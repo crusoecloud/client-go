@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-GITLAB_TOKEN=$1
-CI_COMMIT_SHA=$2
-CI_PROJECT_ID=$3
-MAJOR_VERSION=$4
-MINOR_VERSION=$5
-TAG_PREFIX=$6
+MAJOR_VERSION=$1
+MINOR_VERSION=$2
+TAG_PREFIX=$3
 
 # find the latest tag
 NEW_VERSION="${TAG_PREFIX}v${MAJOR_VERSION}.${MINOR_VERSION}.0"
@@ -24,13 +21,5 @@ if [[ ! -z "$tags" ]]; then
   done
 fi
 
-echo "Adding git tag for version ${NEW_VERSION} via curl POST"
-resp=$(curl -s --request POST --header "PRIVATE-TOKEN: ${GITLAB_TOKEN}" --header "Content-Type: application/json" \
-  --data "{\"tag_name\": \"${NEW_VERSION}\", \"ref\": \"${CI_COMMIT_SHA}\", \"name\": \"Release ${NEW_VERSION}\"}" \
-  https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/releases)
-echo $resp | jq
-
-# check if the request was successful
-if [[ $(echo $resp | jq .name) == "null" ]]; then
-  exit 1
-fi
+echo "Version for this commit: ${NEW_VERSION}"
+echo "RELEASE_VERSION=${NEW_VERSION}" >> variables.env
