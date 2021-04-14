@@ -1,0 +1,28 @@
+stages:
+  - test
+
+test_and_lint:
+  stage: test
+  image: golang:1.16
+  cache:
+    paths:
+      - .cache/
+  before_script:
+    - go env -w "GOPRIVATE=${CI_SERVER_HOST}"
+    - echo -e "machine ${CI_SERVER_HOST} login gitlab-ci-token password ${CI_JOB_TOKEN}" > ~/.netrc
+  script:
+    # set $GOPATH into current directory so we can cache it between runs
+    - mkdir -p .cache
+    - export GOPATH="$CI_PROJECT_DIR/.cache"
+    - export PATH=$PATH:$GOPATH/bin
+    # run unit tests and linters
+    - make ci
+    # generate code navigation artifact for gitlab.com
+    - make lsif
+  artifacts:
+    reports:
+      lsif: dump.lsif
+  only:
+    - master
+    - merge_requests
+    - tags
