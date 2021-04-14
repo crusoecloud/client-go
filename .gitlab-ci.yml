@@ -19,6 +19,7 @@ test_and_lint:
     - make ci
     # generate code navigation artifact for gitlab.com
     - make lsif
+  coverage: '/^total:\t+\(statements\)\t+(\d+\.\d+)%/'
   artifacts:
     reports:
       lsif: dump.lsif

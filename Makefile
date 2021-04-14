@@ -16,7 +16,7 @@ LSIF-GO_VERSION = latest
 dev: test build-deps lint ## Runs a build-deps, test, lint
 
 .PHONY: ci
-ci: test build-deps lint lsif ## Runs test, build-deps, lint, lsif.
+ci: test-ci build-deps lint lsif ## Runs test, build-deps, lint, lsif.
 
 .PHONY: build-deps
 build-deps: ## Install build dependencies
@@ -27,12 +27,21 @@ build-deps: ## Install build dependencies
 .PHONY: precommit
 precommit: ## runs various formatters that will be checked by linter (but can/should be automatic in your editor)
 	@echo "==> $@"
+	@go mod tidy
 	@golangci-lint run --fix ./...
 
 .PHONY: test
 test: ## Runs the go tests.
 	@echo "==> $@"
-	@go test -tags "$(BUILDTAGS)" -cover ./...
+	@go test -tags "$(BUILDTAGS)" -cover -race -v ./...
+
+.PHONY: test-ci
+test-ci: ## Runs the go tests with additional options for a CI environment
+	@echo "==> $@"
+	@go mod tidy
+	@git diff --exit-code go.mod go.sum # fail if go.mod is not tidy
+	@go test -tags "$(BUILDTAGS)" -coverprofile=coverage.out -race -v ./...
+	@go tool cover -func=coverage.out
 
 .PHONY: lint
 lint: ## Verifies `golangci-lint` passes
