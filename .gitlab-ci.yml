@@ -1,5 +1,11 @@
 stages:
   - test
+  - publish
+
+variables: # TODO(template) update these if you have go submodules
+  MAJOR_VERSION: "0"
+  MINOR_VERSION: "0"
+  TAG_PREFIX: ""
 
 test_and_lint:
   stage: test
@@ -27,3 +33,16 @@ test_and_lint:
     - master
     - merge_requests
     - tags
+
+tag_semver:
+  stage: publish
+  needs: [test_and_lint]
+  # TODO we should find an image that just has the script's requirements (git, curl, jq) installed
+  image: ubuntu:20.04
+  script:
+    - apt update
+    - apt install -y git curl jq
+    # TODO(template) update the arguments if you have go submodules (see variables)
+    - ./scripts/tag_semver.sh $CI_JOB_TOKEN $CI_COMMIT_SHA $CI_PROJECT_ID $MAJOR_VERSION $MINOR_VERSION "$TAG_PREFIX"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
