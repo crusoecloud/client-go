@@ -51,3 +51,27 @@ tag_semver:
     description: 'Release $RELEASE_VERSION'
     tag_name: '$RELEASE_VERSION'
     ref: '$CI_COMMIT_SHA'
+
+pages:
+  stage: publish
+  image: golang:1.16
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+  cache:
+    paths:
+      - .cache/
+  before_script:
+    - go env -w "GOPRIVATE=${CI_SERVER_HOST}"
+    - echo -e "machine ${CI_SERVER_HOST} login gitlab-ci-token password ${CI_JOB_TOKEN}" > ~/.netrc
+  script:
+    # set $GOPATH into current directory so we can cache it between runs
+    - mkdir -p .cache
+    - export GOPATH="$CI_PROJECT_DIR/.cache"
+    - export PATH=$PATH:$GOPATH/bin
+    # install dependencies of script
+    - go get -u golang.org/x/tools/cmd/godoc
+    # generate godocs
+    - ./scripts/docs.sh
+  artifacts:
+    paths:
+      - public
