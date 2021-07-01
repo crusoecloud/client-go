@@ -1,5 +1,10 @@
 # see https://golangci-lint.run/usage/configuration/
 linters-settings:
+  custom:
+    aliaslint:
+      path: aliaslint.so
+      description: Checks that import aliases are consistent across the module.
+      original-url: gitlab.com/crusoeenergy/tools
   errcheck:
     # report about not checking of errors in type assertions: `a := b.(MyStruct)`;
     # default is false: such cases aren't reported by default.
@@ -35,13 +40,80 @@ linters-settings:
     multi-func: true # Enforces newlines (or comments) after every multi-line function signature
 
 linters:
-  enable-all: true
-  disable:
-    # we use lots of TODOs
-    - godox
-    # way too aggressive
-    - wsl
-    - exhaustivestruct
+  disable-all: true
+  enable:
+    - aliaslint
+    - asciicheck
+    - bodyclose
+    - cyclop
+    - deadcode
+    - depguard
+    - dogsled
+    - dupl
+    - durationcheck
+    - errcheck
+    - errorlint
+    - exhaustive
+    # - exhaustivestruct
+    - exportloopref
+    - forbidigo
+    - forcetypeassert
+    - funlen
+    - gci
+    - gochecknoinits
+    - gochecknoglobals
+    - gocognit
+    - goconst
+    - gocritic
+    - gocyclo
+    # - godox
+    - godot
+    - goerr113
+    - gofmt
+    - gofumpt
+    - goheader
+    - goimports
+    - golint
+    - gomnd
+    - gomoddirectives
+    - gomodguard
+    - goprintffuncname
+    - gosec
+    - gosimple
+    - govet
+    - ifshort
+    # - importas
+    - ineffassign
+    - lll
+    - makezero
+    - misspell
+    - nakedret
+    - nestif
+    - nilerr
+    - nlreturn
+    - noctx
+    - nolintlint
+    - paralleltest
+    - prealloc
+    - predeclared
+    - revive
+    - rowserrcheck
+    - sqlclosecheck
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - testpackage
+    - thelper
+    - tparallel
+    - typecheck
+    - unconvert
+    - unparam # this one is useful to check sometimes
+    - unused
+    - varcheck
+    - wastedassign
+    - whitespace
+    - wrapcheck
+    # - wsl
 
 issues:
   # exclude:

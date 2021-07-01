@@ -11,6 +11,7 @@ BUILDTAGS :=
 
 GOLANGCI_VERSION = v1.39.0
 LSIF-GO_VERSION = latest
+TOOLS_VERSION = latest
 
 .PHONY: dev
 dev: test build-deps lint ## Runs a build-deps, test, lint
@@ -23,6 +24,13 @@ build-deps: ## Install build dependencies
 	@echo "==> $@"
 	@cd /tmp; GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@${GOLANGCI_VERSION}
 	@cd /tmp; GO111MODULE=on go get github.com/sourcegraph/lsif-go/cmd/lsif-go@${LSIF-GO_VERSION}
+
+.PHONY: get-aliaslint
+get-aliaslint:
+	@echo "==> $@"
+	@go get gitlab.com/crusoeenergy/tools/aliaslint@${TOOLS_VERSION}
+	@go build -o aliaslint.so -buildmode=plugin gitlab.com/crusoeenergy/tools/aliaslint/plugin
+	@go mod tidy
 
 .PHONY: precommit
 precommit: ## runs various formatters that will be checked by linter (but can/should be automatic in your editor)
@@ -44,7 +52,7 @@ test-ci: ## Runs the go tests with additional options for a CI environment
 	@go tool cover -func=coverage.out
 
 .PHONY: lint
-lint: ## Verifies `golangci-lint` passes
+lint: get-aliaslint ## Verifies `golangci-lint` passes
 	@echo "==> $@"
 	@golangci-lint version
 	@golangci-lint run ./...
