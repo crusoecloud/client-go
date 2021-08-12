@@ -9,21 +9,19 @@ BUILDDIR := ${PREFIX}/dist
 # Set any default go build tags
 BUILDTAGS :=
 
-GOLANGCI_VERSION = v1.39.0
-LSIF-GO_VERSION = latest
-TOOLS_VERSION = latest
+GOLANGCI_VERSION = v1.41.1
+TOOLS_VERSION = v0.1.1
 
 .PHONY: dev
 dev: test build-deps lint ## Runs a build-deps, test, lint
 
 .PHONY: ci
-ci: test-ci build-deps lint lsif ## Runs test, build-deps, lint, lsif.
+ci: test-ci build-deps lint ## Runs test, build-deps, lint
 
 .PHONY: build-deps
 build-deps: ## Install build dependencies
 	@echo "==> $@"
 	@cd /tmp; GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@${GOLANGCI_VERSION}
-	@cd /tmp; GO111MODULE=on go get github.com/sourcegraph/lsif-go/cmd/lsif-go@${LSIF-GO_VERSION}
 
 .PHONY: get-aliaslint
 get-aliaslint:
@@ -56,11 +54,6 @@ lint: get-aliaslint ## Verifies `golangci-lint` passes
 	@echo "==> $@"
 	@golangci-lint version
 	@golangci-lint run ./...
-
-.PHONY: lsif
-lsif: ## Generates Language Server Index Format file. See https://lsif.dev/
-	@echo "==> $@"
-	@lsif-go
 
 .PHONY: build
 build: ## Builds the executable and places it in the build dir

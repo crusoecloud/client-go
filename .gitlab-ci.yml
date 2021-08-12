@@ -7,6 +7,23 @@ variables: # TODO(template) update these if you have go submodules
   MINOR_VERSION: "0"
   TAG_PREFIX: ""
 
+code_intelligence:
+  stage: test
+  needs: []
+  allow_failure: true
+  image: sourcegraph/lsif-go:v1
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: '$CI_MERGE_REQUEST_ID'
+  before_script:
+    - go env -w "GOPRIVATE=${CI_SERVER_HOST}"
+    - echo -e "machine ${CI_SERVER_HOST} login gitlab-ci-token password ${CI_JOB_TOKEN}" > ~/.netrc
+  script:
+    - lsif-go --verbose --no-animation
+  artifacts:
+    reports:
+      lsif: dump.lsif
+
 test_and_lint:
   stage: test
   image: golang:1.16
@@ -23,14 +40,11 @@ test_and_lint:
     - export PATH=$PATH:$GOPATH/bin
     # run unit tests and linters
     - make ci
-    # generate code navigation artifact for gitlab.com
-    - make lsif
     # TODO(template) update these if you have go submodules (see variables)
     - ./scripts/tag_semver.sh $MAJOR_VERSION $MINOR_VERSION "$TAG_PREFIX"
   coverage: '/^total:\t+\(statements\)\t+(\d+\.\d+)%/'
   artifacts:
     reports:
-      lsif: dump.lsif
       dotenv: variables.env
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
