@@ -26,9 +26,8 @@ build-deps: ## Install build dependencies
 .PHONY: get-aliaslint
 get-aliaslint:
 	@echo "==> $@"
-	@go get gitlab.com/crusoeenergy/tools/aliaslint@${TOOLS_VERSION}
-	@go build -o aliaslint.so -buildmode=plugin gitlab.com/crusoeenergy/tools/aliaslint/plugin
-	@go mod tidy
+	@go mod download gitlab.com/crusoeenergy/tools@${TOOLS_VERSION}
+	@cd `go env GOMODCACHE`/gitlab.com/crusoeenergy/tools@${TOOLS_VERSION}; go build -o ${PREFIX}/aliaslint.so -buildmode=plugin aliaslint/plugin/aliaslint.go
 
 .PHONY: precommit
 precommit: ## runs various formatters that will be checked by linter (but can/should be automatic in your editor)
