@@ -21,7 +21,7 @@ ci: test-ci build-deps lint ## Runs test, build-deps, lint
 .PHONY: build-deps
 build-deps: ## Install build dependencies
 	@echo "==> $@"
-	@cd /tmp; GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@${GOLANGCI_VERSION}
+	@GO111MODULE=on go install github.com/golangci/golangci-lint/cmd/golangci-lint@${GOLANGCI_VERSION}
 
 .PHONY: get-aliaslint
 get-aliaslint:

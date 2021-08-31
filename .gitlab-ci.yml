@@ -26,7 +26,7 @@ code_intelligence:
 
 test_and_lint:
   stage: test
-  image: golang:1.16
+  image: golang:1.17
   cache:
     paths:
       - .cache/
@@ -68,7 +68,7 @@ tag_semver:
 
 pages:
   stage: publish
-  image: golang:1.16
+  image: golang:1.17
   rules:
     - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
   cache:
