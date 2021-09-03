@@ -51,6 +51,37 @@ test_and_lint:
     - if: '$CI_MERGE_REQUEST_ID'
     - if: '$CI_COMMIT_TAG'
 
+analyze:
+  stage: test
+  image: golang:1.17
+  cache:
+    paths:
+      - .cache/
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: '$CI_MERGE_REQUEST_ID'
+    - if: '$CI_COMMIT_TAG'
+  before_script:
+    - go env -w "GOPRIVATE=${CI_SERVER_HOST}"
+    - echo -e "machine ${CI_SERVER_HOST} login gitlab-ci-token password ${CI_JOB_TOKEN}" > ~/.netrc
+  variables:
+    GOKART_VERSION: v0.2.0
+    GOKART_CONFIG_LOC: $CI_PROJECT_DIR/scripts/.gokart/analyzers.yml
+  script:
+    # install dependencies of script
+    - apt update
+    - apt install -y jq
+    # set $GOPATH into current directory so we can cache it between runs
+    - mkdir -p .cache
+    - export GOPATH="$CI_PROJECT_DIR/.cache"
+    - export PATH=$PATH:$GOPATH/bin
+    # run static analyzers
+    - ./scripts/analyze.sh
+  artifacts:
+    expose_as: 'analysis results'
+    paths:
+      - gokart_result.json
+
 tag_semver:
   stage: publish
   image: registry.gitlab.com/gitlab-org/release-cli:latest

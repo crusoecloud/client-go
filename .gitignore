@@ -3,3 +3,4 @@ dist/
 *.swp
 coverage.out
 aliaslint.so
+gokart_result.json

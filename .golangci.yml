@@ -38,6 +38,9 @@ linters-settings:
   whitespace:
     multi-if: true # Enforces newlines (or comments) after every multi-line if statement
     multi-func: true # Enforces newlines (or comments) after every multi-line function signature
+  gosec:
+    global:
+      audit: enabled # Run extra checks that might be "nosy"
 
 linters:
   disable-all: true
@@ -73,7 +76,7 @@ linters:
     - gofumpt
     - goheader
     - goimports
-    - golint
+    # - golint
     - gomnd
     - gomoddirectives
     - gomodguard
@@ -96,12 +99,14 @@ linters:
     - paralleltest
     - prealloc
     - predeclared
+    - promlinter
     - revive
     - rowserrcheck
     - sqlclosecheck
     - staticcheck
     - structcheck
     - stylecheck
+    - tagliatelle
     - testpackage
     - thelper
     - tparallel
