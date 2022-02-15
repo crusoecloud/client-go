@@ -2,7 +2,10 @@ include:
   - project: 'crusoeenergy/tools'
     file: '/templates/go.gitlab-ci.yml'
 
-variables: # TODO(template) update these if you have go submodules
+variables: 
   MAJOR_VERSION: "0"
-  MINOR_VERSION: "0"
-  TAG_PREFIX: ""
+  MINOR_VERSION: "1"
+
+analyze:
+  variables:
+    GOKART_CONFIG_LOC: $CI_PROJECT_DIR/.gokart/analyzers.yml

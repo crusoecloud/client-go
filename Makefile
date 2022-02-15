@@ -1,22 +1,13 @@
 PREFIX?=$(shell pwd)
 
-# TODO(template) update this to match your executable's name
-NAME := templatecmd
-# TODO(template) update this to point to your project
-PKG := gitlab.com/crusoeenergy/templates/go/cmd/$(NAME)
-
-BUILDDIR := ${PREFIX}/dist
-# Set any default go build tags
-BUILDTAGS :=
-
 GOLANGCI_VERSION = v1.41.1
 TOOLS_VERSION = v0.1.1
 
 .PHONY: dev
-dev: test build-deps lint ## Runs a build-deps, test, lint
+dev: test build-deps lint ## Runs a , test, lint
 
 .PHONY: ci
-ci: test-ci build-deps lint ## Runs test, build-deps, lint
+ci: test-ci build-deps lint ## Runs test, lint
 
 .PHONY: build-deps
 build-deps: ## Install build dependencies
@@ -52,15 +43,7 @@ test-ci: ## Runs the go tests with additional options for a CI environment
 lint: get-aliaslint ## Verifies `golangci-lint` passes
 	@echo "==> $@"
 	@golangci-lint version
-	@golangci-lint run ./...
-
-.PHONY: build
-build: ## Builds the executable and places it in the build dir
-	@go build -o ${BUILDDIR}/${NAME} ${PKG}
-
-.PHONY: install
-install: ## Builds and installs the executable on PATH
-	@go install ${PKG}
+	@golangci-lint run ./... --skip-dirs "swagger"
 
 .PHONY: help
 help:
