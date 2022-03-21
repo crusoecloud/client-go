@@ -9,3 +9,28 @@ variables:
 analyze:
   variables:
     GOKART_CONFIG_LOC: $CI_PROJECT_DIR/.gokart/analyzers.yml
+
+.code-changes: &code-changes
+      changes:
+        - .gitlab-ci.yml
+        - Dockerfile
+        - Makefile
+        - cmd/**/*
+        - go.*
+        - internal/**/*
+        - scripts/**/*
+        - regtest/**/*
+
+.swagger-changes: &swagger-changes
+      changes:
+        - swagger/**/*
+
+# job that will ensure swagger pipeline is created when modifying swagger code
+swagger-dummy:
+  needs: []
+  rules:
+    - <<: *code-changes
+      when: never
+    - <<: *swagger-changes
+      when: always
+  script: "echo 'dummy swagger job'"
