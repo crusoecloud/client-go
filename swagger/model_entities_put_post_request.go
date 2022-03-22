@@ -10,5 +10,5 @@
 package swagger
 
 type EntitiesPutPostRequest struct {
-	OrganizationName string `json:"organization_name,omitempty"`
+	OrganizationName string `json:"organization_name"`
 }

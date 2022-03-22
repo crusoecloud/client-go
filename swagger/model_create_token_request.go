@@ -10,6 +10,6 @@
 package swagger
 
 type CreateTokenRequest struct {
-	Alias string `json:"alias,omitempty"`
-	ExpiresAt string `json:"expires_at,omitempty"`
+	Alias string `json:"alias"`
+	ExpiresAt string `json:"expires_at"`
 }

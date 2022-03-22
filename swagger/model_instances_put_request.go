@@ -10,5 +10,5 @@
 package swagger
 
 type InstancesPutRequest struct {
-	Action string `json:"action,omitempty"`
+	Action string `json:"action"`
 }

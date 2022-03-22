@@ -10,6 +10,6 @@
 package swagger
 
 type RelationUpdate struct {
-	Id string `json:"id,omitempty"`
-	Relation string `json:"relation,omitempty"`
+	Id string `json:"id"`
+	Relation string `json:"relation"`
 }

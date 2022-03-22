@@ -10,6 +10,6 @@
 package swagger
 
 type VmType struct {
-	NumSlices int64 `json:"num_slices,omitempty"`
-	SliceType int64 `json:"slice_type,omitempty"`
+	NumSlices int64 `json:"num_slices"`
+	SliceType int64 `json:"slice_type"`
 }
