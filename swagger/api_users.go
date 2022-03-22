@@ -26,7 +26,7 @@ var (
 type UsersApiService service
 
 /*
-UsersApiService Registers a new SSH public key to the logged in user.
+UsersApiService Register a new SSH public key to the logged in user.
 A successful response from this resource wil contain the created SSH key details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param body
@@ -59,7 +59,7 @@ func (a *UsersApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyReq
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -107,6 +107,39 @@ func (a *UsersApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyReq
 				return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		
+		if localVarHttpResponse.StatusCode == 400 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -114,7 +147,7 @@ func (a *UsersApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyReq
 }
 
 /*
-UsersApiService Deletes an SSH public key registered to the logged in user.
+UsersApiService Delete an SSH public key registered to the logged in user.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param id
 
@@ -147,7 +180,7 @@ func (a *UsersApiService) DeleteSSHKey(ctx context.Context, id string) (*http.Re
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -177,6 +210,50 @@ func (a *UsersApiService) DeleteSSHKey(ctx context.Context, id string) (*http.Re
 			error: localVarHttpResponse.Status,
 		}
 		
+		if localVarHttpResponse.StatusCode == 400 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 404 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarHttpResponse, newErr
+		}
+		
 		return localVarHttpResponse, newErr
 	}
 
@@ -184,7 +261,7 @@ func (a *UsersApiService) DeleteSSHKey(ctx context.Context, id string) (*http.Re
 }
 
 /*
-UsersApiService Deletes the account for the logged in user.
+UsersApiService Delete the account for the logged in user.
 Delete operations will cascade to all entities the user owns (organizations, roles, vms).
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
@@ -216,7 +293,7 @@ func (a *UsersApiService) DeleteUserIdentity(ctx context.Context) (*http.Respons
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -246,6 +323,39 @@ func (a *UsersApiService) DeleteUserIdentity(ctx context.Context) (*http.Respons
 			error: localVarHttpResponse.Status,
 		}
 		
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 403 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarHttpResponse, newErr
+		}
+		
 		return localVarHttpResponse, newErr
 	}
 
@@ -253,7 +363,7 @@ func (a *UsersApiService) DeleteUserIdentity(ctx context.Context) (*http.Respons
 }
 
 /*
-UsersApiService Retrieves the list of SSH public keys registered to the logged in user.
+UsersApiService Retrieve the list of SSH public keys registered to the logged in user.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return GetSshKeyResponse
@@ -284,7 +394,7 @@ func (a *UsersApiService) GetSSHKeys(ctx context.Context) (GetSshKeyResponse, *h
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -330,6 +440,28 @@ func (a *UsersApiService) GetSSHKeys(ctx context.Context) (GetSshKeyResponse, *h
 				return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -337,7 +469,7 @@ func (a *UsersApiService) GetSSHKeys(ctx context.Context) (GetSshKeyResponse, *h
 }
 
 /*
-UsersApiService Retrieves user details for the logged in user.
+UsersApiService Retrieve user details for the logged in user.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return UserResponse
@@ -368,7 +500,7 @@ func (a *UsersApiService) GetUserIdentity(ctx context.Context) (UserResponse, *h
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -414,6 +546,28 @@ func (a *UsersApiService) GetUserIdentity(ctx context.Context) (UserResponse, *h
 				return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -421,7 +575,7 @@ func (a *UsersApiService) GetUserIdentity(ctx context.Context) (UserResponse, *h
 }
 
 /*
-UsersApiService Updates user details for the logged in user.
+UsersApiService Update user details for the logged in user.
 A successful response from this resource wil contain the updated user details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param body
@@ -454,7 +608,7 @@ func (a *UsersApiService) UpdateUserIdentity(ctx context.Context, body Identity)
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -493,6 +647,28 @@ func (a *UsersApiService) UpdateUserIdentity(ctx context.Context, body Identity)
 		
 		if localVarHttpResponse.StatusCode == 200 {
 			var v UserResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()

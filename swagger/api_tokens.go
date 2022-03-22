@@ -26,7 +26,7 @@ var (
 type TokensApiService service
 
 /*
-TokensApiService Creates a new token owned by the logged in user.
+TokensApiService Create a new token owned by the logged in user.
 A successful response from this resource will contain json-encoded details of API token. This is the only time the customer will be able to view the secret key associated with the token.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param body
@@ -59,7 +59,7 @@ func (a *TokensApiService) CreateToken(ctx context.Context, body CreateTokenRequ
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -107,6 +107,28 @@ func (a *TokensApiService) CreateToken(ctx context.Context, body CreateTokenRequ
 				return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
 		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
@@ -114,7 +136,7 @@ func (a *TokensApiService) CreateToken(ctx context.Context, body CreateTokenRequ
 }
 
 /*
-TokensApiService Deletes an API token owned by the logged in user.
+TokensApiService Delete an API token owned by the logged in user.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param accessKey
 
@@ -147,7 +169,7 @@ func (a *TokensApiService) DeleteToken(ctx context.Context, accessKey string) (*
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -177,6 +199,39 @@ func (a *TokensApiService) DeleteToken(ctx context.Context, accessKey string) (*
 			error: localVarHttpResponse.Status,
 		}
 		
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 403 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarHttpResponse, newErr
+		}
+		
 		return localVarHttpResponse, newErr
 	}
 
@@ -184,7 +239,7 @@ func (a *TokensApiService) DeleteToken(ctx context.Context, accessKey string) (*
 }
 
 /*
-TokensApiService Retrieves all active/expired API tokens for the logged in user.
+TokensApiService Retrieve all active/expired API tokens for the logged in user.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return TokensGetResponse
@@ -215,7 +270,7 @@ func (a *TokensApiService) GetTokens(ctx context.Context) (TokensGetResponse, *h
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json", "text/plain"}
+	localVarHttpHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -252,6 +307,28 @@ func (a *TokensApiService) GetTokens(ctx context.Context) (TokensGetResponse, *h
 		
 		if localVarHttpResponse.StatusCode == 200 {
 			var v TokensGetResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()

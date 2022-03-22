@@ -9,7 +9,7 @@
 
 package swagger
 
-type RolesPostRequest struct {
-	Name string `json:"name"`
-	OrganizationId string `json:"organization_id"`
+type ErrorBody struct {
+	Code string `json:"code,omitempty"`
+	Message string `json:"message,omitempty"`
 }

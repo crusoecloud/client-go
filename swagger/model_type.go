@@ -10,7 +10,5 @@
 package swagger
 
 type ModelType struct {
-	Price string `json:"price,omitempty"`
 	ProductName string `json:"product_name,omitempty"`
-	ValidUntil string `json:"valid_until,omitempty"`
 }
