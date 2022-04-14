@@ -9,5 +9,4 @@
 
 package swagger
 
-type RolesMembershipGetResponse struct {
-}
+type RolesMembershipGetResponse struct{}

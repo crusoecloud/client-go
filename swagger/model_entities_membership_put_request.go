@@ -10,8 +10,8 @@
 package swagger
 
 type EntitiesMembershipPutRequest struct {
-	Accept bool `json:"accept,omitempty"`
-	Grant []RelationUpdate `json:"grant"`
-	Invite []Invitee `json:"invite,omitempty"`
-	Remove []string `json:"remove"`
+	Accept bool             `json:"accept,omitempty"`
+	Grant  []RelationUpdate `json:"grant"`
+	Invite []Invitee        `json:"invite,omitempty"`
+	Remove []string         `json:"remove"`
 }

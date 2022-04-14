@@ -10,8 +10,8 @@
 package swagger
 
 type Entity struct {
-	Billing *Billing `json:"billing,omitempty"`
-	Id string `json:"id,omitempty"`
-	Name string `json:"name,omitempty"`
-	Relation string `json:"relation,omitempty"`
+	Billing  *Billing `json:"billing,omitempty"`
+	Id       string   `json:"id,omitempty"`
+	Name     string   `json:"name,omitempty"`
+	Relation string   `json:"relation,omitempty"`
 }

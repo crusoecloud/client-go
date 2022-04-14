@@ -12,5 +12,5 @@ package swagger
 // Identity contains the Traits Island stores for a User inside of Kratos. These are the fields returned from a GET or PUT request.
 type Identity struct {
 	Email string `json:"email"`
-	Name string `json:"name,omitempty"`
+	Name  string `json:"name,omitempty"`
 }

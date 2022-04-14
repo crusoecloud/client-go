@@ -10,6 +10,6 @@
 package swagger
 
 type RolesPostRequest struct {
-	Name string `json:"name"`
+	Name           string `json:"name"`
 	OrganizationId string `json:"organization_id"`
 }

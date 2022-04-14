@@ -10,6 +10,6 @@
 package swagger
 
 type Fingerprints struct {
-	Md5 string `json:"md5,omitempty"`
+	Md5    string `json:"md5,omitempty"`
 	Sha256 string `json:"sha256,omitempty"`
 }

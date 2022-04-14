@@ -10,7 +10,7 @@
 package swagger
 
 type RolesMembershipPutRequest struct {
-	Add []string `json:"add"`
-	Grant []RelationUpdate `json:"grant"`
-	Remove []string `json:"remove"`
+	Add    []string         `json:"add"`
+	Grant  []RelationUpdate `json:"grant"`
+	Remove []string         `json:"remove"`
 }
