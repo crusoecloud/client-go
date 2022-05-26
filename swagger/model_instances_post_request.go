@@ -10,11 +10,13 @@
 package swagger
 
 type InstancesPostRequest struct {
-	ImageChecksum string  `json:"image_checksum,omitempty"`
-	ImageId       string  `json:"image_id,omitempty"`
-	Name          string  `json:"name"`
-	ProductName   string  `json:"product_name"`
-	RoleId        string  `json:"role_id"`
-	SshPublicKey  string  `json:"ssh_public_key"`
-	Type_         *VmType `json:"type,omitempty"`
+	ImageChecksum  string  `json:"image_checksum,omitempty"`
+	ImageId        string  `json:"image_id,omitempty"`
+	Name           string  `json:"name"`
+	ProductName    string  `json:"product_name"`
+	RoleId         string  `json:"role_id"`
+	ShutdownScript string  `json:"shutdown_script,omitempty"`
+	SshPublicKey   string  `json:"ssh_public_key"`
+	StartupScript  string  `json:"startup_script,omitempty"`
+	Type_          *VmType `json:"type,omitempty"`
 }
