@@ -1,5 +1,5 @@
 # default = everyone is codeowner
-* @crusoeenergy
+* @crusoeenergy/island
 
 .gitlab/CODEOWNERS @cagriaksay @lanwall12 @nitper
 
