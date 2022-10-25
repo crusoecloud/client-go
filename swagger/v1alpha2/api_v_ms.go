@@ -11,6 +11,7 @@ package swagger
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -29,15 +30,15 @@ VMsApiService Create a new VM instance owned by the logged in user.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param body
 
-@return InstancesPostPutResponse
+@return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRequest) (InstancesPostPutResponse, *http.Response, error) {
+func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRequest) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesPostPutResponse
+		localVarReturnValue InstancesAsyncPatchPostDeleteResponse
 	)
 
 	// create path and map variables
@@ -95,7 +96,7 @@ func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRe
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesPostPutResponse
+			var v InstancesAsyncPatchPostDeleteResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -160,24 +161,25 @@ VMsApiService Delete a VM that the logged in user owns.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param vmId
 
-
+@return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (*http.Response, error) {
+func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
+		localVarHttpMethod  = strings.ToUpper("Delete")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
+		localVarReturnValue InstancesAsyncPatchPostDeleteResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances"
+	localVarPath := a.client.cfg.BasePath + "/compute/vms/{vm_id}/instances"
+	localVarPath = strings.Replace(localVarPath, "{"+"vm_id"+"}", fmt.Sprintf("%v", vmId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("vm_id", parameterToString(vmId, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}
 
@@ -197,18 +199,24 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (*http.
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
 	localVarHttpResponse.Body.Close()
 	if err != nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
@@ -217,15 +225,26 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (*http.
 			error: localVarHttpResponse.Status,
 		}
 
+		if localVarHttpResponse.StatusCode == 200 {
+			var v InstancesAsyncPatchPostDeleteResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+
 		if localVarHttpResponse.StatusCode == 401 {
 			var v ErrorBody
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
+				return localVarReturnValue, localVarHttpResponse, newErr
 			}
 			newErr.model = v
-			return localVarHttpResponse, newErr
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 
 		if localVarHttpResponse.StatusCode == 403 {
@@ -233,10 +252,10 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (*http.
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
+				return localVarReturnValue, localVarHttpResponse, newErr
 			}
 			newErr.model = v
-			return localVarHttpResponse, newErr
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 
 		if localVarHttpResponse.StatusCode == 500 {
@@ -244,16 +263,16 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (*http.
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
+				return localVarReturnValue, localVarHttpResponse, newErr
 			}
 			newErr.model = v
-			return localVarHttpResponse, newErr
+			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 
-		return localVarHttpResponse, newErr
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return localVarHttpResponse, nil
+	return localVarReturnValue, localVarHttpResponse, nil
 }
 
 /*
@@ -718,28 +737,28 @@ func (a *VMsApiService) GetVMTypes(ctx context.Context) (TypesGetResponse, *http
 /*
 VMsApiService Change the state of a VM the logged in user owns.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param vmId
  * @param body
+ * @param vmId
 
-@return InstancesPostPutResponse
+@return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) UpdateInstance(ctx context.Context, vmId string, body InstancesPutRequest) (InstancesPostPutResponse, *http.Response, error) {
+func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchRequest, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod  = strings.ToUpper("Put")
+		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesPostPutResponse
+		localVarReturnValue InstancesAsyncPatchPostDeleteResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances"
+	localVarPath := a.client.cfg.BasePath + "/compute/vms/{vm_id}/instances"
+	localVarPath = strings.Replace(localVarPath, "{"+"vm_id"+"}", fmt.Sprintf("%v", vmId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("vm_id", parameterToString(vmId, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}
 
@@ -788,7 +807,7 @@ func (a *VMsApiService) UpdateInstance(ctx context.Context, vmId string, body In
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesPostPutResponse
+			var v InstancesAsyncPatchPostDeleteResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
