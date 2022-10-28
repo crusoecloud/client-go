@@ -9,6 +9,6 @@
 
 package swagger
 
-type InstancesPutRequest struct {
+type InstancesPatchRequest struct {
 	Action string `json:"action"`
 }
