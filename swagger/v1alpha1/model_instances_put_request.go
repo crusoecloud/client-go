@@ -10,5 +10,6 @@
 package swagger
 
 type InstancesPutRequest struct {
-	Action string `json:"action"`
+	Action           string `json:"action"`
+	CommitmentPeriod int64  `json:"commitment_period,omitempty"`
 }

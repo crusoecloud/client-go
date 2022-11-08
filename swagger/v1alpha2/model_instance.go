@@ -10,11 +10,13 @@
 package swagger
 
 type Instance struct {
-	CreatedAt      string `json:"created_at,omitempty"`
-	Id             string `json:"id,omitempty"`
-	Name           string `json:"name,omitempty"`
-	ProductName    string `json:"product_name,omitempty"`
-	RoleId         string `json:"role_id,omitempty"`
-	SshDestination string `json:"ssh_destination,omitempty"`
-	State          string `json:"state,omitempty"`
+	CommitmentEnd    string `json:"commitment_end,omitempty"`
+	CommitmentPeriod int64  `json:"commitment_period,omitempty"`
+	CreatedAt        string `json:"created_at,omitempty"`
+	Id               string `json:"id,omitempty"`
+	Name             string `json:"name,omitempty"`
+	ProductName      string `json:"product_name,omitempty"`
+	RoleId           string `json:"role_id,omitempty"`
+	SshDestination   string `json:"ssh_destination,omitempty"`
+	State            string `json:"state,omitempty"`
 }
