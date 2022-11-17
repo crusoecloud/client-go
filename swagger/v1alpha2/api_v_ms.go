@@ -279,10 +279,11 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (Instan
 VMsApiService Get status of a single asynchronous operation
 This resource retrieves information about the status of an asynchronous operation initiated by the instances resource. Only information about the operation specified in the path will be returned, or an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged in user, or has expired. Operations will expire after they have been completed and returned by this endpoint.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param operationId
 
 @return OperationsGetResponse
 */
-func (a *VMsApiService) GetComputeVMsInstancesOperation(ctx context.Context) (OperationsGetResponse, *http.Response, error) {
+func (a *VMsApiService) GetComputeVMsInstancesOperation(ctx context.Context, operationId string) (OperationsGetResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -292,7 +293,8 @@ func (a *VMsApiService) GetComputeVMsInstancesOperation(ctx context.Context) (Op
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/operations/{operationId}"
+	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/operations/{operation_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"operation_id"+"}", fmt.Sprintf("%v", operationId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
