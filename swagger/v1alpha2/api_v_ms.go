@@ -173,7 +173,7 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (Instan
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/{vm_id}/instances"
+	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/{vm_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"vm_id"+"}", fmt.Sprintf("%v", vmId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -754,7 +754,7 @@ func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchR
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/{vm_id}/instances"
+	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/{vm_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"vm_id"+"}", fmt.Sprintf("%v", vmId), -1)
 
 	localVarHeaderParams := make(map[string]string)
