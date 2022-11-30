@@ -23,26 +23,27 @@ var (
 	_ context.Context
 )
 
-type VMsApiService service
+type DisksApiService service
 
 /*
-VMsApiService Create a new VM instance owned by the logged in user.
+DisksApiService Create a new disk owned by the logged in user.
+Requires either a disk snapshot ID, or size and location, where size of disk should be in gibibytes (GiB) or tebibytes (TiB) in the format [Size][Unit]. E.g. 10GiB. Disk type must be one of: DISK_TYPE_PERSISTENT. A successful response from this resource will contain the async operation.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param body
 
-@return InstancesAsyncPatchPostDeleteResponse
+@return Operation
 */
-func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRequest) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequest) (Operation, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesAsyncPatchPostDeleteResponse
+		localVarReturnValue Operation
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances"
+	localVarPath := a.client.cfg.BasePath + "/storage/disks"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -96,7 +97,7 @@ func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRe
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesAsyncPatchPostDeleteResponse
+			var v Operation
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -157,24 +158,27 @@ func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRe
 }
 
 /*
-VMsApiService Delete a VM that the logged in user owns.
+DisksApiService Delete a disk owned by the logged in user.
+A successful response from this resource will contain the async operation.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param vmId
+ * @param diskId
+ * @param snapshotId
 
-@return InstancesAsyncPatchPostDeleteResponse
+@return Operation
 */
-func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *DisksApiService) DeleteDisk(ctx context.Context, diskId string, snapshotId string) (Operation, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesAsyncPatchPostDeleteResponse
+		localVarReturnValue Operation
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/{vm_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"vm_id"+"}", fmt.Sprintf("%v", vmId), -1)
+	localVarPath := a.client.cfg.BasePath + "/storage/disks/{disk_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"disk_id"+"}", fmt.Sprintf("%v", diskId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"snapshot_id"+"}", fmt.Sprintf("%v", snapshotId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -226,7 +230,7 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (Instan
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesAsyncPatchPostDeleteResponse
+			var v Operation
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -276,14 +280,216 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (Instan
 }
 
 /*
-VMsApiService Get status of a single asynchronous operation
-This resource retrieves information about the status of an asynchronous operation initiated by the instances resource. Only information about the operation specified in the path will be returned, or an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged in user, or has expired.
+DisksApiService Retrieve details for a disk that belongs to the logged in user.
+Size of disk will be in gibibytes (GiB)
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param diskId
+
+
+*/
+func (a *DisksApiService) GetDisk(ctx context.Context, diskId string) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/storage/disks/{disk_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"disk_id"+"}", fmt.Sprintf("%v", diskId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body:  localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 403 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+
+		return localVarHttpResponse, newErr
+	}
+
+	return localVarHttpResponse, nil
+}
+
+/*
+DisksApiService Retrieve details about all disks that belong to the logged in user.
+Size of disks will be in gibibytes (GiB)
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
+
+*/
+func (a *DisksApiService) GetDisks(ctx context.Context) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/storage/disks"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body:  localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 403 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+
+		return localVarHttpResponse, newErr
+	}
+
+	return localVarHttpResponse, nil
+}
+
+/*
+DisksApiService Get status of a single asynchronous operation
+This resource retrieves information about the status of an asynchronous operation initiated by the disks resource. Only information about the operation specified in the path will be returned, or an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged in user, or has expired.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param operationId
 
 @return OperationsGetResponse
 */
-func (a *VMsApiService) GetComputeVMsInstancesOperation(ctx context.Context, operationId string) (OperationsGetResponse, *http.Response, error) {
+func (a *DisksApiService) GetStorageDisksOperation(ctx context.Context, operationId string) (OperationsGetResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -293,7 +499,7 @@ func (a *VMsApiService) GetComputeVMsInstancesOperation(ctx context.Context, ope
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/operations/{operation_id}"
+	localVarPath := a.client.cfg.BasePath + "/storage/disks/operations/{operation_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"operation_id"+"}", fmt.Sprintf("%v", operationId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -407,13 +613,13 @@ func (a *VMsApiService) GetComputeVMsInstancesOperation(ctx context.Context, ope
 }
 
 /*
-VMsApiService Get status of asynchronous operations
-This resource retrieves information about the status of asynchronous operations initiated by the instances resource. All operations that are either in-flight or completed but not yet queried will be returned.
+DisksApiService Get status of asynchronous operations
+This resource retrieves information about the status of asynchronous operations initiated by the disks resource. All operations that are either in-flight or completed but not yet queried will be returned.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return OperationsGetResponse
 */
-func (a *VMsApiService) GetComputeVMsInstancesOperations(ctx context.Context) (OperationsGetResponse, *http.Response, error) {
+func (a *DisksApiService) GetStorageDisksOperations(ctx context.Context) (OperationsGetResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -423,7 +629,7 @@ func (a *VMsApiService) GetComputeVMsInstancesOperations(ctx context.Context) (O
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/operations"
+	localVarPath := a.client.cfg.BasePath + "/storage/disks/operations"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -525,237 +731,26 @@ func (a *VMsApiService) GetComputeVMsInstancesOperations(ctx context.Context) (O
 }
 
 /*
-VMsApiService Retrieve details about all VMs that the logged in user owns or has access to.
+DisksApiService Resize a disk that the logged in user owns.
+Size should be in gibibytes (GiB) or tebibytes (TiB) in the format [Size][Unit]. E.g. 10GiB A successful response from this resource will contain the async operation.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-
-@return InstancesGetResponse
-*/
-func (a *VMsApiService) GetInstances(ctx context.Context) (InstancesGetResponse, *http.Response, error) {
-	var (
-		localVarHttpMethod  = strings.ToUpper("Get")
-		localVarPostBody    interface{}
-		localVarFileName    string
-		localVarFileBytes   []byte
-		localVarReturnValue InstancesGetResponse
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body:  localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-
-		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesGetResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 401 {
-			var v ErrorBody
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 500 {
-			var v ErrorBody
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		return localVarReturnValue, localVarHttpResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHttpResponse, nil
-}
-
-/*
-VMsApiService Retrieve information about the types of VMs that are available to purchase along with their prices.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-
-@return TypesGetResponse
-*/
-func (a *VMsApiService) GetVMTypes(ctx context.Context) (TypesGetResponse, *http.Response, error) {
-	var (
-		localVarHttpMethod  = strings.ToUpper("Get")
-		localVarPostBody    interface{}
-		localVarFileName    string
-		localVarFileBytes   []byte
-		localVarReturnValue TypesGetResponse
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/types"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body:  localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-
-		if localVarHttpResponse.StatusCode == 200 {
-			var v TypesGetResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 401 {
-			var v ErrorBody
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 500 {
-			var v ErrorBody
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		return localVarReturnValue, localVarHttpResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHttpResponse, nil
-}
-
-/*
-VMsApiService Change the state of a VM the logged in user owns.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param diskId
  * @param body
- * @param vmId
 
-@return InstancesAsyncPatchPostDeleteResponse
+@return Operation
 */
-func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchRequest, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *DisksApiService) ResizeDisk(ctx context.Context, diskId string, body DisksPatchRequest) (Operation, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesAsyncPatchPostDeleteResponse
+		localVarReturnValue Operation
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/{vm_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"vm_id"+"}", fmt.Sprintf("%v", vmId), -1)
+	localVarPath := a.client.cfg.BasePath + "/storage/disks/{disk_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"disk_id"+"}", fmt.Sprintf("%v", diskId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -809,7 +804,7 @@ func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchR
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesAsyncPatchPostDeleteResponse
+			var v Operation
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
