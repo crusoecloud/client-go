@@ -9,6 +9,6 @@
 
 package swagger
 
-type InstancesGetResponse struct {
-	Instances []Instance `json:"instances,omitempty"`
+type InstancesAsyncGetResponse struct {
+	Instances []InstanceAsync `json:"instances,omitempty"`
 }
