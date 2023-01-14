@@ -16,6 +16,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -410,10 +412,17 @@ func (a *VMsApiService) GetComputeVMsInstancesOperation(ctx context.Context, ope
 VMsApiService Get status of asynchronous operations
 This resource retrieves information about the status of asynchronous operations initiated by the instances resource. All operations that are either in-flight or completed but not yet queried will be returned.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param optional nil or *VMsApiGetComputeVMsInstancesOperationsOpts - Optional Parameters:
+     * @param "ResourceId" (optional.String) -
 
 @return OperationsGetResponse
 */
-func (a *VMsApiService) GetComputeVMsInstancesOperations(ctx context.Context) (OperationsGetResponse, *http.Response, error) {
+
+type VMsApiGetComputeVMsInstancesOperationsOpts struct {
+	ResourceId optional.String
+}
+
+func (a *VMsApiService) GetComputeVMsInstancesOperations(ctx context.Context, localVarOptionals *VMsApiGetComputeVMsInstancesOperationsOpts) (OperationsGetResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -429,6 +438,9 @@ func (a *VMsApiService) GetComputeVMsInstancesOperations(ctx context.Context) (O
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.ResourceId.IsSet() {
+		localVarQueryParams.Add("resource_id", parameterToString(localVarOptionals.ResourceId.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}
 
