@@ -59,6 +59,8 @@ type APIClient struct {
 
 	TokensApi *TokensApiService
 
+	VMOperationsApi *VMOperationsApiService
+
 	VMsApi *VMsApiService
 }
 
@@ -85,6 +87,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.RolesApi = (*RolesApiService)(&c.common)
 	c.SSHKeysApi = (*SSHKeysApiService)(&c.common)
 	c.TokensApi = (*TokensApiService)(&c.common)
+	c.VMOperationsApi = (*VMOperationsApiService)(&c.common)
 	c.VMsApi = (*VMsApiService)(&c.common)
 
 	return c

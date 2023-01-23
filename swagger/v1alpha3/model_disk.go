@@ -9,13 +9,12 @@
 
 package swagger
 
-// DiskAsync contains identifying information about a disk and the recent operations that have been performed on it.
-type DiskAsync struct {
+type Disk struct {
 	AttachedTo []VmAttachment `json:"attached_to,omitempty"`
+	CreatedAt  string         `json:"created_at,omitempty"`
 	Id         string         `json:"id,omitempty"`
 	Location   string         `json:"location,omitempty"`
 	Name       string         `json:"name,omitempty"`
-	Operations []Operation    `json:"operations,omitempty"`
 	Size       string         `json:"size,omitempty"`
 	Type_      string         `json:"type,omitempty"`
 }

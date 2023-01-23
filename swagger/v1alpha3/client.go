@@ -47,6 +47,8 @@ type APIClient struct {
 
 	BillingApi *BillingApiService
 
+	DiskOperationsApi *DiskOperationsApiService
+
 	DisksApi *DisksApiService
 
 	EntitiesApi *EntitiesApiService
@@ -59,9 +61,13 @@ type APIClient struct {
 
 	SSHKeysApi *SSHKeysApiService
 
+	SnapshotOperationsApi *SnapshotOperationsApiService
+
 	SnapshotsApi *SnapshotsApiService
 
 	TokensApi *TokensApiService
+
+	VMOperationsApi *VMOperationsApiService
 
 	VMsApi *VMsApiService
 }
@@ -83,14 +89,17 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.BillingApi = (*BillingApiService)(&c.common)
+	c.DiskOperationsApi = (*DiskOperationsApiService)(&c.common)
 	c.DisksApi = (*DisksApiService)(&c.common)
 	c.EntitiesApi = (*EntitiesApiService)(&c.common)
 	c.IdentitiesApi = (*IdentitiesApiService)(&c.common)
 	c.ProspectsApi = (*ProspectsApiService)(&c.common)
 	c.RolesApi = (*RolesApiService)(&c.common)
 	c.SSHKeysApi = (*SSHKeysApiService)(&c.common)
+	c.SnapshotOperationsApi = (*SnapshotOperationsApiService)(&c.common)
 	c.SnapshotsApi = (*SnapshotsApiService)(&c.common)
 	c.TokensApi = (*TokensApiService)(&c.common)
+	c.VMOperationsApi = (*VMOperationsApiService)(&c.common)
 	c.VMsApi = (*VMsApiService)(&c.common)
 
 	return c

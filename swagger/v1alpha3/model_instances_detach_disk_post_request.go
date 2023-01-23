@@ -9,7 +9,7 @@
 
 package swagger
 
-// InstancesAsyncGetResponseV1Alpha3 is the response type for GET requests to compute/vms/instances.
-type InstancesAsyncGetResponseV1Alpha3 struct {
-	Instances []InstanceV1Alpha3 `json:"instances,omitempty"`
+// InstancesDetachDiskPostRequest is the request type for POST requests to the vms.instances.detach-disk endpoint.
+type InstancesDetachDiskPostRequest struct {
+	DetachDisks []string `json:"detach_disks,omitempty"`
 }

@@ -9,15 +9,14 @@
 
 package swagger
 
-// InstanceAsync contains identifying information about a VM instance and the recent operations that have been performed on it.
-type InstanceAsyncV1Alpha3 struct {
+// Instance contains identifying information about a vm instance for vms.instances endpoints.
+type InstanceV1Alpha3 struct {
 	AttachedDisks    []AttachedDisk `json:"attached_disks,omitempty"`
 	CommitmentEnd    string         `json:"commitment_end,omitempty"`
 	CommitmentPeriod int64          `json:"commitment_period,omitempty"`
 	CreatedAt        string         `json:"created_at,omitempty"`
 	Id               string         `json:"id,omitempty"`
 	Name             string         `json:"name,omitempty"`
-	Operations       []Operation    `json:"operations,omitempty"`
 	ProductName      string         `json:"product_name,omitempty"`
 	RoleId           string         `json:"role_id,omitempty"`
 	SshDestination   string         `json:"ssh_destination,omitempty"`
