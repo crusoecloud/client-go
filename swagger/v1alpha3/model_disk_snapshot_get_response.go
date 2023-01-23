@@ -10,5 +10,5 @@
 package swagger
 
 type DiskSnapshotGetResponse struct {
-	DiskSnapshots []DiskSnapshotAsync `json:"disk_snapshots,omitempty"`
+	DiskSnapshots []DiskSnapshot `json:"disk_snapshots,omitempty"`
 }

@@ -9,7 +9,9 @@
 
 package swagger
 
-// InstancesAsyncGetResponseV1Alpha3 is the response type for GET requests to compute/vms/instances.
-type InstancesAsyncGetResponseV1Alpha3 struct {
-	Instances []InstanceV1Alpha3 `json:"instances,omitempty"`
+type DiskSnapshot struct {
+	CreatedAt   string `json:"created_at,omitempty"`
+	CreatedFrom string `json:"created_from,omitempty"`
+	Id          string `json:"id,omitempty"`
+	Size        string `json:"size,omitempty"`
 }

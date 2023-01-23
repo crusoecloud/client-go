@@ -11,9 +11,7 @@ package swagger
 
 // InstancesPatchRequestV3 is the request type for PATCH requests to the vms.instances endpoint.
 type InstancesPatchRequestV1Alpha3 struct {
-	Action           string   `json:"action"`
-	AttachDisks      []string `json:"attach_disks,omitempty"`
-	CommitmentPeriod int64    `json:"commitment_period,omitempty"`
-	DetachDisks      []string `json:"detach_disks,omitempty"`
-	ProductName      string   `json:"product_name,omitempty"`
+	Action           string `json:"action"`
+	CommitmentPeriod int64  `json:"commitment_period,omitempty"`
+	ProductName      string `json:"product_name,omitempty"`
 }

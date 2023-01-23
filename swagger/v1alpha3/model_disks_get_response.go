@@ -10,5 +10,5 @@
 package swagger
 
 type DisksGetResponse struct {
-	Disks []DiskAsync `json:"disks,omitempty"`
+	Disks []Disk `json:"disks,omitempty"`
 }
