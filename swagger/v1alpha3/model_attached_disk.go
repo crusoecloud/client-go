@@ -18,4 +18,5 @@ type AttachedDisk struct {
 	Name       string         `json:"name,omitempty"`
 	Size       string         `json:"size,omitempty"`
 	Type_      string         `json:"type,omitempty"`
+	UpdatedAt  string         `json:"updated_at,omitempty"`
 }
