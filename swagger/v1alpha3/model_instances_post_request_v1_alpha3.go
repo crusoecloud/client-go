@@ -11,8 +11,8 @@ package swagger
 
 // InstancesPostRequestV1Alpha3 is the request type for POST requests to the vms.instances endpoint.
 type InstancesPostRequestV1Alpha3 struct {
-	AttachedDisks    []string `json:"attached_disks,omitempty"`
 	CommitmentPeriod int64    `json:"commitment_period,omitempty"`
+	Disks            []string `json:"disks,omitempty"`
 	ImageChecksum    string   `json:"image_checksum,omitempty"`
 	ImageId          string   `json:"image_id,omitempty"`
 	Name             string   `json:"name"`
