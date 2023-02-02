@@ -22,27 +22,27 @@ var (
 	_ context.Context
 )
 
-type UsersApiService service
+type EntitiesApiService service
 
 /*
-UsersApiService Register a new SSH public key to the logged in user.
-A successful response from this resource wil contain the created SSH key details.
+EntitiesApiService Create a new organization owned by the logged in user.
+A successful response from this resource will contain the json encoded organization details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param body
 
-@return CreateSshKeyResponse
+@return EntitiesPutPostResponse
 */
-func (a *UsersApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyRequest) (CreateSshKeyResponse, *http.Response, error) {
+func (a *EntitiesApiService) CreateOrganization(ctx context.Context, body EntitiesPutPostRequest) (EntitiesPutPostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue CreateSshKeyResponse
+		localVarReturnValue EntitiesPutPostResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/users/ssh-keys"
+	localVarPath := a.client.cfg.BasePath + "/organizations/entities"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -96,18 +96,7 @@ func (a *UsersApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyReq
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CreateSshKeyResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 400 {
-			var v ErrorBody
+			var v EntitiesPutPostResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -146,13 +135,14 @@ func (a *UsersApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyReq
 }
 
 /*
-UsersApiService Delete an SSH public key registered to the logged in user.
+EntitiesApiService Delete an organization owned by the logged in user.
+Delete operations will cascade to roles and VMs, and all members will be removed from the organization.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id
+ * @param orgId
 
 
 */
-func (a *UsersApiService) DeleteSSHKey(ctx context.Context, id string) (*http.Response, error) {
+func (a *EntitiesApiService) DeleteOrganization(ctx context.Context, orgId string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -161,124 +151,13 @@ func (a *UsersApiService) DeleteSSHKey(ctx context.Context, id string) (*http.Re
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/users/ssh-keys"
+	localVarPath := a.client.cfg.BasePath + "/organizations/entities"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("id", parameterToString(id, ""))
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body:  localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-
-		if localVarHttpResponse.StatusCode == 400 {
-			var v ErrorBody
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 401 {
-			var v ErrorBody
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 404 {
-			var v ErrorBody
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-
-		if localVarHttpResponse.StatusCode == 500 {
-			var v ErrorBody
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-
-		return localVarHttpResponse, newErr
-	}
-
-	return localVarHttpResponse, nil
-}
-
-/*
-UsersApiService Delete the account for the logged in user.
-Delete operations will cascade to all entities the user owns (organizations, roles, vms).
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-
-
-*/
-func (a *UsersApiService) DeleteUserIdentity(ctx context.Context) (*http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/users/identities"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
+	localVarQueryParams.Add("org_id", parameterToString(orgId, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}
 
@@ -358,22 +237,22 @@ func (a *UsersApiService) DeleteUserIdentity(ctx context.Context) (*http.Respons
 }
 
 /*
-UsersApiService Retrieve the list of SSH public keys registered to the logged in user.
+EntitiesApiService Retrieve details about all active organizations the logged in user belongs to.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return GetSshKeyResponse
+@return EntitiesGetResponse
 */
-func (a *UsersApiService) GetSSHKeys(ctx context.Context) (GetSshKeyResponse, *http.Response, error) {
+func (a *EntitiesApiService) GetOrganizations(ctx context.Context) (EntitiesGetResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue GetSshKeyResponse
+		localVarReturnValue EntitiesGetResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/users/ssh-keys"
+	localVarPath := a.client.cfg.BasePath + "/organizations/entities"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -425,7 +304,7 @@ func (a *UsersApiService) GetSSHKeys(ctx context.Context) (GetSshKeyResponse, *h
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v GetSshKeyResponse
+			var v EntitiesGetResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -464,22 +343,22 @@ func (a *UsersApiService) GetSSHKeys(ctx context.Context) (GetSshKeyResponse, *h
 }
 
 /*
-UsersApiService Retrieve user details for the logged in user.
+EntitiesApiService Retrieve the list of users who are members of an organization (or have been invited) owned by the logged in user.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return UserResponse
+@return EntitiesMembershipGetResponse
 */
-func (a *UsersApiService) GetUserIdentity(ctx context.Context) (UserResponse, *http.Response, error) {
+func (a *EntitiesApiService) GetOrganizationsMembership(ctx context.Context) (EntitiesMembershipGetResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue UserResponse
+		localVarReturnValue EntitiesMembershipGetResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/users/identities"
+	localVarPath := a.client.cfg.BasePath + "/organizations/entities/membership"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -531,7 +410,18 @@ func (a *UsersApiService) GetUserIdentity(ctx context.Context) (UserResponse, *h
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v UserResponse
+			var v EntitiesMembershipGetResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 400 {
+			var v ErrorBody
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -542,6 +432,17 @@ func (a *UsersApiService) GetUserIdentity(ctx context.Context) (UserResponse, *h
 		}
 
 		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 403 {
 			var v ErrorBody
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -570,29 +471,31 @@ func (a *UsersApiService) GetUserIdentity(ctx context.Context) (UserResponse, *h
 }
 
 /*
-UsersApiService Update user details for the logged in user.
-A successful response from this resource wil contain the updated user details.
+EntitiesApiService Update details for an organization that the logged in user owns.
+A successful response from this resource will contain the updated organization details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param orgId
  * @param body
 
-@return UserResponse
+@return EntitiesPutPostResponse
 */
-func (a *UsersApiService) UpdateUserIdentity(ctx context.Context, body Identity) (UserResponse, *http.Response, error) {
+func (a *EntitiesApiService) UpdateOrganization(ctx context.Context, orgId string, body EntitiesPutPostRequest) (EntitiesPutPostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Put")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue UserResponse
+		localVarReturnValue EntitiesPutPostResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/users/identities"
+	localVarPath := a.client.cfg.BasePath + "/organizations/entities"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	localVarQueryParams.Add("org_id", parameterToString(orgId, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}
 
@@ -641,7 +544,18 @@ func (a *UsersApiService) UpdateUserIdentity(ctx context.Context, body Identity)
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v UserResponse
+			var v EntitiesPutPostResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 400 {
+			var v ErrorBody
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -652,6 +566,17 @@ func (a *UsersApiService) UpdateUserIdentity(ctx context.Context, body Identity)
 		}
 
 		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 403 {
 			var v ErrorBody
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -677,4 +602,96 @@ func (a *UsersApiService) UpdateUserIdentity(ctx context.Context, body Identity)
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
+}
+
+/*
+EntitiesApiService Update the membership for an organization, as well as granting permissions to existing members.
+For inviting and removing users from an organization, the logged in user must be the owner of the organization. For accepting an invite, the logged in user must have been invited to the organization.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param body
+
+
+*/
+func (a *EntitiesApiService) UpdateOrganizationsMembership(ctx context.Context, body EntitiesMembershipPutRequest) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Put")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/organizations/entities/membership"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body:  localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+
+		if localVarHttpResponse.StatusCode == 401 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+
+		if localVarHttpResponse.StatusCode == 500 {
+			var v ErrorBody
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+
+		return localVarHttpResponse, newErr
+	}
+
+	return localVarHttpResponse, nil
 }
