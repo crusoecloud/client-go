@@ -621,8 +621,6 @@ func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchR
 }
 
 /*
-
-/*
 VMsApiService Attach disks to a VM the logged in user owns.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param body
