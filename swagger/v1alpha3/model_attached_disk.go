@@ -10,13 +10,14 @@
 package swagger
 
 type AttachedDisk struct {
-	AttachedTo []VmAttachment `json:"attached_to,omitempty"`
-	CreatedAt  string         `json:"created_at,omitempty"`
-	Id         string         `json:"id,omitempty"`
-	IsBootDisk bool           `json:"is_boot_disk,omitempty"`
-	Location   string         `json:"location,omitempty"`
-	Name       string         `json:"name,omitempty"`
-	Size       string         `json:"size,omitempty"`
-	Type_      string         `json:"type,omitempty"`
-	UpdatedAt  string         `json:"updated_at,omitempty"`
+	AttachedTo   []VmAttachment `json:"attached_to,omitempty"`
+	CreatedAt    string         `json:"created_at,omitempty"`
+	Id           string         `json:"id,omitempty"`
+	IsBootDisk   bool           `json:"is_boot_disk,omitempty"`
+	Location     string         `json:"location,omitempty"`
+	Name         string         `json:"name,omitempty"`
+	SerialNumber string         `json:"serial_number,omitempty"`
+	Size         string         `json:"size,omitempty"`
+	Type_        string         `json:"type,omitempty"`
+	UpdatedAt    string         `json:"updated_at,omitempty"`
 }
