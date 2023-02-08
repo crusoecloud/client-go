@@ -14,4 +14,5 @@ type DiskSnapshot struct {
 	CreatedFrom string `json:"created_from,omitempty"`
 	Id          string `json:"id,omitempty"`
 	Size        string `json:"size,omitempty"`
+	UpdatedAt   string `json:"updated_at,omitempty"`
 }

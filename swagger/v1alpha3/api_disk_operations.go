@@ -164,12 +164,14 @@ This resource retrieves information about the status of asynchronous operations 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *DiskOperationsApiGetStorageDisksOperationsOpts - Optional Parameters:
      * @param "ResourceId" (optional.String) -
+     * @param "State" (optional.Interface of []string) -
 
 @return OperationsGetResponse
 */
 
 type DiskOperationsApiGetStorageDisksOperationsOpts struct {
 	ResourceId optional.String
+	State      optional.Interface
 }
 
 func (a *DiskOperationsApiService) GetStorageDisksOperations(ctx context.Context, localVarOptionals *DiskOperationsApiGetStorageDisksOperationsOpts) (OperationsGetResponse, *http.Response, error) {
@@ -190,6 +192,9 @@ func (a *DiskOperationsApiService) GetStorageDisksOperations(ctx context.Context
 
 	if localVarOptionals != nil && localVarOptionals.ResourceId.IsSet() {
 		localVarQueryParams.Add("resource_id", parameterToString(localVarOptionals.ResourceId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
+		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), "csv"))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}
