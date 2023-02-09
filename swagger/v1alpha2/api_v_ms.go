@@ -279,15 +279,15 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (Instan
 VMsApiService Retrieve details about all VMs that the logged in user owns or has access to.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return InstancesAsyncGetResponse
+@return InstancesGetResponseV1Alpha2
 */
-func (a *VMsApiService) GetInstances(ctx context.Context) (InstancesAsyncGetResponse, *http.Response, error) {
+func (a *VMsApiService) GetInstances(ctx context.Context) (InstancesGetResponseV1Alpha2, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesAsyncGetResponse
+		localVarReturnValue InstancesGetResponseV1Alpha2
 	)
 
 	// create path and map variables
@@ -343,7 +343,7 @@ func (a *VMsApiService) GetInstances(ctx context.Context) (InstancesAsyncGetResp
 		}
 
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesAsyncGetResponse
+			var v InstancesGetResponseV1Alpha2
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
