@@ -11,10 +11,10 @@ package swagger
 
 // Instance contains identifying information about a vm instance for vms.instances endpoints.
 type InstanceV1Alpha4 struct {
-	AttachedDisks     []AttachedDisk     `json:"attached_disks,omitempty"`
 	CommitmentEnd     string             `json:"commitment_end,omitempty"`
 	CommitmentPeriod  int64              `json:"commitment_period,omitempty"`
 	CreatedAt         string             `json:"created_at,omitempty"`
+	Disks             []AttachedDisk     `json:"disks,omitempty"`
 	Id                string             `json:"id,omitempty"`
 	Name              string             `json:"name,omitempty"`
 	NetworkInterfaces []NetworkInterface `json:"network_interfaces,omitempty"`
