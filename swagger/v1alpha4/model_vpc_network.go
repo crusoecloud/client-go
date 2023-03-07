@@ -10,6 +10,7 @@
 package swagger
 
 type VpcNetwork struct {
+	Cidr    string   `json:"cidr,omitempty"`
 	Gateway string   `json:"gateway,omitempty"`
 	Id      string   `json:"id,omitempty"`
 	Name    string   `json:"name,omitempty"`
