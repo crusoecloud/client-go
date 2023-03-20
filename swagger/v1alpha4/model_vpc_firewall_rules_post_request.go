@@ -19,4 +19,5 @@ type VpcFirewallRulesPostRequest struct {
 	RoleId           string               `json:"role_id"`
 	SourcePorts      []string             `json:"source_ports,omitempty"`
 	Sources          []FirewallRuleObject `json:"sources"`
+	VpcNetworkId     string               `json:"vpc_network_id"`
 }
