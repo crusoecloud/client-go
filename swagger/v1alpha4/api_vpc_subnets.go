@@ -27,8 +27,8 @@ type VPCSubnetsApiService service
 
 /*
 VPCSubnetsApiService Retrieve details for a VPC subnet that belongs to the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param vpcSubnetId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param vpcSubnetId
 
 @return VpcSubnetsGetResponse
 */
@@ -146,7 +146,7 @@ func (a *VPCSubnetsApiService) GetVPCSubnet(ctx context.Context, vpcSubnetId str
 
 /*
 VPCSubnetsApiService Retrieve details about all VPC subnets that belong to the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return VpcSubnetsGetResponse
 */

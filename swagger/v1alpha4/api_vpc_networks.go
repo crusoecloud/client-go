@@ -27,8 +27,8 @@ type VPCNetworksApiService service
 
 /*
 VPCNetworksApiService Retrieve details for a VPC network that belongs to the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param vpcNetworkId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param vpcNetworkId
 
 @return VpcNetworksGetResponse
 */
@@ -146,7 +146,7 @@ func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId 
 
 /*
 VPCNetworksApiService Retrieve details about all VPC networks that belong to the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return VpcNetworksGetResponse
 */

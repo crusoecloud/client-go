@@ -28,8 +28,8 @@ type DisksApiService service
 /*
 DisksApiService Create a new disk owned by the logged in user.
 Requires either a disk snapshot ID, or size and location, where size of disk should be in gibibytes (GiB) or tebibytes (TiB) in the format [Size][Unit]. E.g. 10GiB. Disk type must be one of: DISK_TYPE_PERSISTENT_SSD. A successful response from this resource will contain the async operation.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
 
 @return DiskPostPatchDeleteResponse
 */
@@ -160,8 +160,8 @@ func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequest)
 /*
 DisksApiService Delete a disk owned by the logged in user.
 A successful response from this resource will contain the async operation.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param diskId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param diskId
 
 @return DiskPostPatchDeleteResponse
 */
@@ -280,8 +280,8 @@ func (a *DisksApiService) DeleteDisk(ctx context.Context, diskId string) (DiskPo
 /*
 DisksApiService Retrieve details for a disk that belongs to the logged in user.
 Size of disk will be in gibibytes (GiB)
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param diskId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param diskId
 
 @return DisksGetResponse
 */
@@ -400,7 +400,7 @@ func (a *DisksApiService) GetDisk(ctx context.Context, diskId string) (DisksGetR
 /*
 DisksApiService Retrieve details about all disks that belong to the logged in user.
 Size of disks will be in gibibytes (GiB)
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return DisksGetResponse
 */
@@ -518,9 +518,9 @@ func (a *DisksApiService) GetDisks(ctx context.Context) (DisksGetResponse, *http
 /*
 DisksApiService Resize a disk that the logged in user owns.
 Size should be in gibibytes (GiB) or tebibytes (TiB) in the format [Size][Unit]. E.g. 10GiB A successful response from this resource will contain the async operation.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param diskId
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param diskId
+  - @param body
 
 @return DiskPostPatchDeleteResponse
 */

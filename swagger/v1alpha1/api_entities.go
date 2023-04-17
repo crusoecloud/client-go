@@ -27,8 +27,8 @@ type EntitiesApiService service
 /*
 EntitiesApiService Create a new organization owned by the logged in user.
 A successful response from this resource will contain the json encoded organization details.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
 
 @return EntitiesPutPostResponse
 */
@@ -137,10 +137,8 @@ func (a *EntitiesApiService) CreateOrganization(ctx context.Context, body Entiti
 /*
 EntitiesApiService Delete an organization owned by the logged in user.
 Delete operations will cascade to roles and VMs, and all members will be removed from the organization.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param orgId
-
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param orgId
 */
 func (a *EntitiesApiService) DeleteOrganization(ctx context.Context, orgId string) (*http.Response, error) {
 	var (
@@ -238,7 +236,7 @@ func (a *EntitiesApiService) DeleteOrganization(ctx context.Context, orgId strin
 
 /*
 EntitiesApiService Retrieve details about all active organizations the logged in user belongs to.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return EntitiesGetResponse
 */
@@ -344,7 +342,7 @@ func (a *EntitiesApiService) GetOrganizations(ctx context.Context) (EntitiesGetR
 
 /*
 EntitiesApiService Retrieve the list of users who are members of an organization (or have been invited) owned by the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return EntitiesMembershipGetResponse
 */
@@ -473,9 +471,9 @@ func (a *EntitiesApiService) GetOrganizationsMembership(ctx context.Context) (En
 /*
 EntitiesApiService Update details for an organization that the logged in user owns.
 A successful response from this resource will contain the updated organization details.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param orgId
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param orgId
+  - @param body
 
 @return EntitiesPutPostResponse
 */
@@ -607,10 +605,8 @@ func (a *EntitiesApiService) UpdateOrganization(ctx context.Context, orgId strin
 /*
 EntitiesApiService Update the membership for an organization, as well as granting permissions to existing members.
 For inviting and removing users from an organization, the logged in user must be the owner of the organization. For accepting an invite, the logged in user must have been invited to the organization.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
-
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
 */
 func (a *EntitiesApiService) UpdateOrganizationsMembership(ctx context.Context, body EntitiesMembershipPutRequest) (*http.Response, error) {
 	var (

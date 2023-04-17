@@ -28,8 +28,8 @@ type VPCFirewallRulesApiService service
 /*
 VPCFirewallRulesApiService Create a new VPC firewall rule owned by the logged in user.
 A successful response from this resource will contain the async operation.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
 
 @return VpcFirewallRulesPostDeleteResponse
 */
@@ -160,8 +160,8 @@ func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, 
 /*
 VPCFirewallRulesApiService Delete a VPC firewall rule owned by the logged in user.
 A successful response from this resource will contain the async operation.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param vpcFirewallRuleId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param vpcFirewallRuleId
 
 @return VpcFirewallRulesPostDeleteResponse
 */
@@ -279,8 +279,8 @@ func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, 
 
 /*
 VPCFirewallRulesApiService Retrieve details for a VPC firewall rule that belongs to the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param vpcFirewallRuleId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param vpcFirewallRuleId
 
 @return VpcFirewallRulesGetResponse
 */
@@ -398,7 +398,7 @@ func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, vpc
 
 /*
 VPCFirewallRulesApiService Retrieve details about all VPC firewall rules that belong to the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return VpcFirewallRulesGetResponse
 */

@@ -27,9 +27,7 @@ type IdentitiesApiService service
 /*
 IdentitiesApiService Delete the account for the logged in user.
 Delete operations will cascade to all entities the user owns (organizations, roles, vms).
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 */
 func (a *IdentitiesApiService) DeleteUserIdentity(ctx context.Context) (*http.Response, error) {
 	var (
@@ -126,7 +124,7 @@ func (a *IdentitiesApiService) DeleteUserIdentity(ctx context.Context) (*http.Re
 
 /*
 IdentitiesApiService Retrieve user details for the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return UserResponse
 */
@@ -233,8 +231,8 @@ func (a *IdentitiesApiService) GetUserIdentity(ctx context.Context) (UserRespons
 /*
 IdentitiesApiService Update user details for the logged in user.
 A successful response from this resource wil contain the updated user details.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
 
 @return UserResponse
 */

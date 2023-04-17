@@ -30,8 +30,8 @@ type DiskOperationsApiService service
 /*
 DiskOperationsApiService Get status of a single asynchronous operation
 This resource retrieves information about the status of an asynchronous operation initiated by the disks resource. Only information about the operation specified in the path will be returned, or an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged in user, or has expired.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param operationId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param operationId
 
 @return OperationsGetResponse
 */

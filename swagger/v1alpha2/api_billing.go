@@ -26,9 +26,9 @@ type BillingApiService service
 
 /*
 BillingApiService Retrieve an intent to facilitate a Stripe action.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param orgId
- * @param intentType
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param orgId
+  - @param intentType
 
 @return BillingIntentGetResponse
 */

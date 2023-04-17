@@ -27,8 +27,8 @@ type InternetGatewaysApiService service
 
 /*
 InternetGatewaysApiService Retrieve details for a VPC subnet that belongs to the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param internetGatewayId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param internetGatewayId
 
 @return InternetGatewaysGetResponse
 */
@@ -146,7 +146,7 @@ func (a *InternetGatewaysApiService) GetInternetGateway(ctx context.Context, int
 
 /*
 InternetGatewaysApiService Retrieve details about all VPC subnets that belong to the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return InternetGatewaysGetResponse
 */

@@ -29,8 +29,8 @@ type RolesApiService service
 /*
 RolesApiService Create a new role that will be owned by the logged in user.
 The logged in user must have the permission to create roles within the organization. A successful response from this resource contains details of the created role.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
 
 @return RolesPutPostResponse
 */
@@ -161,10 +161,8 @@ func (a *RolesApiService) CreateRole(ctx context.Context, body RolesPostRequest)
 /*
 RolesApiService Delete a role that the logged in user owns.
 Delete operations cascade to VMs created under that role.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param roleId
-
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param roleId
 */
 func (a *RolesApiService) DeleteRole(ctx context.Context, roleId string) (*http.Response, error) {
 	var (
@@ -379,8 +377,8 @@ func (a *RolesApiService) GetRoles(ctx context.Context, localVarOptionals *Roles
 
 /*
 RolesApiService Retrieve the list of users who are members of a role the logged in user owns.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param roleId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param roleId
 
 @return RolesMembershipGetResponse
 */
@@ -510,9 +508,9 @@ func (a *RolesApiService) GetRolesMembership(ctx context.Context, roleId string)
 /*
 RolesApiService Update details for a role that the logged in user owns.
 Requests to this resource must contain the json-encoded representation of the changes they want to make to the role. Currently only the role&#39;s name can be changed.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param roleId
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param roleId
+  - @param body
 
 @return RolesPutPostResponse
 */
@@ -644,11 +642,9 @@ func (a *RolesApiService) UpdateRole(ctx context.Context, roleId string, body Ro
 /*
 RolesApiService Update the membership for a role, and supports adding and removing users.
 When removing a user, the association between the user and the role will be deleted.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param roleId
- * @param body
-
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param roleId
+  - @param body
 */
 func (a *RolesApiService) UpdateRolesMembership(ctx context.Context, roleId string, body RolesMembershipPutRequest) (*http.Response, error) {
 	var (

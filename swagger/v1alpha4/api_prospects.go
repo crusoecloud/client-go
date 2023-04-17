@@ -26,8 +26,8 @@ type ProspectsApiService service
 
 /*
 ProspectsApiService Create a new prospective customer in Crusoe Cloud.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
 
 @return ProspectPostResponse
 */

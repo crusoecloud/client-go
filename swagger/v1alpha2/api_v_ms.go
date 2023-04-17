@@ -27,8 +27,8 @@ type VMsApiService service
 
 /*
 VMsApiService Create a new VM instance owned by the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
@@ -158,8 +158,8 @@ func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRe
 
 /*
 VMsApiService Delete a VM that the logged in user owns.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param vmId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param vmId
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
@@ -277,7 +277,7 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (Instan
 
 /*
 VMsApiService Retrieve details about all VMs that the logged in user owns or has access to.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return InstancesGetResponseV1Alpha2
 */
@@ -383,7 +383,7 @@ func (a *VMsApiService) GetInstances(ctx context.Context) (InstancesGetResponseV
 
 /*
 VMsApiService Retrieve information about the types of VMs that are available to purchase along with their prices.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return TypesGetResponse
 */
@@ -489,9 +489,9 @@ func (a *VMsApiService) GetVMTypes(ctx context.Context) (TypesGetResponse, *http
 
 /*
 VMsApiService Change the state of a VM the logged in user owns.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
- * @param vmId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
+  - @param vmId
 
 @return InstancesAsyncPatchPostDeleteResponse
 */

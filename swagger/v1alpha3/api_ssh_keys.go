@@ -27,8 +27,8 @@ type SSHKeysApiService service
 /*
 SSHKeysApiService Register a new SSH public key to the logged in user.
 A successful response from this resource wil contain the created SSH key details.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
 
 @return CreateSshKeyResponse
 */
@@ -147,10 +147,8 @@ func (a *SSHKeysApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyR
 
 /*
 SSHKeysApiService Delete an SSH public key registered to the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id
-
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param id
 */
 func (a *SSHKeysApiService) DeleteSSHKey(ctx context.Context, id string) (*http.Response, error) {
 	var (
@@ -259,7 +257,7 @@ func (a *SSHKeysApiService) DeleteSSHKey(ctx context.Context, id string) (*http.
 
 /*
 SSHKeysApiService Retrieve the list of SSH public keys registered to the logged in user.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return GetSshKeyResponse
 */

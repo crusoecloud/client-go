@@ -28,8 +28,8 @@ type SnapshotsApiService service
 /*
 SnapshotsApiService Create a new snapshot for a disk owned by the logged in user.
 A successful response from this resource will contain the async operation.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param body
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
 
 @return DiskSnapshotPostDeleteResponse
 */
@@ -149,8 +149,8 @@ func (a *SnapshotsApiService) CreateDiskSnapshot(ctx context.Context, body DiskS
 /*
 SnapshotsApiService Delete a disk snapshot owned by the logged in user.
 A successful response from this resource will contain the async operation.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param snapshotId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param snapshotId
 
 @return DiskSnapshotPostDeleteResponse
 */
@@ -269,8 +269,8 @@ func (a *SnapshotsApiService) DeleteDiskSnapshot(ctx context.Context, snapshotId
 /*
 SnapshotsApiService Retrieve details about a disk snapshot that belongs to the logged in user.
 Size of snapshot will be in bytes.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param snapshotId
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param snapshotId
 
 @return DiskSnapshotGetResponse
 */
@@ -400,7 +400,7 @@ func (a *SnapshotsApiService) GetDiskSnapshot(ctx context.Context, snapshotId st
 /*
 SnapshotsApiService Retrieve details about all disk snapshots that belong to the logged in user.
 Size of snapshots will be in bytes.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return DiskSnapshotGetResponse
 */
