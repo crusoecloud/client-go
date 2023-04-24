@@ -8,6 +8,7 @@
  */
 package swagger
 
+// The CIDR field may either be a CIDR or an IP address. If an IP, it will be converted to a CIDR.
 type FirewallRuleObject struct {
 	Cidr string `json:"cidr,omitempty"`
 }
