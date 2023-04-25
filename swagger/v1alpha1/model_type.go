@@ -9,5 +9,13 @@
 package swagger
 
 type ModelType struct {
+	CpuCores    int64  `json:"cpu_cores,omitempty"`
+	CpuType     string `json:"cpu_type,omitempty"`
+	DiskGb      int64  `json:"disk_gb,omitempty"`
+	DiskType    string `json:"disk_type,omitempty"`
+	GpuType     string `json:"gpu_type,omitempty"`
+	MemoryGb    int64  `json:"memory_gb,omitempty"`
+	MemoryType  string `json:"memory_type,omitempty"`
+	NumGpu      int64  `json:"num_gpu,omitempty"`
 	ProductName string `json:"product_name,omitempty"`
 }
