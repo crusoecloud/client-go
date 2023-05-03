@@ -8,8 +8,8 @@
  */
 package swagger
 
-// Instance contains identifying information about a vm instance for vms.instances endpoints.
-type InstanceV1Alpha4 struct {
+// SingleInstanceGetResponseV1Alpha4 is the response type for GET requests to compute/vms/instances/{vm_id}.
+type SingleInstanceGetResponseV1Alpha4 struct {
 	CommitmentEnd     string             `json:"commitment_end,omitempty"`
 	CommitmentPeriod  int64              `json:"commitment_period,omitempty"`
 	CreatedAt         string             `json:"created_at,omitempty"`
