@@ -1,10 +1,5 @@
 # see https://golangci-lint.run/usage/configuration/
 linters-settings:
-  custom:
-    aliaslint:
-      path: aliaslint.so
-      description: Checks that import aliases are consistent across the module.
-      original-url: gitlab.com/crusoeenergy/tools
   errcheck:
     # report about not checking of errors in type assertions: `a := b.(MyStruct)`;
     # default is false: such cases aren't reported by default.
@@ -45,7 +40,6 @@ linters-settings:
 linters:
   disable-all: true
   enable:
-    - aliaslint
     - asciicheck
     - bodyclose
     - cyclop
