@@ -13,13 +13,8 @@ analyze:
 .code-changes: &code-changes
       changes:
         - .gitlab-ci.yml
-        - Dockerfile
         - Makefile
-        - cmd/**/*
         - go.*
-        - internal/**/*
-        - scripts/**/*
-        - regtest/**/*
 
 .swagger-changes: &swagger-changes
       changes:
