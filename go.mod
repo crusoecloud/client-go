@@ -1,4 +1,4 @@
-module gitlab.com/crusoeenergy/island/external/client-go
+module github.com/crusoecloud/client-go
 
 go 1.17
 
