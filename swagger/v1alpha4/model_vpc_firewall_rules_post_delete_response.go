@@ -10,5 +10,5 @@ package swagger
 
 // VPCFirewallRulesPostDeleteResponse is the response type for POST and DELETE requests to the v1alpha4 network.firewall-rules endpoint.
 type VpcFirewallRulesPostDeleteResponse struct {
-	Operation *Operation `json:"operation,omitempty"`
+	Operation *Operation `json:"operation"`
 }

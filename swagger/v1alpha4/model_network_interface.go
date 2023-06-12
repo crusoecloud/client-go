@@ -9,11 +9,11 @@
 package swagger
 
 type NetworkInterface struct {
-	Id            string        `json:"id,omitempty"`
-	InterfaceType string        `json:"interface_type,omitempty"`
-	Ips           []IpAddresses `json:"ips,omitempty"`
-	MacAddress    string        `json:"mac_address,omitempty"`
-	Name          string        `json:"name,omitempty"`
-	Network       string        `json:"network,omitempty"`
-	Subnet        string        `json:"subnet,omitempty"`
+	Id            string        `json:"id"`
+	InterfaceType string        `json:"interface_type"`
+	Ips           []IpAddresses `json:"ips"`
+	MacAddress    string        `json:"mac_address"`
+	Name          string        `json:"name"`
+	Network       string        `json:"network"`
+	Subnet        string        `json:"subnet"`
 }

@@ -9,5 +9,5 @@
 package swagger
 
 type CreateSshKeyResponse struct {
-	SshKey *SshKey `json:"ssh_key,omitempty"`
+	SshKey *SshKey `json:"ssh_key"`
 }

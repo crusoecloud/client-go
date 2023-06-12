@@ -10,5 +10,5 @@ package swagger
 
 // DiskPostPatchDeleteResponse is the response type for PATCH, POST, and DELETE requests to the v1alpha2 storage.disks endpoint.
 type DiskPostPatchDeleteResponse struct {
-	Operation *Operation `json:"operation,omitempty"`
+	Operation *Operation `json:"operation"`
 }

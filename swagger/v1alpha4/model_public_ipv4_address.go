@@ -9,7 +9,7 @@
 package swagger
 
 type PublicIpv4Address struct {
-	Address string `json:"address,omitempty"`
-	Id      string `json:"id,omitempty"`
-	Type_   string `json:"type,omitempty"`
+	Address string `json:"address"`
+	Id      string `json:"id"`
+	Type_   string `json:"type"`
 }

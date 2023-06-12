@@ -9,6 +9,6 @@
 package swagger
 
 type VmAttachment struct {
-	AttachmentType string `json:"attachment_type,omitempty"`
-	VmId           string `json:"vm_id,omitempty"`
+	AttachmentType string `json:"attachment_type"`
+	VmId           string `json:"vm_id"`
 }

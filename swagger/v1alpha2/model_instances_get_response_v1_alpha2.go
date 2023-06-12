@@ -9,5 +9,5 @@
 package swagger
 
 type InstancesGetResponseV1Alpha2 struct {
-	Instances []Instance `json:"instances,omitempty"`
+	Instances []Instance `json:"instances"`
 }

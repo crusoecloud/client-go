@@ -9,5 +9,5 @@
 package swagger
 
 type VpcSubnetsGetResponse struct {
-	Subnets []VpcSubnet `json:"subnets,omitempty"`
+	Subnets []VpcSubnet `json:"subnets"`
 }

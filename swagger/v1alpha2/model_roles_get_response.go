@@ -9,5 +9,5 @@
 package swagger
 
 type RolesGetResponse struct {
-	Roles []Role `json:"roles,omitempty"`
+	Roles []Role `json:"roles"`
 }

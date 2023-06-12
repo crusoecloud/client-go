@@ -10,5 +10,5 @@ package swagger
 
 // DiskSnapshotPostDeleteResponse is the response type for POST, and DELETE requests to the v1alpha2 storage.snapshots endpoint.
 type DiskSnapshotPostDeleteResponse struct {
-	Operation *Operation `json:"operation,omitempty"`
+	Operation *Operation `json:"operation"`
 }

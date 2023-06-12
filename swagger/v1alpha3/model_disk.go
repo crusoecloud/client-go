@@ -9,13 +9,13 @@
 package swagger
 
 type Disk struct {
-	AttachedTo   []VmAttachment `json:"attached_to,omitempty"`
-	CreatedAt    string         `json:"created_at,omitempty"`
-	Id           string         `json:"id,omitempty"`
-	Location     string         `json:"location,omitempty"`
-	Name         string         `json:"name,omitempty"`
-	SerialNumber string         `json:"serial_number,omitempty"`
-	Size         string         `json:"size,omitempty"`
-	Type_        string         `json:"type,omitempty"`
-	UpdatedAt    string         `json:"updated_at,omitempty"`
+	AttachedTo   []VmAttachment `json:"attached_to"`
+	CreatedAt    string         `json:"created_at"`
+	Id           string         `json:"id"`
+	Location     string         `json:"location"`
+	Name         string         `json:"name"`
+	SerialNumber string         `json:"serial_number"`
+	Size         string         `json:"size"`
+	Type_        string         `json:"type"`
+	UpdatedAt    string         `json:"updated_at"`
 }

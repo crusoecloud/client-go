@@ -10,5 +10,5 @@ package swagger
 
 // InstancesGetResponseV1Alpha4 is the response type for GET requests to compute/vms/instances.
 type InstancesGetResponseV1Alpha4 struct {
-	Instances []InstanceV1Alpha4 `json:"instances,omitempty"`
+	Instances []InstanceV1Alpha4 `json:"instances"`
 }

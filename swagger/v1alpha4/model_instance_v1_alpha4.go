@@ -10,15 +10,15 @@ package swagger
 
 // Instance contains identifying information about a vm instance for vms.instances endpoints.
 type InstanceV1Alpha4 struct {
-	CommitmentEnd     string             `json:"commitment_end,omitempty"`
-	CommitmentPeriod  int64              `json:"commitment_period,omitempty"`
-	CreatedAt         string             `json:"created_at,omitempty"`
-	Disks             []AttachedDisk     `json:"disks,omitempty"`
-	Id                string             `json:"id,omitempty"`
-	Name              string             `json:"name,omitempty"`
-	NetworkInterfaces []NetworkInterface `json:"network_interfaces,omitempty"`
-	ProductName       string             `json:"product_name,omitempty"`
-	RoleId            string             `json:"role_id,omitempty"`
-	SshDestination    string             `json:"ssh_destination,omitempty"`
-	State             string             `json:"state,omitempty"`
+	CommitmentEnd     string             `json:"commitment_end"`
+	CommitmentPeriod  int64              `json:"commitment_period"`
+	CreatedAt         string             `json:"created_at"`
+	Disks             []AttachedDisk     `json:"disks"`
+	Id                string             `json:"id"`
+	Name              string             `json:"name"`
+	NetworkInterfaces []NetworkInterface `json:"network_interfaces"`
+	ProductName       string             `json:"product_name"`
+	RoleId            string             `json:"role_id"`
+	SshDestination    string             `json:"ssh_destination"`
+	State             string             `json:"state"`
 }

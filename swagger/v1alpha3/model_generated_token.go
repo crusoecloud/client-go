@@ -10,9 +10,9 @@ package swagger
 
 // These are the fields returned from a PUT request.
 type GeneratedToken struct {
-	AccessKey string `json:"access_key,omitempty"`
-	Alias     string `json:"alias,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	ExpiresAt string `json:"expires_at,omitempty"`
-	SecretKey string `json:"secret_key,omitempty"`
+	AccessKey string `json:"access_key"`
+	Alias     string `json:"alias"`
+	CreatedAt string `json:"created_at"`
+	ExpiresAt string `json:"expires_at"`
+	SecretKey string `json:"secret_key"`
 }

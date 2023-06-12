@@ -229,7 +229,7 @@ A successful response from this resource wil contain the updated user details.
 
 @return UserResponse
 */
-func (a *IdentitiesApiService) UpdateUserIdentity(ctx context.Context, body Identity) (UserResponse, *http.Response, error) {
+func (a *IdentitiesApiService) UpdateUserIdentity(ctx context.Context, body IdentityPutRequest) (UserResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Put")
 		localVarPostBody    interface{}
