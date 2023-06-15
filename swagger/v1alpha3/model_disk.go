@@ -12,7 +12,7 @@ type Disk struct {
 	AttachedTo   []VmAttachment `json:"attached_to"`
 	CreatedAt    string         `json:"created_at"`
 	Id           string         `json:"id"`
-	Location     string         `json:"location"`
+	Location     string         `json:"location,omitempty"`
 	Name         string         `json:"name"`
 	SerialNumber string         `json:"serial_number"`
 	Size         string         `json:"size"`

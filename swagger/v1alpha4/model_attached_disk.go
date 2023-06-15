@@ -13,7 +13,7 @@ type AttachedDisk struct {
 	CreatedAt    string         `json:"created_at"`
 	Id           string         `json:"id"`
 	IsBootDisk   bool           `json:"is_boot_disk"`
-	Location     string         `json:"location"`
+	Location     string         `json:"location,omitempty"`
 	Name         string         `json:"name"`
 	SerialNumber string         `json:"serial_number"`
 	Size         string         `json:"size"`

@@ -14,6 +14,7 @@ type InstancesPostRequestV1Alpha3 struct {
 	Disks            []string `json:"disks,omitempty"`
 	ImageChecksum    string   `json:"image_checksum,omitempty"`
 	ImageId          string   `json:"image_id,omitempty"`
+	Location         string   `json:"location,omitempty"`
 	Name             string   `json:"name"`
 	ProductName      string   `json:"product_name"`
 	RoleId           string   `json:"role_id"`

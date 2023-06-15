@@ -12,6 +12,7 @@ type InstancesPostRequest struct {
 	CommitmentPeriod int64  `json:"commitment_period,omitempty"`
 	ImageChecksum    string `json:"image_checksum,omitempty"`
 	ImageId          string `json:"image_id,omitempty"`
+	Location         string `json:"location"`
 	Name             string `json:"name"`
 	ProductName      string `json:"product_name"`
 	RoleId           string `json:"role_id"`
