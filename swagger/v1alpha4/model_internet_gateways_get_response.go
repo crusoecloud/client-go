@@ -9,5 +9,5 @@
 package swagger
 
 type InternetGatewaysGetResponse struct {
-	InternetGateways []InternetGateway `json:"internet_gateways,omitempty"`
+	InternetGateways []InternetGateway `json:"internet_gateways"`
 }

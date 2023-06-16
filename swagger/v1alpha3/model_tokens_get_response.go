@@ -9,5 +9,5 @@
 package swagger
 
 type TokensGetResponse struct {
-	Tokens []TokenInfo `json:"tokens,omitempty"`
+	Tokens []TokenInfo `json:"tokens"`
 }

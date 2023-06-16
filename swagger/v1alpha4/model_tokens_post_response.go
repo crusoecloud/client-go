@@ -9,5 +9,5 @@
 package swagger
 
 type TokensPostResponse struct {
-	Token *GeneratedToken `json:"token,omitempty"`
+	Token *GeneratedToken `json:"token"`
 }

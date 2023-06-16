@@ -9,5 +9,5 @@
 package swagger
 
 type DisksGetResponse struct {
-	Disks []Disk `json:"disks,omitempty"`
+	Disks []Disk `json:"disks"`
 }

@@ -9,5 +9,5 @@
 package swagger
 
 type VpcNetworksGetResponse struct {
-	Networks []VpcNetwork `json:"networks,omitempty"`
+	Networks []VpcNetwork `json:"networks"`
 }

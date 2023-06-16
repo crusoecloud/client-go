@@ -10,10 +10,10 @@ package swagger
 
 // Individual resources that use Operations should populate the `metadata` field with resource-specific information.
 type Operation struct {
-	CompletedAt string       `json:"completed_at,omitempty"`
-	Metadata    *interface{} `json:"metadata,omitempty"`
-	OperationId string       `json:"operation_id,omitempty"`
-	Result      *interface{} `json:"result,omitempty"`
-	StartedAt   string       `json:"started_at,omitempty"`
-	State       string       `json:"state,omitempty"`
+	CompletedAt string       `json:"completed_at"`
+	Metadata    *interface{} `json:"metadata"`
+	OperationId string       `json:"operation_id"`
+	Result      *interface{} `json:"result"`
+	StartedAt   string       `json:"started_at"`
+	State       string       `json:"state"`
 }

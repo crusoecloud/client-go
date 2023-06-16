@@ -9,15 +9,15 @@
 package swagger
 
 type VpcFirewallRule struct {
-	Action           string               `json:"action,omitempty"`
-	DestinationPorts []string             `json:"destination_ports,omitempty"`
-	Destinations     []FirewallRuleObject `json:"destinations,omitempty"`
-	Direction        string               `json:"direction,omitempty"`
-	Id               string               `json:"id,omitempty"`
-	Name             string               `json:"name,omitempty"`
-	Protocols        []string             `json:"protocols,omitempty"`
-	SourcePorts      []string             `json:"source_ports,omitempty"`
-	Sources          []FirewallRuleObject `json:"sources,omitempty"`
-	State            string               `json:"state,omitempty"`
-	VpcNetworkId     string               `json:"vpc_network_id,omitempty"`
+	Action           string               `json:"action"`
+	DestinationPorts []string             `json:"destination_ports"`
+	Destinations     []FirewallRuleObject `json:"destinations"`
+	Direction        string               `json:"direction"`
+	Id               string               `json:"id"`
+	Name             string               `json:"name"`
+	Protocols        []string             `json:"protocols"`
+	SourcePorts      []string             `json:"source_ports"`
+	Sources          []FirewallRuleObject `json:"sources"`
+	State            string               `json:"state"`
+	VpcNetworkId     string               `json:"vpc_network_id"`
 }

@@ -9,8 +9,8 @@
 package swagger
 
 type VpcSubnet struct {
-	Cidr         string `json:"cidr,omitempty"`
-	Id           string `json:"id,omitempty"`
-	Name         string `json:"name,omitempty"`
-	VpcNetworkId string `json:"vpc_network_id,omitempty"`
+	Cidr         string `json:"cidr"`
+	Id           string `json:"id"`
+	Name         string `json:"name"`
+	VpcNetworkId string `json:"vpc_network_id"`
 }

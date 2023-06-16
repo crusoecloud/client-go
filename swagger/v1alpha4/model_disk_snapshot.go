@@ -9,9 +9,9 @@
 package swagger
 
 type DiskSnapshot struct {
-	CreatedAt   string `json:"created_at,omitempty"`
-	CreatedFrom string `json:"created_from,omitempty"`
-	Id          string `json:"id,omitempty"`
-	Size        string `json:"size,omitempty"`
-	UpdatedAt   string `json:"updated_at,omitempty"`
+	CreatedAt   string `json:"created_at"`
+	CreatedFrom string `json:"created_from"`
+	Id          string `json:"id"`
+	Size        string `json:"size"`
+	UpdatedAt   string `json:"updated_at"`
 }

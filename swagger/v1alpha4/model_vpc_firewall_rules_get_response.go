@@ -9,5 +9,5 @@
 package swagger
 
 type VpcFirewallRulesGetResponse struct {
-	FirewallRules []VpcFirewallRule `json:"firewall_rules,omitempty"`
+	FirewallRules []VpcFirewallRule `json:"firewall_rules"`
 }

@@ -10,5 +10,5 @@ package swagger
 
 // The Identity of a user is returned.
 type UserResponse struct {
-	Identity *Identity `json:"identity,omitempty"`
+	Identity *Identity `json:"identity"`
 }

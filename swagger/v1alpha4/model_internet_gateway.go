@@ -9,8 +9,8 @@
 package swagger
 
 type InternetGateway struct {
-	CreatedAt    string `json:"created_at,omitempty"`
-	Id           string `json:"id,omitempty"`
-	Name         string `json:"name,omitempty"`
-	VpcNetworkId string `json:"vpc_network_id,omitempty"`
+	CreatedAt    string `json:"created_at"`
+	Id           string `json:"id"`
+	Name         string `json:"name"`
+	VpcNetworkId string `json:"vpc_network_id"`
 }

@@ -9,5 +9,5 @@
 package swagger
 
 type RolesPutPostResponse struct {
-	Role *Role `json:"role,omitempty"`
+	Role *Role `json:"role"`
 }

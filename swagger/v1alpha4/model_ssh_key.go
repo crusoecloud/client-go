@@ -9,9 +9,9 @@
 package swagger
 
 type SshKey struct {
-	CreatedAt    string        `json:"created_at,omitempty"`
-	Fingerprints *Fingerprints `json:"fingerprints,omitempty"`
-	Id           string        `json:"id,omitempty"`
-	Name         string        `json:"name,omitempty"`
-	PublicKey    string        `json:"public_key,omitempty"`
+	CreatedAt    string        `json:"created_at"`
+	Fingerprints *Fingerprints `json:"fingerprints"`
+	Id           string        `json:"id"`
+	Name         string        `json:"name"`
+	PublicKey    string        `json:"public_key"`
 }

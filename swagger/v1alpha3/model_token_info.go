@@ -10,9 +10,9 @@ package swagger
 
 // These are the fields returned from a GET request.
 type TokenInfo struct {
-	AccessKey string `json:"access_key,omitempty"`
-	Alias     string `json:"alias,omitempty"`
-	CreatedAt string `json:"created_at,omitempty"`
-	ExpiresAt string `json:"expires_at,omitempty"`
-	LastUsed  string `json:"last_used,omitempty"`
+	AccessKey string `json:"access_key"`
+	Alias     string `json:"alias"`
+	CreatedAt string `json:"created_at"`
+	ExpiresAt string `json:"expires_at"`
+	LastUsed  string `json:"last_used"`
 }

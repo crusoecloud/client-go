@@ -9,5 +9,5 @@
 package swagger
 
 type EntitiesGetResponse struct {
-	Entities []Entity `json:"entities,omitempty"`
+	Entities []Entity `json:"entities"`
 }

@@ -9,5 +9,5 @@
 package swagger
 
 type TypesGetResponse struct {
-	VmTypes []ModelType `json:"vm_types,omitempty"`
+	VmTypes []ModelType `json:"vm_types"`
 }

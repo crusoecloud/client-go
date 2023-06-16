@@ -9,6 +9,6 @@
 package swagger
 
 type IpAddresses struct {
-	PrivateIpv4 *PrivateIpv4Address `json:"private_ipv4,omitempty"`
-	PublicIpv4  *PublicIpv4Address  `json:"public_ipv4,omitempty"`
+	PrivateIpv4 *PrivateIpv4Address `json:"private_ipv4"`
+	PublicIpv4  *PublicIpv4Address  `json:"public_ipv4"`
 }

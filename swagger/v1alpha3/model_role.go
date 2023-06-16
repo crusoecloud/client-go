@@ -9,8 +9,8 @@
 package swagger
 
 type Role struct {
-	Id             string `json:"id,omitempty"`
-	Name           string `json:"name,omitempty"`
-	OrganizationId string `json:"organization_id,omitempty"`
-	Relation       string `json:"relation,omitempty"`
+	Id             string `json:"id"`
+	Name           string `json:"name"`
+	OrganizationId string `json:"organization_id"`
+	Relation       string `json:"relation"`
 }

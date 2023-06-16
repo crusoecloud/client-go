@@ -9,5 +9,5 @@
 package swagger
 
 type EntitiesPutPostResponse struct {
-	Entity *Entity `json:"entity,omitempty"`
+	Entity *Entity `json:"entity"`
 }

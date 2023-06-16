@@ -9,5 +9,5 @@
 package swagger
 
 type BillingIntentGetResponse struct {
-	Intent string `json:"intent,omitempty"`
+	Intent string `json:"intent"`
 }
