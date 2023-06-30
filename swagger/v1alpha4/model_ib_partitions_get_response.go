@@ -9,5 +9,5 @@
 package swagger
 
 type IbPartitionsGetResponse struct {
-	IbPartitions []IbPartition `json:"ib_partitions,omitempty"`
+	IbPartitions []IbPartition `json:"ib_partitions"`
 }
