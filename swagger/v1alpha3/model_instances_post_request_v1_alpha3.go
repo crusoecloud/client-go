@@ -13,6 +13,7 @@ type InstancesPostRequestV1Alpha3 struct {
 	CommitmentPeriod int64    `json:"commitment_period,omitempty"`
 	Disks            []string `json:"disks,omitempty"`
 	IbPartitionId    string   `json:"ib_partition_id,omitempty"`
+	Image            string   `json:"image,omitempty"`
 	ImageChecksum    string   `json:"image_checksum,omitempty"`
 	ImageId          string   `json:"image_id,omitempty"`
 	Location         string   `json:"location,omitempty"`
