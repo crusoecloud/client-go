@@ -9,7 +9,7 @@
 package swagger
 
 type IbPartition struct {
-	IbNetworkId string `json:"ib_network_id,omitempty"`
-	Id          string `json:"id,omitempty"`
-	Name        string `json:"name,omitempty"`
+	IbNetworkId string `json:"ib_network_id"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
 }

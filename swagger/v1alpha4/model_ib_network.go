@@ -9,8 +9,8 @@
 package swagger
 
 type IbNetwork struct {
-	Capacities []IbNetworkCapacity `json:"capacities,omitempty"`
-	Id         string              `json:"id,omitempty"`
-	Location   string              `json:"location,omitempty"`
-	Name       string              `json:"name,omitempty"`
+	Capacities []IbNetworkCapacity `json:"capacities"`
+	Id         string              `json:"id"`
+	Location   string              `json:"location"`
+	Name       string              `json:"name"`
 }
