@@ -58,6 +58,8 @@ type APIClient struct {
 
 	IdentitiesApi *IdentitiesApiService
 
+	ImagesApi *ImagesApiService
+
 	InternetGatewaysApi *InternetGatewaysApiService
 
 	LocationsApi *LocationsApiService
@@ -110,6 +112,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.IBNetworksApi = (*IBNetworksApiService)(&c.common)
 	c.IBPartitionsApi = (*IBPartitionsApiService)(&c.common)
 	c.IdentitiesApi = (*IdentitiesApiService)(&c.common)
+	c.ImagesApi = (*ImagesApiService)(&c.common)
 	c.InternetGatewaysApi = (*InternetGatewaysApiService)(&c.common)
 	c.LocationsApi = (*LocationsApiService)(&c.common)
 	c.ProspectsApi = (*ProspectsApiService)(&c.common)

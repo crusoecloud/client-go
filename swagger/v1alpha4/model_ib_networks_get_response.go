@@ -9,5 +9,5 @@
 package swagger
 
 type IbNetworksGetResponse struct {
-	IbNetworks []IbNetwork `json:"ib_networks,omitempty"`
+	IbNetworks []IbNetwork `json:"ib_networks"`
 }

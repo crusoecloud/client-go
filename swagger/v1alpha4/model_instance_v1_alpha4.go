@@ -14,8 +14,9 @@ type InstanceV1Alpha4 struct {
 	CommitmentPeriod    int64                `json:"commitment_period"`
 	CreatedAt           string               `json:"created_at"`
 	Disks               []AttachedDisk       `json:"disks"`
-	HostChannelAdapters []HostChannelAdapter `json:"host_channel_adapters,omitempty"`
+	HostChannelAdapters []HostChannelAdapter `json:"host_channel_adapters"`
 	Id                  string               `json:"id"`
+	Location            string               `json:"location"`
 	Name                string               `json:"name"`
 	NetworkInterfaces   []NetworkInterface   `json:"network_interfaces"`
 	ProductName         string               `json:"product_name"`
