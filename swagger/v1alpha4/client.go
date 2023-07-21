@@ -52,6 +52,8 @@ type APIClient struct {
 
 	EntitiesApi *EntitiesApiService
 
+	FeatureFlagsApi *FeatureFlagsApiService
+
 	IBNetworksApi *IBNetworksApiService
 
 	IBPartitionsApi *IBPartitionsApiService
@@ -109,6 +111,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DiskOperationsApi = (*DiskOperationsApiService)(&c.common)
 	c.DisksApi = (*DisksApiService)(&c.common)
 	c.EntitiesApi = (*EntitiesApiService)(&c.common)
+	c.FeatureFlagsApi = (*FeatureFlagsApiService)(&c.common)
 	c.IBNetworksApi = (*IBNetworksApiService)(&c.common)
 	c.IBPartitionsApi = (*IBPartitionsApiService)(&c.common)
 	c.IdentitiesApi = (*IdentitiesApiService)(&c.common)
