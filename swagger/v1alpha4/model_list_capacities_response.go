@@ -8,6 +8,6 @@
  */
 package swagger
 
-type InternetGatewaysGetResponse struct {
-	InternetGateways []InternetGateway `json:"internet_gateways"`
+type ListCapacitiesResponse struct {
+	Capacities []Capacity `json:"capacities"`
 }

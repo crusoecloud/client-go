@@ -8,9 +8,7 @@
  */
 package swagger
 
-type InternetGateway struct {
-	CreatedAt    string `json:"created_at"`
-	Id           string `json:"id"`
-	Name         string `json:"name"`
-	VpcNetworkId string `json:"vpc_network_id"`
+// VPCFirewallRulesPostDeletePatchResponse is the response type for POST, DELETE and PATCH requests to the v1alpha4 network.firewall-rules endpoint.
+type VpcFirewallRulesPostDeletePatchResponse struct {
+	Operation *Operation `json:"operation"`
 }

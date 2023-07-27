@@ -46,11 +46,15 @@ type APIClient struct {
 
 	BillingApi *BillingApiService
 
+	CapacitiesApi *CapacitiesApiService
+
 	DiskOperationsApi *DiskOperationsApiService
 
 	DisksApi *DisksApiService
 
 	EntitiesApi *EntitiesApiService
+
+	FeatureFlagsApi *FeatureFlagsApiService
 
 	IBNetworksApi *IBNetworksApiService
 
@@ -59,8 +63,6 @@ type APIClient struct {
 	IdentitiesApi *IdentitiesApiService
 
 	ImagesApi *ImagesApiService
-
-	InternetGatewaysApi *InternetGatewaysApiService
 
 	LocationsApi *LocationsApiService
 
@@ -106,14 +108,15 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.BillingApi = (*BillingApiService)(&c.common)
+	c.CapacitiesApi = (*CapacitiesApiService)(&c.common)
 	c.DiskOperationsApi = (*DiskOperationsApiService)(&c.common)
 	c.DisksApi = (*DisksApiService)(&c.common)
 	c.EntitiesApi = (*EntitiesApiService)(&c.common)
+	c.FeatureFlagsApi = (*FeatureFlagsApiService)(&c.common)
 	c.IBNetworksApi = (*IBNetworksApiService)(&c.common)
 	c.IBPartitionsApi = (*IBPartitionsApiService)(&c.common)
 	c.IdentitiesApi = (*IdentitiesApiService)(&c.common)
 	c.ImagesApi = (*ImagesApiService)(&c.common)
-	c.InternetGatewaysApi = (*InternetGatewaysApiService)(&c.common)
 	c.LocationsApi = (*LocationsApiService)(&c.common)
 	c.ProspectsApi = (*ProspectsApiService)(&c.common)
 	c.RolesApi = (*RolesApiService)(&c.common)
