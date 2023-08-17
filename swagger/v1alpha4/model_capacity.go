@@ -8,8 +8,8 @@
  */
 package swagger
 
-type IbPartition struct {
-	IbNetworkId string `json:"ib_network_id"`
-	Id          string `json:"id"`
-	Name        string `json:"name"`
+type Capacity struct {
+	Location    string `json:"location"`
+	ProductName string `json:"product_name,omitempty"`
+	Quantity    int32  `json:"quantity"`
 }

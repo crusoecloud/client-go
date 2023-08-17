@@ -8,8 +8,7 @@
  */
 package swagger
 
-type IbPartition struct {
-	IbNetworkId string `json:"ib_network_id"`
-	Id          string `json:"id"`
-	Name        string `json:"name"`
+// VPCFirewallRulesPostDeletePatchResponse is the response type for POST, DELETE and PATCH requests to the v1alpha4 network.firewall-rules endpoint.
+type VpcFirewallRulesPostDeletePatchResponse struct {
+	Operation *Operation `json:"operation"`
 }
