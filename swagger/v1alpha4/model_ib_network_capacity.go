@@ -9,6 +9,6 @@
 package swagger
 
 type IbNetworkCapacity struct {
-	Quantity  int32  `json:"quantity,omitempty"`
-	SliceType string `json:"slice_type,omitempty"`
+	Quantity  int32  `json:"quantity"`
+	SliceType string `json:"slice_type"`
 }
