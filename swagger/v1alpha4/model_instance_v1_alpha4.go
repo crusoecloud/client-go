@@ -23,4 +23,5 @@ type InstanceV1Alpha4 struct {
 	RoleId              string               `json:"role_id"`
 	SshDestination      string               `json:"ssh_destination"`
 	State               string               `json:"state"`
+	UpdatedAt           string               `json:"updated_at"`
 }
