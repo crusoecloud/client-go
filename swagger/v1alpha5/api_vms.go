@@ -397,15 +397,15 @@ func (a *VMsApiService) GetInstance(ctx context.Context, vmId string) (SingleIns
 VMsApiService Retrieve details about all VMs that the logged in user owns or has access to.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return InstancesGetResponseV1Alpha5
+@return ListInstancesResponseV1Alpha5
 */
-func (a *VMsApiService) GetInstances(ctx context.Context) (InstancesGetResponseV1Alpha5, *http.Response, error) {
+func (a *VMsApiService) GetInstances(ctx context.Context) (ListInstancesResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesGetResponseV1Alpha5
+		localVarReturnValue ListInstancesResponseV1Alpha5
 	)
 
 	// create path and map variables
@@ -462,7 +462,7 @@ func (a *VMsApiService) GetInstances(ctx context.Context) (InstancesGetResponseV
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesGetResponseV1Alpha5
+			var v ListInstancesResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -501,15 +501,15 @@ func (a *VMsApiService) GetInstances(ctx context.Context) (InstancesGetResponseV
 VMsApiService Retrieve information about the types of VMs that are available to purchase along with their prices.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return TypesGetResponse
+@return ListTypesResponseV1Alpha5
 */
-func (a *VMsApiService) GetVMTypes(ctx context.Context) (TypesGetResponse, *http.Response, error) {
+func (a *VMsApiService) GetVMTypes(ctx context.Context) (ListTypesResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue TypesGetResponse
+		localVarReturnValue ListTypesResponseV1Alpha5
 	)
 
 	// create path and map variables
@@ -566,7 +566,7 @@ func (a *VMsApiService) GetVMTypes(ctx context.Context) (TypesGetResponse, *http
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v TypesGetResponse
+			var v ListTypesResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

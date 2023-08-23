@@ -154,15 +154,15 @@ func (a *ImagesApiService) GetImage(ctx context.Context, imageId string) (Image,
 ImagesApiService Lists all VM images available for use.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return ListImagesResponse
+@return interface{}
 */
-func (a *ImagesApiService) ListImages(ctx context.Context) (ListImagesResponse, *http.Response, error) {
+func (a *ImagesApiService) ListImages(ctx context.Context) (interface{}, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListImagesResponse
+		localVarReturnValue interface{}
 	)
 
 	// create path and map variables
@@ -219,7 +219,7 @@ func (a *ImagesApiService) ListImages(ctx context.Context) (ListImagesResponse, 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListImagesResponse
+			var v interface{}
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

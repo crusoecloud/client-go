@@ -27,15 +27,15 @@ type LocationsApiService service
 LocationsApiService Lists all Crusoe Cloud locations usable for resource hosting.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return ListLocationsResponse
+@return ListLocationsResponseV1Alpha4
 */
-func (a *LocationsApiService) ListLocations(ctx context.Context) (ListLocationsResponse, *http.Response, error) {
+func (a *LocationsApiService) ListLocations(ctx context.Context) (ListLocationsResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListLocationsResponse
+		localVarReturnValue ListLocationsResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -92,7 +92,7 @@ func (a *LocationsApiService) ListLocations(ctx context.Context) (ListLocationsR
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListLocationsResponse
+			var v ListLocationsResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

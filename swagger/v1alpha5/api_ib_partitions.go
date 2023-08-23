@@ -386,15 +386,15 @@ func (a *IBPartitionsApiService) GetIBPartition(ctx context.Context, ibPartition
 IBPartitionsApiService Retrieve details for all Infiniband partitions that belongs to the user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return IbPartitionsGetResponse
+@return ListIbPartitionsResponseV1Alpha5
 */
-func (a *IBPartitionsApiService) GetIBPartitions(ctx context.Context) (IbPartitionsGetResponse, *http.Response, error) {
+func (a *IBPartitionsApiService) GetIBPartitions(ctx context.Context) (ListIbPartitionsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue IbPartitionsGetResponse
+		localVarReturnValue ListIbPartitionsResponseV1Alpha5
 	)
 
 	// create path and map variables
@@ -451,7 +451,7 @@ func (a *IBPartitionsApiService) GetIBPartitions(ctx context.Context) (IbPartiti
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v IbPartitionsGetResponse
+			var v ListIbPartitionsResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

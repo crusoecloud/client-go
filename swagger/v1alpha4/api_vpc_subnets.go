@@ -29,15 +29,15 @@ VPCSubnetsApiService Retrieve details for a VPC subnet that belongs to the logge
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param vpcSubnetId
 
-@return VpcSubnetsGetResponse
+@return VpcSubnetsGetResponseV1Alpha4
 */
-func (a *VPCSubnetsApiService) GetVPCSubnet(ctx context.Context, vpcSubnetId string) (VpcSubnetsGetResponse, *http.Response, error) {
+func (a *VPCSubnetsApiService) GetVPCSubnet(ctx context.Context, vpcSubnetId string) (VpcSubnetsGetResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcSubnetsGetResponse
+		localVarReturnValue VpcSubnetsGetResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -95,7 +95,7 @@ func (a *VPCSubnetsApiService) GetVPCSubnet(ctx context.Context, vpcSubnetId str
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcSubnetsGetResponse
+			var v VpcSubnetsGetResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -144,15 +144,15 @@ func (a *VPCSubnetsApiService) GetVPCSubnet(ctx context.Context, vpcSubnetId str
 VPCSubnetsApiService Retrieve details about all VPC subnets that belong to the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return VpcSubnetsGetResponse
+@return VpcSubnetsGetResponseV1Alpha4
 */
-func (a *VPCSubnetsApiService) GetVPCSubnets(ctx context.Context) (VpcSubnetsGetResponse, *http.Response, error) {
+func (a *VPCSubnetsApiService) GetVPCSubnets(ctx context.Context) (VpcSubnetsGetResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcSubnetsGetResponse
+		localVarReturnValue VpcSubnetsGetResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -209,7 +209,7 @@ func (a *VPCSubnetsApiService) GetVPCSubnets(ctx context.Context) (VpcSubnetsGet
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcSubnetsGetResponse
+			var v VpcSubnetsGetResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
