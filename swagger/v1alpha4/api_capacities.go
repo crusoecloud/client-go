@@ -31,7 +31,7 @@ CapacitiesApiService Lists available Crusoe Cloud capacity with optional filters
  * @param optional nil or *CapacitiesApiListSliceCapacitiesOpts - Optional Parameters:
      * @param "ProductName" (optional.Interface of []string) -
      * @param "Location" (optional.Interface of []string) -
-@return ListCapacitiesResponse
+@return ListCapacitiesResponseV1Alpha4
 */
 
 type CapacitiesApiListSliceCapacitiesOpts struct {
@@ -39,13 +39,13 @@ type CapacitiesApiListSliceCapacitiesOpts struct {
 	Location    optional.Interface
 }
 
-func (a *CapacitiesApiService) ListSliceCapacities(ctx context.Context, localVarOptionals *CapacitiesApiListSliceCapacitiesOpts) (ListCapacitiesResponse, *http.Response, error) {
+func (a *CapacitiesApiService) ListSliceCapacities(ctx context.Context, localVarOptionals *CapacitiesApiListSliceCapacitiesOpts) (ListCapacitiesResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListCapacitiesResponse
+		localVarReturnValue ListCapacitiesResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -108,7 +108,7 @@ func (a *CapacitiesApiService) ListSliceCapacities(ctx context.Context, localVar
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListCapacitiesResponse
+			var v ListCapacitiesResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

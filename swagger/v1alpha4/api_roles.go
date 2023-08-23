@@ -255,20 +255,20 @@ If querying for roles within an organization, the logged in user must be the own
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *RolesApiGetRolesOpts - Optional Parameters:
      * @param "OrgId" (optional.String) -
-@return RolesGetResponse
+@return ListRolesResponseV1Alpha4
 */
 
 type RolesApiGetRolesOpts struct {
 	OrgId optional.String
 }
 
-func (a *RolesApiService) GetRoles(ctx context.Context, localVarOptionals *RolesApiGetRolesOpts) (RolesGetResponse, *http.Response, error) {
+func (a *RolesApiService) GetRoles(ctx context.Context, localVarOptionals *RolesApiGetRolesOpts) (ListRolesResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue RolesGetResponse
+		localVarReturnValue ListRolesResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -328,7 +328,7 @@ func (a *RolesApiService) GetRoles(ctx context.Context, localVarOptionals *Roles
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v RolesGetResponse
+			var v ListRolesResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

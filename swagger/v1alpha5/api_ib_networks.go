@@ -144,15 +144,15 @@ func (a *IBNetworksApiService) GetIBNetwork(ctx context.Context, ibNetworkId str
 IBNetworksApiService Retrieve details for all Infiniband networks.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return IbNetworksGetResponse
+@return ListIbNetworksResponseV1Alpha5
 */
-func (a *IBNetworksApiService) GetIBNetworks(ctx context.Context) (IbNetworksGetResponse, *http.Response, error) {
+func (a *IBNetworksApiService) GetIBNetworks(ctx context.Context) (ListIbNetworksResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue IbNetworksGetResponse
+		localVarReturnValue ListIbNetworksResponseV1Alpha5
 	)
 
 	// create path and map variables
@@ -209,7 +209,7 @@ func (a *IBNetworksApiService) GetIBNetworks(ctx context.Context) (IbNetworksGet
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v IbNetworksGetResponse
+			var v ListIbNetworksResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

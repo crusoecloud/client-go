@@ -32,15 +32,15 @@ This resource retrieves information about the status of an asynchronous operatio
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param operationId
 
-@return OperationsGetResponse
+@return ListOperationsResponseV1Alpha5
 */
-func (a *VMOperationsApiService) GetComputeVMsInstancesOperation(ctx context.Context, operationId string) (OperationsGetResponse, *http.Response, error) {
+func (a *VMOperationsApiService) GetComputeVMsInstancesOperation(ctx context.Context, operationId string) (ListOperationsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue OperationsGetResponse
+		localVarReturnValue ListOperationsResponseV1Alpha5
 	)
 
 	// create path and map variables
@@ -98,7 +98,7 @@ func (a *VMOperationsApiService) GetComputeVMsInstancesOperation(ctx context.Con
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v OperationsGetResponse
+			var v ListOperationsResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -160,7 +160,7 @@ This resource retrieves information about the status of asynchronous operations 
  * @param optional nil or *VMOperationsApiGetComputeVMsInstancesOperationsOpts - Optional Parameters:
      * @param "ResourceId" (optional.String) -
      * @param "State" (optional.Interface of []string) -
-@return OperationsGetResponse
+@return ListOperationsResponseV1Alpha5
 */
 
 type VMOperationsApiGetComputeVMsInstancesOperationsOpts struct {
@@ -168,13 +168,13 @@ type VMOperationsApiGetComputeVMsInstancesOperationsOpts struct {
 	State      optional.Interface
 }
 
-func (a *VMOperationsApiService) GetComputeVMsInstancesOperations(ctx context.Context, localVarOptionals *VMOperationsApiGetComputeVMsInstancesOperationsOpts) (OperationsGetResponse, *http.Response, error) {
+func (a *VMOperationsApiService) GetComputeVMsInstancesOperations(ctx context.Context, localVarOptionals *VMOperationsApiGetComputeVMsInstancesOperationsOpts) (ListOperationsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue OperationsGetResponse
+		localVarReturnValue ListOperationsResponseV1Alpha5
 	)
 
 	// create path and map variables
@@ -237,7 +237,7 @@ func (a *VMOperationsApiService) GetComputeVMsInstancesOperations(ctx context.Co
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v OperationsGetResponse
+			var v ListOperationsResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
