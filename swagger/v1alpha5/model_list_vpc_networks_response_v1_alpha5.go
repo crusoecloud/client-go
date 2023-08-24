@@ -8,7 +8,6 @@
  */
 package swagger
 
-// SingleInstanceGetResponseV1Alpha5 is the response type for GET requests to compute/vms/instances/{vm_id}.
-type SingleInstanceGetResponseV1Alpha5 struct {
-	Instance *InstanceV1Alpha5 `json:"instance"`
+type ListVpcNetworksResponseV1Alpha5 struct {
+	Items []VpcNetwork `json:"items"`
 }

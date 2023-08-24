@@ -29,15 +29,15 @@ VPCNetworksApiService Retrieve details for a VPC network that belongs to the log
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param vpcNetworkId
 
-@return interface{}
+@return VpcNetwork
 */
-func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId string) (interface{}, *http.Response, error) {
+func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId string) (VpcNetwork, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue interface{}
+		localVarReturnValue VpcNetwork
 	)
 
 	// create path and map variables
@@ -95,7 +95,7 @@ func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v interface{}
+			var v VpcNetwork
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -144,15 +144,15 @@ func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId 
 VPCNetworksApiService Retrieve details about all VPC networks that belong to the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return interface{}
+@return ListVpcNetworksResponseV1Alpha5
 */
-func (a *VPCNetworksApiService) GetVPCNetworks(ctx context.Context) (interface{}, *http.Response, error) {
+func (a *VPCNetworksApiService) ListVPCNetworks(ctx context.Context) (ListVpcNetworksResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue interface{}
+		localVarReturnValue ListVpcNetworksResponseV1Alpha5
 	)
 
 	// create path and map variables
@@ -209,7 +209,7 @@ func (a *VPCNetworksApiService) GetVPCNetworks(ctx context.Context) (interface{}
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v interface{}
+			var v ListVpcNetworksResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

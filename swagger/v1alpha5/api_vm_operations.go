@@ -15,8 +15,6 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-
-	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -32,15 +30,15 @@ This resource retrieves information about the status of an asynchronous operatio
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param operationId
 
-@return ListOperationsResponseV1Alpha5
+@return Operation
 */
-func (a *VMOperationsApiService) GetComputeVMsInstancesOperation(ctx context.Context, operationId string) (ListOperationsResponseV1Alpha5, *http.Response, error) {
+func (a *VMOperationsApiService) GetComputeVMsInstancesOperation(ctx context.Context, operationId string) (Operation, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListOperationsResponseV1Alpha5
+		localVarReturnValue Operation
 	)
 
 	// create path and map variables
@@ -98,7 +96,7 @@ func (a *VMOperationsApiService) GetComputeVMsInstancesOperation(ctx context.Con
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListOperationsResponseV1Alpha5
+			var v Operation
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -156,19 +154,11 @@ func (a *VMOperationsApiService) GetComputeVMsInstancesOperation(ctx context.Con
 /*
 VMOperationsApiService Get status of asynchronous operations
 This resource retrieves information about the status of asynchronous operations initiated by the instances resource. All operations that are either in-flight or completed but not yet queried will be returned.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param optional nil or *VMOperationsApiGetComputeVMsInstancesOperationsOpts - Optional Parameters:
-     * @param "ResourceId" (optional.String) -
-     * @param "State" (optional.Interface of []string) -
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+
 @return ListOperationsResponseV1Alpha5
 */
-
-type VMOperationsApiGetComputeVMsInstancesOperationsOpts struct {
-	ResourceId optional.String
-	State      optional.Interface
-}
-
-func (a *VMOperationsApiService) GetComputeVMsInstancesOperations(ctx context.Context, localVarOptionals *VMOperationsApiGetComputeVMsInstancesOperationsOpts) (ListOperationsResponseV1Alpha5, *http.Response, error) {
+func (a *VMOperationsApiService) ListComputeVMsInstancesOperations(ctx context.Context) (ListOperationsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -184,12 +174,6 @@ func (a *VMOperationsApiService) GetComputeVMsInstancesOperations(ctx context.Co
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.ResourceId.IsSet() {
-		localVarQueryParams.Add("resource_id", parameterToString(localVarOptionals.ResourceId.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
-		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), "csv"))
-	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
