@@ -275,15 +275,15 @@ Size of disk will be in gibibytes (GiB)
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param diskId
 
-@return interface{}
+@return Disk
 */
-func (a *DisksApiService) GetDisk(ctx context.Context, diskId string) (interface{}, *http.Response, error) {
+func (a *DisksApiService) GetDisk(ctx context.Context, diskId string) (Disk, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue interface{}
+		localVarReturnValue Disk
 	)
 
 	// create path and map variables
@@ -341,7 +341,7 @@ func (a *DisksApiService) GetDisk(ctx context.Context, diskId string) (interface
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v interface{}
+			var v Disk
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -391,15 +391,15 @@ DisksApiService Retrieve details about all disks that belong to the logged in us
 Size of disks will be in gibibytes (GiB)
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return interface{}
+@return ListDisksResponseV1Alpha5
 */
-func (a *DisksApiService) GetDisks(ctx context.Context) (interface{}, *http.Response, error) {
+func (a *DisksApiService) ListDisks(ctx context.Context) (ListDisksResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue interface{}
+		localVarReturnValue ListDisksResponseV1Alpha5
 	)
 
 	// create path and map variables
@@ -456,7 +456,7 @@ func (a *DisksApiService) GetDisks(ctx context.Context) (interface{}, *http.Resp
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v interface{}
+			var v ListDisksResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

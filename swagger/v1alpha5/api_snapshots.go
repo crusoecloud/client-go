@@ -265,15 +265,15 @@ Size of snapshot will be in bytes.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param snapshotId
 
-@return ListDiskSnapshotsResponseV1Alpha5
+@return DiskSnapshot
 */
-func (a *SnapshotsApiService) GetDiskSnapshot(ctx context.Context, snapshotId string) (ListDiskSnapshotsResponseV1Alpha5, *http.Response, error) {
+func (a *SnapshotsApiService) GetDiskSnapshot(ctx context.Context, snapshotId string) (DiskSnapshot, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListDiskSnapshotsResponseV1Alpha5
+		localVarReturnValue DiskSnapshot
 	)
 
 	// create path and map variables
@@ -331,7 +331,7 @@ func (a *SnapshotsApiService) GetDiskSnapshot(ctx context.Context, snapshotId st
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListDiskSnapshotsResponseV1Alpha5
+			var v DiskSnapshot
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -393,7 +393,7 @@ Size of snapshots will be in bytes.
 
 @return ListDiskSnapshotsResponseV1Alpha5
 */
-func (a *SnapshotsApiService) GetDiskSnapshots(ctx context.Context) (ListDiskSnapshotsResponseV1Alpha5, *http.Response, error) {
+func (a *SnapshotsApiService) ListDiskSnapshots(ctx context.Context) (ListDiskSnapshotsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}

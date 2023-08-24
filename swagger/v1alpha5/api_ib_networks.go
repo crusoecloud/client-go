@@ -146,7 +146,7 @@ IBNetworksApiService Retrieve details for all Infiniband networks.
 
 @return ListIbNetworksResponseV1Alpha5
 */
-func (a *IBNetworksApiService) GetIBNetworks(ctx context.Context) (ListIbNetworksResponseV1Alpha5, *http.Response, error) {
+func (a *IBNetworksApiService) ListIBNetworks(ctx context.Context) (ListIbNetworksResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}

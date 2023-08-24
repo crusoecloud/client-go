@@ -388,7 +388,7 @@ IBPartitionsApiService Retrieve details for all Infiniband partitions that belon
 
 @return ListIbPartitionsResponseV1Alpha5
 */
-func (a *IBPartitionsApiService) GetIBPartitions(ctx context.Context) (ListIbPartitionsResponseV1Alpha5, *http.Response, error) {
+func (a *IBPartitionsApiService) ListIbPartitions(ctx context.Context) (ListIbPartitionsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
