@@ -8,6 +8,6 @@
  */
 package swagger
 
-type RolesPutRequest struct {
-	Name string `json:"name"`
+type ListProjectsResponseV1Alpha5 struct {
+	Items []Project `json:"items"`
 }

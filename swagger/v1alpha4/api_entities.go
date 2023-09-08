@@ -133,7 +133,7 @@ func (a *EntitiesApiService) CreateOrganization(ctx context.Context, body Entiti
 
 /*
 EntitiesApiService Delete an organization owned by the logged in user.
-Delete operations will cascade to roles and VMs, and all members will be removed from the organization.
+Delete operations will cascade to projects and VMs, and all members will be removed from the organization.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param orgId
 */
