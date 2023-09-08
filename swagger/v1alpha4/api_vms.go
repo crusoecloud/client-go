@@ -738,7 +738,7 @@ VMsApiService Attach disks to a VM the logged in user owns.
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body InstancesAttachDiskPostRequest, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body InstancesAttachDiskPostRequestV1Alpha4, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
