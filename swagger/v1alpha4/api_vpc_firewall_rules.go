@@ -32,7 +32,7 @@ A successful response from this resource will contain the async operation.
 
 @return VpcFirewallRulesPostDeletePatchResponse
 */
-func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPostRequest) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPostRequestV1Alpha4) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}

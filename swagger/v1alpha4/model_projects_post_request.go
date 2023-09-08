@@ -8,6 +8,7 @@
  */
 package swagger
 
-type RolesPutPostResponse struct {
-	Role *Role `json:"role"`
+type ProjectsPostRequest struct {
+	Name           string `json:"name"`
+	OrganizationId string `json:"organization_id"`
 }

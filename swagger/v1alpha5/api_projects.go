@@ -23,27 +23,27 @@ var (
 	_ context.Context
 )
 
-type RolesApiService service
+type ProjectsApiService service
 
 /*
-RolesApiService Create a new role that will be owned by the logged in user.
-The logged in user must have the permission to create roles within the organization. A successful response from this resource contains details of the created role.
+ProjectsApiService Create a new project that will be owned by the logged in user.
+The logged in user must have the permission to create projects within the organization. A successful response from this resource contains details of the created project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 
-@return RolesPutPostResponse
+@return ProjectsPutPostResponseV1Alpha5
 */
-func (a *RolesApiService) CreateRole(ctx context.Context, body RolesPostRequest) (RolesPutPostResponse, *http.Response, error) {
+func (a *ProjectsApiService) CreateProject(ctx context.Context, body ProjectsPostRequest) (ProjectsPutPostResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue RolesPutPostResponse
+		localVarReturnValue ProjectsPutPostResponseV1Alpha5
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/roles"
+	localVarPath := a.client.cfg.BasePath + "/organizations/projects"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -98,7 +98,7 @@ func (a *RolesApiService) CreateRole(ctx context.Context, body RolesPostRequest)
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v RolesPutPostResponse
+			var v ProjectsPutPostResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -154,12 +154,12 @@ func (a *RolesApiService) CreateRole(ctx context.Context, body RolesPostRequest)
 }
 
 /*
-RolesApiService Delete a role that the logged in user owns.
-Delete operations cascade to VMs created under that role.
+ProjectsApiService Delete a project that the logged in user owns.
+Delete operations cascade to VMs created under that project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param roleId
+  - @param projectId
 */
-func (a *RolesApiService) DeleteRole(ctx context.Context, roleId string) (*http.Response, error) {
+func (a *ProjectsApiService) DeleteProject(ctx context.Context, projectId string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -168,13 +168,13 @@ func (a *RolesApiService) DeleteRole(ctx context.Context, roleId string) (*http.
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/roles"
+	localVarPath := a.client.cfg.BasePath + "/organizations/projects"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("role_id", parameterToString(roleId, ""))
+	localVarQueryParams.Add("project_id", parameterToString(projectId, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -250,29 +250,29 @@ func (a *RolesApiService) DeleteRole(ctx context.Context, roleId string) (*http.
 }
 
 /*
-RolesApiService Retrieve details about roles that the logged in user belongs to or owns.
-If querying for roles within an organization, the logged in user must be the owner of the organization.
+ProjectsApiService Retrieve details about projects that the logged in user belongs to or owns.
+If querying for projects within an organization, the logged in user must be the owner of the organization.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param optional nil or *RolesApiGetRolesOpts - Optional Parameters:
+ * @param optional nil or *ProjectsApiGetProjectsOpts - Optional Parameters:
      * @param "OrgId" (optional.String) -
-@return ListRolesResponseV1Alpha4
+@return ListProjectsResponseV1Alpha5
 */
 
-type RolesApiGetRolesOpts struct {
+type ProjectsApiGetProjectsOpts struct {
 	OrgId optional.String
 }
 
-func (a *RolesApiService) GetRoles(ctx context.Context, localVarOptionals *RolesApiGetRolesOpts) (ListRolesResponseV1Alpha4, *http.Response, error) {
+func (a *ProjectsApiService) GetProjects(ctx context.Context, localVarOptionals *ProjectsApiGetProjectsOpts) (ListProjectsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListRolesResponseV1Alpha4
+		localVarReturnValue ListProjectsResponseV1Alpha5
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/roles"
+	localVarPath := a.client.cfg.BasePath + "/organizations/projects"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -328,7 +328,7 @@ func (a *RolesApiService) GetRoles(ctx context.Context, localVarOptionals *Roles
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListRolesResponseV1Alpha4
+			var v ListProjectsResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -364,31 +364,31 @@ func (a *RolesApiService) GetRoles(ctx context.Context, localVarOptionals *Roles
 }
 
 /*
-RolesApiService Update details for a role that the logged in user owns.
-Requests to this resource must contain the json-encoded representation of the changes they want to make to the role. Currently only the role&#x27;s name can be changed.
+ProjectsApiService Update details for a project that the logged in user owns.
+Requests to this resource must contain the json-encoded representation of the changes they want to make to the project. Currently only the project&#x27;s name can be changed.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param roleId
+  - @param projectId
 
-@return RolesPutPostResponse
+@return ProjectsPutPostResponseV1Alpha5
 */
-func (a *RolesApiService) UpdateRole(ctx context.Context, body RolesPutRequest, roleId string) (RolesPutPostResponse, *http.Response, error) {
+func (a *ProjectsApiService) UpdateProject(ctx context.Context, body ProjectsPutRequest, projectId string) (ProjectsPutPostResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Put")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue RolesPutPostResponse
+		localVarReturnValue ProjectsPutPostResponseV1Alpha5
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/roles"
+	localVarPath := a.client.cfg.BasePath + "/organizations/projects"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("role_id", parameterToString(roleId, ""))
+	localVarQueryParams.Add("project_id", parameterToString(projectId, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}
 
@@ -438,7 +438,7 @@ func (a *RolesApiService) UpdateRole(ctx context.Context, body RolesPutRequest, 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v RolesPutPostResponse
+			var v ProjectsPutPostResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

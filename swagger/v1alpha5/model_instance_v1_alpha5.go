@@ -20,7 +20,7 @@ type InstanceV1Alpha5 struct {
 	Name                string               `json:"name"`
 	NetworkInterfaces   []NetworkInterface   `json:"network_interfaces"`
 	ProductName         string               `json:"product_name"`
-	RoleId              string               `json:"role_id"`
+	ProjectId           string               `json:"project_id"`
 	SshDestination      string               `json:"ssh_destination"`
 	State               string               `json:"state"`
 }

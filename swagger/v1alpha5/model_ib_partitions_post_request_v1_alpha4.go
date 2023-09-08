@@ -8,6 +8,8 @@
  */
 package swagger
 
-type RolesPutPostResponse struct {
-	Role *Role `json:"role"`
+type IbPartitionsPostRequestV1Alpha4 struct {
+	IbNetworkId string `json:"ib_network_id"`
+	Name        string `json:"name"`
+	RoleId      string `json:"role_id"`
 }
