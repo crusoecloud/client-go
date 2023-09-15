@@ -28,10 +28,11 @@ type VMsApiService service
 VMsApiService Create a new VM instance owned by the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
+  - @param projectId
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRequestV1Alpha4) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRequestV1Alpha4, projectId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -41,7 +42,8 @@ func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRe
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/compute/vms/instances"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -154,11 +156,12 @@ func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRe
 /*
 VMsApiService Delete a VM that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param vmId
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) DeleteInstance(ctx context.Context, projectId string, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
@@ -168,7 +171,8 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (Instan
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/{vm_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/compute/vms/instances/{vm_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"vm_id"+"}", fmt.Sprintf("%v", vmId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -270,11 +274,12 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, vmId string) (Instan
 /*
 VMsApiService Retrieve details about a particular VM.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param vmId
 
 @return InstanceV1Alpha5
 */
-func (a *VMsApiService) GetInstance(ctx context.Context, vmId string) (InstanceV1Alpha5, *http.Response, error) {
+func (a *VMsApiService) GetInstance(ctx context.Context, projectId string, vmId string) (InstanceV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -284,7 +289,8 @@ func (a *VMsApiService) GetInstance(ctx context.Context, vmId string) (InstanceV
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/{vm_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/compute/vms/instances/{vm_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"vm_id"+"}", fmt.Sprintf("%v", vmId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -396,10 +402,11 @@ func (a *VMsApiService) GetInstance(ctx context.Context, vmId string) (InstanceV
 /*
 VMsApiService Retrieve information about the types of VMs that are available to purchase along with their prices.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
 
 @return ListTypesResponseV1Alpha5
 */
-func (a *VMsApiService) GetVMTypes(ctx context.Context) (ListTypesResponseV1Alpha5, *http.Response, error) {
+func (a *VMsApiService) GetVMTypes(ctx context.Context, projectId string) (ListTypesResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -409,7 +416,8 @@ func (a *VMsApiService) GetVMTypes(ctx context.Context) (ListTypesResponseV1Alph
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/types"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/compute/vms/types"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -500,10 +508,11 @@ func (a *VMsApiService) GetVMTypes(ctx context.Context) (ListTypesResponseV1Alph
 /*
 VMsApiService Retrieve details about all VMs that the logged in user owns or has access to.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
 
 @return ListInstancesResponseV1Alpha5
 */
-func (a *VMsApiService) ListInstances(ctx context.Context) (ListInstancesResponseV1Alpha5, *http.Response, error) {
+func (a *VMsApiService) ListInstances(ctx context.Context, projectId string) (ListInstancesResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -513,7 +522,8 @@ func (a *VMsApiService) ListInstances(ctx context.Context) (ListInstancesRespons
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/compute/vms/instances"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -605,11 +615,12 @@ func (a *VMsApiService) ListInstances(ctx context.Context) (ListInstancesRespons
 VMsApiService Change the state of a VM the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
+  - @param projectId
   - @param vmId
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchRequestV1Alpha4, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchRequestV1Alpha4, projectId string, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
@@ -619,7 +630,8 @@ func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchR
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/{vm_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/compute/vms/instances/{vm_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"vm_id"+"}", fmt.Sprintf("%v", vmId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -734,11 +746,12 @@ func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchR
 VMsApiService Attach disks to a VM the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
+  - @param projectId
   - @param vmId
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body InstancesAttachDiskPostRequestV1Alpha5, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body InstancesAttachDiskPostRequestV1Alpha5, projectId string, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -748,7 +761,8 @@ func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body Inst
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/{vm_id}/attach-disks"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/compute/vms/instances/{vm_id}/attach-disks"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"vm_id"+"}", fmt.Sprintf("%v", vmId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -863,11 +877,12 @@ func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body Inst
 VMsApiService Detach disks from a VM the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
+  - @param projectId
   - @param vmId
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) UpdateInstanceDetachDisks(ctx context.Context, body InstancesDetachDiskPostRequest, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) UpdateInstanceDetachDisks(ctx context.Context, body InstancesDetachDiskPostRequest, projectId string, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -877,7 +892,8 @@ func (a *VMsApiService) UpdateInstanceDetachDisks(ctx context.Context, body Inst
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/compute/vms/instances/{vm_id}/detach-disks"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/compute/vms/instances/{vm_id}/detach-disks"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"vm_id"+"}", fmt.Sprintf("%v", vmId), -1)
 
 	localVarHeaderParams := make(map[string]string)

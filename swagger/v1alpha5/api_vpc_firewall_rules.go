@@ -29,10 +29,11 @@ VPCFirewallRulesApiService Create a new VPC firewall rule owned by the logged in
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
+  - @param projectId
 
 @return VpcFirewallRulesPostDeletePatchResponse
 */
-func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPostRequestV1Alpha5) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPostRequestV1Alpha5, projectId string) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -42,7 +43,8 @@ func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, 
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/vpc-firewall-rules"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/vpc-firewall-rules"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -156,11 +158,12 @@ func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, 
 VPCFirewallRulesApiService Delete a VPC firewall rule owned by the logged in user.
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param vpcFirewallRuleId
 
 @return VpcFirewallRulesPostDeletePatchResponse
 */
-func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, vpcFirewallRuleId string) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, projectId string, vpcFirewallRuleId string) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
@@ -170,7 +173,8 @@ func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, 
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/vpc-firewall-rules/{vpc_firewall_rule_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/vpc-firewall-rules/{vpc_firewall_rule_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"vpc_firewall_rule_id"+"}", fmt.Sprintf("%v", vpcFirewallRuleId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -272,11 +276,12 @@ func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, 
 /*
 VPCFirewallRulesApiService Retrieve details for a VPC firewall rule that belongs to the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param vpcFirewallRuleId
 
 @return VpcFirewallRule
 */
-func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, vpcFirewallRuleId string) (VpcFirewallRule, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, projectId string, vpcFirewallRuleId string) (VpcFirewallRule, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -286,7 +291,8 @@ func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, vpc
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/vpc-firewall-rules/{vpc_firewall_rule_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/vpc-firewall-rules/{vpc_firewall_rule_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"vpc_firewall_rule_id"+"}", fmt.Sprintf("%v", vpcFirewallRuleId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -388,10 +394,11 @@ func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, vpc
 /*
 VPCFirewallRulesApiService Retrieve details about all VPC firewall rules that belong to the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
 
 @return ListVpcFirewallRulesResponseV1Alpha5
 */
-func (a *VPCFirewallRulesApiService) ListVPCFirewallRules(ctx context.Context) (ListVpcFirewallRulesResponseV1Alpha5, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) ListVPCFirewallRules(ctx context.Context, projectId string) (ListVpcFirewallRulesResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -401,7 +408,8 @@ func (a *VPCFirewallRulesApiService) ListVPCFirewallRules(ctx context.Context) (
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/vpc-firewall-rules"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/vpc-firewall-rules"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -504,11 +512,12 @@ VPCFirewallRulesApiService Patch (update) a VPC firewall rule owned by the logge
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
+  - @param projectId
   - @param vpcFirewallRuleId
 
 @return VpcFirewallRulesPostDeletePatchResponse
 */
-func (a *VPCFirewallRulesApiService) PatchVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPatchRequest, vpcFirewallRuleId string) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) PatchVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPatchRequest, projectId string, vpcFirewallRuleId string) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
@@ -518,7 +527,8 @@ func (a *VPCFirewallRulesApiService) PatchVPCFirewallRule(ctx context.Context, b
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/vpc-firewall-rules/{vpc_firewall_rule_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/vpc-firewall-rules/{vpc_firewall_rule_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"vpc_firewall_rule_id"+"}", fmt.Sprintf("%v", vpcFirewallRuleId), -1)
 
 	localVarHeaderParams := make(map[string]string)

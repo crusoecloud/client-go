@@ -27,11 +27,12 @@ type IBNetworksApiService service
 /*
 IBNetworksApiService Retrieve details for an Infiniband network.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param ibNetworkId
 
 @return IbNetwork
 */
-func (a *IBNetworksApiService) GetIBNetwork(ctx context.Context, ibNetworkId string) (IbNetwork, *http.Response, error) {
+func (a *IBNetworksApiService) GetIBNetwork(ctx context.Context, projectId string, ibNetworkId string) (IbNetwork, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -41,7 +42,8 @@ func (a *IBNetworksApiService) GetIBNetwork(ctx context.Context, ibNetworkId str
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/ib-networks/{ib_network_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/ib-networks/{ib_network_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"ib_network_id"+"}", fmt.Sprintf("%v", ibNetworkId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -143,10 +145,11 @@ func (a *IBNetworksApiService) GetIBNetwork(ctx context.Context, ibNetworkId str
 /*
 IBNetworksApiService Retrieve details for all Infiniband networks.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
 
 @return ListIbNetworksResponseV1Alpha5
 */
-func (a *IBNetworksApiService) ListIBNetworks(ctx context.Context) (ListIbNetworksResponseV1Alpha5, *http.Response, error) {
+func (a *IBNetworksApiService) ListIBNetworks(ctx context.Context, projectId string) (ListIbNetworksResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -156,7 +159,8 @@ func (a *IBNetworksApiService) ListIBNetworks(ctx context.Context) (ListIbNetwor
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/ib-networks"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/ib-networks"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

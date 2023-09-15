@@ -27,11 +27,12 @@ type VPCSubnetsApiService service
 /*
 VPCSubnetsApiService Retrieve details for a VPC subnet that belongs to the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param vpcSubnetId
 
 @return VpcSubnet
 */
-func (a *VPCSubnetsApiService) GetVPCSubnet(ctx context.Context, vpcSubnetId string) (VpcSubnet, *http.Response, error) {
+func (a *VPCSubnetsApiService) GetVPCSubnet(ctx context.Context, projectId string, vpcSubnetId string) (VpcSubnet, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -41,7 +42,8 @@ func (a *VPCSubnetsApiService) GetVPCSubnet(ctx context.Context, vpcSubnetId str
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/vpc-subnets/{vpc_subnet_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/vpc-subnets/{vpc_subnet_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"vpc_subnet_id"+"}", fmt.Sprintf("%v", vpcSubnetId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -143,10 +145,11 @@ func (a *VPCSubnetsApiService) GetVPCSubnet(ctx context.Context, vpcSubnetId str
 /*
 VPCSubnetsApiService Retrieve details about all VPC subnets that belong to the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
 
 @return ListVpcSubnetsResponseV1Alpha5
 */
-func (a *VPCSubnetsApiService) ListVPCSubnets(ctx context.Context) (ListVpcSubnetsResponseV1Alpha5, *http.Response, error) {
+func (a *VPCSubnetsApiService) ListVPCSubnets(ctx context.Context, projectId string) (ListVpcSubnetsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -156,7 +159,8 @@ func (a *VPCSubnetsApiService) ListVPCSubnets(ctx context.Context) (ListVpcSubne
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/vpc-subnets"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/vpc-subnets"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

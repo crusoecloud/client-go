@@ -29,10 +29,11 @@ SnapshotsApiService Create a new snapshot for a disk owned by the logged in user
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
+  - @param projectId
 
 @return DiskSnapshotPostDeleteResponse
 */
-func (a *SnapshotsApiService) CreateDiskSnapshot(ctx context.Context, body DiskSnapshotPostRequest) (DiskSnapshotPostDeleteResponse, *http.Response, error) {
+func (a *SnapshotsApiService) CreateDiskSnapshot(ctx context.Context, body DiskSnapshotPostRequest, projectId string) (DiskSnapshotPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -42,7 +43,8 @@ func (a *SnapshotsApiService) CreateDiskSnapshot(ctx context.Context, body DiskS
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/storage/snapshots"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/storage/snapshots"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -146,11 +148,12 @@ func (a *SnapshotsApiService) CreateDiskSnapshot(ctx context.Context, body DiskS
 SnapshotsApiService Delete a disk snapshot owned by the logged in user.
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param snapshotId
 
 @return DiskSnapshotPostDeleteResponse
 */
-func (a *SnapshotsApiService) DeleteDiskSnapshot(ctx context.Context, snapshotId string) (DiskSnapshotPostDeleteResponse, *http.Response, error) {
+func (a *SnapshotsApiService) DeleteDiskSnapshot(ctx context.Context, projectId string, snapshotId string) (DiskSnapshotPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
@@ -160,7 +163,8 @@ func (a *SnapshotsApiService) DeleteDiskSnapshot(ctx context.Context, snapshotId
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/storage/snapshots/{snapshot_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/storage/snapshots/{snapshot_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"snapshot_id"+"}", fmt.Sprintf("%v", snapshotId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -263,11 +267,12 @@ func (a *SnapshotsApiService) DeleteDiskSnapshot(ctx context.Context, snapshotId
 SnapshotsApiService Retrieve details about a disk snapshot that belongs to the logged in user.
 Size of snapshot will be in bytes.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param snapshotId
 
 @return DiskSnapshot
 */
-func (a *SnapshotsApiService) GetDiskSnapshot(ctx context.Context, snapshotId string) (DiskSnapshot, *http.Response, error) {
+func (a *SnapshotsApiService) GetDiskSnapshot(ctx context.Context, projectId string, snapshotId string) (DiskSnapshot, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -277,7 +282,8 @@ func (a *SnapshotsApiService) GetDiskSnapshot(ctx context.Context, snapshotId st
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/storage/snapshots/{snapshot_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/storage/snapshots/{snapshot_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"snapshot_id"+"}", fmt.Sprintf("%v", snapshotId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -390,10 +396,11 @@ func (a *SnapshotsApiService) GetDiskSnapshot(ctx context.Context, snapshotId st
 SnapshotsApiService Retrieve details about all disk snapshots that belong to the logged in user.
 Size of snapshots will be in bytes.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
 
 @return ListDiskSnapshotsResponseV1Alpha5
 */
-func (a *SnapshotsApiService) ListDiskSnapshots(ctx context.Context) (ListDiskSnapshotsResponseV1Alpha5, *http.Response, error) {
+func (a *SnapshotsApiService) ListDiskSnapshots(ctx context.Context, projectId string) (ListDiskSnapshotsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -403,7 +410,8 @@ func (a *SnapshotsApiService) ListDiskSnapshots(ctx context.Context) (ListDiskSn
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/storage/snapshots"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/storage/snapshots"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
