@@ -29,10 +29,11 @@ DisksApiService Create a new disk owned by the logged in user.
 Requires either a disk snapshot ID, or size and location, where size of disk should be in gibibytes (GiB) or tebibytes (TiB) in the format [Size][Unit]. E.g. 10GiB. Disk type must be one of: DISK_TYPE_PERSISTENT_SSD. A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
+  - @param projectId
 
 @return DiskPostPatchDeleteResponse
 */
-func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequest) (DiskPostPatchDeleteResponse, *http.Response, error) {
+func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequest, projectId string) (DiskPostPatchDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -42,7 +43,8 @@ func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequest)
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/storage/disks"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/storage/disks"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -156,11 +158,12 @@ func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequest)
 DisksApiService Delete a disk owned by the logged in user.
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param diskId
 
 @return DiskPostPatchDeleteResponse
 */
-func (a *DisksApiService) DeleteDisk(ctx context.Context, diskId string) (DiskPostPatchDeleteResponse, *http.Response, error) {
+func (a *DisksApiService) DeleteDisk(ctx context.Context, projectId string, diskId string) (DiskPostPatchDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
@@ -170,7 +173,8 @@ func (a *DisksApiService) DeleteDisk(ctx context.Context, diskId string) (DiskPo
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/storage/disks/{disk_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/storage/disks/{disk_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"disk_id"+"}", fmt.Sprintf("%v", diskId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -273,11 +277,12 @@ func (a *DisksApiService) DeleteDisk(ctx context.Context, diskId string) (DiskPo
 DisksApiService Retrieve details for a disk that belongs to the logged in user.
 Size of disk will be in gibibytes (GiB)
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param diskId
 
 @return Disk
 */
-func (a *DisksApiService) GetDisk(ctx context.Context, diskId string) (Disk, *http.Response, error) {
+func (a *DisksApiService) GetDisk(ctx context.Context, projectId string, diskId string) (Disk, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -287,7 +292,8 @@ func (a *DisksApiService) GetDisk(ctx context.Context, diskId string) (Disk, *ht
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/storage/disks/{disk_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/storage/disks/{disk_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"disk_id"+"}", fmt.Sprintf("%v", diskId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -390,10 +396,11 @@ func (a *DisksApiService) GetDisk(ctx context.Context, diskId string) (Disk, *ht
 DisksApiService Retrieve details about all disks that belong to the logged in user.
 Size of disks will be in gibibytes (GiB)
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
 
 @return ListDisksResponseV1Alpha5
 */
-func (a *DisksApiService) ListDisks(ctx context.Context) (ListDisksResponseV1Alpha5, *http.Response, error) {
+func (a *DisksApiService) ListDisks(ctx context.Context, projectId string) (ListDisksResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -403,7 +410,8 @@ func (a *DisksApiService) ListDisks(ctx context.Context) (ListDisksResponseV1Alp
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/storage/disks"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/storage/disks"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -506,11 +514,12 @@ DisksApiService Resize a disk that the logged in user owns.
 Size should be in gibibytes (GiB) or tebibytes (TiB) in the format [Size][Unit]. E.g. 10GiB A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
+  - @param projectId
   - @param diskId
 
 @return DiskPostPatchDeleteResponse
 */
-func (a *DisksApiService) ResizeDisk(ctx context.Context, body DisksPatchRequest, diskId string) (DiskPostPatchDeleteResponse, *http.Response, error) {
+func (a *DisksApiService) ResizeDisk(ctx context.Context, body DisksPatchRequest, projectId string, diskId string) (DiskPostPatchDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
@@ -520,7 +529,8 @@ func (a *DisksApiService) ResizeDisk(ctx context.Context, body DisksPatchRequest
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/storage/disks/{disk_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/storage/disks/{disk_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"disk_id"+"}", fmt.Sprintf("%v", diskId), -1)
 
 	localVarHeaderParams := make(map[string]string)

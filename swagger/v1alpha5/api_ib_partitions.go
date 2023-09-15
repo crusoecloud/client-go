@@ -28,10 +28,11 @@ type IBPartitionsApiService service
 IBPartitionsApiService Create a new Infiniband partition owned by the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
+  - @param projectId
 
 @return IbPartition
 */
-func (a *IBPartitionsApiService) CreateIBPartition(ctx context.Context, body IbPartitionsPostRequestV1Alpha4) (IbPartition, *http.Response, error) {
+func (a *IBPartitionsApiService) CreateIBPartition(ctx context.Context, body IbPartitionsPostRequestV1Alpha4, projectId string) (IbPartition, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -41,7 +42,8 @@ func (a *IBPartitionsApiService) CreateIBPartition(ctx context.Context, body IbP
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/ib-partitions"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/ib-partitions"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -154,9 +156,10 @@ func (a *IBPartitionsApiService) CreateIBPartition(ctx context.Context, body IbP
 /*
 IBPartitionsApiService Delete an Infiniband partition owned by the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param ibPartitionId
 */
-func (a *IBPartitionsApiService) DeleteIBPartition(ctx context.Context, ibPartitionId string) (*http.Response, error) {
+func (a *IBPartitionsApiService) DeleteIBPartition(ctx context.Context, projectId string, ibPartitionId string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -165,7 +168,8 @@ func (a *IBPartitionsApiService) DeleteIBPartition(ctx context.Context, ibPartit
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/ib-partitions/{ib_partition_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/ib-partitions/{ib_partition_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"ib_partition_id"+"}", fmt.Sprintf("%v", ibPartitionId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -259,11 +263,12 @@ func (a *IBPartitionsApiService) DeleteIBPartition(ctx context.Context, ibPartit
 /*
 IBPartitionsApiService Retrieve details for an Infiniband partition that belongs to the user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param ibPartitionId
 
 @return IbPartition
 */
-func (a *IBPartitionsApiService) GetIBPartition(ctx context.Context, ibPartitionId string) (IbPartition, *http.Response, error) {
+func (a *IBPartitionsApiService) GetIBPartition(ctx context.Context, projectId string, ibPartitionId string) (IbPartition, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -273,7 +278,8 @@ func (a *IBPartitionsApiService) GetIBPartition(ctx context.Context, ibPartition
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/ib-partitions/{ib_partition_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/ib-partitions/{ib_partition_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"ib_partition_id"+"}", fmt.Sprintf("%v", ibPartitionId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -385,10 +391,11 @@ func (a *IBPartitionsApiService) GetIBPartition(ctx context.Context, ibPartition
 /*
 IBPartitionsApiService Retrieve details for all Infiniband partitions that belongs to the user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
 
 @return ListIbPartitionsResponseV1Alpha5
 */
-func (a *IBPartitionsApiService) ListIbPartitions(ctx context.Context) (ListIbPartitionsResponseV1Alpha5, *http.Response, error) {
+func (a *IBPartitionsApiService) ListIBPartitions(ctx context.Context, projectId string) (ListIbPartitionsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -398,7 +405,8 @@ func (a *IBPartitionsApiService) ListIbPartitions(ctx context.Context) (ListIbPa
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/ib-partitions"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/ib-partitions"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

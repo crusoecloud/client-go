@@ -28,11 +28,12 @@ type VPCFirewallRuleOperationsApiService service
 VPCFirewallRuleOperationsApiService Get status of a single asynchronous operation
 This resource retrieves information about the status of an asynchronous operation initiated by the snapshots resource. Only information about the operation specified in the path will be returned, or an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged in user, or has expired.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
   - @param operationId
 
 @return Operation
 */
-func (a *VPCFirewallRuleOperationsApiService) GetNetworkingVPCFirewallRulesOperation(ctx context.Context, operationId string) (Operation, *http.Response, error) {
+func (a *VPCFirewallRuleOperationsApiService) GetNetworkingVPCFirewallRulesOperation(ctx context.Context, projectId string, operationId string) (Operation, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -42,7 +43,8 @@ func (a *VPCFirewallRuleOperationsApiService) GetNetworkingVPCFirewallRulesOpera
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/vpc-firewall-rules/operations/{operation_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/vpc-firewall-rules/operations/{operation_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"operation_id"+"}", fmt.Sprintf("%v", operationId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -155,10 +157,11 @@ func (a *VPCFirewallRuleOperationsApiService) GetNetworkingVPCFirewallRulesOpera
 VPCFirewallRuleOperationsApiService Get status of asynchronous operations
 This resource retrieves information about the status of asynchronous operations initiated by the snapshots resource. All operations that are either in-flight or completed but not yet queried will be returned.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
 
 @return ListOperationsResponseV1Alpha5
 */
-func (a *VPCFirewallRuleOperationsApiService) ListNetworkingVPCFirewallRulesOperations(ctx context.Context) (ListOperationsResponseV1Alpha5, *http.Response, error) {
+func (a *VPCFirewallRuleOperationsApiService) ListNetworkingVPCFirewallRulesOperations(ctx context.Context, projectId string) (ListOperationsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -168,7 +171,8 @@ func (a *VPCFirewallRuleOperationsApiService) ListNetworkingVPCFirewallRulesOper
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/networking/vpc-firewall-rules/operations"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/vpc-firewall-rules/operations"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
