@@ -11,6 +11,7 @@ package swagger
 type ModelType struct {
 	CpuCores    int64  `json:"cpu_cores"`
 	CpuType     string `json:"cpu_type"`
+	Description string `json:"description"`
 	DiskGb      int64  `json:"disk_gb"`
 	DiskType    string `json:"disk_type"`
 	GpuType     string `json:"gpu_type"`
