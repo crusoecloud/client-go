@@ -31,7 +31,7 @@ VMsApiService Create a new VM instance owned by the logged in user.
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRequestV1Alpha3) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRequestV1Alpha4) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -501,15 +501,15 @@ func (a *VMsApiService) GetInstances(ctx context.Context) (InstancesGetResponseV
 VMsApiService Retrieve information about the types of VMs that are available to purchase along with their prices.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return TypesGetResponse
+@return TypesGetResponseV1Alpha4
 */
-func (a *VMsApiService) GetVMTypes(ctx context.Context) (TypesGetResponse, *http.Response, error) {
+func (a *VMsApiService) GetVMTypes(ctx context.Context) (TypesGetResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue TypesGetResponse
+		localVarReturnValue TypesGetResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -566,7 +566,7 @@ func (a *VMsApiService) GetVMTypes(ctx context.Context) (TypesGetResponse, *http
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v TypesGetResponse
+			var v TypesGetResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -609,7 +609,7 @@ VMsApiService Change the state of a VM the logged in user owns.
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchRequestV1Alpha3, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchRequestV1Alpha4, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
@@ -738,7 +738,7 @@ VMsApiService Attach disks to a VM the logged in user owns.
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body InstancesAttachDiskPostRequest, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body InstancesAttachDiskPostRequestV1Alpha4, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}

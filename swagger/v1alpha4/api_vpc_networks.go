@@ -29,15 +29,15 @@ VPCNetworksApiService Retrieve details for a VPC network that belongs to the log
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param vpcNetworkId
 
-@return VpcNetworksGetResponse
+@return VpcNetworksGetResponseV1Alpha4
 */
-func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId string) (VpcNetworksGetResponse, *http.Response, error) {
+func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId string) (VpcNetworksGetResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcNetworksGetResponse
+		localVarReturnValue VpcNetworksGetResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -95,7 +95,7 @@ func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcNetworksGetResponse
+			var v VpcNetworksGetResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -144,15 +144,15 @@ func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId 
 VPCNetworksApiService Retrieve details about all VPC networks that belong to the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return VpcNetworksGetResponse
+@return VpcNetworksGetResponseV1Alpha4
 */
-func (a *VPCNetworksApiService) GetVPCNetworks(ctx context.Context) (VpcNetworksGetResponse, *http.Response, error) {
+func (a *VPCNetworksApiService) GetVPCNetworks(ctx context.Context) (VpcNetworksGetResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcNetworksGetResponse
+		localVarReturnValue VpcNetworksGetResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -209,7 +209,7 @@ func (a *VPCNetworksApiService) GetVPCNetworks(ctx context.Context) (VpcNetworks
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcNetworksGetResponse
+			var v VpcNetworksGetResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
