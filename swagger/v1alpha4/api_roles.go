@@ -31,15 +31,15 @@ The logged in user must have the permission to create roles within the organizat
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 
-@return RolesPutPostResponse
+@return ProjectsPutPostResponseV1Alpha4
 */
-func (a *RolesApiService) CreateRole(ctx context.Context, body RolesPostRequest) (RolesPutPostResponse, *http.Response, error) {
+func (a *RolesApiService) CreateRole(ctx context.Context, body ProjectsPostRequest) (ProjectsPutPostResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue RolesPutPostResponse
+		localVarReturnValue ProjectsPutPostResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -98,7 +98,7 @@ func (a *RolesApiService) CreateRole(ctx context.Context, body RolesPostRequest)
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v RolesPutPostResponse
+			var v ProjectsPutPostResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -255,20 +255,20 @@ If querying for roles within an organization, the logged in user must be the own
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *RolesApiGetRolesOpts - Optional Parameters:
      * @param "OrgId" (optional.String) -
-@return RolesGetResponse
+@return ListProjectsResponseV1Alpha4
 */
 
 type RolesApiGetRolesOpts struct {
 	OrgId optional.String
 }
 
-func (a *RolesApiService) GetRoles(ctx context.Context, localVarOptionals *RolesApiGetRolesOpts) (RolesGetResponse, *http.Response, error) {
+func (a *RolesApiService) GetRoles(ctx context.Context, localVarOptionals *RolesApiGetRolesOpts) (ListProjectsResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue RolesGetResponse
+		localVarReturnValue ListProjectsResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -328,7 +328,7 @@ func (a *RolesApiService) GetRoles(ctx context.Context, localVarOptionals *Roles
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v RolesGetResponse
+			var v ListProjectsResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -370,15 +370,15 @@ Requests to this resource must contain the json-encoded representation of the ch
   - @param body
   - @param roleId
 
-@return RolesPutPostResponse
+@return ProjectsPutPostResponseV1Alpha4
 */
-func (a *RolesApiService) UpdateRole(ctx context.Context, body RolesPutRequest, roleId string) (RolesPutPostResponse, *http.Response, error) {
+func (a *RolesApiService) UpdateRole(ctx context.Context, body ProjectsPutRequest, roleId string) (ProjectsPutPostResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Put")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue RolesPutPostResponse
+		localVarReturnValue ProjectsPutPostResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -438,7 +438,7 @@ func (a *RolesApiService) UpdateRole(ctx context.Context, body RolesPutRequest, 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v RolesPutPostResponse
+			var v ProjectsPutPostResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

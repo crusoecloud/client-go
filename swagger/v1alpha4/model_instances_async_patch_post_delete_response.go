@@ -8,7 +8,7 @@
  */
 package swagger
 
-// InstancesAsyncPatchPostDeleteResponse is the response type for PATCH, POST, and DELETE requests to the v1alpha2 vms.instances endpoint.
+// InstancesAsyncPatchPostDeleteResponse is the response type for PATCH, POST, and DELETE requests to the v1alpha4 vms.instances endpoint.
 type InstancesAsyncPatchPostDeleteResponse struct {
 	Operation *Operation `json:"operation"`
 }

@@ -13,7 +13,7 @@ type Operation struct {
 	CompletedAt string       `json:"completed_at"`
 	Metadata    *interface{} `json:"metadata"`
 	OperationId string       `json:"operation_id"`
-	Result      *interface{} `json:"result"`
+	Result      *interface{} `json:"result,omitempty"`
 	StartedAt   string       `json:"started_at"`
 	State       string       `json:"state"`
 }

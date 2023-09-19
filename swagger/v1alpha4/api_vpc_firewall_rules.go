@@ -32,7 +32,7 @@ A successful response from this resource will contain the async operation.
 
 @return VpcFirewallRulesPostDeletePatchResponse
 */
-func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPostRequest) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPostRequestV1Alpha4) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -274,15 +274,15 @@ VPCFirewallRulesApiService Retrieve details for a VPC firewall rule that belongs
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param vpcFirewallRuleId
 
-@return VpcFirewallRulesGetResponse
+@return VpcFirewallRulesGetResponseV1Alpha4
 */
-func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, vpcFirewallRuleId string) (VpcFirewallRulesGetResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, vpcFirewallRuleId string) (VpcFirewallRulesGetResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcFirewallRulesGetResponse
+		localVarReturnValue VpcFirewallRulesGetResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -340,7 +340,7 @@ func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, vpc
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcFirewallRulesGetResponse
+			var v VpcFirewallRulesGetResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -389,15 +389,15 @@ func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, vpc
 VPCFirewallRulesApiService Retrieve details about all VPC firewall rules that belong to the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return VpcFirewallRulesGetResponse
+@return VpcFirewallRulesGetResponseV1Alpha4
 */
-func (a *VPCFirewallRulesApiService) GetVPCFirewallRules(ctx context.Context) (VpcFirewallRulesGetResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) GetVPCFirewallRules(ctx context.Context) (VpcFirewallRulesGetResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcFirewallRulesGetResponse
+		localVarReturnValue VpcFirewallRulesGetResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -454,7 +454,7 @@ func (a *VPCFirewallRulesApiService) GetVPCFirewallRules(ctx context.Context) (V
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcFirewallRulesGetResponse
+			var v VpcFirewallRulesGetResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
