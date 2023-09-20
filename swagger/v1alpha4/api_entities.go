@@ -133,7 +133,7 @@ func (a *EntitiesApiService) CreateOrganization(ctx context.Context, body Entiti
 
 /*
 EntitiesApiService Delete an organization owned by the logged in user.
-Delete operations will cascade to roles and VMs, and all members will be removed from the organization.
+Delete operations will cascade to projects and VMs, and all members will be removed from the organization.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param orgId
 */
@@ -231,15 +231,15 @@ func (a *EntitiesApiService) DeleteOrganization(ctx context.Context, orgId strin
 EntitiesApiService Retrieve details about all active organizations the logged in user belongs to.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return EntitiesGetResponse
+@return EntitiesGetResponseV1Alpha4
 */
-func (a *EntitiesApiService) GetOrganizations(ctx context.Context) (EntitiesGetResponse, *http.Response, error) {
+func (a *EntitiesApiService) GetOrganizations(ctx context.Context) (EntitiesGetResponseV1Alpha4, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue EntitiesGetResponse
+		localVarReturnValue EntitiesGetResponseV1Alpha4
 	)
 
 	// create path and map variables
@@ -296,7 +296,7 @@ func (a *EntitiesApiService) GetOrganizations(ctx context.Context) (EntitiesGetR
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v EntitiesGetResponse
+			var v EntitiesGetResponseV1Alpha4
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
