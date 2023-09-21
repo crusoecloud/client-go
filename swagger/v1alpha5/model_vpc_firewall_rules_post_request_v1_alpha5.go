@@ -14,7 +14,6 @@ type VpcFirewallRulesPostRequestV1Alpha5 struct {
 	Destinations     []FirewallRuleObject `json:"destinations"`
 	Direction        string               `json:"direction"`
 	Name             string               `json:"name"`
-	ProjectId        string               `json:"project_id"`
 	Protocols        []string             `json:"protocols"`
 	SourcePorts      []string             `json:"source_ports,omitempty"`
 	Sources          []FirewallRuleObject `json:"sources"`
