@@ -33,7 +33,7 @@ Requires either a disk snapshot ID, or size and location, where size of disk sho
 
 @return DiskPostPatchDeleteResponse
 */
-func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequest, projectId string) (DiskPostPatchDeleteResponse, *http.Response, error) {
+func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequestV1Alpha5, projectId string) (DiskPostPatchDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}

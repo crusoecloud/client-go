@@ -8,8 +8,7 @@
  */
 package swagger
 
-type IbPartitionsPostRequestV1Alpha4 struct {
+type IbPartitionsPostRequestV1Alpha5 struct {
 	IbNetworkId string `json:"ib_network_id"`
 	Name        string `json:"name"`
-	RoleId      string `json:"role_id"`
 }
