@@ -8,6 +8,6 @@
  */
 package swagger
 
-type ListLocationsResponseV1Alpha4 struct {
-	Locations []string `json:"locations"`
+type ListLocationsResponseV1Alpha5 struct {
+	Items []string `json:"items"`
 }
