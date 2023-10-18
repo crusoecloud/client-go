@@ -12,6 +12,7 @@ type Image struct {
 	CreatedAt   string   `json:"created_at"`
 	Description string   `json:"description"`
 	Id          string   `json:"id"`
+	Locations   []string `json:"locations"`
 	Name        string   `json:"name"`
 	Tags        []string `json:"tags"`
 }
