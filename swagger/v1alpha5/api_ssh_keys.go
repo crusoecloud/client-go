@@ -250,15 +250,15 @@ func (a *SSHKeysApiService) DeleteSSHKey(ctx context.Context, id string) (*http.
 SSHKeysApiService Retrieve the list of SSH public keys registered to the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return ListSshKeysResponseV1Alpha4
+@return ListSshKeysResponseV1Alpha5
 */
-func (a *SSHKeysApiService) GetSSHKeys(ctx context.Context) (ListSshKeysResponseV1Alpha4, *http.Response, error) {
+func (a *SSHKeysApiService) GetSSHKeys(ctx context.Context) (ListSshKeysResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListSshKeysResponseV1Alpha4
+		localVarReturnValue ListSshKeysResponseV1Alpha5
 	)
 
 	// create path and map variables
@@ -315,7 +315,7 @@ func (a *SSHKeysApiService) GetSSHKeys(ctx context.Context) (ListSshKeysResponse
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListSshKeysResponseV1Alpha4
+			var v ListSshKeysResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

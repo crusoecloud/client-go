@@ -8,6 +8,6 @@
  */
 package swagger
 
-type ListSshKeysResponseV1Alpha4 struct {
-	SshKeys []SshKey `json:"ssh_keys"`
+type ListEntitiesResponseV1Alpha5 struct {
+	Items []Entity `json:"items"`
 }
