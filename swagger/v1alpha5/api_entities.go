@@ -231,15 +231,15 @@ func (a *EntitiesApiService) DeleteOrganization(ctx context.Context, orgId strin
 EntitiesApiService Retrieve details about all active organizations the logged in user belongs to.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return EntitiesGetResponseV1Alpha4
+@return ListEntitiesResponseV1Alpha5
 */
-func (a *EntitiesApiService) GetOrganizations(ctx context.Context) (EntitiesGetResponseV1Alpha4, *http.Response, error) {
+func (a *EntitiesApiService) GetOrganizations(ctx context.Context) (ListEntitiesResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue EntitiesGetResponseV1Alpha4
+		localVarReturnValue ListEntitiesResponseV1Alpha5
 	)
 
 	// create path and map variables
@@ -296,7 +296,7 @@ func (a *EntitiesApiService) GetOrganizations(ctx context.Context) (EntitiesGetR
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v EntitiesGetResponseV1Alpha4
+			var v ListEntitiesResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
