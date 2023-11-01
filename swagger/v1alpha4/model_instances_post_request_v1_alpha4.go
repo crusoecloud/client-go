@@ -24,4 +24,5 @@ type InstancesPostRequestV1Alpha4 struct {
 	ShutdownScript    string             `json:"shutdown_script,omitempty"`
 	SshPublicKey      string             `json:"ssh_public_key"`
 	StartupScript     string             `json:"startup_script,omitempty"`
+	Subnet            string             `json:"subnet,omitempty"`
 }
