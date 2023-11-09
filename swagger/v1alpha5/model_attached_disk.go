@@ -10,6 +10,7 @@ package swagger
 
 type AttachedDisk struct {
 	AttachedTo   []VmAttachment `json:"attached_to"`
+	BlockSize    int64          `json:"block_size"`
 	CreatedAt    string         `json:"created_at"`
 	Id           string         `json:"id"`
 	IsBootDisk   bool           `json:"is_boot_disk"`
