@@ -23,4 +23,5 @@ type InstanceV1Alpha5 struct {
 	ProjectId           string               `json:"project_id"`
 	SshDestination      string               `json:"ssh_destination"`
 	State               string               `json:"state"`
+	UpdatedAt           string               `json:"updated_at"`
 }

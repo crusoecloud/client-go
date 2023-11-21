@@ -32,7 +32,7 @@ VMsApiService Create a new VM instance owned by the logged in user.
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRequestV1Alpha4, projectId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRequestV1Alpha5, projectId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -620,7 +620,7 @@ VMsApiService Change the state of a VM the logged in user owns.
 
 @return InstancesAsyncPatchPostDeleteResponse
 */
-func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchRequestV1Alpha4, projectId string, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchRequest, projectId string, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
