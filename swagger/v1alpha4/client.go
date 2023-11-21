@@ -78,6 +78,8 @@ type APIClient struct {
 
 	TokensApi *TokensApiService
 
+	UsageApi *UsageApiService
+
 	VMOperationsApi *VMOperationsApiService
 
 	VMsApi *VMsApiService
@@ -124,6 +126,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.SnapshotOperationsApi = (*SnapshotOperationsApiService)(&c.common)
 	c.SnapshotsApi = (*SnapshotsApiService)(&c.common)
 	c.TokensApi = (*TokensApiService)(&c.common)
+	c.UsageApi = (*UsageApiService)(&c.common)
 	c.VMOperationsApi = (*VMOperationsApiService)(&c.common)
 	c.VMsApi = (*VMsApiService)(&c.common)
 	c.VPCFirewallRuleOperationsApi = (*VPCFirewallRuleOperationsApiService)(&c.common)

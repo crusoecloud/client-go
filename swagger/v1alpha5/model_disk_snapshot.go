@@ -9,6 +9,7 @@
 package swagger
 
 type DiskSnapshot struct {
+	BlockSize   int64  `json:"block_size"`
 	CreatedAt   string `json:"created_at"`
 	CreatedFrom string `json:"created_from"`
 	Id          string `json:"id"`

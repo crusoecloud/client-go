@@ -21,34 +21,44 @@ var (
 	_ context.Context
 )
 
-type SSHKeysApiService service
+type UsageApiService service
 
 /*
-SSHKeysApiService Register a new SSH public key to the logged in user.
-A successful response from this resource wil contain the created SSH key details.
+UsageApiService Get project-level usage for products in Crusoe Cloud.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param orgId
+  - @param projects
+  - @param resourceTypes
+  - @param regions
+  - @param startDate
+  - @param endDate
 
-@return CreateSshKeyResponse
+@return UsageByProjectGetResponse
 */
-func (a *SSHKeysApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyRequest) (CreateSshKeyResponse, *http.Response, error) {
+func (a *UsageApiService) GetUsage(ctx context.Context, orgId string, projects []string, resourceTypes []string, regions []string, startDate string, endDate string) (UsageByProjectGetResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod  = strings.ToUpper("Post")
+		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue CreateSshKeyResponse
+		localVarReturnValue UsageByProjectGetResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/users/ssh-keys"
+	localVarPath := a.client.cfg.BasePath + "/organizations/usage"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	localVarQueryParams.Add("org_id", parameterToString(orgId, ""))
+	localVarQueryParams.Add("projects", parameterToString(projects, "csv"))
+	localVarQueryParams.Add("resource_types", parameterToString(resourceTypes, "csv"))
+	localVarQueryParams.Add("regions", parameterToString(regions, "csv"))
+	localVarQueryParams.Add("start_date", parameterToString(startDate, ""))
+	localVarQueryParams.Add("end_date", parameterToString(endDate, ""))
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -64,8 +74,6 @@ func (a *SSHKeysApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyR
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	// body params
-	localVarPostBody = &body
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -96,7 +104,7 @@ func (a *SSHKeysApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyR
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CreateSshKeyResponse
+			var v UsageByProjectGetResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -106,16 +114,6 @@ func (a *SSHKeysApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyR
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 400 {
-			var v ErrorBody
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 401 {
 			var v ErrorBody
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -142,26 +140,38 @@ func (a *SSHKeysApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyR
 }
 
 /*
-SSHKeysApiService Delete an SSH public key registered to the logged in user.
+UsageApiService Get resource-level usage for products in Crusoe Cloud.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param id
+  - @param orgId
+  - @param projects
+  - @param resources
+  - @param resourceTypes
+  - @param regions
+  - @param startDate
+  - @param endDate
 */
-func (a *SSHKeysApiService) DeleteSSHKey(ctx context.Context, id string) (*http.Response, error) {
+func (a *UsageApiService) GetUsageExport(ctx context.Context, orgId string, projects []string, resources []string, resourceTypes []string, regions []string, startDate string, endDate string) (*http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Delete")
+		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/users/ssh-keys"
+	localVarPath := a.client.cfg.BasePath + "/organizations/usage/export"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("id", parameterToString(id, ""))
+	localVarQueryParams.Add("org_id", parameterToString(orgId, ""))
+	localVarQueryParams.Add("projects", parameterToString(projects, "csv"))
+	localVarQueryParams.Add("resources", parameterToString(resources, "csv"))
+	localVarQueryParams.Add("resource_types", parameterToString(resourceTypes, "csv"))
+	localVarQueryParams.Add("regions", parameterToString(regions, "csv"))
+	localVarQueryParams.Add("start_date", parameterToString(startDate, ""))
+	localVarQueryParams.Add("end_date", parameterToString(endDate, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -172,7 +182,7 @@ func (a *SSHKeysApiService) DeleteSSHKey(ctx context.Context, id string) (*http.
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json"}
+	localVarHttpHeaderAccepts := []string{"text/csv"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -210,26 +220,6 @@ func (a *SSHKeysApiService) DeleteSSHKey(ctx context.Context, id string) (*http.
 			newErr.model = v
 			return localVarHttpResponse, newErr
 		}
-		if localVarHttpResponse.StatusCode == 401 {
-			var v ErrorBody
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 404 {
-			var v ErrorBody
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
 		if localVarHttpResponse.StatusCode == 500 {
 			var v ErrorBody
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
@@ -247,27 +237,29 @@ func (a *SSHKeysApiService) DeleteSSHKey(ctx context.Context, id string) (*http.
 }
 
 /*
-SSHKeysApiService Retrieve the list of SSH public keys registered to the logged in user.
+UsageApiService Get options which exist for filters for /usage and /usage/export routes.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param orgId
 
-@return ListSshKeysResponseV1Alpha5
+@return UsageOptions
 */
-func (a *SSHKeysApiService) GetSSHKeys(ctx context.Context) (ListSshKeysResponseV1Alpha5, *http.Response, error) {
+func (a *UsageApiService) GetUsageOptions(ctx context.Context, orgId string) (UsageOptions, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListSshKeysResponseV1Alpha5
+		localVarReturnValue UsageOptions
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/users/ssh-keys"
+	localVarPath := a.client.cfg.BasePath + "/organizations/usage/options"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	localVarQueryParams.Add("org_id", parameterToString(orgId, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -315,17 +307,7 @@ func (a *SSHKeysApiService) GetSSHKeys(ctx context.Context) (ListSshKeysResponse
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListSshKeysResponseV1Alpha5
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 401 {
-			var v ErrorBody
+			var v UsageOptions
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

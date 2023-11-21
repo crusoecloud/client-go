@@ -9,9 +9,12 @@
 package swagger
 
 type ProspectPostRequest struct {
-	Company string `json:"company"`
-	Email   string `json:"email"`
-	Name    string `json:"name"`
-	Source  string `json:"source"`
-	UseCase string `json:"use_case"`
+	Company            string `json:"company"`
+	Email              string `json:"email"`
+	ExpectedCapacity   string `json:"expected_capacity"`
+	ExpectedCommitment string `json:"expected_commitment"`
+	Name               string `json:"name"`
+	Referral           string `json:"referral"`
+	Source             string `json:"source"`
+	UseCase            string `json:"use_case"`
 }

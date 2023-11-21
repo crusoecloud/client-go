@@ -32,7 +32,7 @@ IBPartitionsApiService Create a new Infiniband partition owned by the logged in 
 
 @return IbPartition
 */
-func (a *IBPartitionsApiService) CreateIBPartition(ctx context.Context, body IbPartitionsPostRequestV1Alpha4, projectId string) (IbPartition, *http.Response, error) {
+func (a *IBPartitionsApiService) CreateIBPartition(ctx context.Context, body IbPartitionsPostRequestV1Alpha5, projectId string) (IbPartition, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
