@@ -9,6 +9,7 @@
 package swagger
 
 type DisksPostRequestV1Alpha5 struct {
+	BlockSize  int64  `json:"block_size,omitempty"`
 	Location   string `json:"location,omitempty"`
 	Name       string `json:"name"`
 	Size       string `json:"size,omitempty"`

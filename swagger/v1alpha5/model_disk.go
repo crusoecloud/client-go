@@ -10,6 +10,7 @@ package swagger
 
 type Disk struct {
 	AttachedTo   []VmAttachment `json:"attached_to"`
+	BlockSize    int64          `json:"block_size"`
 	CreatedAt    string         `json:"created_at"`
 	Id           string         `json:"id"`
 	Location     string         `json:"location"`
