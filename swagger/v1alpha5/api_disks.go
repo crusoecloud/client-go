@@ -280,15 +280,15 @@ Size of disk will be in gibibytes (GiB)
   - @param projectId
   - @param diskId
 
-@return Disk
+@return DiskV1Alpha5
 */
-func (a *DisksApiService) GetDisk(ctx context.Context, projectId string, diskId string) (Disk, *http.Response, error) {
+func (a *DisksApiService) GetDisk(ctx context.Context, projectId string, diskId string) (DiskV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue Disk
+		localVarReturnValue DiskV1Alpha5
 	)
 
 	// create path and map variables
@@ -347,7 +347,7 @@ func (a *DisksApiService) GetDisk(ctx context.Context, projectId string, diskId 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v Disk
+			var v DiskV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

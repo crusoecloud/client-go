@@ -11,4 +11,5 @@ package swagger
 type DiskAttachment struct {
 	AttachmentType string `json:"attachment_type"`
 	DiskId         string `json:"disk_id"`
+	Mode           string `json:"mode"`
 }
