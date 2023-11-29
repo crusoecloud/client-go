@@ -12,15 +12,14 @@ package swagger
 type InstancesPostRequestV1Alpha5 struct {
 	CommitmentPeriod int64 `json:"commitment_period,omitempty"`
 	// nolint:lll // DiskAttachments are large
-	Disks             []DiskAttachment   `json:"disks,omitempty"`
-	IbPartitionId     string             `json:"ib_partition_id,omitempty"`
-	Image             string             `json:"image,omitempty"`
-	Location          string             `json:"location,omitempty"`
-	Name              string             `json:"name"`
-	NetworkInterfaces []NetworkInterface `json:"network_interfaces,omitempty"`
-	ProductName       string             `json:"product_name"`
-	ShutdownScript    string             `json:"shutdown_script,omitempty"`
-	SshPublicKey      string             `json:"ssh_public_key"`
-	StartupScript     string             `json:"startup_script,omitempty"`
-	Subnet            string             `json:"subnet,omitempty"`
+	Disks               []DiskAttachment            `json:"disks,omitempty"`
+	HostChannelAdapters []PartialHostChannelAdapter `json:"host_channel_adapters,omitempty"`
+	Image               string                      `json:"image,omitempty"`
+	Location            string                      `json:"location,omitempty"`
+	Name                string                      `json:"name"`
+	NetworkInterfaces   []NetworkInterface          `json:"network_interfaces,omitempty"`
+	ShutdownScript      string                      `json:"shutdown_script,omitempty"`
+	SshPublicKey        string                      `json:"ssh_public_key"`
+	StartupScript       string                      `json:"startup_script,omitempty"`
+	Type_               string                      `json:"type"`
 }

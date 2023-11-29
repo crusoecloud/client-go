@@ -9,5 +9,5 @@
 package swagger
 
 type ListDisksResponseV1Alpha5 struct {
-	Items []Disk `json:"items"`
+	Items []DiskV1Alpha5 `json:"items"`
 }
