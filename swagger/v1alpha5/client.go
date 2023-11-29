@@ -88,6 +88,8 @@ type APIClient struct {
 
 	VPCFirewallRulesApi *VPCFirewallRulesApiService
 
+	VPCNetworkOperationsApi *VPCNetworkOperationsApiService
+
 	VPCNetworksApi *VPCNetworksApiService
 
 	VPCSubnetsApi *VPCSubnetsApiService
@@ -131,6 +133,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.VMsApi = (*VMsApiService)(&c.common)
 	c.VPCFirewallRuleOperationsApi = (*VPCFirewallRuleOperationsApiService)(&c.common)
 	c.VPCFirewallRulesApi = (*VPCFirewallRulesApiService)(&c.common)
+	c.VPCNetworkOperationsApi = (*VPCNetworkOperationsApiService)(&c.common)
 	c.VPCNetworksApi = (*VPCNetworksApiService)(&c.common)
 	c.VPCSubnetsApi = (*VPCSubnetsApiService)(&c.common)
 
