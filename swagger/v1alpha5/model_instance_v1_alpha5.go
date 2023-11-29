@@ -19,9 +19,9 @@ type InstanceV1Alpha5 struct {
 	Location            string                 `json:"location"`
 	Name                string                 `json:"name"`
 	NetworkInterfaces   []NetworkInterface     `json:"network_interfaces"`
-	ProductName         string                 `json:"product_name"`
 	ProjectId           string                 `json:"project_id"`
 	SshDestination      string                 `json:"ssh_destination"`
 	State               string                 `json:"state"`
+	Type_               string                 `json:"type"`
 	UpdatedAt           string                 `json:"updated_at"`
 }
