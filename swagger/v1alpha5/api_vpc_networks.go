@@ -33,7 +33,7 @@ A successful response from this resource will contain information regarding the 
 
 @return VpcNetworkPostResponse
 */
-func (a *VPCNetworksApiService) CreateVPCNetwork(ctx context.Context, body VpcNetworkPostRequest, projectId string) (VpcNetworkPostResponse, *http.Response, error) {
+func (a *VPCNetworksApiService) CreateVPCNetwork(ctx context.Context, body VpcSubnetPostRequest, projectId string) (VpcNetworkPostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
