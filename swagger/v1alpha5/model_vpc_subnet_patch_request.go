@@ -8,8 +8,6 @@
  */
 package swagger
 
-type Capacity struct {
-	Location    string `json:"location"`
-	ProductName string `json:"product_name,omitempty"`
-	Quantity    int32  `json:"quantity"`
+type VpcSubnetPatchRequest struct {
+	Name string `json:"name"`
 }

@@ -8,6 +8,8 @@
  */
 package swagger
 
-type ListCapacitiesResponseV1Alpha4 struct {
-	Capacities []CapacityV1Alpha4 `json:"capacities"`
+type CapacityV1Alpha4 struct {
+	Location    string `json:"location"`
+	ProductName string `json:"product_name,omitempty"`
+	Quantity    int32  `json:"quantity"`
 }
