@@ -10,8 +10,7 @@ package swagger
 
 // InstancesPostRequestV1Alpha5 is the request type for POST requests to the vms.instances endpoint.
 type InstancesPostRequestV1Alpha5 struct {
-	CommitmentPeriod int64 `json:"commitment_period,omitempty"`
-	// nolint:lll // DiskAttachments are large
+	CommitmentPeriod    int64                       `json:"commitment_period,omitempty"`
 	Disks               []DiskAttachment            `json:"disks,omitempty"`
 	HostChannelAdapters []PartialHostChannelAdapter `json:"host_channel_adapters,omitempty"`
 	Image               string                      `json:"image,omitempty"`

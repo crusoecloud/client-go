@@ -28,11 +28,12 @@ type VPCSubnetsApiService service
 VPCSubnetsApiService Create a new VPC subnet owned by the logged in user.
 A successful response from this resource will contain information regarding the created subnet.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
   - @param projectId
 
 @return VpcSubnetPostResponse
 */
-func (a *VPCSubnetsApiService) CreateVPCSubnet(ctx context.Context, projectId string) (VpcSubnetPostResponse, *http.Response, error) {
+func (a *VPCSubnetsApiService) CreateVPCSubnet(ctx context.Context, body VpcSubnetPostRequest, projectId string) (VpcSubnetPostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -50,7 +51,7 @@ func (a *VPCSubnetsApiService) CreateVPCSubnet(ctx context.Context, projectId st
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{}
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -66,6 +67,8 @@ func (a *VPCSubnetsApiService) CreateVPCSubnet(ctx context.Context, projectId st
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
+	// body params
+	localVarPostBody = &body
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err

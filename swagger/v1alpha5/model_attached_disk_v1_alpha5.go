@@ -9,16 +9,15 @@
 package swagger
 
 type AttachedDiskV1Alpha5 struct {
-	AttachedTo     []VmAttachmentV1Alpha5 `json:"attached_to"`
-	AttachmentType string                 `json:"attachment_type"`
-	BlockSize      int64                  `json:"block_size"`
-	CreatedAt      string                 `json:"created_at"`
-	Id             string                 `json:"id"`
-	Location       string                 `json:"location"`
-	Mode           string                 `json:"mode"`
-	Name           string                 `json:"name"`
-	SerialNumber   string                 `json:"serial_number"`
-	Size           string                 `json:"size"`
-	Type_          string                 `json:"type"`
-	UpdatedAt      string                 `json:"updated_at"`
+	AttachmentType string `json:"attachment_type"`
+	BlockSize      int64  `json:"block_size"`
+	CreatedAt      string `json:"created_at"`
+	Id             string `json:"id"`
+	Location       string `json:"location"`
+	Mode           string `json:"mode"`
+	Name           string `json:"name"`
+	SerialNumber   string `json:"serial_number"`
+	Size           string `json:"size"`
+	Type_          string `json:"type"`
+	UpdatedAt      string `json:"updated_at"`
 }
