@@ -9,5 +9,5 @@
 package swagger
 
 type ListCapacitiesResponseV1Alpha5 struct {
-	Items []Capacity `json:"items"`
+	Items []CapacityV1Alpha5 `json:"items"`
 }
