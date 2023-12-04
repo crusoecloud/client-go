@@ -29,21 +29,13 @@ type VPCNetworkOperationsApiService service
 /*
 VPCNetworkOperationsApiService Get status of a single asynchronous operation
 This resource retrieves information about the status of an asynchronous operation initiated by the VPC Network resource. Only information about the operation specified in the path will be returned, or an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged in user, or has expired.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param operationId
- * @param optional nil or *VPCNetworkOperationsApiGetNetworkingVPCNetworksOperationOpts - Optional Parameters:
-     * @param "ResourceId" (optional.String) -
-     * @param "State" (optional.Interface of []string) -
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
+  - @param operationId
+
 @return Operation
 */
-
-type VPCNetworkOperationsApiGetNetworkingVPCNetworksOperationOpts struct {
-	ResourceId optional.String
-	State      optional.Interface
-}
-
-func (a *VPCNetworkOperationsApiService) GetNetworkingVPCNetworksOperation(ctx context.Context, projectId string, operationId string, localVarOptionals *VPCNetworkOperationsApiGetNetworkingVPCNetworksOperationOpts) (Operation, *http.Response, error) {
+func (a *VPCNetworkOperationsApiService) GetNetworkingVPCNetworksOperation(ctx context.Context, projectId string, operationId string) (Operation, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -61,12 +53,6 @@ func (a *VPCNetworkOperationsApiService) GetNetworkingVPCNetworksOperation(ctx c
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.ResourceId.IsSet() {
-		localVarQueryParams.Add("resource_id", parameterToString(localVarOptionals.ResourceId.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
-		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), "csv"))
-	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -172,12 +158,20 @@ func (a *VPCNetworkOperationsApiService) GetNetworkingVPCNetworksOperation(ctx c
 /*
 VPCNetworkOperationsApiService Get status of asynchronous operations
 This resource retrieves information about the status of asynchronous operations initiated by the VPC Networks resource. All operations that are either in-flight or completed but not yet queried will be returned.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param projectId
+ * @param optional nil or *VPCNetworkOperationsApiListNetworkingVPCNetworksOperationsOpts - Optional Parameters:
+     * @param "ResourceId" (optional.String) -
+     * @param "State" (optional.Interface of []string) -
 @return ListOperationsResponseV1Alpha5
 */
-func (a *VPCNetworkOperationsApiService) ListNetworkingVPCNetworksOperations(ctx context.Context, projectId string) (ListOperationsResponseV1Alpha5, *http.Response, error) {
+
+type VPCNetworkOperationsApiListNetworkingVPCNetworksOperationsOpts struct {
+	ResourceId optional.String
+	State      optional.Interface
+}
+
+func (a *VPCNetworkOperationsApiService) ListNetworkingVPCNetworksOperations(ctx context.Context, projectId string, localVarOptionals *VPCNetworkOperationsApiListNetworkingVPCNetworksOperationsOpts) (ListOperationsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -194,6 +188,12 @@ func (a *VPCNetworkOperationsApiService) ListNetworkingVPCNetworksOperations(ctx
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.ResourceId.IsSet() {
+		localVarQueryParams.Add("resource_id", parameterToString(localVarOptionals.ResourceId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
+		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), "csv"))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
