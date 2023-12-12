@@ -30,15 +30,15 @@ A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 
-@return VpcFirewallRulesPostDeletePatchResponse
+@return AsyncOperationResponse
 */
-func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPostRequestV1Alpha4) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPostRequestV1Alpha4) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcFirewallRulesPostDeletePatchResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -97,7 +97,7 @@ func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcFirewallRulesPostDeletePatchResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -158,15 +158,15 @@ A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param vpcFirewallRuleId
 
-@return VpcFirewallRulesPostDeletePatchResponse
+@return AsyncOperationResponse
 */
-func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, vpcFirewallRuleId string) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, vpcFirewallRuleId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcFirewallRulesPostDeletePatchResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -224,7 +224,7 @@ func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcFirewallRulesPostDeletePatchResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -506,15 +506,15 @@ A successful response from this resource will contain the async operation.
   - @param body
   - @param vpcFirewallRuleId
 
-@return VpcFirewallRulesPostDeletePatchResponse
+@return AsyncOperationResponse
 */
-func (a *VPCFirewallRulesApiService) PatchVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPatchRequest, vpcFirewallRuleId string) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) PatchVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPatchRequest, vpcFirewallRuleId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcFirewallRulesPostDeletePatchResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -574,7 +574,7 @@ func (a *VPCFirewallRulesApiService) PatchVPCFirewallRule(ctx context.Context, b
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcFirewallRulesPostDeletePatchResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

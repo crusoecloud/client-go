@@ -161,15 +161,15 @@ A successful response from this resource will contain the async operation.
   - @param projectId
   - @param vpcSubnetId
 
-@return VpcSubnetPatchDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *VPCSubnetsApiService) DeleteVPCSubnet(ctx context.Context, projectId string, vpcSubnetId string) (VpcSubnetPatchDeleteResponse, *http.Response, error) {
+func (a *VPCSubnetsApiService) DeleteVPCSubnet(ctx context.Context, projectId string, vpcSubnetId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcSubnetPatchDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -228,7 +228,7 @@ func (a *VPCSubnetsApiService) DeleteVPCSubnet(ctx context.Context, projectId st
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcSubnetPatchDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -535,15 +535,15 @@ A successful response from this resource will contain the async operation.
   - @param projectId
   - @param vpcSubnetId
 
-@return VpcSubnetPatchDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *VPCSubnetsApiService) PatchVPCSubnet(ctx context.Context, body VpcSubnetPatchRequest, projectId string, vpcSubnetId string) (VpcSubnetPatchDeleteResponse, *http.Response, error) {
+func (a *VPCSubnetsApiService) PatchVPCSubnet(ctx context.Context, body VpcSubnetPatchRequest, projectId string, vpcSubnetId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcSubnetPatchDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -604,7 +604,7 @@ func (a *VPCSubnetsApiService) PatchVPCSubnet(ctx context.Context, body VpcSubne
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcSubnetPatchDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
