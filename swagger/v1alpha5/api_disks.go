@@ -31,15 +31,15 @@ Requires either a disk snapshot ID, or size and location, where size of disk sho
   - @param body
   - @param projectId
 
-@return DiskPostPatchDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequestV1Alpha5, projectId string) (DiskPostPatchDeleteResponse, *http.Response, error) {
+func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequestV1Alpha5, projectId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue DiskPostPatchDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -99,7 +99,7 @@ func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequestV
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v DiskPostPatchDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -161,15 +161,15 @@ A successful response from this resource will contain the async operation.
   - @param projectId
   - @param diskId
 
-@return DiskPostPatchDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *DisksApiService) DeleteDisk(ctx context.Context, projectId string, diskId string) (DiskPostPatchDeleteResponse, *http.Response, error) {
+func (a *DisksApiService) DeleteDisk(ctx context.Context, projectId string, diskId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue DiskPostPatchDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -228,7 +228,7 @@ func (a *DisksApiService) DeleteDisk(ctx context.Context, projectId string, disk
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v DiskPostPatchDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -517,15 +517,15 @@ Size should be in gibibytes (GiB) or tebibytes (TiB) in the format [Size][Unit].
   - @param projectId
   - @param diskId
 
-@return DiskPostPatchDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *DisksApiService) ResizeDisk(ctx context.Context, body DisksPatchRequest, projectId string, diskId string) (DiskPostPatchDeleteResponse, *http.Response, error) {
+func (a *DisksApiService) ResizeDisk(ctx context.Context, body DisksPatchRequest, projectId string, diskId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue DiskPostPatchDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -586,7 +586,7 @@ func (a *DisksApiService) ResizeDisk(ctx context.Context, body DisksPatchRequest
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v DiskPostPatchDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

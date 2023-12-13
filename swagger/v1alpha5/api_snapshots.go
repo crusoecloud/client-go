@@ -31,15 +31,15 @@ A successful response from this resource will contain the async operation.
   - @param body
   - @param projectId
 
-@return DiskSnapshotPostDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *SnapshotsApiService) CreateDiskSnapshot(ctx context.Context, body DiskSnapshotPostRequest, projectId string) (DiskSnapshotPostDeleteResponse, *http.Response, error) {
+func (a *SnapshotsApiService) CreateDiskSnapshot(ctx context.Context, body DiskSnapshotPostRequest, projectId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue DiskSnapshotPostDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -99,7 +99,7 @@ func (a *SnapshotsApiService) CreateDiskSnapshot(ctx context.Context, body DiskS
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v DiskSnapshotPostDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -151,15 +151,15 @@ A successful response from this resource will contain the async operation.
   - @param projectId
   - @param snapshotId
 
-@return DiskSnapshotPostDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *SnapshotsApiService) DeleteDiskSnapshot(ctx context.Context, projectId string, snapshotId string) (DiskSnapshotPostDeleteResponse, *http.Response, error) {
+func (a *SnapshotsApiService) DeleteDiskSnapshot(ctx context.Context, projectId string, snapshotId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue DiskSnapshotPostDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -218,7 +218,7 @@ func (a *SnapshotsApiService) DeleteDiskSnapshot(ctx context.Context, projectId 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v DiskSnapshotPostDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

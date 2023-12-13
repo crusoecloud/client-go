@@ -30,15 +30,15 @@ VMsApiService Create a new VM instance owned by the logged in user.
   - @param body
   - @param projectId
 
-@return InstancesAsyncPatchPostDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRequestV1Alpha5, projectId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRequestV1Alpha5, projectId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesAsyncPatchPostDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -98,7 +98,7 @@ func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRe
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesAsyncPatchPostDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -159,15 +159,15 @@ VMsApiService Delete a VM that the logged in user owns.
   - @param projectId
   - @param vmId
 
-@return InstancesAsyncPatchPostDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *VMsApiService) DeleteInstance(ctx context.Context, projectId string, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) DeleteInstance(ctx context.Context, projectId string, vmId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesAsyncPatchPostDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -226,7 +226,7 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, projectId string, vm
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesAsyncPatchPostDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -618,15 +618,15 @@ VMsApiService Change the state of a VM the logged in user owns.
   - @param projectId
   - @param vmId
 
-@return InstancesAsyncPatchPostDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchRequestV1Alpha5, projectId string, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchRequestV1Alpha5, projectId string, vmId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesAsyncPatchPostDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -687,7 +687,7 @@ func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchR
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesAsyncPatchPostDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -749,15 +749,15 @@ VMsApiService Attach disks to a VM the logged in user owns.
   - @param projectId
   - @param vmId
 
-@return InstancesAsyncPatchPostDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body InstancesAttachDiskPostRequestV1Alpha5, projectId string, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body InstancesAttachDiskPostRequestV1Alpha5, projectId string, vmId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesAsyncPatchPostDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -818,7 +818,7 @@ func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body Inst
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesAsyncPatchPostDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -880,15 +880,15 @@ VMsApiService Detach disks from a VM the logged in user owns.
   - @param projectId
   - @param vmId
 
-@return InstancesAsyncPatchPostDeleteResponse
+@return AsyncOperationResponse
 */
-func (a *VMsApiService) UpdateInstanceDetachDisks(ctx context.Context, body InstancesDetachDiskPostRequest, projectId string, vmId string) (InstancesAsyncPatchPostDeleteResponse, *http.Response, error) {
+func (a *VMsApiService) UpdateInstanceDetachDisks(ctx context.Context, body InstancesDetachDiskPostRequest, projectId string, vmId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InstancesAsyncPatchPostDeleteResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -949,7 +949,7 @@ func (a *VMsApiService) UpdateInstanceDetachDisks(ctx context.Context, body Inst
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InstancesAsyncPatchPostDeleteResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

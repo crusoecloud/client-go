@@ -31,15 +31,15 @@ A successful response from this resource will contain the async operation.
   - @param body
   - @param projectId
 
-@return VpcFirewallRulesPostDeletePatchResponse
+@return AsyncOperationResponse
 */
-func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPostRequestV1Alpha5, projectId string) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPostRequestV1Alpha5, projectId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcFirewallRulesPostDeletePatchResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -99,7 +99,7 @@ func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcFirewallRulesPostDeletePatchResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -161,15 +161,15 @@ A successful response from this resource will contain the async operation.
   - @param projectId
   - @param vpcFirewallRuleId
 
-@return VpcFirewallRulesPostDeletePatchResponse
+@return AsyncOperationResponse
 */
-func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, projectId string, vpcFirewallRuleId string) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, projectId string, vpcFirewallRuleId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcFirewallRulesPostDeletePatchResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -228,7 +228,7 @@ func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcFirewallRulesPostDeletePatchResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -515,15 +515,15 @@ A successful response from this resource will contain the async operation.
   - @param projectId
   - @param vpcFirewallRuleId
 
-@return VpcFirewallRulesPostDeletePatchResponse
+@return AsyncOperationResponse
 */
-func (a *VPCFirewallRulesApiService) PatchVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPatchRequest, projectId string, vpcFirewallRuleId string) (VpcFirewallRulesPostDeletePatchResponse, *http.Response, error) {
+func (a *VPCFirewallRulesApiService) PatchVPCFirewallRule(ctx context.Context, body VpcFirewallRulesPatchRequest, projectId string, vpcFirewallRuleId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue VpcFirewallRulesPostDeletePatchResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -584,7 +584,7 @@ func (a *VPCFirewallRulesApiService) PatchVPCFirewallRule(ctx context.Context, b
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v VpcFirewallRulesPostDeletePatchResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
