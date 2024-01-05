@@ -64,6 +64,8 @@ type APIClient struct {
 
 	ImagesApi *ImagesApiService
 
+	LoadBalancerOperationsApi *LoadBalancerOperationsApiService
+
 	LoadBalancersApi *LoadBalancersApiService
 
 	LocationsApi *LocationsApiService
@@ -125,6 +127,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.IBPartitionsApi = (*IBPartitionsApiService)(&c.common)
 	c.IdentitiesApi = (*IdentitiesApiService)(&c.common)
 	c.ImagesApi = (*ImagesApiService)(&c.common)
+	c.LoadBalancerOperationsApi = (*LoadBalancerOperationsApiService)(&c.common)
 	c.LoadBalancersApi = (*LoadBalancersApiService)(&c.common)
 	c.LocationsApi = (*LocationsApiService)(&c.common)
 	c.ProjectsApi = (*ProjectsApiService)(&c.common)
