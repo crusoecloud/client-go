@@ -1,12 +1,12 @@
 # default = everyone is codeowner
 * @crusoeenergy/island
 
-.gitlab/CODEOWNERS @lanwall12 @nitper
+.gitlab/CODEOWNERS @lanwall12 @nitper @bsherrycrusoe @ksosnowski3 @dpattishall
 
 # more restrictive ownership for adding dependencies and changing ci/build
-.gitlab-ci.yml     @lanwall12 @nitper
-.golangci-lint.yml @lanwall12 @nitper
-go.mod             @lanwall12 @nitper
-Makefile           @lanwall12 @nitper
-Dockerfile         @lanwall12 @nitper
-Dockerfile.*       @lanwall12 @nitper
+.gitlab-ci.yml     @lanwall12 @nitper @crusoeenergy/island/ccx
+.golangci-lint.yml @lanwall12 @nitper @crusoeenergy/island/ccx
+go.mod             @lanwall12 @nitper @crusoeenergy/island/ccx
+Makefile           @lanwall12 @nitper @crusoeenergy/island/ccx
+Dockerfile         @lanwall12 @nitper @crusoeenergy/island/ccx
+Dockerfile.*       @lanwall12 @nitper @crusoeenergy/island/ccx
