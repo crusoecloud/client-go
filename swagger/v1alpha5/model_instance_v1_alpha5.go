@@ -14,6 +14,7 @@ type InstanceV1Alpha5 struct {
 	CommitmentPeriod    int64                  `json:"commitment_period"`
 	CreatedAt           string                 `json:"created_at"`
 	Disks               []AttachedDiskV1Alpha5 `json:"disks"`
+	Fqdn                string                 `json:"fqdn"`
 	HostChannelAdapters []HostChannelAdapter   `json:"host_channel_adapters"`
 	Id                  string                 `json:"id"`
 	Location            string                 `json:"location"`
