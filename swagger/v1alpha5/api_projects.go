@@ -169,13 +169,13 @@ func (a *ProjectsApiService) DeleteProject(ctx context.Context, projectId string
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/projects"
+	localVarPath := a.client.cfg.BasePath + "/organizations/projects/{project_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("project_id", parameterToString(projectId, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
