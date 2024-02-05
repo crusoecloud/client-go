@@ -20,6 +20,12 @@ analyze:
       changes:
         - swagger/**/*
 
+# trigger semantic versioning + tagging if .swagger-changes occur when pushing to the default branch
+tag_semver:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes: !reference [.swagger-changes, changes]
+
 # job that will ensure swagger pipeline is created when modifying swagger code
 swagger-dummy:
   needs: []
