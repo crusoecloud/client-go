@@ -509,7 +509,7 @@ func (a *LoadBalancersApiService) ListLoadBalancers(ctx context.Context, project
 
 /*
 LoadBalancersApiService Patch (update) a load balancer owned by the logged in user.
-A successful response from this resource will contain the async operation.
+A successful response from this resource will contain the async operation. To disable health checking, pass \&quot;health_check\&quot;: {\&quot;port\&quot;: 0}
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
