@@ -105,7 +105,7 @@ func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId 
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 401 {
-			var v ErrorBody
+			var v InlineResponse401
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -115,7 +115,7 @@ func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId 
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 403 {
-			var v ErrorBody
+			var v InlineResponse403
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -125,7 +125,7 @@ func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, vpcNetworkId 
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 500 {
-			var v ErrorBody
+			var v InlineResponse500
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -219,7 +219,7 @@ func (a *VPCNetworksApiService) GetVPCNetworks(ctx context.Context) (VpcNetworks
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 401 {
-			var v ErrorBody
+			var v InlineResponse401
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -229,7 +229,7 @@ func (a *VPCNetworksApiService) GetVPCNetworks(ctx context.Context) (VpcNetworks
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 403 {
-			var v ErrorBody
+			var v InlineResponse403
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -239,7 +239,7 @@ func (a *VPCNetworksApiService) GetVPCNetworks(ctx context.Context) (VpcNetworks
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 500 {
-			var v ErrorBody
+			var v InlineResponse500
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

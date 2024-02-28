@@ -8,7 +8,7 @@
  */
 package swagger
 
-type ErrorBody struct {
+type InlineResponse401 struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
