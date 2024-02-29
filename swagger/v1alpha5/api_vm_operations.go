@@ -163,12 +163,14 @@ This resource retrieves information about the status of asynchronous operations 
  * @param optional nil or *VMOperationsApiListComputeVMsInstancesOperationsOpts - Optional Parameters:
      * @param "ResourceId" (optional.String) -
      * @param "State" (optional.Interface of []string) -
+     * @param "LowerTimeBound" (optional.String) -
 @return ListOperationsResponseV1Alpha5
 */
 
 type VMOperationsApiListComputeVMsInstancesOperationsOpts struct {
-	ResourceId optional.String
-	State      optional.Interface
+	ResourceId     optional.String
+	State          optional.Interface
+	LowerTimeBound optional.String
 }
 
 func (a *VMOperationsApiService) ListComputeVMsInstancesOperations(ctx context.Context, projectId string, localVarOptionals *VMOperationsApiListComputeVMsInstancesOperationsOpts) (ListOperationsResponseV1Alpha5, *http.Response, error) {
@@ -193,6 +195,9 @@ func (a *VMOperationsApiService) ListComputeVMsInstancesOperations(ctx context.C
 	}
 	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
 		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.LowerTimeBound.IsSet() {
+		localVarQueryParams.Add("lower_time_bound", parameterToString(localVarOptionals.LowerTimeBound.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
