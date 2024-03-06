@@ -9,14 +9,26 @@
 package swagger
 
 type InstanceTemplatePostRequestV1Alpha5 struct {
-	Disks          []DiskTemplate `json:"disks,omitempty"`
-	IbPartitionId  string         `json:"ib_partition_id,omitempty"`
-	ImageName      string         `json:"image_name,omitempty"`
-	Location       string         `json:"location,omitempty"`
-	Name           string         `json:"name"`
-	ShutdownScript string         `json:"shutdown_script,omitempty"`
-	SshPublicKey   string         `json:"ssh_public_key"`
-	StartupScript  string         `json:"startup_script,omitempty"`
-	SubnetId       string         `json:"subnet_id,omitempty"`
-	Type_          string         `json:"type"`
+	// Disks to create for all VMs created from this instance template.
+	Disks []DiskTemplate `json:"disks,omitempty"`
+	// IB Partition to use for all VMs created from this instance template. Should only be provided for IB-enabled VM types. This is location-specific and must be provided if location is provided.
+	IbPartitionId string `json:"ib_partition_id,omitempty"`
+	// OS Image to use for all VMs created from this instance template.
+	ImageName string `json:"image_name,omitempty"`
+	// Location to use for all VMs created from this instance template. If provided, all location-specific resources must also be provided.
+	Location string `json:"location,omitempty"`
+	// Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".
+	PublicIpAddressType string `json:"public_ip_address_type,omitempty"`
+	// Shutdown script to use for all VMs created from this instance template.
+	ShutdownScript string `json:"shutdown_script,omitempty"`
+	// SSH public key to use for all VMs created from this instance template.
+	SshPublicKey string `json:"ssh_public_key"`
+	// Startup script to use for all VMs created from this instance template.
+	StartupScript string `json:"startup_script,omitempty"`
+	// Subnet to use for all VMs created from this instance template. This is location-specific and must be provided if location is provided.
+	SubnetId string `json:"subnet_id,omitempty"`
+	// Name of the instance template. (This is not the name of the VMs created from this instance template.)
+	TemplateName string `json:"template_name"`
+	// Product name of the VM type we want to create from this instance template.
+	Type_ string `json:"type"`
 }
