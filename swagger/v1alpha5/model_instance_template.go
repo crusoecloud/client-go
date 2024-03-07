@@ -9,17 +9,32 @@
 package swagger
 
 type InstanceTemplate struct {
-	CreatedAt      string         `json:"created_at"`
-	Disks          []DiskTemplate `json:"disks,omitempty"`
-	IbPartitionId  string         `json:"ib_partition_id"`
-	Id             string         `json:"id"`
-	ImageName      string         `json:"image_name"`
-	Location       string         `json:"location"`
-	Name           string         `json:"name"`
-	ProjectId      string         `json:"project_id"`
-	ShutdownScript string         `json:"shutdown_script"`
-	SshPublicKey   string         `json:"ssh_public_key"`
-	StartupScript  string         `json:"startup_script"`
-	SubnetId       string         `json:"subnet_id"`
-	Type_          string         `json:"type"`
+	// Time the instance template was created.
+	CreatedAt string `json:"created_at"`
+	// Disks to create for all VMs created from this instance template.
+	Disks []DiskTemplate `json:"disks,omitempty"`
+	// IB Partition to use for all VMs created from this instance template. Only used for IB-enabled VM types. Empty if template has no location.
+	IbPartitionId string `json:"ib_partition_id"`
+	// ID of the instance template.
+	Id string `json:"id"`
+	// OS Image to use for all VMs created from this instance template.
+	ImageName string `json:"image_name"`
+	// Location to use for all VMs created from this instance template. May be empty if we do not want to bind this template to a location.
+	Location string `json:"location"`
+	// Name of the instance template. (This is not the name of the VMs created from this instance template.)
+	Name string `json:"name"`
+	// Project ID of the project this instance template belongs to.
+	ProjectId string `json:"project_id"`
+	// Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".
+	PublicIpAddressType string `json:"public_ip_address_type"`
+	// Shutdown script to use for all VMs created from this instance template.
+	ShutdownScript string `json:"shutdown_script"`
+	// SSH public key to use for all VMs created from this instance template.
+	SshPublicKey string `json:"ssh_public_key"`
+	// Startup script to use for all VMs created from this instance template.
+	StartupScript string `json:"startup_script"`
+	// SubnetID to use for all VMs created from this instance template. Only used if template has a location.
+	SubnetId string `json:"subnet_id"`
+	// Product name of the VM type we want to create from this instance template.
+	Type_ string `json:"type"`
 }
