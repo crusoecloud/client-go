@@ -13,6 +13,6 @@ type BulkCreateLocationInfo struct {
 	IbPartitionId string `json:"ib_partition_id,omitempty"`
 	// The location to create the VMs in.
 	Location string `json:"location"`
-	// The ID of the subnet to create the VMs in. Must be in the same location as the VMs.
-	SubnetId string `json:"subnet_id"`
+	// The ID of the subnet to create the VMs in. Must be in the same location as the VMs. If not provided, the default subnet for the location will be used, if there is one.
+	SubnetId string `json:"subnet_id,omitempty"`
 }
