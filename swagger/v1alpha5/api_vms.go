@@ -15,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -636,12 +638,34 @@ func (a *VMsApiService) GetVMTypes(ctx context.Context, projectId string) (ListT
 
 /*
 VMsApiService Retrieve details about all VMs that the logged in user owns or has access to.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param projectId
+ * @param optional nil or *VMsApiListInstancesOpts - Optional Parameters:
+     * @param "Ids" (optional.String) -
+     * @param "Names" (optional.String) -
+     * @param "Types" (optional.String) -
+     * @param "Locations" (optional.String) -
+     * @param "States" (optional.String) -
+     * @param "Limit" (optional.String) -
+     * @param "Sort" (optional.String) -
+     * @param "NextToken" (optional.String) -
+     * @param "PrevToken" (optional.String) -
 @return ListInstancesResponseV1Alpha5
 */
-func (a *VMsApiService) ListInstances(ctx context.Context, projectId string) (ListInstancesResponseV1Alpha5, *http.Response, error) {
+
+type VMsApiListInstancesOpts struct {
+	Ids       optional.String
+	Names     optional.String
+	Types     optional.String
+	Locations optional.String
+	States    optional.String
+	Limit     optional.String
+	Sort      optional.String
+	NextToken optional.String
+	PrevToken optional.String
+}
+
+func (a *VMsApiService) ListInstances(ctx context.Context, projectId string, localVarOptionals *VMsApiListInstancesOpts) (ListInstancesResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -658,6 +682,33 @@ func (a *VMsApiService) ListInstances(ctx context.Context, projectId string) (Li
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.Ids.IsSet() {
+		localVarQueryParams.Add("ids", parameterToString(localVarOptionals.Ids.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Names.IsSet() {
+		localVarQueryParams.Add("names", parameterToString(localVarOptionals.Names.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Types.IsSet() {
+		localVarQueryParams.Add("types", parameterToString(localVarOptionals.Types.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Locations.IsSet() {
+		localVarQueryParams.Add("locations", parameterToString(localVarOptionals.Locations.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.States.IsSet() {
+		localVarQueryParams.Add("states", parameterToString(localVarOptionals.States.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Limit.IsSet() {
+		localVarQueryParams.Add("limit", parameterToString(localVarOptionals.Limit.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Sort.IsSet() {
+		localVarQueryParams.Add("sort", parameterToString(localVarOptionals.Sort.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.NextToken.IsSet() {
+		localVarQueryParams.Add("next_token", parameterToString(localVarOptionals.NextToken.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PrevToken.IsSet() {
+		localVarQueryParams.Add("prev_token", parameterToString(localVarOptionals.PrevToken.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 

@@ -10,4 +10,8 @@ package swagger
 
 type ListInstancesResponseV1Alpha5 struct {
 	Items []InstanceV1Alpha5 `json:"items"`
+	// Base64 encoded token representing the next page of instances. Empty if currently on the last page.
+	NextPageToken string `json:"next_page_token,omitempty"`
+	// Base64 encoded token representing the previous page of instances. Empty if currently on the first page.
+	PrevPageToken string `json:"prev_page_token,omitempty"`
 }
