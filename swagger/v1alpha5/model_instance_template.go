@@ -36,5 +36,6 @@ type InstanceTemplate struct {
 	// SubnetID to use for all VMs created from this instance template. Only used if template has a location.
 	SubnetId string `json:"subnet_id"`
 	// Product name of the VM type we want to create from this instance template.
-	Type_ string `json:"type"`
+	Type_                  string                  `json:"type"`
+	VirtualizationFeatures *VirtualizationFeatures `json:"virtualization_features,omitempty"`
 }
