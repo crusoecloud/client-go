@@ -30,5 +30,6 @@ type InstanceTemplatePostRequestV1Alpha5 struct {
 	// Name of the instance template. (This is not the name of the VMs created from this instance template.)
 	TemplateName string `json:"template_name"`
 	// Product name of the VM type we want to create from this instance template.
-	Type_ string `json:"type"`
+	Type_                  string                  `json:"type"`
+	VirtualizationFeatures *VirtualizationFeatures `json:"virtualization_features,omitempty"`
 }
