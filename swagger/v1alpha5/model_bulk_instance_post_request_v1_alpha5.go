@@ -10,7 +10,9 @@ package swagger
 
 type BulkInstancePostRequestV1Alpha5 struct {
 	// The number of VMs to create. If multiple locations are specified, this will be the number of VMs created in each location.
-	Count            int64                                `json:"count"`
+	Count int64 `json:"count"`
+	// The ID of the instance group the VMs will be created in.
+	InstanceGroupId  string                               `json:"instance_group_id,omitempty"`
 	InstanceTemplate *InstanceTemplatePostRequestV1Alpha5 `json:"instance_template,omitempty"`
 	// The ID of the instance template to use for creating the VMs.
 	InstanceTemplateId string `json:"instance_template_id,omitempty"`
