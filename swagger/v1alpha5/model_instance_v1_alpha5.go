@@ -16,6 +16,8 @@ type InstanceV1Alpha5 struct {
 	Disks                  []AttachedDiskV1Alpha5  `json:"disks"`
 	HostChannelAdapters    []HostChannelAdapter    `json:"host_channel_adapters"`
 	Id                     string                  `json:"id"`
+	InstanceGroupId        string                  `json:"instance_group_id,omitempty"`
+	InstanceTemplateId     string                  `json:"instance_template_id,omitempty"`
 	Location               string                  `json:"location"`
 	Name                   string                  `json:"name"`
 	NetworkInterfaces      []NetworkInterface      `json:"network_interfaces"`
