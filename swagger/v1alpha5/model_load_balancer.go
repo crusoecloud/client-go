@@ -9,14 +9,14 @@
 package swagger
 
 type LoadBalancer struct {
-	Algorithm    string              `json:"algorithm"`
-	Destinations []NetworkTarget     `json:"destinations"`
-	HealthCheck  *HealthCheckOptions `json:"health_check,omitempty"`
-	Id           string              `json:"id"`
-	Ips          []IpAddresses       `json:"ips"`
-	Location     string              `json:"location"`
-	Name         string              `json:"name"`
-	Protocols    []string            `json:"protocols"`
-	Type_        string              `json:"type,omitempty"`
-	VpcSubnetId  string              `json:"vpc_subnet_id"`
+	Algorithm         string                         `json:"algorithm"`
+	Destinations      []NetworkTarget                `json:"destinations"`
+	HealthCheck       *HealthCheckOptions            `json:"health_check,omitempty"`
+	Id                string                         `json:"id"`
+	Ips               []IpAddresses                  `json:"ips"`
+	Location          string                         `json:"location"`
+	Name              string                         `json:"name"`
+	NetworkInterfaces []LoadBalancerNetworkInterface `json:"network_interfaces"`
+	Protocols         []string                       `json:"protocols"`
+	Type_             string                         `json:"type,omitempty"`
 }
