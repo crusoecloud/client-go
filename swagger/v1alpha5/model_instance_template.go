@@ -27,6 +27,7 @@ type InstanceTemplate struct {
 	ProjectId string `json:"project_id"`
 	// Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".
 	PublicIpAddressType string `json:"public_ip_address_type"`
+	ReservationId       string `json:"reservation_id,omitempty"`
 	// Shutdown script to use for all VMs created from this instance template.
 	ShutdownScript string `json:"shutdown_script"`
 	// SSH public key to use for all VMs created from this instance template.

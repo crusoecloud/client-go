@@ -17,6 +17,7 @@ type InstancesPostRequestV1Alpha5 struct {
 	Location               string                      `json:"location,omitempty"`
 	Name                   string                      `json:"name"`
 	NetworkInterfaces      []NetworkInterface          `json:"network_interfaces,omitempty"`
+	ReservationId          string                      `json:"reservation_id,omitempty"`
 	ShutdownScript         string                      `json:"shutdown_script,omitempty"`
 	SshPublicKey           string                      `json:"ssh_public_key"`
 	StartupScript          string                      `json:"startup_script,omitempty"`
