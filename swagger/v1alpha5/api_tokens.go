@@ -230,15 +230,15 @@ func (a *TokensApiService) DeleteToken(ctx context.Context, accessKey string) (*
 TokensApiService Retrieve all active/expired API tokens for the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return TokensGetResponseV1Alpha4
+@return ListTokensResponseV1Alpha5
 */
-func (a *TokensApiService) GetTokens(ctx context.Context) (TokensGetResponseV1Alpha4, *http.Response, error) {
+func (a *TokensApiService) GetTokens(ctx context.Context) (ListTokensResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue TokensGetResponseV1Alpha4
+		localVarReturnValue ListTokensResponseV1Alpha5
 	)
 
 	// create path and map variables
@@ -295,7 +295,7 @@ func (a *TokensApiService) GetTokens(ctx context.Context) (TokensGetResponseV1Al
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v TokensGetResponseV1Alpha4
+			var v ListTokensResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
