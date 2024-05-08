@@ -11,14 +11,16 @@ package swagger
 type Reservation struct {
 	ContractEndDate   string  `json:"contract_end_date"`
 	ContractStartDate string  `json:"contract_start_date"`
-	DateDelivered     string  `json:"date_delivered,omitempty"`
+	DateDelivered     string  `json:"date_delivered"`
 	DeliveryDeadline  string  `json:"delivery_deadline"`
 	Duration          float32 `json:"duration"`
 	// TODO: follow new format for giving descriptions to fields for apis
 	Id              string   `json:"id"`
 	Locations       []string `json:"locations"`
 	ProductLine     string   `json:"product_line"`
+	Projects        []string `json:"projects"`
 	Quantity        int64    `json:"quantity"`
 	ReservationType string   `json:"reservation_type"`
 	UsedQuantity    int64    `json:"used_quantity"`
+	VmIds           []string `json:"vm_ids"`
 }
