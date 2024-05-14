@@ -10,6 +10,5 @@ package swagger
 
 // InstancesAttachDiskPostRequestV1Alpha5 is the request type for POST requests to the vms.instances.attach-disk endpoint.
 type InstancesAttachDiskPostRequestV1Alpha5 struct {
-	// nolint:lll // DiskAttachment objects are large
 	AttachDisks []DiskAttachment `json:"attach_disks"`
 }
