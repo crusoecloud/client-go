@@ -13,5 +13,6 @@ type InstancesPatchRequestV1Alpha5 struct {
 	CommitmentPeriod    int64                       `json:"commitment_period,omitempty"`
 	HostChannelAdapters []PartialHostChannelAdapter `json:"host_channel_adapters,omitempty"`
 	NetworkInterfaces   []NetworkInterface          `json:"network_interfaces,omitempty"`
+	ReservationId       string                      `json:"reservation_id,omitempty"`
 	Type_               string                      `json:"type,omitempty"`
 }
