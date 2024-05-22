@@ -10,8 +10,9 @@ package swagger
 
 // InstanceV1Alpha5 contains identifying information about a vm instance for vms.instances endpoints.
 type InstanceV1Alpha5 struct {
-	CommitmentEnd          string                  `json:"commitment_end"`
-	CommitmentPeriod       int64                   `json:"commitment_period"`
+	CommitmentEnd string `json:"commitment_end,omitempty"`
+	// commitment is no longer supported
+	CommitmentPeriod       int64                   `json:"commitment_period,omitempty"`
 	CreatedAt              string                  `json:"created_at"`
 	Disks                  []AttachedDiskV1Alpha5  `json:"disks"`
 	HostChannelAdapters    []HostChannelAdapter    `json:"host_channel_adapters"`

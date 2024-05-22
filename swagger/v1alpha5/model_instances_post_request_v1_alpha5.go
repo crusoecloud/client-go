@@ -11,7 +11,8 @@ package swagger
 // InstancesPostRequestV1Alpha5 is the request type for POST requests to the vms.instances endpoint.
 type InstancesPostRequestV1Alpha5 struct {
 	// if a VM should automatically use the best available reservation. ignored if a reservation ID is provided.
-	AutoAddReservation     bool                        `json:"auto_add_reservation,omitempty"`
+	AutoAddReservation bool `json:"auto_add_reservation,omitempty"`
+	// commitment is no longer supported
 	CommitmentPeriod       int64                       `json:"commitment_period,omitempty"`
 	Disks                  []DiskAttachment            `json:"disks,omitempty"`
 	HostChannelAdapters    []PartialHostChannelAdapter `json:"host_channel_adapters,omitempty"`
