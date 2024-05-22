@@ -14,5 +14,6 @@ type ProjectUsageResponse struct {
 	ProjectId      string  `json:"project_id"`
 	Quantity       float64 `json:"quantity"`
 	Region         string  `json:"region"`
+	ReservationId  string  `json:"reservation_id"`
 	ResourceType   string  `json:"resource_type"`
 }

@@ -9,7 +9,8 @@
 package swagger
 
 type InstancesPatchRequestV1Alpha5 struct {
-	Action              string                      `json:"action"`
+	Action string `json:"action"`
+	// CommitmentPeriod is deprecated, please use reservationID instead
 	CommitmentPeriod    int64                       `json:"commitment_period,omitempty"`
 	HostChannelAdapters []PartialHostChannelAdapter `json:"host_channel_adapters,omitempty"`
 	NetworkInterfaces   []NetworkInterface          `json:"network_interfaces,omitempty"`
