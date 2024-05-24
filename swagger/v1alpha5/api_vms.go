@@ -531,7 +531,7 @@ func (a *VMsApiService) GetInstance(ctx context.Context, projectId string, vmId 
 }
 
 /*
-VMsApiService Retrieve information about the types of VMs that are available to purchase along with their prices.
+VMsApiService Retrieve information about the types of VMs that are available.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
 
