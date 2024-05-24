@@ -9,8 +9,6 @@
 package swagger
 
 type BulkInstancePostRequestV1Alpha5 struct {
-	// if a VM should automatically use the best available reservation. ignored if a reservation ID is provided.
-	AutoAddReservation bool `json:"auto_add_reservation,omitempty"`
 	// The number of VMs to create. If multiple locations are specified, this will be the number of VMs created in each location.
 	Count int64 `json:"count"`
 	// The ID of the instance group the VMs will be created in.
@@ -21,5 +19,6 @@ type BulkInstancePostRequestV1Alpha5 struct {
 	// The locations to create the VMs in. This will override any location specified in the instance template.
 	Locations []BulkCreateLocationInfo `json:"locations,omitempty"`
 	// The name prefix for the VMs to be created. E.g. \"my-vm\" will create VMs with names \"my-vm-1\",
-	NamePrefix string `json:"name_prefix"`
+	NamePrefix               string                    `json:"name_prefix"`
+	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
 }
