@@ -33,7 +33,7 @@ A successful response from this resource will contain the async operation.
 
 @return AsyncOperationResponse
 */
-func (a *SnapshotsApiService) CreateDiskSnapshot(ctx context.Context, body DiskSnapshotPostRequest, projectId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *SnapshotsApiService) CreateDiskSnapshot(ctx context.Context, body DiskSnapshotPostRequestV1Alpha5, projectId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}

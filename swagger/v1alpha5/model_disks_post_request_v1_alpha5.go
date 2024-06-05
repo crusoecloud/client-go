@@ -14,5 +14,5 @@ type DisksPostRequestV1Alpha5 struct {
 	Name       string `json:"name"`
 	Size       string `json:"size,omitempty"`
 	SnapshotId string `json:"snapshot_id,omitempty"`
-	Type_      string `json:"type"`
+	Type_      string `json:"type,omitempty"`
 }
