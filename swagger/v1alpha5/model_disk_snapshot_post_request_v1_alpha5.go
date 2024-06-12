@@ -8,7 +8,6 @@
  */
 package swagger
 
-type DiskSnapshotPostRequest struct {
+type DiskSnapshotPostRequestV1Alpha5 struct {
 	DiskId string `json:"disk_id"`
-	RoleId string `json:"role_id"`
 }
