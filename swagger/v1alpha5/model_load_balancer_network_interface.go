@@ -9,6 +9,6 @@
 package swagger
 
 type LoadBalancerNetworkInterface struct {
-	NetworkId string `json:"network_id,omitempty"`
-	SubnetId  string `json:"subnet_id,omitempty"`
+	Network string `json:"network,omitempty"`
+	Subnet  string `json:"subnet,omitempty"`
 }
