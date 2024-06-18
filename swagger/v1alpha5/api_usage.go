@@ -10,6 +10,7 @@ package swagger
 
 import (
 	"context"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -26,7 +27,7 @@ type UsageApiService service
 /*
 UsageApiService Get project-level usage for products in Crusoe Cloud.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId
+  - @param organizationId
   - @param projects
   - @param resourceTypes
   - @param regions
@@ -35,7 +36,7 @@ UsageApiService Get project-level usage for products in Crusoe Cloud.
 
 @return UsageByProjectGetResponse
 */
-func (a *UsageApiService) GetUsage(ctx context.Context, orgId string, projects []string, resourceTypes []string, regions []string, startDate string, endDate string) (UsageByProjectGetResponse, *http.Response, error) {
+func (a *UsageApiService) GetUsage(ctx context.Context, organizationId string, projects []string, resourceTypes []string, regions []string, startDate string, endDate string) (UsageByProjectGetResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -45,13 +46,13 @@ func (a *UsageApiService) GetUsage(ctx context.Context, orgId string, projects [
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/usage"
+	localVarPath := a.client.cfg.BasePath + "/organizations/{organization_id}/usage"
+	localVarPath = strings.Replace(localVarPath, "{"+"organization_id"+"}", fmt.Sprintf("%v", organizationId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("org_id", parameterToString(orgId, ""))
 	localVarQueryParams.Add("projects", parameterToString(projects, "csv"))
 	localVarQueryParams.Add("resource_types", parameterToString(resourceTypes, "csv"))
 	localVarQueryParams.Add("regions", parameterToString(regions, "csv"))
@@ -142,7 +143,7 @@ func (a *UsageApiService) GetUsage(ctx context.Context, orgId string, projects [
 /*
 UsageApiService Get resource-level usage for products in Crusoe Cloud.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId
+  - @param organizationId
   - @param projects
   - @param resources
   - @param resourceTypes
@@ -150,7 +151,7 @@ UsageApiService Get resource-level usage for products in Crusoe Cloud.
   - @param startDate
   - @param endDate
 */
-func (a *UsageApiService) GetUsageExport(ctx context.Context, orgId string, projects []string, resources []string, resourceTypes []string, regions []string, startDate string, endDate string) (*http.Response, error) {
+func (a *UsageApiService) GetUsageExport(ctx context.Context, organizationId string, projects []string, resources []string, resourceTypes []string, regions []string, startDate string, endDate string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
@@ -159,13 +160,13 @@ func (a *UsageApiService) GetUsageExport(ctx context.Context, orgId string, proj
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/usage/export"
+	localVarPath := a.client.cfg.BasePath + "/organizations/{organization_id}/usage/export"
+	localVarPath = strings.Replace(localVarPath, "{"+"organization_id"+"}", fmt.Sprintf("%v", organizationId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("org_id", parameterToString(orgId, ""))
 	localVarQueryParams.Add("projects", parameterToString(projects, "csv"))
 	localVarQueryParams.Add("resources", parameterToString(resources, "csv"))
 	localVarQueryParams.Add("resource_types", parameterToString(resourceTypes, "csv"))
@@ -239,11 +240,11 @@ func (a *UsageApiService) GetUsageExport(ctx context.Context, orgId string, proj
 /*
 UsageApiService Get options which exist for filters for /usage and /usage/export routes.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId
+  - @param organizationId
 
 @return UsageOptions
 */
-func (a *UsageApiService) GetUsageOptions(ctx context.Context, orgId string) (UsageOptions, *http.Response, error) {
+func (a *UsageApiService) GetUsageOptions(ctx context.Context, organizationId string) (UsageOptions, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -253,13 +254,13 @@ func (a *UsageApiService) GetUsageOptions(ctx context.Context, orgId string) (Us
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/usage/options"
+	localVarPath := a.client.cfg.BasePath + "/organizations/{organization_id}/usage/options"
+	localVarPath = strings.Replace(localVarPath, "{"+"organization_id"+"}", fmt.Sprintf("%v", organizationId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("org_id", parameterToString(orgId, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
