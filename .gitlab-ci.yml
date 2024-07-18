@@ -87,3 +87,42 @@ update-customer-cli:
         
       # Run the script
       - echo "$JSON_CONTENT" |./update_autogen.sh "$LATEST_TAG"
+
+# update auotgen branch in cli
+update-customer-cli:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_BRANCH == "parent"'
+      changes:
+        - swagger/**/swagger.json
+  script: 
+      - apt update
+      - apt install -y git openssh-client default-jre
+      - eval $(ssh-agent -s)
+      - echo "hello"
+      - echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
+      - mkdir -p $HOME/.ssh
+      - chmod 700 $HOME/.ssh
+      - ssh-keyscan gitlab.com >> $HOME/.ssh/known_hosts
+      - chmod 644 $HOME/.ssh/known_hosts
+      - git config --global user.email ${GITLAB_USER_EMAIL}
+      - git config --global user.name "Gitlab Runner"
+
+      # Define the file path
+      - JSON_CONTENT=$(cat swagger/v1alpha5/swagger.json)
+      - git fetch origin parent --tags
+      - LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+
+      # Clone the target repository
+      - git clone git@gitlab.com:crusoeenergy/island/external/customer-cli.git
+
+      - cd customer-cli
+
+      - git fetch origin
+        
+      - git checkout add_autogen_scripts
+      
+      # Navigate to the specific directory
+      - cd scripts/update_autogen
+        
+      # Run the script
+      - echo "$JSON_CONTENT" |./update_autogen.sh "$LATEST_TAG"
