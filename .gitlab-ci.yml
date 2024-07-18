@@ -51,15 +51,19 @@ swagger-dummy:
 
 # update auotgen branch in cli
 update-customer-cli:
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "parent" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "feature_branch" && $CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
     - |
       if [[ "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME" == "parent" && "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" == "feature_branch" && "$CI_PIPELINE_SOURCE" == "merge_request_event" ]]; then
         
-        echo "hello"
         apt update
         apt install -y git openssh-client default-jre
+        echo "go"
         eval $(ssh-agent -s)
+        echo "bye"
         echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
+        echo "hello"
         mkdir -p $HOME/.ssh
         chmod 700 $HOME/.ssh
         ssh-keyscan $CI_SERVER_HOST >> $HOME/.ssh/known_hosts
@@ -79,5 +83,3 @@ update-customer-cli:
       else
         echo "Not a merge from feature_branch to parent, skipping job."
       fi
-  rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "parent" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "feature_branch" && $CI_PIPELINE_SOURCE == "merge_request_event"'
