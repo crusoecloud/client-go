@@ -69,8 +69,8 @@ update-customer-cli:
         # chmod 700 $HOME/.ssh
         # ssh-keyscan $CI_SERVER_HOST >> $HOME/.ssh/known_hosts
         # chmod 644 $HOME/.ssh/known_hosts
-        # git config --global user.email ${GITLAB_USER_EMAIL}
-        # git config --global user.name "Gitlab Runner"
+        git config --global user.email ${GITLAB_USER_EMAIL}
+        git config --global user.name "Gitlab Runner"
 
         # Clone the target repository
         git clone https://gitlab.com/crusoeenergy/island/external/customer-cli
