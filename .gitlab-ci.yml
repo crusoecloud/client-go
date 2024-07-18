@@ -55,6 +55,7 @@ update-customer-cli:
     - |
       if [[ "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME" == "parent" && "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" == "feature_branch" && "$CI_PIPELINE_SOURCE" == "merge_request_event" ]]; then
         
+        echo "hello"
         apt update
         apt install -y git openssh-client default-jre
         eval $(ssh-agent -s)
