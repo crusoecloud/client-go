@@ -58,18 +58,19 @@ update-customer-cli:
       if [[ "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME" == "parent" && "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" == "feature_branch" && "$CI_PIPELINE_SOURCE" == "merge_request_event" ]]; then
         
         apt update
-        apt install -y git openssh-client default-jre
-        echo "go"
-        eval $(ssh-agent -s)
-        echo "bye"
-        echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
-        echo "hello"
-        mkdir -p $HOME/.ssh
-        chmod 700 $HOME/.ssh
-        ssh-keyscan $CI_SERVER_HOST >> $HOME/.ssh/known_hosts
-        chmod 644 $HOME/.ssh/known_hosts
-        git config --global user.email ${GITLAB_USER_EMAIL}
-        git config --global user.name "Gitlab Runner"
+        apt install -y git
+        # apt install -y git openssh-client default-jre
+        # echo "go"
+        # eval $(ssh-agent -s)
+        # echo "bye"
+        # echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
+        # echo "hello"
+        # mkdir -p $HOME/.ssh
+        # chmod 700 $HOME/.ssh
+        # ssh-keyscan $CI_SERVER_HOST >> $HOME/.ssh/known_hosts
+        # chmod 644 $HOME/.ssh/known_hosts
+        # git config --global user.email ${GITLAB_USER_EMAIL}
+        # git config --global user.name "Gitlab Runner"
 
         # Clone the target repository
         git clone https://gitlab.com/crusoeenergy/island/external/customer-cli
