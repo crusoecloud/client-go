@@ -53,34 +53,25 @@ swagger-dummy:
 update-customer-cli:
   rules:
     - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "parent" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "feature_branch" && $CI_PIPELINE_SOURCE == "merge_request_event"'
-  script:
-    - |
-      if [[ "$CI_MERGE_REQUEST_TARGET_BRANCH_NAME" == "parent" && "$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME" == "feature_branch" && "$CI_PIPELINE_SOURCE" == "merge_request_event" ]]; then
-        
-        apt update
-        apt install -y git
-        # apt install -y git openssh-client default-jre
-        # echo "go"
-        # eval $(ssh-agent -s)
-        # echo "bye"
-        # echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
-        # echo "hello"
-        # mkdir -p $HOME/.ssh
-        # chmod 700 $HOME/.ssh
-        # ssh-keyscan $CI_SERVER_HOST >> $HOME/.ssh/known_hosts
-        # chmod 644 $HOME/.ssh/known_hosts
-        git config --global user.email ${GITLAB_USER_EMAIL}
-        git config --global user.name "Gitlab Runner"
+  script: 
+      - apt update
+      - apt install -y git openssh-client default-jre
+      - eval $(ssh-agent -s)
+      - echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
+      - mkdir -p $HOME/.ssh
+      - chmod 700 $HOME/.ssh
+      - ssh-keyscan $CI_SERVER_HOST >> $HOME/.ssh/known_hosts
+      - chmod 644 $HOME/.ssh/known_hosts
+      - git config --global user.email ${GITLAB_USER_EMAIL}
+      - git config --global user.name "Gitlab Runner"
 
-        # Clone the target repository
-        git clone https://gitlab.com/crusoeenergy/island/external/customer-cli
+      # Clone the target repository
+      - git clone https://gitlab.com/crusoeenergy/island/external/customer-cli
         
-        git checkout refactor-subnets
-        # Navigate to the specific directory
-        cd scripts/update_autogen
+      - git checkout refactor-subnets
+      
+      # Navigate to the specific directory
+      - cd scripts/update_autogen
         
-        # Run the script
-        ./update_autogen.sh
-      else
-        echo "Not a merge from feature_branch to parent, skipping job."
-      fi
+      # Run the script
+      - ./update_autogen.sh
