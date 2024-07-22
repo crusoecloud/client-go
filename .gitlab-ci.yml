@@ -57,14 +57,10 @@ update-customer-cli:
       - apt update
       - apt install -y git openssh-client default-jre
       - eval $(ssh-agent -s)
-      - env
-      - echo "hello"
-      - echo "$GIT_SSH_PRIV_KEY"
-      - echo "bye"
       - echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
       - mkdir -p $HOME/.ssh
       - chmod 700 $HOME/.ssh
-      - ssh-keyscan $CI_SERVER_HOST >> $HOME/.ssh/known_hosts
+      - ssh-keyscan gitlab.com >> $HOME/.ssh/known_hosts
       - chmod 644 $HOME/.ssh/known_hosts
       - git config --global user.email ${GITLAB_USER_EMAIL}
       - git config --global user.name "Gitlab Runner"
