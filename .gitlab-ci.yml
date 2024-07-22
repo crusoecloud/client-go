@@ -59,7 +59,7 @@ update-customer-cli:
       - eval $(ssh-agent -s)
       - env
       - echo "hello"
-      - echo "$GIT_SSH_PRIV_K"
+      - echo "$GIT_SSH_PRIV_KEY"
       - echo "bye"
       - echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
       - mkdir -p $HOME/.ssh
