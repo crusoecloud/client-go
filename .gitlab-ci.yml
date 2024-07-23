@@ -57,6 +57,7 @@ update-customer-cli:
       - apt update
       - apt install -y git openssh-client default-jre
       - eval $(ssh-agent -s)
+      - echo "hello"
       - echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
       - mkdir -p $HOME/.ssh
       - chmod 700 $HOME/.ssh
