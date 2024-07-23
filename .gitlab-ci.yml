@@ -69,6 +69,8 @@ update-customer-cli:
       # Clone the target repository
       - git clone git@gitlab.com:crusoeenergy/island/external/customer-cli.git
 
+      - cd customer-cli
+
       - git fetch origin
         
       - git checkout refactor-subnets
