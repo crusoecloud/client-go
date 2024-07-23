@@ -66,7 +66,7 @@ update-customer-cli:
       - git config --global user.name "Gitlab Runner"
 
       # Clone the target repository
-      - git clone git@gitlab.com:crusoeenergy/island/external/customer-cli.git
+      - git clone git@gitlab.com:crusoeenergy/island/rest-gateway.git
         
       - git checkout refactor-subnets
       
