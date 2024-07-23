@@ -72,6 +72,7 @@ update-customer-cli:
       - cd customer-cli
 
       - git fetch origin
+      - echo "hello"
         
       - git checkout refactor-subnets
       
