@@ -83,4 +83,4 @@ update-customer-cli:
       - cd scripts/update_autogen
         
       # Run the script
-      - echo "$JSON_CONTENT" | ./update_autogen
+      - echo "$JSON_CONTENT" | ./update_autogen.sh
