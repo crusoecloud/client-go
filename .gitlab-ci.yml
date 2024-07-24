@@ -66,6 +66,9 @@ update-customer-cli:
       - git config --global user.email ${GITLAB_USER_EMAIL}
       - git config --global user.name "Gitlab Runner"
 
+      # Define the file path
+      - JSON_CONTENT=$(cat swagger/v1alpha5/swagger.json)
+
       # Clone the target repository
       - git clone git@gitlab.com:crusoeenergy/island/external/customer-cli.git
 
@@ -80,4 +83,4 @@ update-customer-cli:
       - cd scripts/update_autogen
         
       # Run the script
-      - ./update_autogen.sh
+      - echo "$JSON_CONTENT" | ./update_autogen
