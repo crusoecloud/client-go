@@ -68,6 +68,8 @@ update-customer-cli:
 
       # Define the file path
       - JSON_CONTENT=$(cat swagger/v1alpha5/swagger.json)
+      - git fetch --tags
+      - LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1
 
       # Clone the target repository
       - git clone git@gitlab.com:crusoeenergy/island/external/customer-cli.git
