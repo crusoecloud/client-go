@@ -15,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -154,12 +156,18 @@ func (a *ReservationsApiService) GetReservation(ctx context.Context, organizatio
 
 /*
 ReservationsApiService Get all reservations belonging to the specified organization. User must be part of the organization.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
-
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param organizationId
+ * @param optional nil or *ReservationsApiGetReservationsOpts - Optional Parameters:
+     * @param "Status" (optional.String) -
 @return ReservationsGetResponse
 */
-func (a *ReservationsApiService) GetReservations(ctx context.Context, organizationId string) (ReservationsGetResponse, *http.Response, error) {
+
+type ReservationsApiGetReservationsOpts struct {
+	Status optional.String
+}
+
+func (a *ReservationsApiService) GetReservations(ctx context.Context, organizationId string, localVarOptionals *ReservationsApiGetReservationsOpts) (ReservationsGetResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -176,6 +184,9 @@ func (a *ReservationsApiService) GetReservations(ctx context.Context, organizati
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.Status.IsSet() {
+		localVarQueryParams.Add("status", parameterToString(localVarOptionals.Status.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
