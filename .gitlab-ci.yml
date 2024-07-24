@@ -85,4 +85,4 @@ update-customer-cli:
       - cd scripts/update_autogen
         
       # Run the script
-      - ./update_autogen.sh "$JSON_CONTENT" "$LATEST_TAG"
+      - echo "$JSON_CONTENT" |./update_autogen.sh "$LATEST_TAG"
