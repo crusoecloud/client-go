@@ -52,7 +52,7 @@ swagger-dummy:
 # update auotgen branch in cli
 update-customer-cli:
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "parent" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "feature_branch" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "parent" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "feature_branch"'
   script: 
       - apt update
       - apt install -y git openssh-client default-jre
@@ -86,3 +86,5 @@ update-customer-cli:
         
       # Run the script
       - echo "$JSON_CONTENT" | ./update_autogen.sh
+  only:
+    parent
