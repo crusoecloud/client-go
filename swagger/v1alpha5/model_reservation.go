@@ -17,6 +17,7 @@ type Reservation struct {
 	// TODO: follow new format for giving descriptions to fields for apis
 	Id              string   `json:"id"`
 	Locations       []string `json:"locations"`
+	Price           string   `json:"price"`
 	ProductLine     string   `json:"product_line"`
 	Projects        []string `json:"projects"`
 	Quantity        int64    `json:"quantity"`
