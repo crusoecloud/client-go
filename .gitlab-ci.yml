@@ -74,7 +74,7 @@ update-customer-cli:
       - git fetch origin
       - echo "hello"
         
-      - git checkout refactor-subnets
+      - git checkout add_autogen_scripts
       
       # Navigate to the specific directory
       - cd scripts/update_autogen
