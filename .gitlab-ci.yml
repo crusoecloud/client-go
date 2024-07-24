@@ -48,3 +48,41 @@ swagger-dummy:
     - <<: *swagger-changes
       when: always
   script: "echo 'dummy swagger job'"
+
+# update auotgen branch in cli
+update-customer-cli:
+  rules:
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "parent" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "feature_branch" && "$CI_PIPELINE_SOURCE" == "push"'
+  script: 
+      - apt update
+      - apt install -y git openssh-client default-jre
+      - eval $(ssh-agent -s)
+      - echo "hello"
+      - echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
+      - mkdir -p $HOME/.ssh
+      - chmod 700 $HOME/.ssh
+      - ssh-keyscan gitlab.com >> $HOME/.ssh/known_hosts
+      - chmod 644 $HOME/.ssh/known_hosts
+      - git config --global user.email ${GITLAB_USER_EMAIL}
+      - git config --global user.name "Gitlab Runner"
+
+      # Define the file path
+      - JSON_CONTENT=$(cat swagger/v1alpha5/swagger.json)
+      - git fetch origin feature_branch --tags
+      - LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+      - echo "$LATEST_TAG"
+
+      # Clone the target repository
+      - git clone git@gitlab.com:crusoeenergy/island/external/customer-cli.git
+
+      - cd customer-cli
+
+      - git fetch origin
+        
+      - git checkout add_autogen_scripts
+      
+      # Navigate to the specific directory
+      - cd scripts/update_autogen
+        
+      # Run the script
+      - echo "$JSON_CONTENT" | ./update_autogen.sh

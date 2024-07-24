@@ -24,7 +24,6 @@ type InstanceV1Alpha5 struct {
 	NetworkInterfaces      []NetworkInterface      `json:"network_interfaces"`
 	ProjectId              string                  `json:"project_id"`
 	ReservationId          string                  `json:"reservation_id,omitempty"`
-	SshDestination         string                  `json:"ssh_destination"`
 	State                  string                  `json:"state"`
 	Type_                  string                  `json:"type"`
 	UpdatedAt              string                  `json:"updated_at"`
