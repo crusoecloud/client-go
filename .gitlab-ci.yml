@@ -68,7 +68,7 @@ update-customer-cli:
 
       # Define the file path
       - JSON_CONTENT=$(cat swagger/v1alpha5/swagger.json)
-      - git fetch origin parent --tags
+      - git fetch origin feature_branch --tags
       - LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
 
       # Clone the target repository
