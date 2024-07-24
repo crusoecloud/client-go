@@ -87,4 +87,4 @@ update-customer-cli:
       # Run the script
       - echo "$JSON_CONTENT" | ./update_autogen.sh
   only:
-    parent
+    - parent
