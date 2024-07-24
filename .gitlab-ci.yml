@@ -70,7 +70,6 @@ update-customer-cli:
       - JSON_CONTENT=$(cat swagger/v1alpha5/swagger.json)
       - git fetch origin feature_branch --tags
       - LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
-      - echo "$LATEST_TAG"
 
       # Clone the target repository
       - git clone git@gitlab.com:crusoeenergy/island/external/customer-cli.git
