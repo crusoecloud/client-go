@@ -72,7 +72,7 @@ update-customer-cli:
       - cd customer-cli
 
       - git fetch origin
-      - echo "bye "
+      - echo "hello"
         
       - git checkout add_autogen_scripts
       
