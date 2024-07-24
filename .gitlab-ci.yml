@@ -71,7 +71,6 @@ update-customer-cli:
       - git fetch origin feature_branch --tags
       - LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
       - echo "$LATEST_TAG"
-      - echo "bye"
 
       # Clone the target repository
       - git clone git@gitlab.com:crusoeenergy/island/external/customer-cli.git
@@ -79,7 +78,6 @@ update-customer-cli:
       - cd customer-cli
 
       - git fetch origin
-      - echo "hello"
         
       - git checkout add_autogen_scripts
       
@@ -87,4 +85,4 @@ update-customer-cli:
       - cd scripts/update_autogen
         
       # Run the script
-      - echo "$JSON_CONTENT" | ./update_autogen.sh
+      - ./update_autogen.sh "$JSON_CONTENT" "$LATEST_TAG"
