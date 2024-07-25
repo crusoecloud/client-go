@@ -2455,7 +2455,7 @@
     "/projects/{project_id}/networking/vpc-networks": {
       "get": {
         "tags": [
-          "VPC-Networks"
+          "VPC-Networkings"
         ],
         "summary": "Retrieve details about all VPC networks that belong to the logged in user.",
         "operationId": "listVPCNetworks",
