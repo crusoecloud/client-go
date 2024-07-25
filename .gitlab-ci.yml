@@ -52,7 +52,7 @@ swagger-dummy:
 # update auotgen branch in cli
 update-customer-cli:
   rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_BRANCH == "parent"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_BRANCH == "parent"'
       changes:
         - swagger/**/swagger.json
   script: 
