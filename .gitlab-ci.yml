@@ -52,7 +52,9 @@ swagger-dummy:
 # update auotgen branch in cli
 update-customer-cli:
   rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "parent" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "feature_branch" && $CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_BRANCH == "master"'
+      changes:
+        - swagger/**/swagger.json
   script: 
       - apt update
       - apt install -y git openssh-client default-jre
@@ -68,7 +70,7 @@ update-customer-cli:
 
       # Define the file path
       - JSON_CONTENT=$(cat swagger/v1alpha5/swagger.json)
-      - git fetch origin feature_branch --tags
+      - git fetch origin parent --tags
       - LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
 
       # Clone the target repository
