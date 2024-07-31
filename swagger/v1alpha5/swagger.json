@@ -2770,7 +2770,7 @@
     "/projects/{project_id}/networking/vpc-subnets": {
       "get": {
         "tags": [
-          "VPC-Subnets"
+          "VPC-Subneteds"
         ],
         "summary": "Retrieve details about all VPC subnets that belong to the logged in user.",
         "operationId": "listVPCSubnets",

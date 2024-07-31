@@ -83,7 +83,7 @@ update-customer-cli:
       - git checkout add_autogen_scripts
       
       # Navigate to the specific directory
-      - cd scripts/update_autogen
+      - cd scripts/cli_autogen/update_autogen
         
       # Run the script
       - echo "$JSON_CONTENT" |./update_autogen.sh "$LATEST_TAG"
