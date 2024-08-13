@@ -2770,7 +2770,7 @@
     "/projects/{project_id}/networking/vpc-subnets": {
       "get": {
         "tags": [
-          "VPC-Subneteds"
+          "VPC-Subnets"
         ],
         "summary": "Retrieve details about all VPC subnets that belong to the logged in user.",
         "operationId": "listVPCSubnets",
@@ -2802,7 +2802,7 @@
       "post": {
         "description": "A successful response from this resource will contain information regarding the created subnet.",
         "tags": [
-          "VPC-Subneteds"
+          "VPC-Subnets"
         ],
         "summary": "Create a new VPC subnet owned by the logged in user.",
         "operationId": "createVPCSubnet",
@@ -2944,7 +2944,7 @@
     "/projects/{project_id}/networking/vpc-subnets/{vpc_subnet_id}": {
       "get": {
         "tags": [
-          "VPC-Subneteds"
+          "VPC-Subnets"
         ],
         "summary": "Retrieve details for a VPC subnet that belongs to the logged in user.",
         "operationId": "getVPCSubnet",
@@ -2984,7 +2984,7 @@
       "delete": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "VPC-Subneteds"
+          "VPC-Subnets"
         ],
         "summary": "Delete a VPC subnet owned by the logged in user.",
         "operationId": "deleteVPCSubnet",
@@ -3030,7 +3030,7 @@
       "patch": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "VPC-Subneteds"
+          "VPC-Subnets"
         ],
         "summary": "Patch (update) a VPC subnet owned by the logged in user.",
         "operationId": "patchVPCSubnet",
