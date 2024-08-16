@@ -7165,10 +7165,6 @@
           "type": "string",
           "x-go-name": "Name",
           "example": "my-cool-vpc-network"
-        },
-        "new_field": {
-          "type": "string",
-          "x-go-name": "New_field"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
