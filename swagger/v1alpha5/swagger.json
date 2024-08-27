@@ -1608,6 +1608,631 @@
         }
       }
     },
+    "/projects/{project_id}/kubernetes/clusters": {
+      "get": {
+        "tags": [
+          "Kubernetes-Clusters"
+        ],
+        "summary": "Retrieve information about Kubernetes clusters belonged to the project.",
+        "operationId": "listClusters",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listKubernetesClustersResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "description": "A successful response from this resource will contain the async operation.",
+        "tags": [
+          "Kubernetes-Clusters"
+        ],
+        "summary": "Create a new Kubernetes cluster owned by the logged in user.",
+        "operationId": "createCluster",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KubernetesClusterPostRequest"
+            }
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/kubernetes/clusters/operations": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Kubernetes Cluster resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
+        "tags": [
+          "Kubernetes-Cluster-Operations"
+        ],
+        "summary": "Get status of asynchronous operations",
+        "operationId": "listKubernetesClustersOperations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
+            "x-go-name": "ResourceID",
+            "name": "resource_id",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "IN_PROGRESS"
+            ],
+            "x-go-name": "State",
+            "name": "state",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/kubernetes/clusters/operations/{operation_id}": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Kubernetes Cluster resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
+        "tags": [
+          "Kubernetes-Cluster-Operations"
+        ],
+        "summary": "Get status of a single asynchronous operation",
+        "operationId": "getKubernetesClustersOperation",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}": {
+      "get": {
+        "tags": [
+          "Kubernetes-Clusters"
+        ],
+        "summary": "Retrieve information about a particular Kubernetes cluster belonged to the project.",
+        "operationId": "getCluster",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getKubernetesClusterResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Kubernetes-Clusters"
+        ],
+        "summary": "Delete a cluster that the logged in user owns.",
+        "operationId": "deleteCluster",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Kubernetes-Clusters"
+        ],
+        "summary": "Update a cluster that the logged in user owns.",
+        "operationId": "updateCluster",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KubernetesClusterPatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools": {
+      "get": {
+        "tags": [
+          "Kubernetes-NodePools"
+        ],
+        "summary": "Retrieve information about Kubernetes node pools belonged to the cluster.",
+        "operationId": "listNodePools",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listKubernetesNodePoolsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "description": "A successful response from this resource will contain the async operation.",
+        "tags": [
+          "Kubernetes-NodePools"
+        ],
+        "summary": "Create a new Kubernetes node pool owned by the logged in user.",
+        "operationId": "createNodePool",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KubernetesNodePoolPostRequest"
+            }
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools/operations/{operation_id}": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Kubernetes Node Pool resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
+        "tags": [
+          "Kubernetes-Node-Pool-Operations"
+        ],
+        "summary": "Get status of a single asynchronous operation",
+        "operationId": "getKubernetesNodePoolsOperation",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools/{node_pool_id}": {
+      "get": {
+        "tags": [
+          "Kubernetes-NodePools"
+        ],
+        "summary": "Retrieve information about a particular Kubernetes node pool belonged to the project.",
+        "operationId": "getNodePool",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "NodePoolID",
+            "name": "node_pool_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getKubernetesNodePoolResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Kubernetes-NodePools"
+        ],
+        "summary": "Delete a node pool that the logged in user owns.",
+        "operationId": "deleteNodePool",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "NodePoolID",
+            "name": "node_pool_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Kubernetes-NodePools"
+        ],
+        "summary": "Update a node pool that the logged in user owns.",
+        "operationId": "updateNodePool",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "NodePoolID",
+            "name": "node_pool_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KubernetesNodePoolPatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/kubernetes/nodepools/operations": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Kubernetes Node Pool resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
+        "tags": [
+          "Kubernetes-Node-Pool-Operations"
+        ],
+        "summary": "Get status of asynchronous operations",
+        "operationId": "listKubernetesNodePoolsOperations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/networking/ib-networks": {
       "get": {
         "tags": [
@@ -5494,6 +6119,335 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "KubernetesCluster": {
+      "type": "object",
+      "title": "KubernetesCluster defines the specifications of the Kubernetes cluster.",
+      "required": [
+        "id",
+        "name",
+        "location",
+        "version",
+        "configuration",
+        "subnet_id",
+        "project_id",
+        "node_pools",
+        "add_ons",
+        "state"
+      ],
+      "properties": {
+        "add_ons": {
+          "description": "List of add-ons associated with the cluster.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "AddOns",
+          "example": [
+            "crusoe_csi"
+          ]
+        },
+        "configuration": {
+          "description": "Configuration setting of the Kubernetes cluster.",
+          "type": "string",
+          "enum": [
+            "ha"
+          ],
+          "x-go-name": "Configuration",
+          "example": "ha"
+        },
+        "id": {
+          "description": "ID of the Kubernetes cluster.",
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "location": {
+          "description": "Location of the Kubernetes cluster.",
+          "type": "string",
+          "x-go-name": "Location"
+        },
+        "name": {
+          "description": "Name of the Kubernetes cluster.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-kubernetes-cluster"
+        },
+        "node_pools": {
+          "description": "List of IDs of node pools within the Kubernetes cluster.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "NodePools",
+          "example": [
+            "1d2b3a4c-5e6f-7b9d-8c9a-0e1f2d3b4c5d"
+          ]
+        },
+        "project_id": {
+          "description": "The ID of the project this Kubernetes cluster belongs to.",
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
+        },
+        "state": {
+          "description": "State of the cluster",
+          "type": "string",
+          "x-go-name": "State",
+          "example": "RUNNING"
+        },
+        "subnet_id": {
+          "description": "The ID of the subnet this Kubernetes cluster belongs to.",
+          "type": "string",
+          "x-go-name": "SubnetID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "version": {
+          "description": "Version of the crusoe Kubernetes image of the Kubernetes cluster.",
+          "type": "string",
+          "x-go-name": "Version",
+          "example": "1.29.5-crusoe.0"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "KubernetesClusterPatchRequest": {
+      "type": "object",
+      "title": "KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.",
+      "required": [
+        "configuration"
+      ],
+      "properties": {
+        "add_ons": {
+          "description": "List of add-ons to be included to the cluster.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "AddOns",
+          "example": [
+            "crusoe_csi"
+          ]
+        },
+        "configuration": {
+          "description": "Configuration setting of the Kubernetes cluster.\nCan only upgrade cluster to HA, but not downgrade from HA to normal",
+          "type": "string",
+          "enum": [
+            "ha"
+          ],
+          "x-go-name": "Configuration",
+          "example": "ha"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "KubernetesClusterPostRequest": {
+      "type": "object",
+      "title": "KubernetesClusterPostRequest defines the specifications of the cluster to be created.",
+      "required": [
+        "name",
+        "location",
+        "version"
+      ],
+      "properties": {
+        "add_ons": {
+          "description": "List of add-ons to be included to the cluster.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "AddOns",
+          "example": [
+            "crusoe_csi"
+          ]
+        },
+        "configuration": {
+          "description": "Configuration setting of the Kubernetes cluster. Leave the field empty for standard configuration.",
+          "type": "string",
+          "enum": [
+            "ha"
+          ],
+          "x-go-name": "Configuration",
+          "example": "ha"
+        },
+        "location": {
+          "description": "Location to create the Kubernetes cluster in.",
+          "type": "string",
+          "x-go-name": "Location"
+        },
+        "name": {
+          "description": "Name of the Kubernetes cluster.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-kubernetes-cluster"
+        },
+        "subnet_id": {
+          "description": "The ID of the subnet to create the cluster in. Must be in the location\nspecified. If not provided, the default subnet for the location will be\nused, if there is one.",
+          "type": "string",
+          "x-go-name": "SubnetID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "version": {
+          "description": "Version of the Crusoe Kubernetes image to create the cluster with.",
+          "type": "string",
+          "x-go-name": "Version",
+          "example": "1.29.5-crusoe.0"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "KubernetesNodePool": {
+      "type": "object",
+      "required": [
+        "id",
+        "count",
+        "project_id",
+        "cluster_id",
+        "image_id",
+        "node_labels",
+        "subnet_id",
+        "instance_ids",
+        "state"
+      ],
+      "properties": {
+        "cluster_id": {
+          "description": "The ID of the Kubernetes cluster this node pool belongs to.",
+          "type": "string",
+          "x-go-name": "ClusterID",
+          "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
+        },
+        "count": {
+          "description": "Number of nodes within the node pool.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Count",
+          "example": 4
+        },
+        "id": {
+          "description": "ID of the node pool.",
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "0a1b3c2d-5e6f-8b9c-4d7e-1a2b3c4d5e6f"
+        },
+        "image_id": {
+          "description": "Image Unique identifier for the Kubernetes node pool.",
+          "type": "string",
+          "x-go-name": "ImageID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "instance_ids": {
+          "description": "List of IDs of instances within the node pool.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "InstanceIDs",
+          "example": [
+            "ca39e669-47ee-456b-968d-303234fbf99f"
+          ]
+        },
+        "node_labels": {
+          "description": "Labels associated with the node pool.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "NodeLabels",
+          "example": "\"nvidia.a100\""
+        },
+        "project_id": {
+          "description": "The ID of the project this Kubernetes node pool belongs to.",
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
+        },
+        "state": {
+          "description": "State of the node pool",
+          "type": "string",
+          "x-go-name": "State",
+          "example": "RUNNING"
+        },
+        "subnet_id": {
+          "description": "The ID of the subnet this node pool belongs to.",
+          "type": "string",
+          "x-go-name": "SubnetID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "KubernetesNodePoolPatchRequest": {
+      "type": "object",
+      "required": [
+        "count"
+      ],
+      "properties": {
+        "count": {
+          "description": "The number of nodes to be created.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Count",
+          "example": 4
+        },
+        "node_labels": {
+          "description": "Labels assigned to the node pool",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "NodeLabels",
+          "example": {
+            "label": "my_node"
+          }
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "KubernetesNodePoolPostRequest": {
+      "type": "object",
+      "required": [
+        "product_name",
+        "count"
+      ],
+      "properties": {
+        "count": {
+          "description": "The number of nodes to be created.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Count",
+          "example": 4
+        },
+        "ib_partition_id": {
+          "description": "The ID of the Infiniband partition to create node pool in. Must be in the location\nof the cluster if specified.",
+          "type": "string",
+          "x-go-name": "IBPartitionID",
+          "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653"
+        },
+        "node_labels": {
+          "description": "Labels assigned to the node pool",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "NodeLabels",
+          "example": {
+            "label": "my_node"
+          }
+        },
+        "product_name": {
+          "description": "Product name of the VM type to be created within this node pool.",
+          "type": "string",
+          "x-go-name": "ProductName",
+          "example": "a100.2x"
+        },
+        "subnet_id": {
+          "description": "The ID of the subnet to create the node pool in. Must be in the location\nof the cluster if specified. If not provided, the default subnet for the\nlocation will be used, if there is one.",
+          "type": "string",
+          "x-go-name": "SubnetID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ListCapacitiesResponseV1Alpha5": {
       "type": "object",
       "required": [
@@ -5670,6 +6624,38 @@
           "type": "string",
           "x-go-name": "PrevPageToken",
           "example": "bXktZmlyc3Qtdm0"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ListKubernetesClustersResponse": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KubernetesCluster"
+          },
+          "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ListKubernetesNodePoolsResponse": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KubernetesNodePool"
+          },
+          "x-go-name": "Items"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -7434,6 +8420,18 @@
         "$ref": "#/definitions/InstanceTemplate"
       }
     },
+    "getKubernetesClusterResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesCluster"
+      }
+    },
+    "getKubernetesNodePoolResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesNodePool"
+      }
+    },
     "getLoadBalancerResponse": {
       "description": "",
       "schema": {
@@ -7534,6 +8532,18 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListInstancesResponseV1Alpha5"
+      }
+    },
+    "listKubernetesClustersResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListKubernetesClustersResponse"
+      }
+    },
+    "listKubernetesNodePoolsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListKubernetesNodePoolsResponse"
       }
     },
     "listLoadBalancersResponse": {
