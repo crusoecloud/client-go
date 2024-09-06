@@ -22,6 +22,7 @@ type InstanceV1Alpha5 struct {
 	Location               string                  `json:"location"`
 	Name                   string                  `json:"name"`
 	NetworkInterfaces      []NetworkInterface      `json:"network_interfaces"`
+	PodId                  string                  `json:"pod_id,omitempty"`
 	ProjectId              string                  `json:"project_id"`
 	ReservationId          string                  `json:"reservation_id,omitempty"`
 	State                  string                  `json:"state"`

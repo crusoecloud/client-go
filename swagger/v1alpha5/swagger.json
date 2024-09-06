@@ -5914,6 +5914,11 @@
           },
           "x-go-name": "NetworkInterfaces"
         },
+        "pod_id": {
+          "type": "string",
+          "x-go-name": "PodID",
+          "example": "29d20dc4-90ad-4365-ab05-83f5f5e52d94"
+        },
         "project_id": {
           "type": "string",
           "x-go-name": "ProjectID",
