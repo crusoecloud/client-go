@@ -1906,6 +1906,50 @@
         }
       }
     },
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/get-credentials": {
+      "post": {
+        "tags": [
+          "Kubernetes-Clusters"
+        ],
+        "summary": "Retrieve credentials for the user to authenticate to the specified cluster.",
+        "operationId": "getClusterCredentials",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getKubernetesClusterCredentialsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools": {
       "get": {
         "tags": [
@@ -5914,6 +5958,11 @@
           },
           "x-go-name": "NetworkInterfaces"
         },
+        "pod_id": {
+          "type": "string",
+          "x-go-name": "PodID",
+          "example": "29d20dc4-90ad-4365-ab05-83f5f5e52d94"
+        },
         "project_id": {
           "type": "string",
           "x-go-name": "ProjectID",
@@ -6115,6 +6164,51 @@
         },
         "virtualization_features": {
           "$ref": "#/definitions/VirtualizationFeatures"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "KubernetesAuthenticationClientCertificateDetails": {
+      "description": "KubernetesAuthenticationClientCertificateDetails contains information to authenticate\nto a Kubernetes cluster with client certificates.",
+      "type": "object",
+      "required": [
+        "cluster_name",
+        "cluster_address",
+        "cluster_ca_certificate",
+        "user_name",
+        "user_client_certificate",
+        "user_client_key"
+      ],
+      "properties": {
+        "cluster_address": {
+          "description": "Address of the Kubernetes cluster to authenticate to",
+          "type": "string",
+          "x-go-name": "ClusterAddress"
+        },
+        "cluster_ca_certificate": {
+          "description": "CA Certificate of the Kubernetes cluster to authenticate to",
+          "type": "string",
+          "x-go-name": "ClusterCACert"
+        },
+        "cluster_name": {
+          "description": "Name of the Kubernetes cluster to authenticate to",
+          "type": "string",
+          "x-go-name": "ClusterName"
+        },
+        "user_client_certificate": {
+          "description": "User's Client certificate for authenticating to the cluster.",
+          "type": "string",
+          "x-go-name": "UserClientCert"
+        },
+        "user_client_key": {
+          "description": "The private key associated with the user's Client certificate.",
+          "type": "string",
+          "x-go-name": "UserClientKey"
+        },
+        "user_name": {
+          "description": "Name of the authenticating user",
+          "type": "string",
+          "x-go-name": "UserName"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -8418,6 +8512,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/InstanceTemplate"
+      }
+    },
+    "getKubernetesClusterCredentialsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesAuthenticationClientCertificateDetails"
       }
     },
     "getKubernetesClusterResponse": {
