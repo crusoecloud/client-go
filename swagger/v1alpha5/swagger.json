@@ -7168,7 +7168,7 @@
         "client_ip",
         "end_time",
         "status",
-        "string",
+        "start_time",
         "surface"
       ],
       "properties": {
@@ -7250,17 +7250,17 @@
           "x-go-name": "ProjectName",
           "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb"
         },
+        "start_time": {
+          "description": "The start time of the request",
+          "type": "string",
+          "x-go-name": "StartTime",
+          "example": "\"2024-08-24T05:25:30.954Z\""
+        },
         "status": {
           "description": "The status of the action",
           "type": "string",
           "x-go-name": "Status",
           "example": "OK"
-        },
-        "string": {
-          "description": "The start time of the request",
-          "type": "string",
-          "x-go-name": "StartTime",
-          "example": "\"2024-08-24T05:25:30.954Z\""
         },
         "surface": {
           "description": "Surface type of the request",

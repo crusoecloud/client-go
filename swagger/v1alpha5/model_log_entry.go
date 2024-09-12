@@ -35,10 +35,10 @@ type LogEntry struct {
 	ProjectId string `json:"project_id,omitempty"`
 	// Project Name
 	ProjectName string `json:"project_name,omitempty"`
+	// The start time of the request
+	StartTime string `json:"start_time"`
 	// The status of the action
 	Status string `json:"status"`
-	// The start time of the request
-	String_ string `json:"string"`
 	// Surface type of the request
 	Surface string `json:"surface"`
 	// The targets of the action required
