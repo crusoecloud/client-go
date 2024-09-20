@@ -6600,6 +6600,12 @@
           "x-go-name": "ProductName",
           "example": "a100.2x"
         },
+        "ssh_public_key": {
+          "description": "SSH public key to use for all VMs created from this node pool.",
+          "type": "string",
+          "x-go-name": "SSHPublicKey",
+          "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D"
+        },
         "subnet_id": {
           "description": "The ID of the subnet to create the node pool in. Must be in the location\nof the cluster if specified. If not provided, the default subnet for the\nlocation will be used, if there is one.",
           "type": "string",

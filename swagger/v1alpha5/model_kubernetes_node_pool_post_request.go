@@ -17,6 +17,8 @@ type KubernetesNodePoolPostRequest struct {
 	NodeLabels map[string]string `json:"node_labels,omitempty"`
 	// Product name of the VM type to be created within this node pool.
 	ProductName string `json:"product_name"`
+	// SSH public key to use for all VMs created from this node pool.
+	SshPublicKey string `json:"ssh_public_key,omitempty"`
 	// The ID of the subnet to create the node pool in. Must be in the location of the cluster if specified. If not provided, the default subnet for the location will be used, if there is one.
 	SubnetId string `json:"subnet_id,omitempty"`
 }
