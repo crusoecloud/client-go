@@ -7168,7 +7168,7 @@
       "title": "Log Entry models the audit log entry.",
       "required": [
         "action",
-        "actor",
+        "actor_id",
         "actor_email",
         "actor_type",
         "client_ip",
@@ -7184,17 +7184,17 @@
           "x-go-name": "Action",
           "example": "Create"
         },
-        "actor": {
-          "description": "Actor: who performed the action.",
-          "type": "string",
-          "x-go-name": "Actor",
-          "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb || \"system\""
-        },
         "actor_email": {
           "description": "ActorEmail: the email address of the actor",
           "type": "string",
           "x-go-name": "ActorEmail",
           "example": "xxxx@gmail.coom"
+        },
+        "actor_id": {
+          "description": "Actor: who performed the action.",
+          "type": "string",
+          "x-go-name": "Actor",
+          "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb || \"system\""
         },
         "actor_type": {
           "description": "ActorType: type of the actor",
@@ -7226,7 +7226,7 @@
           "x-go-name": "EndTime",
           "example": "\"2024-08-24T05:25:33.860Z\""
         },
-        "location": {
+        "locations": {
           "description": "Region name of where the action is performed if applicable",
           "type": "string",
           "x-go-name": "Location",
@@ -7274,13 +7274,13 @@
           "x-go-name": "Surface",
           "example": "browser"
         },
-        "target": {
+        "target_ids": {
           "description": "The targets of the action\nrequired",
           "type": "string",
           "x-go-name": "Target",
           "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb,6ac4d027-ee2a-4c0c-9b6f-e8638a7ae867"
         },
-        "target_name": {
+        "target_names": {
           "description": "The target names of the action",
           "type": "string",
           "x-go-name": "TargetName",

@@ -11,10 +11,10 @@ package swagger
 type LogEntry struct {
 	// Name of the action
 	Action string `json:"action"`
-	// Actor: who performed the action.
-	Actor string `json:"actor"`
 	// ActorEmail: the email address of the actor
 	ActorEmail string `json:"actor_email"`
+	// Actor: who performed the action.
+	ActorId string `json:"actor_id"`
 	// ActorType: type of the actor
 	ActorType string `json:"actor_type"`
 	// id of the associate
@@ -26,7 +26,7 @@ type LogEntry struct {
 	// The end time of the request
 	EndTime string `json:"end_time"`
 	// Region name of where the action is performed if applicable
-	Location string `json:"location,omitempty"`
+	Locations string `json:"locations,omitempty"`
 	// organization id
 	OrganizationId string `json:"organization_id,omitempty"`
 	// organization name
@@ -42,9 +42,9 @@ type LogEntry struct {
 	// Surface type of the request
 	Surface string `json:"surface"`
 	// The targets of the action required
-	Target string `json:"target,omitempty"`
+	TargetIds string `json:"target_ids,omitempty"`
 	// The target names of the action
-	TargetName string `json:"target_name,omitempty"`
+	TargetNames string `json:"target_names,omitempty"`
 	// The target type of the action required
 	TargetType string `json:"target_type,omitempty"`
 }
