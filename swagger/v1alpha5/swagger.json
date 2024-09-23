@@ -402,6 +402,57 @@
         }
       }
     },
+    "/organizations/{organization_id}/audit-logs": {
+      "get": {
+        "tags": [
+          "Audit",
+          "Logs"
+        ],
+        "summary": "Get audit logs belonging to the specified organization. User must be part of the organization.",
+        "operationId": "getAuditLogs",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "x-go-name": "OrganizationID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "2022-09-01T14:25:36-07:00",
+            "x-go-name": "StartTime",
+            "name": "start_time",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "2022-09-06T14:25:36-07:00",
+            "x-go-name": "EndTime",
+            "name": "end_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/auditLogsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/organizations/{organization_id}/reservations": {
       "get": {
         "tags": [
@@ -4646,6 +4697,22 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "AuditLogsGetResponse": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LogEntry"
+          },
+          "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "Billing": {
       "type": "object",
       "title": "Billing contains information about the billing status of an organization.",
@@ -6533,6 +6600,12 @@
           "x-go-name": "ProductName",
           "example": "a100.2x"
         },
+        "ssh_public_key": {
+          "description": "SSH public key to use for all VMs created from this node pool.",
+          "type": "string",
+          "x-go-name": "SSHPublicKey",
+          "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D"
+        },
         "subnet_id": {
           "description": "The ID of the subnet to create the node pool in. Must be in the location\nof the cluster if specified. If not provided, the default subnet for the\nlocation will be used, if there is one.",
           "type": "string",
@@ -7089,6 +7162,138 @@
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "LogEntry": {
+      "type": "object",
+      "title": "Log Entry models the audit log entry.",
+      "required": [
+        "action",
+        "actor_id",
+        "actor_email",
+        "actor_type",
+        "client_ip",
+        "end_time",
+        "status",
+        "start_time",
+        "surface"
+      ],
+      "properties": {
+        "action": {
+          "description": "Name of the action",
+          "type": "string",
+          "x-go-name": "Action",
+          "example": "Create"
+        },
+        "actor_email": {
+          "description": "ActorEmail: the email address of the actor",
+          "type": "string",
+          "x-go-name": "ActorEmail",
+          "example": "xxxx@gmail.coom"
+        },
+        "actor_id": {
+          "description": "Actor: who performed the action.",
+          "type": "string",
+          "x-go-name": "Actor",
+          "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb || \"system\""
+        },
+        "actor_type": {
+          "description": "ActorType: type of the actor",
+          "type": "string",
+          "x-go-name": "ActorType",
+          "example": "user || admin || system"
+        },
+        "associate": {
+          "description": "id of the associate",
+          "type": "string",
+          "x-go-name": "Associate",
+          "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb"
+        },
+        "associate_type": {
+          "description": "Type of the associate",
+          "type": "string",
+          "x-go-name": "AssociateType",
+          "example": "reservation"
+        },
+        "client_ip": {
+          "description": "IP address of the request",
+          "type": "string",
+          "x-go-name": "ClientIP",
+          "example": "10.2.5.355"
+        },
+        "end_time": {
+          "description": "The end time of the request",
+          "type": "string",
+          "x-go-name": "EndTime",
+          "example": "\"2024-08-24T05:25:33.860Z\""
+        },
+        "locations": {
+          "description": "Region name of where the action is performed if applicable",
+          "type": "string",
+          "x-go-name": "Location",
+          "example": "us-east1"
+        },
+        "organization_id": {
+          "description": "organization id",
+          "type": "string",
+          "x-go-name": "OrganizationID",
+          "example": "d10efcc0-7dba-4163-a3f0-f48aae20712a"
+        },
+        "organization_name": {
+          "description": "organization name",
+          "type": "string",
+          "x-go-name": "OrganizationName",
+          "example": "crusoe.ai"
+        },
+        "project_id": {
+          "description": "Project ID",
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb"
+        },
+        "project_name": {
+          "description": "Project Name",
+          "type": "string",
+          "x-go-name": "ProjectName",
+          "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb"
+        },
+        "start_time": {
+          "description": "The start time of the request",
+          "type": "string",
+          "x-go-name": "StartTime",
+          "example": "\"2024-08-24T05:25:30.954Z\""
+        },
+        "status": {
+          "description": "The status of the action",
+          "type": "string",
+          "x-go-name": "Status",
+          "example": "OK"
+        },
+        "surface": {
+          "description": "Surface type of the request",
+          "type": "string",
+          "x-go-name": "Surface",
+          "example": "browser"
+        },
+        "target_ids": {
+          "description": "The targets of the action\nrequired",
+          "type": "string",
+          "x-go-name": "Target",
+          "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb,6ac4d027-ee2a-4c0c-9b6f-e8638a7ae867"
+        },
+        "target_names": {
+          "description": "The target names of the action",
+          "type": "string",
+          "x-go-name": "TargetName",
+          "example": "vm-test-1,vm-test-2"
+        },
+        "target_type": {
+          "description": "The target type of the action\nrequired",
+          "type": "string",
+          "x-go-name": "TargetType",
+          "example": "VM"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers/logservice"
     },
     "NetworkInterface": {
       "type": "object",
@@ -8387,6 +8592,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/AsyncOperationResponse"
+      }
+    },
+    "auditLogsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AuditLogsGetResponse"
       }
     },
     "authError": {

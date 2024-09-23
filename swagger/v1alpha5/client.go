@@ -44,6 +44,8 @@ type APIClient struct {
 
 	// API Services
 
+	AuditApi *AuditApiService
+
 	CapacitiesApi *CapacitiesApiService
 
 	DiskOperationsApi *DiskOperationsApiService
@@ -79,6 +81,8 @@ type APIClient struct {
 	LoadBalancersApi *LoadBalancersApiService
 
 	LocationsApi *LocationsApiService
+
+	LogsApi *LogsApiService
 
 	ProjectsApi *ProjectsApiService
 
@@ -127,6 +131,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.AuditApi = (*AuditApiService)(&c.common)
 	c.CapacitiesApi = (*CapacitiesApiService)(&c.common)
 	c.DiskOperationsApi = (*DiskOperationsApiService)(&c.common)
 	c.DisksApi = (*DisksApiService)(&c.common)
@@ -145,6 +150,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LoadBalancerOperationsApi = (*LoadBalancerOperationsApiService)(&c.common)
 	c.LoadBalancersApi = (*LoadBalancersApiService)(&c.common)
 	c.LocationsApi = (*LocationsApiService)(&c.common)
+	c.LogsApi = (*LogsApiService)(&c.common)
 	c.ProjectsApi = (*ProjectsApiService)(&c.common)
 	c.ReservationsApi = (*ReservationsApiService)(&c.common)
 	c.SSHKeysApi = (*SSHKeysApiService)(&c.common)
