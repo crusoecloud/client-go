@@ -421,6 +421,13 @@
           },
           {
             "type": "string",
+            "example": "f934fbdb-7e3a-4b92-b7d2-da0f91d768e8,8c29f3f3-830f-4a44-9b6b-a51fcf6a6b5d",
+            "x-go-name": "ProjectIDs",
+            "name": "project_ids",
+            "in": "query"
+          },
+          {
+            "type": "string",
             "example": "2022-09-01T14:25:36-07:00",
             "x-go-name": "StartTime",
             "name": "start_time",

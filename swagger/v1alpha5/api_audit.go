@@ -31,14 +31,16 @@ AuditApiService Get audit logs belonging to the specified organization. User mus
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param organizationId
  * @param optional nil or *AuditApiGetAuditLogsOpts - Optional Parameters:
+     * @param "ProjectIds" (optional.String) -
      * @param "StartTime" (optional.String) -
      * @param "EndTime" (optional.String) -
 @return AuditLogsGetResponse
 */
 
 type AuditApiGetAuditLogsOpts struct {
-	StartTime optional.String
-	EndTime   optional.String
+	ProjectIds optional.String
+	StartTime  optional.String
+	EndTime    optional.String
 }
 
 func (a *AuditApiService) GetAuditLogs(ctx context.Context, organizationId string, localVarOptionals *AuditApiGetAuditLogsOpts) (AuditLogsGetResponse, *http.Response, error) {
@@ -58,6 +60,9 @@ func (a *AuditApiService) GetAuditLogs(ctx context.Context, organizationId strin
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.ProjectIds.IsSet() {
+		localVarQueryParams.Add("project_ids", parameterToString(localVarOptionals.ProjectIds.Value(), ""))
+	}
 	if localVarOptionals != nil && localVarOptionals.StartTime.IsSet() {
 		localVarQueryParams.Add("start_time", parameterToString(localVarOptionals.StartTime.Value(), ""))
 	}
