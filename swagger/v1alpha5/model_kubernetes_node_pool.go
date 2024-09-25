@@ -27,4 +27,6 @@ type KubernetesNodePool struct {
 	State string `json:"state"`
 	// The ID of the subnet this node pool belongs to.
 	SubnetId string `json:"subnet_id"`
+	// VM type of the node pool
+	Type_ string `json:"type"`
 }

@@ -421,6 +421,13 @@
           },
           {
             "type": "string",
+            "example": "f934fbdb-7e3a-4b92-b7d2-da0f91d768e8,8c29f3f3-830f-4a44-9b6b-a51fcf6a6b5d",
+            "x-go-name": "ProjectIDs",
+            "name": "project_ids",
+            "in": "query"
+          },
+          {
+            "type": "string",
             "example": "2022-09-01T14:25:36-07:00",
             "x-go-name": "StartTime",
             "name": "start_time",
@@ -6467,7 +6474,8 @@
         "node_labels",
         "subnet_id",
         "instance_ids",
-        "state"
+        "state",
+        "type"
       ],
       "properties": {
         "cluster_id": {
@@ -6532,6 +6540,12 @@
           "type": "string",
           "x-go-name": "SubnetID",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "type": {
+          "description": "VM type of the node pool",
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "a100.2x"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
