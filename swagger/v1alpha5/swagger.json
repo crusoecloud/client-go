@@ -6474,7 +6474,8 @@
         "node_labels",
         "subnet_id",
         "instance_ids",
-        "state"
+        "state",
+        "type"
       ],
       "properties": {
         "cluster_id": {
@@ -6539,6 +6540,12 @@
           "type": "string",
           "x-go-name": "SubnetID",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "type": {
+          "description": "VM type of the node pool",
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "a100.2x"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
