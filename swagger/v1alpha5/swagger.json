@@ -6467,6 +6467,7 @@
       "type": "object",
       "required": [
         "id",
+        "name",
         "count",
         "project_id",
         "cluster_id",
@@ -6513,6 +6514,12 @@
           "example": [
             "ca39e669-47ee-456b-968d-303234fbf99f"
           ]
+        },
+        "name": {
+          "description": "Name of the node pool.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "crusoe-node-pool"
         },
         "node_labels": {
           "description": "Labels associated with the node pool.",
@@ -6580,6 +6587,7 @@
     "KubernetesNodePoolPostRequest": {
       "type": "object",
       "required": [
+        "name",
         "product_name",
         "count"
       ],
@@ -6596,6 +6604,12 @@
           "type": "string",
           "x-go-name": "IBPartitionID",
           "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653"
+        },
+        "name": {
+          "description": "Name of the Kubernetes node pool.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-kubernetes-node-pool"
         },
         "node_labels": {
           "description": "Labels assigned to the node pool",
