@@ -13,6 +13,8 @@ type KubernetesNodePoolPostRequest struct {
 	Count int64 `json:"count"`
 	// The ID of the Infiniband partition to create node pool in. Must be in the location of the cluster if specified.
 	IbPartitionId string `json:"ib_partition_id,omitempty"`
+	// Name of the Kubernetes node pool.
+	Name string `json:"name"`
 	// Labels assigned to the node pool
 	NodeLabels map[string]string `json:"node_labels,omitempty"`
 	// Product name of the VM type to be created within this node pool.

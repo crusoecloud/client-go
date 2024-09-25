@@ -19,6 +19,8 @@ type KubernetesNodePool struct {
 	ImageId string `json:"image_id"`
 	// List of IDs of instances within the node pool.
 	InstanceIds []string `json:"instance_ids"`
+	// Name of the node pool.
+	Name string `json:"name"`
 	// Labels associated with the node pool.
 	NodeLabels map[string]string `json:"node_labels"`
 	// The ID of the project this Kubernetes node pool belongs to.
