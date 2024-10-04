@@ -439,6 +439,97 @@
             "x-go-name": "EndTime",
             "name": "end_time",
             "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "Create,Update",
+            "x-go-name": "Actions",
+            "name": "actions",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "f934fbdb-7e3a-4b92-b7d2-da0f91d768e8,8c29f3f3-830f-4a44-9b6b-a51fcf6a6b5d",
+            "x-go-name": "ActorIDs",
+            "name": "actor_ids",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "hh26@xxx.com,xyz@yyy.ai, only support filter by user email, not by crusoe admin email. ",
+            "x-go-name": "ActorEmails",
+            "name": "actor_emails",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "User,Crusoe Admin, please ensure URL encoding for values with space.",
+            "x-go-name": "ActorTypes",
+            "name": "actor_types",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "f934fbdb-7e3a-4b92-b7d2-da0f91d768e8,8c29f3f3-830f-4a44-9b6b-a51fcf6a6b5d",
+            "x-go-name": "TargetIDs",
+            "name": "target_ids",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "VM,KubernetesCluster",
+            "x-go-name": "TargetTypes",
+            "name": "target_types",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "my_vm1,my_vm2",
+            "x-go-name": "TargetNames",
+            "name": "target_names",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "f934fbdb-7e3a-4b92-b7d2-da0f91d768e8,8c29f3f3-830f-4a44-9b6b-a51fcf6a6b5d",
+            "x-go-name": "AssociateIDs",
+            "name": "associate_ids",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "VM,KubernetesCluster",
+            "x-go-name": "AssociateTypes",
+            "name": "associate_types",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "instance",
+            "x-go-name": "AssociateNames",
+            "name": "associate_names",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "us-east1,us-northcentral1-a",
+            "x-go-name": "Locations",
+            "name": "locations",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "OK,Bad Request",
+            "x-go-name": "Statuses",
+            "name": "statuses",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "Browser,Crusoe Terraform/v0.5.21 please make sure the values are URL encoded.",
+            "x-go-name": "Surfaces",
+            "name": "surfaces",
+            "in": "query"
           }
         ],
         "responses": {
