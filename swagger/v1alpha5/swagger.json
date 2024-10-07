@@ -5904,6 +5904,11 @@
           "x-go-name": "Name",
           "example": "my-instance-template"
         },
+        "placement_policy": {
+          "description": "The VM Placement Policy",
+          "type": "string",
+          "x-go-name": "PlacementPolicy"
+        },
         "project_id": {
           "description": "Project ID of the project this instance template belongs to.",
           "type": "string",
@@ -5991,6 +5996,11 @@
           "type": "string",
           "x-go-name": "Location",
           "example": "us-northcentral1-a"
+        },
+        "placement_policy": {
+          "description": "The VM Placement Policy to use.",
+          "type": "string",
+          "x-go-name": "PlacementPolicy"
         },
         "public_ip_address_type": {
           "description": "Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".",
