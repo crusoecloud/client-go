@@ -7313,6 +7313,12 @@
           "x-go-name": "Action",
           "example": "Create"
         },
+        "action_detail": {
+          "description": "Name of the action",
+          "type": "string",
+          "x-go-name": "ActionDetail",
+          "example": "Attach Disk"
+        },
         "actor_email": {
           "description": "ActorEmail: the email address of the actor",
           "type": "string",
@@ -7331,11 +7337,17 @@
           "x-go-name": "ActorType",
           "example": "user || admin || system"
         },
-        "associate": {
+        "associate_ids": {
           "description": "id of the associate",
           "type": "string",
           "x-go-name": "Associate",
           "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb"
+        },
+        "associate_names": {
+          "description": "Name of the associate",
+          "type": "string",
+          "x-go-name": "AssociateName",
+          "example": "testing-vpcnetwork"
         },
         "associate_type": {
           "description": "Type of the associate",
