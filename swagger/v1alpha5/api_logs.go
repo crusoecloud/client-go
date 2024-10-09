@@ -34,13 +34,39 @@ LogsApiService Get audit logs belonging to the specified organization. User must
      * @param "ProjectIds" (optional.String) -
      * @param "StartTime" (optional.String) -
      * @param "EndTime" (optional.String) -
+     * @param "Actions" (optional.String) -
+     * @param "ActorIds" (optional.String) -
+     * @param "ActorEmails" (optional.String) -
+     * @param "ActorTypes" (optional.String) -
+     * @param "TargetIds" (optional.String) -
+     * @param "TargetTypes" (optional.String) -
+     * @param "TargetNames" (optional.String) -
+     * @param "AssociateIds" (optional.String) -
+     * @param "AssociateTypes" (optional.String) -
+     * @param "AssociateNames" (optional.String) -
+     * @param "Locations" (optional.String) -
+     * @param "Statuses" (optional.String) -
+     * @param "Surfaces" (optional.String) -
 @return AuditLogsGetResponse
 */
 
 type LogsApiGetAuditLogsOpts struct {
-	ProjectIds optional.String
-	StartTime  optional.String
-	EndTime    optional.String
+	ProjectIds     optional.String
+	StartTime      optional.String
+	EndTime        optional.String
+	Actions        optional.String
+	ActorIds       optional.String
+	ActorEmails    optional.String
+	ActorTypes     optional.String
+	TargetIds      optional.String
+	TargetTypes    optional.String
+	TargetNames    optional.String
+	AssociateIds   optional.String
+	AssociateTypes optional.String
+	AssociateNames optional.String
+	Locations      optional.String
+	Statuses       optional.String
+	Surfaces       optional.String
 }
 
 func (a *LogsApiService) GetAuditLogs(ctx context.Context, organizationId string, localVarOptionals *LogsApiGetAuditLogsOpts) (AuditLogsGetResponse, *http.Response, error) {
@@ -68,6 +94,45 @@ func (a *LogsApiService) GetAuditLogs(ctx context.Context, organizationId string
 	}
 	if localVarOptionals != nil && localVarOptionals.EndTime.IsSet() {
 		localVarQueryParams.Add("end_time", parameterToString(localVarOptionals.EndTime.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Actions.IsSet() {
+		localVarQueryParams.Add("actions", parameterToString(localVarOptionals.Actions.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ActorIds.IsSet() {
+		localVarQueryParams.Add("actor_ids", parameterToString(localVarOptionals.ActorIds.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ActorEmails.IsSet() {
+		localVarQueryParams.Add("actor_emails", parameterToString(localVarOptionals.ActorEmails.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ActorTypes.IsSet() {
+		localVarQueryParams.Add("actor_types", parameterToString(localVarOptionals.ActorTypes.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.TargetIds.IsSet() {
+		localVarQueryParams.Add("target_ids", parameterToString(localVarOptionals.TargetIds.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.TargetTypes.IsSet() {
+		localVarQueryParams.Add("target_types", parameterToString(localVarOptionals.TargetTypes.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.TargetNames.IsSet() {
+		localVarQueryParams.Add("target_names", parameterToString(localVarOptionals.TargetNames.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.AssociateIds.IsSet() {
+		localVarQueryParams.Add("associate_ids", parameterToString(localVarOptionals.AssociateIds.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.AssociateTypes.IsSet() {
+		localVarQueryParams.Add("associate_types", parameterToString(localVarOptionals.AssociateTypes.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.AssociateNames.IsSet() {
+		localVarQueryParams.Add("associate_names", parameterToString(localVarOptionals.AssociateNames.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Locations.IsSet() {
+		localVarQueryParams.Add("locations", parameterToString(localVarOptionals.Locations.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Statuses.IsSet() {
+		localVarQueryParams.Add("statuses", parameterToString(localVarOptionals.Statuses.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Surfaces.IsSet() {
+		localVarQueryParams.Add("surfaces", parameterToString(localVarOptionals.Surfaces.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}

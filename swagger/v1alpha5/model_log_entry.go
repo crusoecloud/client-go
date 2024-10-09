@@ -11,6 +11,8 @@ package swagger
 type LogEntry struct {
 	// Name of the action
 	Action string `json:"action"`
+	// Name of the action
+	ActionDetail string `json:"action_detail,omitempty"`
 	// ActorEmail: the email address of the actor
 	ActorEmail string `json:"actor_email"`
 	// Actor: who performed the action.
@@ -18,13 +20,17 @@ type LogEntry struct {
 	// ActorType: type of the actor
 	ActorType string `json:"actor_type"`
 	// id of the associate
-	Associate string `json:"associate,omitempty"`
+	AssociateIds string `json:"associate_ids,omitempty"`
+	// Name of the associate
+	AssociateNames string `json:"associate_names,omitempty"`
 	// Type of the associate
 	AssociateType string `json:"associate_type,omitempty"`
 	// IP address of the request
 	ClientIp string `json:"client_ip"`
 	// The end time of the request
 	EndTime string `json:"end_time"`
+	// The error message of the request
+	ErrorMessage string `json:"error_message,omitempty"`
 	// Region name of where the action is performed if applicable
 	Locations string `json:"locations,omitempty"`
 	// organization id
