@@ -29,6 +29,8 @@ type LogEntry struct {
 	ClientIp string `json:"client_ip"`
 	// The end time of the request
 	EndTime string `json:"end_time"`
+	// The error message of the request
+	ErrorMessage string `json:"error_message,omitempty"`
 	// Region name of where the action is performed if applicable
 	Locations string `json:"locations,omitempty"`
 	// organization id

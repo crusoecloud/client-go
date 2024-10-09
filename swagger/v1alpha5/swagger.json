@@ -7367,6 +7367,12 @@
           "x-go-name": "EndTime",
           "example": "\"2024-08-24T05:25:33.860Z\""
         },
+        "error_message": {
+          "description": "The error message of the request",
+          "type": "string",
+          "x-go-name": "ErrorMsg",
+          "example": "\"The requested resource is out of stock. Please try again later.\""
+        },
         "locations": {
           "description": "Region name of where the action is performed if applicable",
           "type": "string",
