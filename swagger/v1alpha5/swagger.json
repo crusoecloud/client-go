@@ -2099,7 +2099,7 @@
         }
       }
     },
-    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools": {
+    "/projects/{project_id}/kubernetes/nodepools": {
       "get": {
         "tags": [
           "Kubernetes-NodePools"
@@ -2112,14 +2112,6 @@
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "x-go-name": "ProjectID",
             "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
             "in": "path",
             "required": true
           }
@@ -2159,14 +2151,6 @@
             "name": "project_id",
             "in": "path",
             "required": true
-          },
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
-            "in": "path",
-            "required": true
           }
         ],
         "responses": {
@@ -2188,7 +2172,44 @@
         }
       }
     },
-    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools/operations/{operation_id}": {
+    "/projects/{project_id}/kubernetes/nodepools/operations": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Kubernetes Node Pool resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
+        "tags": [
+          "Kubernetes-Node-Pool-Operations"
+        ],
+        "summary": "Get status of asynchronous operations",
+        "operationId": "listKubernetesNodePoolsOperations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/kubernetes/nodepools/operations/{operation_id}": {
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Kubernetes Node Pool resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
@@ -2212,14 +2233,6 @@
             "name": "operation_id",
             "in": "path",
             "required": true
-          },
-          {
-            "type": "string",
-            "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
-            "in": "path",
-            "required": true
           }
         ],
         "responses": {
@@ -2241,7 +2254,7 @@
         }
       }
     },
-    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools/{node_pool_id}": {
+    "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}": {
       "get": {
         "tags": [
           "Kubernetes-NodePools"
@@ -2254,14 +2267,6 @@
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "x-go-name": "ProjectID",
             "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
             "in": "path",
             "required": true
           },
@@ -2308,14 +2313,6 @@
             "name": "node_pool_id",
             "in": "path",
             "required": true
-          },
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
-            "in": "path",
-            "required": true
           }
         ],
         "responses": {
@@ -2351,14 +2348,6 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "x-go-name": "NodePoolID",
             "name": "node_pool_id",
             "in": "path",
@@ -2376,43 +2365,6 @@
         "responses": {
           "200": {
             "$ref": "#/responses/asyncOperationResponse"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      }
-    },
-    "/projects/{project_id}/kubernetes/nodepools/operations": {
-      "get": {
-        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Kubernetes Node Pool resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
-        "tags": [
-          "Kubernetes-Node-Pool-Operations"
-        ],
-        "summary": "Get status of asynchronous operations",
-        "operationId": "listKubernetesNodePoolsOperations",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/listOperationsResponse"
-          },
-          "400": {
-            "$ref": "#/responses/badReqError"
           },
           "401": {
             "$ref": "#/responses/authError"
@@ -6690,9 +6642,16 @@
       "required": [
         "name",
         "product_name",
-        "count"
+        "count",
+        "cluster_id"
       ],
       "properties": {
+        "cluster_id": {
+          "description": "Cluster ID of the cluster this node pool belongs to.",
+          "type": "string",
+          "x-go-name": "ClusterID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
         "count": {
           "description": "The number of nodes to be created.",
           "type": "integer",

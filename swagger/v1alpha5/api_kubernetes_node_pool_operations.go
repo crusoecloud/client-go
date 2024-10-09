@@ -30,11 +30,10 @@ This resource retrieves information about the status of an asynchronous operatio
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
   - @param operationId
-  - @param clusterId
 
 @return Operation
 */
-func (a *KubernetesNodePoolOperationsApiService) GetKubernetesNodePoolsOperation(ctx context.Context, projectId string, operationId string, clusterId string) (Operation, *http.Response, error) {
+func (a *KubernetesNodePoolOperationsApiService) GetKubernetesNodePoolsOperation(ctx context.Context, projectId string, operationId string) (Operation, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -44,10 +43,9 @@ func (a *KubernetesNodePoolOperationsApiService) GetKubernetesNodePoolsOperation
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools/operations/{operation_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/nodepools/operations/{operation_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"operation_id"+"}", fmt.Sprintf("%v", operationId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

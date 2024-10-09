@@ -9,6 +9,8 @@
 package swagger
 
 type KubernetesNodePoolPostRequest struct {
+	// Cluster ID of the cluster this node pool belongs to.
+	ClusterId string `json:"cluster_id"`
 	// The number of nodes to be created.
 	Count int64 `json:"count"`
 	// The ID of the Infiniband partition to create node pool in. Must be in the location of the cluster if specified.

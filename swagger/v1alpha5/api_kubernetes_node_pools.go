@@ -30,11 +30,10 @@ A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
-  - @param clusterId
 
 @return AsyncOperationResponse
 */
-func (a *KubernetesNodePoolsApiService) CreateNodePool(ctx context.Context, body KubernetesNodePoolPostRequest, projectId string, clusterId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *KubernetesNodePoolsApiService) CreateNodePool(ctx context.Context, body KubernetesNodePoolPostRequest, projectId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -44,9 +43,8 @@ func (a *KubernetesNodePoolsApiService) CreateNodePool(ctx context.Context, body
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/nodepools"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -161,11 +159,10 @@ KubernetesNodePoolsApiService Delete a node pool that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
   - @param nodePoolId
-  - @param clusterId
 
 @return AsyncOperationResponse
 */
-func (a *KubernetesNodePoolsApiService) DeleteNodePool(ctx context.Context, projectId string, nodePoolId string, clusterId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *KubernetesNodePoolsApiService) DeleteNodePool(ctx context.Context, projectId string, nodePoolId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
@@ -175,10 +172,9 @@ func (a *KubernetesNodePoolsApiService) DeleteNodePool(ctx context.Context, proj
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools/{node_pool_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"node_pool_id"+"}", fmt.Sprintf("%v", nodePoolId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -280,12 +276,11 @@ func (a *KubernetesNodePoolsApiService) DeleteNodePool(ctx context.Context, proj
 KubernetesNodePoolsApiService Retrieve information about a particular Kubernetes node pool belonged to the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
-  - @param clusterId
   - @param nodePoolId
 
 @return KubernetesNodePool
 */
-func (a *KubernetesNodePoolsApiService) GetNodePool(ctx context.Context, projectId string, clusterId string, nodePoolId string) (KubernetesNodePool, *http.Response, error) {
+func (a *KubernetesNodePoolsApiService) GetNodePool(ctx context.Context, projectId string, nodePoolId string) (KubernetesNodePool, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -295,9 +290,8 @@ func (a *KubernetesNodePoolsApiService) GetNodePool(ctx context.Context, project
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools/{node_pool_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"node_pool_id"+"}", fmt.Sprintf("%v", nodePoolId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -390,11 +384,10 @@ func (a *KubernetesNodePoolsApiService) GetNodePool(ctx context.Context, project
 KubernetesNodePoolsApiService Retrieve information about Kubernetes node pools belonged to the cluster.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
-  - @param clusterId
 
 @return ListKubernetesNodePoolsResponse
 */
-func (a *KubernetesNodePoolsApiService) ListNodePools(ctx context.Context, projectId string, clusterId string) (ListKubernetesNodePoolsResponse, *http.Response, error) {
+func (a *KubernetesNodePoolsApiService) ListNodePools(ctx context.Context, projectId string) (ListKubernetesNodePoolsResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -404,9 +397,8 @@ func (a *KubernetesNodePoolsApiService) ListNodePools(ctx context.Context, proje
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/nodepools"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -499,12 +491,11 @@ KubernetesNodePoolsApiService Update a node pool that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
-  - @param clusterId
   - @param nodePoolId
 
 @return AsyncOperationResponse
 */
-func (a *KubernetesNodePoolsApiService) UpdateNodePool(ctx context.Context, body KubernetesNodePoolPatchRequest, projectId string, clusterId string, nodePoolId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *KubernetesNodePoolsApiService) UpdateNodePool(ctx context.Context, body KubernetesNodePoolPatchRequest, projectId string, nodePoolId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
@@ -514,9 +505,8 @@ func (a *KubernetesNodePoolsApiService) UpdateNodePool(ctx context.Context, body
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/clusters/{cluster_id}/nodepools/{node_pool_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"node_pool_id"+"}", fmt.Sprintf("%v", nodePoolId), -1)
 
 	localVarHeaderParams := make(map[string]string)
