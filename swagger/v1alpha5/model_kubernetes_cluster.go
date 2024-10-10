@@ -13,6 +13,8 @@ type KubernetesCluster struct {
 	AddOns []string `json:"add_ons"`
 	// Configuration setting of the Kubernetes cluster.
 	Configuration string `json:"configuration"`
+	// DNS name of the cluster
+	DnsName string `json:"dns_name"`
 	// ID of the Kubernetes cluster.
 	Id string `json:"id"`
 	// Location of the Kubernetes cluster.

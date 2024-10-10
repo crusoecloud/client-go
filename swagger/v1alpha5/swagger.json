@@ -5256,9 +5256,7 @@
         },
         "features": {
           "type": "object",
-          "additionalProperties": {
-            "type": "object"
-          },
+          "additionalProperties": {},
           "x-go-name": "Features"
         },
         "id": {
@@ -5310,9 +5308,7 @@
       "properties": {
         "feature_flags": {
           "type": "object",
-          "additionalProperties": {
-            "type": "object"
-          },
+          "additionalProperties": {},
           "x-go-name": "FeatureFlags",
           "example": {
             "curated-images": true,
@@ -6353,7 +6349,8 @@
         "project_id",
         "node_pools",
         "add_ons",
-        "state"
+        "state",
+        "dns_name"
       ],
       "properties": {
         "add_ons": {
@@ -6375,6 +6372,12 @@
           ],
           "x-go-name": "Configuration",
           "example": "ha"
+        },
+        "dns_name": {
+          "description": "DNS name of the cluster",
+          "type": "string",
+          "x-go-name": "DNSName",
+          "example": "my-kubernetes-cluster.crusoecloudcompute.com"
         },
         "id": {
           "description": "ID of the Kubernetes cluster.",
@@ -7487,9 +7490,8 @@
           "example": "2021-12-03T19:59:34Z"
         },
         "metadata": {
-          "type": "object",
           "x-go-name": "Metadata",
-          "example": {}
+          "example": "{}"
         },
         "operation_id": {
           "type": "string",
@@ -7497,9 +7499,8 @@
           "example": "F6EF489C-086E-458D-B812-7962964A28C9"
         },
         "result": {
-          "type": "object",
           "x-go-name": "Result",
-          "example": {}
+          "example": "{}"
         },
         "started_at": {
           "type": "string",
