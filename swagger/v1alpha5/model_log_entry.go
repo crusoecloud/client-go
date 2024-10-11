@@ -19,12 +19,6 @@ type LogEntry struct {
 	ActorId string `json:"actor_id"`
 	// ActorType: type of the actor
 	ActorType string `json:"actor_type"`
-	// id of the associate
-	AssociateIds string `json:"associate_ids,omitempty"`
-	// Name of the associate
-	AssociateNames string `json:"associate_names,omitempty"`
-	// Type of the associate
-	AssociateType string `json:"associate_type,omitempty"`
 	// IP address of the request
 	ClientIp string `json:"client_ip"`
 	// The end time of the request
@@ -41,10 +35,10 @@ type LogEntry struct {
 	ProjectId string `json:"project_id,omitempty"`
 	// Project Name
 	ProjectName string `json:"project_name,omitempty"`
+	// The result of the action
+	Result string `json:"result"`
 	// The start time of the request
 	StartTime string `json:"start_time"`
-	// The status of the action
-	Status string `json:"status"`
 	// Surface type of the request
 	Surface string `json:"surface"`
 	// The targets of the action required

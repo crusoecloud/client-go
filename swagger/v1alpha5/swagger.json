@@ -7264,7 +7264,7 @@
         "actor_type",
         "client_ip",
         "end_time",
-        "status",
+        "result",
         "start_time",
         "surface"
       ],
@@ -7298,24 +7298,6 @@
           "type": "string",
           "x-go-name": "ActorType",
           "example": "user || admin || system"
-        },
-        "associate_ids": {
-          "description": "id of the associate",
-          "type": "string",
-          "x-go-name": "Associate",
-          "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb"
-        },
-        "associate_names": {
-          "description": "Name of the associate",
-          "type": "string",
-          "x-go-name": "AssociateName",
-          "example": "testing-vpcnetwork"
-        },
-        "associate_type": {
-          "description": "Type of the associate",
-          "type": "string",
-          "x-go-name": "AssociateType",
-          "example": "reservation"
         },
         "client_ip": {
           "description": "IP address of the request",
@@ -7365,17 +7347,17 @@
           "x-go-name": "ProjectName",
           "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb"
         },
+        "result": {
+          "description": "The result of the action",
+          "type": "string",
+          "x-go-name": "Result",
+          "example": "OK"
+        },
         "start_time": {
           "description": "The start time of the request",
           "type": "string",
           "x-go-name": "StartTime",
           "example": "\"2024-08-24T05:25:30.954Z\""
-        },
-        "status": {
-          "description": "The status of the action",
-          "type": "string",
-          "x-go-name": "Status",
-          "example": "OK"
         },
         "surface": {
           "description": "Surface type of the request",
