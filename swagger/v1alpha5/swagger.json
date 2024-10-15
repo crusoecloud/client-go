@@ -5588,10 +5588,20 @@
         "role"
       ],
       "properties": {
+        "accepted_tos": {
+          "type": "boolean",
+          "x-go-name": "AcceptedTos",
+          "example": true
+        },
         "email": {
           "type": "string",
           "x-go-name": "Email",
           "example": "john.doe@crusoeenergy.com"
+        },
+        "latest_authmethod": {
+          "type": "string",
+          "x-go-name": "LatestAuthMethod",
+          "example": "password"
         },
         "name": {
           "type": "string",
