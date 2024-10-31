@@ -6492,7 +6492,9 @@
           },
           "x-go-name": "AddOns",
           "example": [
-            "crusoe_csi"
+            "crusoe_csi",
+            "nvidia_gpu_operator",
+            "nvidia_network_operator"
           ]
         },
         "configuration": {
