@@ -2104,7 +2104,7 @@
         "tags": [
           "Kubernetes-NodePools"
         ],
-        "summary": "Retrieve information about Kubernetes node pools belonged to the cluster.",
+        "summary": "Retrieve information about Kubernetes node pools belonging to a project or cluster.",
         "operationId": "listNodePools",
         "parameters": [
           {
@@ -2114,6 +2114,13 @@
             "name": "project_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "query"
           }
         ],
         "responses": {
@@ -2259,7 +2266,7 @@
         "tags": [
           "Kubernetes-NodePools"
         ],
-        "summary": "Retrieve information about a particular Kubernetes node pool belonged to the project.",
+        "summary": "Retrieve information about a particular Kubernetes node pool belonging to the project.",
         "operationId": "getNodePool",
         "parameters": [
           {

@@ -15,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -273,7 +275,7 @@ func (a *KubernetesNodePoolsApiService) DeleteNodePool(ctx context.Context, proj
 }
 
 /*
-KubernetesNodePoolsApiService Retrieve information about a particular Kubernetes node pool belonged to the project.
+KubernetesNodePoolsApiService Retrieve information about a particular Kubernetes node pool belonging to the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
   - @param nodePoolId
@@ -381,13 +383,19 @@ func (a *KubernetesNodePoolsApiService) GetNodePool(ctx context.Context, project
 }
 
 /*
-KubernetesNodePoolsApiService Retrieve information about Kubernetes node pools belonged to the cluster.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-
+KubernetesNodePoolsApiService Retrieve information about Kubernetes node pools belonging to a project or cluster.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param projectId
+ * @param optional nil or *KubernetesNodePoolsApiListNodePoolsOpts - Optional Parameters:
+     * @param "ClusterId" (optional.String) -
 @return ListKubernetesNodePoolsResponse
 */
-func (a *KubernetesNodePoolsApiService) ListNodePools(ctx context.Context, projectId string) (ListKubernetesNodePoolsResponse, *http.Response, error) {
+
+type KubernetesNodePoolsApiListNodePoolsOpts struct {
+	ClusterId optional.String
+}
+
+func (a *KubernetesNodePoolsApiService) ListNodePools(ctx context.Context, projectId string, localVarOptionals *KubernetesNodePoolsApiListNodePoolsOpts) (ListKubernetesNodePoolsResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -404,6 +412,9 @@ func (a *KubernetesNodePoolsApiService) ListNodePools(ctx context.Context, proje
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.ClusterId.IsSet() {
+		localVarQueryParams.Add("cluster_id", parameterToString(localVarOptionals.ClusterId.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
