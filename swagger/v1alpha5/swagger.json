@@ -6425,11 +6425,30 @@
             "1d2b3a4c-5e6f-7b9d-8c9a-0e1f2d3b4c5d"
           ]
         },
+        "pod_cidr": {
+          "description": "IP Range for pods scheduled on K8s worker nodes",
+          "type": "string",
+          "x-go-name": "PodCIDR",
+          "example": "10.233.0.0/18"
+        },
+        "pod_cidr_mask": {
+          "description": "Mask to be applied to PodCIDR",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "PodCIDRMask",
+          "example": 24
+        },
         "project_id": {
           "description": "The ID of the project this Kubernetes cluster belongs to.",
           "type": "string",
           "x-go-name": "ProjectID",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
+        },
+        "service_cidr": {
+          "description": "IP Range for K8s services",
+          "type": "string",
+          "x-go-name": "ServiceCIDR",
+          "example": "10.233.0.0/18"
         },
         "state": {
           "description": "State of the cluster",
@@ -6523,6 +6542,25 @@
           "type": "string",
           "x-go-name": "Name",
           "example": "my-kubernetes-cluster"
+        },
+        "pod_cidr": {
+          "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
+          "type": "string",
+          "x-go-name": "PodCIDR",
+          "example": "10.233.0.0/18"
+        },
+        "pod_cidr_mask": {
+          "description": "defines: the mask size for pod cidr in cluster",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "PodCIDRMask",
+          "example": 24
+        },
+        "service_cidr": {
+          "description": "defines: the range of IP Addresses allocated to K8s services",
+          "type": "string",
+          "x-go-name": "ServiceCIDR",
+          "example": "10.233.0.0/18"
         },
         "subnet_id": {
           "description": "The ID of the subnet to create the cluster in. Must be in the location\nspecified. If not provided, the default subnet for the location will be\nused, if there is one.",
