@@ -4474,28 +4474,6 @@
             "$ref": "#/responses/serverError"
           }
         }
-      },
-      "delete": {
-        "description": "Delete operations will cascade to all entities the user owns (organizations, roles, vms).",
-        "tags": [
-          "Identities"
-        ],
-        "summary": "Delete the account for the logged in user.",
-        "operationId": "deleteUserIdentity",
-        "responses": {
-          "200": {
-            "$ref": "#/responses/emptyResponse"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
       }
     },
     "/users/ssh-keys": {
@@ -4965,6 +4943,49 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "CredentialsDeleteRequest": {
+      "type": "object",
+      "title": "CredentialsDeleteRequest is the request type for DELETE requests to the credentials endpoint.",
+      "required": [
+        "credential_type"
+      ],
+      "properties": {
+        "credential_type": {
+          "$ref": "#/definitions/IdentityCredentialsType"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CredentialsResponse": {
+      "type": "object",
+      "required": [
+        "credentials"
+      ],
+      "properties": {
+        "credentials": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Credentials"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "DeleteOrgMFARequest": {
+      "type": "object",
+      "required": [
+        "mfa_method"
+      ],
+      "properties": {
+        "mfa_method": {
+          "type": "string",
+          "x-go-name": "MFAMethod",
+          "example": "totp"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "DiskAttachment": {
       "type": "object",
       "required": [
@@ -5271,6 +5292,13 @@
           "x-go-name": "ID",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         },
+        "mfa_methods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MFAMethod"
+          },
+          "x-go-name": "MFAMethods"
+        },
         "name": {
           "type": "string",
           "x-go-name": "Name",
@@ -5398,6 +5426,24 @@
           "type": "string",
           "x-go-name": "SecretKey",
           "example": "HrbZ3VTUb2YNAq53Md1EsA"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "GetOrgMFAResponse": {
+      "type": "object",
+      "title": "GetOrgMFAResponse is the response type for GET requests to the org mfa endpoint.",
+      "properties": {
+        "mfa_methods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MFAMethod"
+          },
+          "x-go-name": "MFAMethods",
+          "example": [
+            "totp",
+            "webauthn"
+          ]
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -5590,6 +5636,7 @@
       "description": "Identity contains the Traits Island stores for a User inside of Kratos. These are\nthe fields returned from a GET or PUT request.",
       "type": "object",
       "required": [
+        "id",
         "email",
         "name",
         "role"
@@ -5604,6 +5651,10 @@
           "type": "string",
           "x-go-name": "Email",
           "example": "john.doe@crusoeenergy.com"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
         },
         "latest_authmethod": {
           "type": "string",
@@ -5622,6 +5673,11 @@
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "IdentityCredentialsType": {
+      "type": "string",
+      "title": "IdentityCredentialsType and so on.",
+      "x-go-package": "github.com/ory/kratos-client-go"
     },
     "IdentityPutRequest": {
       "type": "object",
@@ -7444,6 +7500,11 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers/logservice"
     },
+    "MFAMethod": {
+      "type": "string",
+      "title": "Enum of all valid MFA methods.",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "NetworkInterface": {
       "type": "object",
       "required": [
@@ -7567,6 +7628,20 @@
         "ib_partition_id": {
           "type": "string",
           "x-go-name": "IBPartitionID"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "PostOrgMFARequest": {
+      "type": "object",
+      "required": [
+        "mfa_method"
+      ],
+      "properties": {
+        "mfa_method": {
+          "type": "string",
+          "x-go-name": "MFAMethod",
+          "example": "totp"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -8262,6 +8337,13 @@
         "identity"
       ],
       "properties": {
+        "credentials": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Credentials"
+        },
         "identity": {
           "$ref": "#/definitions/Identity"
         }
@@ -8821,6 +8903,12 @@
         "$ref": "#/definitions/CreateSSHKeyResponse"
       }
     },
+    "credentialsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/CredentialsResponse"
+      }
+    },
     "emptyResponse": {
       "description": "Empty Response"
     },
@@ -9044,6 +9132,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListLocationsResponseV1Alpha5"
+      }
+    },
+    "mfaGetResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetOrgMFAResponse"
       }
     },
     "notFoundError": {

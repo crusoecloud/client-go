@@ -12,6 +12,7 @@ package swagger
 type Identity struct {
 	AcceptedTos      bool   `json:"accepted_tos,omitempty"`
 	Email            string `json:"email"`
+	Id               string `json:"id"`
 	LatestAuthmethod string `json:"latest_authmethod,omitempty"`
 	Name             string `json:"name"`
 	Role             string `json:"role"`

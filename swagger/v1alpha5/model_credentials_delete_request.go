@@ -8,8 +8,6 @@
  */
 package swagger
 
-// The Identity of a user is returned.
-type UserResponse struct {
-	Credentials []string  `json:"credentials,omitempty"`
-	Identity    *Identity `json:"identity"`
+type CredentialsDeleteRequest struct {
+	CredentialType string `json:"credential_type"`
 }
