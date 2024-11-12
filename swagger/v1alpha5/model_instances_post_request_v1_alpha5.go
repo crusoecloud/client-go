@@ -15,7 +15,7 @@ type InstancesPostRequestV1Alpha5 struct {
 	Disks                    []DiskAttachment            `json:"disks,omitempty"`
 	HostChannelAdapters      []PartialHostChannelAdapter `json:"host_channel_adapters,omitempty"`
 	Image                    string                      `json:"image,omitempty"`
-	Location                 string                      `json:"location,omitempty"`
+	Location                 string                      `json:"location"`
 	Name                     string                      `json:"name"`
 	NetworkInterfaces        []NetworkInterface          `json:"network_interfaces,omitempty"`
 	ReservationSpecification *ReservationSpecification   `json:"reservation_specification,omitempty"`

@@ -23,8 +23,14 @@ type KubernetesCluster struct {
 	Name string `json:"name"`
 	// List of IDs of node pools within the Kubernetes cluster.
 	NodePools []string `json:"node_pools"`
+	// IP Range for pods scheduled on K8s worker nodes
+	PodCidr string `json:"pod_cidr,omitempty"`
+	// Mask to be applied to PodCIDR
+	PodCidrMask int32 `json:"pod_cidr_mask,omitempty"`
 	// The ID of the project this Kubernetes cluster belongs to.
 	ProjectId string `json:"project_id"`
+	// IP Range for K8s services
+	ServiceCidr string `json:"service_cidr,omitempty"`
 	// State of the cluster
 	State string `json:"state"`
 	// The ID of the subnet this Kubernetes cluster belongs to.

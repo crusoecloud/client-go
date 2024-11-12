@@ -17,6 +17,12 @@ type KubernetesClusterPostRequest struct {
 	Location string `json:"location"`
 	// Name of the Kubernetes cluster.
 	Name string `json:"name"`
+	// defines: the range of IP Addresses allocated to pods scheduled on worker nodes
+	PodCidr string `json:"pod_cidr,omitempty"`
+	// defines: the mask size for pod cidr in cluster
+	PodCidrMask int32 `json:"pod_cidr_mask,omitempty"`
+	// defines: the range of IP Addresses allocated to K8s services
+	ServiceCidr string `json:"service_cidr,omitempty"`
 	// The ID of the subnet to create the cluster in. Must be in the location specified. If not provided, the default subnet for the location will be used, if there is one.
 	SubnetId string `json:"subnet_id,omitempty"`
 	// Version of the Crusoe Kubernetes image to create the cluster with.

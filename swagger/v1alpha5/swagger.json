@@ -2104,7 +2104,7 @@
         "tags": [
           "Kubernetes-NodePools"
         ],
-        "summary": "Retrieve information about Kubernetes node pools belonged to the cluster.",
+        "summary": "Retrieve information about Kubernetes node pools belonging to a project or cluster.",
         "operationId": "listNodePools",
         "parameters": [
           {
@@ -2114,6 +2114,13 @@
             "name": "project_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "query"
           }
         ],
         "responses": {
@@ -2259,7 +2266,7 @@
         "tags": [
           "Kubernetes-NodePools"
         ],
-        "summary": "Retrieve information about a particular Kubernetes node pool belonged to the project.",
+        "summary": "Retrieve information about a particular Kubernetes node pool belonging to the project.",
         "operationId": "getNodePool",
         "parameters": [
           {
@@ -4467,28 +4474,6 @@
             "$ref": "#/responses/serverError"
           }
         }
-      },
-      "delete": {
-        "description": "Delete operations will cascade to all entities the user owns (organizations, roles, vms).",
-        "tags": [
-          "Identities"
-        ],
-        "summary": "Delete the account for the logged in user.",
-        "operationId": "deleteUserIdentity",
-        "responses": {
-          "200": {
-            "$ref": "#/responses/emptyResponse"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
       }
     },
     "/users/ssh-keys": {
@@ -4958,6 +4943,49 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "CredentialsDeleteRequest": {
+      "type": "object",
+      "title": "CredentialsDeleteRequest is the request type for DELETE requests to the credentials endpoint.",
+      "required": [
+        "credential_type"
+      ],
+      "properties": {
+        "credential_type": {
+          "$ref": "#/definitions/IdentityCredentialsType"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CredentialsResponse": {
+      "type": "object",
+      "required": [
+        "credentials"
+      ],
+      "properties": {
+        "credentials": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Credentials"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "DeleteOrgMFARequest": {
+      "type": "object",
+      "required": [
+        "mfa_method"
+      ],
+      "properties": {
+        "mfa_method": {
+          "type": "string",
+          "x-go-name": "MFAMethod",
+          "example": "totp"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "DiskAttachment": {
       "type": "object",
       "required": [
@@ -5264,6 +5292,13 @@
           "x-go-name": "ID",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         },
+        "mfa_methods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MFAMethod"
+          },
+          "x-go-name": "MFAMethods"
+        },
         "name": {
           "type": "string",
           "x-go-name": "Name",
@@ -5391,6 +5426,24 @@
           "type": "string",
           "x-go-name": "SecretKey",
           "example": "HrbZ3VTUb2YNAq53Md1EsA"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "GetOrgMFAResponse": {
+      "type": "object",
+      "title": "GetOrgMFAResponse is the response type for GET requests to the org mfa endpoint.",
+      "properties": {
+        "mfa_methods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MFAMethod"
+          },
+          "x-go-name": "MFAMethods",
+          "example": [
+            "totp",
+            "webauthn"
+          ]
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -5583,15 +5636,30 @@
       "description": "Identity contains the Traits Island stores for a User inside of Kratos. These are\nthe fields returned from a GET or PUT request.",
       "type": "object",
       "required": [
+        "id",
         "email",
         "name",
         "role"
       ],
       "properties": {
+        "accepted_tos": {
+          "type": "boolean",
+          "x-go-name": "AcceptedTos",
+          "example": true
+        },
         "email": {
           "type": "string",
           "x-go-name": "Email",
           "example": "john.doe@crusoeenergy.com"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "latest_authmethod": {
+          "type": "string",
+          "x-go-name": "LatestAuthMethod",
+          "example": "password"
         },
         "name": {
           "type": "string",
@@ -5605,6 +5673,11 @@
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "IdentityCredentialsType": {
+      "type": "string",
+      "title": "IdentityCredentialsType and so on.",
+      "x-go-package": "github.com/ory/kratos-client-go"
     },
     "IdentityPutRequest": {
       "type": "object",
@@ -6216,7 +6289,8 @@
       "required": [
         "type",
         "ssh_public_key",
-        "name"
+        "name",
+        "location"
       ],
       "properties": {
         "commitment_period": {
@@ -6407,11 +6481,30 @@
             "1d2b3a4c-5e6f-7b9d-8c9a-0e1f2d3b4c5d"
           ]
         },
+        "pod_cidr": {
+          "description": "IP Range for pods scheduled on K8s worker nodes",
+          "type": "string",
+          "x-go-name": "PodCIDR",
+          "example": "10.233.0.0/18"
+        },
+        "pod_cidr_mask": {
+          "description": "Mask to be applied to PodCIDR",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "PodCIDRMask",
+          "example": 24
+        },
         "project_id": {
           "description": "The ID of the project this Kubernetes cluster belongs to.",
           "type": "string",
           "x-go-name": "ProjectID",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
+        },
+        "service_cidr": {
+          "description": "IP Range for K8s services",
+          "type": "string",
+          "x-go-name": "ServiceCIDR",
+          "example": "10.233.0.0/18"
         },
         "state": {
           "description": "State of the cluster",
@@ -6481,7 +6574,9 @@
           },
           "x-go-name": "AddOns",
           "example": [
-            "crusoe_csi"
+            "crusoe_csi",
+            "nvidia_gpu_operator",
+            "nvidia_network_operator"
           ]
         },
         "configuration": {
@@ -6503,6 +6598,25 @@
           "type": "string",
           "x-go-name": "Name",
           "example": "my-kubernetes-cluster"
+        },
+        "pod_cidr": {
+          "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
+          "type": "string",
+          "x-go-name": "PodCIDR",
+          "example": "10.233.0.0/18"
+        },
+        "pod_cidr_mask": {
+          "description": "defines: the mask size for pod cidr in cluster",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "PodCIDRMask",
+          "example": 24
+        },
+        "service_cidr": {
+          "description": "defines: the range of IP Addresses allocated to K8s services",
+          "type": "string",
+          "x-go-name": "ServiceCIDR",
+          "example": "10.233.0.0/18"
         },
         "subnet_id": {
           "description": "The ID of the subnet to create the cluster in. Must be in the location\nspecified. If not provided, the default subnet for the location will be\nused, if there is one.",
@@ -7264,7 +7378,7 @@
         "actor_type",
         "client_ip",
         "end_time",
-        "status",
+        "result",
         "start_time",
         "surface"
       ],
@@ -7298,24 +7412,6 @@
           "type": "string",
           "x-go-name": "ActorType",
           "example": "user || admin || system"
-        },
-        "associate_ids": {
-          "description": "id of the associate",
-          "type": "string",
-          "x-go-name": "Associate",
-          "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb"
-        },
-        "associate_names": {
-          "description": "Name of the associate",
-          "type": "string",
-          "x-go-name": "AssociateName",
-          "example": "testing-vpcnetwork"
-        },
-        "associate_type": {
-          "description": "Type of the associate",
-          "type": "string",
-          "x-go-name": "AssociateType",
-          "example": "reservation"
         },
         "client_ip": {
           "description": "IP address of the request",
@@ -7365,17 +7461,17 @@
           "x-go-name": "ProjectName",
           "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb"
         },
+        "result": {
+          "description": "The result of the action",
+          "type": "string",
+          "x-go-name": "Result",
+          "example": "OK"
+        },
         "start_time": {
           "description": "The start time of the request",
           "type": "string",
           "x-go-name": "StartTime",
           "example": "\"2024-08-24T05:25:30.954Z\""
-        },
-        "status": {
-          "description": "The status of the action",
-          "type": "string",
-          "x-go-name": "Status",
-          "example": "OK"
         },
         "surface": {
           "description": "Surface type of the request",
@@ -7403,6 +7499,11 @@
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers/logservice"
+    },
+    "MFAMethod": {
+      "type": "string",
+      "title": "Enum of all valid MFA methods.",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "NetworkInterface": {
       "type": "object",
@@ -7527,6 +7628,20 @@
         "ib_partition_id": {
           "type": "string",
           "x-go-name": "IBPartitionID"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "PostOrgMFARequest": {
+      "type": "object",
+      "required": [
+        "mfa_method"
+      ],
+      "properties": {
+        "mfa_method": {
+          "type": "string",
+          "x-go-name": "MFAMethod",
+          "example": "totp"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -8222,6 +8337,13 @@
         "identity"
       ],
       "properties": {
+        "credentials": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Credentials"
+        },
         "identity": {
           "$ref": "#/definitions/Identity"
         }
@@ -8781,6 +8903,12 @@
         "$ref": "#/definitions/CreateSSHKeyResponse"
       }
     },
+    "credentialsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/CredentialsResponse"
+      }
+    },
     "emptyResponse": {
       "description": "Empty Response"
     },
@@ -9004,6 +9132,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListLocationsResponseV1Alpha5"
+      }
+    },
+    "mfaGetResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetOrgMFAResponse"
       }
     },
     "notFoundError": {
