@@ -8139,7 +8139,18 @@
       "type": "object",
       "title": "ProspectPostResponse is the response type for POST requests to the prospects endpoint.",
       "properties": {
+        "approve_customer_success": {
+          "type": "boolean",
+          "x-go-name": "ApproveCustomerSuccess",
+          "example": true
+        },
+        "create_customer_success": {
+          "type": "boolean",
+          "x-go-name": "CreateCustomerSuccess",
+          "example": true
+        },
         "success": {
+          "description": "Success is deprecated",
           "type": "boolean",
           "x-go-name": "Success",
           "example": true
