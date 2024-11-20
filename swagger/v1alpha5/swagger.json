@@ -65,6 +65,35 @@
         }
       }
     },
+    "/chat/completions": {
+      "post": {
+        "description": "Create a chat completion request",
+        "tags": [
+          "post",
+          "chat",
+          "completion"
+        ],
+        "summary": "Create chat completion",
+        "operationId": "request",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/chatCompletionPostResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/compute/images": {
       "get": {
         "tags": [
@@ -4892,6 +4921,181 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ChatCompletionPostRequest": {
+      "type": "object",
+      "required": [
+        "model",
+        "messages"
+      ],
+      "properties": {
+        "frequency_penalty": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "FrequencyPenalty",
+          "example": 0.2
+        },
+        "logit_bias": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "x-go-name": "LogitBias",
+          "example": {
+            "198": 2,
+            "50256": -1
+          }
+        },
+        "max_tokens": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "MaxTokens",
+          "example": 150
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Message"
+          },
+          "x-go-name": "Messages",
+          "example": "[{\"role\": \"system\", \"content\": \"You are a helpful assistant.\"},"
+        },
+        "model": {
+          "type": "string",
+          "x-go-name": "Model",
+          "example": "gpt-4"
+        },
+        "n": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "N",
+          "example": 3
+        },
+        "parallel_tool_calls": {
+          "type": "boolean",
+          "x-go-name": "ParallelToolCalls",
+          "example": false
+        },
+        "presence_penalty": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "PresencePenalty",
+          "example": 0.5
+        },
+        "stop": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Stop",
+          "example": [
+            "\n",
+            "Stop sequence"
+          ]
+        },
+        "temperature": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Temperature",
+          "example": 0.7
+        },
+        "tool_choice": {
+          "type": "string",
+          "x-go-name": "ToolChoice",
+          "example": "text-generation-tool"
+        },
+        "top_p": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "TopP",
+          "example": 0.9
+        },
+        "user": {
+          "type": "string",
+          "x-go-name": "User",
+          "example": "user-1234"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ChatCompletionPostResponse": {
+      "type": "object",
+      "required": [
+        "id",
+        "object",
+        "created",
+        "model",
+        "choices"
+      ],
+      "properties": {
+        "choices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Choice"
+          },
+          "x-go-name": "Choices"
+        },
+        "created": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Created",
+          "example": 1677649443
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "\"chatcmpl-6oAs8JSgfXn22M\""
+        },
+        "model": {
+          "type": "string",
+          "x-go-name": "Model",
+          "example": "\"gpt-4\""
+        },
+        "object": {
+          "type": "string",
+          "x-go-name": "Object",
+          "example": "\"chat.completion\""
+        },
+        "service_tier": {
+          "type": "string",
+          "x-go-name": "ServiceTier",
+          "example": "\"basic\""
+        },
+        "system_fingerprint": {
+          "type": "string",
+          "x-go-name": "SystemFingerprint",
+          "example": "\"abc123xyz\""
+        },
+        "usage": {
+          "$ref": "#/definitions/TokenUsage"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "Choice": {
+      "type": "object",
+      "required": [
+        "index",
+        "message"
+      ],
+      "properties": {
+        "finish_reason": {
+          "type": "string",
+          "x-go-name": "FinishReason",
+          "example": "\"stop\""
+        },
+        "index": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Index",
+          "example": 0
+        },
+        "message": {
+          "$ref": "#/definitions/Message"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "CreateSSHKeyRequest": {
       "type": "object",
       "required": [
@@ -6438,6 +6642,12 @@
             "crusoe_csi"
           ]
         },
+        "cluster_cidr": {
+          "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
+          "type": "string",
+          "x-go-name": "ClusterCIDR",
+          "example": "10.233.0.0/18"
+        },
         "configuration": {
           "description": "Configuration setting of the Kubernetes cluster.",
           "type": "string",
@@ -6470,6 +6680,13 @@
           "x-go-name": "Name",
           "example": "my-kubernetes-cluster"
         },
+        "node_cidr_mask_size": {
+          "description": "defines: the mask size for cluster cidr",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "NodeCIDRMask",
+          "example": 24
+        },
         "node_pools": {
           "description": "List of IDs of node pools within the Kubernetes cluster.",
           "type": "array",
@@ -6481,29 +6698,16 @@
             "1d2b3a4c-5e6f-7b9d-8c9a-0e1f2d3b4c5d"
           ]
         },
-        "pod_cidr": {
-          "description": "IP Range for pods scheduled on K8s worker nodes",
-          "type": "string",
-          "x-go-name": "PodCIDR",
-          "example": "10.233.0.0/18"
-        },
-        "pod_cidr_mask": {
-          "description": "Mask to be applied to PodCIDR",
-          "type": "integer",
-          "format": "int32",
-          "x-go-name": "PodCIDRMask",
-          "example": 24
-        },
         "project_id": {
           "description": "The ID of the project this Kubernetes cluster belongs to.",
           "type": "string",
           "x-go-name": "ProjectID",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
         },
-        "service_cidr": {
-          "description": "IP Range for K8s services",
+        "service_cluster_ip_range": {
+          "description": "defines: the range of IP Addresses allocated to K8s services",
           "type": "string",
-          "x-go-name": "ServiceCIDR",
+          "x-go-name": "ServiceClusterCIDR",
           "example": "10.233.0.0/18"
         },
         "state": {
@@ -6579,6 +6783,12 @@
             "nvidia_network_operator"
           ]
         },
+        "cluster_cidr": {
+          "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
+          "type": "string",
+          "x-go-name": "ClusterCIDR",
+          "example": "10.233.0.0/18"
+        },
         "configuration": {
           "description": "Configuration setting of the Kubernetes cluster. Leave the field empty for standard configuration.",
           "type": "string",
@@ -6599,23 +6809,17 @@
           "x-go-name": "Name",
           "example": "my-kubernetes-cluster"
         },
-        "pod_cidr": {
-          "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
-          "type": "string",
-          "x-go-name": "PodCIDR",
-          "example": "10.233.0.0/18"
-        },
-        "pod_cidr_mask": {
-          "description": "defines: the mask size for pod cidr in cluster",
+        "node_cidr_mask_size": {
+          "description": "defines: the mask size for cluster cidr",
           "type": "integer",
           "format": "int32",
-          "x-go-name": "PodCIDRMask",
+          "x-go-name": "NodeCIDRMask",
           "example": 24
         },
-        "service_cidr": {
+        "service_cluster_ip_range": {
           "description": "defines: the range of IP Addresses allocated to K8s services",
           "type": "string",
-          "x-go-name": "ServiceCIDR",
+          "x-go-name": "ServiceClusterCIDR",
           "example": "10.233.0.0/18"
         },
         "subnet_id": {
@@ -7505,6 +7709,26 @@
       "title": "Enum of all valid MFA methods.",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "Message": {
+      "type": "object",
+      "required": [
+        "role",
+        "content"
+      ],
+      "properties": {
+        "content": {
+          "type": "string",
+          "x-go-name": "Content",
+          "example": "\"You are a helpful assistant.\""
+        },
+        "role": {
+          "type": "string",
+          "x-go-name": "Role",
+          "example": "\"system\""
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "NetworkInterface": {
       "type": "object",
       "required": [
@@ -7915,7 +8139,18 @@
       "type": "object",
       "title": "ProspectPostResponse is the response type for POST requests to the prospects endpoint.",
       "properties": {
+        "approve_customer_success": {
+          "type": "boolean",
+          "x-go-name": "ApproveCustomerSuccess",
+          "example": true
+        },
+        "create_customer_success": {
+          "type": "boolean",
+          "x-go-name": "CreateCustomerSuccess",
+          "example": true
+        },
         "success": {
+          "description": "Success is deprecated",
           "type": "boolean",
           "x-go-name": "Success",
           "example": true
@@ -8167,6 +8402,35 @@
           "type": "string",
           "x-go-name": "LastUsed",
           "example": "2021-11-03T22:22:55Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "TokenUsage": {
+      "type": "object",
+      "required": [
+        "prompt_tokens",
+        "completion_tokens",
+        "total_tokens"
+      ],
+      "properties": {
+        "completion_tokens": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "CompletionTokens",
+          "example": 15
+        },
+        "prompt_tokens": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "PromptTokens",
+          "example": 10
+        },
+        "total_tokens": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "TotalTokens",
+          "example": 25
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -8883,6 +9147,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListCapacitiesResponseV1Alpha5"
+      }
+    },
+    "chatCompletionPostResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ChatCompletionPostResponse"
       }
     },
     "createInstanceGroupResponse": {

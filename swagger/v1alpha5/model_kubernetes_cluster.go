@@ -11,6 +11,8 @@ package swagger
 type KubernetesCluster struct {
 	// List of add-ons associated with the cluster.
 	AddOns []string `json:"add_ons"`
+	// defines: the range of IP Addresses allocated to pods scheduled on worker nodes
+	ClusterCidr string `json:"cluster_cidr,omitempty"`
 	// Configuration setting of the Kubernetes cluster.
 	Configuration string `json:"configuration"`
 	// DNS name of the cluster
@@ -21,16 +23,14 @@ type KubernetesCluster struct {
 	Location string `json:"location"`
 	// Name of the Kubernetes cluster.
 	Name string `json:"name"`
+	// defines: the mask size for cluster cidr
+	NodeCidrMaskSize int32 `json:"node_cidr_mask_size,omitempty"`
 	// List of IDs of node pools within the Kubernetes cluster.
 	NodePools []string `json:"node_pools"`
-	// IP Range for pods scheduled on K8s worker nodes
-	PodCidr string `json:"pod_cidr,omitempty"`
-	// Mask to be applied to PodCIDR
-	PodCidrMask int32 `json:"pod_cidr_mask,omitempty"`
 	// The ID of the project this Kubernetes cluster belongs to.
 	ProjectId string `json:"project_id"`
-	// IP Range for K8s services
-	ServiceCidr string `json:"service_cidr,omitempty"`
+	// defines: the range of IP Addresses allocated to K8s services
+	ServiceClusterIpRange string `json:"service_cluster_ip_range,omitempty"`
 	// State of the cluster
 	State string `json:"state"`
 	// The ID of the subnet this Kubernetes cluster belongs to.

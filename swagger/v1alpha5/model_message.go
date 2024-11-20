@@ -8,9 +8,7 @@
  */
 package swagger
 
-type ProspectPostResponse struct {
-	ApproveCustomerSuccess bool `json:"approve_customer_success,omitempty"`
-	CreateCustomerSuccess  bool `json:"create_customer_success,omitempty"`
-	// Success is deprecated
-	Success bool `json:"success,omitempty"`
+type Message struct {
+	Content string `json:"content"`
+	Role    string `json:"role"`
 }
