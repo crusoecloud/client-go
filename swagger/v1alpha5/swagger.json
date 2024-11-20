@@ -6642,6 +6642,12 @@
             "crusoe_csi"
           ]
         },
+        "cluster_cidr": {
+          "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
+          "type": "string",
+          "x-go-name": "ClusterCIDR",
+          "example": "10.233.0.0/18"
+        },
         "configuration": {
           "description": "Configuration setting of the Kubernetes cluster.",
           "type": "string",
@@ -6674,6 +6680,13 @@
           "x-go-name": "Name",
           "example": "my-kubernetes-cluster"
         },
+        "node_cidr_mask_size": {
+          "description": "defines: the mask size for cluster cidr",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "NodeCIDRMask",
+          "example": 24
+        },
         "node_pools": {
           "description": "List of IDs of node pools within the Kubernetes cluster.",
           "type": "array",
@@ -6685,29 +6698,16 @@
             "1d2b3a4c-5e6f-7b9d-8c9a-0e1f2d3b4c5d"
           ]
         },
-        "pod_cidr": {
-          "description": "IP Range for pods scheduled on K8s worker nodes",
-          "type": "string",
-          "x-go-name": "PodCIDR",
-          "example": "10.233.0.0/18"
-        },
-        "pod_cidr_mask": {
-          "description": "Mask to be applied to PodCIDR",
-          "type": "integer",
-          "format": "int32",
-          "x-go-name": "PodCIDRMask",
-          "example": 24
-        },
         "project_id": {
           "description": "The ID of the project this Kubernetes cluster belongs to.",
           "type": "string",
           "x-go-name": "ProjectID",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
         },
-        "service_cidr": {
-          "description": "IP Range for K8s services",
+        "service_cluster_ip_range": {
+          "description": "defines: the range of IP Addresses allocated to K8s services",
           "type": "string",
-          "x-go-name": "ServiceCIDR",
+          "x-go-name": "ServiceClusterCIDR",
           "example": "10.233.0.0/18"
         },
         "state": {
@@ -6783,6 +6783,12 @@
             "nvidia_network_operator"
           ]
         },
+        "cluster_cidr": {
+          "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
+          "type": "string",
+          "x-go-name": "ClusterCIDR",
+          "example": "10.233.0.0/18"
+        },
         "configuration": {
           "description": "Configuration setting of the Kubernetes cluster. Leave the field empty for standard configuration.",
           "type": "string",
@@ -6803,23 +6809,17 @@
           "x-go-name": "Name",
           "example": "my-kubernetes-cluster"
         },
-        "pod_cidr": {
-          "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
-          "type": "string",
-          "x-go-name": "PodCIDR",
-          "example": "10.233.0.0/18"
-        },
-        "pod_cidr_mask": {
-          "description": "defines: the mask size for pod cidr in cluster",
+        "node_cidr_mask_size": {
+          "description": "defines: the mask size for cluster cidr",
           "type": "integer",
           "format": "int32",
-          "x-go-name": "PodCIDRMask",
+          "x-go-name": "NodeCIDRMask",
           "example": 24
         },
-        "service_cidr": {
+        "service_cluster_ip_range": {
           "description": "defines: the range of IP Addresses allocated to K8s services",
           "type": "string",
-          "x-go-name": "ServiceCIDR",
+          "x-go-name": "ServiceClusterCIDR",
           "example": "10.233.0.0/18"
         },
         "subnet_id": {
