@@ -6082,7 +6082,9 @@
         "location",
         "project_id",
         "created_at",
-        "public_ip_address_type"
+        "public_ip_address_type",
+        "placement_policy",
+        "maintenance_policy"
       ],
       "properties": {
         "created_at": {
@@ -6123,6 +6125,15 @@
           "x-go-name": "Location",
           "example": "us-northcentral1-a"
         },
+        "maintenance_policy": {
+          "description": "The VM Host Maintenance Policy",
+          "type": "string",
+          "enum": [
+            "stop-vm",
+            "unspecified"
+          ],
+          "x-go-name": "MaintenancePolicy"
+        },
         "name": {
           "description": "Name of the instance template. (This is not the name of the VMs created from this instance template.)",
           "type": "string",
@@ -6132,6 +6143,10 @@
         "placement_policy": {
           "description": "The VM Placement Policy",
           "type": "string",
+          "enum": [
+            "spread",
+            "unspecified"
+          ],
           "x-go-name": "PlacementPolicy"
         },
         "project_id": {
@@ -6222,10 +6237,17 @@
           "x-go-name": "Location",
           "example": "us-northcentral1-a"
         },
+        "maintenance_policy": {
+          "description": "THe Host Maintenance Policy to use.",
+          "type": "string",
+          "x-go-name": "MaintenancePolicy",
+          "example": "stop-vm"
+        },
         "placement_policy": {
           "description": "The VM Placement Policy to use.",
           "type": "string",
-          "x-go-name": "PlacementPolicy"
+          "x-go-name": "PlacementPolicy",
+          "example": "spread"
         },
         "public_ip_address_type": {
           "description": "Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".",
@@ -6294,7 +6316,8 @@
         "location",
         "disks",
         "network_interfaces",
-        "host_channel_adapters"
+        "host_channel_adapters",
+        "maintenance_policy"
       ],
       "properties": {
         "commitment_end": {
@@ -6345,6 +6368,14 @@
           "type": "string",
           "x-go-name": "Location",
           "example": "us-centralnorth1-a"
+        },
+        "maintenance_policy": {
+          "type": "string",
+          "enum": [
+            "stop-vm",
+            "unspecified"
+          ],
+          "x-go-name": "MaintenancePolicy"
         },
         "name": {
           "type": "string",
@@ -6467,6 +6498,12 @@
           },
           "x-go-name": "HostChannelAdapters"
         },
+        "maintenance_policy": {
+          "description": "The host maintenance policy to use.",
+          "type": "string",
+          "x-go-name": "MaintenancePolicy",
+          "example": "stop-vm"
+        },
         "network_interfaces": {
           "type": "array",
           "items": {
@@ -6527,6 +6564,12 @@
           "type": "string",
           "x-go-name": "Location",
           "example": "us-northcentral1-a"
+        },
+        "maintenance_policy": {
+          "description": "The Host Maintenance Policy to use.",
+          "type": "string",
+          "x-go-name": "MaintenancePolicy",
+          "example": "stop-vm"
         },
         "name": {
           "type": "string",

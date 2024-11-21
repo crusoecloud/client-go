@@ -17,6 +17,8 @@ type InstanceTemplatePostRequestV1Alpha5 struct {
 	ImageName string `json:"image_name,omitempty"`
 	// Location to use for all VMs created from this instance template. If provided, all location-specific resources must also be provided.
 	Location string `json:"location,omitempty"`
+	// THe Host Maintenance Policy to use.
+	MaintenancePolicy string `json:"maintenance_policy,omitempty"`
 	// The VM Placement Policy to use.
 	PlacementPolicy string `json:"placement_policy,omitempty"`
 	// Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".
