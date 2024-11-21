@@ -8107,12 +8107,7 @@
         "email",
         "name",
         "company",
-        "use_case",
-        "source",
-        "referral",
-        "expected_commitment",
-        "expected_capacity",
-        "expected_service"
+        "source"
       ],
       "properties": {
         "company": {
