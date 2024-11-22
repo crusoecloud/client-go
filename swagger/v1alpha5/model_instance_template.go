@@ -21,10 +21,12 @@ type InstanceTemplate struct {
 	ImageName string `json:"image_name"`
 	// Location to use for all VMs created from this instance template. May be empty if we do not want to bind this template to a location.
 	Location string `json:"location"`
+	// The VM Host Maintenance Policy
+	MaintenancePolicy string `json:"maintenance_policy"`
 	// Name of the instance template. (This is not the name of the VMs created from this instance template.)
 	Name string `json:"name"`
 	// The VM Placement Policy
-	PlacementPolicy string `json:"placement_policy,omitempty"`
+	PlacementPolicy string `json:"placement_policy"`
 	// Project ID of the project this instance template belongs to.
 	ProjectId string `json:"project_id"`
 	// Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".

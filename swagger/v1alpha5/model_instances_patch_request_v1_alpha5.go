@@ -14,7 +14,9 @@ type InstancesPatchRequestV1Alpha5 struct {
 	// CommitmentPeriod is deprecated, please use reservationID instead
 	CommitmentPeriod    int64                       `json:"commitment_period,omitempty"`
 	HostChannelAdapters []PartialHostChannelAdapter `json:"host_channel_adapters,omitempty"`
-	NetworkInterfaces   []NetworkInterface          `json:"network_interfaces,omitempty"`
-	ReservationId       string                      `json:"reservation_id,omitempty"`
-	Type_               string                      `json:"type,omitempty"`
+	// The host maintenance policy to use.
+	MaintenancePolicy string             `json:"maintenance_policy,omitempty"`
+	NetworkInterfaces []NetworkInterface `json:"network_interfaces,omitempty"`
+	ReservationId     string             `json:"reservation_id,omitempty"`
+	Type_             string             `json:"type,omitempty"`
 }

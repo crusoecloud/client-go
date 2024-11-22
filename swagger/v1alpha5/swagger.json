@@ -4505,6 +4505,86 @@
         }
       }
     },
+    "/users/inference-api-key": {
+      "get": {
+        "tags": [
+          "InferenceAPIKey"
+        ],
+        "summary": "Retrieve all active/expired Inference API Keys for the logged in user.",
+        "operationId": "getInferenceAPIKeys",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/inferenceAPIKeyGetResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "description": "A successful response from this resource will contain json-encoded details of the inference API key.\nThis is the only time the customer will be able to view the api key associated with the API key id.",
+        "tags": [
+          "InferenceAPIKey"
+        ],
+        "summary": "Create a new inference api key owned by the logged in user.",
+        "operationId": "createInferenceAPIKey",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateInferenceAPIKeyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/inferenceAPIKeyPostResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "InferenceAPIKey"
+        ],
+        "summary": "Delete an Inference API Key owned by the logged in user.",
+        "operationId": "deleteInferenceAPIKey",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "WTUzcGibQ82y9_01h4MCdQ",
+            "x-go-name": "KeyID",
+            "name": "key_id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/users/ssh-keys": {
       "get": {
         "tags": [
@@ -5092,6 +5172,25 @@
         },
         "message": {
           "$ref": "#/definitions/Message"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CreateInferenceAPIKeyRequest": {
+      "type": "object",
+      "required": [
+        "expires_at"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "x-go-name": "Alias",
+          "example": "token1"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2021-12-03T19:58:34Z"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -5952,6 +6051,46 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "InferenceAPIKeyInfo": {
+      "description": "These are the fields returned from a GET request.",
+      "type": "object",
+      "title": "TokenInfo contains the Traits Island stores for a Token inside of Kratos.",
+      "required": [
+        "alias",
+        "key_id",
+        "created_at",
+        "expires_at",
+        "last_used"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "x-go-name": "Alias",
+          "example": "token1"
+        },
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2021-11-03T22:16:27Z"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2021-12-03T19:58:34Z"
+        },
+        "key_id": {
+          "type": "string",
+          "x-go-name": "KeyID",
+          "example": "Hm11C1coQZm2+Aihn9ofYg"
+        },
+        "last_used": {
+          "type": "string",
+          "x-go-name": "LastUsed",
+          "example": "2021-11-03T22:22:55Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "InstanceGroup": {
       "type": "object",
       "title": "InstanceGroup defines the specification of an instance group.",
@@ -6082,7 +6221,9 @@
         "location",
         "project_id",
         "created_at",
-        "public_ip_address_type"
+        "public_ip_address_type",
+        "placement_policy",
+        "maintenance_policy"
       ],
       "properties": {
         "created_at": {
@@ -6123,6 +6264,15 @@
           "x-go-name": "Location",
           "example": "us-northcentral1-a"
         },
+        "maintenance_policy": {
+          "description": "The VM Host Maintenance Policy",
+          "type": "string",
+          "enum": [
+            "stop-vm",
+            "unspecified"
+          ],
+          "x-go-name": "MaintenancePolicy"
+        },
         "name": {
           "description": "Name of the instance template. (This is not the name of the VMs created from this instance template.)",
           "type": "string",
@@ -6132,6 +6282,10 @@
         "placement_policy": {
           "description": "The VM Placement Policy",
           "type": "string",
+          "enum": [
+            "spread",
+            "unspecified"
+          ],
           "x-go-name": "PlacementPolicy"
         },
         "project_id": {
@@ -6222,10 +6376,17 @@
           "x-go-name": "Location",
           "example": "us-northcentral1-a"
         },
+        "maintenance_policy": {
+          "description": "THe Host Maintenance Policy to use.",
+          "type": "string",
+          "x-go-name": "MaintenancePolicy",
+          "example": "stop-vm"
+        },
         "placement_policy": {
           "description": "The VM Placement Policy to use.",
           "type": "string",
-          "x-go-name": "PlacementPolicy"
+          "x-go-name": "PlacementPolicy",
+          "example": "spread"
         },
         "public_ip_address_type": {
           "description": "Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".",
@@ -6294,7 +6455,8 @@
         "location",
         "disks",
         "network_interfaces",
-        "host_channel_adapters"
+        "host_channel_adapters",
+        "maintenance_policy"
       ],
       "properties": {
         "commitment_end": {
@@ -6345,6 +6507,14 @@
           "type": "string",
           "x-go-name": "Location",
           "example": "us-centralnorth1-a"
+        },
+        "maintenance_policy": {
+          "type": "string",
+          "enum": [
+            "stop-vm",
+            "unspecified"
+          ],
+          "x-go-name": "MaintenancePolicy"
         },
         "name": {
           "type": "string",
@@ -6467,6 +6637,12 @@
           },
           "x-go-name": "HostChannelAdapters"
         },
+        "maintenance_policy": {
+          "description": "The host maintenance policy to use.",
+          "type": "string",
+          "x-go-name": "MaintenancePolicy",
+          "example": "stop-vm"
+        },
         "network_interfaces": {
           "type": "array",
           "items": {
@@ -6527,6 +6703,12 @@
           "type": "string",
           "x-go-name": "Location",
           "example": "us-northcentral1-a"
+        },
+        "maintenance_policy": {
+          "description": "The Host Maintenance Policy to use.",
+          "type": "string",
+          "x-go-name": "MaintenancePolicy",
+          "example": "stop-vm"
         },
         "name": {
           "type": "string",
@@ -7135,6 +7317,22 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Image"
+          },
+          "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ListInferenceAPIKeysResponseV1Alpha5": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InferenceAPIKeyInfo"
           },
           "x-go-name": "Items"
         }
@@ -8064,12 +8262,7 @@
         "email",
         "name",
         "company",
-        "use_case",
-        "source",
-        "referral",
-        "expected_commitment",
-        "expected_capacity",
-        "expected_service"
+        "source"
       ],
       "properties": {
         "company": {
@@ -9300,6 +9493,18 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/IBPartition"
+      }
+    },
+    "inferenceAPIKeyGetResponse": {
+      "description": "A successful response from this resource will contain json-encoded array of token details, excluding the api key.",
+      "schema": {
+        "$ref": "#/definitions/ListInferenceAPIKeysResponseV1Alpha5"
+      }
+    },
+    "inferenceAPIKeyPostResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/InferenceAPIKeyInfo"
       }
     },
     "listDiskSnapshotsResponse": {

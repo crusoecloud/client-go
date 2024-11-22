@@ -20,6 +20,7 @@ type InstanceV1Alpha5 struct {
 	InstanceGroupId        string                  `json:"instance_group_id,omitempty"`
 	InstanceTemplateId     string                  `json:"instance_template_id,omitempty"`
 	Location               string                  `json:"location"`
+	MaintenancePolicy      string                  `json:"maintenance_policy"`
 	Name                   string                  `json:"name"`
 	NetworkInterfaces      []NetworkInterface      `json:"network_interfaces"`
 	PodId                  string                  `json:"pod_id,omitempty"`
