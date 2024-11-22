@@ -6102,7 +6102,8 @@
         "updated_at",
         "project_id",
         "running_instance_count",
-        "instances"
+        "instances",
+        "desired_count"
       ],
       "properties": {
         "created_at": {
@@ -6110,6 +6111,13 @@
           "type": "string",
           "x-go-name": "CreatedAt",
           "example": "2024-01-01T00:00:00Z"
+        },
+        "desired_count": {
+          "description": "Desired VM Count for the instance group.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "DesiredCount",
+          "example": 3
         },
         "id": {
           "description": "ID of the instance group.",
@@ -6167,6 +6175,13 @@
       "type": "object",
       "title": "InstanceGroupPatchRequest defines the specifications of the updates to be made to the instance group.",
       "properties": {
+        "desired_count": {
+          "description": "Desired VM Count for the instance group.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "DesiredCount",
+          "example": 3
+        },
         "name": {
           "description": "Name of the instance group.",
           "type": "string",
@@ -6187,9 +6202,17 @@
       "title": "InstanceGroupPostRequest defines the specifications of the instance group to be created.",
       "required": [
         "name",
-        "template_id"
+        "template_id",
+        "desired_count"
       ],
       "properties": {
+        "desired_count": {
+          "description": "Desired VM Count for the instance group.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "DesiredCount",
+          "example": 3
+        },
         "name": {
           "description": "Name of the instance group.",
           "type": "string",

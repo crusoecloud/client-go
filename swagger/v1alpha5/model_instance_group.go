@@ -11,6 +11,8 @@ package swagger
 type InstanceGroup struct {
 	// Time the instance template was created.
 	CreatedAt string `json:"created_at"`
+	// Desired VM Count for the instance group.
+	DesiredCount int64 `json:"desired_count"`
 	// ID of the instance group.
 	Id string `json:"id"`
 	// A list of IDs of instances currently in the instance group.
