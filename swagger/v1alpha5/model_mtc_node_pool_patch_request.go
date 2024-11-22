@@ -8,11 +8,7 @@
  */
 package swagger
 
-type InstanceGroupPostRequest struct {
-	// Desired VM Count for the instance group.
+type MtcNodePoolPatchRequest struct {
+	// The desired number of nodes to be created.
 	DesiredCount int64 `json:"desired_count"`
-	// Name of the instance group.
-	Name string `json:"name"`
-	// Instance Template ID to be associated with the instance group.
-	TemplateId string `json:"template_id"`
 }

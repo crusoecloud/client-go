@@ -2414,6 +2414,450 @@
         }
       }
     },
+    "/projects/{project_id}/mtc/clusters": {
+      "get": {
+        "tags": [
+          "Training-Clusters"
+        ],
+        "summary": "Retrieve information about training clusters belonged to the project.",
+        "operationId": "listTrainingClusters",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listTrainingClustersResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "description": "A successful response from this resource will contain the async operation.",
+        "tags": [
+          "Training-Clusters"
+        ],
+        "summary": "Create a new training cluster owned by the logged in user.",
+        "operationId": "createTrainingCluster",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MTCClusterPostRequest"
+            }
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/mtc/clusters/operations/{operation_id}": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Training Cluster resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
+        "tags": [
+          "Training-Cluster-Operations"
+        ],
+        "summary": "Get status of a single asynchronous operation",
+        "operationId": "getTrainingClustersOperation",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/mtc/clusters/{cluster_id}": {
+      "get": {
+        "tags": [
+          "Training-Clusters"
+        ],
+        "summary": "Retrieve information about a particular training cluster belonged to the project.",
+        "operationId": "getTrainingCluster",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getTrainingClusterResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Training-Clusters"
+        ],
+        "summary": "Delete a training cluster that the logged in user owns.",
+        "operationId": "deleteTrainingCluster",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/mtc/nodepools": {
+      "get": {
+        "tags": [
+          "Training-Cluster-Node-Pools"
+        ],
+        "summary": "Retrieve information about training node pools belonging to a project or cluster.",
+        "operationId": "listTrainingClusterNodePools",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listTrainingNodePoolsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "description": "A successful response from this resource will contain the async operation.",
+        "tags": [
+          "Training-Cluster-Node-Pools"
+        ],
+        "summary": "Create a new training node pool owned by the logged in user.",
+        "operationId": "createTrainingClusterNodePool",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MTCNodePoolPostRequest"
+            }
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/mtc/nodepools/operations/{operation_id}": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Training Cluster Node Pool resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
+        "tags": [
+          "Training-Cluster-Node-Pool-Operations"
+        ],
+        "summary": "Get status of a single asynchronous operation",
+        "operationId": "getTrainingClusterNodePoolsOperation",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/mtc/nodepools/{node_pool_id}": {
+      "get": {
+        "tags": [
+          "Training-Cluster-Node-Pools"
+        ],
+        "summary": "Retrieve information about a particular training node pool belonging to the project.",
+        "operationId": "getTrainingClusterNodePool",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "NodePoolID",
+            "name": "node_pool_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getTrainingNodePoolResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Training-Cluster-Node-Pools"
+        ],
+        "summary": "Delete a node pool that the logged in user owns.",
+        "operationId": "deleteTrainingClusterNodePool",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "NodePoolID",
+            "name": "node_pool_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Training-Cluster-Node-Pools"
+        ],
+        "summary": "Update a node pool that the logged in user owns.",
+        "operationId": "updateTrainingClusterNodePool",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "NodePoolID",
+            "name": "node_pool_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MTCNodePoolPatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/networking/ib-networks": {
       "get": {
         "tags": [
@@ -6102,7 +6546,8 @@
         "updated_at",
         "project_id",
         "running_instance_count",
-        "instances"
+        "instances",
+        "desired_count"
       ],
       "properties": {
         "created_at": {
@@ -6110,6 +6555,13 @@
           "type": "string",
           "x-go-name": "CreatedAt",
           "example": "2024-01-01T00:00:00Z"
+        },
+        "desired_count": {
+          "description": "Desired VM Count for the instance group.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "DesiredCount",
+          "example": 3
         },
         "id": {
           "description": "ID of the instance group.",
@@ -6167,6 +6619,13 @@
       "type": "object",
       "title": "InstanceGroupPatchRequest defines the specifications of the updates to be made to the instance group.",
       "properties": {
+        "desired_count": {
+          "description": "Desired VM Count for the instance group.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "DesiredCount",
+          "example": 3
+        },
         "name": {
           "description": "Name of the instance group.",
           "type": "string",
@@ -6187,9 +6646,17 @@
       "title": "InstanceGroupPostRequest defines the specifications of the instance group to be created.",
       "required": [
         "name",
-        "template_id"
+        "template_id",
+        "desired_count"
       ],
       "properties": {
+        "desired_count": {
+          "description": "Desired VM Count for the instance group.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "DesiredCount",
+          "example": 3
+        },
         "name": {
           "description": "Name of the instance group.",
           "type": "string",
@@ -7469,6 +7936,22 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ListMTCNodePoolsResponse": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MTCNodePool"
+          },
+          "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ListOperationsResponseV1Alpha5": {
       "type": "object",
       "required": [
@@ -7528,6 +8011,22 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/TokenInfo"
+          },
+          "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ListTrainingClustersResponse": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MTCCluster"
           },
           "x-go-name": "Items"
         }
@@ -7905,6 +8404,275 @@
     "MFAMethod": {
       "type": "string",
       "title": "Enum of all valid MFA methods.",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "MTCCluster": {
+      "type": "object",
+      "title": "MTCCluster defines the specifications of the slurm cluster.",
+      "required": [
+        "id",
+        "name",
+        "location",
+        "subnet_id",
+        "project_id",
+        "orchestrator_version",
+        "orchestrator",
+        "state",
+        "node_pools"
+      ],
+      "properties": {
+        "id": {
+          "description": "ID of the slurm cluster.",
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "location": {
+          "description": "Location of the slurm cluster.",
+          "type": "string",
+          "x-go-name": "Location"
+        },
+        "name": {
+          "description": "Name of the slurm cluster.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-slurm-cluster"
+        },
+        "node_pools": {
+          "description": "Nodepools associated with the cluster.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "NodePools",
+          "example": [
+            "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+          ]
+        },
+        "orchestrator": {
+          "description": "Orchestrator of the cluster.",
+          "type": "string",
+          "x-go-name": "Orchestrator",
+          "example": "slurm"
+        },
+        "orchestrator_version": {
+          "description": "Orchestrator version of the cluster.",
+          "type": "string",
+          "x-go-name": "OrchestratorVersion",
+          "example": "22.05.8"
+        },
+        "project_id": {
+          "description": "The ID of the project this slurm cluster belongs to.",
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
+        },
+        "state": {
+          "description": "State of the cluster",
+          "type": "string",
+          "x-go-name": "State",
+          "example": "RUNNING"
+        },
+        "subnet_id": {
+          "description": "The ID of the subnet this slurm cluster belongs to.",
+          "type": "string",
+          "x-go-name": "SubnetID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "MTCClusterPostRequest": {
+      "type": "object",
+      "title": "MTCClusterPostRequest defines the specifications of the cluster to be created.",
+      "required": [
+        "name",
+        "location",
+        "ssh_public_key"
+      ],
+      "properties": {
+        "location": {
+          "description": "Location to create the slurm cluster in.",
+          "type": "string",
+          "x-go-name": "Location"
+        },
+        "name": {
+          "description": "Name of the slurm cluster.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-slurm-cluster"
+        },
+        "ssh_public_key": {
+          "description": "The SSH public key for accessing all nodes in the cluster.",
+          "type": "string",
+          "x-go-name": "SSHPublicKey",
+          "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D"
+        },
+        "subnet_id": {
+          "description": "The ID of the subnet to create the cluster in. Must be in the location\nspecified. If not provided, the default subnet for the location will be\nused, if there is one.",
+          "type": "string",
+          "x-go-name": "SubnetID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "MTCNodePool": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "type",
+        "running_count",
+        "desired_count",
+        "ib_partition_id",
+        "project_id",
+        "cluster_id",
+        "image_id",
+        "instance_ids",
+        "partition_name"
+      ],
+      "properties": {
+        "cluster_id": {
+          "description": "The ID of the slurm cluster this node pool belongs to.",
+          "type": "string",
+          "x-go-name": "ClusterID",
+          "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
+        },
+        "desired_count": {
+          "description": "Desired number of nodes within the node pool.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "DesiredCount",
+          "example": 4
+        },
+        "ib_partition_id": {
+          "description": "IB Partition ID of the node pool.",
+          "type": "string",
+          "x-go-name": "IBPartitionID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "id": {
+          "description": "ID of the node pool.",
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "0a1b3c2d-5e6f-8b9c-4d7e-1a2b3c4d5e6f"
+        },
+        "image_id": {
+          "description": "Image ID for the slurm node pool.",
+          "type": "string",
+          "x-go-name": "ImageID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "instance_ids": {
+          "description": "List of IDs of instances within the node pool.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "InstanceIDs",
+          "example": [
+            "ca39e669-47ee-456b-968d-303234fbf99f"
+          ]
+        },
+        "name": {
+          "description": "Name of the node pool.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "crusoe-node-pool"
+        },
+        "partition_name": {
+          "description": "Slurm partition name of the node pool.",
+          "type": "string",
+          "x-go-name": "SlurmPartitionName",
+          "example": "my-slurm-partition"
+        },
+        "project_id": {
+          "description": "The ID of the project this slurm node pool belongs to.",
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
+        },
+        "running_count": {
+          "description": "Number of nodes within the node pool.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "RunningCount",
+          "example": 4
+        },
+        "type": {
+          "description": "VM type of the node pool",
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "a100.2x"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "MTCNodePoolPatchRequest": {
+      "type": "object",
+      "required": [
+        "desired_count"
+      ],
+      "properties": {
+        "desired_count": {
+          "description": "The desired number of nodes to be created.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "DesiredCount",
+          "example": 4
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "MTCNodePoolPostRequest": {
+      "type": "object",
+      "required": [
+        "name",
+        "product_name",
+        "desired_count",
+        "cluster_id",
+        "partition_name"
+      ],
+      "properties": {
+        "cluster_id": {
+          "description": "Cluster ID of the cluster this node pool belongs to.",
+          "type": "string",
+          "x-go-name": "ClusterID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "desired_count": {
+          "description": "The desired number of nodes to be created.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "DesiredCount",
+          "example": 4
+        },
+        "ib_partition_id": {
+          "description": "The ID of the Infiniband partition to create node pool in. Must be in the location\nof the cluster if specified.",
+          "type": "string",
+          "x-go-name": "IBPartitionID",
+          "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653"
+        },
+        "name": {
+          "description": "Name of the slurm node pool.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-slurm-node-pool"
+        },
+        "partition_name": {
+          "description": "Name of the slurm partition.",
+          "type": "string",
+          "x-go-name": "SlurmPartitionName",
+          "example": "my-slurm-partition"
+        },
+        "product_name": {
+          "description": "Product name of the VM type to be created within this node pool.",
+          "type": "string",
+          "x-go-name": "ProductName",
+          "example": "a100.2x"
+        }
+      },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "Message": {
@@ -9471,6 +10239,18 @@
         "$ref": "#/definitions/DiskSnapshot"
       }
     },
+    "getTrainingClusterResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/MTCCluster"
+      }
+    },
+    "getTrainingNodePoolResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/MTCNodePool"
+      }
+    },
     "getVPCNetworkResponse": {
       "description": "",
       "schema": {
@@ -9583,6 +10363,18 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListProjectsResponseV1Alpha5"
+      }
+    },
+    "listTrainingClustersResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListTrainingClustersResponse"
+      }
+    },
+    "listTrainingNodePoolsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListMTCNodePoolsResponse"
       }
     },
     "listVPCNetworksResponse": {
