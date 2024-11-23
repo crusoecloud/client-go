@@ -15,5 +15,6 @@ type Identity struct {
 	Id               string `json:"id"`
 	LatestAuthmethod string `json:"latest_authmethod,omitempty"`
 	Name             string `json:"name"`
+	RegistrationType string `json:"registration_type,omitempty"`
 	Role             string `json:"role"`
 }

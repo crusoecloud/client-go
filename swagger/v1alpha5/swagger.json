@@ -6051,6 +6051,11 @@
           "x-go-name": "Name",
           "example": "Crusoe Energy"
         },
+        "registration_type": {
+          "type": "string",
+          "x-go-name": "RegistrationType",
+          "example": "waitlist"
+        },
         "relation": {
           "type": "string",
           "x-go-name": "Relation",
@@ -6412,6 +6417,11 @@
           "type": "string",
           "x-go-name": "Name",
           "example": "John Doe"
+        },
+        "registration_type": {
+          "type": "string",
+          "x-go-name": "RegistrationType",
+          "example": "waitlist"
         },
         "role": {
           "type": "string",
