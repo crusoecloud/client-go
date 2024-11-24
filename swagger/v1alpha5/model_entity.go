@@ -9,12 +9,14 @@
 package swagger
 
 type Entity struct {
-	Billing     *Billing               `json:"billing"`
-	Features    map[string]interface{} `json:"features"`
-	Id          string                 `json:"id"`
-	MfaMethods  []string               `json:"mfa_methods,omitempty"`
-	Name        string                 `json:"name"`
-	Relation    string                 `json:"relation"`
-	State       string                 `json:"state"`
-	StateReason string                 `json:"state_reason"`
+	Billing          *Billing               `json:"billing"`
+	BillingAddr      *BillingAddress        `json:"billing_addr,omitempty"`
+	Features         map[string]interface{} `json:"features"`
+	Id               string                 `json:"id"`
+	MfaMethods       []string               `json:"mfa_methods,omitempty"`
+	Name             string                 `json:"name"`
+	RegistrationType string                 `json:"registration_type,omitempty"`
+	Relation         string                 `json:"relation"`
+	State            string                 `json:"state"`
+	StateReason      string                 `json:"state_reason"`
 }

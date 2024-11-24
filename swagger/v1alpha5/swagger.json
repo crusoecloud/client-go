@@ -5328,6 +5328,50 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "BillingAddress": {
+      "type": "object",
+      "title": "BillingAddress contains sensitive information related to the billing address for an entity.",
+      "required": [
+        "address_line1",
+        "city",
+        "state_or_region",
+        "postal_code",
+        "country"
+      ],
+      "properties": {
+        "address_line1": {
+          "type": "string",
+          "x-go-name": "AddressLine1",
+          "example": "123 Main Street"
+        },
+        "address_line2": {
+          "type": "string",
+          "x-go-name": "AddressLine2",
+          "example": "Suite 400"
+        },
+        "city": {
+          "type": "string",
+          "x-go-name": "City",
+          "example": "Denver"
+        },
+        "country": {
+          "type": "string",
+          "x-go-name": "Country",
+          "example": "US"
+        },
+        "postal_code": {
+          "type": "string",
+          "x-go-name": "PostalCode",
+          "example": "80202"
+        },
+        "state_or_region": {
+          "type": "string",
+          "x-go-name": "StateOrRegion",
+          "example": "Colorado"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "BillingIntentGetResponse": {
       "type": "object",
       "title": "BillingIntentGetResponse is the response type for Get requests to the entities/billing/intent endpoint.",
@@ -5988,10 +6032,10 @@
     "EntitiesPutPostRequest": {
       "type": "object",
       "title": "EntitiesPutPostRequest is the request type for PUT and POST requests to the entities endpoint.",
-      "required": [
-        "organization_name"
-      ],
       "properties": {
+        "billing_addr": {
+          "$ref": "#/definitions/BillingAddress"
+        },
         "organization_name": {
           "type": "string",
           "x-go-name": "OrganizationName",
@@ -6029,6 +6073,9 @@
         "billing": {
           "$ref": "#/definitions/Billing"
         },
+        "billing_addr": {
+          "$ref": "#/definitions/BillingAddress"
+        },
         "features": {
           "type": "object",
           "additionalProperties": {},
@@ -6050,6 +6097,11 @@
           "type": "string",
           "x-go-name": "Name",
           "example": "Crusoe Energy"
+        },
+        "registration_type": {
+          "type": "string",
+          "x-go-name": "RegistrationType",
+          "example": "waitlist"
         },
         "relation": {
           "type": "string",
@@ -6412,6 +6464,11 @@
           "type": "string",
           "x-go-name": "Name",
           "example": "John Doe"
+        },
+        "registration_type": {
+          "type": "string",
+          "x-go-name": "RegistrationType",
+          "example": "waitlist"
         },
         "role": {
           "type": "string",
