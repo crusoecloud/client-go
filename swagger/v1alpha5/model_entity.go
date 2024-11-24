@@ -10,6 +10,7 @@ package swagger
 
 type Entity struct {
 	Billing          *Billing               `json:"billing"`
+	BillingAddr      *BillingAddress        `json:"billing_addr,omitempty"`
 	Features         map[string]interface{} `json:"features"`
 	Id               string                 `json:"id"`
 	MfaMethods       []string               `json:"mfa_methods,omitempty"`
