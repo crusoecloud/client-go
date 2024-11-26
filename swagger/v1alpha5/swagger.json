@@ -6190,6 +6190,43 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "GeneratedInferenceAPIKey": {
+      "type": "object",
+      "required": [
+        "key_id",
+        "api_key",
+        "created_at",
+        "expires_at"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "x-go-name": "Alias",
+          "example": "newAPIKey"
+        },
+        "api_key": {
+          "type": "string",
+          "x-go-name": "APIKey",
+          "example": "R7p5XctCQMuGlpVBmVdqzA"
+        },
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2021-11-03T22:16:27Z"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2021-12-03T19:58:34Z"
+        },
+        "key_id": {
+          "type": "string",
+          "x-go-name": "KeyID",
+          "example": "R7p5XctCQMuGlpVBmVdqzA"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "GeneratedToken": {
       "description": "These are the fields returned from a PUT request.",
       "type": "object",
@@ -6588,6 +6625,18 @@
           "type": "string",
           "x-go-name": "LastUsed",
           "example": "2021-11-03T22:22:55Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "InferenceAPIKeyPostResponse": {
+      "type": "object",
+      "required": [
+        "api_key_info"
+      ],
+      "properties": {
+        "api_key_info": {
+          "$ref": "#/definitions/GeneratedInferenceAPIKey"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -10341,7 +10390,7 @@
     "inferenceAPIKeyPostResponse": {
       "description": "",
       "schema": {
-        "$ref": "#/definitions/InferenceAPIKeyInfo"
+        "$ref": "#/definitions/InferenceAPIKeyPostResponse"
       }
     },
     "listDiskSnapshotsResponse": {

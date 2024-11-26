@@ -29,15 +29,15 @@ A successful response from this resource will contain json-encoded details of th
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 
-@return InferenceApiKeyInfo
+@return InferenceApiKeyPostResponse
 */
-func (a *InferenceAPIKeyApiService) CreateInferenceAPIKey(ctx context.Context, body CreateInferenceApiKeyRequest) (InferenceApiKeyInfo, *http.Response, error) {
+func (a *InferenceAPIKeyApiService) CreateInferenceAPIKey(ctx context.Context, body CreateInferenceApiKeyRequest) (InferenceApiKeyPostResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue InferenceApiKeyInfo
+		localVarReturnValue InferenceApiKeyPostResponse
 	)
 
 	// create path and map variables
@@ -96,7 +96,7 @@ func (a *InferenceAPIKeyApiService) CreateInferenceAPIKey(ctx context.Context, b
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v InferenceApiKeyInfo
+			var v InferenceApiKeyPostResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
