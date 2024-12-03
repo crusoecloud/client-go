@@ -4332,6 +4332,42 @@
         }
       }
     },
+    "/projects/{project_id}/quotas": {
+      "get": {
+        "tags": [
+          "Quotas"
+        ],
+        "summary": "List max and currently used project quotas.",
+        "operationId": "listProjectQuotas",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listProjectQuotasResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/storage/disks": {
       "get": {
         "description": "Size of disks will be in gibibytes (GiB)",
@@ -5475,11 +5511,24 @@
           "x-go-name": "Location",
           "example": "us-east"
         },
+        "num_slices": {
+          "description": "NumSlices is the number of slices that make up the resource",
+          "type": "integer",
+          "format": "uint32",
+          "x-go-name": "NumSlices",
+          "example": 1
+        },
         "quantity": {
           "type": "integer",
           "format": "uint32",
           "x-go-name": "Quantity",
           "example": 8
+        },
+        "quota_type": {
+          "description": "QuotaType is the enum string for the quota type consumed by this resource",
+          "type": "string",
+          "x-go-name": "QuotaType",
+          "example": "PROJECT_QUOTA_TYPE_MAXIMUM_VM_SLICES_VCPU_6_MEM_60_A40_PCIE_48GB_1"
         },
         "type": {
           "type": "string",
@@ -8074,6 +8123,21 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ListProjectQuotasResponse": {
+      "type": "object",
+      "title": "ListProjectQuotasResponse is the response for listing a project's quotas.",
+      "properties": {
+        "quotas": {
+          "description": "Quotas are all returned project quotas",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Quota"
+          },
+          "x-go-name": "Quotas"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ListProjectsResponseV1Alpha5": {
       "type": "object",
       "title": "ListProjectsResponseV1Alpha5 is the response type for GET requests to the roles endpoint.",
@@ -9247,6 +9311,39 @@
           "type": "string",
           "x-go-name": "Type",
           "example": "dynamic"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "Quota": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "description": "Used is the remaining quota available",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Available",
+          "example": 6
+        },
+        "max": {
+          "description": "Max is the maximum quota allowed for the resource in the project",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Max",
+          "example": 10
+        },
+        "type": {
+          "description": "Type is the enum quota type",
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "PROJECT_QUOTA_TYPE_MAXIMUM_VM_SLICES_VCPU_6_MEM_60_A40_PCIE_48GB_1"
+        },
+        "used": {
+          "description": "Used is the current quota consumed by the project",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Used",
+          "example": 4
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -10463,6 +10560,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListOperationsResponseV1Alpha5"
+      }
+    },
+    "listProjectQuotasResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListProjectQuotasResponse"
       }
     },
     "listProjectsResponse": {
