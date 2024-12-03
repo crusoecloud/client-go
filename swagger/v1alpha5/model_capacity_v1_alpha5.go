@@ -10,6 +10,10 @@ package swagger
 
 type CapacityV1Alpha5 struct {
 	Location string `json:"location"`
-	Quantity int32  `json:"quantity"`
-	Type_    string `json:"type,omitempty"`
+	// NumSlices is the number of slices that make up the resource
+	NumSlices int32 `json:"num_slices,omitempty"`
+	Quantity  int32 `json:"quantity"`
+	// QuotaType is the enum string for the quota type consumed by this resource
+	QuotaType string `json:"quota_type,omitempty"`
+	Type_     string `json:"type,omitempty"`
 }

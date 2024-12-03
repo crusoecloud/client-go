@@ -94,6 +94,8 @@ type APIClient struct {
 
 	ProjectsApi *ProjectsApiService
 
+	QuotasApi *QuotasApiService
+
 	ReservationsApi *ReservationsApiService
 
 	SSHKeysApi *SSHKeysApiService
@@ -172,6 +174,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LogsApi = (*LogsApiService)(&c.common)
 	c.PostApi = (*PostApiService)(&c.common)
 	c.ProjectsApi = (*ProjectsApiService)(&c.common)
+	c.QuotasApi = (*QuotasApiService)(&c.common)
 	c.ReservationsApi = (*ReservationsApiService)(&c.common)
 	c.SSHKeysApi = (*SSHKeysApiService)(&c.common)
 	c.SnapshotOperationsApi = (*SnapshotOperationsApiService)(&c.common)

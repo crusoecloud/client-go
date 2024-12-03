@@ -388,11 +388,13 @@ TrainingClusterNodePoolsApiService Retrieve information about training node pool
  * @param projectId
  * @param optional nil or *TrainingClusterNodePoolsApiListTrainingClusterNodePoolsOpts - Optional Parameters:
      * @param "ClusterId" (optional.String) -
+     * @param "Name" (optional.String) -
 @return ListMtcNodePoolsResponse
 */
 
 type TrainingClusterNodePoolsApiListTrainingClusterNodePoolsOpts struct {
 	ClusterId optional.String
+	Name      optional.String
 }
 
 func (a *TrainingClusterNodePoolsApiService) ListTrainingClusterNodePools(ctx context.Context, projectId string, localVarOptionals *TrainingClusterNodePoolsApiListTrainingClusterNodePoolsOpts) (ListMtcNodePoolsResponse, *http.Response, error) {
@@ -414,6 +416,9 @@ func (a *TrainingClusterNodePoolsApiService) ListTrainingClusterNodePools(ctx co
 
 	if localVarOptionals != nil && localVarOptionals.ClusterId.IsSet() {
 		localVarQueryParams.Add("cluster_id", parameterToString(localVarOptionals.ClusterId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Name.IsSet() {
+		localVarQueryParams.Add("name", parameterToString(localVarOptionals.Name.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
