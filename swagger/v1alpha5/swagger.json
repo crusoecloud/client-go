@@ -2429,6 +2429,13 @@
             "name": "project_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "example": "my-slurm-cluster",
+            "x-go-name": "Name",
+            "name": "name",
+            "in": "query"
           }
         ],
         "responses": {
@@ -2630,6 +2637,13 @@
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "x-go-name": "ClusterID",
             "name": "cluster_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "my-slurm-node-pool",
+            "x-go-name": "Name",
+            "name": "name",
             "in": "query"
           }
         ],

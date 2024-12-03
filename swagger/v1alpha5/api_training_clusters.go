@@ -15,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -382,12 +384,18 @@ func (a *TrainingClustersApiService) GetTrainingCluster(ctx context.Context, pro
 
 /*
 TrainingClustersApiService Retrieve information about training clusters belonged to the project.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param projectId
+ * @param optional nil or *TrainingClustersApiListTrainingClustersOpts - Optional Parameters:
+     * @param "Name" (optional.String) -
 @return ListTrainingClustersResponse
 */
-func (a *TrainingClustersApiService) ListTrainingClusters(ctx context.Context, projectId string) (ListTrainingClustersResponse, *http.Response, error) {
+
+type TrainingClustersApiListTrainingClustersOpts struct {
+	Name optional.String
+}
+
+func (a *TrainingClustersApiService) ListTrainingClusters(ctx context.Context, projectId string, localVarOptionals *TrainingClustersApiListTrainingClustersOpts) (ListTrainingClustersResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -404,6 +412,9 @@ func (a *TrainingClustersApiService) ListTrainingClusters(ctx context.Context, p
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.Name.IsSet() {
+		localVarQueryParams.Add("name", parameterToString(localVarOptionals.Name.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
