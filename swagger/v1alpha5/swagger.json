@@ -7705,7 +7705,7 @@
           "description": "State of the cluster",
           "type": "string",
           "x-go-name": "State",
-          "example": "RUNNING"
+          "example": "STATE_RUNNING"
         },
         "subnet_id": {
           "description": "The ID of the subnet this Kubernetes cluster belongs to.",
@@ -7905,7 +7905,7 @@
           "description": "State of the node pool",
           "type": "string",
           "x-go-name": "State",
-          "example": "RUNNING"
+          "example": "STATE_RUNNING"
         },
         "subnet_id": {
           "description": "The ID of the subnet this node pool belongs to.",
