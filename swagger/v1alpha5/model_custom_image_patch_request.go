@@ -8,8 +8,6 @@
  */
 package swagger
 
-type Choice struct {
-	FinishReason string   `json:"finish_reason,omitempty"`
-	Index        int64    `json:"index"`
-	Message      *Message `json:"message"`
+type CustomImagePatchRequest struct {
+	Description string `json:"description"`
 }

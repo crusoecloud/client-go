@@ -8,8 +8,9 @@
  */
 package swagger
 
-type TokenUsage struct {
-	CompletionTokens int64 `json:"completion_tokens"`
-	PromptTokens     int64 `json:"prompt_tokens"`
-	TotalTokens      int64 `json:"total_tokens"`
+type CustomImagePostRequest struct {
+	DiskID      string   `json:"DiskID"`
+	Description string   `json:"description,omitempty"`
+	Name        string   `json:"name"`
+	Tags        []string `json:"tags,omitempty"`
 }

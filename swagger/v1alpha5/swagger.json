@@ -65,35 +65,6 @@
         }
       }
     },
-    "/chat/completions": {
-      "post": {
-        "description": "Create a chat completion request",
-        "tags": [
-          "post",
-          "chat",
-          "completion"
-        ],
-        "summary": "Create chat completion",
-        "operationId": "request",
-        "responses": {
-          "200": {
-            "$ref": "#/responses/chatCompletionPostResponse"
-          },
-          "400": {
-            "$ref": "#/responses/badReqError"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      }
-    },
     "/compute/images": {
       "get": {
         "tags": [
@@ -877,6 +848,317 @@
         "responses": {
           "200": {
             "$ref": "#/responses/usageOptionsGetResponse"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/compute/custom-images": {
+      "get": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "List all custom VM images available for use.",
+        "operationId": "listCustomImages",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listImagesResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "Create a custom image.",
+        "operationId": "customImagePost",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomImagePostRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/compute/custom-images/operations": {
+      "get": {
+        "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe custom images resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
+        "tags": [
+          "Custom-Image-Operations"
+        ],
+        "summary": "Get status of asynchronous operations",
+        "operationId": "listCustomImagesOperations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
+            "x-go-name": "ResourceID",
+            "name": "resource_id",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "IN_PROGRESS"
+            ],
+            "x-go-name": "State",
+            "name": "state",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/compute/custom-images/operations/{operation_id}": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe custom image resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
+        "tags": [
+          "Custom-Image-Operations"
+        ],
+        "summary": "Get status of a single asynchronous custom image operation",
+        "operationId": "getCustomImagesOperation",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/compute/custom-images/{image_id}": {
+      "get": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "Retrieve details about a VM image.",
+        "operationId": "getCustomImage",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ImageID",
+            "name": "image_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getImageResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "Delete a custom image.",
+        "operationId": "customImageDelete",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ImageID",
+            "name": "image_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "Update a custom image.",
+        "operationId": "customImagePatch",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ImageID",
+            "name": "image_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomImagePatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/customImagePatchResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
           },
           "500": {
             "$ref": "#/responses/serverError"
@@ -5552,181 +5834,6 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "ChatCompletionPostRequest": {
-      "type": "object",
-      "required": [
-        "model",
-        "messages"
-      ],
-      "properties": {
-        "frequency_penalty": {
-          "type": "number",
-          "format": "double",
-          "x-go-name": "FrequencyPenalty",
-          "example": 0.2
-        },
-        "logit_bias": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "x-go-name": "LogitBias",
-          "example": {
-            "198": 2,
-            "50256": -1
-          }
-        },
-        "max_tokens": {
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "MaxTokens",
-          "example": 150
-        },
-        "messages": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Message"
-          },
-          "x-go-name": "Messages",
-          "example": "[{\"role\": \"system\", \"content\": \"You are a helpful assistant.\"},"
-        },
-        "model": {
-          "type": "string",
-          "x-go-name": "Model",
-          "example": "gpt-4"
-        },
-        "n": {
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "N",
-          "example": 3
-        },
-        "parallel_tool_calls": {
-          "type": "boolean",
-          "x-go-name": "ParallelToolCalls",
-          "example": false
-        },
-        "presence_penalty": {
-          "type": "number",
-          "format": "double",
-          "x-go-name": "PresencePenalty",
-          "example": 0.5
-        },
-        "stop": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-go-name": "Stop",
-          "example": [
-            "\n",
-            "Stop sequence"
-          ]
-        },
-        "temperature": {
-          "type": "number",
-          "format": "double",
-          "x-go-name": "Temperature",
-          "example": 0.7
-        },
-        "tool_choice": {
-          "type": "string",
-          "x-go-name": "ToolChoice",
-          "example": "text-generation-tool"
-        },
-        "top_p": {
-          "type": "number",
-          "format": "double",
-          "x-go-name": "TopP",
-          "example": 0.9
-        },
-        "user": {
-          "type": "string",
-          "x-go-name": "User",
-          "example": "user-1234"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "ChatCompletionPostResponse": {
-      "type": "object",
-      "required": [
-        "id",
-        "object",
-        "created",
-        "model",
-        "choices"
-      ],
-      "properties": {
-        "choices": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Choice"
-          },
-          "x-go-name": "Choices"
-        },
-        "created": {
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "Created",
-          "example": 1677649443
-        },
-        "id": {
-          "type": "string",
-          "x-go-name": "ID",
-          "example": "\"chatcmpl-6oAs8JSgfXn22M\""
-        },
-        "model": {
-          "type": "string",
-          "x-go-name": "Model",
-          "example": "\"gpt-4\""
-        },
-        "object": {
-          "type": "string",
-          "x-go-name": "Object",
-          "example": "\"chat.completion\""
-        },
-        "service_tier": {
-          "type": "string",
-          "x-go-name": "ServiceTier",
-          "example": "\"basic\""
-        },
-        "system_fingerprint": {
-          "type": "string",
-          "x-go-name": "SystemFingerprint",
-          "example": "\"abc123xyz\""
-        },
-        "usage": {
-          "$ref": "#/definitions/TokenUsage"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "Choice": {
-      "type": "object",
-      "required": [
-        "index",
-        "message"
-      ],
-      "properties": {
-        "finish_reason": {
-          "type": "string",
-          "x-go-name": "FinishReason",
-          "example": "\"stop\""
-        },
-        "index": {
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "Index",
-          "example": 0
-        },
-        "message": {
-          "$ref": "#/definitions/Message"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "CreateInferenceAPIKeyRequest": {
       "type": "object",
       "required": [
@@ -5822,6 +5929,64 @@
             "type": "string"
           },
           "x-go-name": "Credentials"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CustomImagePatchRequest": {
+      "type": "object",
+      "title": "CustomImagePatchRequest is the request type for PATCH requests to the /custom-images/{id} endpoint.",
+      "required": [
+        "description"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "x-go-name": "Description",
+          "example": "\"Ubuntu is the modern, open source operating system on Linux for ...\""
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CustomImagePatchResponse": {
+      "type": "object",
+      "title": "CustomImagePatchResponse is the response type for PATCH requests to the /custom-images/{id} endpoint.",
+      "properties": {
+        "image": {
+          "$ref": "#/definitions/Image"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CustomImagePostRequest": {
+      "type": "object",
+      "title": "CustomImagePostRequest is the request type for POST requests to the /custom-images endpoint.",
+      "required": [
+        "DiskID",
+        "name"
+      ],
+      "properties": {
+        "DiskID": {
+          "type": "string",
+          "example": "182d01c7-d3fe-424b-af13-8775aeead194"
+        },
+        "description": {
+          "type": "string",
+          "x-go-name": "Description",
+          "example": "Ubuntu is the modern, open source operating system on Linux for ..."
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "ubuntu"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Tags",
+          "example": "22.04,latest"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -6160,6 +6325,14 @@
           "type": "string",
           "x-go-name": "Name",
           "example": "Crusoe Energy"
+        },
+        "organization_type": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "enterprise"
+          ],
+          "x-go-name": "OrganizationType"
         },
         "registration_type": {
           "type": "string",
@@ -7532,7 +7705,7 @@
           "description": "State of the cluster",
           "type": "string",
           "x-go-name": "State",
-          "example": "RUNNING"
+          "example": "STATE_RUNNING"
         },
         "subnet_id": {
           "description": "The ID of the subnet this Kubernetes cluster belongs to.",
@@ -7732,7 +7905,7 @@
           "description": "State of the node pool",
           "type": "string",
           "x-go-name": "State",
-          "example": "RUNNING"
+          "example": "STATE_RUNNING"
         },
         "subnet_id": {
           "description": "The ID of the subnet this node pool belongs to.",
@@ -8859,26 +9032,6 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "Message": {
-      "type": "object",
-      "required": [
-        "role",
-        "content"
-      ],
-      "properties": {
-        "content": {
-          "type": "string",
-          "x-go-name": "Content",
-          "example": "\"You are a helpful assistant.\""
-        },
-        "role": {
-          "type": "string",
-          "x-go-name": "Role",
-          "example": "\"system\""
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "NetworkInterface": {
       "type": "object",
       "required": [
@@ -9580,35 +9733,6 @@
           "type": "string",
           "x-go-name": "LastUsed",
           "example": "2021-11-03T22:22:55Z"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "TokenUsage": {
-      "type": "object",
-      "required": [
-        "prompt_tokens",
-        "completion_tokens",
-        "total_tokens"
-      ],
-      "properties": {
-        "completion_tokens": {
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "CompletionTokens",
-          "example": 15
-        },
-        "prompt_tokens": {
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "PromptTokens",
-          "example": 10
-        },
-        "total_tokens": {
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "TotalTokens",
-          "example": 25
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -10327,12 +10451,6 @@
         "$ref": "#/definitions/ListCapacitiesResponseV1Alpha5"
       }
     },
-    "chatCompletionPostResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ChatCompletionPostResponse"
-      }
-    },
     "createInstanceGroupResponse": {
       "description": "",
       "schema": {
@@ -10355,6 +10473,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/CredentialsResponse"
+      }
+    },
+    "customImagePatchResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/CustomImagePatchResponse"
       }
     },
     "emptyResponse": {

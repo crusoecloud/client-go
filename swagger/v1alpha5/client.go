@@ -48,9 +48,9 @@ type APIClient struct {
 
 	CapacitiesApi *CapacitiesApiService
 
-	ChatApi *ChatApiService
+	CustomImageOperationsApi *CustomImageOperationsApiService
 
-	CompletionApi *CompletionApiService
+	CustomImagesApi *CustomImagesApiService
 
 	DiskOperationsApi *DiskOperationsApiService
 
@@ -89,8 +89,6 @@ type APIClient struct {
 	LocationsApi *LocationsApiService
 
 	LogsApi *LogsApiService
-
-	PostApi *PostApiService
 
 	ProjectsApi *ProjectsApiService
 
@@ -151,8 +149,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	// API Services
 	c.AuditApi = (*AuditApiService)(&c.common)
 	c.CapacitiesApi = (*CapacitiesApiService)(&c.common)
-	c.ChatApi = (*ChatApiService)(&c.common)
-	c.CompletionApi = (*CompletionApiService)(&c.common)
+	c.CustomImageOperationsApi = (*CustomImageOperationsApiService)(&c.common)
+	c.CustomImagesApi = (*CustomImagesApiService)(&c.common)
 	c.DiskOperationsApi = (*DiskOperationsApiService)(&c.common)
 	c.DisksApi = (*DisksApiService)(&c.common)
 	c.EntitiesApi = (*EntitiesApiService)(&c.common)
@@ -172,7 +170,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LoadBalancersApi = (*LoadBalancersApiService)(&c.common)
 	c.LocationsApi = (*LocationsApiService)(&c.common)
 	c.LogsApi = (*LogsApiService)(&c.common)
-	c.PostApi = (*PostApiService)(&c.common)
 	c.ProjectsApi = (*ProjectsApiService)(&c.common)
 	c.QuotasApi = (*QuotasApiService)(&c.common)
 	c.ReservationsApi = (*ReservationsApiService)(&c.common)

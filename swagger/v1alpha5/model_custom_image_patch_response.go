@@ -8,7 +8,6 @@
  */
 package swagger
 
-type Message struct {
-	Content string `json:"content"`
-	Role    string `json:"role"`
+type CustomImagePatchResponse struct {
+	Image *Image `json:"image,omitempty"`
 }
