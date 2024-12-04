@@ -15,6 +15,7 @@ type Entity struct {
 	Id               string                 `json:"id"`
 	MfaMethods       []string               `json:"mfa_methods,omitempty"`
 	Name             string                 `json:"name"`
+	OrganizationType string                 `json:"organization_type,omitempty"`
 	RegistrationType string                 `json:"registration_type,omitempty"`
 	Relation         string                 `json:"relation"`
 	State            string                 `json:"state"`

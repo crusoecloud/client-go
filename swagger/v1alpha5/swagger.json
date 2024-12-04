@@ -6530,6 +6530,14 @@
           "x-go-name": "Name",
           "example": "Crusoe Energy"
         },
+        "organization_type": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "enterprise"
+          ],
+          "x-go-name": "OrganizationType"
+        },
         "registration_type": {
           "type": "string",
           "x-go-name": "RegistrationType",
