@@ -52,6 +52,10 @@ type APIClient struct {
 
 	CompletionApi *CompletionApiService
 
+	CustomImageOperationsApi *CustomImageOperationsApiService
+
+	CustomImagesApi *CustomImagesApiService
+
 	DiskOperationsApi *DiskOperationsApiService
 
 	DisksApi *DisksApiService
@@ -153,6 +157,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.CapacitiesApi = (*CapacitiesApiService)(&c.common)
 	c.ChatApi = (*ChatApiService)(&c.common)
 	c.CompletionApi = (*CompletionApiService)(&c.common)
+	c.CustomImageOperationsApi = (*CustomImageOperationsApiService)(&c.common)
+	c.CustomImagesApi = (*CustomImagesApiService)(&c.common)
 	c.DiskOperationsApi = (*DiskOperationsApiService)(&c.common)
 	c.DisksApi = (*DisksApiService)(&c.common)
 	c.EntitiesApi = (*EntitiesApiService)(&c.common)

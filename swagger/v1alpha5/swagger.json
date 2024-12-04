@@ -884,6 +884,317 @@
         }
       }
     },
+    "/projects/{project_id}/compute/custom-images": {
+      "get": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "List all custom VM images available for use.",
+        "operationId": "listCustomImages",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listImagesResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "Create a custom image.",
+        "operationId": "customImagePost",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomImagePostRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/compute/custom-images/operations": {
+      "get": {
+        "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe custom images resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
+        "tags": [
+          "Custom-Image-Operations"
+        ],
+        "summary": "Get status of asynchronous operations",
+        "operationId": "listCustomImagesOperations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
+            "x-go-name": "ResourceID",
+            "name": "resource_id",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "IN_PROGRESS"
+            ],
+            "x-go-name": "State",
+            "name": "state",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/compute/custom-images/operations/{operation_id}": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe custom image resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
+        "tags": [
+          "Custom-Image-Operations"
+        ],
+        "summary": "Get status of a single asynchronous custom image operation",
+        "operationId": "getCustomImagesOperation",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/compute/custom-images/{image_id}": {
+      "get": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "Retrieve details about a VM image.",
+        "operationId": "getCustomImage",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ImageID",
+            "name": "image_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getImageResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "Delete a custom image.",
+        "operationId": "customImageDelete",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ImageID",
+            "name": "image_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "Update a custom image.",
+        "operationId": "customImagePatch",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ImageID",
+            "name": "image_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomImagePatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/customImagePatchResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/compute/instance-groups": {
       "get": {
         "tags": [
@@ -5826,6 +6137,64 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "CustomImagePatchRequest": {
+      "type": "object",
+      "title": "CustomImagePatchRequest is the request type for PATCH requests to the /custom-images/{id} endpoint.",
+      "required": [
+        "description"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "x-go-name": "Description",
+          "example": "\"Ubuntu is the modern, open source operating system on Linux for ...\""
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CustomImagePatchResponse": {
+      "type": "object",
+      "title": "CustomImagePatchResponse is the response type for PATCH requests to the /custom-images/{id} endpoint.",
+      "properties": {
+        "image": {
+          "$ref": "#/definitions/Image"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CustomImagePostRequest": {
+      "type": "object",
+      "title": "CustomImagePostRequest is the request type for POST requests to the /custom-images endpoint.",
+      "required": [
+        "DiskID",
+        "name"
+      ],
+      "properties": {
+        "DiskID": {
+          "type": "string",
+          "example": "182d01c7-d3fe-424b-af13-8775aeead194"
+        },
+        "description": {
+          "type": "string",
+          "x-go-name": "Description",
+          "example": "Ubuntu is the modern, open source operating system on Linux for ..."
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "ubuntu"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Tags",
+          "example": "22.04,latest"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "DeleteOrgMFARequest": {
       "type": "object",
       "required": [
@@ -10355,6 +10724,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/CredentialsResponse"
+      }
+    },
+    "customImagePatchResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/CustomImagePatchResponse"
       }
     },
     "emptyResponse": {
