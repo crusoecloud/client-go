@@ -6362,6 +6362,10 @@
           "type": "string",
           "x-go-name": "Code"
         },
+        "error_id": {
+          "type": "string",
+          "x-go-name": "ErrorID"
+        },
         "message": {
           "type": "string",
           "x-go-name": "Message"
