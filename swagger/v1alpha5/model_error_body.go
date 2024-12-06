@@ -10,5 +10,6 @@ package swagger
 
 type ErrorBody struct {
 	Code    string `json:"code,omitempty"`
+	ErrorId string `json:"error_id,omitempty"`
 	Message string `json:"message,omitempty"`
 }
