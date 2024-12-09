@@ -1166,6 +1166,59 @@
         }
       }
     },
+    "/projects/{project_id}/compute/custom-images/{image_id}/edit-tags": {
+      "patch": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "Update a custom image.",
+        "operationId": "customImageEditTags",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ImageID",
+            "name": "image_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomImageEditTagsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/customImagePatchResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/compute/instance-groups": {
       "get": {
         "tags": [
@@ -5929,6 +5982,24 @@
             "type": "string"
           },
           "x-go-name": "Credentials"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CustomImageEditTagsRequest": {
+      "type": "object",
+      "title": "CustomImagesEditTagsRequest is the request type for PATCH requests to the /custom-images{id}/edit-tags endpoint.",
+      "required": [
+        "tags"
+      ],
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Tags",
+          "example": "[latest]"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
