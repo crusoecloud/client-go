@@ -6076,6 +6076,18 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "DesiredCount": {
+      "type": "object",
+      "title": "DesiredCount defines a wrapper struct for the desired count of VMs in the instance group.",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Value"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "DiskAttachment": {
       "type": "object",
       "required": [
@@ -7037,11 +7049,7 @@
       "title": "InstanceGroupPatchRequest defines the specifications of the updates to be made to the instance group.",
       "properties": {
         "desired_count": {
-          "description": "Desired VM Count for the instance group.",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "DesiredCount",
-          "example": 3
+          "$ref": "#/definitions/DesiredCount"
         },
         "name": {
           "description": "Name of the instance group.",
