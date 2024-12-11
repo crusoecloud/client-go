@@ -10,8 +10,7 @@ package swagger
 
 // This is a separate type from InstanceGroupPostRequest for clearer documentation, as these fields are not required in the PATCH endpoint.
 type InstanceGroupPatchRequest struct {
-	// Desired VM Count for the instance group.
-	DesiredCount int64 `json:"desired_count,omitempty"`
+	DesiredCount *DesiredCount `json:"desired_count,omitempty"`
 	// Name of the instance group.
 	Name string `json:"name,omitempty"`
 	// Instance Template ID to be associated with the instance group.

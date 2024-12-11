@@ -1166,6 +1166,59 @@
         }
       }
     },
+    "/projects/{project_id}/compute/custom-images/{image_id}/edit-tags": {
+      "patch": {
+        "tags": [
+          "CustomImages"
+        ],
+        "summary": "Update a custom image.",
+        "operationId": "customImageEditTags",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ImageID",
+            "name": "image_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomImageEditTagsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/customImagePatchResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/compute/instance-groups": {
       "get": {
         "tags": [
@@ -5933,6 +5986,24 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "CustomImageEditTagsRequest": {
+      "type": "object",
+      "title": "CustomImagesEditTagsRequest is the request type for PATCH requests to the /custom-images{id}/edit-tags endpoint.",
+      "required": [
+        "tags"
+      ],
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Tags",
+          "example": "[latest]"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "CustomImagePatchRequest": {
       "type": "object",
       "title": "CustomImagePatchRequest is the request type for PATCH requests to the /custom-images/{id} endpoint.",
@@ -6001,6 +6072,18 @@
           "type": "string",
           "x-go-name": "MFAMethod",
           "example": "totp"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "DesiredCount": {
+      "type": "object",
+      "title": "DesiredCount defines a wrapper struct for the desired count of VMs in the instance group.",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Value"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -6966,11 +7049,7 @@
       "title": "InstanceGroupPatchRequest defines the specifications of the updates to be made to the instance group.",
       "properties": {
         "desired_count": {
-          "description": "Desired VM Count for the instance group.",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "DesiredCount",
-          "example": 3
+          "$ref": "#/definitions/DesiredCount"
         },
         "name": {
           "description": "Name of the instance group.",
