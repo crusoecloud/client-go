@@ -6174,13 +6174,19 @@
     "DiskSnapshotPostRequestV1Alpha5": {
       "type": "object",
       "required": [
-        "disk_id"
+        "disk_id",
+        "name"
       ],
       "properties": {
         "disk_id": {
           "type": "string",
           "x-go-name": "DiskID",
           "example": "123e4567-e89b-12d3-a456-426614174000"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-snapshot-1"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
