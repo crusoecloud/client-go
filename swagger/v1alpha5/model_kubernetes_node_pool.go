@@ -13,6 +13,8 @@ type KubernetesNodePool struct {
 	ClusterId string `json:"cluster_id"`
 	// Number of nodes within the node pool.
 	Count int64 `json:"count"`
+	// The time when the cluster was created
+	CreatedAt string `json:"created_at"`
 	// ID of the node pool.
 	Id string `json:"id"`
 	// Image Unique identifier for the Kubernetes node pool.
@@ -31,4 +33,6 @@ type KubernetesNodePool struct {
 	SubnetId string `json:"subnet_id"`
 	// VM type of the node pool
 	Type_ string `json:"type"`
+	// The time when the cluster was last updated
+	UpdatedAt string `json:"updated_at"`
 }
