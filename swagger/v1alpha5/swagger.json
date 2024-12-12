@@ -6406,7 +6406,7 @@
         "mfa_methods": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/MFAMethod"
+            "type": "string"
           },
           "x-go-name": "MFAMethods"
         },
@@ -6602,7 +6602,7 @@
         "mfa_methods": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/MFAMethod"
+            "type": "string"
           },
           "x-go-name": "MFAMethods",
           "example": [
@@ -6820,6 +6820,11 @@
         "id": {
           "type": "string",
           "x-go-name": "ID"
+        },
+        "is_recovery": {
+          "type": "boolean",
+          "x-go-name": "IsRecoveryFlow",
+          "example": true
         },
         "latest_authmethod": {
           "type": "string",
@@ -8874,11 +8879,6 @@
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers/logservice"
-    },
-    "MFAMethod": {
-      "type": "string",
-      "title": "Enum of all valid MFA methods.",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "MTCCluster": {
       "type": "object",
