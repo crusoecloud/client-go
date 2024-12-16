@@ -7989,7 +7989,8 @@
         "location": {
           "description": "Location to create the Kubernetes cluster in.",
           "type": "string",
-          "x-go-name": "Location"
+          "x-go-name": "Location",
+          "example": "us-northcentral1-a"
         },
         "name": {
           "description": "Name of the Kubernetes cluster.",
