@@ -2136,6 +2136,95 @@
             "name": "project_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "my-first-cluster",
+            "x-go-name": "ClusterName",
+            "name": "cluster_name",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "a40.2x,a100.8x",
+            "x-go-name": "ClusterSearchNames",
+            "name": "cluster_search_names",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "us-east1,us-northcentral1",
+            "x-go-name": "Locations",
+            "name": "locations",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "STATE_RUNNING",
+            "x-go-name": "States",
+            "name": "states",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "1.30",
+            "x-go-name": "Versions",
+            "name": "versions",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "name",
+            "x-go-name": "SortBy",
+            "name": "sort_by",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "example": true,
+            "x-go-name": "SortAsc",
+            "name": "sort_asc",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "example": true,
+            "x-go-name": "ShowInactive",
+            "name": "show_inactive",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "bXktZmlyc3Qtdm0",
+            "x-go-name": "NextToken",
+            "name": "next_token",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "bXktZmlyc3Qtdm0",
+            "x-go-name": "PrevToken",
+            "name": "prev_token",
+            "in": "query"
           }
         ],
         "responses": {
