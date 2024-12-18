@@ -2875,7 +2875,7 @@
         }
       },
       "post": {
-        "description": "A successful response from this resource will contain the async operation.",
+        "description": "A successful response from this resource will contain the async operation ID.",
         "tags": [
           "Training-Clusters"
         ],
@@ -2901,7 +2901,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/asyncOperationResponse"
+            "$ref": "#/responses/asyncOperationID"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -2986,6 +2986,13 @@
             "name": "cluster_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "example": "my-slurm-cluster",
+            "x-go-name": "Name",
+            "name": "name",
+            "in": "query"
           }
         ],
         "responses": {
@@ -3026,7 +3033,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/asyncOperationResponse"
+            "$ref": "#/responses/asyncOperationID"
           },
           "401": {
             "$ref": "#/responses/authError"
@@ -8981,9 +8988,31 @@
         "orchestrator_version",
         "orchestrator",
         "state",
-        "node_pools"
+        "node_pools",
+        "created_at",
+        "updated_at",
+        "deleted_at",
+        "login_node_url",
+        "controller_node_url"
       ],
       "properties": {
+        "controller_node_url": {
+          "description": "Controller node URL.",
+          "type": "string",
+          "x-go-name": "ControllerNodeURL"
+        },
+        "created_at": {
+          "description": "The timestamp of the cluster creation since 1970-01-01T00:00:00Z in seconds.",
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "100000"
+        },
+        "deleted_at": {
+          "description": "The timestamp of the cluster deletion since 1970-01-01T00:00:00Z in seconds.",
+          "type": "string",
+          "x-go-name": "DeletedAt",
+          "example": "100000"
+        },
         "id": {
           "description": "ID of the slurm cluster.",
           "type": "string",
@@ -8994,6 +9023,11 @@
           "description": "Location of the slurm cluster.",
           "type": "string",
           "x-go-name": "Location"
+        },
+        "login_node_url": {
+          "description": "Login node URL.",
+          "type": "string",
+          "x-go-name": "LoginNodeURL"
         },
         "name": {
           "description": "Name of the slurm cluster.",
@@ -9041,6 +9075,12 @@
           "type": "string",
           "x-go-name": "SubnetID",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "updated_at": {
+          "description": "The timestamp of the cluster update since 1970-01-01T00:00:00Z in seconds.",
+          "type": "string",
+          "x-go-name": "UpdatedAt",
+          "example": "100000"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -9072,7 +9112,7 @@
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
         },
         "user_list": {
-          "description": "A mapping of usernames to their SSH keys for accessing the cluster.\nBoth the username and ssh key must be named attributes, as shown in the example below",
+          "description": "A mapping of usernames to their SSH keys for accessing the cluster.\nBoth the username and ssh key must be named attributes, as shown in the example",
           "type": "object",
           "additionalProperties": {
             "type": "string"
@@ -10617,6 +10657,9 @@
       "headers": {
         "Body": {}
       }
+    },
+    "asyncOperationID": {
+      "description": ""
     },
     "asyncOperationResponse": {
       "description": "",

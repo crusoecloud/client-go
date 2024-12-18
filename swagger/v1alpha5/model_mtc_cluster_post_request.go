@@ -15,6 +15,6 @@ type MtcClusterPostRequest struct {
 	Name string `json:"name"`
 	// The ID of the subnet to create the cluster in. Must be in the location specified. If not provided, the default subnet for the location will be used, if there is one.
 	SubnetId string `json:"subnet_id,omitempty"`
-	// A mapping of usernames to their SSH keys for accessing the cluster. Both the username and ssh key must be named attributes, as shown in the example below
+	// A mapping of usernames to their SSH keys for accessing the cluster. Both the username and ssh key must be named attributes, as shown in the example
 	UserList map[string]string `json:"user_list"`
 }
