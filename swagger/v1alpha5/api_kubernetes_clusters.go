@@ -15,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -510,12 +512,38 @@ func (a *KubernetesClustersApiService) GetClusterCredentials(ctx context.Context
 
 /*
 KubernetesClustersApiService Retrieve information about Kubernetes clusters belonged to the project.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param projectId
+ * @param optional nil or *KubernetesClustersApiListClustersOpts - Optional Parameters:
+     * @param "ClusterId" (optional.String) -
+     * @param "ClusterName" (optional.String) -
+     * @param "ClusterSearchNames" (optional.Interface of []string) -
+     * @param "Locations" (optional.Interface of []string) -
+     * @param "States" (optional.Interface of []string) -
+     * @param "Versions" (optional.Interface of []string) -
+     * @param "SortBy" (optional.String) -
+     * @param "SortAsc" (optional.Bool) -
+     * @param "ShowInactive" (optional.Bool) -
+     * @param "NextToken" (optional.String) -
+     * @param "PrevToken" (optional.String) -
 @return ListKubernetesClustersResponse
 */
-func (a *KubernetesClustersApiService) ListClusters(ctx context.Context, projectId string) (ListKubernetesClustersResponse, *http.Response, error) {
+
+type KubernetesClustersApiListClustersOpts struct {
+	ClusterId          optional.String
+	ClusterName        optional.String
+	ClusterSearchNames optional.Interface
+	Locations          optional.Interface
+	States             optional.Interface
+	Versions           optional.Interface
+	SortBy             optional.String
+	SortAsc            optional.Bool
+	ShowInactive       optional.Bool
+	NextToken          optional.String
+	PrevToken          optional.String
+}
+
+func (a *KubernetesClustersApiService) ListClusters(ctx context.Context, projectId string, localVarOptionals *KubernetesClustersApiListClustersOpts) (ListKubernetesClustersResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -532,6 +560,39 @@ func (a *KubernetesClustersApiService) ListClusters(ctx context.Context, project
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.ClusterId.IsSet() {
+		localVarQueryParams.Add("cluster_id", parameterToString(localVarOptionals.ClusterId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ClusterName.IsSet() {
+		localVarQueryParams.Add("cluster_name", parameterToString(localVarOptionals.ClusterName.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ClusterSearchNames.IsSet() {
+		localVarQueryParams.Add("cluster_search_names", parameterToString(localVarOptionals.ClusterSearchNames.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.Locations.IsSet() {
+		localVarQueryParams.Add("locations", parameterToString(localVarOptionals.Locations.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.States.IsSet() {
+		localVarQueryParams.Add("states", parameterToString(localVarOptionals.States.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.Versions.IsSet() {
+		localVarQueryParams.Add("versions", parameterToString(localVarOptionals.Versions.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.SortBy.IsSet() {
+		localVarQueryParams.Add("sort_by", parameterToString(localVarOptionals.SortBy.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.SortAsc.IsSet() {
+		localVarQueryParams.Add("sort_asc", parameterToString(localVarOptionals.SortAsc.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ShowInactive.IsSet() {
+		localVarQueryParams.Add("show_inactive", parameterToString(localVarOptionals.ShowInactive.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.NextToken.IsSet() {
+		localVarQueryParams.Add("next_token", parameterToString(localVarOptionals.NextToken.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PrevToken.IsSet() {
+		localVarQueryParams.Add("prev_token", parameterToString(localVarOptionals.PrevToken.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 

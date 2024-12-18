@@ -13,6 +13,7 @@ type Identity struct {
 	AcceptedTos      bool   `json:"accepted_tos,omitempty"`
 	Email            string `json:"email"`
 	Id               string `json:"id"`
+	IsRecovery       bool   `json:"is_recovery,omitempty"`
 	LatestAuthmethod string `json:"latest_authmethod,omitempty"`
 	Name             string `json:"name"`
 	RegistrationType string `json:"registration_type,omitempty"`

@@ -2136,6 +2136,95 @@
             "name": "project_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "my-first-cluster",
+            "x-go-name": "ClusterName",
+            "name": "cluster_name",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "a40.2x,a100.8x",
+            "x-go-name": "ClusterSearchNames",
+            "name": "cluster_search_names",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "us-east1,us-northcentral1",
+            "x-go-name": "Locations",
+            "name": "locations",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "STATE_RUNNING",
+            "x-go-name": "States",
+            "name": "states",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "1.30",
+            "x-go-name": "Versions",
+            "name": "versions",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "name",
+            "x-go-name": "SortBy",
+            "name": "sort_by",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "example": true,
+            "x-go-name": "SortAsc",
+            "name": "sort_asc",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "example": true,
+            "x-go-name": "ShowInactive",
+            "name": "show_inactive",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "bXktZmlyc3Qtdm0",
+            "x-go-name": "NextToken",
+            "name": "next_token",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "bXktZmlyc3Qtdm0",
+            "x-go-name": "PrevToken",
+            "name": "prev_token",
+            "in": "query"
           }
         ],
         "responses": {
@@ -6174,13 +6263,19 @@
     "DiskSnapshotPostRequestV1Alpha5": {
       "type": "object",
       "required": [
-        "disk_id"
+        "disk_id",
+        "name"
       ],
       "properties": {
         "disk_id": {
           "type": "string",
           "x-go-name": "DiskID",
           "example": "123e4567-e89b-12d3-a456-426614174000"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-snapshot-1"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -6400,7 +6495,7 @@
         "mfa_methods": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/MFAMethod"
+            "$ref": "#/definitions/OrganizationMFA"
           },
           "x-go-name": "MFAMethods"
         },
@@ -6592,17 +6687,16 @@
     "GetOrgMFAResponse": {
       "type": "object",
       "title": "GetOrgMFAResponse is the response type for GET requests to the org mfa endpoint.",
+      "required": [
+        "mfa_methods"
+      ],
       "properties": {
         "mfa_methods": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/MFAMethod"
+            "$ref": "#/definitions/OrganizationMFA"
           },
-          "x-go-name": "MFAMethods",
-          "example": [
-            "totp",
-            "webauthn"
-          ]
+          "x-go-name": "MFAMethods"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -6814,6 +6908,11 @@
         "id": {
           "type": "string",
           "x-go-name": "ID"
+        },
+        "is_recovery": {
+          "type": "boolean",
+          "x-go-name": "IsRecoveryFlow",
+          "example": true
         },
         "latest_authmethod": {
           "type": "string",
@@ -7702,7 +7801,9 @@
         "node_pools",
         "add_ons",
         "state",
-        "dns_name"
+        "dns_name",
+        "created_at",
+        "updated_at"
       ],
       "properties": {
         "add_ons": {
@@ -7717,7 +7818,7 @@
           ]
         },
         "cluster_cidr": {
-          "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
+          "description": "The range of IP Addresses allocated to pods scheduled on worker nodes",
           "type": "string",
           "x-go-name": "ClusterCIDR",
           "example": "10.233.0.0/18"
@@ -7730,6 +7831,12 @@
           ],
           "x-go-name": "Configuration",
           "example": "ha"
+        },
+        "created_at": {
+          "description": "The time when the cluster was created",
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2021-12-03T19:58:34Z"
         },
         "dns_name": {
           "description": "DNS name of the cluster",
@@ -7755,7 +7862,7 @@
           "example": "my-kubernetes-cluster"
         },
         "node_cidr_mask_size": {
-          "description": "defines: the mask size for cluster cidr",
+          "description": "The mask size for cluster cidr",
           "type": "integer",
           "format": "int32",
           "x-go-name": "NodeCIDRMask",
@@ -7779,7 +7886,7 @@
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
         },
         "service_cluster_ip_range": {
-          "description": "defines: the range of IP Addresses allocated to K8s services",
+          "description": "The range of IP Addresses allocated to K8s services",
           "type": "string",
           "x-go-name": "ServiceClusterCIDR",
           "example": "10.233.0.0/18"
@@ -7795,6 +7902,12 @@
           "type": "string",
           "x-go-name": "SubnetID",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "updated_at": {
+          "description": "The time when the cluster was last updated",
+          "type": "string",
+          "x-go-name": "UpdatedAt",
+          "example": "2021-12-03T19:58:34Z"
         },
         "version": {
           "description": "Version of the crusoe Kubernetes image of the Kubernetes cluster.",
@@ -7875,7 +7988,8 @@
         "location": {
           "description": "Location to create the Kubernetes cluster in.",
           "type": "string",
-          "x-go-name": "Location"
+          "x-go-name": "Location",
+          "example": "us-northcentral1-a"
         },
         "name": {
           "description": "Name of the Kubernetes cluster.",
@@ -7924,7 +8038,9 @@
         "subnet_id",
         "instance_ids",
         "state",
-        "type"
+        "type",
+        "created_at",
+        "updated_at"
       ],
       "properties": {
         "cluster_id": {
@@ -7939,6 +8055,12 @@
           "format": "int64",
           "x-go-name": "Count",
           "example": 4
+        },
+        "created_at": {
+          "description": "The time when the cluster was created",
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2021-12-03T19:58:34Z"
         },
         "id": {
           "description": "ID of the node pool.",
@@ -8001,6 +8123,12 @@
           "type": "string",
           "x-go-name": "Type",
           "example": "a100.2x"
+        },
+        "updated_at": {
+          "description": "The time when the cluster was last updated",
+          "type": "string",
+          "x-go-name": "UpdatedAt",
+          "example": "2021-12-03T19:58:34Z"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -8841,11 +8969,6 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers/logservice"
     },
-    "MFAMethod": {
-      "type": "string",
-      "title": "Enum of all valid MFA methods.",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "MTCCluster": {
       "type": "object",
       "title": "MTCCluster defines the specifications of the slurm cluster.",
@@ -9232,6 +9355,30 @@
           ],
           "x-go-name": "State",
           "example": "IN_PROGRESS"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "OrganizationMFA": {
+      "type": "object",
+      "title": "OrganizationMFA contains details about a single required MFA method.",
+      "required": [
+        "method",
+        "created_at"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2021-12-03T19:58:34Z"
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "totp",
+            "webauthn"
+          ],
+          "x-go-name": "Method"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"

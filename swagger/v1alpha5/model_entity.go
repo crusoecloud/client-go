@@ -13,7 +13,7 @@ type Entity struct {
 	BillingAddr      *BillingAddress        `json:"billing_addr,omitempty"`
 	Features         map[string]interface{} `json:"features"`
 	Id               string                 `json:"id"`
-	MfaMethods       []string               `json:"mfa_methods,omitempty"`
+	MfaMethods       []OrganizationMfa      `json:"mfa_methods,omitempty"`
 	Name             string                 `json:"name"`
 	OrganizationType string                 `json:"organization_type,omitempty"`
 	RegistrationType string                 `json:"registration_type,omitempty"`
