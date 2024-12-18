@@ -6495,7 +6495,7 @@
         "mfa_methods": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/OrganizationMFA"
           },
           "x-go-name": "MFAMethods"
         },
@@ -6687,17 +6687,16 @@
     "GetOrgMFAResponse": {
       "type": "object",
       "title": "GetOrgMFAResponse is the response type for GET requests to the org mfa endpoint.",
+      "required": [
+        "mfa_methods"
+      ],
       "properties": {
         "mfa_methods": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/OrganizationMFA"
           },
-          "x-go-name": "MFAMethods",
-          "example": [
-            "totp",
-            "webauthn"
-          ]
+          "x-go-name": "MFAMethods"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -9356,6 +9355,30 @@
           ],
           "x-go-name": "State",
           "example": "IN_PROGRESS"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "OrganizationMFA": {
+      "type": "object",
+      "title": "OrganizationMFA contains details about a single required MFA method.",
+      "required": [
+        "method",
+        "created_at"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2021-12-03T19:58:34Z"
+        },
+        "method": {
+          "type": "string",
+          "enum": [
+            "totp",
+            "webauthn"
+          ],
+          "x-go-name": "Method"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
