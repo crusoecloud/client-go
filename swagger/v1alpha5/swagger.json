@@ -5379,6 +5379,57 @@
             "$ref": "#/responses/serverError"
           }
         }
+      },
+      "patch": {
+        "description": "A successful response from this resource will contain the updated snapshot.",
+        "tags": [
+          "Snapshots"
+        ],
+        "summary": "Rename a disk snapshot owned by the logged in user.",
+        "operationId": "renameDiskSnapshot",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "SnapshotID",
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DiskSnapshotPatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/syncOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
       }
     },
     "/users/identities": {
@@ -6254,6 +6305,11 @@
           "x-go-name": "ID",
           "example": "123e4567-e89b-12d3-a456-426614174000"
         },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-snapshot"
+        },
         "size": {
           "type": "string",
           "x-go-name": "Size",
@@ -6263,6 +6319,20 @@
           "type": "string",
           "x-go-name": "UpdatedAt",
           "example": "2021-12-03T19:58:34Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "DiskSnapshotPatchRequest": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-snapshot"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -9972,6 +10042,19 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "SyncOperationResponse": {
+      "type": "object",
+      "title": "SyncOperationResponse is the response type for endpoints which return completed synchronous operations.",
+      "required": [
+        "operation"
+      ],
+      "properties": {
+        "operation": {
+          "$ref": "#/definitions/Operation"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "TokenInfo": {
       "description": "These are the fields returned from a GET request.",
       "type": "object",
@@ -11132,6 +11215,12 @@
             "example": "internal_error"
           }
         }
+      }
+    },
+    "syncOperationResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/SyncOperationResponse"
       }
     },
     "tokensGetResponse": {
