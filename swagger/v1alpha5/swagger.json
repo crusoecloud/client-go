@@ -6104,19 +6104,6 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "CredentialsDeleteRequest": {
-      "type": "object",
-      "title": "CredentialsDeleteRequest is the request type for DELETE requests to the credentials endpoint.",
-      "required": [
-        "credential_type"
-      ],
-      "properties": {
-        "credential_type": {
-          "$ref": "#/definitions/IdentityCredentialsType"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "CredentialsResponse": {
       "type": "object",
       "required": [
@@ -6205,20 +6192,6 @@
           },
           "x-go-name": "Tags",
           "example": "22.04,latest"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "DeleteOrgMFARequest": {
-      "type": "object",
-      "required": [
-        "mfa_method"
-      ],
-      "properties": {
-        "mfa_method": {
-          "type": "string",
-          "x-go-name": "MFAMethod",
-          "example": "totp"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -7013,11 +6986,6 @@
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "IdentityCredentialsType": {
-      "type": "string",
-      "title": "IdentityCredentialsType and so on.",
-      "x-go-package": "github.com/ory/kratos-client-go"
     },
     "IdentityPutRequest": {
       "type": "object",
@@ -9500,20 +9468,6 @@
         "ib_partition_id": {
           "type": "string",
           "x-go-name": "IBPartitionID"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "PostOrgMFARequest": {
-      "type": "object",
-      "required": [
-        "mfa_method"
-      ],
-      "properties": {
-        "mfa_method": {
-          "type": "string",
-          "x-go-name": "MFAMethod",
-          "example": "totp"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
