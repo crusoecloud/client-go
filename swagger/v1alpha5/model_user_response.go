@@ -10,6 +10,8 @@ package swagger
 
 // The Identity of a user is returned.
 type UserResponse struct {
-	Credentials []string  `json:"credentials,omitempty"`
-	Identity    *Identity `json:"identity"`
+	// Credentials will be deprecated
+	Credentials    []string                      `json:"credentials,omitempty"`
+	CredentialsMap map[string]IdentityCredential `json:"credentials_map,omitempty"`
+	Identity       *Identity                     `json:"identity"`
 }

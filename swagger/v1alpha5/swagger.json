@@ -2875,7 +2875,7 @@
         }
       },
       "post": {
-        "description": "A successful response from this resource will contain the async operation.",
+        "description": "A successful response from this resource will contain the async operation ID.",
         "tags": [
           "Training-Clusters"
         ],
@@ -2901,7 +2901,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/asyncOperationResponse"
+            "$ref": "#/responses/asyncOperationID"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -2986,6 +2986,13 @@
             "name": "cluster_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "example": "my-slurm-cluster",
+            "x-go-name": "Name",
+            "name": "name",
+            "in": "query"
           }
         ],
         "responses": {
@@ -3026,7 +3033,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/asyncOperationResponse"
+            "$ref": "#/responses/asyncOperationID"
           },
           "401": {
             "$ref": "#/responses/authError"
@@ -5372,6 +5379,57 @@
             "$ref": "#/responses/serverError"
           }
         }
+      },
+      "patch": {
+        "description": "A successful response from this resource will contain the updated snapshot.",
+        "tags": [
+          "Snapshots"
+        ],
+        "summary": "Rename a disk snapshot owned by the logged in user.",
+        "operationId": "renameDiskSnapshot",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "SnapshotID",
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DiskSnapshotPatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/syncOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
       }
     },
     "/users/identities": {
@@ -6046,31 +6104,23 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "CredentialsDeleteRequest": {
-      "type": "object",
-      "title": "CredentialsDeleteRequest is the request type for DELETE requests to the credentials endpoint.",
-      "required": [
-        "credential_type"
-      ],
-      "properties": {
-        "credential_type": {
-          "$ref": "#/definitions/IdentityCredentialsType"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "CredentialsResponse": {
       "type": "object",
-      "required": [
-        "credentials"
-      ],
       "properties": {
         "credentials": {
+          "description": "Credentials will be deprecated",
           "type": "array",
           "items": {
             "type": "string"
           },
           "x-go-name": "Credentials"
+        },
+        "credentials_map": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/IdentityCredential"
+          },
+          "x-go-name": "CredentialsMap"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -6147,20 +6197,6 @@
           },
           "x-go-name": "Tags",
           "example": "22.04,latest"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "DeleteOrgMFARequest": {
-      "type": "object",
-      "required": [
-        "mfa_method"
-      ],
-      "properties": {
-        "mfa_method": {
-          "type": "string",
-          "x-go-name": "MFAMethod",
-          "example": "totp"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -6247,6 +6283,11 @@
           "x-go-name": "ID",
           "example": "123e4567-e89b-12d3-a456-426614174000"
         },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-snapshot"
+        },
         "size": {
           "type": "string",
           "x-go-name": "Size",
@@ -6256,6 +6297,20 @@
           "type": "string",
           "x-go-name": "UpdatedAt",
           "example": "2021-12-03T19:58:34Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "DiskSnapshotPatchRequest": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-snapshot"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -6937,10 +6992,31 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "IdentityCredentialsType": {
-      "type": "string",
-      "title": "IdentityCredentialsType and so on.",
-      "x-go-package": "github.com/ory/kratos-client-go"
+    "IdentityCredential": {
+      "type": "object",
+      "title": "IdentityCredential represents a specific Kratos credential type, sanitized to expose to customers.",
+      "required": [
+        "type",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "CreatedAt"
+        },
+        "type": {
+          "type": "string",
+          "x-go-name": "Type"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "UpdatedAt"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "IdentityPutRequest": {
       "type": "object",
@@ -8981,9 +9057,31 @@
         "orchestrator_version",
         "orchestrator",
         "state",
-        "node_pools"
+        "node_pools",
+        "created_at",
+        "updated_at",
+        "deleted_at",
+        "login_node_url",
+        "controller_node_url"
       ],
       "properties": {
+        "controller_node_url": {
+          "description": "Controller node URL.",
+          "type": "string",
+          "x-go-name": "ControllerNodeURL"
+        },
+        "created_at": {
+          "description": "The timestamp of the cluster creation since 1970-01-01T00:00:00Z in seconds.",
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "100000"
+        },
+        "deleted_at": {
+          "description": "The timestamp of the cluster deletion since 1970-01-01T00:00:00Z in seconds.",
+          "type": "string",
+          "x-go-name": "DeletedAt",
+          "example": "100000"
+        },
         "id": {
           "description": "ID of the slurm cluster.",
           "type": "string",
@@ -8994,6 +9092,11 @@
           "description": "Location of the slurm cluster.",
           "type": "string",
           "x-go-name": "Location"
+        },
+        "login_node_url": {
+          "description": "Login node URL.",
+          "type": "string",
+          "x-go-name": "LoginNodeURL"
         },
         "name": {
           "description": "Name of the slurm cluster.",
@@ -9041,6 +9144,12 @@
           "type": "string",
           "x-go-name": "SubnetID",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "updated_at": {
+          "description": "The timestamp of the cluster update since 1970-01-01T00:00:00Z in seconds.",
+          "type": "string",
+          "x-go-name": "UpdatedAt",
+          "example": "100000"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -9072,7 +9181,7 @@
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
         },
         "user_list": {
-          "description": "A mapping of usernames to their SSH keys for accessing the cluster.\nBoth the username and ssh key must be named attributes, as shown in the example below",
+          "description": "A mapping of usernames to their SSH keys for accessing the cluster.\nBoth the username and ssh key must be named attributes, as shown in the example",
           "type": "object",
           "additionalProperties": {
             "type": "string"
@@ -9394,20 +9503,6 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "PostOrgMFARequest": {
-      "type": "object",
-      "required": [
-        "mfa_method"
-      ],
-      "properties": {
-        "mfa_method": {
-          "type": "string",
-          "x-go-name": "MFAMethod",
-          "example": "totp"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "PrivateIPv4Address": {
       "type": "object",
       "required": [
@@ -9681,12 +9776,6 @@
           "type": "boolean",
           "x-go-name": "CreateCustomerSuccess",
           "example": true
-        },
-        "success": {
-          "description": "Success is deprecated",
-          "type": "boolean",
-          "x-go-name": "Success",
-          "example": true
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -9932,6 +10021,19 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "SyncOperationResponse": {
+      "type": "object",
+      "title": "SyncOperationResponse is the response type for endpoints which return completed synchronous operations.",
+      "required": [
+        "operation"
+      ],
+      "properties": {
+        "operation": {
+          "$ref": "#/definitions/Operation"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "TokenInfo": {
       "description": "These are the fields returned from a GET request.",
       "type": "object",
@@ -10139,11 +10241,19 @@
       ],
       "properties": {
         "credentials": {
+          "description": "Credentials will be deprecated",
           "type": "array",
           "items": {
             "type": "string"
           },
           "x-go-name": "Credentials"
+        },
+        "credentials_map": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/IdentityCredential"
+          },
+          "x-go-name": "CredentialsMap"
         },
         "identity": {
           "$ref": "#/definitions/Identity"
@@ -10618,6 +10728,9 @@
         "Body": {}
       }
     },
+    "asyncOperationID": {
+      "description": ""
+    },
     "asyncOperationResponse": {
       "description": "",
       "schema": {
@@ -11089,6 +11202,12 @@
             "example": "internal_error"
           }
         }
+      }
+    },
+    "syncOperationResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/SyncOperationResponse"
       }
     },
     "tokensGetResponse": {

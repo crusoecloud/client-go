@@ -13,6 +13,7 @@ type DiskSnapshot struct {
 	CreatedAt   string `json:"created_at"`
 	CreatedFrom string `json:"created_from"`
 	Id          string `json:"id"`
+	Name        string `json:"name,omitempty"`
 	Size        string `json:"size"`
 	UpdatedAt   string `json:"updated_at"`
 }

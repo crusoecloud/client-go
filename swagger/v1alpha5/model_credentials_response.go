@@ -9,5 +9,7 @@
 package swagger
 
 type CredentialsResponse struct {
-	Credentials []string `json:"credentials"`
+	// Credentials will be deprecated
+	Credentials    []string                      `json:"credentials,omitempty"`
+	CredentialsMap map[string]IdentityCredential `json:"credentials_map,omitempty"`
 }

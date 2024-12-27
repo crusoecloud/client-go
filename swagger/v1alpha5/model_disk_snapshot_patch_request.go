@@ -8,6 +8,6 @@
  */
 package swagger
 
-type CredentialsDeleteRequest struct {
-	CredentialType string `json:"credential_type"`
+type DiskSnapshotPatchRequest struct {
+	Name string `json:"name"`
 }

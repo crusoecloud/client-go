@@ -8,6 +8,6 @@
  */
 package swagger
 
-type DeleteOrgMfaRequest struct {
-	MfaMethod string `json:"mfa_method"`
+type SyncOperationResponse struct {
+	Operation *Operation `json:"operation"`
 }

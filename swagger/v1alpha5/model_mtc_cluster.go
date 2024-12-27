@@ -9,10 +9,18 @@
 package swagger
 
 type MtcCluster struct {
+	// Controller node URL.
+	ControllerNodeUrl string `json:"controller_node_url"`
+	// The timestamp of the cluster creation since 1970-01-01T00:00:00Z in seconds.
+	CreatedAt string `json:"created_at"`
+	// The timestamp of the cluster deletion since 1970-01-01T00:00:00Z in seconds.
+	DeletedAt string `json:"deleted_at"`
 	// ID of the slurm cluster.
 	Id string `json:"id"`
 	// Location of the slurm cluster.
 	Location string `json:"location"`
+	// Login node URL.
+	LoginNodeUrl string `json:"login_node_url"`
 	// Name of the slurm cluster.
 	Name string `json:"name"`
 	// Nodepools associated with the cluster.
@@ -27,4 +35,6 @@ type MtcCluster struct {
 	State string `json:"state"`
 	// The ID of the subnet this slurm cluster belongs to.
 	SubnetId string `json:"subnet_id"`
+	// The timestamp of the cluster update since 1970-01-01T00:00:00Z in seconds.
+	UpdatedAt string `json:"updated_at"`
 }

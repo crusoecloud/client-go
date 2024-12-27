@@ -8,6 +8,12 @@
  */
 package swagger
 
-type PostOrgMfaRequest struct {
-	MfaMethod string `json:"mfa_method"`
+import (
+	"time"
+)
+
+type IdentityCredential struct {
+	CreatedAt time.Time `json:"created_at"`
+	Type_     string    `json:"type"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
