@@ -9776,12 +9776,6 @@
           "type": "boolean",
           "x-go-name": "CreateCustomerSuccess",
           "example": true
-        },
-        "success": {
-          "description": "Success is deprecated",
-          "type": "boolean",
-          "x-go-name": "Success",
-          "example": true
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
