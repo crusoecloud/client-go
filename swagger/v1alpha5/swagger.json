@@ -6106,16 +6106,21 @@
     },
     "CredentialsResponse": {
       "type": "object",
-      "required": [
-        "credentials"
-      ],
       "properties": {
         "credentials": {
+          "description": "Credentials will be deprecated",
           "type": "array",
           "items": {
             "type": "string"
           },
           "x-go-name": "Credentials"
+        },
+        "credentials_map": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/IdentityCredential"
+          },
+          "x-go-name": "CredentialsMap"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -6983,6 +6988,32 @@
           "type": "string",
           "x-go-name": "Role",
           "example": "Admin"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "IdentityCredential": {
+      "type": "object",
+      "title": "IdentityCredential represents a specific Kratos credential type, sanitized to expose to customers.",
+      "required": [
+        "type",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "CreatedAt"
+        },
+        "type": {
+          "type": "string",
+          "x-go-name": "Type"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "UpdatedAt"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -10216,11 +10247,19 @@
       ],
       "properties": {
         "credentials": {
+          "description": "Credentials will be deprecated",
           "type": "array",
           "items": {
             "type": "string"
           },
           "x-go-name": "Credentials"
+        },
+        "credentials_map": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/IdentityCredential"
+          },
+          "x-go-name": "CredentialsMap"
         },
         "identity": {
           "$ref": "#/definitions/Identity"

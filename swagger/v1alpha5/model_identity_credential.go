@@ -8,8 +8,12 @@
  */
 package swagger
 
-type CredentialsResponse struct {
-	// Credentials will be deprecated
-	Credentials    []string                      `json:"credentials,omitempty"`
-	CredentialsMap map[string]IdentityCredential `json:"credentials_map,omitempty"`
+import (
+	"time"
+)
+
+type IdentityCredential struct {
+	CreatedAt time.Time `json:"created_at"`
+	Type_     string    `json:"type"`
+	UpdatedAt time.Time `json:"updated_at"`
 }
