@@ -2193,16 +2193,9 @@
           },
           {
             "type": "string",
-            "example": "name",
+            "example": "name, -name",
             "x-go-name": "SortBy",
-            "name": "sort_by",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "example": true,
-            "x-go-name": "SortAsc",
-            "name": "sort_asc",
+            "name": "sort",
             "in": "query"
           },
           {
@@ -2573,6 +2566,13 @@
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "x-go-name": "ClusterID",
             "name": "cluster_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "created_at, -created_at",
+            "x-go-name": "SortBy",
+            "name": "sort",
             "in": "query"
           }
         ],

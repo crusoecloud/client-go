@@ -388,11 +388,13 @@ KubernetesNodePoolsApiService Retrieve information about Kubernetes node pools b
  * @param projectId
  * @param optional nil or *KubernetesNodePoolsApiListNodePoolsOpts - Optional Parameters:
      * @param "ClusterId" (optional.String) -
+     * @param "Sort" (optional.String) -
 @return ListKubernetesNodePoolsResponse
 */
 
 type KubernetesNodePoolsApiListNodePoolsOpts struct {
 	ClusterId optional.String
+	Sort      optional.String
 }
 
 func (a *KubernetesNodePoolsApiService) ListNodePools(ctx context.Context, projectId string, localVarOptionals *KubernetesNodePoolsApiListNodePoolsOpts) (ListKubernetesNodePoolsResponse, *http.Response, error) {
@@ -414,6 +416,9 @@ func (a *KubernetesNodePoolsApiService) ListNodePools(ctx context.Context, proje
 
 	if localVarOptionals != nil && localVarOptionals.ClusterId.IsSet() {
 		localVarQueryParams.Add("cluster_id", parameterToString(localVarOptionals.ClusterId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Sort.IsSet() {
+		localVarQueryParams.Add("sort", parameterToString(localVarOptionals.Sort.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}

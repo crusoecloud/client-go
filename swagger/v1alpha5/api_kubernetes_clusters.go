@@ -521,8 +521,7 @@ KubernetesClustersApiService Retrieve information about Kubernetes clusters belo
      * @param "Locations" (optional.Interface of []string) -
      * @param "States" (optional.Interface of []string) -
      * @param "Versions" (optional.Interface of []string) -
-     * @param "SortBy" (optional.String) -
-     * @param "SortAsc" (optional.Bool) -
+     * @param "Sort" (optional.String) -
      * @param "ShowInactive" (optional.Bool) -
      * @param "NextToken" (optional.String) -
      * @param "PrevToken" (optional.String) -
@@ -536,8 +535,7 @@ type KubernetesClustersApiListClustersOpts struct {
 	Locations          optional.Interface
 	States             optional.Interface
 	Versions           optional.Interface
-	SortBy             optional.String
-	SortAsc            optional.Bool
+	Sort               optional.String
 	ShowInactive       optional.Bool
 	NextToken          optional.String
 	PrevToken          optional.String
@@ -578,11 +576,8 @@ func (a *KubernetesClustersApiService) ListClusters(ctx context.Context, project
 	if localVarOptionals != nil && localVarOptionals.Versions.IsSet() {
 		localVarQueryParams.Add("versions", parameterToString(localVarOptionals.Versions.Value(), "csv"))
 	}
-	if localVarOptionals != nil && localVarOptionals.SortBy.IsSet() {
-		localVarQueryParams.Add("sort_by", parameterToString(localVarOptionals.SortBy.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.SortAsc.IsSet() {
-		localVarQueryParams.Add("sort_asc", parameterToString(localVarOptionals.SortAsc.Value(), ""))
+	if localVarOptionals != nil && localVarOptionals.Sort.IsSet() {
+		localVarQueryParams.Add("sort", parameterToString(localVarOptionals.Sort.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.ShowInactive.IsSet() {
 		localVarQueryParams.Add("show_inactive", parameterToString(localVarOptionals.ShowInactive.Value(), ""))
