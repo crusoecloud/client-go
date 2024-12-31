@@ -1146,7 +1146,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/customImagePatchResponse"
+            "$ref": "#/responses/asyncOperationResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -1199,7 +1199,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/customImagePatchResponse"
+            "$ref": "#/responses/asyncOperationResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -6158,16 +6158,6 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "CustomImagePatchResponse": {
-      "type": "object",
-      "title": "CustomImagePatchResponse is the response type for PATCH requests to the /custom-images/{id} endpoint.",
-      "properties": {
-        "image": {
-          "$ref": "#/definitions/Image"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "CustomImagePostRequest": {
       "type": "object",
       "title": "CustomImagePostRequest is the request type for POST requests to the /custom-images endpoint.",
@@ -10839,12 +10829,6 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/CredentialsResponse"
-      }
-    },
-    "customImagePatchResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/CustomImagePatchResponse"
       }
     },
     "emptyResponse": {

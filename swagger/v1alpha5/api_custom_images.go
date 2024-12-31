@@ -169,15 +169,15 @@ CustomImagesApiService Update a custom image.
   - @param imageId
   - @param projectId
 
-@return CustomImagePatchResponse
+@return AsyncOperationResponse
 */
-func (a *CustomImagesApiService) CustomImageEditTags(ctx context.Context, body CustomImageEditTagsRequest, imageId string, projectId string) (CustomImagePatchResponse, *http.Response, error) {
+func (a *CustomImagesApiService) CustomImageEditTags(ctx context.Context, body CustomImageEditTagsRequest, imageId string, projectId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue CustomImagePatchResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -238,7 +238,7 @@ func (a *CustomImagesApiService) CustomImageEditTags(ctx context.Context, body C
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CustomImagePatchResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -310,15 +310,15 @@ CustomImagesApiService Update a custom image.
   - @param imageId
   - @param projectId
 
-@return CustomImagePatchResponse
+@return AsyncOperationResponse
 */
-func (a *CustomImagesApiService) CustomImagePatch(ctx context.Context, body CustomImagePatchRequest, imageId string, projectId string) (CustomImagePatchResponse, *http.Response, error) {
+func (a *CustomImagesApiService) CustomImagePatch(ctx context.Context, body CustomImagePatchRequest, imageId string, projectId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue CustomImagePatchResponse
+		localVarReturnValue AsyncOperationResponse
 	)
 
 	// create path and map variables
@@ -379,7 +379,7 @@ func (a *CustomImagesApiService) CustomImagePatch(ctx context.Context, body Cust
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CustomImagePatchResponse
+			var v AsyncOperationResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
