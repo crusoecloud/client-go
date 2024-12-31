@@ -8,12 +8,18 @@
  */
 package swagger
 
-type Quota struct {
+type ProjectQuota struct {
 	// Used is the remaining quota available
 	Available int64 `json:"available,omitempty"`
+	// Category is the quota category
+	Category string `json:"category,omitempty"`
+	// Description is the customer-facing description of the quota
+	Description string `json:"description,omitempty"`
 	// Max is the maximum quota allowed for the resource in the project
 	Max int64 `json:"max,omitempty"`
-	// Type is the enum quota type
+	// ProgrammaticName is the external name of the resource the quota applies to
+	ProgrammaticName string `json:"programmatic_name,omitempty"`
+	// Type is the enum quota type. This is meant to be used internally
 	Type_ string `json:"type,omitempty"`
 	// Used is the current quota consumed by the project
 	Used int64 `json:"used,omitempty"`

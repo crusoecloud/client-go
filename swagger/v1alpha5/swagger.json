@@ -8605,7 +8605,7 @@
           "description": "Quotas are all returned project quotas",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Quota"
+            "$ref": "#/definitions/ProjectQuota"
           },
           "x-go-name": "Quotas"
         }
@@ -9554,6 +9554,57 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ProjectQuota": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "description": "Used is the remaining quota available",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Available",
+          "example": 6
+        },
+        "category": {
+          "description": "Category is the quota category",
+          "type": "string",
+          "x-go-name": "Category",
+          "example": "GPU Instance, Storage"
+        },
+        "description": {
+          "description": "Description is the customer-facing description of the quota",
+          "type": "string",
+          "x-go-name": "Description",
+          "example": "A40 PCIe"
+        },
+        "max": {
+          "description": "Max is the maximum quota allowed for the resource in the project",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Max",
+          "example": 10
+        },
+        "programmatic_name": {
+          "description": "ProgrammaticName is the external name of the resource the quota applies to",
+          "type": "string",
+          "x-go-name": "ProgrammaticName",
+          "example": "a40"
+        },
+        "type": {
+          "description": "Type is the enum quota type. This is meant to be used internally",
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "PROJECT_QUOTA_TYPE_MAXIMUM_VM_SLICES_VCPU_6_MEM_60_A40_PCIE_48GB_1"
+        },
+        "used": {
+          "description": "Used is the current quota consumed by the project",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Used",
+          "example": 4
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ProjectResourceDetails": {
       "type": "object",
       "required": [
@@ -9802,39 +9853,6 @@
           "type": "string",
           "x-go-name": "Type",
           "example": "dynamic"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "Quota": {
-      "type": "object",
-      "properties": {
-        "available": {
-          "description": "Used is the remaining quota available",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "Available",
-          "example": 6
-        },
-        "max": {
-          "description": "Max is the maximum quota allowed for the resource in the project",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "Max",
-          "example": 10
-        },
-        "type": {
-          "description": "Type is the enum quota type",
-          "type": "string",
-          "x-go-name": "Type",
-          "example": "PROJECT_QUOTA_TYPE_MAXIMUM_VM_SLICES_VCPU_6_MEM_60_A40_PCIE_48GB_1"
-        },
-        "used": {
-          "description": "Used is the current quota consumed by the project",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "Used",
-          "example": 4
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
