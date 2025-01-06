@@ -1146,7 +1146,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/customImagePatchResponse"
+            "$ref": "#/responses/asyncOperationResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -1199,7 +1199,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/customImagePatchResponse"
+            "$ref": "#/responses/asyncOperationResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -2193,16 +2193,9 @@
           },
           {
             "type": "string",
-            "example": "name",
+            "example": "name, -name",
             "x-go-name": "SortBy",
-            "name": "sort_by",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "example": true,
-            "x-go-name": "SortAsc",
-            "name": "sort_asc",
+            "name": "sort",
             "in": "query"
           },
           {
@@ -2574,6 +2567,13 @@
             "x-go-name": "ClusterID",
             "name": "cluster_id",
             "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "created_at, -created_at",
+            "x-go-name": "SortBy",
+            "name": "sort",
+            "in": "query"
           }
         ],
         "responses": {
@@ -2901,7 +2901,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/asyncOperationID"
+            "$ref": "#/responses/asyncOperationResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -2918,14 +2918,14 @@
         }
       }
     },
-    "/projects/{project_id}/mtc/clusters/operations/{operation_id}": {
+    "/projects/{project_id}/mtc/clusters/operation-events/{operation_id}": {
       "get": {
-        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Training Cluster resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
+        "description": "This resource streams information about the status updates of an asynchronous operation initiated by\nthe Training Cluster resource. Only information about the operation specified in the path will be streamed,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
           "Training-Cluster-Operations"
         ],
-        "summary": "Get status of a single asynchronous operation",
-        "operationId": "getTrainingClustersOperation",
+        "summary": "Stream status updates of a single asynchronous operation",
+        "operationId": "getTrainingClustersOperationEvents",
         "parameters": [
           {
             "type": "string",
@@ -3033,7 +3033,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/asyncOperationID"
+            "$ref": "#/responses/asyncOperationResponse"
           },
           "401": {
             "$ref": "#/responses/authError"
@@ -3134,14 +3134,14 @@
         }
       }
     },
-    "/projects/{project_id}/mtc/nodepools/operations/{operation_id}": {
+    "/projects/{project_id}/mtc/nodepools/operation-events/{operation_id}": {
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Training Cluster Node Pool resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
           "Training-Cluster-Node-Pool-Operations"
         ],
         "summary": "Get status of a single asynchronous operation",
-        "operationId": "getTrainingClusterNodePoolsOperation",
+        "operationId": "getTrainingClusterNodePoolsOperationEvents",
         "parameters": [
           {
             "type": "string",
@@ -6158,16 +6158,6 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "CustomImagePatchResponse": {
-      "type": "object",
-      "title": "CustomImagePatchResponse is the response type for PATCH requests to the /custom-images/{id} endpoint.",
-      "properties": {
-        "image": {
-          "$ref": "#/definitions/Image"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "CustomImagePostRequest": {
       "type": "object",
       "title": "CustomImagePostRequest is the request type for POST requests to the /custom-images endpoint.",
@@ -8605,7 +8595,7 @@
           "description": "Quotas are all returned project quotas",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Quota"
+            "$ref": "#/definitions/ProjectQuota"
           },
           "x-go-name": "Quotas"
         }
@@ -9554,6 +9544,57 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ProjectQuota": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "description": "Used is the remaining quota available",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Available",
+          "example": 6
+        },
+        "category": {
+          "description": "Category is the quota category",
+          "type": "string",
+          "x-go-name": "Category",
+          "example": "GPU Instance, Storage"
+        },
+        "description": {
+          "description": "Description is the customer-facing description of the quota",
+          "type": "string",
+          "x-go-name": "Description",
+          "example": "A40 PCIe"
+        },
+        "max": {
+          "description": "Max is the maximum quota allowed for the resource in the project",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Max",
+          "example": 10
+        },
+        "programmatic_name": {
+          "description": "ProgrammaticName is the external name of the resource the quota applies to",
+          "type": "string",
+          "x-go-name": "ProgrammaticName",
+          "example": "a40"
+        },
+        "type": {
+          "description": "Type is the enum quota type. This is meant to be used internally",
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "PROJECT_QUOTA_TYPE_MAXIMUM_VM_SLICES_VCPU_6_MEM_60_A40_PCIE_48GB_1"
+        },
+        "used": {
+          "description": "Used is the current quota consumed by the project",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Used",
+          "example": 4
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ProjectResourceDetails": {
       "type": "object",
       "required": [
@@ -9802,39 +9843,6 @@
           "type": "string",
           "x-go-name": "Type",
           "example": "dynamic"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "Quota": {
-      "type": "object",
-      "properties": {
-        "available": {
-          "description": "Used is the remaining quota available",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "Available",
-          "example": 6
-        },
-        "max": {
-          "description": "Max is the maximum quota allowed for the resource in the project",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "Max",
-          "example": 10
-        },
-        "type": {
-          "description": "Type is the enum quota type",
-          "type": "string",
-          "x-go-name": "Type",
-          "example": "PROJECT_QUOTA_TYPE_MAXIMUM_VM_SLICES_VCPU_6_MEM_60_A40_PCIE_48GB_1"
-        },
-        "used": {
-          "description": "Used is the current quota consumed by the project",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "Used",
-          "example": 4
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -10728,9 +10736,6 @@
         "Body": {}
       }
     },
-    "asyncOperationID": {
-      "description": ""
-    },
     "asyncOperationResponse": {
       "description": "",
       "schema": {
@@ -10821,12 +10826,6 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/CredentialsResponse"
-      }
-    },
-    "customImagePatchResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/CustomImagePatchResponse"
       }
     },
     "emptyResponse": {
