@@ -33,7 +33,7 @@ This resource retrieves information about the status of an asynchronous operatio
 
 @return Operation
 */
-func (a *TrainingClusterNodePoolOperationsApiService) GetTrainingClusterNodePoolsOperation(ctx context.Context, projectId string, operationId string) (Operation, *http.Response, error) {
+func (a *TrainingClusterNodePoolOperationsApiService) GetTrainingClusterNodePoolsOperationEvents(ctx context.Context, projectId string, operationId string) (Operation, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -43,7 +43,7 @@ func (a *TrainingClusterNodePoolOperationsApiService) GetTrainingClusterNodePool
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/mtc/nodepools/operations/{operation_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/mtc/nodepools/operation-events/{operation_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"operation_id"+"}", fmt.Sprintf("%v", operationId), -1)
 

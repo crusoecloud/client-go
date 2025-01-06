@@ -2901,7 +2901,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/asyncOperationID"
+            "$ref": "#/responses/asyncOperationResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -2918,14 +2918,14 @@
         }
       }
     },
-    "/projects/{project_id}/mtc/clusters/operations/{operation_id}": {
+    "/projects/{project_id}/mtc/clusters/operation-events/{operation_id}": {
       "get": {
-        "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Training Cluster resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
+        "description": "This resource streams information about the status updates of an asynchronous operation initiated by\nthe Training Cluster resource. Only information about the operation specified in the path will be streamed,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
           "Training-Cluster-Operations"
         ],
-        "summary": "Get status of a single asynchronous operation",
-        "operationId": "getTrainingClustersOperation",
+        "summary": "Stream status updates of a single asynchronous operation",
+        "operationId": "getTrainingClustersOperationEvents",
         "parameters": [
           {
             "type": "string",
@@ -3033,7 +3033,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/asyncOperationID"
+            "$ref": "#/responses/asyncOperationResponse"
           },
           "401": {
             "$ref": "#/responses/authError"
@@ -3134,14 +3134,14 @@
         }
       }
     },
-    "/projects/{project_id}/mtc/nodepools/operations/{operation_id}": {
+    "/projects/{project_id}/mtc/nodepools/operation-events/{operation_id}": {
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Training Cluster Node Pool resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
           "Training-Cluster-Node-Pool-Operations"
         ],
         "summary": "Get status of a single asynchronous operation",
-        "operationId": "getTrainingClusterNodePoolsOperation",
+        "operationId": "getTrainingClusterNodePoolsOperationEvents",
         "parameters": [
           {
             "type": "string",
@@ -10735,9 +10735,6 @@
       "headers": {
         "Body": {}
       }
-    },
-    "asyncOperationID": {
-      "description": ""
     },
     "asyncOperationResponse": {
       "description": "",
