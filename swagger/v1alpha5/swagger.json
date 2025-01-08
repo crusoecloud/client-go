@@ -2838,6 +2838,49 @@
         }
       }
     },
+    "/projects/{project_id}/kubernetes/versions": {
+      "get": {
+        "tags": [
+          "Kubernetes-Versions"
+        ],
+        "summary": "Retrieve information about available Kubernetes versions.",
+        "operationId": "listKubernetesVersions",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "example": true,
+            "x-go-name": "ShowDeprecated",
+            "name": "show_deprecated",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listKubernetesVersionsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/mtc/clusters": {
       "get": {
         "tags": [
@@ -8091,6 +8134,29 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "KubernetesClustersVersionInfo": {
+      "type": "object",
+      "required": [
+        "cluster_version_name",
+        "tags"
+      ],
+      "properties": {
+        "cluster_version_name": {
+          "description": "The version name of Crusoe's Kubernetes clusters.",
+          "type": "string",
+          "x-go-name": "ClusterVersionName"
+        },
+        "tags": {
+          "description": "A list of tags associated with the version.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Tags"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "KubernetesNodePool": {
       "type": "object",
       "required": [
@@ -8271,6 +8337,12 @@
             "label": "my_node"
           }
         },
+        "node_pool_version": {
+          "description": "Version of the Kubernetes node pool.",
+          "type": "string",
+          "x-go-name": "NodePoolVersion",
+          "example": "1.30"
+        },
         "product_name": {
           "description": "Product name of the VM type to be created within this node pool.",
           "type": "string",
@@ -8288,6 +8360,29 @@
           "type": "string",
           "x-go-name": "SubnetID",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "KubernetesNodePoolsVersionInfo": {
+      "type": "object",
+      "required": [
+        "node_pool_version_name",
+        "tags"
+      ],
+      "properties": {
+        "node_pool_version_name": {
+          "description": "The version name of Crusoe's Kubernetes node pools.",
+          "type": "string",
+          "x-go-name": "NodePoolVersionName"
+        },
+        "tags": {
+          "description": "A list of tags associated with the version.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Tags"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -8516,6 +8611,32 @@
             "$ref": "#/definitions/KubernetesNodePool"
           },
           "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ListKubernetesVersionsResponse": {
+      "type": "object",
+      "required": [
+        "kubernetes_cluster_versions",
+        "kubernetes_node_pool_versions"
+      ],
+      "properties": {
+        "kubernetes_cluster_versions": {
+          "description": "The list of available Kubernetes cluster versions.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KubernetesClustersVersionInfo"
+          },
+          "x-go-name": "KubernetesClusterVersions"
+        },
+        "kubernetes_node_pool_versions": {
+          "description": "The list of available Kubernetes node pool versions.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KubernetesNodePoolsVersionInfo"
+          },
+          "x-go-name": "KubernetesNodePoolVersions"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -11033,6 +11154,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListKubernetesNodePoolsResponse"
+      }
+    },
+    "listKubernetesVersionsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListKubernetesVersionsResponse"
       }
     },
     "listLoadBalancersResponse": {
