@@ -19,6 +19,8 @@ type KubernetesNodePoolPostRequest struct {
 	Name string `json:"name"`
 	// Labels assigned to the node pool
 	NodeLabels map[string]string `json:"node_labels,omitempty"`
+	// Version of the Kubernetes node pool.
+	NodePoolVersion string `json:"node_pool_version,omitempty"`
 	// Product name of the VM type to be created within this node pool.
 	ProductName string `json:"product_name"`
 	// SSH public key to use for all VMs created from this node pool.
