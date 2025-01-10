@@ -13,7 +13,7 @@ type KubernetesClusterPostRequest struct {
 	AddOns []string `json:"add_ons,omitempty"`
 	// defines: the range of IP Addresses allocated to pods scheduled on worker nodes
 	ClusterCidr string `json:"cluster_cidr,omitempty"`
-	// Configuration setting of the Kubernetes cluster. Leave the field empty for standard configuration.
+	// Configuration setting is deprecated, defaults to HA configuration.
 	Configuration string `json:"configuration,omitempty"`
 	// Location to create the Kubernetes cluster in.
 	Location string `json:"location"`

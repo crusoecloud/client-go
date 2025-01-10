@@ -10,7 +10,7 @@ package swagger
 
 type KubernetesClusterPatchRequest struct {
 	// List of add-ons to be included to the cluster.
-	AddOns []string `json:"add_ons,omitempty"`
-	// Configuration setting of the Kubernetes cluster. Can only upgrade cluster to HA, but not downgrade from HA to normal
-	Configuration string `json:"configuration"`
+	AddOns []string `json:"add_ons"`
+	// Configuration setting is deprecated, defaults to HA configuration.
+	Configuration string `json:"configuration,omitempty"`
 }
