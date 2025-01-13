@@ -6988,6 +6988,11 @@
           "x-go-name": "AcceptedTos",
           "example": true
         },
+        "company_name": {
+          "type": "string",
+          "x-go-name": "CompanyName",
+          "example": "Crusoe"
+        },
         "email": {
           "type": "string",
           "x-go-name": "Email",
@@ -8031,7 +8036,7 @@
       "type": "object",
       "title": "KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.",
       "required": [
-        "configuration"
+        "add_ons"
       ],
       "properties": {
         "add_ons": {
@@ -8046,7 +8051,7 @@
           ]
         },
         "configuration": {
-          "description": "Configuration setting of the Kubernetes cluster.\nCan only upgrade cluster to HA, but not downgrade from HA to normal",
+          "description": "Configuration setting is deprecated, defaults to HA configuration.",
           "type": "string",
           "enum": [
             "ha"
@@ -8086,7 +8091,7 @@
           "example": "10.233.0.0/18"
         },
         "configuration": {
-          "description": "Configuration setting of the Kubernetes cluster. Leave the field empty for standard configuration.",
+          "description": "Configuration setting is deprecated, defaults to HA configuration.",
           "type": "string",
           "enum": [
             "ha"
