@@ -6988,6 +6988,11 @@
           "x-go-name": "AcceptedTos",
           "example": true
         },
+        "company_name": {
+          "type": "string",
+          "x-go-name": "CompanyName",
+          "example": "Crusoe"
+        },
         "email": {
           "type": "string",
           "x-go-name": "Email",
