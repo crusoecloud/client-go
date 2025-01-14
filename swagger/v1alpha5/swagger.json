@@ -3346,6 +3346,335 @@
         }
       }
     },
+    "/projects/{project_id}/networking/external-load-balancers": {
+      "get": {
+        "tags": [
+          "External-Load-Balancers"
+        ],
+        "summary": "Retrieve information about External Load Balancer belonging to the project.",
+        "operationId": "listExternalLoadBalancers",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "us-east1",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "VPCNetworkID",
+            "name": "vpc_network_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "my-loadbalancer-test",
+            "x-go-name": "Name",
+            "name": "name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listExternalLoadBalancersResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "description": "This endpoint creates a new external load balancer in the specified project. The request must include the VPC ID, name, location, and at least one listen port with its associated backends.",
+        "tags": [
+          "External-Load-Balancers"
+        ],
+        "summary": "Create a new external load balancer.",
+        "operationId": "createExternalLoadBalancer",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "description": "The project ID to which the external load balancer belongs.",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Request body for creating the external load balancer.",
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ExternalLoadBalancerPostRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/networking/external-load-balancers/operations": {
+      "get": {
+        "description": "This resource retrieves information about the status of asynchronous operations for\nexternal load balancers. Query parameters can be used to filter results by external\nload balancer ID or operation state.",
+        "tags": [
+          "External-Load-Balancer-Operations"
+        ],
+        "summary": "Get status of asynchronous operations.",
+        "operationId": "listExternalLoadBalancerOperations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
+            "x-go-name": "ResourceID",
+            "name": "resource_id",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "IN_PROGRESS"
+            ],
+            "x-go-name": "State",
+            "name": "state",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/networking/external-load-balancers/operations/{operation_id}": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation\nfor an external load balancer. Only information about the operation specified in\nthe path will be returned.",
+        "tags": [
+          "External-Load-Balancer-Operations"
+        ],
+        "summary": "Get status of a single asynchronous operation.",
+        "operationId": "getExternalLoadBalancerOperation",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/networking/external-load-balancers/{load_balancer_id}": {
+      "get": {
+        "tags": [
+          "External-Load-Balancers"
+        ],
+        "summary": "Retrieve information about a particular external load balancer belonging to the project.",
+        "operationId": "getExternalLoadBalancer",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "LoadBalancerID",
+            "name": "load_balancer_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getExternalLoadBalancerResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "description": "This endpoint deletes an external load balancer identified by its ID within the specified project. No request body or query parameters are required.",
+        "tags": [
+          "External-Load-Balancers"
+        ],
+        "summary": "Delete an external load balancer.",
+        "operationId": "deleteExternalLoadBalancer",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "description": "The project ID to which the external load balancer belongs.",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "LoadBalancerID",
+            "description": "The ID of the external load balancer to delete.",
+            "name": "load_balancer_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "description": "This endpoint updates the configuration of an existing external load balancer. The request must include the load balancer ID and optionally the health check options and/or listen ports and associated backends.",
+        "tags": [
+          "External-Load-Balancers"
+        ],
+        "summary": "Update an existing external load balancer.",
+        "operationId": "updateExternalLoadBalancer",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "description": "The project ID to which the external load balancer belongs.",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "LoadBalancerID",
+            "description": "The ID of the external load balancer to update.",
+            "name": "load_balancer_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Request body for updating the external load balancer.",
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ExternalLoadBalancerPatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/updateExternalLoadBalancerResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/networking/ib-networks": {
       "get": {
         "tags": [
@@ -5876,6 +6205,37 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "Backend": {
+      "type": "object",
+      "title": "Backend defines the backend server configuration.",
+      "required": [
+        "ip",
+        "port",
+        "status"
+      ],
+      "properties": {
+        "ip": {
+          "description": "IP address of the backend server.",
+          "type": "string",
+          "x-go-name": "IP",
+          "example": "192.168.1.2"
+        },
+        "port": {
+          "description": "Port on which the backend server listens.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Port",
+          "example": 8080
+        },
+        "status": {
+          "description": "Status of the backend server.",
+          "type": "string",
+          "x-go-name": "Status",
+          "example": "ONLINE"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "Billing": {
       "type": "object",
       "title": "Billing contains information about the billing status of an organization.",
@@ -6639,6 +6999,152 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ExternalLoadBalancer": {
+      "type": "object",
+      "title": "ExternalLoadBalancer defines the specifications of the External Load Balancer.",
+      "required": [
+        "id",
+        "project_id",
+        "vpc_id",
+        "name",
+        "location",
+        "protocol",
+        "vip",
+        "listen_ports_and_backends",
+        "health_check_options"
+      ],
+      "properties": {
+        "health_check_options": {
+          "$ref": "#/definitions/HealthCheckOptionsExternalLB"
+        },
+        "id": {
+          "description": "ID of the External Load Balancer.",
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "listen_ports_and_backends": {
+          "description": "Listen ports and backends configuration.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ListenPortAndBackend"
+          },
+          "x-go-name": "ListenPortsAndBackends"
+        },
+        "location": {
+          "description": "Location of the External Load Balancer.",
+          "type": "string",
+          "x-go-name": "Location"
+        },
+        "name": {
+          "description": "Name of the External Load Balancer.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-external-load-balancer"
+        },
+        "project_id": {
+          "description": "The ID of the project this External Load Balancer belongs to.",
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "protocol": {
+          "description": "The protocol of the External Load Balancer.",
+          "type": "string",
+          "x-go-name": "Protocol"
+        },
+        "vip": {
+          "description": "Virtual IP (VIP) of the External Load Balancer.",
+          "type": "string",
+          "x-go-name": "VIP",
+          "example": "192.168.1.1"
+        },
+        "vpc_id": {
+          "description": "The ID of the vpc network this External Load Balancer belongs to.",
+          "type": "string",
+          "x-go-name": "VPCID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ExternalLoadBalancerPatchRequest": {
+      "type": "object",
+      "title": "ExternalLoadBalancerPatchRequest defines the structure of the request body for patching an external load balancer.",
+      "required": [
+        "id",
+        "listen_ports_and_backends"
+      ],
+      "properties": {
+        "health_check_options": {
+          "$ref": "#/definitions/HealthCheckOptionsExternalLB"
+        },
+        "id": {
+          "description": "The ID of the External Load Balancer to update.",
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "listen_ports_and_backends": {
+          "description": "Listen ports and associated backends configuration.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ListenPortAndBackend"
+          },
+          "x-go-name": "ListenPortsAndBackends"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ExternalLoadBalancerPostRequest": {
+      "type": "object",
+      "title": "ExternalLoadBalancerPostRequest defines the structure of the request body for creating an external load balancer.",
+      "required": [
+        "protocol",
+        "vpc_id",
+        "name",
+        "location",
+        "listen_ports_and_backends"
+      ],
+      "properties": {
+        "health_check_options": {
+          "$ref": "#/definitions/HealthCheckOptionsExternalLB"
+        },
+        "listen_ports_and_backends": {
+          "description": "Listen ports and associated backends configuration.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ListenPortAndBackend"
+          },
+          "x-go-name": "ListenPortsAndBackends"
+        },
+        "location": {
+          "description": "Location of the External Load Balancer.",
+          "type": "string",
+          "x-go-name": "Location",
+          "example": "us-east1"
+        },
+        "name": {
+          "description": "Name of the External Load Balancer.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "my-external-load-balancer"
+        },
+        "protocol": {
+          "description": "The protocol of the External Load Balancer.",
+          "type": "string",
+          "x-go-name": "Protocol",
+          "example": "tcp"
+        },
+        "vpc_id": {
+          "description": "The ID of the VPC network this External Load Balancer belongs to.",
+          "type": "string",
+          "x-go-name": "VPCID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "FeatureFlagsGetResponse": {
       "type": "object",
       "title": "FeatureFlagsGetResponse is the response type for GET requests to the feature flags endpoint.",
@@ -6819,6 +7325,47 @@
           "type": "string",
           "x-go-name": "Timeout",
           "example": "20"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "HealthCheckOptionsExternalLB": {
+      "type": "object",
+      "title": "HealthCheckOptions defines the health check configuration.",
+      "required": [
+        "failure_count",
+        "interval",
+        "success_count",
+        "timeout"
+      ],
+      "properties": {
+        "failure_count": {
+          "description": "Number of allowed failures before considering the backend unhealthy.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "FailureCount",
+          "example": 3
+        },
+        "interval": {
+          "description": "Interval between health checks (in seconds).",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Interval",
+          "example": 10
+        },
+        "success_count": {
+          "description": "Number of successful checks required to consider the backend healthy.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "SuccessCount",
+          "example": 2
+        },
+        "timeout": {
+          "description": "Timeout for health check responses (in seconds).",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Timeout",
+          "example": 5
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -8458,6 +9005,22 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ListExternalLoadBalancersResponse": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ExternalLoadBalancer"
+          },
+          "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ListIBNetworksResponseV1Alpha5": {
       "type": "object",
       "title": "ListIBNetworksResponseV1Alpha5 is the response type for GET requests to the IB Networks endpoint.",
@@ -8856,6 +9419,32 @@
             "$ref": "#/definitions/VPCSubnet"
           },
           "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ListenPortAndBackend": {
+      "type": "object",
+      "title": "ListenPortAndBackend defines a mapping of listen ports to backend configurations.",
+      "required": [
+        "listen_port",
+        "backends"
+      ],
+      "properties": {
+        "backends": {
+          "description": "List of backend configurations.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Backend"
+          },
+          "x-go-name": "Backends"
+        },
+        "listen_port": {
+          "description": "Port on which the load balancer listens.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ListenPort",
+          "example": 80
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -10954,6 +11543,12 @@
         "$ref": "#/definitions/CredentialsResponse"
       }
     },
+    "deleteExternalLoadBalancerResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ExternalLoadBalancer"
+      }
+    },
     "emptyResponse": {
       "description": "Empty Response"
     },
@@ -10967,6 +11562,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/DiskV1Alpha5"
+      }
+    },
+    "getExternalLoadBalancerResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ExternalLoadBalancer"
       }
     },
     "getIbNetworkResponse": {
@@ -11111,6 +11712,15 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListDisksResponseV1Alpha5"
+      }
+    },
+    "listExternalLoadBalancersResponse": {
+      "description": "",
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/ListExternalLoadBalancersResponse"
+        }
       }
     },
     "listIBPartitionsResponse": {
@@ -11357,6 +11967,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListTypesResponseV1Alpha5"
+      }
+    },
+    "updateExternalLoadBalancerResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ExternalLoadBalancer"
       }
     },
     "usageExportGetResponse": {
