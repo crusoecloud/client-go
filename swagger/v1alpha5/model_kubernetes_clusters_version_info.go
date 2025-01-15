@@ -12,5 +12,6 @@ type KubernetesClustersVersionInfo struct {
 	// The version name of Crusoe's Kubernetes clusters.
 	ClusterVersionName string `json:"cluster_version_name"`
 	// A list of tags associated with the version.
-	Tags []string `json:"tags"`
+	Tags           []string        `json:"tags"`
+	VersionDetails *VersionDetails `json:"version_details"`
 }
