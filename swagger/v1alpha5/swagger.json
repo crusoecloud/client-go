@@ -3417,6 +3417,7 @@
             "description": "Request body for creating the external load balancer.",
             "name": "Body",
             "in": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/ExternalLoadBalancerPostRequest"
             }
@@ -3651,6 +3652,7 @@
             "description": "Request body for updating the external load balancer.",
             "name": "Body",
             "in": "body",
+            "required": true,
             "schema": {
               "$ref": "#/definitions/ExternalLoadBalancerPatchRequest"
             }
