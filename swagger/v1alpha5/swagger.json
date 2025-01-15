@@ -8692,7 +8692,8 @@
       "type": "object",
       "required": [
         "cluster_version_name",
-        "tags"
+        "tags",
+        "version_details"
       ],
       "properties": {
         "cluster_version_name": {
@@ -8707,6 +8708,9 @@
             "type": "string"
           },
           "x-go-name": "Tags"
+        },
+        "version_details": {
+          "$ref": "#/definitions/VersionDetails"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -8922,7 +8926,8 @@
       "type": "object",
       "required": [
         "node_pool_version_name",
-        "tags"
+        "tags",
+        "version_details"
       ],
       "properties": {
         "node_pool_version_name": {
@@ -8937,6 +8942,9 @@
             "type": "string"
           },
           "x-go-name": "Tags"
+        },
+        "version_details": {
+          "$ref": "#/definitions/VersionDetails"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -11427,6 +11435,21 @@
       "properties": {
         "subnet": {
           "$ref": "#/definitions/VPCSubnet"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "VersionDetails": {
+      "type": "object",
+      "properties": {
+        "BuildVersion": {
+          "type": "string"
+        },
+        "MajorMinorVersion": {
+          "type": "string"
+        },
+        "PatchVersion": {
+          "type": "string"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
