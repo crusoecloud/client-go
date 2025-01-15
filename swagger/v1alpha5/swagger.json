@@ -10341,13 +10341,21 @@
       "required": [
         "instances",
         "disks",
+        "snapshots",
+        "images",
         "vpc_networks"
       ],
       "properties": {
         "disks": {
           "$ref": "#/definitions/ProjectResourceDetails"
         },
+        "images": {
+          "$ref": "#/definitions/ProjectResourceDetails"
+        },
         "instances": {
+          "$ref": "#/definitions/ProjectResourceDetails"
+        },
+        "snapshots": {
           "$ref": "#/definitions/ProjectResourceDetails"
         },
         "vpc_networks": {
