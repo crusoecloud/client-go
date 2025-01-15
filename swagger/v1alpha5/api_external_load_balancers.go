@@ -29,18 +29,13 @@ type ExternalLoadBalancersApiService service
 /*
 ExternalLoadBalancersApiService Create a new external load balancer.
 This endpoint creates a new external load balancer in the specified project. The request must include the VPC ID, name, location, and at least one listen port with its associated backends.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId The project ID to which the external load balancer belongs.
- * @param optional nil or *ExternalLoadBalancersApiCreateExternalLoadBalancerOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of ExternalLoadBalancerPostRequest) -  Request body for creating the external load balancer.
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body Request body for creating the external load balancer.
+  - @param projectId The project ID to which the external load balancer belongs.
+
 @return AsyncOperationResponse
 */
-
-type ExternalLoadBalancersApiCreateExternalLoadBalancerOpts struct {
-	Body optional.Interface
-}
-
-func (a *ExternalLoadBalancersApiService) CreateExternalLoadBalancer(ctx context.Context, projectId string, localVarOptionals *ExternalLoadBalancersApiCreateExternalLoadBalancerOpts) (AsyncOperationResponse, *http.Response, error) {
+func (a *ExternalLoadBalancersApiService) CreateExternalLoadBalancer(ctx context.Context, body ExternalLoadBalancerPostRequest, projectId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -75,11 +70,7 @@ func (a *ExternalLoadBalancersApiService) CreateExternalLoadBalancer(ctx context
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-
-		localVarOptionalBody := localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
+	localVarPostBody = &body
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -510,19 +501,14 @@ func (a *ExternalLoadBalancersApiService) ListExternalLoadBalancers(ctx context.
 /*
 ExternalLoadBalancersApiService Update an existing external load balancer.
 This endpoint updates the configuration of an existing external load balancer. The request must include the load balancer ID and optionally the health check options and/or listen ports and associated backends.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId The project ID to which the external load balancer belongs.
- * @param loadBalancerId The ID of the external load balancer to update.
- * @param optional nil or *ExternalLoadBalancersApiUpdateExternalLoadBalancerOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of ExternalLoadBalancerPatchRequest) -  Request body for updating the external load balancer.
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body Request body for updating the external load balancer.
+  - @param projectId The project ID to which the external load balancer belongs.
+  - @param loadBalancerId The ID of the external load balancer to update.
+
 @return ExternalLoadBalancer
 */
-
-type ExternalLoadBalancersApiUpdateExternalLoadBalancerOpts struct {
-	Body optional.Interface
-}
-
-func (a *ExternalLoadBalancersApiService) UpdateExternalLoadBalancer(ctx context.Context, projectId string, loadBalancerId string, localVarOptionals *ExternalLoadBalancersApiUpdateExternalLoadBalancerOpts) (ExternalLoadBalancer, *http.Response, error) {
+func (a *ExternalLoadBalancersApiService) UpdateExternalLoadBalancer(ctx context.Context, body ExternalLoadBalancerPatchRequest, projectId string, loadBalancerId string) (ExternalLoadBalancer, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
@@ -558,11 +544,7 @@ func (a *ExternalLoadBalancersApiService) UpdateExternalLoadBalancer(ctx context
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-
-		localVarOptionalBody := localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
+	localVarPostBody = &body
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
