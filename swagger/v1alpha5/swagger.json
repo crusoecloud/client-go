@@ -8620,21 +8620,7 @@
     "KubernetesClusterPatchRequest": {
       "type": "object",
       "title": "KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.",
-      "required": [
-        "add_ons"
-      ],
       "properties": {
-        "add_ons": {
-          "description": "List of add-ons to be included to the cluster.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-go-name": "AddOns",
-          "example": [
-            "crusoe_csi"
-          ]
-        },
         "configuration": {
           "description": "Configuration setting is deprecated, defaults to HA configuration.",
           "type": "string",
