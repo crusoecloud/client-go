@@ -551,6 +551,42 @@
         }
       }
     },
+    "/organizations/{organization_id}/quotas": {
+      "get": {
+        "tags": [
+          "Quotas"
+        ],
+        "summary": "List max and currently used organization quotas.",
+        "operationId": "listOrgQuotas",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOrgQuotasResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/organizations/{organization_id}/reservations": {
       "get": {
         "tags": [
@@ -9286,6 +9322,21 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ListOrgQuotasResponse": {
+      "type": "object",
+      "title": "ListOrgQuotasResponse is the response for listing a org's quotas.",
+      "properties": {
+        "quotas": {
+          "description": "Quotas are all returned org quotas",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrgQuota"
+          },
+          "x-go-name": "Quotas"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ListProjectQuotasResponse": {
       "type": "object",
       "title": "ListProjectQuotasResponse is the response for listing a project's quotas.",
@@ -10179,6 +10230,51 @@
           ],
           "x-go-name": "State",
           "example": "IN_PROGRESS"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "OrgQuota": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "description": "Available is the remaining quota available to the org",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Available",
+          "example": 6
+        },
+        "description": {
+          "description": "Description is the customer-facing description of the quota",
+          "type": "string",
+          "x-go-name": "Description",
+          "example": "Users"
+        },
+        "max": {
+          "description": "Max is the maximum quota allowed for the resource in the org",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Max",
+          "example": 10
+        },
+        "programmatic_name": {
+          "description": "ProgrammaticName is the external, human-friendly identifier for the quota",
+          "type": "string",
+          "x-go-name": "ProgrammaticName",
+          "example": "users"
+        },
+        "type": {
+          "description": "Type is the enum quota type. This is meant to be used internally",
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "ORG_QUOTAS_MAXIMUM_USERS"
+        },
+        "used": {
+          "description": "Used is the current quota consumed by the org",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Used",
+          "example": 4
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -11820,6 +11916,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListOperationsResponseV1Alpha5"
+      }
+    },
+    "listOrgQuotasResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListOrgQuotasResponse"
       }
     },
     "listProjectQuotasResponse": {
