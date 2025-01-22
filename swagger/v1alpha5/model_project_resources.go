@@ -10,6 +10,8 @@ package swagger
 
 type ProjectResources struct {
 	Disks       *ProjectResourceDetails `json:"disks"`
+	Images      *ProjectResourceDetails `json:"images"`
 	Instances   *ProjectResourceDetails `json:"instances"`
+	Snapshots   *ProjectResourceDetails `json:"snapshots"`
 	VpcNetworks *ProjectResourceDetails `json:"vpc_networks"`
 }

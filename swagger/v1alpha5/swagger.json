@@ -551,6 +551,42 @@
         }
       }
     },
+    "/organizations/{organization_id}/quotas": {
+      "get": {
+        "tags": [
+          "Quotas"
+        ],
+        "summary": "List max and currently used organization quotas.",
+        "operationId": "listOrgQuotas",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOrgQuotasResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/organizations/{organization_id}/reservations": {
       "get": {
         "tags": [
@@ -3346,337 +3382,6 @@
         }
       }
     },
-    "/projects/{project_id}/networking/external-load-balancers": {
-      "get": {
-        "tags": [
-          "External-Load-Balancers"
-        ],
-        "summary": "Retrieve information about External Load Balancer belonging to the project.",
-        "operationId": "listExternalLoadBalancers",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "example": "us-east1",
-            "x-go-name": "Location",
-            "name": "location",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "VPCNetworkID",
-            "name": "vpc_network_id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "example": "my-loadbalancer-test",
-            "x-go-name": "Name",
-            "name": "name",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/listExternalLoadBalancersResponse"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      },
-      "post": {
-        "description": "This endpoint creates a new external load balancer in the specified project. The request must include the VPC ID, name, location, and at least one listen port with its associated backends.",
-        "tags": [
-          "External-Load-Balancers"
-        ],
-        "summary": "Create a new external load balancer.",
-        "operationId": "createExternalLoadBalancer",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "description": "The project ID to which the external load balancer belongs.",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "Request body for creating the external load balancer.",
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ExternalLoadBalancerPostRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/asyncOperationResponse"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      }
-    },
-    "/projects/{project_id}/networking/external-load-balancers/operations": {
-      "get": {
-        "description": "This resource retrieves information about the status of asynchronous operations for\nexternal load balancers. Query parameters can be used to filter results by external\nload balancer ID or operation state.",
-        "tags": [
-          "External-Load-Balancer-Operations"
-        ],
-        "summary": "Get status of asynchronous operations.",
-        "operationId": "listExternalLoadBalancerOperations",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
-            "x-go-name": "ResourceID",
-            "name": "resource_id",
-            "in": "query"
-          },
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "IN_PROGRESS"
-            ],
-            "x-go-name": "State",
-            "name": "state",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/listOperationsResponse"
-          },
-          "400": {
-            "$ref": "#/responses/badReqError"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      }
-    },
-    "/projects/{project_id}/networking/external-load-balancers/operations/{operation_id}": {
-      "get": {
-        "description": "This resource retrieves information about the status of an asynchronous operation\nfor an external load balancer. Only information about the operation specified in\nthe path will be returned.",
-        "tags": [
-          "External-Load-Balancer-Operations"
-        ],
-        "summary": "Get status of a single asynchronous operation.",
-        "operationId": "getExternalLoadBalancerOperation",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "OperationID",
-            "name": "operation_id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/getOperationResponse"
-          },
-          "400": {
-            "$ref": "#/responses/badReqError"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "404": {
-            "$ref": "#/responses/notFoundError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      }
-    },
-    "/projects/{project_id}/networking/external-load-balancers/{load_balancer_id}": {
-      "get": {
-        "tags": [
-          "External-Load-Balancers"
-        ],
-        "summary": "Retrieve information about a particular external load balancer belonging to the project.",
-        "operationId": "getExternalLoadBalancer",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "LoadBalancerID",
-            "name": "load_balancer_id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/getExternalLoadBalancerResponse"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      },
-      "delete": {
-        "description": "This endpoint deletes an external load balancer identified by its ID within the specified project. No request body or query parameters are required.",
-        "tags": [
-          "External-Load-Balancers"
-        ],
-        "summary": "Delete an external load balancer.",
-        "operationId": "deleteExternalLoadBalancer",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "description": "The project ID to which the external load balancer belongs.",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "LoadBalancerID",
-            "description": "The ID of the external load balancer to delete.",
-            "name": "load_balancer_id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/asyncOperationResponse"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      },
-      "patch": {
-        "description": "This endpoint updates the configuration of an existing external load balancer. The request must include the load balancer ID and optionally the health check options and/or listen ports and associated backends.",
-        "tags": [
-          "External-Load-Balancers"
-        ],
-        "summary": "Update an existing external load balancer.",
-        "operationId": "updateExternalLoadBalancer",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "description": "The project ID to which the external load balancer belongs.",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "LoadBalancerID",
-            "description": "The ID of the external load balancer to update.",
-            "name": "load_balancer_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "description": "Request body for updating the external load balancer.",
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ExternalLoadBalancerPatchRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/updateExternalLoadBalancerResponse"
-          },
-          "400": {
-            "$ref": "#/responses/badReqError"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "404": {
-            "$ref": "#/responses/notFoundError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      }
-    },
     "/projects/{project_id}/networking/ib-networks": {
       "get": {
         "tags": [
@@ -3909,7 +3614,7 @@
         }
       }
     },
-    "/projects/{project_id}/networking/load-balancers": {
+    "/projects/{project_id}/networking/internal-load-balancers": {
       "get": {
         "tags": [
           "Load-Balancers"
@@ -3985,7 +3690,7 @@
         }
       }
     },
-    "/projects/{project_id}/networking/load-balancers/operations": {
+    "/projects/{project_id}/networking/internal-load-balancers/operations": {
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe Load Balancers resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
         "tags": [
@@ -4038,7 +3743,7 @@
         }
       }
     },
-    "/projects/{project_id}/networking/load-balancers/operations/{operation_id}": {
+    "/projects/{project_id}/networking/internal-load-balancers/operations/{operation_id}": {
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Load Balancer resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
@@ -4083,7 +3788,7 @@
         }
       }
     },
-    "/projects/{project_id}/networking/load-balancers/{load_balancer_id}": {
+    "/projects/{project_id}/networking/internal-load-balancers/{load_balancer_id}": {
       "get": {
         "tags": [
           "Load-Balancers"
@@ -4208,6 +3913,337 @@
           },
           "403": {
             "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/networking/load-balancers": {
+      "get": {
+        "tags": [
+          "External-Load-Balancers"
+        ],
+        "summary": "Retrieve information about External Load Balancer belonging to the project.",
+        "operationId": "listExternalLoadBalancers",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "us-east1",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "VPCNetworkID",
+            "name": "vpc_network_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "my-loadbalancer-test",
+            "x-go-name": "Name",
+            "name": "name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listExternalLoadBalancersResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "description": "This endpoint creates a new external load balancer in the specified project. The request must include the VPC ID, name, location, and at least one listen port with its associated backends.",
+        "tags": [
+          "External-Load-Balancers"
+        ],
+        "summary": "Create a new external load balancer.",
+        "operationId": "createExternalLoadBalancer",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "description": "The project ID to which the external load balancer belongs.",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Request body for creating the external load balancer.",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExternalLoadBalancerPostRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/networking/load-balancers/operations": {
+      "get": {
+        "description": "This resource retrieves information about the status of asynchronous operations for\nexternal load balancers. Query parameters can be used to filter results by external\nload balancer ID or operation state.",
+        "tags": [
+          "External-Load-Balancer-Operations"
+        ],
+        "summary": "Get status of asynchronous operations.",
+        "operationId": "listExternalLoadBalancerOperations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
+            "x-go-name": "ResourceID",
+            "name": "resource_id",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "IN_PROGRESS"
+            ],
+            "x-go-name": "State",
+            "name": "state",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/networking/load-balancers/operations/{operation_id}": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation\nfor an external load balancer. Only information about the operation specified in\nthe path will be returned.",
+        "tags": [
+          "External-Load-Balancer-Operations"
+        ],
+        "summary": "Get status of a single asynchronous operation.",
+        "operationId": "getExternalLoadBalancerOperation",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/networking/load-balancers/{load_balancer_id}": {
+      "get": {
+        "tags": [
+          "External-Load-Balancers"
+        ],
+        "summary": "Retrieve information about a particular external load balancer belonging to the project.",
+        "operationId": "getExternalLoadBalancer",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "LoadBalancerID",
+            "name": "load_balancer_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getExternalLoadBalancerResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "description": "This endpoint deletes an external load balancer identified by its ID within the specified project. No request body or query parameters are required.",
+        "tags": [
+          "External-Load-Balancers"
+        ],
+        "summary": "Delete an external load balancer.",
+        "operationId": "deleteExternalLoadBalancer",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "description": "The project ID to which the external load balancer belongs.",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "LoadBalancerID",
+            "description": "The ID of the external load balancer to delete.",
+            "name": "load_balancer_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/asyncOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "description": "This endpoint updates the configuration of an existing external load balancer. The request must include the load balancer ID and optionally the health check options and/or listen ports and associated backends.",
+        "tags": [
+          "External-Load-Balancers"
+        ],
+        "summary": "Update an existing external load balancer.",
+        "operationId": "updateExternalLoadBalancer",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "description": "The project ID to which the external load balancer belongs.",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "LoadBalancerID",
+            "description": "The ID of the external load balancer to update.",
+            "name": "load_balancer_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Request body for updating the external load balancer.",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ExternalLoadBalancerPatchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/updateExternalLoadBalancerResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
           },
           "500": {
             "$ref": "#/responses/serverError"
@@ -8584,21 +8620,7 @@
     "KubernetesClusterPatchRequest": {
       "type": "object",
       "title": "KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.",
-      "required": [
-        "add_ons"
-      ],
       "properties": {
-        "add_ons": {
-          "description": "List of add-ons to be included to the cluster.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-go-name": "AddOns",
-          "example": [
-            "crusoe_csi"
-          ]
-        },
         "configuration": {
           "description": "Configuration setting is deprecated, defaults to HA configuration.",
           "type": "string",
@@ -9282,6 +9304,21 @@
             "$ref": "#/definitions/Operation"
           },
           "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ListOrgQuotasResponse": {
+      "type": "object",
+      "title": "ListOrgQuotasResponse is the response for listing a org's quotas.",
+      "properties": {
+        "quotas": {
+          "description": "Quotas are all returned org quotas",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrgQuota"
+          },
+          "x-go-name": "Quotas"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -10183,6 +10220,51 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "OrgQuota": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "description": "Available is the remaining quota available to the org",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Available",
+          "example": 6
+        },
+        "description": {
+          "description": "Description is the customer-facing description of the quota",
+          "type": "string",
+          "x-go-name": "Description",
+          "example": "Users"
+        },
+        "max": {
+          "description": "Max is the maximum quota allowed for the resource in the org",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Max",
+          "example": 10
+        },
+        "programmatic_name": {
+          "description": "ProgrammaticName is the external, human-friendly identifier for the quota",
+          "type": "string",
+          "x-go-name": "ProgrammaticName",
+          "example": "users"
+        },
+        "type": {
+          "description": "Type is the enum quota type. This is meant to be used internally",
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "ORG_QUOTAS_MAXIMUM_USERS"
+        },
+        "used": {
+          "description": "Used is the current quota consumed by the org",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Used",
+          "example": 4
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "OrganizationMFA": {
       "type": "object",
       "title": "OrganizationMFA contains details about a single required MFA method.",
@@ -10341,13 +10423,21 @@
       "required": [
         "instances",
         "disks",
+        "snapshots",
+        "images",
         "vpc_networks"
       ],
       "properties": {
         "disks": {
           "$ref": "#/definitions/ProjectResourceDetails"
         },
+        "images": {
+          "$ref": "#/definitions/ProjectResourceDetails"
+        },
         "instances": {
+          "$ref": "#/definitions/ProjectResourceDetails"
+        },
+        "snapshots": {
           "$ref": "#/definitions/ProjectResourceDetails"
         },
         "vpc_networks": {
@@ -11812,6 +11902,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListOperationsResponseV1Alpha5"
+      }
+    },
+    "listOrgQuotasResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListOrgQuotasResponse"
       }
     },
     "listProjectQuotasResponse": {

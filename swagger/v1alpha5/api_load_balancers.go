@@ -43,7 +43,7 @@ func (a *LoadBalancersApiService) CreateLoadBalancer(ctx context.Context, body L
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/load-balancers"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/internal-load-balancers"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -173,7 +173,7 @@ func (a *LoadBalancersApiService) DeleteLoadBalancer(ctx context.Context, projec
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/load-balancers/{load_balancer_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/internal-load-balancers/{load_balancer_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"load_balancer_id"+"}", fmt.Sprintf("%v", loadBalancerId), -1)
 
@@ -291,7 +291,7 @@ func (a *LoadBalancersApiService) GetLoadBalancer(ctx context.Context, projectId
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/load-balancers/{load_balancer_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/internal-load-balancers/{load_balancer_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"load_balancer_id"+"}", fmt.Sprintf("%v", loadBalancerId), -1)
 
@@ -408,7 +408,7 @@ func (a *LoadBalancersApiService) ListLoadBalancers(ctx context.Context, project
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/load-balancers"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/internal-load-balancers"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -527,7 +527,7 @@ func (a *LoadBalancersApiService) PatchLoadBalancer(ctx context.Context, body Lo
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/load-balancers/{load_balancer_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/internal-load-balancers/{load_balancer_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"load_balancer_id"+"}", fmt.Sprintf("%v", loadBalancerId), -1)
 

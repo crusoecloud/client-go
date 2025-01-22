@@ -45,7 +45,7 @@ func (a *LoadBalancerOperationsApiService) GetNetworkingLoadBalancersOperation(c
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/load-balancers/operations/{operation_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/internal-load-balancers/operations/{operation_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"operation_id"+"}", fmt.Sprintf("%v", operationId), -1)
 
@@ -181,7 +181,7 @@ func (a *LoadBalancerOperationsApiService) ListNetworkingLoadBalancersOperations
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/load-balancers/operations"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/internal-load-balancers/operations"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)

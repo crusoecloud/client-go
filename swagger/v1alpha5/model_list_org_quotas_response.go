@@ -8,7 +8,7 @@
  */
 package swagger
 
-type KubernetesClusterPatchRequest struct {
-	// Configuration setting is deprecated, defaults to HA configuration.
-	Configuration string `json:"configuration,omitempty"`
+type ListOrgQuotasResponse struct {
+	// Quotas are all returned org quotas
+	Quotas []OrgQuota `json:"quotas,omitempty"`
 }
