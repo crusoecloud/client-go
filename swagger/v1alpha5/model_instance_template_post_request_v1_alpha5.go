@@ -9,6 +9,8 @@
 package swagger
 
 type InstanceTemplatePostRequestV1Alpha5 struct {
+	// Custom image to use for all VMs created from this instance template. Only one of Image or CustomImage should be supplied at once.
+	CustomImageName string `json:"custom_image_name,omitempty"`
 	// Disks to create for all VMs created from this instance template.
 	Disks []DiskTemplate `json:"disks,omitempty"`
 	// IB Partition to use for all VMs created from this instance template. Should only be provided for IB-enabled VM types. This is location-specific and must be provided if location is provided.
