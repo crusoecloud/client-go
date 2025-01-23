@@ -8040,6 +8040,12 @@
         "ssh_public_key"
       ],
       "properties": {
+        "custom_image_name": {
+          "description": "Custom image to use for all VMs created from this instance template.\nOnly one of Image or CustomImage should be supplied at once.",
+          "type": "string",
+          "x-go-name": "CustomImage",
+          "example": "ubuntu:20.04"
+        },
         "disks": {
           "description": "Disks to create for all VMs created from this instance template.",
           "type": "array",
@@ -8368,6 +8374,11 @@
           "type": "integer",
           "format": "int64",
           "x-go-name": "CommitmentPeriod"
+        },
+        "custom_image": {
+          "description": "either image or custom image should be supplied, not both.",
+          "type": "string",
+          "x-go-name": "CustomImage"
         },
         "disks": {
           "type": "array",
