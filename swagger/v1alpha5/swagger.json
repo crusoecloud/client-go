@@ -9746,8 +9746,11 @@
           "example": "\"The requested resource is out of stock. Please try again later.\""
         },
         "locations": {
-          "description": "Region name of where the action is performed if applicable",
-          "type": "string",
+          "description": "Region names of where the action is performed if applicable",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
           "x-go-name": "Location",
           "example": "us-east1"
         },
@@ -9795,13 +9798,19 @@
         },
         "target_ids": {
           "description": "The targets of the action\nrequired",
-          "type": "string",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
           "x-go-name": "Target",
           "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb,6ac4d027-ee2a-4c0c-9b6f-e8638a7ae867"
         },
         "target_names": {
           "description": "The target names of the action",
-          "type": "string",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
           "x-go-name": "TargetName",
           "example": "vm-test-1,vm-test-2"
         },
