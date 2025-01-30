@@ -11,6 +11,8 @@ package swagger
 type InstanceTemplate struct {
 	// Time the instance template was created.
 	CreatedAt string `json:"created_at"`
+	// OS Image to use for all VMs created from this instance template.
+	CustomImageName string `json:"custom_image_name,omitempty"`
 	// Disks to create for all VMs created from this instance template.
 	Disks []DiskTemplate `json:"disks,omitempty"`
 	// IB Partition to use for all VMs created from this instance template. Only used for IB-enabled VM types. Empty if template has no location.

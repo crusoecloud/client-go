@@ -7922,6 +7922,12 @@
           "x-go-name": "CreatedAt",
           "example": "2024-01-01T00:00:00Z"
         },
+        "custom_image_name": {
+          "description": "OS Image to use for all VMs created from this instance template.",
+          "type": "string",
+          "x-go-name": "CustomImage",
+          "example": "ubuntu:20.04"
+        },
         "disks": {
           "description": "Disks to create for all VMs created from this instance template.",
           "type": "array",
