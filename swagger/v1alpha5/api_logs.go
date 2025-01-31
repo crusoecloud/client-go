@@ -31,42 +31,36 @@ LogsApiService Get audit logs belonging to the specified organization. User must
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param organizationId
  * @param optional nil or *LogsApiGetAuditLogsOpts - Optional Parameters:
-     * @param "ProjectIds" (optional.String) -
+     * @param "ProjectIds" (optional.Interface of []string) -
      * @param "StartTime" (optional.String) -
      * @param "EndTime" (optional.String) -
-     * @param "Actions" (optional.String) -
-     * @param "ActorIds" (optional.String) -
-     * @param "ActorEmails" (optional.String) -
-     * @param "ActorTypes" (optional.String) -
-     * @param "TargetIds" (optional.String) -
-     * @param "TargetTypes" (optional.String) -
-     * @param "TargetNames" (optional.String) -
-     * @param "AssociateIds" (optional.String) -
-     * @param "AssociateTypes" (optional.String) -
-     * @param "AssociateNames" (optional.String) -
-     * @param "Locations" (optional.String) -
-     * @param "Statuses" (optional.String) -
-     * @param "Surfaces" (optional.String) -
+     * @param "Actions" (optional.Interface of []string) -
+     * @param "ActorIds" (optional.Interface of []string) -
+     * @param "ActorEmails" (optional.Interface of []string) -
+     * @param "ActorTypes" (optional.Interface of []string) -
+     * @param "TargetIds" (optional.Interface of []string) -
+     * @param "TargetTypes" (optional.Interface of []string) -
+     * @param "TargetNames" (optional.Interface of []string) -
+     * @param "Locations" (optional.Interface of []string) -
+     * @param "Statuses" (optional.Interface of []string) -
+     * @param "Surfaces" (optional.Interface of []string) -
 @return AuditLogsGetResponse
 */
 
 type LogsApiGetAuditLogsOpts struct {
-	ProjectIds     optional.String
-	StartTime      optional.String
-	EndTime        optional.String
-	Actions        optional.String
-	ActorIds       optional.String
-	ActorEmails    optional.String
-	ActorTypes     optional.String
-	TargetIds      optional.String
-	TargetTypes    optional.String
-	TargetNames    optional.String
-	AssociateIds   optional.String
-	AssociateTypes optional.String
-	AssociateNames optional.String
-	Locations      optional.String
-	Statuses       optional.String
-	Surfaces       optional.String
+	ProjectIds  optional.Interface
+	StartTime   optional.String
+	EndTime     optional.String
+	Actions     optional.Interface
+	ActorIds    optional.Interface
+	ActorEmails optional.Interface
+	ActorTypes  optional.Interface
+	TargetIds   optional.Interface
+	TargetTypes optional.Interface
+	TargetNames optional.Interface
+	Locations   optional.Interface
+	Statuses    optional.Interface
+	Surfaces    optional.Interface
 }
 
 func (a *LogsApiService) GetAuditLogs(ctx context.Context, organizationId string, localVarOptionals *LogsApiGetAuditLogsOpts) (AuditLogsGetResponse, *http.Response, error) {
@@ -87,7 +81,7 @@ func (a *LogsApiService) GetAuditLogs(ctx context.Context, organizationId string
 	localVarFormParams := url.Values{}
 
 	if localVarOptionals != nil && localVarOptionals.ProjectIds.IsSet() {
-		localVarQueryParams.Add("project_ids", parameterToString(localVarOptionals.ProjectIds.Value(), ""))
+		localVarQueryParams.Add("project_ids", parameterToString(localVarOptionals.ProjectIds.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.StartTime.IsSet() {
 		localVarQueryParams.Add("start_time", parameterToString(localVarOptionals.StartTime.Value(), ""))
@@ -96,43 +90,34 @@ func (a *LogsApiService) GetAuditLogs(ctx context.Context, organizationId string
 		localVarQueryParams.Add("end_time", parameterToString(localVarOptionals.EndTime.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.Actions.IsSet() {
-		localVarQueryParams.Add("actions", parameterToString(localVarOptionals.Actions.Value(), ""))
+		localVarQueryParams.Add("actions", parameterToString(localVarOptionals.Actions.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.ActorIds.IsSet() {
-		localVarQueryParams.Add("actor_ids", parameterToString(localVarOptionals.ActorIds.Value(), ""))
+		localVarQueryParams.Add("actor_ids", parameterToString(localVarOptionals.ActorIds.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.ActorEmails.IsSet() {
-		localVarQueryParams.Add("actor_emails", parameterToString(localVarOptionals.ActorEmails.Value(), ""))
+		localVarQueryParams.Add("actor_emails", parameterToString(localVarOptionals.ActorEmails.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.ActorTypes.IsSet() {
-		localVarQueryParams.Add("actor_types", parameterToString(localVarOptionals.ActorTypes.Value(), ""))
+		localVarQueryParams.Add("actor_types", parameterToString(localVarOptionals.ActorTypes.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.TargetIds.IsSet() {
-		localVarQueryParams.Add("target_ids", parameterToString(localVarOptionals.TargetIds.Value(), ""))
+		localVarQueryParams.Add("target_ids", parameterToString(localVarOptionals.TargetIds.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.TargetTypes.IsSet() {
-		localVarQueryParams.Add("target_types", parameterToString(localVarOptionals.TargetTypes.Value(), ""))
+		localVarQueryParams.Add("target_types", parameterToString(localVarOptionals.TargetTypes.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.TargetNames.IsSet() {
-		localVarQueryParams.Add("target_names", parameterToString(localVarOptionals.TargetNames.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.AssociateIds.IsSet() {
-		localVarQueryParams.Add("associate_ids", parameterToString(localVarOptionals.AssociateIds.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.AssociateTypes.IsSet() {
-		localVarQueryParams.Add("associate_types", parameterToString(localVarOptionals.AssociateTypes.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.AssociateNames.IsSet() {
-		localVarQueryParams.Add("associate_names", parameterToString(localVarOptionals.AssociateNames.Value(), ""))
+		localVarQueryParams.Add("target_names", parameterToString(localVarOptionals.TargetNames.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.Locations.IsSet() {
-		localVarQueryParams.Add("locations", parameterToString(localVarOptionals.Locations.Value(), ""))
+		localVarQueryParams.Add("locations", parameterToString(localVarOptionals.Locations.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.Statuses.IsSet() {
-		localVarQueryParams.Add("statuses", parameterToString(localVarOptionals.Statuses.Value(), ""))
+		localVarQueryParams.Add("statuses", parameterToString(localVarOptionals.Statuses.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.Surfaces.IsSet() {
-		localVarQueryParams.Add("surfaces", parameterToString(localVarOptionals.Surfaces.Value(), ""))
+		localVarQueryParams.Add("surfaces", parameterToString(localVarOptionals.Surfaces.Value(), "csv"))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
