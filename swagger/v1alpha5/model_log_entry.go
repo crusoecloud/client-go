@@ -25,8 +25,8 @@ type LogEntry struct {
 	EndTime string `json:"end_time"`
 	// The error message of the request
 	ErrorMessage string `json:"error_message,omitempty"`
-	// Region name of where the action is performed if applicable
-	Locations string `json:"locations,omitempty"`
+	// Region names of where the action is performed if applicable
+	Locations []string `json:"locations,omitempty"`
 	// organization id
 	OrganizationId string `json:"organization_id,omitempty"`
 	// organization name
@@ -42,9 +42,9 @@ type LogEntry struct {
 	// Surface type of the request
 	Surface string `json:"surface"`
 	// The targets of the action required
-	TargetIds string `json:"target_ids,omitempty"`
+	TargetIds []string `json:"target_ids,omitempty"`
 	// The target names of the action
-	TargetNames string `json:"target_names,omitempty"`
+	TargetNames []string `json:"target_names,omitempty"`
 	// The target type of the action required
 	TargetType string `json:"target_type,omitempty"`
 }
