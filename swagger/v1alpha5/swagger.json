@@ -529,8 +529,8 @@
               "type": "string"
             },
             "example": "OK,Bad Request",
-            "x-go-name": "Statuses",
-            "name": "statuses",
+            "x-go-name": "Results",
+            "name": "results",
             "in": "query"
           },
           {
