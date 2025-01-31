@@ -42,7 +42,7 @@ AuditApiService Get audit logs belonging to the specified organization. User mus
      * @param "TargetTypes" (optional.Interface of []string) -
      * @param "TargetNames" (optional.Interface of []string) -
      * @param "Locations" (optional.Interface of []string) -
-     * @param "Statuses" (optional.Interface of []string) -
+     * @param "Results" (optional.Interface of []string) -
      * @param "Surfaces" (optional.Interface of []string) -
 @return AuditLogsGetResponse
 */
@@ -59,7 +59,7 @@ type AuditApiGetAuditLogsOpts struct {
 	TargetTypes optional.Interface
 	TargetNames optional.Interface
 	Locations   optional.Interface
-	Statuses    optional.Interface
+	Results     optional.Interface
 	Surfaces    optional.Interface
 }
 
@@ -113,8 +113,8 @@ func (a *AuditApiService) GetAuditLogs(ctx context.Context, organizationId strin
 	if localVarOptionals != nil && localVarOptionals.Locations.IsSet() {
 		localVarQueryParams.Add("locations", parameterToString(localVarOptionals.Locations.Value(), "csv"))
 	}
-	if localVarOptionals != nil && localVarOptionals.Statuses.IsSet() {
-		localVarQueryParams.Add("statuses", parameterToString(localVarOptionals.Statuses.Value(), "csv"))
+	if localVarOptionals != nil && localVarOptionals.Results.IsSet() {
+		localVarQueryParams.Add("results", parameterToString(localVarOptionals.Results.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.Surfaces.IsSet() {
 		localVarQueryParams.Add("surfaces", parameterToString(localVarOptionals.Surfaces.Value(), "csv"))
