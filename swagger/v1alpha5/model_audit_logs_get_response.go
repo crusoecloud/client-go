@@ -10,4 +10,8 @@ package swagger
 
 type AuditLogsGetResponse struct {
 	Items []LogEntry `json:"items"`
+	// Base64 encoded token representing the starting of the next page of log entry. Empty if currently on the last page.
+	NextPageToken string `json:"next_page_token,omitempty"`
+	// Base64 encoded token representing the starting previous page of log entry. Empty if currently on the first page.
+	PrevPageToken string `json:"prev_page_token,omitempty"`
 }
