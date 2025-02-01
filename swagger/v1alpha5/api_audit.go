@@ -44,6 +44,9 @@ AuditApiService Get audit logs belonging to the specified organization. User mus
      * @param "Locations" (optional.Interface of []string) -
      * @param "Results" (optional.Interface of []string) -
      * @param "Surfaces" (optional.Interface of []string) -
+     * @param "Limit" (optional.String) -
+     * @param "NextToken" (optional.String) -
+     * @param "PrevToken" (optional.String) -
 @return AuditLogsGetResponse
 */
 
@@ -61,6 +64,9 @@ type AuditApiGetAuditLogsOpts struct {
 	Locations   optional.Interface
 	Results     optional.Interface
 	Surfaces    optional.Interface
+	Limit       optional.String
+	NextToken   optional.String
+	PrevToken   optional.String
 }
 
 func (a *AuditApiService) GetAuditLogs(ctx context.Context, organizationId string, localVarOptionals *AuditApiGetAuditLogsOpts) (AuditLogsGetResponse, *http.Response, error) {
@@ -118,6 +124,15 @@ func (a *AuditApiService) GetAuditLogs(ctx context.Context, organizationId strin
 	}
 	if localVarOptionals != nil && localVarOptionals.Surfaces.IsSet() {
 		localVarQueryParams.Add("surfaces", parameterToString(localVarOptionals.Surfaces.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.Limit.IsSet() {
+		localVarQueryParams.Add("limit", parameterToString(localVarOptionals.Limit.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.NextToken.IsSet() {
+		localVarQueryParams.Add("next_token", parameterToString(localVarOptionals.NextToken.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PrevToken.IsSet() {
+		localVarQueryParams.Add("prev_token", parameterToString(localVarOptionals.PrevToken.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}

@@ -542,6 +542,27 @@
             "x-go-name": "Surfaces",
             "name": "surfaces",
             "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "20",
+            "x-go-name": "Limit",
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "bXktZmlyc3Qtdm0",
+            "x-go-name": "NextToken",
+            "name": "next_token",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "bXktZmlyc3Qtdm0",
+            "x-go-name": "PrevToken",
+            "name": "prev_token",
+            "in": "query"
           }
         ],
         "responses": {
@@ -6251,6 +6272,18 @@
             "$ref": "#/definitions/LogEntry"
           },
           "x-go-name": "Items"
+        },
+        "next_page_token": {
+          "description": "Base64 encoded token representing the starting of the next page of log entry.\nEmpty if currently on the last page.",
+          "type": "string",
+          "x-go-name": "NextPageToken",
+          "example": "bXktbGFzdC12bQ"
+        },
+        "prev_page_token": {
+          "description": "Base64 encoded token representing the starting previous page of log entry.\nEmpty if currently on the first page.",
+          "type": "string",
+          "x-go-name": "PrevPageToken",
+          "example": "bXktZmlyc3Qtdm0"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
