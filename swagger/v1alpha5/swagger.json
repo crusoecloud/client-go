@@ -538,6 +538,16 @@
             "items": {
               "type": "string"
             },
+            "example": "OK,Bad Request",
+            "x-go-name": "ResultsNot",
+            "name": "results_not",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "example": "Browser,Crusoe Terraform/v0.5.21 please make sure the values are URL encoded.",
             "x-go-name": "Surfaces",
             "name": "surfaces",
