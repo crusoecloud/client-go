@@ -43,6 +43,7 @@ LogsApiService Get audit logs belonging to the specified organization. User must
      * @param "TargetNames" (optional.Interface of []string) -
      * @param "Locations" (optional.Interface of []string) -
      * @param "Results" (optional.Interface of []string) -
+     * @param "ResultsNot" (optional.Interface of []string) -
      * @param "Surfaces" (optional.Interface of []string) -
      * @param "Limit" (optional.String) -
      * @param "NextToken" (optional.String) -
@@ -63,6 +64,7 @@ type LogsApiGetAuditLogsOpts struct {
 	TargetNames optional.Interface
 	Locations   optional.Interface
 	Results     optional.Interface
+	ResultsNot  optional.Interface
 	Surfaces    optional.Interface
 	Limit       optional.String
 	NextToken   optional.String
@@ -121,6 +123,9 @@ func (a *LogsApiService) GetAuditLogs(ctx context.Context, organizationId string
 	}
 	if localVarOptionals != nil && localVarOptionals.Results.IsSet() {
 		localVarQueryParams.Add("results", parameterToString(localVarOptionals.Results.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.ResultsNot.IsSet() {
+		localVarQueryParams.Add("results_not", parameterToString(localVarOptionals.ResultsNot.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.Surfaces.IsSet() {
 		localVarQueryParams.Add("surfaces", parameterToString(localVarOptionals.Surfaces.Value(), "csv"))
