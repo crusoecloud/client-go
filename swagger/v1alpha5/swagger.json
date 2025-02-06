@@ -5277,11 +5277,40 @@
         "parameters": [
           {
             "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "x-go-name": "ProjectID",
             "name": "project_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "x-go-name": "DiskIds",
+            "name": "disk_ids",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "x-go-name": "DiskNames",
+            "name": "disk_names",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "x-go-name": "ExcludeOs",
+            "name": "exclude_os",
+            "in": "query"
           }
         ],
         "responses": {

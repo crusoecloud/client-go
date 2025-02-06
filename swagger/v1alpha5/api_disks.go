@@ -15,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -395,12 +397,24 @@ func (a *DisksApiService) GetDisk(ctx context.Context, projectId string, diskId 
 /*
 DisksApiService Retrieve details about all disks that belong to the logged in user.
 Size of disks will be in gibibytes (GiB)
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param projectId
+ * @param optional nil or *DisksApiListDisksOpts - Optional Parameters:
+     * @param "DiskIds" (optional.Interface of []string) -
+     * @param "Location" (optional.String) -
+     * @param "DiskNames" (optional.Interface of []string) -
+     * @param "ExcludeOs" (optional.Bool) -
 @return ListDisksResponseV1Alpha5
 */
-func (a *DisksApiService) ListDisks(ctx context.Context, projectId string) (ListDisksResponseV1Alpha5, *http.Response, error) {
+
+type DisksApiListDisksOpts struct {
+	DiskIds   optional.Interface
+	Location  optional.String
+	DiskNames optional.Interface
+	ExcludeOs optional.Bool
+}
+
+func (a *DisksApiService) ListDisks(ctx context.Context, projectId string, localVarOptionals *DisksApiListDisksOpts) (ListDisksResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -417,6 +431,18 @@ func (a *DisksApiService) ListDisks(ctx context.Context, projectId string) (List
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.DiskIds.IsSet() {
+		localVarQueryParams.Add("disk_ids", parameterToString(localVarOptionals.DiskIds.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
+		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.DiskNames.IsSet() {
+		localVarQueryParams.Add("disk_names", parameterToString(localVarOptionals.DiskNames.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.ExcludeOs.IsSet() {
+		localVarQueryParams.Add("exclude_os", parameterToString(localVarOptionals.ExcludeOs.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
