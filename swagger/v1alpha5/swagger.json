@@ -8824,7 +8824,8 @@
         "state",
         "type",
         "created_at",
-        "updated_at"
+        "updated_at",
+        "reservation_id"
       ],
       "properties": {
         "cluster_id": {
@@ -8889,6 +8890,12 @@
           "type": "string",
           "x-go-name": "ProjectID",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
+        },
+        "reservation_id": {
+          "description": "The ID of the billing reservation associated with the node pool",
+          "type": "string",
+          "x-go-name": "ReservationID",
+          "example": "ca39e669-47ee-456b-968d-303234fbf99f"
         },
         "state": {
           "description": "State of the node pool",
@@ -9000,6 +9007,9 @@
           "type": "string",
           "x-go-name": "ProductName",
           "example": "a100.2x"
+        },
+        "reservation_specification": {
+          "$ref": "#/definitions/ReservationSpecification"
         },
         "ssh_public_key": {
           "description": "SSH public key to use for all VMs created from this node pool.",
