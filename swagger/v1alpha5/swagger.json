@@ -7676,11 +7676,6 @@
           "x-go-name": "IsRecoveryFlow",
           "example": true
         },
-        "latest_authmethod": {
-          "type": "string",
-          "x-go-name": "LatestAuthMethod",
-          "example": "password"
-        },
         "name": {
           "type": "string",
           "x-go-name": "Name",
@@ -7695,6 +7690,9 @@
           "type": "string",
           "x-go-name": "Role",
           "example": "Admin"
+        },
+        "user_state": {
+          "$ref": "#/definitions/UserStateEnum"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -11203,6 +11201,10 @@
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "UserStateEnum": {
+      "type": "string",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/auth"
     },
     "VMAttachmentType": {
       "type": "string",
