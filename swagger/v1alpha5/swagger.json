@@ -12334,6 +12334,7 @@
         "VPC-Firewall-Rule-Operations",
         "VPC-Networks",
         "VPC-Subnets",
+        "IB-Partitions",
         "Internet-Gateways",
         "Load-Balancers",
         "Load-Balancer-Operations"
