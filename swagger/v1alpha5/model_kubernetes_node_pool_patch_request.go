@@ -9,8 +9,12 @@
 package swagger
 
 type KubernetesNodePoolPatchRequest struct {
+	// The action to perform on the NodePool. RESERVE and UNRESERVE operations are done synchronously, and so will have succeeded with a 200 response. Defaults to UPDATE if no action specified.
+	Action string `json:"action"`
 	// The number of nodes to be created.
 	Count int64 `json:"count"`
 	// Labels assigned to the node pool
 	NodeLabels map[string]string `json:"node_labels,omitempty"`
+	// The reservation ID of the node pool.
+	ReservationId string `json:"reservation_id,omitempty"`
 }

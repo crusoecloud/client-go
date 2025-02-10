@@ -8395,7 +8395,7 @@
       ],
       "properties": {
         "action": {
-          "description": "The action to perform on the VM. REESRVE and UNRESERVE operations are done synchronously,\nand so will have succeeded with a 200 response.",
+          "description": "The action to perform on the VM. RESERVE and UNRESERVE operations are done synchronously,\nand so will have succeeded with a 200 response.",
           "type": "string",
           "enum": [
             "START",
@@ -8954,9 +8954,22 @@
     "KubernetesNodePoolPatchRequest": {
       "type": "object",
       "required": [
-        "count"
+        "count",
+        "action"
       ],
       "properties": {
+        "action": {
+          "description": "The action to perform on the NodePool. RESERVE and UNRESERVE operations are done synchronously,\nand so will have succeeded with a 200 response. Defaults to UPDATE if no action specified.",
+          "type": "string",
+          "default": "UPDATE",
+          "enum": [
+            "RESERVE",
+            "UNRESERVE",
+            "UPDATE"
+          ],
+          "x-go-name": "Action",
+          "example": "UPDATE"
+        },
         "count": {
           "description": "The number of nodes to be created.",
           "type": "integer",
@@ -8974,6 +8987,12 @@
           "example": {
             "label": "my_node"
           }
+        },
+        "reservation_id": {
+          "description": "The reservation ID of the node pool.",
+          "type": "string",
+          "x-go-name": "ReservationID",
+          "example": "ca39e669-47ee-456b-968d-303234fbf99f"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
