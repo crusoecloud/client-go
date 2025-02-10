@@ -5277,11 +5277,40 @@
         "parameters": [
           {
             "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "x-go-name": "ProjectID",
             "name": "project_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "x-go-name": "DiskIds",
+            "name": "disk_ids",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "x-go-name": "DiskNames",
+            "name": "disk_names",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "x-go-name": "ExcludeOs",
+            "name": "exclude_os",
+            "in": "query"
           }
         ],
         "responses": {
@@ -7647,11 +7676,6 @@
           "x-go-name": "IsRecoveryFlow",
           "example": true
         },
-        "latest_authmethod": {
-          "type": "string",
-          "x-go-name": "LatestAuthMethod",
-          "example": "password"
-        },
         "name": {
           "type": "string",
           "x-go-name": "Name",
@@ -7666,6 +7690,9 @@
           "type": "string",
           "x-go-name": "Role",
           "example": "Admin"
+        },
+        "user_state": {
+          "$ref": "#/definitions/UserStateEnum"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -8368,7 +8395,7 @@
       ],
       "properties": {
         "action": {
-          "description": "The action to perform on the VM. REESRVE and UNRESERVE operations are done synchronously,\nand so will have succeeded with a 200 response.",
+          "description": "The action to perform on the VM. RESERVE and UNRESERVE operations are done synchronously,\nand so will have succeeded with a 200 response.",
           "type": "string",
           "enum": [
             "START",
@@ -8824,7 +8851,8 @@
         "state",
         "type",
         "created_at",
-        "updated_at"
+        "updated_at",
+        "reservation_id"
       ],
       "properties": {
         "cluster_id": {
@@ -8890,6 +8918,12 @@
           "x-go-name": "ProjectID",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
         },
+        "reservation_id": {
+          "description": "The ID of the billing reservation associated with the node pool",
+          "type": "string",
+          "x-go-name": "ReservationID",
+          "example": "ca39e669-47ee-456b-968d-303234fbf99f"
+        },
         "state": {
           "description": "State of the node pool",
           "type": "string",
@@ -8920,9 +8954,22 @@
     "KubernetesNodePoolPatchRequest": {
       "type": "object",
       "required": [
-        "count"
+        "count",
+        "action"
       ],
       "properties": {
+        "action": {
+          "description": "The action to perform on the NodePool. RESERVE and UNRESERVE operations are done synchronously,\nand so will have succeeded with a 200 response. Defaults to UPDATE if no action specified.",
+          "type": "string",
+          "default": "UPDATE",
+          "enum": [
+            "RESERVE",
+            "UNRESERVE",
+            "UPDATE"
+          ],
+          "x-go-name": "Action",
+          "example": "UPDATE"
+        },
         "count": {
           "description": "The number of nodes to be created.",
           "type": "integer",
@@ -8940,6 +8987,12 @@
           "example": {
             "label": "my_node"
           }
+        },
+        "reservation_id": {
+          "description": "The reservation ID of the node pool.",
+          "type": "string",
+          "x-go-name": "ReservationID",
+          "example": "ca39e669-47ee-456b-968d-303234fbf99f"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -9000,6 +9053,9 @@
           "type": "string",
           "x-go-name": "ProductName",
           "example": "a100.2x"
+        },
+        "reservation_specification": {
+          "$ref": "#/definitions/ReservationSpecification"
         },
         "ssh_public_key": {
           "description": "SSH public key to use for all VMs created from this node pool.",
@@ -11165,6 +11221,10 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "UserStateEnum": {
+      "type": "string",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/auth"
+    },
     "VMAttachmentType": {
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -12293,6 +12353,7 @@
         "VPC-Firewall-Rule-Operations",
         "VPC-Networks",
         "VPC-Subnets",
+        "IB-Partitions",
         "Internet-Gateways",
         "Load-Balancers",
         "Load-Balancer-Operations"

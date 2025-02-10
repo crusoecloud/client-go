@@ -22,7 +22,8 @@ type KubernetesNodePoolPostRequest struct {
 	// Version of the Kubernetes node pool.
 	NodePoolVersion string `json:"node_pool_version,omitempty"`
 	// Product name of the VM type to be created within this node pool.
-	ProductName string `json:"product_name"`
+	ProductName              string                    `json:"product_name"`
+	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
 	// SSH public key to use for all VMs created from this node pool.
 	SshPublicKey string `json:"ssh_public_key,omitempty"`
 	// The ID of the subnet to create the node pool in. Must be in the location of the cluster if specified. If not provided, the default subnet for the location will be used, if there is one.

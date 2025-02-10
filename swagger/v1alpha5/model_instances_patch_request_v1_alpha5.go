@@ -9,7 +9,7 @@
 package swagger
 
 type InstancesPatchRequestV1Alpha5 struct {
-	// The action to perform on the VM. REESRVE and UNRESERVE operations are done synchronously, and so will have succeeded with a 200 response.
+	// The action to perform on the VM. RESERVE and UNRESERVE operations are done synchronously, and so will have succeeded with a 200 response.
 	Action string `json:"action"`
 	// CommitmentPeriod is deprecated, please use reservationID instead
 	CommitmentPeriod    int64                       `json:"commitment_period,omitempty"`

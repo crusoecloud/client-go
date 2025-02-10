@@ -15,8 +15,8 @@ type Identity struct {
 	Email            string `json:"email"`
 	Id               string `json:"id"`
 	IsRecovery       bool   `json:"is_recovery,omitempty"`
-	LatestAuthmethod string `json:"latest_authmethod,omitempty"`
 	Name             string `json:"name"`
 	RegistrationType string `json:"registration_type,omitempty"`
 	Role             string `json:"role"`
+	UserState        string `json:"user_state,omitempty"`
 }

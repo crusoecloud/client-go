@@ -27,6 +27,8 @@ type KubernetesNodePool struct {
 	NodeLabels map[string]string `json:"node_labels"`
 	// The ID of the project this Kubernetes node pool belongs to.
 	ProjectId string `json:"project_id"`
+	// The ID of the billing reservation associated with the node pool
+	ReservationId string `json:"reservation_id"`
 	// State of the node pool
 	State string `json:"state"`
 	// The ID of the subnet this node pool belongs to.
