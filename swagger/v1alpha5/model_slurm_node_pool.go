@@ -8,7 +8,7 @@
  */
 package swagger
 
-type MtcNodePool struct {
+type SlurmNodePool struct {
 	// The ID of the slurm cluster this node pool belongs to.
 	ClusterId string `json:"cluster_id"`
 	// Desired number of nodes within the node pool.

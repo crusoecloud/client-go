@@ -8,6 +8,7 @@
  */
 package swagger
 
-type ListTrainingClustersResponse struct {
-	Items []MtcCluster `json:"items"`
+type SlurmNodePoolPatchRequest struct {
+	// The desired number of nodes to be created.
+	DesiredCount int64 `json:"desired_count"`
 }

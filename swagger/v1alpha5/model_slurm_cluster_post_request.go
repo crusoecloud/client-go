@@ -8,7 +8,7 @@
  */
 package swagger
 
-type MtcClusterPostRequest struct {
+type SlurmClusterPostRequest struct {
 	// Location to create the slurm cluster in.
 	Location string `json:"location"`
 	// Name of the slurm cluster.

@@ -24,10 +24,10 @@ var (
 	_ context.Context
 )
 
-type TrainingClusterNodePoolsApiService service
+type SlurmNodePoolsApiService service
 
 /*
-TrainingClusterNodePoolsApiService Create a new training node pool owned by the logged in user.
+SlurmNodePoolsApiService Create a new slurm node pool owned by the logged in user.
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
@@ -35,7 +35,7 @@ A successful response from this resource will contain the async operation.
 
 @return AsyncOperationResponse
 */
-func (a *TrainingClusterNodePoolsApiService) CreateTrainingClusterNodePool(ctx context.Context, body MtcNodePoolPostRequest, projectId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *SlurmNodePoolsApiService) CreateSlurmNodePool(ctx context.Context, body SlurmNodePoolPostRequest, projectId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -45,7 +45,7 @@ func (a *TrainingClusterNodePoolsApiService) CreateTrainingClusterNodePool(ctx c
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/mtc/nodepools"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/nodepools"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -157,14 +157,14 @@ func (a *TrainingClusterNodePoolsApiService) CreateTrainingClusterNodePool(ctx c
 }
 
 /*
-TrainingClusterNodePoolsApiService Delete a node pool that the logged in user owns.
+SlurmNodePoolsApiService Delete a node pool that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
   - @param nodePoolId
 
 @return AsyncOperationResponse
 */
-func (a *TrainingClusterNodePoolsApiService) DeleteTrainingClusterNodePool(ctx context.Context, projectId string, nodePoolId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *SlurmNodePoolsApiService) DeleteSlurmNodePool(ctx context.Context, projectId string, nodePoolId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
@@ -174,7 +174,7 @@ func (a *TrainingClusterNodePoolsApiService) DeleteTrainingClusterNodePool(ctx c
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/mtc/nodepools/{node_pool_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/nodepools/{node_pool_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"node_pool_id"+"}", fmt.Sprintf("%v", nodePoolId), -1)
 
@@ -275,24 +275,24 @@ func (a *TrainingClusterNodePoolsApiService) DeleteTrainingClusterNodePool(ctx c
 }
 
 /*
-TrainingClusterNodePoolsApiService Retrieve information about a particular training node pool belonging to the project.
+SlurmNodePoolsApiService Retrieve information about a particular slurm node pool belonging to the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
   - @param nodePoolId
 
-@return MtcNodePool
+@return SlurmNodePool
 */
-func (a *TrainingClusterNodePoolsApiService) GetTrainingClusterNodePool(ctx context.Context, projectId string, nodePoolId string) (MtcNodePool, *http.Response, error) {
+func (a *SlurmNodePoolsApiService) GetSlurmNodePool(ctx context.Context, projectId string, nodePoolId string) (SlurmNodePool, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue MtcNodePool
+		localVarReturnValue SlurmNodePool
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/mtc/nodepools/{node_pool_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/nodepools/{node_pool_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"node_pool_id"+"}", fmt.Sprintf("%v", nodePoolId), -1)
 
@@ -347,7 +347,7 @@ func (a *TrainingClusterNodePoolsApiService) GetTrainingClusterNodePool(ctx cont
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v MtcNodePool
+			var v SlurmNodePool
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -383,31 +383,31 @@ func (a *TrainingClusterNodePoolsApiService) GetTrainingClusterNodePool(ctx cont
 }
 
 /*
-TrainingClusterNodePoolsApiService Retrieve information about training node pools belonging to a project or cluster.
+SlurmNodePoolsApiService Retrieve information about slurm node pools belonging to a project or cluster.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
- * @param optional nil or *TrainingClusterNodePoolsApiListTrainingClusterNodePoolsOpts - Optional Parameters:
+ * @param optional nil or *SlurmNodePoolsApiListSlurmNodePoolsOpts - Optional Parameters:
      * @param "ClusterId" (optional.String) -
      * @param "Name" (optional.String) -
-@return ListMtcNodePoolsResponse
+@return ListSlurmNodePoolsResponse
 */
 
-type TrainingClusterNodePoolsApiListTrainingClusterNodePoolsOpts struct {
+type SlurmNodePoolsApiListSlurmNodePoolsOpts struct {
 	ClusterId optional.String
 	Name      optional.String
 }
 
-func (a *TrainingClusterNodePoolsApiService) ListTrainingClusterNodePools(ctx context.Context, projectId string, localVarOptionals *TrainingClusterNodePoolsApiListTrainingClusterNodePoolsOpts) (ListMtcNodePoolsResponse, *http.Response, error) {
+func (a *SlurmNodePoolsApiService) ListSlurmNodePools(ctx context.Context, projectId string, localVarOptionals *SlurmNodePoolsApiListSlurmNodePoolsOpts) (ListSlurmNodePoolsResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListMtcNodePoolsResponse
+		localVarReturnValue ListSlurmNodePoolsResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/mtc/nodepools"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/nodepools"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -467,7 +467,7 @@ func (a *TrainingClusterNodePoolsApiService) ListTrainingClusterNodePools(ctx co
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListMtcNodePoolsResponse
+			var v ListSlurmNodePoolsResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -503,7 +503,7 @@ func (a *TrainingClusterNodePoolsApiService) ListTrainingClusterNodePools(ctx co
 }
 
 /*
-TrainingClusterNodePoolsApiService Update a node pool that the logged in user owns.
+SlurmNodePoolsApiService Update a node pool that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
@@ -511,7 +511,7 @@ TrainingClusterNodePoolsApiService Update a node pool that the logged in user ow
 
 @return AsyncOperationResponse
 */
-func (a *TrainingClusterNodePoolsApiService) UpdateTrainingClusterNodePool(ctx context.Context, body MtcNodePoolPatchRequest, projectId string, nodePoolId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *SlurmNodePoolsApiService) UpdateSlurmNodePool(ctx context.Context, body SlurmNodePoolPatchRequest, projectId string, nodePoolId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
@@ -521,7 +521,7 @@ func (a *TrainingClusterNodePoolsApiService) UpdateTrainingClusterNodePool(ctx c
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/mtc/nodepools/{node_pool_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/nodepools/{node_pool_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"node_pool_id"+"}", fmt.Sprintf("%v", nodePoolId), -1)
 
