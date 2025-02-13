@@ -24,10 +24,10 @@ var (
 	_ context.Context
 )
 
-type TrainingClustersApiService service
+type SlurmClustersApiService service
 
 /*
-TrainingClustersApiService Create a new training cluster owned by the logged in user.
+SlurmClustersApiService Create a new slurm cluster owned by the logged in user.
 A successful response from this resource will contain the async operation ID.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
@@ -35,7 +35,7 @@ A successful response from this resource will contain the async operation ID.
 
 @return AsyncOperationResponse
 */
-func (a *TrainingClustersApiService) CreateTrainingCluster(ctx context.Context, body MtcClusterPostRequest, projectId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *SlurmClustersApiService) CreateSlurmCluster(ctx context.Context, body SlurmClusterPostRequest, projectId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -45,7 +45,7 @@ func (a *TrainingClustersApiService) CreateTrainingCluster(ctx context.Context, 
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/mtc/clusters"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/clusters"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -157,14 +157,14 @@ func (a *TrainingClustersApiService) CreateTrainingCluster(ctx context.Context, 
 }
 
 /*
-TrainingClustersApiService Delete a training cluster that the logged in user owns.
+SlurmClustersApiService Delete a slurm cluster that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
   - @param clusterId
 
 @return AsyncOperationResponse
 */
-func (a *TrainingClustersApiService) DeleteTrainingCluster(ctx context.Context, projectId string, clusterId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *SlurmClustersApiService) DeleteSlurmCluster(ctx context.Context, projectId string, clusterId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
@@ -174,7 +174,7 @@ func (a *TrainingClustersApiService) DeleteTrainingCluster(ctx context.Context, 
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/mtc/clusters/{cluster_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/clusters/{cluster_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
 
@@ -275,30 +275,30 @@ func (a *TrainingClustersApiService) DeleteTrainingCluster(ctx context.Context, 
 }
 
 /*
-TrainingClustersApiService Retrieve information about a particular training cluster belonged to the project.
+SlurmClustersApiService Retrieve information about a particular slurm cluster belonged to the project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param clusterId
- * @param optional nil or *TrainingClustersApiGetTrainingClusterOpts - Optional Parameters:
+ * @param optional nil or *SlurmClustersApiGetSlurmClusterOpts - Optional Parameters:
      * @param "Name" (optional.String) -
-@return MtcCluster
+@return SlurmCluster
 */
 
-type TrainingClustersApiGetTrainingClusterOpts struct {
+type SlurmClustersApiGetSlurmClusterOpts struct {
 	Name optional.String
 }
 
-func (a *TrainingClustersApiService) GetTrainingCluster(ctx context.Context, projectId string, clusterId string, localVarOptionals *TrainingClustersApiGetTrainingClusterOpts) (MtcCluster, *http.Response, error) {
+func (a *SlurmClustersApiService) GetSlurmCluster(ctx context.Context, projectId string, clusterId string, localVarOptionals *SlurmClustersApiGetSlurmClusterOpts) (SlurmCluster, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue MtcCluster
+		localVarReturnValue SlurmCluster
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/mtc/clusters/{cluster_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/clusters/{cluster_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
 
@@ -356,7 +356,7 @@ func (a *TrainingClustersApiService) GetTrainingCluster(ctx context.Context, pro
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v MtcCluster
+			var v SlurmCluster
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -392,29 +392,29 @@ func (a *TrainingClustersApiService) GetTrainingCluster(ctx context.Context, pro
 }
 
 /*
-TrainingClustersApiService Retrieve information about training clusters belonged to the project.
+SlurmClustersApiService Retrieve information about slurm clusters belonged to the project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
- * @param optional nil or *TrainingClustersApiListTrainingClustersOpts - Optional Parameters:
+ * @param optional nil or *SlurmClustersApiListSlurmClustersOpts - Optional Parameters:
      * @param "Name" (optional.String) -
-@return ListTrainingClustersResponse
+@return ListSlurmClustersResponse
 */
 
-type TrainingClustersApiListTrainingClustersOpts struct {
+type SlurmClustersApiListSlurmClustersOpts struct {
 	Name optional.String
 }
 
-func (a *TrainingClustersApiService) ListTrainingClusters(ctx context.Context, projectId string, localVarOptionals *TrainingClustersApiListTrainingClustersOpts) (ListTrainingClustersResponse, *http.Response, error) {
+func (a *SlurmClustersApiService) ListSlurmClusters(ctx context.Context, projectId string, localVarOptionals *SlurmClustersApiListSlurmClustersOpts) (ListSlurmClustersResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListTrainingClustersResponse
+		localVarReturnValue ListSlurmClustersResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/mtc/clusters"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/clusters"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -471,7 +471,7 @@ func (a *TrainingClustersApiService) ListTrainingClusters(ctx context.Context, p
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListTrainingClustersResponse
+			var v ListSlurmClustersResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

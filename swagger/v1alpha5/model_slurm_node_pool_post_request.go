@@ -8,7 +8,7 @@
  */
 package swagger
 
-type MtcNodePoolPostRequest struct {
+type SlurmNodePoolPostRequest struct {
 	// Cluster ID of the cluster this node pool belongs to.
 	ClusterId string `json:"cluster_id"`
 	// The desired number of nodes to be created.

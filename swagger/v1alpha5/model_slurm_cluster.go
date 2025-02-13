@@ -8,7 +8,7 @@
  */
 package swagger
 
-type MtcCluster struct {
+type SlurmCluster struct {
 	// Controller node URL.
 	ControllerNodeUrl string `json:"controller_node_url"`
 	// The timestamp of the cluster creation since 1970-01-01T00:00:00Z in seconds.
