@@ -125,7 +125,7 @@
       "get": {
         "description": "A successful response from this resource will contain a map of\nall feature flags and the value assigned to each of them for the user.",
         "tags": [
-          "Feature-Flags"
+          "Feature Flags"
         ],
         "summary": "Get feature flags for the currently logged in user.",
         "operationId": "getFeatureFlags",
@@ -1013,7 +1013,7 @@
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe custom images resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
         "tags": [
-          "Custom-Image-Operations"
+          "Custom Image Operations"
         ],
         "summary": "Get status of asynchronous operations",
         "operationId": "listCustomImagesOperations",
@@ -1066,7 +1066,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe custom image resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "Custom-Image-Operations"
+          "Custom Image Operations"
         ],
         "summary": "Get status of a single asynchronous custom image operation",
         "operationId": "getCustomImagesOperation",
@@ -1301,7 +1301,7 @@
     "/projects/{project_id}/compute/instance-groups": {
       "get": {
         "tags": [
-          "Instance-Groups"
+          "Instance Groups"
         ],
         "summary": "Lists all instance groups.",
         "operationId": "listInstanceGroups",
@@ -1329,7 +1329,7 @@
       },
       "post": {
         "tags": [
-          "Instance-Groups"
+          "Instance Groups"
         ],
         "summary": "Create an instance group.",
         "operationId": "createInstanceGroup",
@@ -1370,7 +1370,7 @@
     "/projects/{project_id}/compute/instance-groups/{instance_group_id}": {
       "get": {
         "tags": [
-          "Instance-Groups"
+          "Instance Groups"
         ],
         "summary": "Retrieve details about an instance group.",
         "operationId": "getInstanceGroup",
@@ -1412,7 +1412,7 @@
       },
       "delete": {
         "tags": [
-          "Instance-Groups"
+          "Instance Groups"
         ],
         "summary": "Delete an instance group.",
         "operationId": "deleteInstanceGroup",
@@ -1451,7 +1451,7 @@
       },
       "patch": {
         "tags": [
-          "Instance-Groups"
+          "Instance Groups"
         ],
         "summary": "Update an instance group.",
         "operationId": "patchInstanceGroup",
@@ -1500,7 +1500,7 @@
     "/projects/{project_id}/compute/instance-templates": {
       "get": {
         "tags": [
-          "Instance-Templates"
+          "Instance Templates"
         ],
         "summary": "Lists all VM instance templates available for use.",
         "operationId": "listInstanceTemplates",
@@ -1528,7 +1528,7 @@
       },
       "post": {
         "tags": [
-          "Instance-Templates"
+          "Instance Templates"
         ],
         "summary": "Create a VM instance template, for use in bulk VM creation.",
         "operationId": "createInstanceTemplate",
@@ -1569,7 +1569,7 @@
     "/projects/{project_id}/compute/instance-templates/{instance_template_id}": {
       "get": {
         "tags": [
-          "Instance-Templates"
+          "Instance Templates"
         ],
         "summary": "Retrieve details about a VM instance template.",
         "operationId": "getInstanceTemplate",
@@ -1611,7 +1611,7 @@
       },
       "delete": {
         "tags": [
-          "Instance-Templates"
+          "Instance Templates"
         ],
         "summary": "Delete a VM instance template.",
         "operationId": "deleteInstanceTemplate",
@@ -1832,7 +1832,7 @@
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe instances resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
         "tags": [
-          "VM-Operations"
+          "VM Operations"
         ],
         "summary": "Get status of asynchronous operations",
         "operationId": "listComputeVMsInstancesOperations",
@@ -1892,7 +1892,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe instances resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "VM-Operations"
+          "VM Operations"
         ],
         "summary": "Get the status of a single asynchronous operation",
         "operationId": "getComputeVMsInstancesOperation",
@@ -2203,7 +2203,7 @@
     "/projects/{project_id}/kubernetes/clusters": {
       "get": {
         "tags": [
-          "Kubernetes-Clusters"
+          "Kubernetes Clusters"
         ],
         "summary": "Retrieve information about Kubernetes clusters belonged to the project.",
         "operationId": "listClusters",
@@ -2314,7 +2314,7 @@
       "post": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "Kubernetes-Clusters"
+          "Kubernetes Clusters"
         ],
         "summary": "Create a new Kubernetes cluster owned by the logged in user.",
         "operationId": "createCluster",
@@ -2359,7 +2359,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Kubernetes Cluster resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "Kubernetes-Cluster-Operations"
+          "Kubernetes Cluster Operations"
         ],
         "summary": "Get status of asynchronous operations",
         "operationId": "listKubernetesClustersOperations",
@@ -2415,7 +2415,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Kubernetes Cluster resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "Kubernetes-Cluster-Operations"
+          "Kubernetes Cluster Operations"
         ],
         "summary": "Get status of a single asynchronous operation",
         "operationId": "getKubernetesClustersOperation",
@@ -2459,7 +2459,7 @@
     "/projects/{project_id}/kubernetes/clusters/{cluster_id}": {
       "get": {
         "tags": [
-          "Kubernetes-Clusters"
+          "Kubernetes Clusters"
         ],
         "summary": "Retrieve information about a particular Kubernetes cluster belonged to the project.",
         "operationId": "getCluster",
@@ -2495,7 +2495,7 @@
       },
       "delete": {
         "tags": [
-          "Kubernetes-Clusters"
+          "Kubernetes Clusters"
         ],
         "summary": "Delete a cluster that the logged in user owns.",
         "operationId": "deleteCluster",
@@ -2534,7 +2534,7 @@
       },
       "patch": {
         "tags": [
-          "Kubernetes-Clusters"
+          "Kubernetes Clusters"
         ],
         "summary": "Update a cluster that the logged in user owns.",
         "operationId": "updateCluster",
@@ -2583,7 +2583,7 @@
     "/projects/{project_id}/kubernetes/clusters/{cluster_id}/get-credentials": {
       "post": {
         "tags": [
-          "Kubernetes-Clusters"
+          "Kubernetes Clusters"
         ],
         "summary": "Retrieve credentials for the user to authenticate to the specified cluster.",
         "operationId": "getClusterCredentials",
@@ -2627,7 +2627,7 @@
     "/projects/{project_id}/kubernetes/nodepools": {
       "get": {
         "tags": [
-          "Kubernetes-NodePools"
+          "Kubernetes NodePools"
         ],
         "summary": "Retrieve information about Kubernetes node pools belonging to a project or cluster.",
         "operationId": "listNodePools",
@@ -2670,7 +2670,7 @@
       "post": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "Kubernetes-NodePools"
+          "Kubernetes NodePools"
         ],
         "summary": "Create a new Kubernetes node pool owned by the logged in user.",
         "operationId": "createNodePool",
@@ -2715,7 +2715,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Kubernetes Node Pool resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "Kubernetes-Node-Pool-Operations"
+          "Kubernetes Node Pool Operations"
         ],
         "summary": "Get status of asynchronous operations",
         "operationId": "listKubernetesNodePoolsOperations",
@@ -2752,7 +2752,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Kubernetes Node Pool resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "Kubernetes-Node-Pool-Operations"
+          "Kubernetes Node Pool Operations"
         ],
         "summary": "Get status of a single asynchronous operation",
         "operationId": "getKubernetesNodePoolsOperation",
@@ -2796,7 +2796,7 @@
     "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}": {
       "get": {
         "tags": [
-          "Kubernetes-NodePools"
+          "Kubernetes NodePools"
         ],
         "summary": "Retrieve information about a particular Kubernetes node pool belonging to the project.",
         "operationId": "getNodePool",
@@ -2832,7 +2832,7 @@
       },
       "delete": {
         "tags": [
-          "Kubernetes-NodePools"
+          "Kubernetes NodePools"
         ],
         "summary": "Delete a node pool that the logged in user owns.",
         "operationId": "deleteNodePool",
@@ -2871,7 +2871,7 @@
       },
       "patch": {
         "tags": [
-          "Kubernetes-NodePools"
+          "Kubernetes NodePools"
         ],
         "summary": "Update a node pool that the logged in user owns.",
         "operationId": "updateNodePool",
@@ -2920,7 +2920,7 @@
     "/projects/{project_id}/kubernetes/versions": {
       "get": {
         "tags": [
-          "Kubernetes-Versions"
+          "Kubernetes Versions"
         ],
         "summary": "Retrieve information about available Kubernetes versions.",
         "operationId": "listKubernetesVersions",
@@ -2963,7 +2963,7 @@
     "/projects/{project_id}/networking/ib-networks": {
       "get": {
         "tags": [
-          "IB-Networks"
+          "IB Networks"
         ],
         "summary": "Retrieve details for all Infiniband networks.",
         "operationId": "listIBNetworks",
@@ -2993,7 +2993,7 @@
     "/projects/{project_id}/networking/ib-networks/{ib_network_id}": {
       "get": {
         "tags": [
-          "IB-Networks"
+          "IB Networks"
         ],
         "summary": "Retrieve details for an Infiniband network.",
         "operationId": "getIBNetwork",
@@ -3034,7 +3034,7 @@
     "/projects/{project_id}/networking/ib-partitions": {
       "get": {
         "tags": [
-          "IB-Partitions"
+          "IB Partitions"
         ],
         "summary": "Retrieve details for all Infiniband partitions that belongs to the user.",
         "operationId": "listIBPartitions",
@@ -3065,7 +3065,7 @@
       },
       "post": {
         "tags": [
-          "IB-Partitions"
+          "IB Partitions"
         ],
         "summary": "Create a new Infiniband partition owned by the logged in user.",
         "operationId": "createIBPartition",
@@ -3109,7 +3109,7 @@
     "/projects/{project_id}/networking/ib-partitions/{ib_partition_id}": {
       "get": {
         "tags": [
-          "IB-Partitions"
+          "IB Partitions"
         ],
         "summary": "Retrieve details for an Infiniband partition that belongs to the user.",
         "operationId": "getIBPartition",
@@ -3151,7 +3151,7 @@
       },
       "delete": {
         "tags": [
-          "IB-Partitions"
+          "IB Partitions"
         ],
         "summary": "Delete an Infiniband partition owned by the logged in user.",
         "operationId": "deleteIBPartition",
@@ -3195,7 +3195,7 @@
     "/projects/{project_id}/networking/internal-load-balancers": {
       "get": {
         "tags": [
-          "Load-Balancers"
+          "Load Balancers"
         ],
         "summary": "Retrieve details about all load balancers that belong to the logged in user.",
         "operationId": "listLoadBalancers",
@@ -3227,7 +3227,7 @@
       "post": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "Load-Balancers"
+          "Load Balancers"
         ],
         "summary": "Create a new load balancer owned by the logged in user.",
         "operationId": "createLoadBalancer",
@@ -3272,7 +3272,7 @@
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe Load Balancers resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
         "tags": [
-          "Load-Balancer-Operations"
+          "Load Balancer Operations"
         ],
         "summary": "Get status of asynchronous operations",
         "operationId": "listNetworkingLoadBalancersOperations",
@@ -3325,7 +3325,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Load Balancer resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "Load-Balancer-Operations"
+          "Load Balancer Operations"
         ],
         "summary": "Get status of a single asynchronous operation",
         "operationId": "getNetworkingLoadBalancersOperation",
@@ -3369,7 +3369,7 @@
     "/projects/{project_id}/networking/internal-load-balancers/{load_balancer_id}": {
       "get": {
         "tags": [
-          "Load-Balancers"
+          "Load Balancers"
         ],
         "summary": "Retrieve details for a load balancer that belongs to the logged in user.",
         "operationId": "getLoadBalancer",
@@ -3409,7 +3409,7 @@
       "delete": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "Load-Balancers"
+          "Load Balancers"
         ],
         "summary": "Delete a load balancer owned by the logged in user.",
         "operationId": "deleteLoadBalancer",
@@ -3449,7 +3449,7 @@
       "patch": {
         "description": "A successful response from this resource will contain the async operation.\nTo disable health checking, pass \"health_check\": {\"port\": 0}",
         "tags": [
-          "Load-Balancers"
+          "Load Balancers"
         ],
         "summary": "Patch (update) a load balancer owned by the logged in user.",
         "operationId": "patchLoadBalancer",
@@ -3501,7 +3501,7 @@
     "/projects/{project_id}/networking/load-balancers": {
       "get": {
         "tags": [
-          "External-Load-Balancers"
+          "External Load Balancers"
         ],
         "summary": "Retrieve information about External Load Balancer belonging to the project.",
         "operationId": "listExternalLoadBalancers",
@@ -3551,7 +3551,7 @@
       "post": {
         "description": "This endpoint creates a new external load balancer in the specified project. The request must include the VPC ID, name, location, and at least one listen port with its associated backends.",
         "tags": [
-          "External-Load-Balancers"
+          "External Load Balancers"
         ],
         "summary": "Create a new external load balancer.",
         "operationId": "createExternalLoadBalancer",
@@ -3595,7 +3595,7 @@
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations for\nexternal load balancers. Query parameters can be used to filter results by external\nload balancer ID or operation state.",
         "tags": [
-          "External-Load-Balancer-Operations"
+          "External Load Balancer Operations"
         ],
         "summary": "Get status of asynchronous operations.",
         "operationId": "listExternalLoadBalancerOperations",
@@ -3651,7 +3651,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation\nfor an external load balancer. Only information about the operation specified in\nthe path will be returned.",
         "tags": [
-          "External-Load-Balancer-Operations"
+          "External Load Balancer Operations"
         ],
         "summary": "Get status of a single asynchronous operation.",
         "operationId": "getExternalLoadBalancerOperation",
@@ -3698,7 +3698,7 @@
     "/projects/{project_id}/networking/load-balancers/{load_balancer_id}": {
       "get": {
         "tags": [
-          "External-Load-Balancers"
+          "External Load Balancers"
         ],
         "summary": "Retrieve information about a particular external load balancer belonging to the project.",
         "operationId": "getExternalLoadBalancer",
@@ -3735,7 +3735,7 @@
       "delete": {
         "description": "This endpoint deletes an external load balancer identified by its ID within the specified project. No request body or query parameters are required.",
         "tags": [
-          "External-Load-Balancers"
+          "External Load Balancers"
         ],
         "summary": "Delete an external load balancer.",
         "operationId": "deleteExternalLoadBalancer",
@@ -3777,7 +3777,7 @@
       "patch": {
         "description": "This endpoint updates the configuration of an existing external load balancer. The request must include the load balancer ID and optionally the health check options and/or listen ports and associated backends.",
         "tags": [
-          "External-Load-Balancers"
+          "External Load Balancers"
         ],
         "summary": "Update an existing external load balancer.",
         "operationId": "updateExternalLoadBalancer",
@@ -3832,7 +3832,7 @@
     "/projects/{project_id}/networking/vpc-firewall-rules": {
       "get": {
         "tags": [
-          "VPC-Firewall-Rules"
+          "VPC Firewall Rules"
         ],
         "summary": "Retrieve details about all VPC firewall rules that belong to the logged in user.",
         "operationId": "listVPCFirewallRules",
@@ -3864,7 +3864,7 @@
       "post": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "VPC-Firewall-Rules"
+          "VPC Firewall Rules"
         ],
         "summary": "Create a new VPC firewall rule owned by the logged in user.",
         "operationId": "createVPCFirewallRule",
@@ -3909,7 +3909,7 @@
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe snapshots resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
         "tags": [
-          "VPC-Firewall-Rule-Operations"
+          "VPC Firewall Rule Operations"
         ],
         "summary": "Get status of asynchronous operations",
         "operationId": "listNetworkingVPCFirewallRulesOperations",
@@ -3962,7 +3962,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe snapshots resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "VPC-Firewall-Rule-Operations"
+          "VPC Firewall Rule Operations"
         ],
         "summary": "Get status of a single asynchronous operation",
         "operationId": "getNetworkingVPCFirewallRulesOperation",
@@ -4006,7 +4006,7 @@
     "/projects/{project_id}/networking/vpc-firewall-rules/{vpc_firewall_rule_id}": {
       "get": {
         "tags": [
-          "VPC-Firewall-Rules"
+          "VPC Firewall Rules"
         ],
         "summary": "Retrieve details for a VPC firewall rule that belongs to the logged in user.",
         "operationId": "getVPCFirewallRule",
@@ -4046,7 +4046,7 @@
       "delete": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "VPC-Firewall-Rules"
+          "VPC Firewall Rules"
         ],
         "summary": "Delete a VPC firewall rule owned by the logged in user.",
         "operationId": "deleteVPCFirewallRule",
@@ -4086,7 +4086,7 @@
       "patch": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "VPC-Firewall-Rules"
+          "VPC Firewall Rules"
         ],
         "summary": "Patch (update) a VPC firewall rule owned by the logged in user.",
         "operationId": "patchVPCFirewallRule",
@@ -4138,7 +4138,7 @@
     "/projects/{project_id}/networking/vpc-networks": {
       "get": {
         "tags": [
-          "VPC-Networks"
+          "VPC Networks"
         ],
         "summary": "Retrieve details about all VPC networks that belong to the logged in user.",
         "operationId": "listVPCNetworks",
@@ -4170,7 +4170,7 @@
       "post": {
         "description": "A successful response from this resource will contain information regarding the created VPC network.",
         "tags": [
-          "VPC-Networks"
+          "VPC Networks"
         ],
         "summary": "Create a new VPC network owned by the logged in user.",
         "operationId": "createVPCNetwork",
@@ -4215,7 +4215,7 @@
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe VPC Networks resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
         "tags": [
-          "VPC-Network-Operations"
+          "VPC Network Operations"
         ],
         "summary": "Get status of asynchronous operations",
         "operationId": "listNetworkingVPCNetworksOperations",
@@ -4268,7 +4268,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe VPC Network resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "VPC-Network-Operations"
+          "VPC Network Operations"
         ],
         "summary": "Get status of a single asynchronous operation",
         "operationId": "getNetworkingVPCNetworksOperation",
@@ -4312,7 +4312,7 @@
     "/projects/{project_id}/networking/vpc-networks/{vpc_network_id}": {
       "get": {
         "tags": [
-          "VPC-Networks"
+          "VPC Networks"
         ],
         "summary": "Retrieve details for a VPC network that belongs to the logged in user.",
         "operationId": "getVPCNetwork",
@@ -4352,7 +4352,7 @@
       "delete": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "VPC-Networks"
+          "VPC Networks"
         ],
         "summary": "Delete a VPC network owned by the logged in user.",
         "operationId": "deleteVPCNetwork",
@@ -4398,7 +4398,7 @@
       "patch": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "VPC-Networks"
+          "VPC Networks"
         ],
         "summary": "Patch (update) a VPC network owned by the logged in user.",
         "operationId": "patchVPCNetwork",
@@ -4453,7 +4453,7 @@
     "/projects/{project_id}/networking/vpc-subnets": {
       "get": {
         "tags": [
-          "VPC-Subnets"
+          "VPC Subnets"
         ],
         "summary": "Retrieve details about all VPC subnets that belong to the logged in user.",
         "operationId": "listVPCSubnets",
@@ -4485,7 +4485,7 @@
       "post": {
         "description": "A successful response from this resource will contain information regarding the created subnet.",
         "tags": [
-          "VPC-Subnets"
+          "VPC Subnets"
         ],
         "summary": "Create a new VPC subnet owned by the logged in user.",
         "operationId": "createVPCSubnet",
@@ -4530,7 +4530,7 @@
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe VPC Networks resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
         "tags": [
-          "VPC-Subnet-Operations"
+          "VPC Subnet Operations"
         ],
         "summary": "Get status of asynchronous operations",
         "operationId": "listNetworkingVPCSubnetsOperations",
@@ -4583,7 +4583,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe VPC Subnet resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "VPC-Subnet-Operations"
+          "VPC Subnet Operations"
         ],
         "summary": "Get status of a single asynchronous operation",
         "operationId": "getNetworkingVPCSubnetsOperation",
@@ -4627,7 +4627,7 @@
     "/projects/{project_id}/networking/vpc-subnets/{vpc_subnet_id}": {
       "get": {
         "tags": [
-          "VPC-Subnets"
+          "VPC Subnets"
         ],
         "summary": "Retrieve details for a VPC subnet that belongs to the logged in user.",
         "operationId": "getVPCSubnet",
@@ -4667,7 +4667,7 @@
       "delete": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "VPC-Subnets"
+          "VPC Subnets"
         ],
         "summary": "Delete a VPC subnet owned by the logged in user.",
         "operationId": "deleteVPCSubnet",
@@ -4713,7 +4713,7 @@
       "patch": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "VPC-Subnets"
+          "VPC Subnets"
         ],
         "summary": "Patch (update) a VPC subnet owned by the logged in user.",
         "operationId": "patchVPCSubnet",
@@ -4804,7 +4804,7 @@
     "/projects/{project_id}/slurm/clusters": {
       "get": {
         "tags": [
-          "Slurm-Clusters"
+          "Slurm Clusters"
         ],
         "summary": "Retrieve information about slurm clusters belonged to the project.",
         "operationId": "listSlurmClusters",
@@ -4840,7 +4840,7 @@
       "post": {
         "description": "A successful response from this resource will contain the async operation ID.",
         "tags": [
-          "Slurm-Clusters"
+          "Slurm Clusters"
         ],
         "summary": "Create a new slurm cluster owned by the logged in user.",
         "operationId": "createSlurmCluster",
@@ -4884,7 +4884,7 @@
     "/projects/{project_id}/slurm/clusters/{cluster_id}": {
       "get": {
         "tags": [
-          "Slurm-Clusters"
+          "Slurm Clusters"
         ],
         "summary": "Retrieve information about a particular slurm cluster belonged to the project.",
         "operationId": "getSlurmCluster",
@@ -4927,7 +4927,7 @@
       },
       "delete": {
         "tags": [
-          "Slurm-Clusters"
+          "Slurm Clusters"
         ],
         "summary": "Delete a slurm cluster that the logged in user owns.",
         "operationId": "deleteSlurmCluster",
@@ -4968,7 +4968,7 @@
     "/projects/{project_id}/slurm/nodepools": {
       "get": {
         "tags": [
-          "Slurm-Node-Pools"
+          "Slurm Node Pools"
         ],
         "summary": "Retrieve information about slurm node pools belonging to a project or cluster.",
         "operationId": "listSlurmNodePools",
@@ -5011,7 +5011,7 @@
       "post": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "Slurm-Node-Pools"
+          "Slurm Node Pools"
         ],
         "summary": "Create a new slurm node pool owned by the logged in user.",
         "operationId": "createSlurmNodePool",
@@ -5055,7 +5055,7 @@
     "/projects/{project_id}/slurm/nodepools/{node_pool_id}": {
       "get": {
         "tags": [
-          "Slurm-Node-Pools"
+          "Slurm Node Pools"
         ],
         "summary": "Retrieve information about a particular slurm node pool belonging to the project.",
         "operationId": "getSlurmNodePool",
@@ -5091,7 +5091,7 @@
       },
       "delete": {
         "tags": [
-          "Slurm-Node-Pools"
+          "Slurm Node Pools"
         ],
         "summary": "Delete a node pool that the logged in user owns.",
         "operationId": "deleteSlurmNodePool",
@@ -5130,7 +5130,7 @@
       },
       "patch": {
         "tags": [
-          "Slurm-Node-Pools"
+          "Slurm Node Pools"
         ],
         "summary": "Update a node pool that the logged in user owns.",
         "operationId": "updateSlurmNodePool",
@@ -5286,7 +5286,7 @@
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe disks resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
         "tags": [
-          "Disk-Operations"
+          "Disk Operations"
         ],
         "summary": "Get status of asynchronous operations",
         "operationId": "listStorageDisksOperations",
@@ -5339,7 +5339,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe disks resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "Disk-Operations"
+          "Disk Operations"
         ],
         "summary": "Get status of a single asynchronous operation",
         "operationId": "getStorageDisksOperation",
@@ -5594,7 +5594,7 @@
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe snapshots resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
         "tags": [
-          "Snapshot-Operations"
+          "Snapshot Operations"
         ],
         "summary": "Get status of asynchronous operations",
         "operationId": "listStorageSnapshotsOperations",
@@ -5647,7 +5647,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe snapshots resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "Snapshot-Operations"
+          "Snapshot Operations"
         ],
         "summary": "Get status of a single asynchronous operation",
         "operationId": "getStorageSnapshotsOperation",
@@ -5956,7 +5956,7 @@
     "/users/ssh-keys": {
       "get": {
         "tags": [
-          "SSH-Keys"
+          "SSH Keys"
         ],
         "summary": "Retrieve the list of SSH public keys registered to the logged in user.",
         "operationId": "getSSHKeys",
@@ -5975,7 +5975,7 @@
       "post": {
         "description": "A successful response from this resource wil contain the created SSH key details.",
         "tags": [
-          "SSH-Keys"
+          "SSH Keys"
         ],
         "summary": "Register a new SSH public key to the logged in user.",
         "operationId": "createSSHKey",
@@ -6006,7 +6006,7 @@
       },
       "delete": {
         "tags": [
-          "SSH-Keys"
+          "SSH Keys"
         ],
         "summary": "Delete an SSH public key registered to the logged in user.",
         "operationId": "deleteSSHKey",
@@ -12223,10 +12223,10 @@
       "name": "Compute",
       "tags": [
         "VMs",
-        "VM-Operations",
+        "VM Operations",
         "Images",
-        "Instance-Templates",
-        "Instance-Groups"
+        "Instance Templates",
+        "Instance Groups"
       ]
     },
     {
@@ -12243,7 +12243,7 @@
       "name": "Users",
       "tags": [
         "Identities",
-        "SSH-Keys",
+        "SSH Keys",
         "Tokens"
       ]
     },
@@ -12251,22 +12251,22 @@
       "name": "Storage",
       "tags": [
         "Disks",
-        "Disk-Operations",
+        "Disk Operations",
         "Snapshots",
-        "Snapshot-Operations"
+        "Snapshot Operations"
       ]
     },
     {
       "name": "Networking",
       "tags": [
-        "VPC-Firewall-Rules",
-        "VPC-Firewall-Rule-Operations",
-        "VPC-Networks",
-        "VPC-Subnets",
-        "IB-Partitions",
-        "Internet-Gateways",
-        "Load-Balancers",
-        "Load-Balancer-Operations"
+        "VPC Firewall Rules",
+        "VPC Firewall Rule Operations",
+        "VPC Networks",
+        "VPC Subnets",
+        "IB Partitions",
+        "Internet Gateways",
+        "Load Balancers",
+        "Load Balancer Operations"
       ]
     },
     {
