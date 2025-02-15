@@ -405,8 +405,7 @@
     "/organizations/{organization_id}/audit-logs": {
       "get": {
         "tags": [
-          "Audit",
-          "Logs"
+          "Audit Logs"
         ],
         "summary": "Get audit logs belonging to the specified organization. User must be part of the organization.",
         "operationId": "getAuditLogs",
