@@ -468,7 +468,7 @@
             "items": {
               "type": "string"
             },
-            "example": "hh26@xxx.com,xyz@yyy.ai, only support filter by user email, not by crusoe admin email. ",
+            "example": "hh26@xxx.com,xyz@yyy.ai, only support filter by user email, not by crusoe admin email.",
             "x-go-name": "ActorEmails",
             "name": "actor_emails",
             "in": "query"
@@ -2627,7 +2627,7 @@
     "/projects/{project_id}/kubernetes/nodepools": {
       "get": {
         "tags": [
-          "Kubernetes NodePools"
+          "Kubernetes Node Pools"
         ],
         "summary": "Retrieve information about Kubernetes node pools belonging to a project or cluster.",
         "operationId": "listNodePools",
@@ -2670,7 +2670,7 @@
       "post": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "Kubernetes NodePools"
+          "Kubernetes Node Pools"
         ],
         "summary": "Create a new Kubernetes node pool owned by the logged in user.",
         "operationId": "createNodePool",
@@ -2796,7 +2796,7 @@
     "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}": {
       "get": {
         "tags": [
-          "Kubernetes NodePools"
+          "Kubernetes Node Pools"
         ],
         "summary": "Retrieve information about a particular Kubernetes node pool belonging to the project.",
         "operationId": "getNodePool",
@@ -2832,7 +2832,7 @@
       },
       "delete": {
         "tags": [
-          "Kubernetes NodePools"
+          "Kubernetes Node Pools"
         ],
         "summary": "Delete a node pool that the logged in user owns.",
         "operationId": "deleteNodePool",
@@ -2871,7 +2871,7 @@
       },
       "patch": {
         "tags": [
-          "Kubernetes NodePools"
+          "Kubernetes Node Pools"
         ],
         "summary": "Update a node pool that the logged in user owns.",
         "operationId": "updateNodePool",
@@ -12225,8 +12225,7 @@
         "VMs",
         "VM Operations",
         "Images",
-        "Instance Templates",
-        "Instance Groups"
+        "Instance Templates"
       ]
     },
     {
@@ -12263,10 +12262,17 @@
         "VPC Firewall Rule Operations",
         "VPC Networks",
         "VPC Subnets",
-        "IB Partitions",
-        "Internet Gateways",
-        "Load Balancers",
-        "Load Balancer Operations"
+        "IB Partitions"
+      ]
+    },
+    {
+      "name": "Orchestration",
+      "tags": [
+        "Kubernetes Clusters",
+        "Kubernetes Cluster Operations",
+        "Kubernetes Node Pools",
+        "Kubernetes Node Pool Operations",
+        "Kubernetes Versions"
       ]
     },
     {
