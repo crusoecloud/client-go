@@ -12235,7 +12235,8 @@
         "Billing",
         "Entities",
         "Prospects",
-        "Usage"
+        "Usage",
+        "Audit Logs"
       ]
     },
     {
