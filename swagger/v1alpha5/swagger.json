@@ -10592,8 +10592,6 @@
         "location",
         "subnet_id",
         "project_id",
-        "orchestrator_version",
-        "orchestrator",
         "state",
         "node_pools",
         "created_at",
@@ -10652,18 +10650,6 @@
           "example": [
             "09ae8411-0fbb-411c-898c-2b8f19622ae1"
           ]
-        },
-        "orchestrator": {
-          "description": "Orchestrator of the cluster.",
-          "type": "string",
-          "x-go-name": "Orchestrator",
-          "example": "slurm"
-        },
-        "orchestrator_version": {
-          "description": "Orchestrator version of the cluster.",
-          "type": "string",
-          "x-go-name": "OrchestratorVersion",
-          "example": "22.05.8"
         },
         "project_id": {
           "description": "The ID of the project this slurm cluster belongs to.",
