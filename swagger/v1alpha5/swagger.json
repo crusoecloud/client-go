@@ -9852,9 +9852,14 @@
         "subnet",
         "interface_type",
         "mac_address",
-        "ips"
+        "ips",
+        "access_type"
       ],
       "properties": {
+        "access_type": {
+          "type": "string",
+          "x-go-name": "AccessType"
+        },
         "id": {
           "type": "string",
           "x-go-name": "ID",

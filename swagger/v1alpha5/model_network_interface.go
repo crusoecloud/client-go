@@ -9,6 +9,7 @@
 package swagger
 
 type NetworkInterface struct {
+	AccessType    string        `json:"access_type"`
 	Id            string        `json:"id"`
 	InterfaceType string        `json:"interface_type"`
 	Ips           []IpAddresses `json:"ips"`
