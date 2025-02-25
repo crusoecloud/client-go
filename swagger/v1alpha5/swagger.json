@@ -7309,6 +7309,61 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "GetBillingMonthlySummaryResponseV1Alpha5": {
+      "type": "object",
+      "title": "This API is internal use and won't be exposed to customers.",
+      "properties": {
+        "credits_balance": {
+          "description": "Amount of credits the customer has",
+          "type": "string",
+          "x-go-name": "CreditsBalance",
+          "example": "12.34"
+        },
+        "currency": {
+          "description": "Currency used by all the fields above",
+          "type": "string",
+          "x-go-name": "Currency",
+          "example": "\"usd\""
+        },
+        "current_month_charges": {
+          "description": "Total Non-Reservation charges for the current month (so far)",
+          "type": "string",
+          "x-go-name": "CurrentMonthCharges",
+          "example": "12.34"
+        },
+        "current_month_credits_used": {
+          "description": "Amount of credits used this month",
+          "type": "string",
+          "x-go-name": "CurrentMonthCreditsUsed",
+          "example": "12.34"
+        },
+        "forecasted_monthly_charges": {
+          "description": "Predicted Non-Reservation charges by the end of the month",
+          "type": "string",
+          "x-go-name": "ForecastedMonthlyCharges",
+          "example": "12.34"
+        },
+        "prior_month_charges": {
+          "description": "Total Non-Reservation charges for last month",
+          "type": "string",
+          "x-go-name": "PriorMonthCharges",
+          "example": "12.34"
+        },
+        "prior_month_credits_used": {
+          "description": "Amount of credits used last month",
+          "type": "string",
+          "x-go-name": "PriorMonthCreditsUsed",
+          "example": "12.34"
+        },
+        "total_credits_used": {
+          "description": "Amount of credits used ever",
+          "type": "string",
+          "x-go-name": "TotalCreditsUsed",
+          "example": "12.34"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "GetOrgMFAResponse": {
       "type": "object",
       "title": "GetOrgMFAResponse is the response type for GET requests to the org mfa endpoint.",
@@ -11667,6 +11722,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/BillingIntentGetResponse"
+      }
+    },
+    "billingMonthlySummaryGetResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetBillingMonthlySummaryResponseV1Alpha5"
       }
     },
     "capacitiesResponse": {
