@@ -12253,7 +12253,8 @@
         "VPC Firewall Rule Operations",
         "VPC Networks",
         "VPC Subnets",
-        "IB Partitions"
+        "IB Partitions",
+        "External Load Balancers"
       ]
     },
     {
