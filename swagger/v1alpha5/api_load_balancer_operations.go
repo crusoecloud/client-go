@@ -27,15 +27,15 @@ var (
 type LoadBalancerOperationsApiService service
 
 /*
-LoadBalancerOperationsApiService Get status of a single asynchronous operation
-This resource retrieves information about the status of an asynchronous operation initiated by the Load Balancer resource. Only information about the operation specified in the path will be returned, or an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged in user, or has expired.
+LoadBalancerOperationsApiService Get status of a single asynchronous operation.
+This resource retrieves information about the status of an asynchronous operation for an external load balancer. Only information about the operation specified in the path will be returned.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
   - @param operationId
 
 @return Operation
 */
-func (a *LoadBalancerOperationsApiService) GetNetworkingLoadBalancersOperation(ctx context.Context, projectId string, operationId string) (Operation, *http.Response, error) {
+func (a *LoadBalancerOperationsApiService) GetExternalLoadBalancerOperation(ctx context.Context, projectId string, operationId string) (Operation, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -45,7 +45,7 @@ func (a *LoadBalancerOperationsApiService) GetNetworkingLoadBalancersOperation(c
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/internal-load-balancers/operations/{operation_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/load-balancers/operations/{operation_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"operation_id"+"}", fmt.Sprintf("%v", operationId), -1)
 
@@ -139,6 +139,16 @@ func (a *LoadBalancerOperationsApiService) GetNetworkingLoadBalancersOperation(c
 			newErr.model = v
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
+		if localVarHttpResponse.StatusCode == 404 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
 		if localVarHttpResponse.StatusCode == 500 {
 			var v InlineResponse500
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
@@ -156,22 +166,22 @@ func (a *LoadBalancerOperationsApiService) GetNetworkingLoadBalancersOperation(c
 }
 
 /*
-LoadBalancerOperationsApiService Get status of asynchronous operations
-This resource retrieves information about the status of asynchronous operations initiated by the Load Balancers resource. All operations that are either in-flight or completed but not yet queried will be returned.
+LoadBalancerOperationsApiService Get status of asynchronous operations.
+This resource retrieves information about the status of asynchronous operations for external load balancers. Query parameters can be used to filter results by external load balancer ID or operation state.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
- * @param optional nil or *LoadBalancerOperationsApiListNetworkingLoadBalancersOperationsOpts - Optional Parameters:
+ * @param optional nil or *LoadBalancerOperationsApiListExternalLoadBalancerOperationsOpts - Optional Parameters:
      * @param "ResourceId" (optional.String) -
      * @param "State" (optional.Interface of []string) -
 @return ListOperationsResponseV1Alpha5
 */
 
-type LoadBalancerOperationsApiListNetworkingLoadBalancersOperationsOpts struct {
+type LoadBalancerOperationsApiListExternalLoadBalancerOperationsOpts struct {
 	ResourceId optional.String
 	State      optional.Interface
 }
 
-func (a *LoadBalancerOperationsApiService) ListNetworkingLoadBalancersOperations(ctx context.Context, projectId string, localVarOptionals *LoadBalancerOperationsApiListNetworkingLoadBalancersOperationsOpts) (ListOperationsResponseV1Alpha5, *http.Response, error) {
+func (a *LoadBalancerOperationsApiService) ListExternalLoadBalancerOperations(ctx context.Context, projectId string, localVarOptionals *LoadBalancerOperationsApiListExternalLoadBalancerOperationsOpts) (ListOperationsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -181,7 +191,7 @@ func (a *LoadBalancerOperationsApiService) ListNetworkingLoadBalancersOperations
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/internal-load-balancers/operations"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/networking/load-balancers/operations"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -242,6 +252,16 @@ func (a *LoadBalancerOperationsApiService) ListNetworkingLoadBalancersOperations
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v ListOperationsResponseV1Alpha5
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 400 {
+			var v InlineResponse400
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

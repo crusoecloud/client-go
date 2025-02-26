@@ -25,10 +25,6 @@ type SlurmCluster struct {
 	Name string `json:"name"`
 	// Nodepools associated with the cluster.
 	NodePools []string `json:"node_pools"`
-	// Orchestrator of the cluster.
-	Orchestrator string `json:"orchestrator"`
-	// Orchestrator version of the cluster.
-	OrchestratorVersion string `json:"orchestrator_version"`
 	// The ID of the project this slurm cluster belongs to.
 	ProjectId string `json:"project_id"`
 	// State of the cluster

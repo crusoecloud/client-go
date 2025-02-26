@@ -24,13 +24,13 @@ var (
 	_ context.Context
 )
 
-type LogsApiService service
+type AuditLogsApiService service
 
 /*
-LogsApiService Get audit logs belonging to the specified organization. User must be part of the organization.
+AuditLogsApiService Get audit logs belonging to the specified organization. User must be part of the organization.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param organizationId
- * @param optional nil or *LogsApiGetAuditLogsOpts - Optional Parameters:
+ * @param optional nil or *AuditLogsApiGetAuditLogsOpts - Optional Parameters:
      * @param "ProjectIds" (optional.Interface of []string) -
      * @param "StartTime" (optional.String) -
      * @param "EndTime" (optional.String) -
@@ -51,7 +51,7 @@ LogsApiService Get audit logs belonging to the specified organization. User must
 @return AuditLogsGetResponse
 */
 
-type LogsApiGetAuditLogsOpts struct {
+type AuditLogsApiGetAuditLogsOpts struct {
 	ProjectIds  optional.Interface
 	StartTime   optional.String
 	EndTime     optional.String
@@ -71,7 +71,7 @@ type LogsApiGetAuditLogsOpts struct {
 	PrevToken   optional.String
 }
 
-func (a *LogsApiService) GetAuditLogs(ctx context.Context, organizationId string, localVarOptionals *LogsApiGetAuditLogsOpts) (AuditLogsGetResponse, *http.Response, error) {
+func (a *AuditLogsApiService) GetAuditLogs(ctx context.Context, organizationId string, localVarOptionals *AuditLogsApiGetAuditLogsOpts) (AuditLogsGetResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
