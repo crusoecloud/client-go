@@ -58,10 +58,6 @@ type APIClient struct {
 
 	EntitiesApi *EntitiesApiService
 
-	ExternalLoadBalancerOperationsApi *ExternalLoadBalancerOperationsApiService
-
-	ExternalLoadBalancersApi *ExternalLoadBalancersApiService
-
 	FeatureFlagsApi *FeatureFlagsApiService
 
 	IBNetworksApi *IBNetworksApiService
@@ -77,6 +73,10 @@ type APIClient struct {
 	InstanceGroupsApi *InstanceGroupsApiService
 
 	InstanceTemplatesApi *InstanceTemplatesApiService
+
+	InternalLoadBalancerOperationsApi *InternalLoadBalancerOperationsApiService
+
+	InternalLoadBalancersApi *InternalLoadBalancersApiService
 
 	KubernetesClusterOperationsApi *KubernetesClusterOperationsApiService
 
@@ -154,8 +154,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DiskOperationsApi = (*DiskOperationsApiService)(&c.common)
 	c.DisksApi = (*DisksApiService)(&c.common)
 	c.EntitiesApi = (*EntitiesApiService)(&c.common)
-	c.ExternalLoadBalancerOperationsApi = (*ExternalLoadBalancerOperationsApiService)(&c.common)
-	c.ExternalLoadBalancersApi = (*ExternalLoadBalancersApiService)(&c.common)
 	c.FeatureFlagsApi = (*FeatureFlagsApiService)(&c.common)
 	c.IBNetworksApi = (*IBNetworksApiService)(&c.common)
 	c.IBPartitionsApi = (*IBPartitionsApiService)(&c.common)
@@ -164,6 +162,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.InferenceAPIKeyApi = (*InferenceAPIKeyApiService)(&c.common)
 	c.InstanceGroupsApi = (*InstanceGroupsApiService)(&c.common)
 	c.InstanceTemplatesApi = (*InstanceTemplatesApiService)(&c.common)
+	c.InternalLoadBalancerOperationsApi = (*InternalLoadBalancerOperationsApiService)(&c.common)
+	c.InternalLoadBalancersApi = (*InternalLoadBalancersApiService)(&c.common)
 	c.KubernetesClusterOperationsApi = (*KubernetesClusterOperationsApiService)(&c.common)
 	c.KubernetesClustersApi = (*KubernetesClustersApiService)(&c.common)
 	c.KubernetesNodePoolOperationsApi = (*KubernetesNodePoolOperationsApiService)(&c.common)

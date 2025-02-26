@@ -3194,7 +3194,7 @@
     "/projects/{project_id}/networking/internal-load-balancers": {
       "get": {
         "tags": [
-          "Load Balancers"
+          "Internal Load Balancers"
         ],
         "summary": "Retrieve details about all load balancers that belong to the logged in user.",
         "operationId": "listLoadBalancers",
@@ -3226,7 +3226,7 @@
       "post": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "Load Balancers"
+          "Internal Load Balancers"
         ],
         "summary": "Create a new load balancer owned by the logged in user.",
         "operationId": "createLoadBalancer",
@@ -3271,7 +3271,7 @@
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations initiated by\nthe Load Balancers resource. All operations that are either in-flight or completed but not yet\nqueried will be returned.",
         "tags": [
-          "Load Balancer Operations"
+          "Internal Load Balancer Operations"
         ],
         "summary": "Get status of asynchronous operations",
         "operationId": "listNetworkingLoadBalancersOperations",
@@ -3324,7 +3324,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation initiated by\nthe Load Balancer resource. Only information about the operation specified in the path will be returned,\nor an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged\nin user, or has expired.",
         "tags": [
-          "Load Balancer Operations"
+          "Internal Load Balancer Operations"
         ],
         "summary": "Get status of a single asynchronous operation",
         "operationId": "getNetworkingLoadBalancersOperation",
@@ -3368,7 +3368,7 @@
     "/projects/{project_id}/networking/internal-load-balancers/{load_balancer_id}": {
       "get": {
         "tags": [
-          "Load Balancers"
+          "Internal Load Balancers"
         ],
         "summary": "Retrieve details for a load balancer that belongs to the logged in user.",
         "operationId": "getLoadBalancer",
@@ -3408,7 +3408,7 @@
       "delete": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "Load Balancers"
+          "Internal Load Balancers"
         ],
         "summary": "Delete a load balancer owned by the logged in user.",
         "operationId": "deleteLoadBalancer",
@@ -3448,7 +3448,7 @@
       "patch": {
         "description": "A successful response from this resource will contain the async operation.\nTo disable health checking, pass \"health_check\": {\"port\": 0}",
         "tags": [
-          "Load Balancers"
+          "Internal Load Balancers"
         ],
         "summary": "Patch (update) a load balancer owned by the logged in user.",
         "operationId": "patchLoadBalancer",
@@ -3500,7 +3500,7 @@
     "/projects/{project_id}/networking/load-balancers": {
       "get": {
         "tags": [
-          "External Load Balancers"
+          "Load Balancers"
         ],
         "summary": "Retrieve information about External Load Balancer belonging to the project.",
         "operationId": "listExternalLoadBalancers",
@@ -3550,7 +3550,7 @@
       "post": {
         "description": "This endpoint creates a new external load balancer in the specified project. The request must include the VPC ID, name, location, and at least one listen port with its associated backends.",
         "tags": [
-          "External Load Balancers"
+          "Load Balancers"
         ],
         "summary": "Create a new external load balancer.",
         "operationId": "createExternalLoadBalancer",
@@ -3594,7 +3594,7 @@
       "get": {
         "description": "This resource retrieves information about the status of asynchronous operations for\nexternal load balancers. Query parameters can be used to filter results by external\nload balancer ID or operation state.",
         "tags": [
-          "External Load Balancer Operations"
+          "Load Balancer Operations"
         ],
         "summary": "Get status of asynchronous operations.",
         "operationId": "listExternalLoadBalancerOperations",
@@ -3650,7 +3650,7 @@
       "get": {
         "description": "This resource retrieves information about the status of an asynchronous operation\nfor an external load balancer. Only information about the operation specified in\nthe path will be returned.",
         "tags": [
-          "External Load Balancer Operations"
+          "Load Balancer Operations"
         ],
         "summary": "Get status of a single asynchronous operation.",
         "operationId": "getExternalLoadBalancerOperation",
@@ -3697,7 +3697,7 @@
     "/projects/{project_id}/networking/load-balancers/{load_balancer_id}": {
       "get": {
         "tags": [
-          "External Load Balancers"
+          "Load Balancers"
         ],
         "summary": "Retrieve information about a particular external load balancer belonging to the project.",
         "operationId": "getExternalLoadBalancer",
@@ -3734,7 +3734,7 @@
       "delete": {
         "description": "This endpoint deletes an external load balancer identified by its ID within the specified project. No request body or query parameters are required.",
         "tags": [
-          "External Load Balancers"
+          "Load Balancers"
         ],
         "summary": "Delete an external load balancer.",
         "operationId": "deleteExternalLoadBalancer",
@@ -3776,7 +3776,7 @@
       "patch": {
         "description": "This endpoint updates the configuration of an existing external load balancer. The request must include the load balancer ID and optionally the health check options and/or listen ports and associated backends.",
         "tags": [
-          "External Load Balancers"
+          "Load Balancers"
         ],
         "summary": "Update an existing external load balancer.",
         "operationId": "updateExternalLoadBalancer",
@@ -3811,7 +3811,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/updateExternalLoadBalancerResponse"
+            "$ref": "#/responses/asyncOperationResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -12192,12 +12192,6 @@
         "$ref": "#/definitions/ListTypesResponseV1Alpha5"
       }
     },
-    "updateExternalLoadBalancerResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ExternalLoadBalancer"
-      }
-    },
     "usageExportGetResponse": {
       "description": "",
       "headers": {
@@ -12315,7 +12309,7 @@
         "VPC Networks",
         "VPC Subnets",
         "IB Partitions",
-        "External Load Balancers"
+        "Load Balancers"
       ]
     },
     {
