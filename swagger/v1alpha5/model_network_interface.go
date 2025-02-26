@@ -9,12 +9,13 @@
 package swagger
 
 type NetworkInterface struct {
-	AccessType    string        `json:"access_type"`
-	Id            string        `json:"id"`
-	InterfaceType string        `json:"interface_type"`
-	Ips           []IpAddresses `json:"ips"`
-	MacAddress    string        `json:"mac_address"`
-	Name          string        `json:"name"`
-	Network       string        `json:"network"`
-	Subnet        string        `json:"subnet"`
+	AccessType      string        `json:"access_type"`
+	ExternalDnsName string        `json:"external_dns_name"`
+	Id              string        `json:"id"`
+	InterfaceType   string        `json:"interface_type"`
+	Ips             []IpAddresses `json:"ips"`
+	MacAddress      string        `json:"mac_address"`
+	Name            string        `json:"name"`
+	Network         string        `json:"network"`
+	Subnet          string        `json:"subnet"`
 }
