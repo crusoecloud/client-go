@@ -11939,10 +11939,7 @@
     "listExternalLoadBalancersResponse": {
       "description": "",
       "schema": {
-        "type": "array",
-        "items": {
-          "$ref": "#/definitions/ListExternalLoadBalancersResponse"
-        }
+        "$ref": "#/definitions/ListExternalLoadBalancersResponse"
       }
     },
     "listIBPartitionsResponse": {
