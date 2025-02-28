@@ -381,7 +381,7 @@ LoadBalancersApiService Retrieve information about External Load Balancer belong
      * @param "Location" (optional.String) -
      * @param "VpcNetworkId" (optional.String) -
      * @param "Name" (optional.String) -
-@return []ListExternalLoadBalancersResponse
+@return ListExternalLoadBalancersResponse
 */
 
 type LoadBalancersApiListExternalLoadBalancersOpts struct {
@@ -390,13 +390,13 @@ type LoadBalancersApiListExternalLoadBalancersOpts struct {
 	Name         optional.String
 }
 
-func (a *LoadBalancersApiService) ListExternalLoadBalancers(ctx context.Context, projectId string, localVarOptionals *LoadBalancersApiListExternalLoadBalancersOpts) ([]ListExternalLoadBalancersResponse, *http.Response, error) {
+func (a *LoadBalancersApiService) ListExternalLoadBalancers(ctx context.Context, projectId string, localVarOptionals *LoadBalancersApiListExternalLoadBalancersOpts) (ListExternalLoadBalancersResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue []ListExternalLoadBalancersResponse
+		localVarReturnValue ListExternalLoadBalancersResponse
 	)
 
 	// create path and map variables
@@ -463,7 +463,7 @@ func (a *LoadBalancersApiService) ListExternalLoadBalancers(ctx context.Context,
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v []ListExternalLoadBalancersResponse
+			var v ListExternalLoadBalancersResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
