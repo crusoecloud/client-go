@@ -247,6 +247,13 @@
             "x-go-name": "ProjectName",
             "name": "project_name",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "example": true,
+            "x-go-name": "SkipLoadingProjectResources",
+            "name": "skip_loading_project_resources",
+            "in": "query"
           }
         ],
         "responses": {
