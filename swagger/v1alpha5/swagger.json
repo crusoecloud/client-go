@@ -10902,7 +10902,7 @@
       "type": "object",
       "required": [
         "name",
-        "product_name",
+        "type",
         "desired_count",
         "cluster_id",
         "partition_name"
@@ -10939,10 +10939,10 @@
           "x-go-name": "SlurmPartitionName",
           "example": "my-slurm-partition"
         },
-        "product_name": {
+        "type": {
           "description": "Product name of the VM type to be created within this node pool.",
           "type": "string",
-          "x-go-name": "ProductName",
+          "x-go-name": "Type",
           "example": "a100.2x"
         }
       },

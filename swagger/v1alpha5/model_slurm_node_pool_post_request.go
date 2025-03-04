@@ -20,5 +20,5 @@ type SlurmNodePoolPostRequest struct {
 	// Name of the slurm partition.
 	PartitionName string `json:"partition_name"`
 	// Product name of the VM type to be created within this node pool.
-	ProductName string `json:"product_name"`
+	Type_ string `json:"type"`
 }
