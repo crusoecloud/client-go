@@ -10770,6 +10770,12 @@
           "x-go-name": "Name",
           "example": "my-slurm-cluster"
         },
+        "sans_shared_volume": {
+          "description": "If true, allows internal developers to create slurm clusters without shared volumes.",
+          "type": "boolean",
+          "x-go-name": "SansSharedVolume",
+          "example": true
+        },
         "subnet_id": {
           "description": "The ID of the subnet to create the cluster in. Must be in the location\nspecified. If not provided, the default subnet for the location will be\nused, if there is one.",
           "type": "string",
