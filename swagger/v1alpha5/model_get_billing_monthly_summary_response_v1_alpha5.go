@@ -17,8 +17,14 @@ type GetBillingMonthlySummaryResponseV1Alpha5 struct {
 	CurrentMonthCharges string `json:"current_month_charges,omitempty"`
 	// Amount of credits used this month
 	CurrentMonthCreditsUsed string `json:"current_month_credits_used,omitempty"`
+	// Predicted number of credits used this month
+	ForecastedCreditsUsed string `json:"forecasted_credits_used,omitempty"`
 	// Predicted Non-Reservation charges by the end of the month
 	ForecastedMonthlyCharges string `json:"forecasted_monthly_charges,omitempty"`
+	// Predicted change in costs between forecasted month and previous month
+	PctDiffForecastedMonth float32 `json:"pct_diff_forecasted_month,omitempty"`
+	// Percentage change in costs between current month and previous month
+	PctDiffPrevMonth float32 `json:"pct_diff_prev_month,omitempty"`
 	// Total Non-Reservation charges for last month
 	PriorMonthCharges string `json:"prior_month_charges,omitempty"`
 	// Amount of credits used last month
