@@ -181,15 +181,18 @@ func encodeQuery(values map[string][]string) string {
 }
 
 // NewAuthenticatedAPIClient initializes a new Crusoe API client with the given configuration.
-func NewAuthenticatedAPIClient(accessKey, secret, userAgent, apiEndpoint string) *APIClient {
+func NewAuthenticatedAPIClient(accessKey, secret string) *APIClient {
+	return NewAPIClient(NewAuthenticatedConfig(accessKey, secret))
+}
+
+// NewAuthenticatedConfig initializes a new Crusoe API configuration .
+func NewAuthenticatedConfig(accessKey, secret string) *Configuration {
 	cfg := NewConfiguration()
-	cfg.UserAgent = userAgent
-	cfg.BasePath = apiEndpoint
 	if cfg.HTTPClient == nil {
 		cfg.HTTPClient = http.DefaultClient
 	}
 
 	cfg.HTTPClient.Transport = NewAuthenticatingTransport(cfg.HTTPClient.Transport, accessKey, secret)
 
-	return NewAPIClient(cfg)
+	return cfg
 }
