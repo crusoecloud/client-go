@@ -247,6 +247,13 @@
             "x-go-name": "ProjectName",
             "name": "project_name",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "example": true,
+            "x-go-name": "SkipLoadingProjectResources",
+            "name": "skip_loading_project_resources",
+            "in": "query"
           }
         ],
         "responses": {
@@ -6559,6 +6566,32 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "Credit": {
+      "type": "object",
+      "required": [
+        "amount",
+        "balance",
+        "date"
+      ],
+      "properties": {
+        "amount": {
+          "type": "string",
+          "x-go-name": "Amount",
+          "example": "\"12.34\""
+        },
+        "balance": {
+          "type": "string",
+          "x-go-name": "Balance",
+          "example": "\"12.34\""
+        },
+        "date": {
+          "type": "string",
+          "x-go-name": "Date",
+          "example": "\"2025-02-14T12:00:00Z\""
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "CustomImageEditTagsRequest": {
       "type": "object",
       "title": "CustomImagesEditTagsRequest is the request type for PATCH requests to the /custom-images{id}/edit-tags endpoint.",
@@ -7317,7 +7350,7 @@
           "description": "Amount of credits the customer has",
           "type": "string",
           "x-go-name": "CreditsBalance",
-          "example": "12.34"
+          "example": "\"12.34\""
         },
         "currency": {
           "description": "Currency used by all the fields above",
@@ -7329,37 +7362,79 @@
           "description": "Total Non-Reservation charges for the current month (so far)",
           "type": "string",
           "x-go-name": "CurrentMonthCharges",
-          "example": "12.34"
+          "example": "\"12.34\""
         },
         "current_month_credits_used": {
           "description": "Amount of credits used this month",
           "type": "string",
           "x-go-name": "CurrentMonthCreditsUsed",
-          "example": "12.34"
+          "example": "\"12.34\""
+        },
+        "forecasted_credits_used": {
+          "description": "Predicted number of credits used this month",
+          "type": "string",
+          "x-go-name": "ForecastedCreditsUsed",
+          "example": "\"12.34\""
         },
         "forecasted_monthly_charges": {
           "description": "Predicted Non-Reservation charges by the end of the month",
           "type": "string",
           "x-go-name": "ForecastedMonthlyCharges",
-          "example": "12.34"
+          "example": "\"12.34\""
+        },
+        "pct_diff_forecasted_month": {
+          "description": "Predicted change in costs between forecasted month and previous month",
+          "type": "number",
+          "format": "float",
+          "x-go-name": "PctDiffForecastedMonth",
+          "example": 8.5
+        },
+        "pct_diff_prev_month": {
+          "description": "Percentage change in costs between current month and previous month",
+          "type": "number",
+          "format": "float",
+          "x-go-name": "PctDiffPrevMonth",
+          "example": 8.5
         },
         "prior_month_charges": {
           "description": "Total Non-Reservation charges for last month",
           "type": "string",
           "x-go-name": "PriorMonthCharges",
-          "example": "12.34"
+          "example": "\"12.34\""
         },
         "prior_month_credits_used": {
           "description": "Amount of credits used last month",
           "type": "string",
           "x-go-name": "PriorMonthCreditsUsed",
-          "example": "12.34"
+          "example": "\"12.34\""
         },
         "total_credits_used": {
           "description": "Amount of credits used ever",
           "type": "string",
           "x-go-name": "TotalCreditsUsed",
-          "example": "12.34"
+          "example": "\"12.34\""
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "GetCreditsResponseV1Alpha5": {
+      "type": "object",
+      "required": [
+        "credits",
+        "currency"
+      ],
+      "properties": {
+        "credits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Credit"
+          },
+          "x-go-name": "Credits"
+        },
+        "currency": {
+          "type": "string",
+          "x-go-name": "Currency",
+          "example": "\"usd\""
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -10763,6 +10838,12 @@
           "x-go-name": "Name",
           "example": "my-slurm-cluster"
         },
+        "sans_shared_volume": {
+          "description": "If true, allows internal developers to create slurm clusters without shared volumes.",
+          "type": "boolean",
+          "x-go-name": "SansSharedVolume",
+          "example": true
+        },
         "subnet_id": {
           "description": "The ID of the subnet to create the cluster in. Must be in the location\nspecified. If not provided, the default subnet for the location will be\nused, if there is one.",
           "type": "string",
@@ -10895,7 +10976,7 @@
       "type": "object",
       "required": [
         "name",
-        "product_name",
+        "type",
         "desired_count",
         "cluster_id",
         "partition_name"
@@ -10932,10 +11013,10 @@
           "x-go-name": "SlurmPartitionName",
           "example": "my-slurm-partition"
         },
-        "product_name": {
+        "type": {
           "description": "Product name of the VM type to be created within this node pool.",
           "type": "string",
-          "x-go-name": "ProductName",
+          "x-go-name": "Type",
           "example": "a100.2x"
         }
       },
@@ -12088,6 +12169,12 @@
             "example": "not_found"
           }
         }
+      }
+    },
+    "orgCreditsGetResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetCreditsResponseV1Alpha5"
       }
     },
     "organizationsGetResponse": {

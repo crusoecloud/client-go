@@ -363,12 +363,14 @@ If querying for projects within an organization, the logged in user must be the 
  * @param optional nil or *ProjectsApiListProjectsOpts - Optional Parameters:
      * @param "OrgId" (optional.String) -
      * @param "ProjectName" (optional.String) -
+     * @param "SkipLoadingProjectResources" (optional.Bool) -
 @return ListProjectsResponseV1Alpha5
 */
 
 type ProjectsApiListProjectsOpts struct {
-	OrgId       optional.String
-	ProjectName optional.String
+	OrgId                       optional.String
+	ProjectName                 optional.String
+	SkipLoadingProjectResources optional.Bool
 }
 
 func (a *ProjectsApiService) ListProjects(ctx context.Context, localVarOptionals *ProjectsApiListProjectsOpts) (ListProjectsResponseV1Alpha5, *http.Response, error) {
@@ -392,6 +394,9 @@ func (a *ProjectsApiService) ListProjects(ctx context.Context, localVarOptionals
 	}
 	if localVarOptionals != nil && localVarOptionals.ProjectName.IsSet() {
 		localVarQueryParams.Add("project_name", parameterToString(localVarOptionals.ProjectName.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.SkipLoadingProjectResources.IsSet() {
+		localVarQueryParams.Add("skip_loading_project_resources", parameterToString(localVarOptionals.SkipLoadingProjectResources.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
