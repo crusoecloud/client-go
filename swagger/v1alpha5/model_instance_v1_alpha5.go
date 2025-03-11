@@ -10,6 +10,8 @@ package swagger
 
 // InstanceV1Alpha5 contains identifying information about a vm instance for vms.instances endpoints.
 type InstanceV1Alpha5 struct {
+	// values: On-demand, Spot, PoC
+	BillingType   string `json:"billing_type,omitempty"`
 	CommitmentEnd string `json:"commitment_end,omitempty"`
 	// commitment is no longer supported
 	CommitmentPeriod       int64                   `json:"commitment_period,omitempty"`
