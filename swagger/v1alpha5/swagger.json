@@ -11809,6 +11809,56 @@
         }
       }
     },
+    "billingExportGetResponse": {
+      "description": "",
+      "headers": {
+        "metric": {
+          "type": "string",
+          "example": "instance-hours"
+        },
+        "project_id": {
+          "type": "string",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "project_name": {
+          "type": "string",
+          "example": "\"Apollo Program\""
+        },
+        "quantity": {
+          "type": "number",
+          "format": "double",
+          "example": "261.271111"
+        },
+        "region": {
+          "type": "string",
+          "example": "us-east1"
+        },
+        "resource_id": {
+          "type": "string",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "resource_name": {
+          "type": "string",
+          "example": "\"Blake's Virtual Machine\""
+        },
+        "resource_type": {
+          "type": "string",
+          "example": "a40.1x"
+        },
+        "total_price": {
+          "type": "string",
+          "example": "\"12.34\""
+        },
+        "unit_price": {
+          "type": "string",
+          "example": "\"1.23\""
+        },
+        "usage_date": {
+          "type": "string",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        }
+      }
+    },
     "billingIntentGetResponse": {
       "description": "",
       "schema": {
