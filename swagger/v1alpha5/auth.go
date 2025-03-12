@@ -34,7 +34,7 @@ func NewAuthenticatingTransport(r http.RoundTripper, keyID, secretKey string) Au
 }
 
 func (t AuthenticatingTransport) RoundTrip(r *http.Request) (*http.Response, error) {
-	if err := addSignature(r, t.keyID, t.secretKey); err != nil {
+	if err := AddSignature(r, t.keyID, t.secretKey); err != nil {
 		return nil, err
 	}
 
@@ -49,7 +49,7 @@ const (
 )
 
 // Verifies if the token signature is valid for a given request.
-func addSignature(req *http.Request, encodedKeyID, encodedKey string) error {
+func AddSignature(req *http.Request, encodedKeyID, encodedKey string) error {
 	req.Header.Set(timestampHeader, time.Now().UTC().Format(time.RFC3339))
 
 	message, err := generateMessageV1_0(req)
