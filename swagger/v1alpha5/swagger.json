@@ -8282,6 +8282,11 @@
         "maintenance_policy"
       ],
       "properties": {
+        "billing_type": {
+          "description": "values: On-demand, Spot, PoC",
+          "type": "string",
+          "x-go-name": "BillingType"
+        },
         "commitment_end": {
           "type": "string",
           "x-go-name": "CommitmentEnd"
