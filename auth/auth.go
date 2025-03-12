@@ -1,4 +1,4 @@
-package swagger
+package auth
 
 import (
 	"crypto/hmac"
@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
+	"github.com/crusoecloud/client-go/swagger/v1alpha5"
 	"net/http"
 	"net/url"
 	"sort"
@@ -181,13 +182,13 @@ func encodeQuery(values map[string][]string) string {
 }
 
 // NewAuthenticatedAPIClient initializes a new Crusoe API client with the given configuration.
-func NewAuthenticatedAPIClient(accessKey, secret string) *APIClient {
-	return NewAPIClient(NewAuthenticatedConfig(accessKey, secret))
+func NewAuthenticatedAPIClient(accessKey, secret string) *swagger.APIClient {
+	return swagger.NewAPIClient(NewAuthenticatedConfig(accessKey, secret))
 }
 
 // NewAuthenticatedConfig initializes a new Crusoe API configuration .
-func NewAuthenticatedConfig(accessKey, secret string) *Configuration {
-	cfg := NewConfiguration()
+func NewAuthenticatedConfig(accessKey, secret string) *swagger.Configuration {
+	cfg := swagger.NewConfiguration()
 	if cfg.HTTPClient == nil {
 		cfg.HTTPClient = http.DefaultClient
 	}
