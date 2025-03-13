@@ -6,12 +6,13 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
-	"github.com/crusoecloud/client-go/swagger/v1alpha5"
 	"net/http"
 	"net/url"
 	"sort"
 	"strings"
 	"time"
+
+	swagger "github.com/crusoecloud/client-go/swagger/v1alpha5"
 )
 
 // AuthenticatingTransport is a struct implementing http.Roundtripper
@@ -129,7 +130,7 @@ func canonicalizeQuery(query string) (canonicalQuery string, err error) {
 		if key == "" {
 			continue
 		}
-		value := ""
+		var value string
 		key, value, _ = strings.Cut(key, "=")
 		key, err1 := url.QueryUnescape(key)
 		if err1 != nil {
