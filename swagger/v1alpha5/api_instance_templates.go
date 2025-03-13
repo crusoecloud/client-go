@@ -224,6 +224,16 @@ func (a *InstanceTemplatesApiService) DeleteInstanceTemplate(ctx context.Context
 			newErr.model = v
 			return localVarHttpResponse, newErr
 		}
+		if localVarHttpResponse.StatusCode == 403 {
+			var v InlineResponse403
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
 		if localVarHttpResponse.StatusCode == 500 {
 			var v InlineResponse500
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))

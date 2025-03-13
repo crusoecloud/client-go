@@ -1649,6 +1649,9 @@
           "401": {
             "$ref": "#/responses/authError"
           },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
           "500": {
             "$ref": "#/responses/serverError"
           }
