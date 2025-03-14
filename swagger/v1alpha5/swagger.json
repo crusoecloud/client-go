@@ -2969,6 +2969,106 @@
         }
       }
     },
+    "/projects/{project_id}/metrics/timeseries": {
+      "get": {
+        "tags": [
+          "Observability"
+        ],
+        "summary": "Query timeseries for a resource.",
+        "operationId": "queryTimeseriesRange",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "filesystem",
+            "x-go-name": "ResourceType",
+            "name": "resource_type",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ResourceID",
+            "name": "resource_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/timeseriesResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/metrics/timeseries/api/v1/query": {
+      "get": {
+        "tags": [
+          "Observability"
+        ],
+        "summary": "Query timeseries for a resource.",
+        "operationId": "queryTimeseries",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "filesystem",
+            "x-go-name": "ResourceType",
+            "name": "resource_type",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ResourceID",
+            "name": "resource_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/timeseriesResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/networking/ib-networks": {
       "get": {
         "tags": [
@@ -10294,6 +10394,53 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ObservabilityMetrics": {
+      "description": "see also https://prometheus.io/docs/prometheus/latest/querying/api/",
+      "type": "object",
+      "title": "This is the standard format for prometheus query responses;",
+      "required": [
+        "status",
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "x-go-name": "Data",
+          "example": "{}"
+        },
+        "error": {
+          "type": "string",
+          "x-go-name": "Error",
+          "example": "???"
+        },
+        "errorType": {
+          "type": "string",
+          "x-go-name": "ErrorType",
+          "example": "???"
+        },
+        "infos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Infos",
+          "example": "???"
+        },
+        "status": {
+          "type": "string",
+          "x-go-name": "Status",
+          "example": "success"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Warnings",
+          "example": "???"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "Operation": {
       "description": "Individual resources that use Operations should populate the `metadata` field\nwith resource-specific information.",
       "type": "object",
@@ -12566,6 +12713,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/SyncOperationResponse"
+      }
+    },
+    "timeseriesResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ObservabilityMetrics"
       }
     },
     "tokensGetResponse": {
