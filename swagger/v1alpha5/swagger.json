@@ -5962,6 +5962,97 @@
         }
       }
     },
+    "/users/limited-usage-api-key": {
+      "get": {
+        "tags": [
+          "LimitedUsageAPIKey"
+        ],
+        "summary": "Retrieve all active/expired Limited Usage API Keys for the logged in user and their usage types.",
+        "operationId": "getLimitedUsageAPIKeys",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/limitedUsageAPIKeyGetResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "description": "A successful response from this resource will contain json-encoded details of the limited usage API key.\nThis is the only time the customer will be able to view the api key associated with the API key id.",
+        "tags": [
+          "LimitedUsageAPIKey"
+        ],
+        "summary": "Create a new limited usage api key owned by the logged in user, of type specified by usage parameter.",
+        "operationId": "createLimitedUsageAPIKey",
+        "parameters": [
+          {
+            "enum": [
+              "inference",
+              "observability"
+            ],
+            "type": "string",
+            "x-go-name": "Usage",
+            "name": "usage",
+            "in": "query",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateLimitedUsageAPIKeyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/limitedUsageAPIKeyPostResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "LimitedUsageAPIKey"
+        ],
+        "summary": "Delete a Limited Usage API Key owned by the logged in user.",
+        "operationId": "deleteLimitedUsageAPIKey",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "WTUzcGibQ82y9_01h4MCdQ",
+            "x-go-name": "KeyID",
+            "name": "key_id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/users/ssh-keys": {
       "get": {
         "tags": [
@@ -6479,6 +6570,25 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "CreateInferenceAPIKeyRequest": {
+      "type": "object",
+      "required": [
+        "expires_at"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "x-go-name": "Alias",
+          "example": "token1"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2021-12-03T19:58:34Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CreateLimitedUsageAPIKeyRequest": {
       "type": "object",
       "required": [
         "expires_at"
@@ -7302,6 +7412,53 @@
           "type": "string",
           "x-go-name": "KeyID",
           "example": "R7p5XctCQMuGlpVBmVdqzA"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "GeneratedLimitedUsageAPIKey": {
+      "type": "object",
+      "required": [
+        "usage",
+        "key_id",
+        "api_key",
+        "created_at",
+        "expires_at"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "x-go-name": "Alias",
+          "example": "newAPIKey"
+        },
+        "api_key": {
+          "type": "string",
+          "x-go-name": "APIKey",
+          "example": "R7p5XctCQMuGlpVBmVdqzA"
+        },
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2021-11-03T22:16:27Z"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2021-12-03T19:58:34Z"
+        },
+        "key_id": {
+          "type": "string",
+          "x-go-name": "KeyID",
+          "example": "R7p5XctCQMuGlpVBmVdqzA"
+        },
+        "usage": {
+          "type": "string",
+          "enum": [
+            "inference",
+            "observability"
+          ],
+          "x-go-name": "Usage",
+          "example": "inference"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -9146,6 +9303,68 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "LimitedUsageAPIKeyInfo": {
+      "description": "These are the fields returned from a GET request.",
+      "type": "object",
+      "title": "TokenInfo contains the Traits Island stores for a Token inside of Kratos.",
+      "required": [
+        "usage",
+        "alias",
+        "key_id",
+        "created_at",
+        "expires_at",
+        "last_used"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "x-go-name": "Alias",
+          "example": "token1"
+        },
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2021-11-03T22:16:27Z"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2021-12-03T19:58:34Z"
+        },
+        "key_id": {
+          "type": "string",
+          "x-go-name": "KeyID",
+          "example": "Hm11C1coQZm2+Aihn9ofYg"
+        },
+        "last_used": {
+          "type": "string",
+          "x-go-name": "LastUsed",
+          "example": "2021-11-03T22:22:55Z"
+        },
+        "usage": {
+          "type": "string",
+          "enum": [
+            "inference",
+            "observability"
+          ],
+          "x-go-name": "Usage",
+          "example": "inference"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "LimitedUsageAPIKeyPostResponse": {
+      "type": "object",
+      "required": [
+        "api_key_info"
+      ],
+      "properties": {
+        "api_key_info": {
+          "$ref": "#/definitions/GeneratedLimitedUsageAPIKey"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ListCapacitiesResponseV1Alpha5": {
       "type": "object",
       "required": [
@@ -9412,6 +9631,22 @@
             "$ref": "#/definitions/KubernetesNodePoolsVersionInfo"
           },
           "x-go-name": "KubernetesNodePoolVersions"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ListLimitedUsageAPIKeysResponseV1Alpha5": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LimitedUsageAPIKeyInfo"
+          },
+          "x-go-name": "Items"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -12061,6 +12296,18 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/InferenceAPIKeyPostResponse"
+      }
+    },
+    "limitedUsageAPIKeyGetResponse": {
+      "description": "A successful response from this resource will contain json-encoded array of token details, excluding the api key.",
+      "schema": {
+        "$ref": "#/definitions/ListLimitedUsageAPIKeysResponseV1Alpha5"
+      }
+    },
+    "limitedUsageAPIKeyPostResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/LimitedUsageAPIKeyPostResponse"
       }
     },
     "listDiskSnapshotsResponse": {
