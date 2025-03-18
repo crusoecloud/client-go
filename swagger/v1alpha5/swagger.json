@@ -2974,8 +2974,8 @@
         "tags": [
           "Observability"
         ],
-        "summary": "Query timeseries for a resource.",
-        "operationId": "queryTimeseriesRange",
+        "summary": "Query timeseries for a resource (in development).",
+        "operationId": "queryTimeseriesSimplified",
         "parameters": [
           {
             "type": "string",
@@ -2987,10 +2987,11 @@
           },
           {
             "type": "string",
-            "example": "filesystem",
+            "example": "shareddisk",
             "x-go-name": "ResourceType",
             "name": "resource_type",
-            "in": "query"
+            "in": "query",
+            "required": true
           },
           {
             "type": "string",
@@ -2998,6 +2999,33 @@
             "x-go-name": "ResourceID",
             "name": "resource_id",
             "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "<rfc3339 | unix_timestamp>",
+            "x-go-name": "Start",
+            "description": "Start timestamp, inclusive.",
+            "name": "start",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "<rfc3339 | unix_timestamp>",
+            "x-go-name": "End",
+            "description": "End timestamp, inclusive.",
+            "name": "end",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "5m | 30.0",
+            "x-go-name": "Step",
+            "description": "Query resolution step width in duration format or float number of seconds.",
+            "name": "step",
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -3024,7 +3052,7 @@
         "tags": [
           "Observability"
         ],
-        "summary": "Query timeseries for a resource.",
+        "summary": "Query timeseries at an instant via PromQL.",
         "operationId": "queryTimeseries",
         "parameters": [
           {
@@ -3037,16 +3065,123 @@
           },
           {
             "type": "string",
-            "example": "filesystem",
-            "x-go-name": "ResourceType",
-            "name": "resource_type",
+            "example": "metric[label=value]",
+            "x-go-name": "Query",
+            "description": "Prometheus expression query string.",
+            "name": "query",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "<rfc3339 | unix_timestamp>",
+            "x-go-name": "Time",
+            "description": "Evaluation timestamp.",
+            "name": "time",
             "in": "query"
           },
           {
             "type": "string",
+            "example": "30s",
+            "x-go-name": "Timeout",
+            "description": "Evaluation timeout. Defaults to and is capped by the value of the -query.timeout flag.",
+            "name": "timeout",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "5",
+            "x-go-name": "Limit",
+            "description": "Maximum number of returned series. 0 means disabled.",
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/timeseriesResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/metrics/timeseries/api/v1/query-range": {
+      "get": {
+        "tags": [
+          "Observability"
+        ],
+        "summary": "Query timeseries over a time range via PromQL.",
+        "operationId": "queryTimeseriesRange",
+        "parameters": [
+          {
+            "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ResourceID",
-            "name": "resource_id",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "metric[label=value]",
+            "x-go-name": "Query",
+            "description": "Prometheus expression query string.",
+            "name": "query",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "<rfc3339 | unix_timestamp>",
+            "x-go-name": "Start",
+            "description": "Start timestamp, inclusive.",
+            "name": "start",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "<rfc3339 | unix_timestamp>",
+            "x-go-name": "End",
+            "description": "End timestamp, inclusive.",
+            "name": "end",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "5m | 30.0",
+            "x-go-name": "Step",
+            "description": "Query resolution step width in duration format or float number of seconds.",
+            "name": "step",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "30s",
+            "x-go-name": "Timeout",
+            "description": "Evaluation timeout. Defaults to and is capped by the value of the -query.timeout flag.",
+            "name": "timeout",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "5",
+            "x-go-name": "Limit",
+            "description": "Maximum number of returned series. 0 means disabled.",
+            "name": "limit",
             "in": "query"
           }
         ],
