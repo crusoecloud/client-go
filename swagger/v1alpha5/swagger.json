@@ -7295,6 +7295,23 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "EditOrgMFARequest": {
+      "type": "object",
+      "title": "EditOrgMFARequest is the request type for PATCH requests to the org mfa endpoint.",
+      "required": [
+        "intended_methods"
+      ],
+      "properties": {
+        "intended_methods": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "IntendedMethods"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "EntitiesPutPostRequest": {
       "type": "object",
       "title": "EntitiesPutPostRequest is the request type for PUT and POST requests to the entities endpoint.",
