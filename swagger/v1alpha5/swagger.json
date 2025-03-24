@@ -8497,6 +8497,7 @@
           "description": "The VM Host Maintenance Policy",
           "type": "string",
           "enum": [
+            "manual",
             "stop-vm",
             "unspecified"
           ],
@@ -8615,7 +8616,7 @@
           "description": "THe Host Maintenance Policy to use.",
           "type": "string",
           "x-go-name": "MaintenancePolicy",
-          "example": "stop-vm"
+          "example": "manual,stop-vm,unspecified"
         },
         "placement_policy": {
           "description": "The VM Placement Policy to use.",
@@ -8751,6 +8752,7 @@
         "maintenance_policy": {
           "type": "string",
           "enum": [
+            "manual",
             "stop-vm",
             "unspecified"
           ],
@@ -8881,7 +8883,7 @@
           "description": "The host maintenance policy to use.",
           "type": "string",
           "x-go-name": "MaintenancePolicy",
-          "example": "stop-vm"
+          "example": "manual,stop-vm,unspecified"
         },
         "network_interfaces": {
           "type": "array",
@@ -8953,7 +8955,7 @@
           "description": "The Host Maintenance Policy to use.",
           "type": "string",
           "x-go-name": "MaintenancePolicy",
-          "example": "stop-vm"
+          "example": "manual,stop-vm,unspecified"
         },
         "name": {
           "type": "string",
