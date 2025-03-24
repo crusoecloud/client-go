@@ -2969,6 +2969,241 @@
         }
       }
     },
+    "/projects/{project_id}/metrics/timeseries": {
+      "get": {
+        "tags": [
+          "Observability"
+        ],
+        "summary": "Query timeseries for a resource (in development).",
+        "operationId": "queryTimeseriesSimplified",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "shareddisk",
+            "x-go-name": "ResourceType",
+            "name": "resource_type",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ResourceID",
+            "name": "resource_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "<rfc3339 | unix_timestamp>",
+            "x-go-name": "Start",
+            "description": "Start timestamp, inclusive.",
+            "name": "start",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "<rfc3339 | unix_timestamp>",
+            "x-go-name": "End",
+            "description": "End timestamp, inclusive.",
+            "name": "end",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "5m | 30.0",
+            "x-go-name": "Step",
+            "description": "Query resolution step width in duration format or float number of seconds.",
+            "name": "step",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/timeseriesResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/metrics/timeseries/api/v1/query": {
+      "get": {
+        "tags": [
+          "Observability"
+        ],
+        "summary": "Query timeseries at an instant via PromQL.",
+        "operationId": "queryTimeseries",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "metric[label=value]",
+            "x-go-name": "Query",
+            "description": "Prometheus expression query string.",
+            "name": "query",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "<rfc3339 | unix_timestamp>",
+            "x-go-name": "Time",
+            "description": "Evaluation timestamp.",
+            "name": "time",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "30s",
+            "x-go-name": "Timeout",
+            "description": "Evaluation timeout. Defaults to and is capped by the value of the -query.timeout flag.",
+            "name": "timeout",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "5",
+            "x-go-name": "Limit",
+            "description": "Maximum number of returned series. 0 means disabled.",
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/timeseriesResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/metrics/timeseries/api/v1/query-range": {
+      "get": {
+        "tags": [
+          "Observability"
+        ],
+        "summary": "Query timeseries over a time range via PromQL.",
+        "operationId": "queryTimeseriesRange",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "metric[label=value]",
+            "x-go-name": "Query",
+            "description": "Prometheus expression query string.",
+            "name": "query",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "<rfc3339 | unix_timestamp>",
+            "x-go-name": "Start",
+            "description": "Start timestamp, inclusive.",
+            "name": "start",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "<rfc3339 | unix_timestamp>",
+            "x-go-name": "End",
+            "description": "End timestamp, inclusive.",
+            "name": "end",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "5m | 30.0",
+            "x-go-name": "Step",
+            "description": "Query resolution step width in duration format or float number of seconds.",
+            "name": "step",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "30s",
+            "x-go-name": "Timeout",
+            "description": "Evaluation timeout. Defaults to and is capped by the value of the -query.timeout flag.",
+            "name": "timeout",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "5",
+            "x-go-name": "Limit",
+            "description": "Maximum number of returned series. 0 means disabled.",
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/timeseriesResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/networking/ib-networks": {
       "get": {
         "tags": [
@@ -10294,6 +10529,53 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ObservabilityMetrics": {
+      "description": "see also https://prometheus.io/docs/prometheus/latest/querying/api/",
+      "type": "object",
+      "title": "This is the standard format for prometheus query responses;",
+      "required": [
+        "status",
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "x-go-name": "Data",
+          "example": "{}"
+        },
+        "error": {
+          "type": "string",
+          "x-go-name": "Error",
+          "example": "???"
+        },
+        "errorType": {
+          "type": "string",
+          "x-go-name": "ErrorType",
+          "example": "???"
+        },
+        "infos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Infos",
+          "example": "???"
+        },
+        "status": {
+          "type": "string",
+          "x-go-name": "Status",
+          "example": "success"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Warnings",
+          "example": "???"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "Operation": {
       "description": "Individual resources that use Operations should populate the `metadata` field\nwith resource-specific information.",
       "type": "object",
@@ -11067,7 +11349,7 @@
       "required": [
         "name",
         "location",
-        "user_list"
+        "ssh_pub_key"
       ],
       "properties": {
         "location": {
@@ -11087,22 +11369,17 @@
           "x-go-name": "SansSharedVolume",
           "example": true
         },
+        "ssh_pub_key": {
+          "description": "A mapping of usernames to their SSH keys for accessing the cluster.\nBoth the username and ssh key must be named attributes, as shown in the example",
+          "type": "string",
+          "x-go-name": "SSHPubKey",
+          "example": "{ \"username1\" : \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D\"}"
+        },
         "subnet_id": {
           "description": "The ID of the subnet to create the cluster in. Must be in the location\nspecified. If not provided, the default subnet for the location will be\nused, if there is one.",
           "type": "string",
           "x-go-name": "SubnetID",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
-        },
-        "user_list": {
-          "description": "A mapping of usernames to their SSH keys for accessing the cluster.\nBoth the username and ssh key must be named attributes, as shown in the example",
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "x-go-name": "UserSSHKeys",
-          "example": {
-            "username1": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D"
-          }
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -12566,6 +12843,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/SyncOperationResponse"
+      }
+    },
+    "timeseriesResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ObservabilityMetrics"
       }
     },
     "tokensGetResponse": {
