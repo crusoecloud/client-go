@@ -8616,7 +8616,7 @@
           "description": "THe Host Maintenance Policy to use.",
           "type": "string",
           "x-go-name": "MaintenancePolicy",
-          "example": "manual,stop-vm,unspecified"
+          "example": "manual,auto-stop,stop-vm,unspecified"
         },
         "placement_policy": {
           "description": "The VM Placement Policy to use.",
