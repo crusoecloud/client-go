@@ -10764,6 +10764,7 @@
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         },
         "relation": {
+          "description": "relation is deprecated",
           "type": "string",
           "x-go-name": "Relation",
           "example": "owner"
