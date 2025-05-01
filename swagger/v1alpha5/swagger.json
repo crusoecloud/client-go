@@ -10470,6 +10470,30 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers/logservice"
     },
+    "NATGateway": {
+      "type": "object",
+      "required": [
+        "id",
+        "public_ipv4_id",
+        "public_ipv4_address"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "8f3c4b7d-3c3b-4a63-8e1a-6cd14c1dfe91"
+        },
+        "public_ipv4_address": {
+          "type": "string",
+          "x-go-name": "PublicIPV4Address"
+        },
+        "public_ipv4_id": {
+          "type": "string",
+          "x-go-name": "PublicIPV4ID"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "NetworkInterface": {
       "type": "object",
       "required": [
@@ -12182,6 +12206,14 @@
           "x-go-name": "Name",
           "example": "my-subnet"
         },
+        "nat_gateways": {
+          "description": "require: true",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NATGateway"
+          },
+          "x-go-name": "NATGateways"
+        },
         "vpc_network_id": {
           "type": "string",
           "x-go-name": "VPCNetworkID",
@@ -12201,6 +12233,11 @@
           "type": "string",
           "x-go-name": "Name",
           "example": "my-cool-vpc-subnet"
+        },
+        "nat_gateway_enabled": {
+          "type": "boolean",
+          "x-go-name": "NATGatewayEnabled",
+          "example": true
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -12212,7 +12249,8 @@
         "name",
         "cidr",
         "vpc_network_id",
-        "location"
+        "location",
+        "nat_gateway_enabled"
       ],
       "properties": {
         "cidr": {
@@ -12229,6 +12267,11 @@
           "type": "string",
           "x-go-name": "Name",
           "example": "my-cool-vpc-subnet"
+        },
+        "nat_gateway_enabled": {
+          "type": "boolean",
+          "x-go-name": "NATGatewayEnabled",
+          "example": true
         },
         "vpc_network_id": {
           "type": "string",
