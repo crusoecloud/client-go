@@ -3204,6 +3204,97 @@
         }
       }
     },
+    "/projects/{project_id}/metrics/timeseries/query-parameters": {
+      "get": {
+        "tags": [
+          "Observability"
+        ],
+        "summary": "Query timeseries by passing various metric parameters.",
+        "operationId": "queryTimeseriesWithParameters",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "cpu_usage_seconds_total",
+            "x-go-name": "Metric",
+            "description": "Name of the metric to query.",
+            "name": "metric",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "instance=server1,job=node",
+            "x-go-name": "Label",
+            "description": "Labels to filter the metric by.  Multiple labels can be provided as comma-separated key=value pairs.",
+            "name": "label",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "2024-01-22T10:00:00Z",
+            "x-go-name": "Start",
+            "description": "Start timestamp, inclusive.",
+            "name": "start",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "2024-01-22T11:00:00Z",
+            "x-go-name": "End",
+            "description": "End timestamp, inclusive.",
+            "name": "end",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "default": "3600",
+            "example": "60",
+            "x-go-name": "Step",
+            "description": "Query resolution step width in duration format or float number of seconds.",
+            "name": "step",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "avg",
+            "x-go-name": "Aggregator",
+            "description": "Aggregation function to use (e.g., sum, avg, min, max).",
+            "name": "aggregator",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/timeseriesResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/networking/ib-networks": {
       "get": {
         "tags": [
