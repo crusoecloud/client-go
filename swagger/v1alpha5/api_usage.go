@@ -15,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -239,12 +241,18 @@ func (a *UsageApiService) GetUsageExport(ctx context.Context, organizationId str
 
 /*
 UsageApiService Get options which exist for filters for /usage and /usage/export routes.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
-
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param organizationId
+ * @param optional nil or *UsageApiGetUsageOptionsOpts - Optional Parameters:
+     * @param "Billing" (optional.String) -
 @return UsageOptions
 */
-func (a *UsageApiService) GetUsageOptions(ctx context.Context, organizationId string) (UsageOptions, *http.Response, error) {
+
+type UsageApiGetUsageOptionsOpts struct {
+	Billing optional.String
+}
+
+func (a *UsageApiService) GetUsageOptions(ctx context.Context, organizationId string, localVarOptionals *UsageApiGetUsageOptionsOpts) (UsageOptions, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -261,6 +269,9 @@ func (a *UsageApiService) GetUsageOptions(ctx context.Context, organizationId st
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.Billing.IsSet() {
+		localVarQueryParams.Add("billing", parameterToString(localVarOptionals.Billing.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 

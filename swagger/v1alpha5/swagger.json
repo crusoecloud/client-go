@@ -928,6 +928,13 @@
             "name": "organization_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "example": "\"true\"",
+            "x-go-name": "Billing",
+            "name": "billing",
+            "in": "query"
           }
         ],
         "responses": {
