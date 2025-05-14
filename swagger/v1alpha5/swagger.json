@@ -616,7 +616,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/usageGetResponse"
+            "$ref": "#/responses/billingUsageGetResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -12652,6 +12652,12 @@
         "$ref": "#/definitions/GetBillingMonthlySummaryResponseV1Alpha5"
       }
     },
+    "billingUsageGetResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/BillingCostData"
+      }
+    },
     "capacitiesResponse": {
       "description": "",
       "schema": {
@@ -12695,12 +12701,6 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/FeatureFlagsGetResponse"
-      }
-    },
-    "getBillingCosts": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/BillingCostData"
       }
     },
     "getDiskResponse": {

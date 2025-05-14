@@ -29,15 +29,15 @@ DefaultApiService Get the daily spend for a specified organization.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param organizationId
 
-@return UsageByProjectGetResponse
+@return BillingCostData
 */
-func (a *DefaultApiService) GetBillingCosts(ctx context.Context, organizationId string) (UsageByProjectGetResponse, *http.Response, error) {
+func (a *DefaultApiService) GetBillingCosts(ctx context.Context, organizationId string) (BillingCostData, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue UsageByProjectGetResponse
+		localVarReturnValue BillingCostData
 	)
 
 	// create path and map variables
@@ -95,7 +95,7 @@ func (a *DefaultApiService) GetBillingCosts(ctx context.Context, organizationId 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v UsageByProjectGetResponse
+			var v BillingCostData
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
