@@ -600,6 +600,39 @@
         }
       }
     },
+    "/organizations/{organization_id}/billing/costs": {
+      "get": {
+        "summary": "Get the daily spend for a specified organization.",
+        "operationId": "getBillingCosts",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/usageGetResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/organizations/{organization_id}/quotas": {
       "get": {
         "tags": [
@@ -6772,6 +6805,78 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "BillingCostData": {
+      "type": "object",
+      "title": "UsageByProjectGetResponse is the response type for GET requests to the usage.usageByProject endpoint.",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BillingCostDatum"
+          },
+          "x-go-name": "Data"
+        },
+        "last_updated": {
+          "type": "string",
+          "x-go-name": "LastUpdated"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "BillingCostDatum": {
+      "type": "object",
+      "required": [
+        "resource_type",
+        "project_id",
+        "region",
+        "date",
+        "quantity",
+        "billable_metric"
+      ],
+      "properties": {
+        "billable_metric": {
+          "type": "string",
+          "x-go-name": "BillableMetric",
+          "example": "\"gpu-hours\""
+        },
+        "cost": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Cost",
+          "example": 12.34
+        },
+        "date": {
+          "type": "string",
+          "x-go-name": "Date",
+          "example": "\"2022-07-01\""
+        },
+        "project_id": {
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "\"d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb\""
+        },
+        "quantity": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Quantity",
+          "example": 2.123
+        },
+        "region": {
+          "type": "string",
+          "x-go-name": "Region",
+          "example": "\"us-northcentral1\""
+        },
+        "resource_type": {
+          "type": "string",
+          "x-go-name": "ResourceType",
+          "example": "\"a40.1x\""
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "BillingIntentGetResponse": {
       "type": "object",
       "title": "BillingIntentGetResponse is the response type for Get requests to the entities/billing/intent endpoint.",
@@ -12590,6 +12695,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/FeatureFlagsGetResponse"
+      }
+    },
+    "getBillingCosts": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/BillingCostData"
       }
     },
     "getDiskResponse": {
