@@ -463,3 +463,154 @@ func (a *ObservabilityApiService) QueryTimeseriesSimplified(ctx context.Context,
 
 	return localVarReturnValue, localVarHttpResponse, nil
 }
+
+/*
+ObservabilityApiService Query timeseries by passing various metric parameters.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param projectId
+ * @param metric Name of the metric to query.
+ * @param start Start timestamp, inclusive.
+ * @param end End timestamp, inclusive.
+ * @param optional nil or *ObservabilityApiQueryTimeseriesWithParametersOpts - Optional Parameters:
+     * @param "Label" (optional.Interface of []string) -  Labels to filter the metric by.  Multiple labels can be provided as comma-separated key&#x3D;value pairs.
+     * @param "Step" (optional.String) -  Query resolution step width in duration format or float number of seconds.
+     * @param "Aggregator" (optional.String) -  Aggregation function to use (e.g., sum, avg, min, max).
+@return ObservabilityMetrics
+*/
+
+type ObservabilityApiQueryTimeseriesWithParametersOpts struct {
+	Label      optional.Interface
+	Step       optional.String
+	Aggregator optional.String
+}
+
+func (a *ObservabilityApiService) QueryTimeseriesWithParameters(ctx context.Context, projectId string, metric string, start string, end string, localVarOptionals *ObservabilityApiQueryTimeseriesWithParametersOpts) (ObservabilityMetrics, *http.Response, error) {
+	var (
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
+		localVarReturnValue ObservabilityMetrics
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/metrics/timeseries/query-parameters"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	localVarQueryParams.Add("metric", parameterToString(metric, ""))
+	if localVarOptionals != nil && localVarOptionals.Label.IsSet() {
+		localVarQueryParams.Add("label", parameterToString(localVarOptionals.Label.Value(), "csv"))
+	}
+	localVarQueryParams.Add("start", parameterToString(start, ""))
+	localVarQueryParams.Add("end", parameterToString(end, ""))
+	if localVarOptionals != nil && localVarOptionals.Step.IsSet() {
+		localVarQueryParams.Add("step", parameterToString(localVarOptionals.Step.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Aggregator.IsSet() {
+		localVarQueryParams.Add("aggregator", parameterToString(localVarOptionals.Aggregator.Value(), ""))
+	}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body:  localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v ObservabilityMetrics
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 400 {
+			var v InlineResponse400
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 401 {
+			var v InlineResponse401
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 403 {
+			var v InlineResponse403
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 500 {
+			var v InlineResponse500
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}

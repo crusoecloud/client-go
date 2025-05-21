@@ -8,7 +8,8 @@
  */
 package swagger
 
-type VpcSubnetPatchRequest struct {
-	Name              string `json:"name"`
-	NatGatewayEnabled bool   `json:"nat_gateway_enabled,omitempty"`
+type NatGateway struct {
+	Id                string `json:"id"`
+	PublicIpv4Address string `json:"public_ipv4_address"`
+	PublicIpv4Id      string `json:"public_ipv4_id"`
 }

@@ -8,7 +8,7 @@
  */
 package swagger
 
-type VpcSubnetPatchRequest struct {
-	Name              string `json:"name"`
-	NatGatewayEnabled bool   `json:"nat_gateway_enabled,omitempty"`
+type BillingCostData struct {
+	Data        []BillingCostDatum `json:"data"`
+	LastUpdated string             `json:"last_updated,omitempty"`
 }

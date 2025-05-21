@@ -9,8 +9,9 @@
 package swagger
 
 type VpcSubnetPostRequest struct {
-	Cidr         string `json:"cidr"`
-	Location     string `json:"location"`
-	Name         string `json:"name"`
-	VpcNetworkId string `json:"vpc_network_id"`
+	Cidr              string `json:"cidr"`
+	Location          string `json:"location"`
+	Name              string `json:"name"`
+	NatGatewayEnabled bool   `json:"nat_gateway_enabled"`
+	VpcNetworkId      string `json:"vpc_network_id"`
 }

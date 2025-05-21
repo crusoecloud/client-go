@@ -8,7 +8,6 @@
  */
 package swagger
 
-type VpcSubnetPatchRequest struct {
-	Name              string `json:"name"`
-	NatGatewayEnabled bool   `json:"nat_gateway_enabled,omitempty"`
+type EditOrgMfaRequest struct {
+	IntendedMethods []string `json:"intended_methods"`
 }
