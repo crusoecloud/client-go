@@ -9726,6 +9726,21 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "KubernetesNodePoolResponse": {
+      "type": "object",
+      "required": [
+        "node_pool"
+      ],
+      "properties": {
+        "details": {
+          "$ref": "#/definitions/OperationDetails"
+        },
+        "node_pool": {
+          "$ref": "#/definitions/KubernetesNodePool"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "KubernetesNodePoolsVersionInfo": {
       "type": "object",
       "required": [
@@ -10859,6 +10874,23 @@
           ],
           "x-go-name": "State",
           "example": "IN_PROGRESS"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "OperationDetails": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "Error associated to the operation\nPopulated if the operation was a partial success due to best effort",
+          "type": "string",
+          "x-go-name": "Error"
+        },
+        "num_vms_created": {
+          "description": "Number of VMs created as part of the operation",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "NumVMsCreated"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
