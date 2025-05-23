@@ -10715,14 +10715,9 @@
         "interface_type",
         "mac_address",
         "ips",
-        "access_type",
         "external_dns_name"
       ],
       "properties": {
-        "access_type": {
-          "type": "string",
-          "x-go-name": "AccessType"
-        },
         "external_dns_name": {
           "type": "string",
           "x-go-name": "ExternalDNSName"

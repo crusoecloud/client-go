@@ -9,7 +9,6 @@
 package swagger
 
 type NetworkInterface struct {
-	AccessType      string        `json:"access_type"`
 	ExternalDnsName string        `json:"external_dns_name"`
 	Id              string        `json:"id"`
 	InterfaceType   string        `json:"interface_type"`
