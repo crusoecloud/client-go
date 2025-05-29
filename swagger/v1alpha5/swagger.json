@@ -999,7 +999,7 @@
           "Ccr"
         ],
         "summary": "List all CCR repositories in a project.",
-        "operationId": "listRepositories",
+        "operationId": "listCcrRepositories",
         "parameters": [
           {
             "type": "string",
@@ -1034,7 +1034,7 @@
           "Ccr"
         ],
         "summary": "Get a specific CCR repository.",
-        "operationId": "getRepository",
+        "operationId": "getCcrRepository",
         "parameters": [
           {
             "type": "string",
@@ -1074,7 +1074,7 @@
           "Ccr"
         ],
         "summary": "Create a CCR repository.",
-        "operationId": "createRepository",
+        "operationId": "createCcrRepository",
         "parameters": [
           {
             "type": "string",
@@ -1161,7 +1161,7 @@
           "Ccr"
         ],
         "summary": "Update a CCR repository.",
-        "operationId": "updateRepository",
+        "operationId": "updateCcrRepository",
         "parameters": [
           {
             "type": "string",
@@ -1252,7 +1252,7 @@
           "Ccr"
         ],
         "summary": "Delete an image from a CCR repository.",
-        "operationId": "deleteImage",
+        "operationId": "deleteCcrImage",
         "parameters": [
           {
             "type": "string",
@@ -1301,7 +1301,7 @@
           "Ccr"
         ],
         "summary": "List all artifacts for an image in a CCR repository.",
-        "operationId": "listArtifacts",
+        "operationId": "listCcrArtifacts",
         "parameters": [
           {
             "type": "string",
@@ -1348,7 +1348,7 @@
           "Ccr"
         ],
         "summary": "Delete an artifact from an image in a CCR repository.",
-        "operationId": "deleteArtifact",
+        "operationId": "deleteCcrArtifact",
         "parameters": [
           {
             "type": "string",
