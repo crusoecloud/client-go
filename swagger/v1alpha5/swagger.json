@@ -1155,53 +1155,6 @@
             "$ref": "#/responses/serverError"
           }
         }
-      },
-      "patch": {
-        "tags": [
-          "Ccr"
-        ],
-        "summary": "Update a CCR repository.",
-        "operationId": "updateCcrRepository",
-        "parameters": [
-          {
-            "type": "string",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "x-go-name": "RepositoryID",
-            "name": "repository_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "name": "Body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/UpdateRepositoryRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/ccrRepositoryResponse"
-          },
-          "400": {
-            "$ref": "#/responses/badReqError"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
       }
     },
     "/projects/{project_id}/ccr/repositories/{repository_id}/images": {
@@ -12580,16 +12533,6 @@
           "type": "string",
           "x-go-name": "ProductName",
           "example": "a100.2x"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "UpdateRepositoryRequest": {
-      "type": "object",
-      "properties": {
-        "max_size_bytes": {
-          "type": "string",
-          "x-go-name": "MaxSizeBytes"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
