@@ -1403,6 +1403,48 @@
         }
       }
     },
+    "/projects/{project_id}/ccr/repositories/{repository_id}/usage": {
+      "get": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Get usage data for a specific CCR repository.",
+        "operationId": "getCcrRepositoryUsage",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "RepositoryID",
+            "name": "repository_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrRepositoryQuotaResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/compute/custom-images": {
       "get": {
         "tags": [
@@ -11889,6 +11931,20 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "RepositoryQuota": {
+      "type": "object",
+      "properties": {
+        "max_size_bytes": {
+          "type": "string",
+          "x-go-name": "MaxSizeBytes"
+        },
+        "used_size_bytes": {
+          "type": "string",
+          "x-go-name": "UsedSizeBytes"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "RepositoryRequest": {
       "type": "object",
       "properties": {
@@ -13334,6 +13390,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListSupportedProvidersResponse"
+      }
+    },
+    "ccrRepositoryQuotaResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/RepositoryQuota"
       }
     },
     "ccrRepositoryResponse": {
