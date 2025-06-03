@@ -30,7 +30,6 @@ type CcrApiService service
 CcrApiService Create a CCR repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
- * @param repositoryId
  * @param optional nil or *CcrApiCreateCcrRepositoryOpts - Optional Parameters:
      * @param "Body" (optional.Interface of RepositoryRequest) -
 @return Repository
@@ -40,7 +39,7 @@ type CcrApiCreateCcrRepositoryOpts struct {
 	Body optional.Interface
 }
 
-func (a *CcrApiService) CreateCcrRepository(ctx context.Context, projectId string, repositoryId string, localVarOptionals *CcrApiCreateCcrRepositoryOpts) (Repository, *http.Response, error) {
+func (a *CcrApiService) CreateCcrRepository(ctx context.Context, projectId string, localVarOptionals *CcrApiCreateCcrRepositoryOpts) (Repository, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -50,9 +49,8 @@ func (a *CcrApiService) CreateCcrRepository(ctx context.Context, projectId strin
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repository_id"+"}", fmt.Sprintf("%v", repositoryId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
