@@ -7447,14 +7447,14 @@
           "format": "int64",
           "x-go-name": "ArtifactCount"
         },
-        "image_count": {
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "PullCount"
-        },
         "name": {
           "type": "string",
           "x-go-name": "Name"
+        },
+        "pull_count": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "PullCount"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
