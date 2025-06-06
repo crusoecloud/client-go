@@ -11880,6 +11880,10 @@
     "RepositoryQuota": {
       "type": "object",
       "properties": {
+        "last_requested_timestamp_utc": {
+          "type": "string",
+          "x-go-name": "LastRequestedTimestampUTC"
+        },
         "max_size_bytes": {
           "type": "string",
           "x-go-name": "MaxSizeBytes"
