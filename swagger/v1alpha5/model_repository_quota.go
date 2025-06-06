@@ -8,6 +8,8 @@
  */
 package swagger
 
-type UpdateRepositoryRequest struct {
-	MaxSizeBytes string `json:"max_size_bytes,omitempty"`
+type RepositoryQuota struct {
+	LastRequestedTimestampUtc string `json:"last_requested_timestamp_utc,omitempty"`
+	MaxSizeBytes              string `json:"max_size_bytes,omitempty"`
+	UsedSizeBytes             string `json:"used_size_bytes,omitempty"`
 }

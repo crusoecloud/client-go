@@ -10,6 +10,6 @@ package swagger
 
 type CcrImage struct {
 	ArtifactCount int64  `json:"artifact_count,omitempty"`
-	ImageCount    int64  `json:"image_count,omitempty"`
 	Name          string `json:"name,omitempty"`
+	PullCount     int64  `json:"pull_count,omitempty"`
 }

@@ -1026,6 +1026,46 @@
             "$ref": "#/responses/serverError"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Create a CCR repository.",
+        "operationId": "createCcrRepository",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RepositoryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/ccrRepositoryResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
       }
     },
     "/projects/{project_id}/ccr/repositories/{repository_id}": {
@@ -1069,53 +1109,6 @@
           }
         }
       },
-      "post": {
-        "tags": [
-          "Ccr"
-        ],
-        "summary": "Create a CCR repository.",
-        "operationId": "createCcrRepository",
-        "parameters": [
-          {
-            "type": "string",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "x-go-name": "RepositoryID",
-            "name": "repository_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "name": "Body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/RepositoryRequest"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "$ref": "#/responses/ccrRepositoryResponse"
-          },
-          "400": {
-            "$ref": "#/responses/badReqError"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      },
       "delete": {
         "tags": [
           "Ccr"
@@ -1141,53 +1134,6 @@
         "responses": {
           "200": {
             "$ref": "#/responses/emptyResponse"
-          },
-          "400": {
-            "$ref": "#/responses/badReqError"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Ccr"
-        ],
-        "summary": "Update a CCR repository.",
-        "operationId": "updateCcrRepository",
-        "parameters": [
-          {
-            "type": "string",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "x-go-name": "RepositoryID",
-            "name": "repository_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "name": "Body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/UpdateRepositoryRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/ccrRepositoryResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -1387,6 +1333,48 @@
         "responses": {
           "200": {
             "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/ccr/repositories/{repository_id}/usage": {
+      "get": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Get usage data for a specific CCR repository.",
+        "operationId": "getCcrRepositoryUsage",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "RepositoryID",
+            "name": "repository_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrRepositoryQuotaResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -7459,14 +7447,14 @@
           "format": "int64",
           "x-go-name": "ArtifactCount"
         },
-        "image_count": {
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "PullCount"
-        },
         "name": {
           "type": "string",
           "x-go-name": "Name"
+        },
+        "pull_count": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "PullCount"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -11889,6 +11877,24 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "RepositoryQuota": {
+      "type": "object",
+      "properties": {
+        "last_requested_timestamp_utc": {
+          "type": "string",
+          "x-go-name": "LastRequestedTimestampUTC"
+        },
+        "max_size_bytes": {
+          "type": "string",
+          "x-go-name": "MaxSizeBytes"
+        },
+        "used_size_bytes": {
+          "type": "string",
+          "x-go-name": "UsedSizeBytes"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "RepositoryRequest": {
       "type": "object",
       "properties": {
@@ -12524,16 +12530,6 @@
           "type": "string",
           "x-go-name": "ProductName",
           "example": "a100.2x"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "UpdateRepositoryRequest": {
-      "type": "object",
-      "properties": {
-        "max_size_bytes": {
-          "type": "string",
-          "x-go-name": "MaxSizeBytes"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -13334,6 +13330,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListSupportedProvidersResponse"
+      }
+    },
+    "ccrRepositoryQuotaResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/RepositoryQuota"
       }
     },
     "ccrRepositoryResponse": {
