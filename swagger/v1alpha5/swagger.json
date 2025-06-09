@@ -8156,18 +8156,11 @@
       "type": "object",
       "title": "ExternalLoadBalancerPatchRequest defines the structure of the request body for patching an external load balancer.",
       "required": [
-        "id",
         "listen_ports_and_backends"
       ],
       "properties": {
         "health_check_options": {
           "$ref": "#/definitions/HealthCheckOptionsExternalLB"
-        },
-        "id": {
-          "description": "The ID of the External Load Balancer to update.",
-          "type": "string",
-          "x-go-name": "ID",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         },
         "listen_ports_and_backends": {
           "description": "Listen ports and associated backends configuration.",
@@ -8218,7 +8211,7 @@
           "description": "The protocol of the External Load Balancer.",
           "type": "string",
           "x-go-name": "Protocol",
-          "example": "tcp"
+          "example": "LOAD_BALANCER_PROTOCOL_TCP"
         },
         "vpc_id": {
           "description": "The ID of the VPC network this External Load Balancer belongs to.",

@@ -10,8 +10,6 @@ package swagger
 
 type ExternalLoadBalancerPatchRequest struct {
 	HealthCheckOptions *HealthCheckOptionsExternalLb `json:"health_check_options,omitempty"`
-	// The ID of the External Load Balancer to update.
-	Id string `json:"id"`
 	// Listen ports and associated backends configuration.
 	ListenPortsAndBackends []ListenPortAndBackend `json:"listen_ports_and_backends"`
 }
