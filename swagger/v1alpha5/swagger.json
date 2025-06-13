@@ -85,6 +85,38 @@
         }
       }
     },
+    "/ccr/tokens": {
+      "post": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Create a CCR token for a user.",
+        "operationId": "createCcrToken",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CCRTokenRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrTokenResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/compute/images": {
       "get": {
         "tags": [
@@ -7400,6 +7432,26 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "CCRTokenRequest": {
+      "type": "object",
+      "properties": {
+        "alias": {
+          "type": "string",
+          "x-go-name": "Alias"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CCRTokenResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "x-go-name": "Token"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "CapacityV1Alpha5": {
       "type": "object",
       "required": [
@@ -13335,6 +13387,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/Repository"
+      }
+    },
+    "ccrTokenResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/CCRTokenResponse"
       }
     },
     "createInstanceGroupResponse": {
