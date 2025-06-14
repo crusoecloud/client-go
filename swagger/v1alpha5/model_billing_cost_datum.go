@@ -16,4 +16,5 @@ type BillingCostDatum struct {
 	Quantity       float64 `json:"quantity"`
 	Region         string  `json:"region"`
 	ResourceType   string  `json:"resource_type"`
+	UnitPrice      float64 `json:"unit_price,omitempty"`
 }
