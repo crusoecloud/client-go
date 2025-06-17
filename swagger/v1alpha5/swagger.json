@@ -708,11 +708,14 @@
             "required": true
           },
           {
+            "enum": [
+              "json",
+              "csv"
+            ],
             "type": "array",
             "items": {
               "type": "string"
             },
-            "example": "\"json\",\"csv\"",
             "x-go-name": "Format",
             "name": "format",
             "in": "query"
