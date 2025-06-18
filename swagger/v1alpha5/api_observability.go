@@ -473,15 +473,17 @@ ObservabilityApiService Query timeseries by passing various metric parameters.
  * @param end End timestamp, inclusive.
  * @param optional nil or *ObservabilityApiQueryTimeseriesWithParametersOpts - Optional Parameters:
      * @param "Label" (optional.Interface of []string) -  Labels to filter the metric by.  Multiple labels can be provided as comma-separated key&#x3D;value pairs.
+     * @param "Function" (optional.String) -  Function to use (e.g., rate, avg). Multiple functions are separated by comma and applied in that order
+     * @param "Range_" (optional.String) -  Range to use with some functions (e.g., rate).
      * @param "Step" (optional.String) -  Query resolution step width in duration format or float number of seconds.
-     * @param "Aggregator" (optional.String) -  Aggregation function to use (e.g., sum, avg, min, max).
 @return ObservabilityMetrics
 */
 
 type ObservabilityApiQueryTimeseriesWithParametersOpts struct {
-	Label      optional.Interface
-	Step       optional.String
-	Aggregator optional.String
+	Label    optional.Interface
+	Function optional.String
+	Range_   optional.String
+	Step     optional.String
 }
 
 func (a *ObservabilityApiService) QueryTimeseriesWithParameters(ctx context.Context, projectId string, metric string, start string, end string, localVarOptionals *ObservabilityApiQueryTimeseriesWithParametersOpts) (ObservabilityMetrics, *http.Response, error) {
@@ -505,13 +507,16 @@ func (a *ObservabilityApiService) QueryTimeseriesWithParameters(ctx context.Cont
 	if localVarOptionals != nil && localVarOptionals.Label.IsSet() {
 		localVarQueryParams.Add("label", parameterToString(localVarOptionals.Label.Value(), "csv"))
 	}
+	if localVarOptionals != nil && localVarOptionals.Function.IsSet() {
+		localVarQueryParams.Add("function", parameterToString(localVarOptionals.Function.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Range_.IsSet() {
+		localVarQueryParams.Add("range", parameterToString(localVarOptionals.Range_.Value(), ""))
+	}
 	localVarQueryParams.Add("start", parameterToString(start, ""))
 	localVarQueryParams.Add("end", parameterToString(end, ""))
 	if localVarOptionals != nil && localVarOptionals.Step.IsSet() {
 		localVarQueryParams.Add("step", parameterToString(localVarOptionals.Step.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.Aggregator.IsSet() {
-		localVarQueryParams.Add("aggregator", parameterToString(localVarOptionals.Aggregator.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}

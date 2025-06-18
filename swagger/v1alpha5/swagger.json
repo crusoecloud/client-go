@@ -3896,6 +3896,22 @@
           },
           {
             "type": "string",
+            "example": "function=rate,avg",
+            "x-go-name": "Function",
+            "description": "Function to use (e.g., rate, avg). Multiple functions are separated by comma and applied in that order",
+            "name": "function",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "range=3600",
+            "x-go-name": "Range",
+            "description": "Range to use with some functions (e.g., rate).",
+            "name": "range",
+            "in": "query"
+          },
+          {
+            "type": "string",
             "example": "2024-01-22T10:00:00Z",
             "x-go-name": "Start",
             "description": "Start timestamp, inclusive.",
@@ -3919,14 +3935,6 @@
             "x-go-name": "Step",
             "description": "Query resolution step width in duration format or float number of seconds.",
             "name": "step",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "example": "avg",
-            "x-go-name": "Aggregator",
-            "description": "Aggregation function to use (e.g., sum, avg, min, max).",
-            "name": "aggregator",
             "in": "query"
           }
         ],
