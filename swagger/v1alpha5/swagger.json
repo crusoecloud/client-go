@@ -7346,6 +7346,39 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "AuthCheckGetResponse": {
+      "type": "object",
+      "required": [
+        "continue_to"
+      ],
+      "properties": {
+        "continue_to": {
+          "$ref": "#/definitions/ContinueToEnum"
+        },
+        "providers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AuthCheckProvider"
+          },
+          "x-go-name": "Providers"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "AuthCheckProvider": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "issuer_uri": {
+          "type": "string",
+          "x-go-name": "IssuerURI"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "Backend": {
       "type": "object",
       "title": "Backend defines the backend server configuration.",
@@ -7782,6 +7815,10 @@
           "x-go-name": "PullCount"
         }
       },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ContinueToEnum": {
+      "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "CreateInferenceAPIKeyRequest": {
@@ -13490,6 +13527,12 @@
         "$ref": "#/definitions/AuditLogsGetResponse"
       }
     },
+    "authCheckGetResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AuthCheckGetResponse"
+      }
+    },
     "authError": {
       "description": "Error Authentication Failed",
       "schema": {
@@ -14029,6 +14072,61 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ProspectPostResponse"
+      }
+    },
+    "redirectSeeOther": {
+      "description": "Redirect See Other",
+      "schema": {
+        "type": "object",
+        "required": [
+          "error",
+          "redirect_browser_to"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "id",
+              "status",
+              "reason"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "x-go-name": "Code",
+                "example": "422"
+              },
+              "id": {
+                "type": "string",
+                "x-go-name": "Id",
+                "example": "browser_location_change_required"
+              },
+              "message": {
+                "type": "string",
+                "x-go-name": "Message",
+                "example": "browser location change required"
+              },
+              "reason": {
+                "type": "string",
+                "x-go-name": "Reason",
+                "example": "In order to complete this flow please redirect the browser to..."
+              },
+              "status": {
+                "type": "string",
+                "x-go-name": "Status",
+                "example": "Unprocessable Entity"
+              }
+            },
+            "x-go-name": "Error"
+          },
+          "redirect_browser_to": {
+            "type": "string",
+            "x-go-name": "RedirectBrowserTo",
+            "example": "https://dev-70243141.okta.com/oauth2/v1/authorize/..."
+          }
+        }
       }
     },
     "reservationsResponse": {
