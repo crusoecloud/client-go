@@ -297,13 +297,13 @@ CcrApiService Delete an artifact from an image in a CCR repository.
  * @param repositoryId
  * @param imageId
  * @param optional nil or *CcrApiDeleteCcrArtifactOpts - Optional Parameters:
-     * @param "Tags" (optional.String) -
+     * @param "Tag" (optional.String) -
      * @param "Digest" (optional.String) -
 
 */
 
 type CcrApiDeleteCcrArtifactOpts struct {
-	Tags   optional.String
+	Tag    optional.String
 	Digest optional.String
 }
 
@@ -325,8 +325,8 @@ func (a *CcrApiService) DeleteCcrArtifact(ctx context.Context, projectId string,
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Tags.IsSet() {
-		localVarQueryParams.Add("tags", parameterToString(localVarOptionals.Tags.Value(), ""))
+	if localVarOptionals != nil && localVarOptionals.Tag.IsSet() {
+		localVarQueryParams.Add("tag", parameterToString(localVarOptionals.Tag.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.Digest.IsSet() {
 		localVarQueryParams.Add("digest", parameterToString(localVarOptionals.Digest.Value(), ""))
