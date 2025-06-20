@@ -8,8 +8,13 @@
  */
 package swagger
 
+import (
+	"time"
+)
+
 type CcrImage struct {
-	ArtifactCount int64  `json:"artifact_count,omitempty"`
-	Name          string `json:"name,omitempty"`
-	PullCount     int64  `json:"pull_count,omitempty"`
+	ManifestCount int64     `json:"manifest_count,omitempty"`
+	Name          string    `json:"name,omitempty"`
+	PullCount     int64     `json:"pull_count,omitempty"`
+	UpdatedAt     time.Time `json:"updated_at,omitempty"`
 }

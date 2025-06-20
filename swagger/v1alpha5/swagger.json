@@ -1444,13 +1444,13 @@
         }
       }
     },
-    "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/artifacts": {
+    "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/manifests": {
       "get": {
         "tags": [
           "Ccr"
         ],
-        "summary": "List all artifacts for an image in a CCR repository.",
-        "operationId": "listCcrArtifacts",
+        "summary": "List all manifests for an image in a CCR repository.",
+        "operationId": "listCcrManifests",
         "parameters": [
           {
             "type": "string",
@@ -1476,7 +1476,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/ccrListArtifactsResponse"
+            "$ref": "#/responses/ccrListManifestsResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -1496,8 +1496,8 @@
         "tags": [
           "Ccr"
         ],
-        "summary": "Delete an artifact from an image in a CCR repository.",
-        "operationId": "deleteCcrArtifact",
+        "summary": "Delete an manifest from an image in a CCR repository.",
+        "operationId": "deleteCcrManifest",
         "parameters": [
           {
             "type": "string",
@@ -1522,7 +1522,7 @@
           },
           {
             "type": "string",
-            "x-go-name": "Tags",
+            "x-go-name": "Tag",
             "name": "tag",
             "in": "query"
           },
@@ -7209,27 +7209,6 @@
     }
   },
   "definitions": {
-    "Artifact": {
-      "type": "object",
-      "properties": {
-        "digest": {
-          "type": "string",
-          "x-go-name": "Digest"
-        },
-        "size_bytes": {
-          "type": "string",
-          "x-go-name": "SizeBytes"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-go-name": "Tags"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "AsyncOperationResponse": {
       "type": "object",
       "title": "AsyncOperationResponse is the response type for endpoints which return async operations.",
@@ -7800,10 +7779,10 @@
     "CcrImage": {
       "type": "object",
       "properties": {
-        "artifact_count": {
+        "manifest_count": {
           "type": "integer",
           "format": "int64",
-          "x-go-name": "ArtifactCount"
+          "x-go-name": "ManifestCount"
         },
         "name": {
           "type": "string",
@@ -7813,6 +7792,11 @@
           "type": "integer",
           "format": "int64",
           "x-go-name": "PullCount"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "LastUpdatedTimestampUTC"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -10644,19 +10628,6 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "ListArtifactsResponse": {
-      "type": "object",
-      "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Artifact"
-          },
-          "x-go-name": "Items"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "ListCapacitiesResponseV1Alpha5": {
       "type": "object",
       "required": [
@@ -10987,6 +10958,19 @@
           "example": [
             "us-northcentral1-a"
           ]
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ListManifestsResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Manifest"
+          },
+          "x-go-name": "Items"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -11546,6 +11530,27 @@
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers/logservice"
+    },
+    "Manifest": {
+      "type": "object",
+      "properties": {
+        "digest": {
+          "type": "string",
+          "x-go-name": "Digest"
+        },
+        "size_bytes": {
+          "type": "string",
+          "x-go-name": "SizeBytes"
+        },
+        "tag": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Tag"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "NATGateway": {
       "type": "object",
@@ -13613,16 +13618,16 @@
         "$ref": "#/definitions/ListCapacitiesResponseV1Alpha5"
       }
     },
-    "ccrListArtifactsResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ListArtifactsResponse"
-      }
-    },
     "ccrListImagesResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListCcrImagesResponse"
+      }
+    },
+    "ccrListManifestsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListManifestsResponse"
       }
     },
     "ccrListRepositoriesResponse": {

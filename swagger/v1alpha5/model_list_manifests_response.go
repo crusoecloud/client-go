@@ -8,6 +8,6 @@
  */
 package swagger
 
-type ListArtifactsResponse struct {
-	Items []Artifact `json:"items,omitempty"`
+type ListManifestsResponse struct {
+	Items []Manifest `json:"items,omitempty"`
 }
