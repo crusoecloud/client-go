@@ -8,8 +8,13 @@
  */
 package swagger
 
+import (
+	"time"
+)
+
 type Manifest struct {
-	Digest    string   `json:"digest,omitempty"`
-	SizeBytes string   `json:"size_bytes,omitempty"`
-	Tag       []string `json:"tag,omitempty"`
+	Digest    string    `json:"digest,omitempty"`
+	PushedAt  time.Time `json:"pushed_at,omitempty"`
+	SizeBytes string    `json:"size_bytes,omitempty"`
+	Tags      []string  `json:"tags,omitempty"`
 }

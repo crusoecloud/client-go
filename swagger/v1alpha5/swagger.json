@@ -11538,16 +11538,21 @@
           "type": "string",
           "x-go-name": "Digest"
         },
+        "pushed_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "PushTimestampUTC"
+        },
         "size_bytes": {
           "type": "string",
           "x-go-name": "SizeBytes"
         },
-        "tag": {
+        "tags": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "x-go-name": "Tag"
+          "x-go-name": "Tags"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
