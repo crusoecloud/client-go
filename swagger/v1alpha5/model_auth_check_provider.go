@@ -8,8 +8,7 @@
  */
 package swagger
 
-type Artifact struct {
-	Digest    string   `json:"digest,omitempty"`
-	SizeBytes string   `json:"size_bytes,omitempty"`
-	Tags      []string `json:"tags,omitempty"`
+type AuthCheckProvider struct {
+	Id        string `json:"id,omitempty"`
+	IssuerUri string `json:"issuer_uri,omitempty"`
 }

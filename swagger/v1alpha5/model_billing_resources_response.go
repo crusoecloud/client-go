@@ -8,13 +8,6 @@
  */
 package swagger
 
-import (
-	"time"
-)
-
-type CcrImage struct {
-	ManifestCount int64     `json:"manifest_count,omitempty"`
-	Name          string    `json:"name,omitempty"`
-	PullCount     int64     `json:"pull_count,omitempty"`
-	UpdatedAt     time.Time `json:"updated_at,omitempty"`
+type BillingResourcesResponse struct {
+	Data []BillingResourceDatum `json:"data"`
 }

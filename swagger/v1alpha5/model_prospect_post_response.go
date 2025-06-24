@@ -8,7 +8,4 @@
  */
 package swagger
 
-type ProspectPostResponse struct {
-	ApproveCustomerSuccess bool `json:"approve_customer_success,omitempty"`
-	CreateCustomerSuccess  bool `json:"create_customer_success,omitempty"`
-}
+type ProspectPostResponse struct{}

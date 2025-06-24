@@ -291,23 +291,13 @@ func (a *CcrApiService) CreateCcrToken(ctx context.Context, localVarOptionals *C
 }
 
 /*
-CcrApiService Delete an artifact from an image in a CCR repository.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
- * @param imageId
- * @param optional nil or *CcrApiDeleteCcrArtifactOpts - Optional Parameters:
-     * @param "Tags" (optional.String) -
-     * @param "Digest" (optional.String) -
-
+CcrApiService Delete an image from a CCR repository.
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
+  - @param repositoryId
+  - @param imageId
 */
-
-type CcrApiDeleteCcrArtifactOpts struct {
-	Tags   optional.String
-	Digest optional.String
-}
-
-func (a *CcrApiService) DeleteCcrArtifact(ctx context.Context, projectId string, repositoryId string, imageId string, localVarOptionals *CcrApiDeleteCcrArtifactOpts) (*http.Response, error) {
+func (a *CcrApiService) DeleteCcrImage(ctx context.Context, projectId string, repositoryId string, imageId string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -316,7 +306,7 @@ func (a *CcrApiService) DeleteCcrArtifact(ctx context.Context, projectId string,
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/artifacts"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repository_id"+"}", fmt.Sprintf("%v", repositoryId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"image_id"+"}", fmt.Sprintf("%v", imageId), -1)
@@ -325,12 +315,6 @@ func (a *CcrApiService) DeleteCcrArtifact(ctx context.Context, projectId string,
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Tags.IsSet() {
-		localVarQueryParams.Add("tags", parameterToString(localVarOptionals.Tags.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.Digest.IsSet() {
-		localVarQueryParams.Add("digest", parameterToString(localVarOptionals.Digest.Value(), ""))
-	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -416,13 +400,23 @@ func (a *CcrApiService) DeleteCcrArtifact(ctx context.Context, projectId string,
 }
 
 /*
-CcrApiService Delete an image from a CCR repository.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param repositoryId
-  - @param imageId
+CcrApiService Delete an manifest from an image in a CCR repository.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param projectId
+ * @param repositoryId
+ * @param imageId
+ * @param optional nil or *CcrApiDeleteCcrManifestOpts - Optional Parameters:
+     * @param "Tag" (optional.String) -
+     * @param "Digest" (optional.String) -
+
 */
-func (a *CcrApiService) DeleteCcrImage(ctx context.Context, projectId string, repositoryId string, imageId string) (*http.Response, error) {
+
+type CcrApiDeleteCcrManifestOpts struct {
+	Tag    optional.String
+	Digest optional.String
+}
+
+func (a *CcrApiService) DeleteCcrManifest(ctx context.Context, projectId string, repositoryId string, imageId string, localVarOptionals *CcrApiDeleteCcrManifestOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -431,7 +425,7 @@ func (a *CcrApiService) DeleteCcrImage(ctx context.Context, projectId string, re
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/manifests"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repository_id"+"}", fmt.Sprintf("%v", repositoryId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"image_id"+"}", fmt.Sprintf("%v", imageId), -1)
@@ -440,6 +434,12 @@ func (a *CcrApiService) DeleteCcrImage(ctx context.Context, projectId string, re
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.Tag.IsSet() {
+		localVarQueryParams.Add("tag", parameterToString(localVarOptionals.Tag.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Digest.IsSet() {
+		localVarQueryParams.Add("digest", parameterToString(localVarOptionals.Digest.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -888,136 +888,6 @@ func (a *CcrApiService) GetCcrRepositoryUsage(ctx context.Context, projectId str
 }
 
 /*
-CcrApiService List all artifacts for an image in a CCR repository.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param repositoryId
-  - @param imageId
-
-@return ListArtifactsResponse
-*/
-func (a *CcrApiService) ListCcrArtifacts(ctx context.Context, projectId string, repositoryId string, imageId string) (ListArtifactsResponse, *http.Response, error) {
-	var (
-		localVarHttpMethod  = strings.ToUpper("Get")
-		localVarPostBody    interface{}
-		localVarFileName    string
-		localVarFileBytes   []byte
-		localVarReturnValue ListArtifactsResponse
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/artifacts"
-	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"repository_id"+"}", fmt.Sprintf("%v", repositoryId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"image_id"+"}", fmt.Sprintf("%v", imageId), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-		if err == nil {
-			return localVarReturnValue, localVarHttpResponse, err
-		}
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body:  localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		if localVarHttpResponse.StatusCode == 200 {
-			var v ListArtifactsResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 400 {
-			var v InlineResponse400
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 401 {
-			var v InlineResponse401
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 403 {
-			var v InlineResponse403
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 500 {
-			var v InlineResponse500
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		return localVarReturnValue, localVarHttpResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHttpResponse, nil
-}
-
-/*
 CcrApiService List all images in a CCR repository.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
@@ -1091,6 +961,136 @@ func (a *CcrApiService) ListCcrImages(ctx context.Context, projectId string, rep
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v ListCcrImagesResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 400 {
+			var v InlineResponse400
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 401 {
+			var v InlineResponse401
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 403 {
+			var v InlineResponse403
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 500 {
+			var v InlineResponse500
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}
+
+/*
+CcrApiService List all manifests for an image in a CCR repository.
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
+  - @param repositoryId
+  - @param imageId
+
+@return ListManifestsResponse
+*/
+func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, repositoryId string, imageId string) (ListManifestsResponse, *http.Response, error) {
+	var (
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
+		localVarReturnValue ListManifestsResponse
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/manifests"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"repository_id"+"}", fmt.Sprintf("%v", repositoryId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"image_id"+"}", fmt.Sprintf("%v", imageId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body:  localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v ListManifestsResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

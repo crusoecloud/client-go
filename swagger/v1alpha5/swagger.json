@@ -654,7 +654,10 @@
     },
     "/organizations/{organization_id}/billing/costs": {
       "get": {
-        "summary": "Get the daily spend for a specified organization.",
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Get the daily spend for a specified organization by project.",
         "operationId": "getBillingCosts",
         "parameters": [
           {
@@ -668,7 +671,175 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/billingUsageGetResponse"
+            "$ref": "#/responses/billingCostsGetResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/billing/export": {
+      "get": {
+        "produces": [
+          "text/csv"
+        ],
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Return a itemized spend per resource.",
+        "operationId": "getBillingExport",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "enum": [
+              "json",
+              "csv"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "x-go-name": "Format",
+            "name": "format",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb"
+            ],
+            "x-go-name": "Projects",
+            "name": "projects",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb"
+            ],
+            "x-go-name": "Resources",
+            "name": "resources",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "persistent-ssd",
+              "a40.1x"
+            ],
+            "x-go-name": "ResourceTypes",
+            "name": "resource_types",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "us-east1",
+              "us-northcentral1"
+            ],
+            "x-go-name": "Regions",
+            "name": "regions",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "\"2022-07-01\"",
+            "x-go-name": "StartDate",
+            "name": "start_date",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "\"2023-08-08\"",
+            "x-go-name": "EndDate",
+            "name": "end_date",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/billingExportGetResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/billing/options": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Retrieve data about an organizations recent Non-Reservation costs.",
+        "operationId": "getBillingOptions",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "\"2025-05-01\"",
+            "x-go-name": "StartDate",
+            "name": "start_date",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "\"2025-05-20\"",
+            "x-go-name": "EndDate",
+            "name": "end_date",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/billingOptionsGetResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -1273,13 +1444,13 @@
         }
       }
     },
-    "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/artifacts": {
+    "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/manifests": {
       "get": {
         "tags": [
           "Ccr"
         ],
-        "summary": "List all artifacts for an image in a CCR repository.",
-        "operationId": "listCcrArtifacts",
+        "summary": "List all manifests for an image in a CCR repository.",
+        "operationId": "listCcrManifests",
         "parameters": [
           {
             "type": "string",
@@ -1305,7 +1476,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/ccrListArtifactsResponse"
+            "$ref": "#/responses/ccrListManifestsResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -1325,8 +1496,8 @@
         "tags": [
           "Ccr"
         ],
-        "summary": "Delete an artifact from an image in a CCR repository.",
-        "operationId": "deleteCcrArtifact",
+        "summary": "Delete an manifest from an image in a CCR repository.",
+        "operationId": "deleteCcrManifest",
         "parameters": [
           {
             "type": "string",
@@ -1351,8 +1522,8 @@
           },
           {
             "type": "string",
-            "x-go-name": "Tags",
-            "name": "tags",
+            "x-go-name": "Tag",
+            "name": "tag",
             "in": "query"
           },
           {
@@ -3725,6 +3896,22 @@
           },
           {
             "type": "string",
+            "example": "function=rate,avg",
+            "x-go-name": "Function",
+            "description": "Function to use (e.g., rate, avg). Multiple functions are separated by comma and applied in that order",
+            "name": "function",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "range=3600",
+            "x-go-name": "Range",
+            "description": "Range to use with some functions (e.g., rate).",
+            "name": "range",
+            "in": "query"
+          },
+          {
+            "type": "string",
             "example": "2024-01-22T10:00:00Z",
             "x-go-name": "Start",
             "description": "Start timestamp, inclusive.",
@@ -3748,14 +3935,6 @@
             "x-go-name": "Step",
             "description": "Query resolution step width in duration format or float number of seconds.",
             "name": "step",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "example": "avg",
-            "x-go-name": "Aggregator",
-            "description": "Aggregation function to use (e.g., sum, avg, min, max).",
-            "name": "aggregator",
             "in": "query"
           }
         ],
@@ -7030,27 +7209,6 @@
     }
   },
   "definitions": {
-    "Artifact": {
-      "type": "object",
-      "properties": {
-        "digest": {
-          "type": "string",
-          "x-go-name": "Digest"
-        },
-        "size_bytes": {
-          "type": "string",
-          "x-go-name": "SizeBytes"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-go-name": "Tags"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "AsyncOperationResponse": {
       "type": "object",
       "title": "AsyncOperationResponse is the response type for endpoints which return async operations.",
@@ -7163,6 +7321,39 @@
           "type": "string",
           "x-go-name": "PrevPageToken",
           "example": "bXktZmlyc3Qtdm0"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "AuthCheckGetResponse": {
+      "type": "object",
+      "required": [
+        "continue_to"
+      ],
+      "properties": {
+        "continue_to": {
+          "$ref": "#/definitions/ContinueToEnum"
+        },
+        "providers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AuthCheckProvider"
+          },
+          "x-go-name": "Providers"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "AuthCheckProvider": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "issuer_uri": {
+          "type": "string",
+          "x-go-name": "IssuerURI"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -7337,6 +7528,12 @@
           "type": "string",
           "x-go-name": "ResourceType",
           "example": "\"a40.1x\""
+        },
+        "unit_price": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "UnitPrice",
+          "example": 1.23
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -7352,6 +7549,94 @@
           "type": "string",
           "x-go-name": "Intent",
           "example": "https://billing.stripe.com/session/{SESSION_SECRET}"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "BillingResourceDatum": {
+      "type": "object",
+      "required": [
+        "date",
+        "project_name",
+        "project_id",
+        "resource_name",
+        "resource_id",
+        "resource_type",
+        "region",
+        "quantity",
+        "billable_metric"
+      ],
+      "properties": {
+        "billable_metric": {
+          "type": "string",
+          "x-go-name": "BillableMetric",
+          "example": "\"instance-hours\""
+        },
+        "date": {
+          "type": "string",
+          "x-go-name": "Date",
+          "example": "\"2025-07-04\""
+        },
+        "project_id": {
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "\"d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb\""
+        },
+        "project_name": {
+          "type": "string",
+          "x-go-name": "ProjectName",
+          "example": "\"Apollo 11\""
+        },
+        "quantity": {
+          "type": "string",
+          "x-go-name": "Quantity",
+          "example": "\"2.123\""
+        },
+        "region": {
+          "type": "string",
+          "x-go-name": "Region",
+          "example": "\"us-northcentral1\""
+        },
+        "resource_id": {
+          "type": "string",
+          "x-go-name": "ResourceID",
+          "example": "\"d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb\""
+        },
+        "resource_name": {
+          "type": "string",
+          "x-go-name": "ResourceName",
+          "example": "\"My H200\""
+        },
+        "resource_type": {
+          "type": "string",
+          "x-go-name": "ResourceType",
+          "example": "\"h200-141gb-sxm-ib.8x\""
+        },
+        "total_price": {
+          "type": "string",
+          "x-go-name": "TotalPrice",
+          "example": "\"12.34\""
+        },
+        "unit_price": {
+          "type": "string",
+          "x-go-name": "UnitPrice",
+          "example": "\"1.23\""
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "BillingResourcesResponse": {
+      "type": "object",
+      "required": [
+        "data"
+      ],
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BillingResourceDatum"
+          },
+          "x-go-name": "Data"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -7438,6 +7723,10 @@
         "alias": {
           "type": "string",
           "x-go-name": "Alias"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -7494,10 +7783,10 @@
     "CcrImage": {
       "type": "object",
       "properties": {
-        "artifact_count": {
+        "manifest_count": {
           "type": "integer",
           "format": "int64",
-          "x-go-name": "ArtifactCount"
+          "x-go-name": "ManifestCount"
         },
         "name": {
           "type": "string",
@@ -7507,8 +7796,17 @@
           "type": "integer",
           "format": "int64",
           "x-go-name": "PullCount"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "LastUpdatedTimestampUTC"
         }
       },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ContinueToEnum": {
+      "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "CreateInferenceAPIKeyRequest": {
@@ -10334,19 +10632,6 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "ListArtifactsResponse": {
-      "type": "object",
-      "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Artifact"
-          },
-          "x-go-name": "Items"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "ListCapacitiesResponseV1Alpha5": {
       "type": "object",
       "required": [
@@ -10677,6 +10962,19 @@
           "example": [
             "us-northcentral1-a"
           ]
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ListManifestsResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Manifest"
+          },
+          "x-go-name": "Items"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -11236,6 +11534,32 @@
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers/logservice"
+    },
+    "Manifest": {
+      "type": "object",
+      "properties": {
+        "digest": {
+          "type": "string",
+          "x-go-name": "Digest"
+        },
+        "pushed_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "PushTimestampUTC"
+        },
+        "size_bytes": {
+          "type": "string",
+          "x-go-name": "SizeBytes"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Tags"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "NATGateway": {
       "type": "object",
@@ -11849,18 +12173,6 @@
     "ProspectPostResponse": {
       "type": "object",
       "title": "ProspectPostResponse is the response type for POST requests to the prospects endpoint.",
-      "properties": {
-        "approve_customer_success": {
-          "type": "boolean",
-          "x-go-name": "ApproveCustomerSuccess",
-          "example": true
-        },
-        "create_customer_success": {
-          "type": "boolean",
-          "x-go-name": "CreateCustomerSuccess",
-          "example": true
-        }
-      },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "PublicIPv4Address": {
@@ -13229,6 +13541,12 @@
         "$ref": "#/definitions/AuditLogsGetResponse"
       }
     },
+    "authCheckGetResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AuthCheckGetResponse"
+      }
+    },
     "authError": {
       "description": "Error Authentication Failed",
       "schema": {
@@ -13273,54 +13591,16 @@
         }
       }
     },
+    "billingCostsGetResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/BillingCostData"
+      }
+    },
     "billingExportGetResponse": {
       "description": "",
-      "headers": {
-        "metric": {
-          "type": "string",
-          "example": "instance-hours"
-        },
-        "project_id": {
-          "type": "string",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
-        },
-        "project_name": {
-          "type": "string",
-          "example": "\"Apollo Program\""
-        },
-        "quantity": {
-          "type": "number",
-          "format": "double",
-          "example": "261.271111"
-        },
-        "region": {
-          "type": "string",
-          "example": "us-east1"
-        },
-        "resource_id": {
-          "type": "string",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
-        },
-        "resource_name": {
-          "type": "string",
-          "example": "\"Blake's Virtual Machine\""
-        },
-        "resource_type": {
-          "type": "string",
-          "example": "a40.1x"
-        },
-        "total_price": {
-          "type": "string",
-          "example": "\"12.34\""
-        },
-        "unit_price": {
-          "type": "string",
-          "example": "\"1.23\""
-        },
-        "usage_date": {
-          "type": "string",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
-        }
+      "schema": {
+        "$ref": "#/definitions/BillingResourcesResponse"
       }
     },
     "billingIntentGetResponse": {
@@ -13341,28 +13621,22 @@
         "$ref": "#/definitions/UsageOptions"
       }
     },
-    "billingUsageGetResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/BillingCostData"
-      }
-    },
     "capacitiesResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListCapacitiesResponseV1Alpha5"
       }
     },
-    "ccrListArtifactsResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ListArtifactsResponse"
-      }
-    },
     "ccrListImagesResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListCcrImagesResponse"
+      }
+    },
+    "ccrListManifestsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListManifestsResponse"
       }
     },
     "ccrListRepositoriesResponse": {
@@ -13812,6 +14086,61 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ProspectPostResponse"
+      }
+    },
+    "redirectSeeOther": {
+      "description": "Redirect See Other",
+      "schema": {
+        "type": "object",
+        "required": [
+          "error",
+          "redirect_browser_to"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message",
+              "id",
+              "status",
+              "reason"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "x-go-name": "Code",
+                "example": "422"
+              },
+              "id": {
+                "type": "string",
+                "x-go-name": "Id",
+                "example": "browser_location_change_required"
+              },
+              "message": {
+                "type": "string",
+                "x-go-name": "Message",
+                "example": "browser location change required"
+              },
+              "reason": {
+                "type": "string",
+                "x-go-name": "Reason",
+                "example": "In order to complete this flow please redirect the browser to..."
+              },
+              "status": {
+                "type": "string",
+                "x-go-name": "Status",
+                "example": "Unprocessable Entity"
+              }
+            },
+            "x-go-name": "Error"
+          },
+          "redirect_browser_to": {
+            "type": "string",
+            "x-go-name": "RedirectBrowserTo",
+            "example": "https://dev-70243141.okta.com/oauth2/v1/authorize/..."
+          }
+        }
       }
     },
     "reservationsResponse": {
