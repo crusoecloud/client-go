@@ -7723,6 +7723,10 @@
         "alias": {
           "type": "string",
           "x-go-name": "Alias"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"

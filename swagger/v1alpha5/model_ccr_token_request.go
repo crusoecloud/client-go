@@ -9,5 +9,6 @@
 package swagger
 
 type CcrTokenRequest struct {
-	Alias string `json:"alias,omitempty"`
+	Alias     string `json:"alias,omitempty"`
+	ExpiresAt string `json:"expires_at,omitempty"`
 }
