@@ -3266,6 +3266,16 @@
             "name": "cluster_id",
             "in": "path",
             "required": true
+          },
+          {
+            "enum": [
+              "oidc",
+              "admin_cert"
+            ],
+            "type": "string",
+            "x-go-name": "AuthType",
+            "name": "auth_type",
+            "in": "query"
           }
         ],
         "responses": {
@@ -10041,6 +10051,27 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "KubernetesAuthenticationDetails": {
+      "description": "It supports both the new kubeconfig-based and legacy certificate-based authentication.",
+      "type": "object",
+      "title": "KubernetesAuthenticationDetails contains credentials to authenticate to a Kubernetes cluster.",
+      "properties": {
+        "cluster_name": {
+          "description": "Name of the Kubernetes cluster to authenticate to",
+          "type": "string",
+          "x-go-name": "ClusterName"
+        },
+        "kube_config": {
+          "description": "Kubeconfig of the Kubernetes cluster to authenticate to",
+          "type": "string",
+          "x-go-name": "KubeConfig"
+        },
+        "legacy_client_cert": {
+          "$ref": "#/definitions/KubernetesAuthenticationClientCertificateDetails"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "KubernetesCluster": {
       "type": "object",
       "title": "KubernetesCluster defines the specifications of the Kubernetes cluster.",
@@ -10172,6 +10203,17 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "KubernetesClusterAuthConfig": {
+      "description": "This configures how users authenticate to the Kubernetes API server.\nexample: {\"oidc\": {\"issuer_url\": \"https://oauth2.example.com\", \"client_id\": \"kubernetes\"}}",
+      "type": "object",
+      "title": "KubernetesClusterAuthConfig defines authentication configuration for the cluster.",
+      "properties": {
+        "oidc": {
+          "$ref": "#/definitions/OIDCAuthConfig"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "KubernetesClusterPatchRequest": {
       "type": "object",
       "title": "KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.",
@@ -10209,6 +10251,9 @@
             "nvidia_gpu_operator",
             "nvidia_network_operator"
           ]
+        },
+        "auth_config": {
+          "$ref": "#/definitions/KubernetesClusterAuthConfig"
         },
         "cluster_cidr": {
           "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
@@ -11654,6 +11699,49 @@
           "type": "string",
           "x-go-name": "ResourceID",
           "example": "306aa10d-5570-4e47-88c9-46bf11bd8737"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "OIDCAuthConfig": {
+      "description": "This allows the Kubernetes API server to authenticate users via an external OIDC provider.",
+      "type": "object",
+      "title": "OIDCAuthConfig defines OpenID Connect authentication configuration.",
+      "properties": {
+        "ca_cert": {
+          "description": "PEM encoded Certificate Authority certificate to use when validating the OIDC server's certificate.",
+          "type": "string",
+          "x-go-name": "CACert"
+        },
+        "client_id": {
+          "description": "The client ID for the OpenID Connect client.",
+          "type": "string",
+          "x-go-name": "ClientID",
+          "example": "kubernetes"
+        },
+        "groups_claim": {
+          "description": "This is the claim that will be used to identify the groups.",
+          "type": "string",
+          "x-go-name": "GroupsClaim",
+          "example": "groups"
+        },
+        "issuer_url": {
+          "description": "The URL of the OpenID issuer",
+          "type": "string",
+          "x-go-name": "IssuerURL",
+          "example": "https://oauth2.example.com"
+        },
+        "username_claim": {
+          "description": "This is the claim that will be used to identify the user. Defaults to 'sub'.",
+          "type": "string",
+          "x-go-name": "UsernameClaim",
+          "example": "email"
+        },
+        "username_prefix": {
+          "description": "A prefix to add before the username to avoid name conflicts.",
+          "type": "string",
+          "x-go-name": "UsernamePrefix",
+          "example": "oidc:"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -13759,7 +13847,7 @@
     "getKubernetesClusterCredentialsResponse": {
       "description": "",
       "schema": {
-        "$ref": "#/definitions/KubernetesAuthenticationClientCertificateDetails"
+        "$ref": "#/definitions/KubernetesAuthenticationDetails"
       }
     },
     "getKubernetesClusterResponse": {
