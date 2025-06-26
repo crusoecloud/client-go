@@ -7424,6 +7424,11 @@
     },
     "AuthCheckProvider": {
       "type": "object",
+      "required": [
+        "id",
+        "issuer_uri",
+        "org_name"
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -7432,6 +7437,10 @@
         "issuer_uri": {
           "type": "string",
           "x-go-name": "IssuerURI"
+        },
+        "org_name": {
+          "type": "string",
+          "x-go-name": "OrgName"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
