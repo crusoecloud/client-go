@@ -65,6 +65,26 @@
         }
       }
     },
+    "/ccr/supported-locations": {
+      "get": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "List supported CCR locations.",
+        "operationId": "listSupportedLocations",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrListSupportedLocationsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/ccr/supported-providers": {
       "get": {
         "tags": [
@@ -1210,6 +1230,12 @@
             "name": "project_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1292,6 +1318,12 @@
             "name": "repository_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1332,6 +1364,12 @@
             "name": "repository_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1374,6 +1412,12 @@
             "name": "repository_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1423,6 +1467,12 @@
             "name": "image_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1472,6 +1522,12 @@
             "name": "image_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1531,6 +1587,12 @@
             "x-go-name": "Digest",
             "name": "digest",
             "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1573,6 +1635,12 @@
             "name": "repository_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
           }
         ],
         "responses": {
@@ -11148,6 +11216,19 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ListSupportedLocationsResponse": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ListSupportedProvidersResponse": {
       "type": "object",
       "properties": {
@@ -13731,6 +13812,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListRepositoriesResponse"
+      }
+    },
+    "ccrListSupportedLocationsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListSupportedLocationsResponse"
       }
     },
     "ccrListSupportedProvidersResponse": {
