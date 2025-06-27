@@ -384,25 +384,19 @@ func (a *KubernetesClustersApiService) GetCluster(ctx context.Context, projectId
 
 /*
 KubernetesClustersApiService Retrieve credentials for the user to authenticate to the specified cluster.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param clusterId
- * @param optional nil or *KubernetesClustersApiGetClusterCredentialsOpts - Optional Parameters:
-     * @param "AuthType" (optional.String) -
-@return KubernetesAuthenticationDetails
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
+  - @param clusterId
+
+@return KubernetesAuthenticationClientCertificateDetails
 */
-
-type KubernetesClustersApiGetClusterCredentialsOpts struct {
-	AuthType optional.String
-}
-
-func (a *KubernetesClustersApiService) GetClusterCredentials(ctx context.Context, projectId string, clusterId string, localVarOptionals *KubernetesClustersApiGetClusterCredentialsOpts) (KubernetesAuthenticationDetails, *http.Response, error) {
+func (a *KubernetesClustersApiService) GetClusterCredentials(ctx context.Context, projectId string, clusterId string) (KubernetesAuthenticationClientCertificateDetails, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue KubernetesAuthenticationDetails
+		localVarReturnValue KubernetesAuthenticationClientCertificateDetails
 	)
 
 	// create path and map variables
@@ -414,9 +408,6 @@ func (a *KubernetesClustersApiService) GetClusterCredentials(ctx context.Context
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.AuthType.IsSet() {
-		localVarQueryParams.Add("auth_type", parameterToString(localVarOptionals.AuthType.Value(), ""))
-	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -464,7 +455,7 @@ func (a *KubernetesClustersApiService) GetClusterCredentials(ctx context.Context
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v KubernetesAuthenticationDetails
+			var v KubernetesAuthenticationClientCertificateDetails
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
