@@ -8,7 +8,6 @@
  */
 package swagger
 
-// This configures how users authenticate to the Kubernetes API server. example: {\"oidc\": {\"issuer_url\": \"https://oauth2.example.com\", \"client_id\": \"kubernetes\"}}
-type KubernetesClusterAuthConfig struct {
-	Oidc *OidcAuthConfig `json:"oidc,omitempty"`
+type ListSupportedLocationsResponse struct {
+	Items []string `json:"items,omitempty"`
 }

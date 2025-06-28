@@ -9,6 +9,7 @@
 package swagger
 
 type AuthCheckProvider struct {
-	Id        string `json:"id,omitempty"`
-	IssuerUri string `json:"issuer_uri,omitempty"`
+	Id        string `json:"id"`
+	IssuerUri string `json:"issuer_uri"`
+	OrgName   string `json:"org_name"`
 }
