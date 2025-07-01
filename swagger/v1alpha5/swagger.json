@@ -1230,12 +1230,6 @@
             "name": "project_id",
             "in": "path",
             "required": true
-          },
-          {
-            "type": "string",
-            "x-go-name": "Location",
-            "name": "location",
-            "in": "query"
           }
         ],
         "responses": {

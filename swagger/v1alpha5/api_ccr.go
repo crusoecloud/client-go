@@ -1210,18 +1210,12 @@ func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, 
 
 /*
 CcrApiService List all CCR repositories in a project.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param optional nil or *CcrApiListCcrRepositoriesOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
+
 @return ListRepositoriesResponse
 */
-
-type CcrApiListCcrRepositoriesOpts struct {
-	Location optional.String
-}
-
-func (a *CcrApiService) ListCcrRepositories(ctx context.Context, projectId string, localVarOptionals *CcrApiListCcrRepositoriesOpts) (ListRepositoriesResponse, *http.Response, error) {
+func (a *CcrApiService) ListCcrRepositories(ctx context.Context, projectId string) (ListRepositoriesResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -1238,9 +1232,6 @@ func (a *CcrApiService) ListCcrRepositories(ctx context.Context, projectId strin
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
-		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
-	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
