@@ -999,6 +999,128 @@
         }
       }
     },
+    "/organizations/{organization_id}/sso/providers": {
+      "get": {
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Returns the active sso providers for a given orgID.",
+        "operationId": "listSSOProviders",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listSSOProvidersResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Create a new SSO provider for a specific org.",
+        "operationId": "createSSOProvider",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
+            "x-go-name": "OrgID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSSOProviderRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/createSSOProviderResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/sso/providers/{provider_id}": {
+      "delete": {
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Delete a specific SSO provider for a specific org.",
+        "operationId": "deleteSSOProvider",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
+            "x-go-name": "OrgID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
+            "x-go-name": "ProviderID",
+            "name": "provider_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/deleteSSOProviderResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/organizations/{organization_id}/usage": {
       "get": {
         "tags": [
@@ -7189,6 +7311,60 @@
         }
       }
     },
+    "/users/sso-enforcement": {
+      "patch": {
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Update SSO for a user.",
+        "operationId": "updateUserSSOEnforcement",
+        "parameters": [
+          {
+            "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
+            "x-go-name": "UserIDs",
+            "name": "user_ids",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "enum": [
+              "none",
+              "required"
+            ],
+            "x-go-name": "Enforcement",
+            "name": "enforcement",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/users/tokens": {
       "get": {
         "tags": [
@@ -7946,6 +8122,32 @@
       "properties": {
         "ssh_key": {
           "$ref": "#/definitions/SSHKey"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "CreateSSOProviderRequest": {
+      "type": "object",
+      "required": [
+        "client_id",
+        "issuer_uri",
+        "email_domains"
+      ],
+      "properties": {
+        "client_id": {
+          "type": "string",
+          "x-go-name": "ClientID"
+        },
+        "email_domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "EmailDomains"
+        },
+        "issuer_uri": {
+          "type": "string",
+          "x-go-name": "IssuerURI"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -11142,6 +11344,22 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ListSSOProvidersResponse": {
+      "type": "object",
+      "required": [
+        "sso_providers"
+      ],
+      "properties": {
+        "sso_providers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SSOProvider"
+          },
+          "x-go-name": "SsoProviders"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ListSlurmClustersResponse": {
       "type": "object",
       "required": [
@@ -12543,6 +12761,47 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "SSOProvider": {
+      "type": "object",
+      "required": [
+        "id",
+        "org_id",
+        "client_id",
+        "issuer_uri",
+        "created_at",
+        "email_domains"
+      ],
+      "properties": {
+        "client_id": {
+          "type": "string",
+          "x-go-name": "ClientID"
+        },
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "email_domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "EmailDomains"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "issuer_uri": {
+          "type": "string",
+          "x-go-name": "IssuerURI"
+        },
+        "org_id": {
+          "type": "string",
+          "x-go-name": "OrganizationID"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "SlurmCluster": {
       "type": "object",
       "title": "SlurmCluster defines the specifications of the slurm cluster.",
@@ -13777,6 +14036,12 @@
         "$ref": "#/definitions/CreateSSHKeyResponse"
       }
     },
+    "createSSOProviderResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/SSOProvider"
+      }
+    },
     "credentialsResponse": {
       "description": "",
       "schema": {
@@ -13787,6 +14052,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ExternalLoadBalancer"
+      }
+    },
+    "deleteSSOProviderResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/SSOProvider"
       }
     },
     "emptyResponse": {
@@ -14054,6 +14325,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListProjectsResponseV1Alpha5"
+      }
+    },
+    "listSSOProvidersResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListSSOProvidersResponse"
       }
     },
     "listSlurmClustersResponse": {
