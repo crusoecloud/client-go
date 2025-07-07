@@ -1439,7 +1439,8 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -1485,7 +1486,8 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -1533,7 +1535,8 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -1553,9 +1556,7 @@
             "$ref": "#/responses/serverError"
           }
         }
-      }
-    },
-    "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}": {
+      },
       "delete": {
         "tags": [
           "Ccr"
@@ -1581,14 +1582,15 @@
             "type": "string",
             "x-go-name": "ImageID",
             "name": "image_id",
-            "in": "path",
+            "in": "query",
             "required": true
           },
           {
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -1610,7 +1612,7 @@
         }
       }
     },
-    "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/manifests": {
+    "/projects/{project_id}/ccr/repositories/{repository_id}/manifests": {
       "get": {
         "tags": [
           "Ccr"
@@ -1636,8 +1638,14 @@
             "type": "string",
             "x-go-name": "ImageID",
             "name": "image_id",
-            "in": "path",
+            "in": "query",
             "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Tag",
+            "name": "tag",
+            "in": "query"
           },
           {
             "type": "string",
@@ -1668,7 +1676,7 @@
         "tags": [
           "Ccr"
         ],
-        "summary": "Delete an manifest from an image in a CCR repository.",
+        "summary": "Delete a manifest from an image in a CCR repository.",
         "operationId": "deleteCcrManifest",
         "parameters": [
           {
@@ -1689,7 +1697,7 @@
             "type": "string",
             "x-go-name": "ImageID",
             "name": "image_id",
-            "in": "path",
+            "in": "query",
             "required": true
           },
           {
@@ -1708,7 +1716,8 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -1756,7 +1765,8 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {

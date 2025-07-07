@@ -292,20 +292,13 @@ func (a *CcrApiService) CreateCcrToken(ctx context.Context, localVarOptionals *C
 
 /*
 CcrApiService Delete an image from a CCR repository.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
- * @param imageId
- * @param optional nil or *CcrApiDeleteCcrImageOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
+  - @param repositoryId
+  - @param imageId
+  - @param location
 */
-
-type CcrApiDeleteCcrImageOpts struct {
-	Location optional.String
-}
-
-func (a *CcrApiService) DeleteCcrImage(ctx context.Context, projectId string, repositoryId string, imageId string, localVarOptionals *CcrApiDeleteCcrImageOpts) (*http.Response, error) {
+func (a *CcrApiService) DeleteCcrImage(ctx context.Context, projectId string, repositoryId string, imageId string, location string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -314,18 +307,16 @@ func (a *CcrApiService) DeleteCcrImage(ctx context.Context, projectId string, re
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/images"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repository_id"+"}", fmt.Sprintf("%v", repositoryId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"image_id"+"}", fmt.Sprintf("%v", imageId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
-		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
-	}
+	localVarQueryParams.Add("image_id", parameterToString(imageId, ""))
+	localVarQueryParams.Add("location", parameterToString(location, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -411,25 +402,24 @@ func (a *CcrApiService) DeleteCcrImage(ctx context.Context, projectId string, re
 }
 
 /*
-CcrApiService Delete an manifest from an image in a CCR repository.
+CcrApiService Delete a manifest from an image in a CCR repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param repositoryId
  * @param imageId
+ * @param location
  * @param optional nil or *CcrApiDeleteCcrManifestOpts - Optional Parameters:
      * @param "Tag" (optional.String) -
      * @param "Digest" (optional.String) -
-     * @param "Location" (optional.String) -
 
 */
 
 type CcrApiDeleteCcrManifestOpts struct {
-	Tag      optional.String
-	Digest   optional.String
-	Location optional.String
+	Tag    optional.String
+	Digest optional.String
 }
 
-func (a *CcrApiService) DeleteCcrManifest(ctx context.Context, projectId string, repositoryId string, imageId string, localVarOptionals *CcrApiDeleteCcrManifestOpts) (*http.Response, error) {
+func (a *CcrApiService) DeleteCcrManifest(ctx context.Context, projectId string, repositoryId string, imageId string, location string, localVarOptionals *CcrApiDeleteCcrManifestOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -438,24 +428,22 @@ func (a *CcrApiService) DeleteCcrManifest(ctx context.Context, projectId string,
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/manifests"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/manifests"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repository_id"+"}", fmt.Sprintf("%v", repositoryId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"image_id"+"}", fmt.Sprintf("%v", imageId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	localVarQueryParams.Add("image_id", parameterToString(imageId, ""))
 	if localVarOptionals != nil && localVarOptionals.Tag.IsSet() {
 		localVarQueryParams.Add("tag", parameterToString(localVarOptionals.Tag.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.Digest.IsSet() {
 		localVarQueryParams.Add("digest", parameterToString(localVarOptionals.Digest.Value(), ""))
 	}
-	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
-		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
-	}
+	localVarQueryParams.Add("location", parameterToString(location, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -542,19 +530,12 @@ func (a *CcrApiService) DeleteCcrManifest(ctx context.Context, projectId string,
 
 /*
 CcrApiService Delete a CCR repository.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
- * @param optional nil or *CcrApiDeleteCcrRepositoryOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
+  - @param repositoryId
+  - @param location
 */
-
-type CcrApiDeleteCcrRepositoryOpts struct {
-	Location optional.String
-}
-
-func (a *CcrApiService) DeleteCcrRepository(ctx context.Context, projectId string, repositoryId string, localVarOptionals *CcrApiDeleteCcrRepositoryOpts) (*http.Response, error) {
+func (a *CcrApiService) DeleteCcrRepository(ctx context.Context, projectId string, repositoryId string, location string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -571,9 +552,7 @@ func (a *CcrApiService) DeleteCcrRepository(ctx context.Context, projectId strin
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
-		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
-	}
+	localVarQueryParams.Add("location", parameterToString(location, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -660,19 +639,14 @@ func (a *CcrApiService) DeleteCcrRepository(ctx context.Context, projectId strin
 
 /*
 CcrApiService Get a specific CCR repository.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
- * @param optional nil or *CcrApiGetCcrRepositoryOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
+  - @param repositoryId
+  - @param location
+
 @return Repository
 */
-
-type CcrApiGetCcrRepositoryOpts struct {
-	Location optional.String
-}
-
-func (a *CcrApiService) GetCcrRepository(ctx context.Context, projectId string, repositoryId string, localVarOptionals *CcrApiGetCcrRepositoryOpts) (Repository, *http.Response, error) {
+func (a *CcrApiService) GetCcrRepository(ctx context.Context, projectId string, repositoryId string, location string) (Repository, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -690,9 +664,7 @@ func (a *CcrApiService) GetCcrRepository(ctx context.Context, projectId string, 
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
-		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
-	}
+	localVarQueryParams.Add("location", parameterToString(location, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -797,19 +769,14 @@ func (a *CcrApiService) GetCcrRepository(ctx context.Context, projectId string, 
 
 /*
 CcrApiService Get usage data for a specific CCR repository.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
- * @param optional nil or *CcrApiGetCcrRepositoryUsageOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
+  - @param repositoryId
+  - @param location
+
 @return RepositoryQuota
 */
-
-type CcrApiGetCcrRepositoryUsageOpts struct {
-	Location optional.String
-}
-
-func (a *CcrApiService) GetCcrRepositoryUsage(ctx context.Context, projectId string, repositoryId string, localVarOptionals *CcrApiGetCcrRepositoryUsageOpts) (RepositoryQuota, *http.Response, error) {
+func (a *CcrApiService) GetCcrRepositoryUsage(ctx context.Context, projectId string, repositoryId string, location string) (RepositoryQuota, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -827,9 +794,7 @@ func (a *CcrApiService) GetCcrRepositoryUsage(ctx context.Context, projectId str
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
-		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
-	}
+	localVarQueryParams.Add("location", parameterToString(location, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -934,19 +899,14 @@ func (a *CcrApiService) GetCcrRepositoryUsage(ctx context.Context, projectId str
 
 /*
 CcrApiService List all images in a CCR repository.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
- * @param optional nil or *CcrApiListCcrImagesOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
+  - @param repositoryId
+  - @param location
+
 @return ListCcrImagesResponse
 */
-
-type CcrApiListCcrImagesOpts struct {
-	Location optional.String
-}
-
-func (a *CcrApiService) ListCcrImages(ctx context.Context, projectId string, repositoryId string, localVarOptionals *CcrApiListCcrImagesOpts) (ListCcrImagesResponse, *http.Response, error) {
+func (a *CcrApiService) ListCcrImages(ctx context.Context, projectId string, repositoryId string, location string) (ListCcrImagesResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -964,9 +924,7 @@ func (a *CcrApiService) ListCcrImages(ctx context.Context, projectId string, rep
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
-		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
-	}
+	localVarQueryParams.Add("location", parameterToString(location, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -1076,11 +1034,13 @@ CcrApiService List all manifests for an image in a CCR repository.
  * @param repositoryId
  * @param imageId
  * @param optional nil or *CcrApiListCcrManifestsOpts - Optional Parameters:
+     * @param "Tag" (optional.String) -
      * @param "Location" (optional.String) -
 @return ListManifestsResponse
 */
 
 type CcrApiListCcrManifestsOpts struct {
+	Tag      optional.String
 	Location optional.String
 }
 
@@ -1094,15 +1054,18 @@ func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, 
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/manifests"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/ccr/repositories/{repository_id}/manifests"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"repository_id"+"}", fmt.Sprintf("%v", repositoryId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"image_id"+"}", fmt.Sprintf("%v", imageId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	localVarQueryParams.Add("image_id", parameterToString(imageId, ""))
+	if localVarOptionals != nil && localVarOptionals.Tag.IsSet() {
+		localVarQueryParams.Add("tag", parameterToString(localVarOptionals.Tag.Value(), ""))
+	}
 	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
 		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
 	}
