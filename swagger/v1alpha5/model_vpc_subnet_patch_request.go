@@ -9,6 +9,7 @@
 package swagger
 
 type VpcSubnetPatchRequest struct {
-	Name              string `json:"name"`
-	NatGatewayEnabled bool   `json:"nat_gateway_enabled,omitempty"`
+	Name string `json:"name"`
+	//  enable NATGatewayActionEnable disable NATGatewayActionDisable
+	NatGatewayAction string `json:"nat_gateway_action,omitempty"`
 }

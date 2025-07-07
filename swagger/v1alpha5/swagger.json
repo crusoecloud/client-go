@@ -13787,10 +13787,16 @@
           "x-go-name": "Name",
           "example": "my-cool-vpc-subnet"
         },
-        "nat_gateway_enabled": {
-          "type": "boolean",
-          "x-go-name": "NATGatewayEnabled",
-          "example": true
+        "nat_gateway_action": {
+          "description": "\nenable NATGatewayActionEnable\ndisable NATGatewayActionDisable",
+          "type": "string",
+          "enum": [
+            "enable",
+            "disable"
+          ],
+          "x-go-enum-desc": "enable NATGatewayActionEnable\ndisable NATGatewayActionDisable",
+          "x-go-name": "NATGatewayAction",
+          "example": "enable"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
