@@ -8714,7 +8714,7 @@
           "x-go-name": "Message"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/rpc/httperror"
     },
     "ExternalLoadBalancer": {
       "type": "object",
