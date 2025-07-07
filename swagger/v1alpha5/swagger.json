@@ -87,6 +87,7 @@
     },
     "/ccr/supported-providers": {
       "get": {
+        "description": "Returns the list of supported upstream registry providers that can be used\nwhen creating pull-through cache repositories. These providers are validated\nduring repository creation.",
         "tags": [
           "Ccr"
         ],
@@ -1651,7 +1652,8 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {

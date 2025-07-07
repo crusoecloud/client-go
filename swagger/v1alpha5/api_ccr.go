@@ -1033,18 +1033,17 @@ CcrApiService List all manifests for an image in a CCR repository.
  * @param projectId
  * @param repositoryId
  * @param imageId
+ * @param location
  * @param optional nil or *CcrApiListCcrManifestsOpts - Optional Parameters:
      * @param "Tag" (optional.String) -
-     * @param "Location" (optional.String) -
 @return ListManifestsResponse
 */
 
 type CcrApiListCcrManifestsOpts struct {
-	Tag      optional.String
-	Location optional.String
+	Tag optional.String
 }
 
-func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, repositoryId string, imageId string, localVarOptionals *CcrApiListCcrManifestsOpts) (ListManifestsResponse, *http.Response, error) {
+func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, repositoryId string, imageId string, location string, localVarOptionals *CcrApiListCcrManifestsOpts) (ListManifestsResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -1066,9 +1065,7 @@ func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, 
 	if localVarOptionals != nil && localVarOptionals.Tag.IsSet() {
 		localVarQueryParams.Add("tag", parameterToString(localVarOptionals.Tag.Value(), ""))
 	}
-	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
-		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
-	}
+	localVarQueryParams.Add("location", parameterToString(location, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -1403,6 +1400,7 @@ func (a *CcrApiService) ListSupportedLocations(ctx context.Context) (ListSupport
 
 /*
 CcrApiService List supported CCR providers.
+Returns the list of supported upstream registry providers that can be used when creating pull-through cache repositories. These providers are validated during repository creation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return ListSupportedProvidersResponse
