@@ -3,3 +3,4 @@ dist/
 *.swp
 coverage.out
 gokart_result.json
+.idea/**
