@@ -7332,29 +7332,11 @@
         "operationId": "updateUserSSOEnforcement",
         "parameters": [
           {
-            "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
-            "x-go-name": "UserIDs",
-            "name": "user_ids",
+            "name": "Body",
             "in": "body",
             "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "enum": [
-              "none",
-              "required"
-            ],
-            "x-go-name": "Enforcement",
-            "name": "enforcement",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "string"
+              "$ref": "#/definitions/UpdateUserSSOEnforcementRequest"
             }
           }
         ],
@@ -13242,6 +13224,32 @@
           "type": "string",
           "x-go-name": "ProductName",
           "example": "a100.2x"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "UpdateUserSSOEnforcementRequest": {
+      "type": "object",
+      "required": [
+        "user_ids",
+        "enforcement"
+      ],
+      "properties": {
+        "enforcement": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-go-name": "Enforcement"
+        },
+        "user_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "UserIDs",
+          "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"

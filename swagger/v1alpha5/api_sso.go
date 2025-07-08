@@ -412,7 +412,7 @@ SSOApiService Update SSO for a user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 */
-func (a *SSOApiService) UpdateUserSSOEnforcement(ctx context.Context, body string) (*http.Response, error) {
+func (a *SSOApiService) UpdateUserSSOEnforcement(ctx context.Context, body UpdateUserSsoEnforcementRequest) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
