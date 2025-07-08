@@ -1,5 +1,5 @@
 # default = everyone is codeowner
-* @crusoeenergy/island @crusoeenergy/squads/managed-platform-service
+* @crusoeenergy/island @crusoeenergy/squads/managed-platform-services
 
 .gitlab/CODEOWNERS @lanwall12 @nitper @bsherrycrusoe @ksosnowski3 @dpattishall
 
