@@ -87,6 +87,7 @@
     },
     "/ccr/supported-providers": {
       "get": {
+        "description": "Returns the list of supported upstream registry providers that can be used\nwhen creating pull-through cache repositories. These providers are validated\nduring repository creation.",
         "tags": [
           "Ccr"
         ],
@@ -999,6 +1000,128 @@
         }
       }
     },
+    "/organizations/{organization_id}/sso/providers": {
+      "get": {
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Returns the active sso providers for a given orgID.",
+        "operationId": "listSSOProviders",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listSSOProvidersResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Create a new SSO provider for a specific org.",
+        "operationId": "createSSOProvider",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
+            "x-go-name": "OrgID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSSOProviderRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/createSSOProviderResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/sso/providers/{provider_id}": {
+      "delete": {
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Delete a specific SSO provider for a specific org.",
+        "operationId": "deleteSSOProvider",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
+            "x-go-name": "OrgID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
+            "x-go-name": "ProviderID",
+            "name": "provider_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/deleteSSOProviderResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/organizations/{organization_id}/usage": {
       "get": {
         "tags": [
@@ -1317,7 +1440,8 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -1363,7 +1487,8 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -1411,7 +1536,8 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -1431,9 +1557,7 @@
             "$ref": "#/responses/serverError"
           }
         }
-      }
-    },
-    "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}": {
+      },
       "delete": {
         "tags": [
           "Ccr"
@@ -1459,14 +1583,15 @@
             "type": "string",
             "x-go-name": "ImageID",
             "name": "image_id",
-            "in": "path",
+            "in": "query",
             "required": true
           },
           {
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -1488,7 +1613,7 @@
         }
       }
     },
-    "/projects/{project_id}/ccr/repositories/{repository_id}/images/{image_id}/manifests": {
+    "/projects/{project_id}/ccr/repositories/{repository_id}/manifests": {
       "get": {
         "tags": [
           "Ccr"
@@ -1514,14 +1639,21 @@
             "type": "string",
             "x-go-name": "ImageID",
             "name": "image_id",
-            "in": "path",
+            "in": "query",
             "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Tag",
+            "name": "tag",
+            "in": "query"
           },
           {
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -1546,7 +1678,7 @@
         "tags": [
           "Ccr"
         ],
-        "summary": "Delete an manifest from an image in a CCR repository.",
+        "summary": "Delete a manifest from an image in a CCR repository.",
         "operationId": "deleteCcrManifest",
         "parameters": [
           {
@@ -1567,7 +1699,7 @@
             "type": "string",
             "x-go-name": "ImageID",
             "name": "image_id",
-            "in": "path",
+            "in": "query",
             "required": true
           },
           {
@@ -1586,7 +1718,8 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -1634,7 +1767,8 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
-            "in": "query"
+            "in": "query",
+            "required": true
           }
         ],
         "responses": {
@@ -3328,6 +3462,16 @@
             "name": "cluster_id",
             "in": "path",
             "required": true
+          },
+          {
+            "enum": [
+              "oidc",
+              "admin_cert"
+            ],
+            "type": "string",
+            "x-go-name": "AuthType",
+            "name": "auth_type",
+            "in": "query"
           }
         ],
         "responses": {
@@ -7189,6 +7333,42 @@
         }
       }
     },
+    "/users/sso-enforcement": {
+      "patch": {
+        "tags": [
+          "SSO"
+        ],
+        "summary": "Update SSO for a user.",
+        "operationId": "updateUserSSOEnforcement",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateUserSSOEnforcementRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/users/tokens": {
       "get": {
         "tags": [
@@ -7950,6 +8130,32 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "CreateSSOProviderRequest": {
+      "type": "object",
+      "required": [
+        "client_id",
+        "issuer_uri",
+        "email_domains"
+      ],
+      "properties": {
+        "client_id": {
+          "type": "string",
+          "x-go-name": "ClientID"
+        },
+        "email_domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "EmailDomains"
+        },
+        "issuer_uri": {
+          "type": "string",
+          "x-go-name": "IssuerURI"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "CreateTokenRequest": {
       "type": "object",
       "required": [
@@ -8502,7 +8708,7 @@
           "x-go-name": "Message"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/rpc/httperror"
     },
     "ExternalLoadBalancer": {
       "type": "object",
@@ -10067,9 +10273,10 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "KubernetesAuthenticationClientCertificateDetails": {
-      "description": "KubernetesAuthenticationClientCertificateDetails contains information to authenticate\nto a Kubernetes cluster with client certificates.",
+    "KubernetesAuthenticationDetails": {
+      "description": "It supports both the new kubeconfig-based and legacy certificate-based authentication.",
       "type": "object",
+      "title": "KubernetesAuthenticationDetails contains credentials to authenticate to a Kubernetes cluster.",
       "required": [
         "cluster_name",
         "cluster_address",
@@ -10093,6 +10300,11 @@
           "description": "Name of the Kubernetes cluster to authenticate to",
           "type": "string",
           "x-go-name": "ClusterName"
+        },
+        "kube_config": {
+          "description": "Kubeconfig of the Kubernetes cluster to authenticate to",
+          "type": "string",
+          "x-go-name": "KubeConfig"
         },
         "user_client_certificate": {
           "description": "User's Client certificate for authenticating to the cluster.",
@@ -10243,6 +10455,17 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "KubernetesClusterAuthConfig": {
+      "description": "This configures how users authenticate to the Kubernetes API server.\nexample: {\"oidc\": {\"issuer_url\": \"https://oauth2.example.com\", \"client_id\": \"kubernetes\"}}",
+      "type": "object",
+      "title": "KubernetesClusterAuthConfig defines authentication configuration for the cluster.",
+      "properties": {
+        "oidc": {
+          "$ref": "#/definitions/OIDCAuthConfig"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "KubernetesClusterPatchRequest": {
       "type": "object",
       "title": "KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.",
@@ -10280,6 +10503,9 @@
             "nvidia_gpu_operator",
             "nvidia_network_operator"
           ]
+        },
+        "auth_config": {
+          "$ref": "#/definitions/KubernetesClusterAuthConfig"
         },
         "cluster_cidr": {
           "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
@@ -11142,6 +11368,22 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ListSSOProvidersResponse": {
+      "type": "object",
+      "required": [
+        "sso_providers"
+      ],
+      "properties": {
+        "sso_providers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SSOProvider"
+          },
+          "x-go-name": "SsoProviders"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ListSlurmClustersResponse": {
       "type": "object",
       "required": [
@@ -11738,6 +11980,49 @@
           "type": "string",
           "x-go-name": "ResourceID",
           "example": "306aa10d-5570-4e47-88c9-46bf11bd8737"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "OIDCAuthConfig": {
+      "description": "This allows the Kubernetes API server to authenticate users via an external OIDC provider.",
+      "type": "object",
+      "title": "OIDCAuthConfig defines OpenID Connect authentication configuration.",
+      "properties": {
+        "ca_cert": {
+          "description": "PEM encoded Certificate Authority certificate to use when validating the OIDC server's certificate.",
+          "type": "string",
+          "x-go-name": "CACert"
+        },
+        "client_id": {
+          "description": "The client ID for the OpenID Connect client.",
+          "type": "string",
+          "x-go-name": "ClientID",
+          "example": "kubernetes"
+        },
+        "groups_claim": {
+          "description": "This is the claim that will be used to identify the groups.",
+          "type": "string",
+          "x-go-name": "GroupsClaim",
+          "example": "groups"
+        },
+        "issuer_url": {
+          "description": "The URL of the OpenID issuer",
+          "type": "string",
+          "x-go-name": "IssuerURL",
+          "example": "https://oauth2.example.com"
+        },
+        "username_claim": {
+          "description": "This is the claim that will be used to identify the user. Defaults to 'sub'.",
+          "type": "string",
+          "x-go-name": "UsernameClaim",
+          "example": "email"
+        },
+        "username_prefix": {
+          "description": "A prefix to add before the username to avoid name conflicts.",
+          "type": "string",
+          "x-go-name": "UsernamePrefix",
+          "example": "oidc:"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -12543,6 +12828,47 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "SSOProvider": {
+      "type": "object",
+      "required": [
+        "id",
+        "org_id",
+        "client_id",
+        "issuer_uri",
+        "created_at",
+        "email_domains"
+      ],
+      "properties": {
+        "client_id": {
+          "type": "string",
+          "x-go-name": "ClientID"
+        },
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "email_domains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "EmailDomains"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "issuer_uri": {
+          "type": "string",
+          "x-go-name": "IssuerURI"
+        },
+        "org_id": {
+          "type": "string",
+          "x-go-name": "OrganizationID"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "SlurmCluster": {
       "type": "object",
       "title": "SlurmCluster defines the specifications of the slurm cluster.",
@@ -12971,6 +13297,32 @@
           "type": "string",
           "x-go-name": "ProductName",
           "example": "a100.2x"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "UpdateUserSSOEnforcementRequest": {
+      "type": "object",
+      "required": [
+        "user_ids",
+        "enforcement"
+      ],
+      "properties": {
+        "enforcement": {
+          "type": "string",
+          "enum": [
+            "none",
+            "required"
+          ],
+          "x-go-name": "Enforcement"
+        },
+        "user_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "UserIDs",
+          "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -13516,10 +13868,16 @@
           "x-go-name": "Name",
           "example": "my-cool-vpc-subnet"
         },
-        "nat_gateway_enabled": {
-          "type": "boolean",
-          "x-go-name": "NATGatewayEnabled",
-          "example": true
+        "nat_gateway_action": {
+          "description": "\nenable NATGatewayActionEnable\ndisable NATGatewayActionDisable",
+          "type": "string",
+          "enum": [
+            "enable",
+            "disable"
+          ],
+          "x-go-enum-desc": "enable NATGatewayActionEnable\ndisable NATGatewayActionDisable",
+          "x-go-name": "NATGatewayAction",
+          "example": "enable"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -13777,6 +14135,12 @@
         "$ref": "#/definitions/CreateSSHKeyResponse"
       }
     },
+    "createSSOProviderResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/SSOProvider"
+      }
+    },
     "credentialsResponse": {
       "description": "",
       "schema": {
@@ -13787,6 +14151,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ExternalLoadBalancer"
+      }
+    },
+    "deleteSSOProviderResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/SSOProvider"
       }
     },
     "emptyResponse": {
@@ -13849,7 +14219,7 @@
     "getKubernetesClusterCredentialsResponse": {
       "description": "",
       "schema": {
-        "$ref": "#/definitions/KubernetesAuthenticationClientCertificateDetails"
+        "$ref": "#/definitions/KubernetesAuthenticationDetails"
       }
     },
     "getKubernetesClusterResponse": {
@@ -14054,6 +14424,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListProjectsResponseV1Alpha5"
+      }
+    },
+    "listSSOProvidersResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListSSOProvidersResponse"
       }
     },
     "listSlurmClustersResponse": {

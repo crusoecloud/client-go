@@ -10,7 +10,8 @@ package swagger
 
 type KubernetesClusterPostRequest struct {
 	// List of add-ons to be included to the cluster.
-	AddOns []string `json:"add_ons,omitempty"`
+	AddOns     []string                     `json:"add_ons,omitempty"`
+	AuthConfig *KubernetesClusterAuthConfig `json:"auth_config,omitempty"`
 	// defines: the range of IP Addresses allocated to pods scheduled on worker nodes
 	ClusterCidr string `json:"cluster_cidr,omitempty"`
 	// Configuration setting is deprecated, defaults to HA configuration.

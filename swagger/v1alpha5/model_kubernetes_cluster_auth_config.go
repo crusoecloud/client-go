@@ -8,8 +8,7 @@
  */
 package swagger
 
-type VpcSubnetPatchRequest struct {
-	Name string `json:"name"`
-	//  enable NATGatewayActionEnable disable NATGatewayActionDisable
-	NatGatewayAction string `json:"nat_gateway_action,omitempty"`
+// This configures how users authenticate to the Kubernetes API server. example: {\"oidc\": {\"issuer_url\": \"https://oauth2.example.com\", \"client_id\": \"kubernetes\"}}
+type KubernetesClusterAuthConfig struct {
+	Oidc *OidcAuthConfig `json:"oidc,omitempty"`
 }

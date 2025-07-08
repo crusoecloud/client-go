@@ -8,8 +8,6 @@
  */
 package swagger
 
-type VpcSubnetPatchRequest struct {
-	Name string `json:"name"`
-	//  enable NATGatewayActionEnable disable NATGatewayActionDisable
-	NatGatewayAction string `json:"nat_gateway_action,omitempty"`
+type ListSsoProvidersResponse struct {
+	SsoProviders []SsoProvider `json:"sso_providers"`
 }
