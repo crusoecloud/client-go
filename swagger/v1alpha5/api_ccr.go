@@ -1035,12 +1035,12 @@ CcrApiService List all manifests for an image in a CCR repository.
  * @param imageId
  * @param location
  * @param optional nil or *CcrApiListCcrManifestsOpts - Optional Parameters:
-     * @param "Tag" (optional.String) -
+     * @param "TagContains" (optional.String) -
 @return ListManifestsResponse
 */
 
 type CcrApiListCcrManifestsOpts struct {
-	Tag optional.String
+	TagContains optional.String
 }
 
 func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, repositoryId string, imageId string, location string, localVarOptionals *CcrApiListCcrManifestsOpts) (ListManifestsResponse, *http.Response, error) {
@@ -1062,8 +1062,8 @@ func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, 
 	localVarFormParams := url.Values{}
 
 	localVarQueryParams.Add("image_id", parameterToString(imageId, ""))
-	if localVarOptionals != nil && localVarOptionals.Tag.IsSet() {
-		localVarQueryParams.Add("tag", parameterToString(localVarOptionals.Tag.Value(), ""))
+	if localVarOptionals != nil && localVarOptionals.TagContains.IsSet() {
+		localVarQueryParams.Add("tag_contains", parameterToString(localVarOptionals.TagContains.Value(), ""))
 	}
 	localVarQueryParams.Add("location", parameterToString(location, ""))
 	// to determine the Content-Type header

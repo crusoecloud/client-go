@@ -1644,8 +1644,8 @@
           },
           {
             "type": "string",
-            "x-go-name": "Tag",
-            "name": "tag",
+            "x-go-name": "TagContains",
+            "name": "tag_contains",
             "in": "query"
           },
           {
