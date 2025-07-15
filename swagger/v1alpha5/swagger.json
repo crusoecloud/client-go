@@ -10707,7 +10707,6 @@
     "KubernetesNodePoolPatchRequest": {
       "type": "object",
       "required": [
-        "count",
         "action"
       ],
       "properties": {
@@ -10731,7 +10730,7 @@
           "example": 4
         },
         "node_labels": {
-          "description": "Labels assigned to the node pool",
+          "description": "Labels assigned to the node pool. Labels provided in the PATCH request will not modify existing nodes,\nbut will apply to any newly created nodes.",
           "type": "object",
           "additionalProperties": {
             "type": "string"
