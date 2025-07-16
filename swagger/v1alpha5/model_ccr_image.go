@@ -17,4 +17,5 @@ type CcrImage struct {
 	Name          string    `json:"name,omitempty"`
 	PullCount     int64     `json:"pull_count,omitempty"`
 	UpdatedAt     time.Time `json:"updated_at,omitempty"`
+	Url           string    `json:"url,omitempty"`
 }
