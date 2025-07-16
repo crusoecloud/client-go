@@ -8052,6 +8052,10 @@
           "type": "string",
           "format": "date-time",
           "x-go-name": "LastUpdatedTimestampUTC"
+        },
+        "url": {
+          "type": "string",
+          "x-go-name": "URL"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
