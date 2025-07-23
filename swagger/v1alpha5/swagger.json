@@ -10711,6 +10711,7 @@
     "KubernetesNodePoolPatchRequest": {
       "type": "object",
       "required": [
+        "count",
         "action"
       ],
       "properties": {
