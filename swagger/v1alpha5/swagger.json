@@ -10712,6 +10712,7 @@
       "type": "object",
       "required": [
         "count",
+        "node_labels",
         "action"
       ],
       "properties": {

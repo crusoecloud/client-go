@@ -14,7 +14,7 @@ type KubernetesNodePoolPatchRequest struct {
 	// The number of nodes to be created.
 	Count int64 `json:"count"`
 	// Labels assigned to the node pool. Labels provided in the PATCH request will not modify existing nodes, but will apply to any newly created nodes.
-	NodeLabels map[string]string `json:"node_labels,omitempty"`
+	NodeLabels map[string]string `json:"node_labels"`
 	// The reservation ID of the node pool.
 	ReservationId string `json:"reservation_id,omitempty"`
 }
