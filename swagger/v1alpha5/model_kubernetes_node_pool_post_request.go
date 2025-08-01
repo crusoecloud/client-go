@@ -13,6 +13,8 @@ type KubernetesNodePoolPostRequest struct {
 	ClusterId string `json:"cluster_id"`
 	// The number of nodes to be created.
 	Count int64 `json:"count"`
+	// Indicates whether local ephemeral NVMe disks should be used for containerd storage.
+	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd,omitempty"`
 	// The ID of the Infiniband partition to create node pool in. Must be in the location of the cluster if specified.
 	IbPartitionId string `json:"ib_partition_id,omitempty"`
 	// Name of the Kubernetes node pool.

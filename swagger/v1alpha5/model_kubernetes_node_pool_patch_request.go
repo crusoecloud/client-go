@@ -13,6 +13,8 @@ type KubernetesNodePoolPatchRequest struct {
 	Action string `json:"action"`
 	// The number of nodes to be created.
 	Count int64 `json:"count"`
+	// Indicates whether local ephemeral NVMe disks should be used for containerd storage.
+	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd"`
 	// Labels assigned to the node pool. Labels provided in the PATCH request will not modify existing nodes, but will apply to any newly created nodes.
 	NodeLabels map[string]string `json:"node_labels"`
 	// The reservation ID of the node pool.
