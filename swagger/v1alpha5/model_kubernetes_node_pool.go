@@ -15,6 +15,8 @@ type KubernetesNodePool struct {
 	Count int64 `json:"count"`
 	// The time when the cluster was created
 	CreatedAt string `json:"created_at"`
+	// Indicates whether local ephemeral NVMe disks should be used for containerd storage.
+	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd"`
 	// ID of the node pool.
 	Id string `json:"id"`
 	// Image Unique identifier for the Kubernetes node pool.

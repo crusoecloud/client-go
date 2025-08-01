@@ -10609,7 +10609,8 @@
         "type",
         "created_at",
         "updated_at",
-        "reservation_id"
+        "reservation_id",
+        "ephemeral_storage_for_containerd"
       ],
       "properties": {
         "cluster_id": {
@@ -10630,6 +10631,12 @@
           "type": "string",
           "x-go-name": "CreatedAt",
           "example": "2021-12-03T19:58:34Z"
+        },
+        "ephemeral_storage_for_containerd": {
+          "description": "Indicates whether local ephemeral NVMe disks should be used for containerd storage.",
+          "type": "boolean",
+          "x-go-name": "EphemeralStorageForContainerd",
+          "example": true
         },
         "id": {
           "description": "ID of the node pool.",
@@ -10713,7 +10720,8 @@
       "required": [
         "count",
         "node_labels",
-        "action"
+        "action",
+        "ephemeral_storage_for_containerd"
       ],
       "properties": {
         "action": {
@@ -10734,6 +10742,12 @@
           "format": "int64",
           "x-go-name": "Count",
           "example": 4
+        },
+        "ephemeral_storage_for_containerd": {
+          "description": "Indicates whether local ephemeral NVMe disks should be used for containerd storage.",
+          "type": "boolean",
+          "x-go-name": "EphemeralStorageForContainerd",
+          "example": true
         },
         "node_labels": {
           "description": "Labels assigned to the node pool. Labels provided in the PATCH request will not modify existing nodes,\nbut will apply to any newly created nodes.",
@@ -10776,6 +10790,12 @@
           "format": "int64",
           "x-go-name": "Count",
           "example": 4
+        },
+        "ephemeral_storage_for_containerd": {
+          "description": "Indicates whether local ephemeral NVMe disks should be used for containerd storage.",
+          "type": "boolean",
+          "x-go-name": "EphemeralStorageForContainerd",
+          "example": true
         },
         "ib_partition_id": {
           "description": "The ID of the Infiniband partition to create node pool in. Must be in the location\nof the cluster if specified.",
