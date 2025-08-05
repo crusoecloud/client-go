@@ -11893,6 +11893,11 @@
           "type": "string",
           "x-go-name": "Digest"
         },
+        "pulled_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "PullTimestampUTC"
+        },
         "pushed_at": {
           "type": "string",
           "format": "date-time",

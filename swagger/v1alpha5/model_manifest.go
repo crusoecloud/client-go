@@ -14,6 +14,7 @@ import (
 
 type Manifest struct {
 	Digest    string    `json:"digest,omitempty"`
+	PulledAt  time.Time `json:"pulled_at,omitempty"`
 	PushedAt  time.Time `json:"pushed_at,omitempty"`
 	SizeBytes string    `json:"size_bytes,omitempty"`
 	Tags      []string  `json:"tags,omitempty"`
