@@ -9421,6 +9421,15 @@
           "x-go-name": "Role",
           "example": "Admin"
         },
+        "sso_enforcement": {
+          "type": "string",
+          "enum": [
+            "required",
+            "none"
+          ],
+          "x-go-name": "SSOEnforcement",
+          "example": "none"
+        },
         "user_state": {
           "$ref": "#/definitions/UserStateEnum"
         }
