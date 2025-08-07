@@ -18,5 +18,6 @@ type Identity struct {
 	Name             string `json:"name"`
 	RegistrationType string `json:"registration_type,omitempty"`
 	Role             string `json:"role"`
+	SsoEnforcement   string `json:"sso_enforcement,omitempty"`
 	UserState        string `json:"user_state,omitempty"`
 }
