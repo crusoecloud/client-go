@@ -9,10 +9,12 @@
 package swagger
 
 type BulkCreateLocationInfo struct {
-	// The ID of the Infiniband partition to create the VMs in, if an IB type was specified. Must be in the same location as the VMs.
+	// Deprecated: Use transport_partition_id instead.
 	IbPartitionId string `json:"ib_partition_id,omitempty"`
 	// The location to create the VMs in.
 	Location string `json:"location"`
 	// The ID of the subnet to create the VMs in. Must be in the same location as the VMs. If not provided, the default subnet for the location will be used, if there is one.
 	SubnetId string `json:"subnet_id,omitempty"`
+	// The ID of the Infiniband or RoCE partition to create the VMs in, if a transport type was specified. Must be in the same location as the VMs.
+	TransportPartitionId string `json:"transport_partition_id,omitempty"`
 }

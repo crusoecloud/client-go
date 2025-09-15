@@ -10,7 +10,8 @@ package swagger
 
 type KubernetesCluster struct {
 	// List of add-ons associated with the cluster.
-	AddOns []string `json:"add_ons"`
+	AddOns     []string                     `json:"add_ons"`
+	AuthConfig *KubernetesClusterAuthConfig `json:"auth_config,omitempty"`
 	// The range of IP Addresses allocated to pods scheduled on worker nodes
 	ClusterCidr string `json:"cluster_cidr,omitempty"`
 	// Configuration setting of the Kubernetes cluster.

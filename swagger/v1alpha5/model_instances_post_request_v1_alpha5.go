@@ -19,9 +19,11 @@ type InstancesPostRequestV1Alpha5 struct {
 	Image               string                      `json:"image,omitempty"`
 	Location            string                      `json:"location"`
 	// The Host Maintenance Policy to use.
-	MaintenancePolicy        string                    `json:"maintenance_policy,omitempty"`
-	Name                     string                    `json:"name"`
-	NetworkInterfaces        []NetworkInterface        `json:"network_interfaces,omitempty"`
+	MaintenancePolicy string             `json:"maintenance_policy,omitempty"`
+	Name              string             `json:"name"`
+	NetworkInterfaces []NetworkInterface `json:"network_interfaces,omitempty"`
+	// optional field for specifying an NVLink domain ID
+	NvlinkDomainId           string                    `json:"nvlink_domain_id,omitempty"`
 	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
 	ShutdownScript           string                    `json:"shutdown_script,omitempty"`
 	SshPublicKey             string                    `json:"ssh_public_key"`

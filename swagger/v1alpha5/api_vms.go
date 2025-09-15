@@ -646,6 +646,7 @@ VMsApiService Retrieve details about all VMs that the logged in user owns or has
      * @param "Types" (optional.String) -
      * @param "Locations" (optional.String) -
      * @param "States" (optional.String) -
+     * @param "NvlinkDomainIds" (optional.String) -
      * @param "Limit" (optional.String) -
      * @param "Sort" (optional.String) -
      * @param "NextToken" (optional.String) -
@@ -654,15 +655,16 @@ VMsApiService Retrieve details about all VMs that the logged in user owns or has
 */
 
 type VMsApiListInstancesOpts struct {
-	Ids       optional.String
-	Names     optional.String
-	Types     optional.String
-	Locations optional.String
-	States    optional.String
-	Limit     optional.String
-	Sort      optional.String
-	NextToken optional.String
-	PrevToken optional.String
+	Ids             optional.String
+	Names           optional.String
+	Types           optional.String
+	Locations       optional.String
+	States          optional.String
+	NvlinkDomainIds optional.String
+	Limit           optional.String
+	Sort            optional.String
+	NextToken       optional.String
+	PrevToken       optional.String
 }
 
 func (a *VMsApiService) ListInstances(ctx context.Context, projectId string, localVarOptionals *VMsApiListInstancesOpts) (ListInstancesResponseV1Alpha5, *http.Response, error) {
@@ -696,6 +698,9 @@ func (a *VMsApiService) ListInstances(ctx context.Context, projectId string, loc
 	}
 	if localVarOptionals != nil && localVarOptionals.States.IsSet() {
 		localVarQueryParams.Add("states", parameterToString(localVarOptionals.States.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.NvlinkDomainIds.IsSet() {
+		localVarQueryParams.Add("nvlink_domain_ids", parameterToString(localVarOptionals.NvlinkDomainIds.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.Limit.IsSet() {
 		localVarQueryParams.Add("limit", parameterToString(localVarOptionals.Limit.Value(), ""))

@@ -15,7 +15,7 @@ type KubernetesNodePoolPostRequest struct {
 	Count int64 `json:"count"`
 	// Indicates whether local ephemeral NVMe disks should be used for containerd storage.
 	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd,omitempty"`
-	// The ID of the Infiniband partition to create node pool in. Must be in the location of the cluster if specified.
+	// Deprecated: Use transport_partition_id instead.
 	IbPartitionId string `json:"ib_partition_id,omitempty"`
 	// Name of the Kubernetes node pool.
 	Name string `json:"name"`
@@ -23,6 +23,8 @@ type KubernetesNodePoolPostRequest struct {
 	NodeLabels map[string]string `json:"node_labels,omitempty"`
 	// Version of the Kubernetes node pool.
 	NodePoolVersion string `json:"node_pool_version,omitempty"`
+	// Optional NVLink domain ID to assign to nodes in this node pool
+	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
 	// Product name of the VM type to be created within this node pool.
 	ProductName              string                    `json:"product_name"`
 	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
@@ -30,4 +32,6 @@ type KubernetesNodePoolPostRequest struct {
 	SshPublicKey string `json:"ssh_public_key,omitempty"`
 	// The ID of the subnet to create the node pool in. Must be in the location of the cluster if specified. If not provided, the default subnet for the location will be used, if there is one.
 	SubnetId string `json:"subnet_id,omitempty"`
+	// The ID of the Infiniband or RoCE partition to create node pool in. Must be in the location of the cluster if specified.
+	TransportPartitionId string `json:"transport_partition_id,omitempty"`
 }

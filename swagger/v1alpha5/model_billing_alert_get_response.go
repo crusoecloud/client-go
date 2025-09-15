@@ -8,8 +8,6 @@
  */
 package swagger
 
-type PartialHostChannelAdapter struct {
-	// Deprecated: Use transport_partition_id instead.
-	IbPartitionId        string `json:"ib_partition_id,omitempty"`
-	TransportPartitionId string `json:"transport_partition_id,omitempty"`
+type BillingAlertGetResponse struct {
+	Item *BillingAlert `json:"item"`
 }

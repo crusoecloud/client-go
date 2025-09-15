@@ -13,7 +13,7 @@ type InstanceTemplatePostRequestV1Alpha5 struct {
 	CustomImageName string `json:"custom_image_name,omitempty"`
 	// Disks to create for all VMs created from this instance template.
 	Disks []DiskTemplate `json:"disks,omitempty"`
-	// IB Partition to use for all VMs created from this instance template. Should only be provided for IB-enabled VM types. This is location-specific and must be provided if location is provided.
+	// Deprecated: Use transport_partition_id instead.
 	IbPartitionId string `json:"ib_partition_id,omitempty"`
 	// OS Image to use for all VMs created from this instance template.
 	ImageName string `json:"image_name,omitempty"`
@@ -21,6 +21,8 @@ type InstanceTemplatePostRequestV1Alpha5 struct {
 	Location string `json:"location,omitempty"`
 	// THe Host Maintenance Policy to use.
 	MaintenancePolicy string `json:"maintenance_policy,omitempty"`
+	// Optional NVLink domain ID to assign to VMs
+	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
 	// The VM Placement Policy to use.
 	PlacementPolicy string `json:"placement_policy,omitempty"`
 	// Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".
@@ -36,6 +38,8 @@ type InstanceTemplatePostRequestV1Alpha5 struct {
 	SubnetId string `json:"subnet_id,omitempty"`
 	// Name of the instance template. (This is not the name of the VMs created from this instance template.)
 	TemplateName string `json:"template_name"`
+	// IB or RoCE partition to use for all VMs created from this instance template. Should only be provided for transport-enabled VM types. This is location-specific and must be provided if location is provided.
+	TransportPartitionId string `json:"transport_partition_id,omitempty"`
 	// Product name of the VM type we want to create from this instance template.
 	Type_                  string                  `json:"type"`
 	VirtualizationFeatures *VirtualizationFeatures `json:"virtualization_features,omitempty"`

@@ -19,6 +19,8 @@ type BulkInstancePostRequestV1Alpha5 struct {
 	// The locations to create the VMs in. This will override any location specified in the instance template.
 	Locations []BulkCreateLocationInfo `json:"locations,omitempty"`
 	// The name prefix for the VMs to be created. E.g. \"my-vm\" will create VMs with names \"my-vm-1\",
-	NamePrefix               string                    `json:"name_prefix"`
+	NamePrefix string `json:"name_prefix"`
+	// optional field for specifying an NVLink domain ID
+	NvlinkDomainId           string                    `json:"nvlink_domain_id,omitempty"`
 	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
 }

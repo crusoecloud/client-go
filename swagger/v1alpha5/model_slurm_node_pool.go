@@ -12,8 +12,7 @@ type SlurmNodePool struct {
 	// The ID of the slurm cluster this node pool belongs to.
 	ClusterId string `json:"cluster_id"`
 	// Desired number of nodes within the node pool.
-	DesiredCount int64 `json:"desired_count"`
-	// IB Partition ID of the node pool.
+	DesiredCount  int64  `json:"desired_count"`
 	IbPartitionId string `json:"ib_partition_id"`
 	// ID of the node pool.
 	Id string `json:"id"`
@@ -29,6 +28,8 @@ type SlurmNodePool struct {
 	ProjectId string `json:"project_id"`
 	// Number of nodes within the node pool.
 	RunningCount int64 `json:"running_count"`
+	// IB or RoCE partition ID of the node pool.
+	TransportPartitionId string `json:"transport_partition_id"`
 	// VM type of the node pool
 	Type_ string `json:"type"`
 }

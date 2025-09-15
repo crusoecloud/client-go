@@ -8,8 +8,7 @@
  */
 package swagger
 
-type PartialHostChannelAdapter struct {
-	// Deprecated: Use transport_partition_id instead.
-	IbPartitionId        string `json:"ib_partition_id,omitempty"`
-	TransportPartitionId string `json:"transport_partition_id,omitempty"`
+type NvlinkDomainsSummaryListResponse struct {
+	// List of NVLink domain summaries
+	NvlinkDomains []NvlinkDomainSummaryResponse `json:"nvlink_domains,omitempty"`
 }

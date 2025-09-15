@@ -13,12 +13,14 @@ type SlurmNodePoolPostRequest struct {
 	ClusterId string `json:"cluster_id"`
 	// The desired number of nodes to be created.
 	DesiredCount int64 `json:"desired_count"`
-	// The ID of the Infiniband partition to create node pool in. Must be in the location of the cluster if specified.
+	// Deprecated: Use transport_partition_id instead.
 	IbPartitionId string `json:"ib_partition_id,omitempty"`
 	// Name of the slurm node pool.
 	Name string `json:"name"`
 	// Name of the slurm partition.
 	PartitionName string `json:"partition_name"`
+	// The ID of the Infiniband or RoCE partition to create node pool in. Must be in the location of the cluster if specified.
+	TransportPartitionId string `json:"transport_partition_id,omitempty"`
 	// Product name of the VM type to be created within this node pool.
 	Type_ string `json:"type"`
 }
