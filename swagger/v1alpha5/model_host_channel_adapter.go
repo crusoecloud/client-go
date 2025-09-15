@@ -9,8 +9,10 @@
 package swagger
 
 type HostChannelAdapter struct {
-	Guid          string `json:"guid"`
-	IbNetworkId   string `json:"ib_network_id"`
-	IbPartitionId string `json:"ib_partition_id"`
-	Type_         string `json:"type"`
+	Guid                 string `json:"guid"`
+	IbNetworkId          string `json:"ib_network_id"`
+	IbPartitionId        string `json:"ib_partition_id"`
+	TransportNetworkId   string `json:"transport_network_id"`
+	TransportPartitionId string `json:"transport_partition_id"`
+	Type_                string `json:"type"`
 }

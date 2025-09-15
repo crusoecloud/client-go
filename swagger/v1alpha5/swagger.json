@@ -65,6 +65,79 @@
         }
       }
     },
+    "/ccr/supported-locations": {
+      "get": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "List supported CCR locations.",
+        "operationId": "listSupportedLocations",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrListSupportedLocationsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/ccr/supported-providers": {
+      "get": {
+        "description": "Returns the list of supported upstream registry providers that can be used\nwhen creating pull-through cache repositories. These providers are validated\nduring repository creation.",
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "List supported CCR providers.",
+        "operationId": "listSupportedProviders",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrListSupportedProvidersResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/ccr/tokens": {
+      "post": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Create a CCR token for a user.",
+        "operationId": "createCcrToken",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CCRTokenRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrTokenResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/compute/images": {
       "get": {
         "tags": [
@@ -1266,6 +1339,457 @@
         }
       }
     },
+    "/projects/{project_id}/ccr/repositories": {
+      "get": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "List all CCR repositories in a project.",
+        "operationId": "listCcrRepositories",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrListRepositoriesResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Create a CCR repository.",
+        "operationId": "createCcrRepository",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RepositoryRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/ccrRepositoryResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/ccr/repositories/{repository_id}": {
+      "get": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Get a specific CCR repository.",
+        "operationId": "getCcrRepository",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "RepositoryID",
+            "name": "repository_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrRepositoryResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Delete a CCR repository.",
+        "operationId": "deleteCcrRepository",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "RepositoryID",
+            "name": "repository_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/ccr/repositories/{repository_id}/images": {
+      "get": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "List all images in a CCR repository.",
+        "operationId": "listCcrImages",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "RepositoryID",
+            "name": "repository_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrListImagesResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Delete an image from a CCR repository.",
+        "operationId": "deleteCcrImage",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "RepositoryID",
+            "name": "repository_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "ImageID",
+            "name": "image_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/ccr/repositories/{repository_id}/manifests": {
+      "get": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "List all manifests for an image in a CCR repository.",
+        "operationId": "listCcrManifests",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "RepositoryID",
+            "name": "repository_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "ImageID",
+            "name": "image_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "TagContains",
+            "name": "tag_contains",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrListManifestsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Delete a manifest from an image in a CCR repository.",
+        "operationId": "deleteCcrManifest",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "RepositoryID",
+            "name": "repository_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "ImageID",
+            "name": "image_id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Tag",
+            "name": "tag",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "Digest",
+            "name": "digest",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/ccr/repositories/{repository_id}/usage": {
+      "get": {
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Get usage data for a specific CCR repository.",
+        "operationId": "getCcrRepositoryUsage",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "RepositoryID",
+            "name": "repository_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ccrRepositoryQuotaResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/compute/custom-images": {
       "get": {
         "tags": [
@@ -2077,6 +2601,13 @@
             "example": "STATE_RUNNING",
             "x-go-name": "States",
             "name": "states",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "550e8400-e29b-41d4-a716-446655440000",
+            "x-go-name": "NvlinkDomainIds",
+            "name": "nvlink_domain_ids",
             "in": "query"
           },
           {
@@ -4501,6 +5032,39 @@
           },
           "404": {
             "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/networking/nvlink-domains": {
+      "get": {
+        "tags": [
+          "NVLink Domains"
+        ],
+        "summary": "Retrieve details about all NVLink domains available for the project.",
+        "operationId": "listNvlinkDomains",
+        "parameters": [
+          {
+            "type": "string",
+            "format": "uuid",
+            "description": "Project ID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listNvlinkDomainsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
           },
           "500": {
             "$ref": "#/responses/serverError"
@@ -7187,6 +7751,382 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "BillingAlert": {
+      "type": "object",
+      "title": "Billing Alert contains information about a customer billing alert.",
+      "required": [
+        "id",
+        "frequency",
+        "threshold",
+        "repeating",
+        "scope",
+        "percentage",
+        "name",
+        "percentage_at"
+      ],
+      "properties": {
+        "customer_ids": {
+          "description": "The custom recipients belonging to the billing alert.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "CustomerIDs",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479, 1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6"
+        },
+        "expiration_date": {
+          "description": "The date at which the billing alert expires for a billing alert with custom date range.",
+          "type": "string",
+          "x-go-name": "ExpirationDate",
+          "example": "2025-08-14T09:00:35Z"
+        },
+        "frequency": {
+          "description": "The frequency at which the billing alert is triggered.",
+          "type": "string",
+          "enum": [
+            "daily",
+            "monthly",
+            "quarterly",
+            "weekly",
+            "once"
+          ],
+          "x-go-name": "Frequency"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb"
+        },
+        "name": {
+          "description": "The name of the billing alert.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "billing alert 1"
+        },
+        "object_id": {
+          "description": "The object ID associated with the scope of the billing alert if the scope is product line or project.",
+          "type": "string",
+          "x-go-name": "ObjectID",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        },
+        "percentage": {
+          "description": "The percentage of the threshold at which the user is alerted.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "Percentage",
+          "example": 50
+        },
+        "percentage_at": {
+          "description": "The percentage of the threshold that has been billed during the current billing time period.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "PercentageAt",
+          "example": 50
+        },
+        "recipients": {
+          "description": "The recipient group of the billing alert (e.g. admins, editors, viewers).",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Recipients"
+        },
+        "repeating": {
+          "description": "Whether the billing alert repeats every frequency period.",
+          "type": "boolean",
+          "x-go-name": "Repeating",
+          "example": true
+        },
+        "scope": {
+          "description": "The scope of the billing alert (e.g. organization, project, product line).",
+          "type": "string",
+          "enum": [
+            "organization",
+            "product_line",
+            "project"
+          ],
+          "x-go-name": "Scope"
+        },
+        "start_date": {
+          "description": "The date at which the billing alert starts for a billing alert with custom date range.",
+          "type": "string",
+          "x-go-name": "StartDate",
+          "example": "2024-08-14T09:00:35Z"
+        },
+        "threshold": {
+          "description": "The quantity of resources that can be used before the alert is triggered, along with the currency.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Threshold",
+          "example": 105050.5
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "BillingAlertGetResponse": {
+      "type": "object",
+      "title": "BillingAlertGetResponse is a response type for GET requests to the billing alert endpoint.",
+      "required": [
+        "item"
+      ],
+      "properties": {
+        "item": {
+          "$ref": "#/definitions/BillingAlert"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "BillingAlertListResponse": {
+      "type": "object",
+      "title": "BillingAlertListResponse is a response type for GET requests to the billing alert endpoint.",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BillingAlert"
+          },
+          "x-go-name": "Items"
+        },
+        "next_page_token": {
+          "description": "Base64 encoded token representing the next page of billing alerts.\nEmpty if currently on the last page.",
+          "type": "string",
+          "x-go-name": "NextPageToken",
+          "example": "bXktbGFzdC1ub2Rl"
+        },
+        "prev_page_token": {
+          "description": "Base64 encoded token representing the previous page of billing alerts.\nEmpty if currently on the first page.",
+          "type": "string",
+          "x-go-name": "PrevPageToken",
+          "example": "bXktZmlyc3Qtbm9kZQ"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "BillingAlertPostRequest": {
+      "type": "object",
+      "title": "BillingAlertPostRequest defines the specifications of the billing alert to be created.",
+      "required": [
+        "frequency",
+        "threshold",
+        "repeating",
+        "scope",
+        "percentage",
+        "name"
+      ],
+      "properties": {
+        "customer_ids": {
+          "description": "The custom recipients belonging to the billing alert.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "CustomerIDs",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479, 1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6"
+        },
+        "expiration_date": {
+          "description": "The date at which the billing alert expires.",
+          "type": "string",
+          "x-go-name": "ExpirationDate",
+          "example": "2025-08-14T09:00:35Z"
+        },
+        "frequency": {
+          "description": "The frequency at which the billing alert is triggered.",
+          "type": "string",
+          "enum": [
+            "daily",
+            "monthly",
+            "quarterly",
+            "weekly",
+            "once"
+          ],
+          "x-go-name": "Frequency"
+        },
+        "name": {
+          "description": "The name of the billing alert.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "billing alert 1"
+        },
+        "object_id": {
+          "description": "The object ID associated with the scope of the billing alert if the scope is product line or project.",
+          "type": "string",
+          "x-go-name": "ObjectID",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        },
+        "percentage": {
+          "description": "The percentage of the threshold at which the user is alerted.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "Percentage",
+          "example": 80
+        },
+        "recipients": {
+          "description": "The recipient group of the billing alert (e.g. admins, editors, viewers).",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Recipients"
+        },
+        "repeating": {
+          "description": "Whether the billing alert repeats every frequency period.",
+          "type": "boolean",
+          "x-go-name": "Repeating",
+          "example": true
+        },
+        "scope": {
+          "description": "The scope of the billing alert (e.g., organization, project, product line).",
+          "type": "string",
+          "enum": [
+            "organization",
+            "product_line",
+            "project"
+          ],
+          "x-go-name": "Scope"
+        },
+        "start_date": {
+          "description": "The date at which the billing alert starts for a billing alert with custom date range.",
+          "type": "string",
+          "x-go-name": "StartDate",
+          "example": "2024-08-14T09:00:35Z"
+        },
+        "threshold": {
+          "description": "The quantity of resources that can be used before the alert is triggered, along with the currency.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Threshold",
+          "example": 105050.5
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "BillingAlertPostResponse": {
+      "type": "object",
+      "title": "BillingAlertPostResponse is the response type for PUT requests to the billing alert endpoint.",
+      "required": [
+        "item"
+      ],
+      "properties": {
+        "item": {
+          "$ref": "#/definitions/BillingAlert"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "BillingAlertPutRequest": {
+      "type": "object",
+      "title": "BillingAlertPutRequest defines the specifications of the billing alert to be created.",
+      "required": [
+        "frequency",
+        "threshold",
+        "repeating",
+        "scope",
+        "percentage",
+        "name"
+      ],
+      "properties": {
+        "customer_ids": {
+          "description": "The custom recipients belonging to the billing alert.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "CustomerIDs",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479, 1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6"
+        },
+        "expiration_date": {
+          "description": "The date at which the billing alert expires for a billing alert with custom date range.",
+          "type": "string",
+          "x-go-name": "ExpirationDate",
+          "example": "2025-08-14T09:00:35Z"
+        },
+        "frequency": {
+          "description": "The frequency at which the billing alert is triggered.",
+          "type": "string",
+          "enum": [
+            "daily",
+            "monthly",
+            "quarterly",
+            "weekly",
+            "once"
+          ],
+          "x-go-name": "Frequency"
+        },
+        "name": {
+          "description": "The name of the billing alert.",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "'billing alert 1'"
+        },
+        "object_id": {
+          "description": "The object ID associated with the scope of the billing alert if the scope is product line or project.",
+          "type": "string",
+          "x-go-name": "ObjectID",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        },
+        "percentage": {
+          "description": "The percentage of the threshold at which the user is alerted.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "Percentage",
+          "example": 80
+        },
+        "recipients": {
+          "description": "The recipient group of the billing alert (e.g. admins, editors, viewers).",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Recipients"
+        },
+        "repeating": {
+          "description": "Whether the billing alert repeats every frequency period.",
+          "type": "boolean",
+          "x-go-name": "Repeating",
+          "example": true
+        },
+        "scope": {
+          "description": "The scope of the billing alert (e.g. organization, project, product line).",
+          "type": "string",
+          "enum": [
+            "organization",
+            "product_line",
+            "project"
+          ],
+          "x-go-name": "Scope"
+        },
+        "start_date": {
+          "description": "The date at which the billing alert starts for a billing alert with custom date range.",
+          "type": "string",
+          "x-go-name": "StartDate",
+          "example": "2024-08-14T09:00:35Z"
+        },
+        "threshold": {
+          "description": "The quantity of resources that can be used before the alert is triggered, along with the currency.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Threshold",
+          "example": 105050.5
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "BillingAlertPutResponse": {
+      "type": "object",
+      "title": "BillingAlertPutResponse is the response type for PUT requests to the billing alert endpoint.",
+      "required": [
+        "item"
+      ],
+      "properties": {
+        "item": {
+          "$ref": "#/definitions/BillingAlert"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "BillingCostData": {
       "type": "object",
       "title": "UsageByProjectGetResponse is the response type for GET requests to the usage.usageByProject endpoint.",
@@ -7375,10 +8315,9 @@
       ],
       "properties": {
         "ib_partition_id": {
-          "description": "The ID of the Infiniband partition to create the VMs in, if an IB type was specified.\nMust be in the same location as the VMs.",
+          "description": "Deprecated: Use transport_partition_id instead.",
           "type": "string",
-          "x-go-name": "IBPartitionID",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+          "x-go-name": "IBPartitionID"
         },
         "location": {
           "description": "The location to create the VMs in.",
@@ -7390,6 +8329,12 @@
           "description": "The ID of the subnet to create the VMs in. Must be in the same location\nas the VMs. If not provided, the default subnet for the location will be\nused, if there is one.",
           "type": "string",
           "x-go-name": "SubnetID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "transport_partition_id": {
+          "description": "The ID of the Infiniband or RoCE partition to create the VMs in, if a transport type was specified.\nMust be in the same location as the VMs.",
+          "type": "string",
+          "x-go-name": "TransportPartitionID",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
         }
       },
@@ -7437,6 +8382,11 @@
           "type": "string",
           "x-go-name": "NamePrefix",
           "example": "my-vm"
+        },
+        "nvlink_domain_id": {
+          "description": "optional field for specifying an NVLink domain ID",
+          "type": "string",
+          "x-go-name": "NvlinkDomainID"
         },
         "reservation_specification": {
           "$ref": "#/definitions/ReservationSpecification"
@@ -8704,7 +9654,9 @@
         "type",
         "guid",
         "ib_network_id",
-        "ib_partition_id"
+        "ib_partition_id",
+        "transport_network_id",
+        "transport_partition_id"
       ],
       "properties": {
         "guid": {
@@ -8714,12 +9666,20 @@
         },
         "ib_network_id": {
           "type": "string",
-          "x-go-name": "IBNetworkID",
-          "example": "ca39e669-47ee-456b-968d-303234fbf99f"
+          "x-go-name": "IBNetworkID"
         },
         "ib_partition_id": {
           "type": "string",
-          "x-go-name": "IBPartitionID",
+          "x-go-name": "IBPartitionID"
+        },
+        "transport_network_id": {
+          "type": "string",
+          "x-go-name": "TransportNetworkID",
+          "example": "ca39e669-47ee-456b-968d-303234fbf99f"
+        },
+        "transport_partition_id": {
+          "type": "string",
+          "x-go-name": "TransportPartitionID",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f"
         },
         "type": {
@@ -9204,6 +10164,7 @@
         "shutdown_script",
         "image_name",
         "ib_partition_id",
+        "transport_partition_id",
         "subnet_id",
         "location",
         "project_id",
@@ -9234,10 +10195,8 @@
           "x-go-name": "Disks"
         },
         "ib_partition_id": {
-          "description": "IB Partition to use for all VMs created from this instance template.\nOnly used for IB-enabled VM types. Empty if template has no location.",
           "type": "string",
-          "x-go-name": "IBPartition",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+          "x-go-name": "IBPartition"
         },
         "id": {
           "description": "ID of the instance template.",
@@ -9272,6 +10231,12 @@
           "type": "string",
           "x-go-name": "Name",
           "example": "my-instance-template"
+        },
+        "nvlink_domain_id": {
+          "description": "NVLink domain ID assigned to this instance template",
+          "type": "string",
+          "x-go-name": "NvlinkDomainID",
+          "example": "550e8400-e29b-41d4-a716-446655440000"
         },
         "placement_policy": {
           "description": "The VM Placement Policy",
@@ -9323,6 +10288,12 @@
           "x-go-name": "SubnetID",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
         },
+        "transport_partition_id": {
+          "description": "IB or RoCE partition to use for all VMs created from this instance template.\nOnly used for transport-enabled VM types. Empty if template has no location.",
+          "type": "string",
+          "x-go-name": "TransportPartitionID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
         "type": {
           "description": "Product name of the VM type we want to create from this instance template.",
           "type": "string",
@@ -9359,10 +10330,9 @@
           "x-go-name": "Disks"
         },
         "ib_partition_id": {
-          "description": "IB Partition to use for all VMs created from this instance template.\nShould only be provided for IB-enabled VM types.\nThis is location-specific and must be provided if location is provided.",
+          "description": "Deprecated: Use transport_partition_id instead.",
           "type": "string",
-          "x-go-name": "IBPartition",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+          "x-go-name": "IBPartition"
         },
         "image_name": {
           "description": "OS Image to use for all VMs created from this instance template.",
@@ -9381,6 +10351,12 @@
           "type": "string",
           "x-go-name": "MaintenancePolicy",
           "example": "manual,auto-stop,stop-vm,unspecified"
+        },
+        "nvlink_domain_id": {
+          "description": "Optional NVLink domain ID to assign to VMs",
+          "type": "string",
+          "x-go-name": "NvlinkDomainID",
+          "example": "550e8400-e29b-41d4-a716-446655440000"
         },
         "placement_policy": {
           "description": "The VM Placement Policy to use.",
@@ -9428,6 +10404,12 @@
           "type": "string",
           "x-go-name": "TemplateName",
           "example": "my-instance-template"
+        },
+        "transport_partition_id": {
+          "description": "IB or RoCE partition to use for all VMs created from this instance template.\nShould only be provided for transport-enabled VM types.\nThis is location-specific and must be provided if location is provided.",
+          "type": "string",
+          "x-go-name": "TransportPartitionID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
         },
         "type": {
           "description": "Product name of the VM type we want to create from this instance template.",
@@ -9533,6 +10515,11 @@
             "$ref": "#/definitions/NetworkInterface"
           },
           "x-go-name": "NetworkInterfaces"
+        },
+        "nvlink_domain_id": {
+          "description": "optional field for specifying an NVLink domain ID",
+          "type": "string",
+          "x-go-name": "NvlinkDomainID"
         },
         "pod_id": {
           "type": "string",
@@ -9733,6 +10720,11 @@
           },
           "x-go-name": "NetworkInterfaces"
         },
+        "nvlink_domain_id": {
+          "description": "optional field for specifying an NVLink domain ID",
+          "type": "string",
+          "x-go-name": "NvlinkDomainID"
+        },
         "reservation_specification": {
           "$ref": "#/definitions/ReservationSpecification"
         },
@@ -9842,6 +10834,9 @@
           "example": [
             "crusoe_csi"
           ]
+        },
+        "auth_config": {
+          "$ref": "#/definitions/KubernetesClusterAuthConfig"
         },
         "cluster_cidr": {
           "description": "The range of IP Addresses allocated to pods scheduled on worker nodes",
@@ -10161,6 +11156,12 @@
           "x-go-name": "NodeLabels",
           "example": "\"nvidia.a100\""
         },
+        "nvlink_domain_id": {
+          "description": "NVLink domain ID assigned to this node pool",
+          "type": "string",
+          "x-go-name": "NvlinkDomainID",
+          "example": "550e8400-e29b-41d4-a716-446655440000"
+        },
         "project_id": {
           "description": "The ID of the project this Kubernetes node pool belongs to.",
           "type": "string",
@@ -10283,10 +11284,9 @@
           "example": true
         },
         "ib_partition_id": {
-          "description": "The ID of the Infiniband partition to create node pool in. Must be in the location\nof the cluster if specified.",
+          "description": "Deprecated: Use transport_partition_id instead.",
           "type": "string",
-          "x-go-name": "IBPartitionID",
-          "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653"
+          "x-go-name": "IBPartitionID"
         },
         "name": {
           "description": "Name of the Kubernetes node pool.",
@@ -10311,6 +11311,12 @@
           "x-go-name": "NodePoolVersion",
           "example": "1.30"
         },
+        "nvlink_domain_id": {
+          "description": "Optional NVLink domain ID to assign to nodes in this node pool",
+          "type": "string",
+          "x-go-name": "NvlinkDomainID",
+          "example": "550e8400-e29b-41d4-a716-446655440000"
+        },
         "product_name": {
           "description": "Product name of the VM type to be created within this node pool.",
           "type": "string",
@@ -10331,6 +11337,12 @@
           "type": "string",
           "x-go-name": "SubnetID",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "transport_partition_id": {
+          "description": "The ID of the Infiniband or RoCE partition to create node pool in. Must be in the location\nof the cluster if specified.",
+          "type": "string",
+          "x-go-name": "TransportPartitionID",
+          "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -11499,6 +12511,60 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "NvlinkDomainSummaryResponse": {
+      "type": "object",
+      "title": "NvlinkDomainSummaryResponse represents summary information about an NVLink domain.",
+      "properties": {
+        "available_nodes": {
+          "description": "Number of nodes currently available in the NVLink domain",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "AvailableNodes",
+          "example": 8
+        },
+        "id": {
+          "description": "Unique identifier for the NVLink domain",
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "550e8400-e29b-41d4-a716-446655440000"
+        },
+        "location": {
+          "description": "Geographic location of the NVLink domain",
+          "type": "string",
+          "x-go-name": "Location",
+          "example": "us-east-1"
+        },
+        "name": {
+          "description": "Name of the NVLink domain",
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "nvlink-domain-us-east-1"
+        },
+        "total_nodes": {
+          "description": "Total number of nodes in the NVLink domain",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "TotalNodes",
+          "example": 16
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "NvlinkDomainsSummaryListResponse": {
+      "type": "object",
+      "title": "NvlinkDomainsSummaryListResponse represents a list of NVLink domain summaries.",
+      "properties": {
+        "nvlink_domains": {
+          "description": "List of NVLink domain summaries",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NvlinkDomainSummaryResponse"
+          },
+          "x-go-name": "NvlinkDomains"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "OIDCAuthConfig": {
       "description": "This allows the Kubernetes API server to authenticate users via an external OIDC provider.",
       "type": "object",
@@ -11728,8 +12794,13 @@
       "title": "PartialHostChannelAdapter is used when POSTing and PATCHing VMs to assign IB Partitions.",
       "properties": {
         "ib_partition_id": {
+          "description": "Deprecated: Use transport_partition_id instead.",
           "type": "string",
           "x-go-name": "IBPartitionID"
+        },
+        "transport_partition_id": {
+          "type": "string",
+          "x-go-name": "TransportPartitionID"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -11782,6 +12853,20 @@
         },
         "resources": {
           "$ref": "#/definitions/ProjectResources"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ProjectIsUsingNFSForSharedDisksResponse": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "x-go-name": "Status",
+          "example": false
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -12529,6 +13614,7 @@
         "running_count",
         "desired_count",
         "ib_partition_id",
+        "transport_partition_id",
         "project_id",
         "cluster_id",
         "image_id",
@@ -12550,10 +13636,8 @@
           "example": 4
         },
         "ib_partition_id": {
-          "description": "IB Partition ID of the node pool.",
           "type": "string",
-          "x-go-name": "IBPartitionID",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+          "x-go-name": "IBPartitionID"
         },
         "id": {
           "description": "ID of the node pool.",
@@ -12602,6 +13686,12 @@
           "format": "int64",
           "x-go-name": "RunningCount",
           "example": 4
+        },
+        "transport_partition_id": {
+          "description": "IB or RoCE partition ID of the node pool.",
+          "type": "string",
+          "x-go-name": "TransportPartitionID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
         },
         "type": {
           "description": "VM type of the node pool",
@@ -12652,10 +13742,9 @@
           "example": 4
         },
         "ib_partition_id": {
-          "description": "The ID of the Infiniband partition to create node pool in. Must be in the location\nof the cluster if specified.",
+          "description": "Deprecated: Use transport_partition_id instead.",
           "type": "string",
-          "x-go-name": "IBPartitionID",
-          "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653"
+          "x-go-name": "IBPartitionID"
         },
         "name": {
           "description": "Name of the slurm node pool.",
@@ -12668,6 +13757,12 @@
           "type": "string",
           "x-go-name": "SlurmPartitionName",
           "example": "my-slurm-partition"
+        },
+        "transport_partition_id": {
+          "description": "The ID of the Infiniband or RoCE partition to create node pool in. Must be in the location\nof the cluster if specified.",
+          "type": "string",
+          "x-go-name": "TransportPartitionID",
+          "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653"
         },
         "type": {
           "description": "Product name of the VM type to be created within this node pool.",
@@ -13632,6 +14727,12 @@
         "$ref": "#/definitions/CCRTokenResponse"
       }
     },
+    "createBillingAlertResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/BillingAlertPostResponse"
+      }
+    },
     "createInstanceGroupResponse": {
       "description": "",
       "schema": {
@@ -13681,6 +14782,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/FeatureFlagsGetResponse"
+      }
+    },
+    "getBillingAlertResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/BillingAlertGetResponse"
       }
     },
     "getDiskResponse": {
@@ -13839,6 +14946,12 @@
         "$ref": "#/definitions/LimitedUsageAPIKeyPostResponse"
       }
     },
+    "listBillingAlertsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/BillingAlertListResponse"
+      }
+    },
     "listDiskSnapshotsResponse": {
       "description": "",
       "schema": {
@@ -13915,6 +15028,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListLoadBalancersResponseV1Alpha5"
+      }
+    },
+    "listNvlinkDomainsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/NvlinkDomainsSummaryListResponse"
       }
     },
     "listOperationsResponse": {
@@ -14057,6 +15176,12 @@
         }
       }
     },
+    "projectIsUsingNFSForSharedDisksResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ProjectIsUsingNFSForSharedDisksResponse"
+      }
+    },
     "projectsPutPostResponse": {
       "description": "",
       "schema": {
@@ -14182,6 +15307,12 @@
         "$ref": "#/definitions/ListTypesResponseV1Alpha5"
       }
     },
+    "updateBillingAlertResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/BillingAlertPutResponse"
+      }
+    },
     "usageExportGetResponse": {
       "description": "",
       "headers": {
@@ -14299,7 +15430,8 @@
         "VPC Networks",
         "VPC Subnets",
         "IB Partitions",
-        "Load Balancers"
+        "Load Balancers",
+        "NVLink Domains"
       ]
     },
     {

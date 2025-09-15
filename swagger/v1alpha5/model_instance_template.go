@@ -14,9 +14,8 @@ type InstanceTemplate struct {
 	// OS Image to use for all VMs created from this instance template.
 	CustomImageName string `json:"custom_image_name,omitempty"`
 	// Disks to create for all VMs created from this instance template.
-	Disks []DiskTemplate `json:"disks,omitempty"`
-	// IB Partition to use for all VMs created from this instance template. Only used for IB-enabled VM types. Empty if template has no location.
-	IbPartitionId string `json:"ib_partition_id"`
+	Disks         []DiskTemplate `json:"disks,omitempty"`
+	IbPartitionId string         `json:"ib_partition_id"`
 	// ID of the instance template.
 	Id string `json:"id"`
 	// OS Image to use for all VMs created from this instance template.
@@ -27,6 +26,8 @@ type InstanceTemplate struct {
 	MaintenancePolicy string `json:"maintenance_policy"`
 	// Name of the instance template. (This is not the name of the VMs created from this instance template.)
 	Name string `json:"name"`
+	// NVLink domain ID assigned to this instance template
+	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
 	// The VM Placement Policy
 	PlacementPolicy string `json:"placement_policy"`
 	// Project ID of the project this instance template belongs to.
@@ -42,6 +43,8 @@ type InstanceTemplate struct {
 	StartupScript string `json:"startup_script"`
 	// SubnetID to use for all VMs created from this instance template. Only used if template has a location.
 	SubnetId string `json:"subnet_id"`
+	// IB or RoCE partition to use for all VMs created from this instance template. Only used for transport-enabled VM types. Empty if template has no location.
+	TransportPartitionId string `json:"transport_partition_id"`
 	// Product name of the VM type we want to create from this instance template.
 	Type_                  string                  `json:"type"`
 	VirtualizationFeatures *VirtualizationFeatures `json:"virtualization_features,omitempty"`

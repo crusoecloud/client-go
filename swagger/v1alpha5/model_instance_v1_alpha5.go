@@ -14,17 +14,19 @@ type InstanceV1Alpha5 struct {
 	BillingType   string `json:"billing_type,omitempty"`
 	CommitmentEnd string `json:"commitment_end,omitempty"`
 	// commitment is no longer supported
-	CommitmentPeriod       int64                   `json:"commitment_period,omitempty"`
-	CreatedAt              string                  `json:"created_at"`
-	Disks                  []AttachedDiskV1Alpha5  `json:"disks"`
-	HostChannelAdapters    []HostChannelAdapter    `json:"host_channel_adapters"`
-	Id                     string                  `json:"id"`
-	InstanceGroupId        string                  `json:"instance_group_id,omitempty"`
-	InstanceTemplateId     string                  `json:"instance_template_id,omitempty"`
-	Location               string                  `json:"location"`
-	MaintenancePolicy      string                  `json:"maintenance_policy"`
-	Name                   string                  `json:"name"`
-	NetworkInterfaces      []NetworkInterface      `json:"network_interfaces"`
+	CommitmentPeriod    int64                  `json:"commitment_period,omitempty"`
+	CreatedAt           string                 `json:"created_at"`
+	Disks               []AttachedDiskV1Alpha5 `json:"disks"`
+	HostChannelAdapters []HostChannelAdapter   `json:"host_channel_adapters"`
+	Id                  string                 `json:"id"`
+	InstanceGroupId     string                 `json:"instance_group_id,omitempty"`
+	InstanceTemplateId  string                 `json:"instance_template_id,omitempty"`
+	Location            string                 `json:"location"`
+	MaintenancePolicy   string                 `json:"maintenance_policy"`
+	Name                string                 `json:"name"`
+	NetworkInterfaces   []NetworkInterface     `json:"network_interfaces"`
+	// optional field for specifying an NVLink domain ID
+	NvlinkDomainId         string                  `json:"nvlink_domain_id,omitempty"`
 	PodId                  string                  `json:"pod_id,omitempty"`
 	ProjectId              string                  `json:"project_id"`
 	ReservationId          string                  `json:"reservation_id,omitempty"`
