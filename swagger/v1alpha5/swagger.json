@@ -4713,7 +4713,7 @@
         "tags": [
           "Load Balancers"
         ],
-        "summary": "Retrieve information about External Load Balancer belonging to the project.",
+        "summary": "Retrieve information about external load balancers belonging to the project.",
         "operationId": "listExternalLoadBalancers",
         "parameters": [
           {

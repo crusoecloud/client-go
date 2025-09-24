@@ -374,7 +374,7 @@ func (a *LoadBalancersApiService) GetExternalLoadBalancer(ctx context.Context, p
 }
 
 /*
-LoadBalancersApiService Retrieve information about External Load Balancer belonging to the project.
+LoadBalancersApiService Retrieve information about external load balancers belonging to the project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param optional nil or *LoadBalancersApiListExternalLoadBalancersOpts - Optional Parameters:
