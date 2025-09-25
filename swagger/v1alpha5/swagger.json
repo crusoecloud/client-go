@@ -14072,7 +14072,7 @@
     },
     "UserStateEnum": {
       "type": "string",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/auth"
+      "x-go-package": "gitlab.com/crusoeenergy/island/auth-gateway/pkg/authmodels"
     },
     "VMAttachmentType": {
       "type": "string",
