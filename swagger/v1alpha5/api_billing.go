@@ -153,53 +153,42 @@ func (a *BillingApiService) GetBillingCosts(ctx context.Context, organizationId 
 }
 
 /*
-BillingApiService Return a itemized spend per resource.
+BillingApiService Return a CSV containing the costs for resources in a given period.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param organizationId
  * @param startDate
  * @param endDate
- * @param optional nil or *BillingApiGetBillingExportOpts - Optional Parameters:
-     * @param "Format" (optional.Interface of []string) -
+ * @param optional nil or *BillingApiGetBillingExportProductlineOpts - Optional Parameters:
      * @param "Projects" (optional.Interface of []string) -
-     * @param "Resources" (optional.Interface of []string) -
      * @param "ResourceTypes" (optional.Interface of []string) -
      * @param "Regions" (optional.Interface of []string) -
-@return BillingResourcesResponse
+
 */
 
-type BillingApiGetBillingExportOpts struct {
-	Format        optional.Interface
+type BillingApiGetBillingExportProductlineOpts struct {
 	Projects      optional.Interface
-	Resources     optional.Interface
 	ResourceTypes optional.Interface
 	Regions       optional.Interface
 }
 
-func (a *BillingApiService) GetBillingExport(ctx context.Context, organizationId string, startDate string, endDate string, localVarOptionals *BillingApiGetBillingExportOpts) (BillingResourcesResponse, *http.Response, error) {
+func (a *BillingApiService) GetBillingExportProductline(ctx context.Context, organizationId string, startDate string, endDate string, localVarOptionals *BillingApiGetBillingExportProductlineOpts) (*http.Response, error) {
 	var (
-		localVarHttpMethod  = strings.ToUpper("Get")
-		localVarPostBody    interface{}
-		localVarFileName    string
-		localVarFileBytes   []byte
-		localVarReturnValue BillingResourcesResponse
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/{organization_id}/billing/export"
+	localVarPath := a.client.cfg.BasePath + "/organizations/{organization_id}/billing/export-productline"
 	localVarPath = strings.Replace(localVarPath, "{"+"organization_id"+"}", fmt.Sprintf("%v", organizationId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Format.IsSet() {
-		localVarQueryParams.Add("format", parameterToString(localVarOptionals.Format.Value(), "csv"))
-	}
 	if localVarOptionals != nil && localVarOptionals.Projects.IsSet() {
 		localVarQueryParams.Add("projects", parameterToString(localVarOptionals.Projects.Value(), "csv"))
-	}
-	if localVarOptionals != nil && localVarOptionals.Resources.IsSet() {
-		localVarQueryParams.Add("resources", parameterToString(localVarOptionals.Resources.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.ResourceTypes.IsSet() {
 		localVarQueryParams.Add("resource_types", parameterToString(localVarOptionals.ResourceTypes.Value(), "csv"))
@@ -228,26 +217,18 @@ func (a *BillingApiService) GetBillingExport(ctx context.Context, organizationId
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return localVarReturnValue, nil, err
+		return nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
+		return localVarHttpResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
 	localVarHttpResponse.Body.Close()
 	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-		if err == nil {
-			return localVarReturnValue, localVarHttpResponse, err
-		}
+		return localVarHttpResponse, err
 	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
@@ -255,60 +236,40 @@ func (a *BillingApiService) GetBillingExport(ctx context.Context, organizationId
 			body:  localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		if localVarHttpResponse.StatusCode == 200 {
-			var v BillingResourcesResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
 		if localVarHttpResponse.StatusCode == 400 {
 			var v InlineResponse400
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
+				return localVarHttpResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 401 {
-			var v InlineResponse401
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
+			return localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 403 {
 			var v InlineResponse403
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
+				return localVarHttpResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
+			return localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 500 {
 			var v InlineResponse500
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
+				return localVarHttpResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
+			return localVarHttpResponse, newErr
 		}
-		return localVarReturnValue, localVarHttpResponse, newErr
+		return localVarHttpResponse, newErr
 	}
 
-	return localVarReturnValue, localVarHttpResponse, nil
+	return localVarHttpResponse, nil
 }
 
 /*

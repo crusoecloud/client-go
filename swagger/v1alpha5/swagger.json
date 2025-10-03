@@ -709,7 +709,7 @@
         }
       }
     },
-    "/organizations/{organization_id}/billing/export": {
+    "/organizations/{organization_id}/billing/export-productline": {
       "get": {
         "produces": [
           "text/csv"
@@ -717,8 +717,8 @@
         "tags": [
           "Billing"
         ],
-        "summary": "Return a itemized spend per resource.",
-        "operationId": "getBillingExport",
+        "summary": "Return a CSV containing the costs for resources in a given period.",
+        "operationId": "getBillingExportProductline",
         "parameters": [
           {
             "type": "string",
@@ -727,19 +727,6 @@
             "name": "organization_id",
             "in": "path",
             "required": true
-          },
-          {
-            "enum": [
-              "json",
-              "csv"
-            ],
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "x-go-name": "Format",
-            "name": "format",
-            "in": "query"
           },
           {
             "type": "array",
@@ -751,18 +738,6 @@
             ],
             "x-go-name": "Projects",
             "name": "projects",
-            "in": "query"
-          },
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb"
-            ],
-            "x-go-name": "Resources",
-            "name": "resources",
             "in": "query"
           },
           {
@@ -810,13 +785,10 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/billingExportGetResponse"
+            "$ref": "#/responses/getBillingExportProductlineResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
           },
           "403": {
             "$ref": "#/responses/permissionsError"
@@ -14790,6 +14762,67 @@
         "$ref": "#/definitions/BillingAlertGetResponse"
       }
     },
+    "getBillingExportProductlineResponse": {
+      "description": "",
+      "headers": {
+        "cost": {
+          "type": "string",
+          "example": "45.67",
+          "description": "required: true"
+        },
+        "metric": {
+          "type": "string",
+          "example": "\"instance-hours\"",
+          "description": "required: true"
+        },
+        "project_id": {
+          "type": "string",
+          "example": "\"ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab\"",
+          "description": "required: true"
+        },
+        "project_name": {
+          "type": "string",
+          "example": "\"Apollo Project\"",
+          "description": "required: true"
+        },
+        "quantity": {
+          "type": "number",
+          "format": "double",
+          "example": "261.271111",
+          "description": "required: true"
+        },
+        "region": {
+          "type": "string",
+          "example": "\"us-east1\"",
+          "description": "required: true"
+        },
+        "resource_id": {
+          "type": "string",
+          "example": "\"ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab\"",
+          "description": "required: true"
+        },
+        "resource_name": {
+          "type": "string",
+          "example": "\"My Cool Virtual Machine\"",
+          "description": "required: true"
+        },
+        "resource_type": {
+          "type": "string",
+          "example": "\"a40.1x\", \"persistent-ssd\"",
+          "description": "required: true"
+        },
+        "unit_price": {
+          "type": "string",
+          "example": "0.15",
+          "description": "required: true"
+        },
+        "usage_date": {
+          "type": "string",
+          "example": "\"2025-02-14\"",
+          "description": "required: true"
+        }
+      }
+    },
     "getDiskResponse": {
       "description": "",
       "schema": {
@@ -15173,6 +15206,50 @@
             "x-go-name": "Message",
             "example": "unauthorized"
           }
+        }
+      }
+    },
+    "productlineUsageExportGetResponse": {
+      "description": "",
+      "headers": {
+        "cost": {
+          "type": "number",
+          "format": "double",
+          "example": "32.23"
+        },
+        "metric": {
+          "type": "string",
+          "example": "instance-hours"
+        },
+        "product_line": {
+          "type": "string",
+          "example": "a40"
+        },
+        "project_id": {
+          "type": "string",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "project_name": {
+          "type": "string",
+          "example": "project-name-template"
+        },
+        "quantity": {
+          "type": "number",
+          "format": "double",
+          "example": "261.271111"
+        },
+        "region": {
+          "type": "string",
+          "example": "us-east1"
+        },
+        "unit_price": {
+          "type": "number",
+          "format": "double",
+          "example": "32.23"
+        },
+        "usage_date": {
+          "type": "string",
+          "example": "2000-01-01"
         }
       }
     },
