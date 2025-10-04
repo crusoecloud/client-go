@@ -12737,6 +12737,22 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "OrgUserCredentialsResponse": {
+      "type": "object",
+      "required": [
+        "user_credentials"
+      ],
+      "properties": {
+        "user_credentials": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/CredentialsResponse"
+          },
+          "x-go-name": "UserCredentials"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "OrganizationMFA": {
       "type": "object",
       "title": "OrganizationMFA contains details about a single required MFA method.",
@@ -15167,6 +15183,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/GetCreditsResponseV1Alpha5"
+      }
+    },
+    "orgUserCredentialsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/OrgUserCredentialsResponse"
       }
     },
     "organizationsGetResponse": {
