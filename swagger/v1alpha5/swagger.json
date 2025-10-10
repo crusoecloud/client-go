@@ -13049,7 +13049,7 @@
         "name": {
           "type": "string",
           "x-go-name": "Name",
-          "example": "Crusoe Energy"
+          "example": "Admin"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
