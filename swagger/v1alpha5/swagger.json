@@ -3787,6 +3787,13 @@
             "x-go-name": "ShowDeprecated",
             "name": "show_deprecated",
             "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "a100.2x",
+            "x-go-name": "ProductName",
+            "name": "product_name",
+            "in": "query"
           }
         ],
         "responses": {
