@@ -14,5 +14,6 @@ type GeneratedLimitedUsageApiKey struct {
 	CreatedAt string `json:"created_at"`
 	ExpiresAt string `json:"expires_at"`
 	KeyId     string `json:"key_id"`
+	ProjectId string `json:"project_id,omitempty"`
 	Usage     string `json:"usage"`
 }

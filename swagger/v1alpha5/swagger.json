@@ -8503,6 +8503,12 @@
           "type": "string",
           "x-go-name": "ExpiresAt",
           "example": "2021-12-03T19:58:34Z"
+        },
+        "project_id": {
+          "description": "Optional project ID the token is scoped to",
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -9386,6 +9392,11 @@
           "type": "string",
           "x-go-name": "KeyID",
           "example": "R7p5XctCQMuGlpVBmVdqzA"
+        },
+        "project_id": {
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
         },
         "usage": {
           "type": "string",
@@ -11405,6 +11416,11 @@
           "type": "string",
           "x-go-name": "LastUsed",
           "example": "2021-11-03T22:22:55Z"
+        },
+        "project_id": {
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
         },
         "usage": {
           "type": "string",
