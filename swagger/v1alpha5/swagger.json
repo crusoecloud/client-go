@@ -13986,6 +13986,7 @@
       "required": [
         "projects",
         "resource_types",
+        "product_lines",
         "regions",
         "start_date",
         "end_date"
@@ -13995,6 +13996,17 @@
           "type": "string",
           "x-go-name": "EndDate",
           "example": "\"2023-08-08\""
+        },
+        "product_lines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "ProductLines",
+          "example": [
+            "a40",
+            "h200"
+          ]
         },
         "projects": {
           "type": "array",

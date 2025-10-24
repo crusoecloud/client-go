@@ -11,6 +11,7 @@ package swagger
 // UsageOptions contains the values which exist for the fields which we allow filtering on for the usageByProjectGet endpoint.
 type UsageOptions struct {
 	EndDate       string   `json:"end_date"`
+	ProductLines  []string `json:"product_lines"`
 	Projects      []string `json:"projects"`
 	Regions       []string `json:"regions"`
 	ResourceTypes []string `json:"resource_types"`
