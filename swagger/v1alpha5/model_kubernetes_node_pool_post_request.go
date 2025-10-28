@@ -26,7 +26,9 @@ type KubernetesNodePoolPostRequest struct {
 	// Optional NVLink domain ID to assign to nodes in this node pool
 	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
 	// Product name of the VM type to be created within this node pool.
-	ProductName              string                    `json:"product_name"`
+	ProductName string `json:"product_name"`
+	// Public IP type for nodepool nodes. Possible values: dynamic, static, none
+	PublicIpType             string                    `json:"public_ip_type,omitempty"`
 	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
 	// SSH public key to use for all VMs created from this node pool.
 	SshPublicKey string `json:"ssh_public_key,omitempty"`

@@ -11158,6 +11158,13 @@
           "x-go-name": "ProjectID",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
         },
+        "public_ip_type": {
+          "description": "Public IP type for nodepool nodes. Possible values: dynamic, static, none",
+          "type": "string",
+          "default": "dynamic",
+          "x-go-name": "PublicIPType",
+          "example": "dynamic"
+        },
         "reservation_id": {
           "description": "The ID of the billing reservation associated with the node pool",
           "type": "string",
@@ -11312,6 +11319,13 @@
           "type": "string",
           "x-go-name": "ProductName",
           "example": "a100.2x"
+        },
+        "public_ip_type": {
+          "description": "Public IP type for nodepool nodes. Possible values: dynamic, static, none",
+          "type": "string",
+          "default": "dynamic",
+          "x-go-name": "PublicIPType",
+          "example": "dynamic"
         },
         "reservation_specification": {
           "$ref": "#/definitions/ReservationSpecification"
