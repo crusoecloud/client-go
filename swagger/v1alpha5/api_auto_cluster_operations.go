@@ -24,27 +24,29 @@ var (
 	_ context.Context
 )
 
-type BillingApiService service
+type AutoClusterOperationsApiService service
 
 /*
-BillingApiService Get the daily spend for a specified organization by project.
+AutoClusterOperationsApiService Retrieve information about a specific AutoCluster operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
+  - @param projectId
+  - @param operationId
 
-@return BillingCostData
+@return Operation
 */
-func (a *BillingApiService) GetBillingCosts(ctx context.Context, organizationId string) (BillingCostData, *http.Response, error) {
+func (a *AutoClusterOperationsApiService) GetAutoClusterOperation(ctx context.Context, projectId string, operationId string) (Operation, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue BillingCostData
+		localVarReturnValue Operation
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/{organization_id}/billing/costs"
-	localVarPath = strings.Replace(localVarPath, "{"+"organization_id"+"}", fmt.Sprintf("%v", organizationId), -1)
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/autocluster-operations/{operation_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"operation_id"+"}", fmt.Sprintf("%v", operationId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -97,17 +99,7 @@ func (a *BillingApiService) GetBillingCosts(ctx context.Context, organizationId 
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v BillingCostData
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 400 {
-			var v InlineResponse400
+			var v Operation
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -136,6 +128,16 @@ func (a *BillingApiService) GetBillingCosts(ctx context.Context, organizationId 
 			newErr.model = v
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
+		if localVarHttpResponse.StatusCode == 404 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
 		if localVarHttpResponse.StatusCode == 500 {
 			var v InlineResponse500
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
@@ -153,162 +155,67 @@ func (a *BillingApiService) GetBillingCosts(ctx context.Context, organizationId 
 }
 
 /*
-BillingApiService Return a CSV containing the costs for resources in a given period.
+AutoClusterOperationsApiService Retrieve information about AutoCluster operations for a project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
- * @param startDate
- * @param endDate
- * @param optional nil or *BillingApiGetBillingExportProductlineOpts - Optional Parameters:
-     * @param "Projects" (optional.Interface of []string) -
-     * @param "ProductLines" (optional.Interface of []string) -
-     * @param "Regions" (optional.Interface of []string) -
-
+ * @param projectId Project ID
+ * @param optional nil or *AutoClusterOperationsApiListAutoClusterOperationsOpts - Optional Parameters:
+     * @param "ClusterId" (optional.String) -
+     * @param "OperationId" (optional.String) -
+     * @param "State" (optional.String) -
+     * @param "OperationType" (optional.String) -
+     * @param "RemediationState" (optional.String) -
+     * @param "LowerBound" (optional.String) -
+     * @param "UpperBound" (optional.String) -
+@return ListOperationsResponseV1Alpha5
 */
 
-type BillingApiGetBillingExportProductlineOpts struct {
-	Projects     optional.Interface
-	ProductLines optional.Interface
-	Regions      optional.Interface
+type AutoClusterOperationsApiListAutoClusterOperationsOpts struct {
+	ClusterId        optional.String
+	OperationId      optional.String
+	State            optional.String
+	OperationType    optional.String
+	RemediationState optional.String
+	LowerBound       optional.String
+	UpperBound       optional.String
 }
 
-func (a *BillingApiService) GetBillingExportProductline(ctx context.Context, organizationId string, startDate string, endDate string, localVarOptionals *BillingApiGetBillingExportProductlineOpts) (*http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/{organization_id}/billing/export-productline"
-	localVarPath = strings.Replace(localVarPath, "{"+"organization_id"+"}", fmt.Sprintf("%v", organizationId), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if localVarOptionals != nil && localVarOptionals.Projects.IsSet() {
-		localVarQueryParams.Add("projects", parameterToString(localVarOptionals.Projects.Value(), "csv"))
-	}
-	if localVarOptionals != nil && localVarOptionals.ProductLines.IsSet() {
-		localVarQueryParams.Add("product_lines", parameterToString(localVarOptionals.ProductLines.Value(), "csv"))
-	}
-	if localVarOptionals != nil && localVarOptionals.Regions.IsSet() {
-		localVarQueryParams.Add("regions", parameterToString(localVarOptionals.Regions.Value(), "csv"))
-	}
-	localVarQueryParams.Add("start_date", parameterToString(startDate, ""))
-	localVarQueryParams.Add("end_date", parameterToString(endDate, ""))
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"text/csv"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body:  localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		if localVarHttpResponse.StatusCode == 400 {
-			var v InlineResponse400
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 403 {
-			var v InlineResponse403
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 500 {
-			var v InlineResponse500
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-		return localVarHttpResponse, newErr
-	}
-
-	return localVarHttpResponse, nil
-}
-
-/*
-BillingApiService Retrieve data about an organizations recent Non-Reservation costs.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
- * @param optional nil or *BillingApiGetBillingOptionsOpts - Optional Parameters:
-     * @param "StartDate" (optional.String) -
-     * @param "EndDate" (optional.String) -
-@return UsageOptions
-*/
-
-type BillingApiGetBillingOptionsOpts struct {
-	StartDate optional.String
-	EndDate   optional.String
-}
-
-func (a *BillingApiService) GetBillingOptions(ctx context.Context, organizationId string, localVarOptionals *BillingApiGetBillingOptionsOpts) (UsageOptions, *http.Response, error) {
+func (a *AutoClusterOperationsApiService) ListAutoClusterOperations(ctx context.Context, projectId string, localVarOptionals *AutoClusterOperationsApiListAutoClusterOperationsOpts) (ListOperationsResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue UsageOptions
+		localVarReturnValue ListOperationsResponseV1Alpha5
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/{organization_id}/billing/options"
-	localVarPath = strings.Replace(localVarPath, "{"+"organization_id"+"}", fmt.Sprintf("%v", organizationId), -1)
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/autocluster-operations"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.StartDate.IsSet() {
-		localVarQueryParams.Add("start_date", parameterToString(localVarOptionals.StartDate.Value(), ""))
+	if localVarOptionals != nil && localVarOptionals.ClusterId.IsSet() {
+		localVarQueryParams.Add("cluster_id", parameterToString(localVarOptionals.ClusterId.Value(), ""))
 	}
-	if localVarOptionals != nil && localVarOptionals.EndDate.IsSet() {
-		localVarQueryParams.Add("end_date", parameterToString(localVarOptionals.EndDate.Value(), ""))
+	if localVarOptionals != nil && localVarOptionals.OperationId.IsSet() {
+		localVarQueryParams.Add("operation_id", parameterToString(localVarOptionals.OperationId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
+		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.OperationType.IsSet() {
+		localVarQueryParams.Add("operation_type", parameterToString(localVarOptionals.OperationType.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.RemediationState.IsSet() {
+		localVarQueryParams.Add("remediation_state", parameterToString(localVarOptionals.RemediationState.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.LowerBound.IsSet() {
+		localVarQueryParams.Add("lower_bound", parameterToString(localVarOptionals.LowerBound.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.UpperBound.IsSet() {
+		localVarQueryParams.Add("upper_bound", parameterToString(localVarOptionals.UpperBound.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
@@ -357,17 +264,7 @@ func (a *BillingApiService) GetBillingOptions(ctx context.Context, organizationI
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v UsageOptions
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 400 {
-			var v InlineResponse400
+			var v ListOperationsResponseV1Alpha5
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

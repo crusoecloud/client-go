@@ -8,9 +8,6 @@
  */
 package swagger
 
-type CreateLimitedUsageApiKeyRequest struct {
-	Alias     string `json:"alias,omitempty"`
-	ExpiresAt string `json:"expires_at"`
-	// Optional project ID the token is scoped to
-	ProjectId string `json:"project_id,omitempty"`
+type GpuTrackingResponse struct {
+	Data []GpuTrackingDatum `json:"data,omitempty"`
 }

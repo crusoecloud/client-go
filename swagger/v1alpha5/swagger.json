@@ -709,7 +709,7 @@
         }
       }
     },
-    "/organizations/{organization_id}/billing/export": {
+    "/organizations/{organization_id}/billing/export-productline": {
       "get": {
         "produces": [
           "text/csv"
@@ -717,8 +717,8 @@
         "tags": [
           "Billing"
         ],
-        "summary": "Return a itemized spend per resource.",
-        "operationId": "getBillingExport",
+        "summary": "Return a CSV containing the costs for resources in a given period.",
+        "operationId": "getBillingExportProductline",
         "parameters": [
           {
             "type": "string",
@@ -727,19 +727,6 @@
             "name": "organization_id",
             "in": "path",
             "required": true
-          },
-          {
-            "enum": [
-              "json",
-              "csv"
-            ],
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "x-go-name": "Format",
-            "name": "format",
-            "in": "query"
           },
           {
             "type": "array",
@@ -759,23 +746,11 @@
               "type": "string"
             },
             "example": [
-              "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb"
-            ],
-            "x-go-name": "Resources",
-            "name": "resources",
-            "in": "query"
-          },
-          {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
               "persistent-ssd",
-              "a40.1x"
+              "a40"
             ],
-            "x-go-name": "ResourceTypes",
-            "name": "resource_types",
+            "x-go-name": "ProductLines",
+            "name": "product_lines",
             "in": "query"
           },
           {
@@ -810,13 +785,10 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/billingExportGetResponse"
+            "$ref": "#/responses/getBillingExportProductlineResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
           },
           "403": {
             "$ref": "#/responses/permissionsError"
@@ -3066,6 +3038,133 @@
         }
       }
     },
+    "/projects/{project_id}/kubernetes/autocluster-operations": {
+      "get": {
+        "tags": [
+          "AutoCluster Operations"
+        ],
+        "summary": "Retrieve information about AutoCluster operations for a project.",
+        "operationId": "listAutoClusterOperations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "description": "Project ID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "5f9c5d6a-2d15-4a2c-8a2a-9b0f4e1d3b21",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "IN_PROGRESS",
+            "x-go-name": "State",
+            "name": "state",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "RESET_VM",
+            "x-go-name": "OperationType",
+            "name": "operation_type",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "PREPARED",
+            "x-go-name": "RemediationState",
+            "name": "remediation_state",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "2025-10-01T00:00:00Z",
+            "x-go-name": "LowerBound",
+            "name": "lower_bound",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "2025-10-31T23:59:59Z",
+            "x-go-name": "UpperBound",
+            "name": "upper_bound",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listAutoClusterOperationsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/kubernetes/autocluster-operations/{operation_id}": {
+      "get": {
+        "tags": [
+          "AutoCluster Operations"
+        ],
+        "summary": "Retrieve information about a specific AutoCluster operation.",
+        "operationId": "getAutoClusterOperation",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getAutoClusterOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/kubernetes/clusters": {
       "get": {
         "tags": [
@@ -3814,6 +3913,13 @@
             "example": true,
             "x-go-name": "ShowDeprecated",
             "name": "show_deprecated",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "a100.2x",
+            "x-go-name": "ProductName",
+            "name": "product_name",
             "in": "query"
           }
         ],
@@ -4713,7 +4819,7 @@
         "tags": [
           "Load Balancers"
         ],
-        "summary": "Retrieve information about External Load Balancer belonging to the project.",
+        "summary": "Retrieve information about external load balancers belonging to the project.",
         "operationId": "listExternalLoadBalancers",
         "parameters": [
           {
@@ -8524,6 +8630,12 @@
           "type": "string",
           "x-go-name": "ExpiresAt",
           "example": "2021-12-03T19:58:34Z"
+        },
+        "project_id": {
+          "description": "Optional project ID the token is scoped to",
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -9336,6 +9448,66 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "GPUTrackingDatum": {
+      "type": "object",
+      "properties": {
+        "event_time": {
+          "type": "string",
+          "x-go-name": "EventTime"
+        },
+        "global_capacity": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "GlobalCapacity"
+        },
+        "gpu_usage": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "GPUUsage"
+        },
+        "on_demand_count": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "OnDemandCount"
+        },
+        "organization_id": {
+          "type": "string",
+          "x-go-name": "OrganizationID"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Price"
+        },
+        "product_line": {
+          "type": "string",
+          "x-go-name": "ProductLine"
+        },
+        "region": {
+          "type": "string",
+          "x-go-name": "Region"
+        },
+        "regional_capacity": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "RegionalCapacity"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "GPUTrackingResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GPUTrackingDatum"
+          },
+          "x-go-name": "Data"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "GeneratedInferenceAPIKey": {
       "type": "object",
       "required": [
@@ -9407,6 +9579,11 @@
           "type": "string",
           "x-go-name": "KeyID",
           "example": "R7p5XctCQMuGlpVBmVdqzA"
+        },
+        "project_id": {
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
         },
         "usage": {
           "type": "string",
@@ -11168,6 +11345,13 @@
           "x-go-name": "ProjectID",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
         },
+        "public_ip_type": {
+          "description": "Public IP type for nodepool nodes. Possible values: dynamic, static, none",
+          "type": "string",
+          "default": "dynamic",
+          "x-go-name": "PublicIPType",
+          "example": "dynamic"
+        },
         "reservation_id": {
           "description": "The ID of the billing reservation associated with the node pool",
           "type": "string",
@@ -11323,6 +11507,13 @@
           "x-go-name": "ProductName",
           "example": "a100.2x"
         },
+        "public_ip_type": {
+          "description": "Public IP type for nodepool nodes. Possible values: dynamic, static, none",
+          "type": "string",
+          "default": "dynamic",
+          "x-go-name": "PublicIPType",
+          "example": "dynamic"
+        },
         "reservation_specification": {
           "$ref": "#/definitions/ReservationSpecification"
         },
@@ -11426,6 +11617,11 @@
           "type": "string",
           "x-go-name": "LastUsed",
           "example": "2021-11-03T22:22:55Z"
+        },
+        "project_id": {
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
         },
         "usage": {
           "type": "string",
@@ -12765,6 +12961,22 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "OrgUserCredentialsResponse": {
+      "type": "object",
+      "required": [
+        "user_credentials"
+      ],
+      "properties": {
+        "user_credentials": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/CredentialsResponse"
+          },
+          "x-go-name": "UserCredentials"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "OrganizationMFA": {
       "type": "object",
       "title": "OrganizationMFA contains details about a single required MFA method.",
@@ -13061,7 +13273,7 @@
         "name": {
           "type": "string",
           "x-go-name": "Name",
-          "example": "Crusoe Energy"
+          "example": "Admin"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -13991,6 +14203,7 @@
       "required": [
         "projects",
         "resource_types",
+        "product_lines",
         "regions",
         "start_date",
         "end_date"
@@ -14000,6 +14213,17 @@
           "type": "string",
           "x-go-name": "EndDate",
           "example": "\"2023-08-08\""
+        },
+        "product_lines": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "ProductLines",
+          "example": [
+            "a40",
+            "h200"
+          ]
         },
         "projects": {
           "type": "array",
@@ -14072,7 +14296,7 @@
     },
     "UserStateEnum": {
       "type": "string",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/auth"
+      "x-go-package": "gitlab.com/crusoeenergy/island/auth-gateway/pkg/authmodels"
     },
     "VMAttachmentType": {
       "type": "string",
@@ -14643,6 +14867,15 @@
         }
       }
     },
+    "billingCheckLastUsageGetResponse": {
+      "description": "",
+      "headers": {
+        "last_run_time": {
+          "type": "string",
+          "example": "\"2025-05-20T12:34:56Z\""
+        }
+      }
+    },
     "billingCostsGetResponse": {
       "description": "",
       "schema": {
@@ -14784,10 +15017,72 @@
         "$ref": "#/definitions/FeatureFlagsGetResponse"
       }
     },
+    "getAutoClusterOperationResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/Operation"
+      }
+    },
     "getBillingAlertResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/BillingAlertGetResponse"
+      }
+    },
+    "getBillingExportProductlineResponse": {
+      "description": "",
+      "headers": {
+        "cost": {
+          "type": "string",
+          "example": "45.67",
+          "description": "required: true"
+        },
+        "metric": {
+          "type": "string",
+          "example": "\"instance-hours\"",
+          "description": "required: true"
+        },
+        "product_line": {
+          "type": "string",
+          "example": "\"a40\", \"persistent-ssd\"",
+          "description": "required: true"
+        },
+        "project_id": {
+          "type": "string",
+          "example": "\"ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab\"",
+          "description": "required: true"
+        },
+        "project_name": {
+          "type": "string",
+          "example": "\"Apollo Project\"",
+          "description": "required: true"
+        },
+        "quantity": {
+          "type": "number",
+          "format": "double",
+          "example": "261.271111",
+          "description": "required: true"
+        },
+        "region": {
+          "type": "string",
+          "example": "\"us-east1\"",
+          "description": "required: true"
+        },
+        "resource_name": {
+          "type": "string",
+          "example": "\"My Cool Virtual Machine\"",
+          "description": "required: true"
+        },
+        "unit_price": {
+          "type": "string",
+          "example": "0.15",
+          "description": "required: true"
+        },
+        "usage_date": {
+          "type": "string",
+          "example": "\"2025-02-14\"",
+          "description": "required: true"
+        }
       }
     },
     "getDiskResponse": {
@@ -14944,6 +15239,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/LimitedUsageAPIKeyPostResponse"
+      }
+    },
+    "listAutoClusterOperationsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListOperationsResponseV1Alpha5"
       }
     },
     "listBillingAlertsResponse": {
@@ -15136,6 +15437,12 @@
         "$ref": "#/definitions/GetCreditsResponseV1Alpha5"
       }
     },
+    "orgUserCredentialsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/OrgUserCredentialsResponse"
+      }
+    },
     "organizationsGetResponse": {
       "description": "",
       "schema": {
@@ -15173,6 +15480,50 @@
             "x-go-name": "Message",
             "example": "unauthorized"
           }
+        }
+      }
+    },
+    "productlineUsageExportGetResponse": {
+      "description": "",
+      "headers": {
+        "cost": {
+          "type": "number",
+          "format": "double",
+          "example": "32.23"
+        },
+        "metric": {
+          "type": "string",
+          "example": "instance-hours"
+        },
+        "product_line": {
+          "type": "string",
+          "example": "a40"
+        },
+        "project_id": {
+          "type": "string",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "project_name": {
+          "type": "string",
+          "example": "project-name-template"
+        },
+        "quantity": {
+          "type": "number",
+          "format": "double",
+          "example": "261.271111"
+        },
+        "region": {
+          "type": "string",
+          "example": "us-east1"
+        },
+        "unit_price": {
+          "type": "number",
+          "format": "double",
+          "example": "32.23"
+        },
+        "usage_date": {
+          "type": "string",
+          "example": "2000-01-01"
         }
       }
     },
@@ -15247,6 +15598,12 @@
             "example": "https://dev-70243141.okta.com/oauth2/v1/authorize/..."
           }
         }
+      }
+    },
+    "reservationsGPUTrackingResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GPUTrackingResponse"
       }
     },
     "reservationsResponse": {

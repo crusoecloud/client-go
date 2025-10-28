@@ -31,6 +31,8 @@ type KubernetesNodePool struct {
 	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
 	// The ID of the project this Kubernetes node pool belongs to.
 	ProjectId string `json:"project_id"`
+	// Public IP type for nodepool nodes. Possible values: dynamic, static, none
+	PublicIpType string `json:"public_ip_type,omitempty"`
 	// The ID of the billing reservation associated with the node pool
 	ReservationId string `json:"reservation_id"`
 	// State of the node pool

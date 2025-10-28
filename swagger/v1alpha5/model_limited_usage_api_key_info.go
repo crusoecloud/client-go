@@ -15,5 +15,6 @@ type LimitedUsageApiKeyInfo struct {
 	ExpiresAt string `json:"expires_at"`
 	KeyId     string `json:"key_id"`
 	LastUsed  string `json:"last_used"`
+	ProjectId string `json:"project_id,omitempty"`
 	Usage     string `json:"usage"`
 }

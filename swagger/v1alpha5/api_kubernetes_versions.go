@@ -32,11 +32,13 @@ KubernetesVersionsApiService Retrieve information about available Kubernetes ver
  * @param projectId
  * @param optional nil or *KubernetesVersionsApiListKubernetesVersionsOpts - Optional Parameters:
      * @param "ShowDeprecated" (optional.Bool) -
+     * @param "ProductName" (optional.String) -
 @return ListKubernetesVersionsResponse
 */
 
 type KubernetesVersionsApiListKubernetesVersionsOpts struct {
 	ShowDeprecated optional.Bool
+	ProductName    optional.String
 }
 
 func (a *KubernetesVersionsApiService) ListKubernetesVersions(ctx context.Context, projectId string, localVarOptionals *KubernetesVersionsApiListKubernetesVersionsOpts) (ListKubernetesVersionsResponse, *http.Response, error) {
@@ -58,6 +60,9 @@ func (a *KubernetesVersionsApiService) ListKubernetesVersions(ctx context.Contex
 
 	if localVarOptionals != nil && localVarOptionals.ShowDeprecated.IsSet() {
 		localVarQueryParams.Add("show_deprecated", parameterToString(localVarOptionals.ShowDeprecated.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ProductName.IsSet() {
+		localVarQueryParams.Add("product_name", parameterToString(localVarOptionals.ProductName.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
