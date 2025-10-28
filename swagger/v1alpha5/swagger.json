@@ -9321,6 +9321,66 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "GPUTrackingDatum": {
+      "type": "object",
+      "properties": {
+        "event_time": {
+          "type": "string",
+          "x-go-name": "EventTime"
+        },
+        "global_capacity": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "GlobalCapacity"
+        },
+        "gpu_usage": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "GPUUsage"
+        },
+        "on_demand_count": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "OnDemandCount"
+        },
+        "organization_id": {
+          "type": "string",
+          "x-go-name": "OrganizationID"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Price"
+        },
+        "product_line": {
+          "type": "string",
+          "x-go-name": "ProductLine"
+        },
+        "region": {
+          "type": "string",
+          "x-go-name": "Region"
+        },
+        "regional_capacity": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "RegionalCapacity"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "GPUTrackingResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GPUTrackingDatum"
+          },
+          "x-go-name": "Data"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "GeneratedInferenceAPIKey": {
       "type": "object",
       "required": [
@@ -15399,6 +15459,12 @@
             "example": "https://dev-70243141.okta.com/oauth2/v1/authorize/..."
           }
         }
+      }
+    },
+    "reservationsGPUTrackingResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GPUTrackingResponse"
       }
     },
     "reservationsResponse": {
