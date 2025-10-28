@@ -747,10 +747,10 @@
             },
             "example": [
               "persistent-ssd",
-              "a40.1x"
+              "a40"
             ],
-            "x-go-name": "ResourceTypes",
-            "name": "resource_types",
+            "x-go-name": "ProductLines",
+            "name": "product_lines",
             "in": "query"
           },
           {
@@ -14680,6 +14680,15 @@
         }
       }
     },
+    "billingCheckLastUsageGetResponse": {
+      "description": "",
+      "headers": {
+        "last_run_time": {
+          "type": "string",
+          "example": "\"2025-05-20T12:34:56Z\""
+        }
+      }
+    },
     "billingCostsGetResponse": {
       "description": "",
       "schema": {
@@ -14840,6 +14849,11 @@
           "example": "\"instance-hours\"",
           "description": "required: true"
         },
+        "product_line": {
+          "type": "string",
+          "example": "\"a40\", \"persistent-ssd\"",
+          "description": "required: true"
+        },
         "project_id": {
           "type": "string",
           "example": "\"ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab\"",
@@ -14861,19 +14875,9 @@
           "example": "\"us-east1\"",
           "description": "required: true"
         },
-        "resource_id": {
-          "type": "string",
-          "example": "\"ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab\"",
-          "description": "required: true"
-        },
         "resource_name": {
           "type": "string",
           "example": "\"My Cool Virtual Machine\"",
-          "description": "required: true"
-        },
-        "resource_type": {
-          "type": "string",
-          "example": "\"a40.1x\", \"persistent-ssd\"",
           "description": "required: true"
         },
         "unit_price": {

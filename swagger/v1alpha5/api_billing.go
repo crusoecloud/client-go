@@ -160,15 +160,15 @@ BillingApiService Return a CSV containing the costs for resources in a given per
  * @param endDate
  * @param optional nil or *BillingApiGetBillingExportProductlineOpts - Optional Parameters:
      * @param "Projects" (optional.Interface of []string) -
-     * @param "ResourceTypes" (optional.Interface of []string) -
+     * @param "ProductLines" (optional.Interface of []string) -
      * @param "Regions" (optional.Interface of []string) -
 
 */
 
 type BillingApiGetBillingExportProductlineOpts struct {
-	Projects      optional.Interface
-	ResourceTypes optional.Interface
-	Regions       optional.Interface
+	Projects     optional.Interface
+	ProductLines optional.Interface
+	Regions      optional.Interface
 }
 
 func (a *BillingApiService) GetBillingExportProductline(ctx context.Context, organizationId string, startDate string, endDate string, localVarOptionals *BillingApiGetBillingExportProductlineOpts) (*http.Response, error) {
@@ -190,8 +190,8 @@ func (a *BillingApiService) GetBillingExportProductline(ctx context.Context, org
 	if localVarOptionals != nil && localVarOptionals.Projects.IsSet() {
 		localVarQueryParams.Add("projects", parameterToString(localVarOptionals.Projects.Value(), "csv"))
 	}
-	if localVarOptionals != nil && localVarOptionals.ResourceTypes.IsSet() {
-		localVarQueryParams.Add("resource_types", parameterToString(localVarOptionals.ResourceTypes.Value(), "csv"))
+	if localVarOptionals != nil && localVarOptionals.ProductLines.IsSet() {
+		localVarQueryParams.Add("product_lines", parameterToString(localVarOptionals.ProductLines.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.Regions.IsSet() {
 		localVarQueryParams.Add("regions", parameterToString(localVarOptionals.Regions.Value(), "csv"))
