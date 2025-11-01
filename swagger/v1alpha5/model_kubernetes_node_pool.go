@@ -21,6 +21,8 @@ type KubernetesNodePool struct {
 	Id string `json:"id"`
 	// Image Unique identifier for the Kubernetes node pool.
 	ImageId string `json:"image_id"`
+	// Details about instances within the Kubernetes node pool.
+	InstanceDetails []InstanceDetails `json:"instance_details,omitempty"`
 	// List of IDs of instances within the node pool.
 	InstanceIds []string `json:"instance_ids"`
 	// Name of the node pool.
