@@ -11605,8 +11605,13 @@
     "KubernetesNodePoolPatchRequest": {
       "type": "object",
       "required": [
+        "count",
+        "node_labels",
+        "reservation_id",
         "action",
-        "ephemeral_storage_for_containerd"
+        "ephemeral_storage_for_containerd",
+        "node_pool_version",
+        "ssh_public_key"
       ],
       "properties": {
         "action": {
@@ -11646,7 +11651,7 @@
           }
         },
         "node_pool_version": {
-          "description": "Version of the Kubernetes node pool.",
+          "description": "Version of the Kubernetes node pool for newly created vms.",
           "type": "string",
           "x-go-name": "NodePoolVersion",
           "example": "1.30"
@@ -11783,7 +11788,9 @@
     "KubernetesNodePoolRotateStartRequest": {
       "type": "object",
       "required": [
-        "strategy"
+        "strategy",
+        "count",
+        "percentage"
       ],
       "properties": {
         "count": {
