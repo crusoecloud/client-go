@@ -12,15 +12,15 @@ type KubernetesNodePoolPatchRequest struct {
 	// The action to perform on the NodePool. RESERVE and UNRESERVE operations are done synchronously, and so will have succeeded with a 200 response. Defaults to UPDATE if no action specified.
 	Action string `json:"action"`
 	// The desired number of nodes in the node pool.
-	Count int64 `json:"count,omitempty"`
+	Count int64 `json:"count"`
 	// Indicates whether local ephemeral NVMe disks should be used for containerd storage.
 	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd"`
 	// Labels assigned to the node pool. Labels provided in the PATCH request will not modify existing nodes, but will apply to any newly created nodes.
-	NodeLabels map[string]string `json:"node_labels,omitempty"`
-	// Version of the Kubernetes node pool.
-	NodePoolVersion string `json:"node_pool_version,omitempty"`
+	NodeLabels map[string]string `json:"node_labels"`
+	// Version of the Kubernetes node pool for newly created vms.
+	NodePoolVersion string `json:"node_pool_version"`
 	// The reservation ID of the node pool.
-	ReservationId string `json:"reservation_id,omitempty"`
+	ReservationId string `json:"reservation_id"`
 	// SSH public key to use for all VMs created from this node pool.
-	SshPublicKey string `json:"ssh_public_key,omitempty"`
+	SshPublicKey string `json:"ssh_public_key"`
 }
