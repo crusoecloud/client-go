@@ -32,15 +32,15 @@ KubernetesNodePoolsApiService Cancel an in-progress rotation of the specified Ku
   - @param projectId
   - @param nodePoolId
 
-@return CancelNodePoolRotateResponse
+@return KubernetesCancelNodePoolRotateResponse
 */
-func (a *KubernetesNodePoolsApiService) CancelNodePoolRotate(ctx context.Context, projectId string, nodePoolId string) (CancelNodePoolRotateResponse, *http.Response, error) {
+func (a *KubernetesNodePoolsApiService) CancelNodePoolRotate(ctx context.Context, projectId string, nodePoolId string) (KubernetesCancelNodePoolRotateResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue CancelNodePoolRotateResponse
+		localVarReturnValue KubernetesCancelNodePoolRotateResponse
 	)
 
 	// create path and map variables
@@ -99,7 +99,7 @@ func (a *KubernetesNodePoolsApiService) CancelNodePoolRotate(ctx context.Context
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CancelNodePoolRotateResponse
+			var v KubernetesCancelNodePoolRotateResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -526,15 +526,15 @@ KubernetesNodePoolsApiService Get the rotate status of the specified Kubernetes 
   - @param projectId
   - @param nodePoolId
 
-@return GetNodePoolRotateStatusResponse
+@return KubernetesGetNodePoolRotateStatusResponse
 */
-func (a *KubernetesNodePoolsApiService) GetNodePoolRotateStatus(ctx context.Context, projectId string, nodePoolId string) (GetNodePoolRotateStatusResponse, *http.Response, error) {
+func (a *KubernetesNodePoolsApiService) GetNodePoolRotateStatus(ctx context.Context, projectId string, nodePoolId string) (KubernetesGetNodePoolRotateStatusResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue GetNodePoolRotateStatusResponse
+		localVarReturnValue KubernetesGetNodePoolRotateStatusResponse
 	)
 
 	// create path and map variables
@@ -593,7 +593,7 @@ func (a *KubernetesNodePoolsApiService) GetNodePoolRotateStatus(ctx context.Cont
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v GetNodePoolRotateStatusResponse
+			var v KubernetesGetNodePoolRotateStatusResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
