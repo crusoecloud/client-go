@@ -3919,10 +3919,7 @@
         ],
         "responses": {
           "200": {
-            "description": "cancelNodePoolRotateResponse",
-            "schema": {
-              "$ref": "#/definitions/cancelNodePoolRotateResponse"
-            }
+            "$ref": "#/responses/cancelNodePoolRotateResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -3969,10 +3966,7 @@
         ],
         "responses": {
           "200": {
-            "description": "getNodePoolRotateStatusResponse",
-            "schema": {
-              "$ref": "#/definitions/getNodePoolRotateStatusResponse"
-            }
+            "$ref": "#/responses/getNodePoolRotateStatusResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -15060,26 +15054,6 @@
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "cancelNodePoolRotateResponse": {
-      "type": "object",
-      "properties": {
-        "Body": {
-          "$ref": "#/definitions/KubernetesCancelNodePoolRotateResponse"
-        }
-      },
-      "x-go-name": "KubernetesCancelNodePoolRotateResponse",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
-    },
-    "getNodePoolRotateStatusResponse": {
-      "type": "object",
-      "properties": {
-        "Body": {
-          "$ref": "#/definitions/KubernetesGetNodePoolRotateStatusResponse"
-        }
-      },
-      "x-go-name": "KubernetesGetlNodePoolRotateStatusResponse",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
     }
   },
   "responses": {
@@ -15191,6 +15165,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/UsageOptions"
+      }
+    },
+    "cancelNodePoolRotateResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesCancelNodePoolRotateResponse"
       }
     },
     "capacitiesResponse": {
@@ -15442,6 +15422,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/LoadBalancer"
+      }
+    },
+    "getNodePoolRotateStatusResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesGetNodePoolRotateStatusResponse"
       }
     },
     "getOperationResponse": {
