@@ -7753,7 +7753,7 @@
           "$ref": "#/definitions/Operation"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/fetch"
     },
     "AttachedDiskV1Alpha5": {
       "type": "object",
@@ -12269,7 +12269,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/fetch"
     },
     "ListOrgQuotasResponse": {
       "type": "object",
@@ -13158,7 +13158,7 @@
           "example": "IN_PROGRESS"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/fetch"
     },
     "OperationDetails": {
       "type": "object",
@@ -14257,7 +14257,7 @@
           "$ref": "#/definitions/Operation"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/fetch"
     },
     "TokenInfo": {
       "description": "These are the fields returned from a GET request.",
