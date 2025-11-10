@@ -74,8 +74,6 @@ type APIClient struct {
 
 	ImagesApi *ImagesApiService
 
-	InferenceAPIKeyApi *InferenceAPIKeyApiService
-
 	InstanceGroupsApi *InstanceGroupsApiService
 
 	InstanceTemplatesApi *InstanceTemplatesApiService
@@ -180,7 +178,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.IBPartitionsApi = (*IBPartitionsApiService)(&c.common)
 	c.IdentitiesApi = (*IdentitiesApiService)(&c.common)
 	c.ImagesApi = (*ImagesApiService)(&c.common)
-	c.InferenceAPIKeyApi = (*InferenceAPIKeyApiService)(&c.common)
 	c.InstanceGroupsApi = (*InstanceGroupsApiService)(&c.common)
 	c.InstanceTemplatesApi = (*InstanceTemplatesApiService)(&c.common)
 	c.InternalLoadBalancerOperationsApi = (*InternalLoadBalancerOperationsApiService)(&c.common)

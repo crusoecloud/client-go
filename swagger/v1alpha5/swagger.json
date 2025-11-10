@@ -7901,86 +7901,6 @@
         }
       }
     },
-    "/users/inference-api-key": {
-      "get": {
-        "tags": [
-          "InferenceAPIKey"
-        ],
-        "summary": "Retrieve all active/expired Inference API Keys for the logged in user.",
-        "operationId": "getInferenceAPIKeys",
-        "responses": {
-          "200": {
-            "$ref": "#/responses/inferenceAPIKeyGetResponse"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      },
-      "post": {
-        "description": "A successful response from this resource will contain json-encoded details of the inference API key.\nThis is the only time the customer will be able to view the api key associated with the API key id.",
-        "tags": [
-          "InferenceAPIKey"
-        ],
-        "summary": "Create a new inference api key owned by the logged in user.",
-        "operationId": "createInferenceAPIKey",
-        "parameters": [
-          {
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/CreateInferenceAPIKeyRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/inferenceAPIKeyPostResponse"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "InferenceAPIKey"
-        ],
-        "summary": "Delete an Inference API Key owned by the logged in user.",
-        "operationId": "deleteInferenceAPIKey",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "WTUzcGibQ82y9_01h4MCdQ",
-            "x-go-name": "KeyID",
-            "name": "key_id",
-            "in": "query",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/emptyResponse"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      }
-    },
     "/users/limited-usage-api-key": {
       "get": {
         "tags": [
@@ -9275,25 +9195,6 @@
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "CreateInferenceAPIKeyRequest": {
-      "type": "object",
-      "required": [
-        "expires_at"
-      ],
-      "properties": {
-        "alias": {
-          "type": "string",
-          "x-go-name": "Alias",
-          "example": "token1"
-        },
-        "expires_at": {
-          "type": "string",
-          "x-go-name": "ExpiresAt",
-          "example": "2021-12-03T19:58:34Z"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "CreateLimitedUsageAPIKeyRequest": {
       "type": "object",
       "required": [
@@ -10295,43 +10196,6 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "GeneratedInferenceAPIKey": {
-      "type": "object",
-      "required": [
-        "key_id",
-        "api_key",
-        "created_at",
-        "expires_at"
-      ],
-      "properties": {
-        "alias": {
-          "type": "string",
-          "x-go-name": "Alias",
-          "example": "newAPIKey"
-        },
-        "api_key": {
-          "type": "string",
-          "x-go-name": "APIKey",
-          "example": "R7p5XctCQMuGlpVBmVdqzA"
-        },
-        "created_at": {
-          "type": "string",
-          "x-go-name": "CreatedAt",
-          "example": "2021-11-03T22:16:27Z"
-        },
-        "expires_at": {
-          "type": "string",
-          "x-go-name": "ExpiresAt",
-          "example": "2021-12-03T19:58:34Z"
-        },
-        "key_id": {
-          "type": "string",
-          "x-go-name": "KeyID",
-          "example": "R7p5XctCQMuGlpVBmVdqzA"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "GeneratedLimitedUsageAPIKey": {
       "type": "object",
       "required": [
@@ -10927,58 +10791,6 @@
           },
           "x-go-name": "Tags",
           "example": "[20.4, latest]"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "InferenceAPIKeyInfo": {
-      "description": "These are the fields returned from a GET request.",
-      "type": "object",
-      "title": "TokenInfo contains the Traits Island stores for a Token inside of Kratos.",
-      "required": [
-        "alias",
-        "key_id",
-        "created_at",
-        "expires_at",
-        "last_used"
-      ],
-      "properties": {
-        "alias": {
-          "type": "string",
-          "x-go-name": "Alias",
-          "example": "token1"
-        },
-        "created_at": {
-          "type": "string",
-          "x-go-name": "CreatedAt",
-          "example": "2021-11-03T22:16:27Z"
-        },
-        "expires_at": {
-          "type": "string",
-          "x-go-name": "ExpiresAt",
-          "example": "2021-12-03T19:58:34Z"
-        },
-        "key_id": {
-          "type": "string",
-          "x-go-name": "KeyID",
-          "example": "Hm11C1coQZm2+Aihn9ofYg"
-        },
-        "last_used": {
-          "type": "string",
-          "x-go-name": "LastUsed",
-          "example": "2021-11-03T22:22:55Z"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "InferenceAPIKeyPostResponse": {
-      "type": "object",
-      "required": [
-        "api_key_info"
-      ],
-      "properties": {
-        "api_key_info": {
-          "$ref": "#/definitions/GeneratedInferenceAPIKey"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -12690,22 +12502,6 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Image"
-          },
-          "x-go-name": "Items"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "ListInferenceAPIKeysResponseV1Alpha5": {
-      "type": "object",
-      "required": [
-        "items"
-      ],
-      "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/InferenceAPIKeyInfo"
           },
           "x-go-name": "Items"
         }
@@ -16342,18 +16138,6 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/IBPartition"
-      }
-    },
-    "inferenceAPIKeyGetResponse": {
-      "description": "A successful response from this resource will contain json-encoded array of token details, excluding the api key.",
-      "schema": {
-        "$ref": "#/definitions/ListInferenceAPIKeysResponseV1Alpha5"
-      }
-    },
-    "inferenceAPIKeyPostResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/InferenceAPIKeyPostResponse"
       }
     },
     "limitedUsageAPIKeyGetResponse": {
