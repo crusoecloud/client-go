@@ -10724,7 +10724,7 @@
           "x-go-name": "UpdatedAt"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/auth-gateway/pkg/authmodels"
     },
     "IdentityPutRequest": {
       "type": "object",
