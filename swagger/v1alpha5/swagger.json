@@ -9824,6 +9824,21 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "EntitiesInvitesPatchRequest": {
+      "type": "object",
+      "title": "EntitiesInvitesPatchRequest is the request type for PATCH requests to the entities.customers endpoint.",
+      "required": [
+        "customer_id"
+      ],
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "x-go-name": "CustomerID",
+          "example": "465a1fb5-f37e-4483-ad36-bf994efcb170"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "EntitiesPutPostRequest": {
       "type": "object",
       "title": "EntitiesPutPostRequest is the request type for PUT and POST requests to the entities endpoint.",
