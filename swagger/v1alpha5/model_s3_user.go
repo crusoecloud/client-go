@@ -8,10 +8,13 @@
  */
 package swagger
 
-type GeneratedInferenceApiKey struct {
-	Alias     string `json:"alias,omitempty"`
-	ApiKey    string `json:"api_key"`
+type S3User struct {
+	// Creation date in RFC3339 format.
 	CreatedAt string `json:"created_at"`
-	ExpiresAt string `json:"expires_at"`
-	KeyId     string `json:"key_id"`
+	// The unique ID (Access Key) for the S3 user.
+	Id string `json:"id"`
+	// The project this user belongs to.
+	ProjectId string `json:"project_id"`
+	// The current status of the user's key.
+	Status string `json:"status"`
 }

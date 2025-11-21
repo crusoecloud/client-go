@@ -8,7 +8,6 @@
  */
 package swagger
 
-type CreateInferenceApiKeyRequest struct {
-	Alias     string `json:"alias,omitempty"`
-	ExpiresAt string `json:"expires_at"`
+type ListS3UsersResponse struct {
+	Items []S3User `json:"items"`
 }

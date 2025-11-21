@@ -8,6 +8,7 @@
  */
 package swagger
 
-type ListInferenceApiKeysResponseV1Alpha5 struct {
-	Items []InferenceApiKeyInfo `json:"items"`
+type UpdateS3BucketTagsRequest struct {
+	// List of tags for this bucket. This will replace all existing tags.
+	Tags map[string]string `json:"tags"`
 }

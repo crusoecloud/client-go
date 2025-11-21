@@ -8,6 +8,6 @@
  */
 package swagger
 
-type InferenceApiKeyPostResponse struct {
-	ApiKeyInfo *GeneratedInferenceApiKey `json:"api_key_info"`
+type ListS3BucketsResponse struct {
+	Items []S3Bucket `json:"items"`
 }

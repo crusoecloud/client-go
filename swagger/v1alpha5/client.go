@@ -74,8 +74,6 @@ type APIClient struct {
 
 	ImagesApi *ImagesApiService
 
-	InferenceAPIKeyApi *InferenceAPIKeyApiService
-
 	InstanceGroupsApi *InstanceGroupsApiService
 
 	InstanceTemplatesApi *InstanceTemplatesApiService
@@ -111,6 +109,10 @@ type APIClient struct {
 	QuotasApi *QuotasApiService
 
 	ReservationsApi *ReservationsApiService
+
+	S3BucketsApi *S3BucketsApiService
+
+	S3UsersApi *S3UsersApiService
 
 	SSHKeysApi *SSHKeysApiService
 
@@ -176,7 +178,6 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.IBPartitionsApi = (*IBPartitionsApiService)(&c.common)
 	c.IdentitiesApi = (*IdentitiesApiService)(&c.common)
 	c.ImagesApi = (*ImagesApiService)(&c.common)
-	c.InferenceAPIKeyApi = (*InferenceAPIKeyApiService)(&c.common)
 	c.InstanceGroupsApi = (*InstanceGroupsApiService)(&c.common)
 	c.InstanceTemplatesApi = (*InstanceTemplatesApiService)(&c.common)
 	c.InternalLoadBalancerOperationsApi = (*InternalLoadBalancerOperationsApiService)(&c.common)
@@ -195,6 +196,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.ProjectsApi = (*ProjectsApiService)(&c.common)
 	c.QuotasApi = (*QuotasApiService)(&c.common)
 	c.ReservationsApi = (*ReservationsApiService)(&c.common)
+	c.S3BucketsApi = (*S3BucketsApiService)(&c.common)
+	c.S3UsersApi = (*S3UsersApiService)(&c.common)
 	c.SSHKeysApi = (*SSHKeysApiService)(&c.common)
 	c.SSOApi = (*SSOApiService)(&c.common)
 	c.SlurmClustersApi = (*SlurmClustersApiService)(&c.common)
