@@ -9,6 +9,7 @@
 package swagger
 
 type Repository struct {
+	Id               string            `json:"id,omitempty"`
 	Location         string            `json:"location,omitempty"`
 	MaxSizeBytes     string            `json:"max_size_bytes,omitempty"`
 	Mode             string            `json:"mode,omitempty"`

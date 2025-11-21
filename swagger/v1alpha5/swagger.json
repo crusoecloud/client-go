@@ -14133,6 +14133,10 @@
     "Repository": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
         "location": {
           "type": "string",
           "x-go-name": "Location"
