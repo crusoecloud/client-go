@@ -10841,6 +10841,7 @@
         "created_at",
         "updated_at",
         "project_id",
+        "state",
         "running_instance_count",
         "instances",
         "desired_count"
@@ -10894,6 +10895,12 @@
           "format": "int64",
           "x-go-name": "RunningInstanceCount",
           "example": 3
+        },
+        "state": {
+          "description": "State of the instance group.",
+          "type": "string",
+          "x-go-name": "State",
+          "example": "HEALTHY"
         },
         "template_id": {
           "description": "Instance Template ID currently associated with the instance group.",
