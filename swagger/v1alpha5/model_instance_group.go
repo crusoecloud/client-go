@@ -23,6 +23,8 @@ type InstanceGroup struct {
 	ProjectId string `json:"project_id"`
 	// The number of running instances currently in the Instance Group.
 	RunningInstanceCount int64 `json:"running_instance_count"`
+	// State of the instance group.
+	State string `json:"state"`
 	// Instance Template ID currently associated with the instance group.
 	TemplateId string `json:"template_id"`
 	// Most recent time the instance group was updated.
