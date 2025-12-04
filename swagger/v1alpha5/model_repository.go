@@ -8,7 +8,12 @@
  */
 package swagger
 
+import (
+	"time"
+)
+
 type Repository struct {
+	CreatedAt        time.Time         `json:"created_at,omitempty"`
 	Id               string            `json:"id,omitempty"`
 	Location         string            `json:"location,omitempty"`
 	MaxSizeBytes     string            `json:"max_size_bytes,omitempty"`

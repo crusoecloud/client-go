@@ -14133,6 +14133,11 @@
     "Repository": {
       "type": "object",
       "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "CreatedAt"
+        },
         "id": {
           "type": "string",
           "x-go-name": "ID"
