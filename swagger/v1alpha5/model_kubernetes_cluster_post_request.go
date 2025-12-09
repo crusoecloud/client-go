@@ -22,6 +22,8 @@ type KubernetesClusterPostRequest struct {
 	Name string `json:"name"`
 	// defines: the mask size for cluster cidr
 	NodeCidrMaskSize int32 `json:"node_cidr_mask_size,omitempty"`
+	// Whether the cluster should be private (without a public IP). Default is false.
+	Private bool `json:"private,omitempty"`
 	// defines: the range of IP Addresses allocated to K8s services
 	ServiceClusterIpRange string `json:"service_cluster_ip_range,omitempty"`
 	// The ID of the subnet to create the cluster in. Must be in the location specified. If not provided, the default subnet for the location will be used, if there is one.

@@ -11851,6 +11851,12 @@
           "x-go-name": "NodeCIDRMask",
           "example": 24
         },
+        "private": {
+          "description": "Whether the cluster should be private (without a public IP). Default is false.",
+          "type": "boolean",
+          "x-go-name": "Private",
+          "example": true
+        },
         "service_cluster_ip_range": {
           "description": "defines: the range of IP Addresses allocated to K8s services",
           "type": "string",
@@ -14133,6 +14139,11 @@
     "Repository": {
       "type": "object",
       "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "CreatedAt"
+        },
         "id": {
           "type": "string",
           "x-go-name": "ID"
