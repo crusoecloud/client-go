@@ -11726,6 +11726,12 @@
             "1d2b3a4c-5e6f-7b9d-8c9a-0e1f2d3b4c5d"
           ]
         },
+        "private": {
+          "description": "Whether the cluster is private or not",
+          "type": "boolean",
+          "x-go-name": "Private",
+          "example": true
+        },
         "project_id": {
           "description": "The ID of the project this Kubernetes cluster belongs to.",
           "type": "string",

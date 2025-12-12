@@ -30,6 +30,8 @@ type KubernetesCluster struct {
 	NodeCidrMaskSize int32 `json:"node_cidr_mask_size,omitempty"`
 	// List of IDs of node pools within the Kubernetes cluster.
 	NodePools []string `json:"node_pools"`
+	// Whether the cluster is private or not
+	Private bool `json:"private,omitempty"`
 	// The ID of the project this Kubernetes cluster belongs to.
 	ProjectId string `json:"project_id"`
 	// The range of IP Addresses allocated to K8s services
