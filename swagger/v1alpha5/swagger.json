@@ -10837,9 +10837,22 @@
         "state",
         "running_instance_count",
         "instances",
+        "active_instances",
+        "inactive_instances",
         "desired_count"
       ],
       "properties": {
+        "active_instances": {
+          "description": "A list of IDs of running instances in the instance group.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "ActiveInstances",
+          "example": [
+            "066ce497-889e-4899-b53e-400df3fb7c0e"
+          ]
+        },
         "created_at": {
           "description": "Time the instance template was created.",
           "type": "string",
@@ -10859,8 +10872,19 @@
           "x-go-name": "ID",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         },
+        "inactive_instances": {
+          "description": "A list of IDs of non-running instances in the instance group.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "InactiveInstances",
+          "example": [
+            "066ce497-889e-4899-b53e-400df3fb7c0e"
+          ]
+        },
         "instances": {
-          "description": "A list of IDs of instances currently in the instance group.",
+          "description": "[To be deprecated] A list of IDs of running instances in the instance group.",
           "type": "array",
           "items": {
             "type": "string"
@@ -11725,6 +11749,12 @@
           "example": [
             "1d2b3a4c-5e6f-7b9d-8c9a-0e1f2d3b4c5d"
           ]
+        },
+        "private": {
+          "description": "Whether the cluster is private or not",
+          "type": "boolean",
+          "x-go-name": "Private",
+          "example": true
         },
         "project_id": {
           "description": "The ID of the project this Kubernetes cluster belongs to.",
