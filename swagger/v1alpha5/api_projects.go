@@ -362,6 +362,7 @@ If querying for projects within an organization, the logged in user must be the 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *ProjectsApiListProjectsOpts - Optional Parameters:
      * @param "OrgId" (optional.String) -
+     * @param "ProjectId" (optional.String) -
      * @param "ProjectName" (optional.String) -
      * @param "SkipLoadingProjectResources" (optional.Bool) -
 @return ListProjectsResponseV1Alpha5
@@ -369,6 +370,7 @@ If querying for projects within an organization, the logged in user must be the 
 
 type ProjectsApiListProjectsOpts struct {
 	OrgId                       optional.String
+	ProjectId                   optional.String
 	ProjectName                 optional.String
 	SkipLoadingProjectResources optional.Bool
 }
@@ -391,6 +393,9 @@ func (a *ProjectsApiService) ListProjects(ctx context.Context, localVarOptionals
 
 	if localVarOptionals != nil && localVarOptionals.OrgId.IsSet() {
 		localVarQueryParams.Add("org_id", parameterToString(localVarOptionals.OrgId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ProjectId.IsSet() {
+		localVarQueryParams.Add("project_id", parameterToString(localVarOptionals.ProjectId.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.ProjectName.IsSet() {
 		localVarQueryParams.Add("project_name", parameterToString(localVarOptionals.ProjectName.Value(), ""))
