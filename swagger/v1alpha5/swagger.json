@@ -316,14 +316,7 @@
           },
           {
             "type": "string",
-            "example": "0b889db6-13d0-4244-b7f6-707e3de0443c",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "example": "blue-snow-386",
+            "example": "default",
             "x-go-name": "ProjectName",
             "name": "project_name",
             "in": "query"
