@@ -9944,6 +9944,10 @@
         "message": {
           "type": "string",
           "x-go-name": "Message"
+        },
+        "reason": {
+          "type": "string",
+          "x-go-name": "Reason"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/rpc/httperror"
