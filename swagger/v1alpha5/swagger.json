@@ -215,6 +215,130 @@
         }
       }
     },
+    "/iam/role-bindings": {
+      "get": {
+        "tags": [
+          "RoleBindings"
+        ],
+        "summary": "Lists role bindings visible to the caller.",
+        "operationId": "listRoleBindings",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "UserID",
+            "name": "user_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "RoleID",
+            "name": "role_id",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "org",
+              "project"
+            ],
+            "type": "string",
+            "x-go-name": "ScopeType",
+            "name": "scope_type",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "ScopeObjectID",
+            "name": "scope_object_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listRoleBindingsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/iam/roles": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Lists role associated with the caller's organization.",
+        "operationId": "listRoles",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listRolesResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/iam/users/{user_id}/role-bindings": {
+      "post": {
+        "description": "If any creation or deletion fails, no changes are applied.",
+        "tags": [
+          "RoleBindings"
+        ],
+        "summary": "Creates and deletes role bindings for a user in a single atomic operation.",
+        "operationId": "applyRoleBindings",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "UserID",
+            "name": "user_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ApplyRoleBindingRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/locations": {
       "get": {
         "tags": [
@@ -8189,6 +8313,30 @@
     }
   },
   "definitions": {
+    "ApplyRoleBindingRequest": {
+      "type": "object",
+      "required": [
+        "bindings_to_create",
+        "bindings_to_delete"
+      ],
+      "properties": {
+        "bindings_to_create": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RoleBindingInput"
+          },
+          "x-go-name": "BindingsToCreate"
+        },
+        "bindings_to_delete": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "BindingsToDelete"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "AsyncOperationResponse": {
       "type": "object",
       "title": "AsyncOperationResponse is the response type for endpoints which return async operations.",
@@ -12824,6 +12972,38 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "ListRoleBindingsResponse": {
+      "type": "object",
+      "required": [
+        "role_bindings"
+      ],
+      "properties": {
+        "role_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RoleBinding"
+          },
+          "x-go-name": "RoleBindings"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "ListRolesResponse": {
+      "type": "object",
+      "required": [
+        "roles"
+      ],
+      "properties": {
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Role"
+          },
+          "x-go-name": "Roles"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ListS3BucketsResponse": {
       "type": "object",
       "title": "ListS3BucketsResponse is the response type for GET requests to the S3 buckets endpoint.",
@@ -14397,6 +14577,107 @@
             "$ref": "#/definitions/Reservation"
           },
           "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "Role": {
+      "type": "object",
+      "required": [
+        "id",
+        "role_name",
+        "allowed_scopes",
+        "org_id",
+        "description"
+      ],
+      "properties": {
+        "allowed_scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "AllowedScopes"
+        },
+        "description": {
+          "type": "string",
+          "x-go-name": "Description"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "org_id": {
+          "type": "string",
+          "x-go-name": "OrgID"
+        },
+        "role_name": {
+          "type": "string",
+          "x-go-name": "RoleName"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "RoleBinding": {
+      "type": "object",
+      "required": [
+        "id",
+        "customer_id",
+        "role_id",
+        "scope_type",
+        "scope_object_id"
+      ],
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "x-go-name": "CustomerID"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "role_id": {
+          "type": "string",
+          "x-go-name": "RoleID"
+        },
+        "scope_object_id": {
+          "type": "string",
+          "x-go-name": "ScopeObjectID"
+        },
+        "scope_type": {
+          "type": "string",
+          "x-go-name": "ScopeType"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "RoleBindingInput": {
+      "type": "object",
+      "required": [
+        "customer_id",
+        "role_id",
+        "scope_type",
+        "scope_object_id"
+      ],
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "x-go-name": "CustomerID"
+        },
+        "role_id": {
+          "type": "string",
+          "x-go-name": "RoleID"
+        },
+        "scope_object_id": {
+          "type": "string",
+          "x-go-name": "ScopeObjectID"
+        },
+        "scope_type": {
+          "type": "string",
+          "enum": [
+            "org",
+            "project"
+          ],
+          "x-go-name": "ScopeType"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -16334,6 +16615,18 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListProjectsResponseV1Alpha5"
+      }
+    },
+    "listRoleBindingsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListRoleBindingsResponse"
+      }
+    },
+    "listRolesResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListRolesResponse"
       }
     },
     "listS3BucketsResponse": {
