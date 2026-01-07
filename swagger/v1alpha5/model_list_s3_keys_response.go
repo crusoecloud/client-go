@@ -8,7 +8,6 @@
  */
 package swagger
 
-type CreateS3UserRequest struct {
-	// A human-readable name for the user (optional).
-	Name string `json:"name,omitempty"`
+type ListS3KeysResponse struct {
+	Items []S3Key `json:"items"`
 }

@@ -8,6 +8,9 @@
  */
 package swagger
 
-type ListS3UsersResponse struct {
-	Items []S3User `json:"items"`
+type CreateS3KeyRequest struct {
+	// Alias for the access key.
+	Alias string `json:"alias,omitempty"`
+	// Formatted timestamp for when the access keys expire.
+	ExpireAt string `json:"expire_at,omitempty"`
 }

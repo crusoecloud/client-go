@@ -606,6 +606,139 @@
         }
       }
     },
+    "/organizations/{org_id}/storage/s3/keys": {
+      "get": {
+        "tags": [
+          "S3Keys"
+        ],
+        "summary": "Lists all S3 keys for a organization.",
+        "operationId": "listS3Keys",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgId",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listS3KeysResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "S3Keys"
+        ],
+        "summary": "Creates a new S3 key and generates access/secret key pair.",
+        "operationId": "createS3Key",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgId",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateS3KeyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/createS3KeyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/organizations/{org_id}/storage/s3/keys/{key_id}": {
+      "delete": {
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "S3Keys"
+        ],
+        "summary": "Deletes an S3 key based on its ID.",
+        "operationId": "deleteS3Key",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "OrgID",
+            "description": "The ID of the organization",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "KeyID",
+            "description": "The ID of the S3 key to delete",
+            "name": "key_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteS3KeyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/okEmpty"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/organizations/{organization_id}/audit-logs": {
       "get": {
         "tags": [
@@ -7448,216 +7581,6 @@
         }
       }
     },
-    "/projects/{project_id}/storage/s3/users": {
-      "get": {
-        "tags": [
-          "S3Users"
-        ],
-        "summary": "Lists all S3 users for a project (or organization).",
-        "operationId": "listS3Users",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/listS3UsersResponse"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "S3Users"
-        ],
-        "summary": "Creates a new S3 user and generates access/secret keys.",
-        "operationId": "createS3User",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/CreateS3UserRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/createS3UserResponse"
-          },
-          "400": {
-            "$ref": "#/responses/badReqError"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      }
-    },
-    "/projects/{project_id}/storage/s3/users/{s3_user_id}": {
-      "delete": {
-        "tags": [
-          "S3Users"
-        ],
-        "summary": "Deletes an S3 user based on their ID (or access key).",
-        "operationId": "deleteS3User",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab",
-            "x-go-name": "S3UserID",
-            "description": "The ID (or access key) of the S3 user",
-            "name": "s3_user_id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/okEmpty"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "404": {
-            "$ref": "#/responses/notFoundError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      }
-    },
-    "/projects/{project_id}/storage/s3/users/{s3_user_id}/actions/disable": {
-      "post": {
-        "tags": [
-          "S3Users"
-        ],
-        "summary": "Disables an S3 user's key.",
-        "operationId": "disableS3UserKey",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab",
-            "x-go-name": "S3UserID",
-            "description": "The ID (or access key) of the S3 user",
-            "name": "s3_user_id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/okEmpty"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "404": {
-            "$ref": "#/responses/notFoundError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      }
-    },
-    "/projects/{project_id}/storage/s3/users/{s3_user_id}/actions/enable": {
-      "post": {
-        "tags": [
-          "S3Users"
-        ],
-        "summary": "Enables an S3 user's key.",
-        "operationId": "enableS3UserKey",
-        "parameters": [
-          {
-            "type": "string",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ProjectID",
-            "name": "project_id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab",
-            "x-go-name": "S3UserID",
-            "description": "The ID (or access key) of the S3 user",
-            "name": "s3_user_id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/okEmpty"
-          },
-          "401": {
-            "$ref": "#/responses/authError"
-          },
-          "403": {
-            "$ref": "#/responses/permissionsError"
-          },
-          "404": {
-            "$ref": "#/responses/notFoundError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        }
-      }
-    },
     "/projects/{project_id}/storage/snapshots": {
       "get": {
         "description": "Size of snapshots will be in bytes.",
@@ -9411,43 +9334,51 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "CreateS3UserRequest": {
+    "CreateS3KeyRequest": {
       "type": "object",
-      "title": "CreateS3UserRequest is the request body for creating a new S3 user.",
+      "title": "CreateS3KeyRequest is the request body for creating a new S3 access key for a user.",
       "properties": {
-        "name": {
-          "description": "A human-readable name for the user (optional).",
+        "alias": {
+          "description": "Alias for the access key.",
           "type": "string",
-          "x-go-name": "Name",
+          "x-go-name": "Alias",
           "example": "my-service-account"
+        },
+        "expire_at": {
+          "description": "Formatted timestamp for when the access keys expire.",
+          "type": "string",
+          "x-go-name": "ExpireAt",
+          "example": "2022-12-03T19:58:34Z"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "CreateS3UserResponse": {
+    "CreateS3KeyResponse": {
       "description": "It includes the one-time-only secret key.",
       "type": "object",
-      "title": "CreateS3UserResponse is the response body after creating a new S3 user.",
+      "title": "CreateS3KeyResponse is the response body after creating a new S3 access key for a user.",
       "required": [
-        "access_key",
-        "secret_key",
-        "user"
+        "access_key_id",
+        "secret_key"
       ],
       "properties": {
-        "access_key": {
-          "description": "The unique ID (Access Key) for the S3 user.",
+        "access_key_id": {
+          "description": "The Access Key ID for S3 operations.",
           "type": "string",
-          "x-go-name": "AccessKey",
+          "x-go-name": "AccessKeyID",
           "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab"
+        },
+        "expire_at": {
+          "description": "Formatted timestamp for when the user access key expire.",
+          "type": "string",
+          "x-go-name": "ExpireAt",
+          "example": "2022-12-03T19:58:34Z"
         },
         "secret_key": {
           "description": "The secret key. This is only shown once.",
           "type": "string",
           "x-go-name": "SecretKey",
           "example": "K7i+q0..."
-        },
-        "user": {
-          "$ref": "#/definitions/S3User"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -9638,6 +9569,22 @@
           },
           "x-go-name": "Tags",
           "example": "22.04,latest"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "DeleteS3KeyRequest": {
+      "type": "object",
+      "title": "DeleteS3KeyRequest is the request body for deleting a S3 access key for a user.",
+      "required": [
+        "access_key_id"
+      ],
+      "properties": {
+        "access_key_id": {
+          "description": "The Access Key ID for S3 operations.",
+          "type": "string",
+          "x-go-name": "AccessKeyID",
+          "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -13021,9 +12968,9 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "ListS3UsersResponse": {
+    "ListS3KeysResponse": {
       "type": "object",
-      "title": "ListS3UsersResponse is the response type for GET requests to the S3 users endpoint.",
+      "title": "ListS3KeysResponse is the response type for GET requests to the S3 access keys endpoint.",
       "required": [
         "items"
       ],
@@ -13031,7 +12978,7 @@
         "items": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/S3User"
+            "$ref": "#/definitions/S3Key"
           },
           "x-go-name": "Items"
         }
@@ -14772,6 +14719,65 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "S3Key": {
+      "type": "object",
+      "title": "S3Key represents an S3 Access key for a user.",
+      "required": [
+        "key_uuid",
+        "user_id",
+        "access_key_id",
+        "status",
+        "created_at"
+      ],
+      "properties": {
+        "access_key_id": {
+          "description": "The Access Key ID for S3 operations.",
+          "type": "string",
+          "x-go-name": "AccessKeyID",
+          "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab"
+        },
+        "alias": {
+          "description": "Alias for the access key.",
+          "type": "string",
+          "x-go-name": "Alias",
+          "example": "my-service-account"
+        },
+        "created_at": {
+          "description": "Creation date of S3 key in RFC3339 format.",
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2021-12-03T19:58:34Z"
+        },
+        "expire_at": {
+          "description": "Expiration date of S3 key in RFC3339 format.",
+          "type": "string",
+          "x-go-name": "ExpireAt",
+          "example": "2022-12-03T19:58:34Z"
+        },
+        "key_uuid": {
+          "description": "The Key UUID for the S3 access key.",
+          "type": "string",
+          "x-go-name": "KeyUUID",
+          "example": "f5705300-79f8-4686-9b9f-02496a053bc0"
+        },
+        "status": {
+          "description": "The current status of the user's key.",
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "x-go-name": "Status"
+        },
+        "user_id": {
+          "description": "The user ID for the S3 user.",
+          "type": "string",
+          "x-go-name": "UserID",
+          "example": "e7bed65d-e918-4fab-921c-03b8db94aa7b"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "S3RetentionMode": {
       "description": "enum: governance,compliance",
       "type": "string",
@@ -14782,46 +14788,6 @@
       "description": "enum: days,years",
       "type": "string",
       "title": "S3RetentionPeriodUnit defines the unit of measurement for retention periods.",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "S3User": {
-      "type": "object",
-      "title": "S3User represents an S3 user.",
-      "required": [
-        "id",
-        "project_id",
-        "status",
-        "created_at"
-      ],
-      "properties": {
-        "created_at": {
-          "description": "Creation date in RFC3339 format.",
-          "type": "string",
-          "x-go-name": "CreatedAt",
-          "example": "2021-12-03T19:58:34Z"
-        },
-        "id": {
-          "description": "The unique ID (Access Key) for the S3 user.",
-          "type": "string",
-          "x-go-name": "ID",
-          "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab"
-        },
-        "project_id": {
-          "description": "The project this user belongs to.",
-          "type": "string",
-          "x-go-name": "ProjectID",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
-        },
-        "status": {
-          "description": "The current status of the user's key.",
-          "type": "string",
-          "enum": [
-            "enabled",
-            "disabled"
-          ],
-          "x-go-name": "Status"
-        }
-      },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "S3VersioningState": {
@@ -16228,10 +16194,10 @@
         "$ref": "#/definitions/InstanceTemplate"
       }
     },
-    "createS3UserResponse": {
+    "createS3KeyResponse": {
       "description": "",
       "schema": {
-        "$ref": "#/definitions/CreateS3UserResponse"
+        "$ref": "#/definitions/CreateS3KeyResponse"
       }
     },
     "createSSHKeysResponse": {
@@ -16635,10 +16601,10 @@
         "$ref": "#/definitions/ListS3BucketsResponse"
       }
     },
-    "listS3UsersResponse": {
+    "listS3KeysResponse": {
       "description": "",
       "schema": {
-        "$ref": "#/definitions/ListS3UsersResponse"
+        "$ref": "#/definitions/ListS3KeysResponse"
       }
     },
     "listSSOProvidersResponse": {

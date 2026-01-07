@@ -116,7 +116,7 @@ type APIClient struct {
 
 	S3BucketsApi *S3BucketsApiService
 
-	S3UsersApi *S3UsersApiService
+	S3KeysApi *S3KeysApiService
 
 	SSHKeysApi *SSHKeysApiService
 
@@ -203,7 +203,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.RoleBindingsApi = (*RoleBindingsApiService)(&c.common)
 	c.RolesApi = (*RolesApiService)(&c.common)
 	c.S3BucketsApi = (*S3BucketsApiService)(&c.common)
-	c.S3UsersApi = (*S3UsersApiService)(&c.common)
+	c.S3KeysApi = (*S3KeysApiService)(&c.common)
 	c.SSHKeysApi = (*SSHKeysApiService)(&c.common)
 	c.SSOApi = (*SSOApiService)(&c.common)
 	c.SlurmClustersApi = (*SlurmClustersApiService)(&c.common)
