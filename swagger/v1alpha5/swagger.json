@@ -10290,6 +10290,53 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "GPUTrackingDatumMod": {
+      "type": "object",
+      "properties": {
+        "event_time": {
+          "type": "string",
+          "x-go-name": "EventTime"
+        },
+        "global_reservation_capacity": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "GlobalCapacity"
+        },
+        "gpu_usage": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "GPUUsage"
+        },
+        "organization_id": {
+          "type": "string",
+          "x-go-name": "OrganizationID"
+        },
+        "overage_count": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "OnDemandCount"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "x-go-name": "Price"
+        },
+        "product_line": {
+          "type": "string",
+          "x-go-name": "ProductLine"
+        },
+        "region": {
+          "type": "string",
+          "x-go-name": "Region"
+        },
+        "regional_reservation_capacity": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "RegionalCapacity"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "GPUTrackingResponse": {
       "type": "object",
       "properties": {
@@ -12441,6 +12488,26 @@
         },
         "version_details": {
           "$ref": "#/definitions/VersionDetails"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "LatestGPUTracking": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GPUTrackingDatumMod"
+          },
+          "x-go-name": "Data"
+        },
+        "reservation_id": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "ReservationID"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -16449,6 +16516,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/IBPartition"
+      }
+    },
+    "latestGPUTrackingResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/LatestGPUTracking"
       }
     },
     "limitedUsageAPIKeyGetResponse": {
