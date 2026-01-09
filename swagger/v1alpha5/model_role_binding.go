@@ -12,6 +12,7 @@ type RoleBinding struct {
 	CustomerId    string `json:"customer_id"`
 	Id            string `json:"id"`
 	RoleId        string `json:"role_id"`
+	RoleName      string `json:"role_name"`
 	ScopeObjectId string `json:"scope_object_id"`
 	ScopeType     string `json:"scope_type"`
 }

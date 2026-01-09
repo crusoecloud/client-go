@@ -10965,6 +10965,11 @@
           "x-go-name": "Name",
           "example": "John Doe"
         },
+        "org_role": {
+          "type": "string",
+          "x-go-name": "OrgRole",
+          "example": "org-member, org-admin"
+        },
         "registration_type": {
           "type": "string",
           "x-go-name": "RegistrationType",
@@ -10974,6 +10979,13 @@
           "type": "string",
           "x-go-name": "Role",
           "example": "Admin"
+        },
+        "role_bindings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RoleBinding"
+          },
+          "x-go-name": "RoleBindings"
         },
         "sso_enforcement": {
           "type": "string",
@@ -14774,7 +14786,8 @@
         "customer_id",
         "role_id",
         "scope_type",
-        "scope_object_id"
+        "scope_object_id",
+        "role_name"
       ],
       "properties": {
         "customer_id": {
@@ -14788,6 +14801,10 @@
         "role_id": {
           "type": "string",
           "x-go-name": "RoleID"
+        },
+        "role_name": {
+          "type": "string",
+          "x-go-name": "RoleName"
         },
         "scope_object_id": {
           "type": "string",
