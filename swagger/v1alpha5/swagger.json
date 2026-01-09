@@ -1185,6 +1185,142 @@
         }
       }
     },
+    "/organizations/{organization_id}/reservations/gpu-tracking": {
+      "get": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Get GPU tracking data for the specified organization. User must be part of the organization and have reservations feature access.",
+        "operationId": "getReservationsGPUTracking",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "x-go-name": "OrganizationID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "gpu-hours"
+            ],
+            "x-go-name": "ProductLine",
+            "name": "product_line",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "us-east1",
+              "us-northcentral1"
+            ],
+            "x-go-name": "Region",
+            "name": "region",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "\"2024-01-01T00:00:00Z\"",
+            "x-go-name": "StartTime",
+            "name": "start_time",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "\"2024-01-31T23:59:59Z\"",
+            "x-go-name": "EndTime",
+            "name": "end_time",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/reservationsGPUTrackingResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/reservations/gpu-tracking/latest": {
+      "get": {
+        "tags": [
+          "Reservations"
+        ],
+        "summary": "Get latest GPU tracking data for the specified organization. User must be part of the organization and have reservations feature access.",
+        "operationId": "getLatestGPUTracking",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "x-go-name": "OrganizationID",
+            "name": "organization_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "gpu-hours"
+            ],
+            "x-go-name": "ProductLine",
+            "name": "product_line",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "us-east1",
+              "us-northcentral1"
+            ],
+            "x-go-name": "Region",
+            "name": "region",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/latestGPUTrackingResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/organizations/{organization_id}/reservations/{reservation_id}": {
       "get": {
         "tags": [
@@ -10302,11 +10438,6 @@
           "format": "int64",
           "x-go-name": "GlobalCapacity"
         },
-        "gpu_usage": {
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "GPUUsage"
-        },
         "organization_id": {
           "type": "string",
           "x-go-name": "OrganizationID"
@@ -10333,6 +10464,11 @@
           "type": "integer",
           "format": "int64",
           "x-go-name": "RegionalCapacity"
+        },
+        "running_compute_unit_count": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "GPUUsage"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"

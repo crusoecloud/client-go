@@ -11,11 +11,11 @@ package swagger
 type GpuTrackingDatumMod struct {
 	EventTime                   string  `json:"event_time,omitempty"`
 	GlobalReservationCapacity   int64   `json:"global_reservation_capacity,omitempty"`
-	GpuUsage                    int64   `json:"gpu_usage,omitempty"`
 	OrganizationId              string  `json:"organization_id,omitempty"`
 	OverageCount                int64   `json:"overage_count,omitempty"`
 	Price                       float64 `json:"price,omitempty"`
 	ProductLine                 string  `json:"product_line,omitempty"`
 	Region                      string  `json:"region,omitempty"`
 	RegionalReservationCapacity int64   `json:"regional_reservation_capacity,omitempty"`
+	RunningComputeUnitCount     int64   `json:"running_compute_unit_count,omitempty"`
 }
