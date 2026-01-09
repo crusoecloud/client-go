@@ -8,9 +8,7 @@
  */
 package swagger
 
-type ErrorBody struct {
-	Code    string `json:"code,omitempty"`
-	ErrorId string `json:"error_id,omitempty"`
-	Message string `json:"message,omitempty"`
-	Reason  string `json:"reason,omitempty"`
+type DeleteS3KeyRequest struct {
+	// The Access Key ID for S3 operations.
+	AccessKeyId string `json:"access_key_id"`
 }

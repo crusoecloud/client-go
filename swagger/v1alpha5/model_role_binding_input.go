@@ -8,7 +8,9 @@
  */
 package swagger
 
-type CreateS3UserRequest struct {
-	// A human-readable name for the user (optional).
-	Name string `json:"name,omitempty"`
+type RoleBindingInput struct {
+	CustomerId    string `json:"customer_id"`
+	RoleId        string `json:"role_id"`
+	ScopeObjectId string `json:"scope_object_id"`
+	ScopeType     string `json:"scope_type"`
 }

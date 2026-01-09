@@ -8,6 +8,10 @@
  */
 package swagger
 
-type ListS3UsersResponse struct {
-	Items []S3User `json:"items"`
+type Role struct {
+	AllowedScopes []string `json:"allowed_scopes"`
+	Description   string   `json:"description"`
+	Id            string   `json:"id"`
+	OrgId         string   `json:"org_id"`
+	RoleName      string   `json:"role_name"`
 }

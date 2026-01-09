@@ -8,9 +8,7 @@
  */
 package swagger
 
-type ErrorBody struct {
-	Code    string `json:"code,omitempty"`
-	ErrorId string `json:"error_id,omitempty"`
-	Message string `json:"message,omitempty"`
-	Reason  string `json:"reason,omitempty"`
+type LatestGpuTracking struct {
+	Data          []GpuTrackingDatumMod `json:"data,omitempty"`
+	ReservationId []string              `json:"reservation_id,omitempty"`
 }

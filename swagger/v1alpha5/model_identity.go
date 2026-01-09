@@ -10,14 +10,16 @@ package swagger
 
 // Identity contains the Traits Island stores for a User inside of Kratos. These are the fields returned from a GET or PUT request.
 type Identity struct {
-	AcceptedTos      bool   `json:"accepted_tos,omitempty"`
-	CompanyName      string `json:"company_name,omitempty"`
-	Email            string `json:"email"`
-	Id               string `json:"id"`
-	IsRecovery       bool   `json:"is_recovery,omitempty"`
-	Name             string `json:"name"`
-	RegistrationType string `json:"registration_type,omitempty"`
-	Role             string `json:"role"`
-	SsoEnforcement   string `json:"sso_enforcement,omitempty"`
-	UserState        string `json:"user_state,omitempty"`
+	AcceptedTos      bool          `json:"accepted_tos,omitempty"`
+	CompanyName      string        `json:"company_name,omitempty"`
+	Email            string        `json:"email"`
+	Id               string        `json:"id"`
+	IsRecovery       bool          `json:"is_recovery,omitempty"`
+	Name             string        `json:"name"`
+	OrgRole          string        `json:"org_role,omitempty"`
+	RegistrationType string        `json:"registration_type,omitempty"`
+	Role             string        `json:"role"`
+	RoleBindings     []RoleBinding `json:"role_bindings,omitempty"`
+	SsoEnforcement   string        `json:"sso_enforcement,omitempty"`
+	UserState        string        `json:"user_state,omitempty"`
 }
