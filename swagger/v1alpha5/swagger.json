@@ -1871,6 +1871,54 @@
             "$ref": "#/responses/serverError"
           }
         }
+      },
+      "patch": {
+        "description": "Updates the username and password credentials for the upstream registry\nof a pull-through cache repository.",
+        "tags": [
+          "Ccr"
+        ],
+        "summary": "Update upstream registry credentials for a CCR repository.",
+        "operationId": "updateCcrRepositoryCredentials",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "RepositoryID",
+            "name": "repository_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/UpstreamRegistryCredentials"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
       }
     },
     "/projects/{project_id}/ccr/repositories/{repository_id}/images": {
