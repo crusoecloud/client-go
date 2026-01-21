@@ -10975,7 +10975,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "Identity": {
-      "description": "Identity contains the Traits Island stores for a User inside of Kratos. These are\nthe fields returned from a GET or PUT request.",
+      "description": "Identity contains the information stored for a User. These are\nthe fields returned from a GET or PUT request.",
       "type": "object",
       "required": [
         "id",
