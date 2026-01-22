@@ -4521,6 +4521,54 @@
         }
       }
     },
+    "/projects/{project_id}/metrics/scrape": {
+      "get": {
+        "description": "This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics\nin Prometheus text format.",
+        "tags": [
+          "Observability"
+        ],
+        "summary": "Export metrics in Prometheus text format for scraping.",
+        "operationId": "scrapeMetrics",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "{__name__=~\"cpu.*\"}",
+            "x-go-name": "Match",
+            "description": "Label matchers to filter metrics. Can be specified multiple times.\nUses Prometheus label matcher syntax.",
+            "name": "match[]",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/scrapeMetricsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/metrics/timeseries": {
       "get": {
         "tags": [
@@ -17178,6 +17226,9 @@
       "schema": {
         "$ref": "#/definitions/ReservationsGetResponse"
       }
+    },
+    "scrapeMetricsResponse": {
+      "description": ""
     },
     "serverError": {
       "description": "Error Internal Server",
