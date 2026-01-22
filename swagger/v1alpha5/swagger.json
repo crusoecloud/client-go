@@ -8715,9 +8715,30 @@
         "scope",
         "percentage",
         "name",
-        "percentage_at"
+        "percentage_at",
+        "active",
+        "created_at"
       ],
       "properties": {
+        "active": {
+          "description": "Whether the billing alert is active or paused.",
+          "type": "boolean",
+          "x-go-name": "Active",
+          "example": true
+        },
+        "created_at": {
+          "description": "The date at which the billing alert was created.",
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2024-08-14T09:00:35Z"
+        },
+        "custom_interval_days": {
+          "description": "Custom interval in days when frequency is custom.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "CustomIntervalDays",
+          "example": 14
+        },
         "customer_ids": {
           "description": "The custom recipients belonging to the billing alert.",
           "type": "array",
@@ -8738,10 +8759,11 @@
           "type": "string",
           "enum": [
             "daily",
+            "weekly",
             "monthly",
             "quarterly",
-            "weekly",
-            "once"
+            "yearly",
+            "custom"
           ],
           "x-go-name": "Frequency"
         },
@@ -8870,6 +8892,13 @@
         "name"
       ],
       "properties": {
+        "custom_interval_days": {
+          "description": "Custom interval in days when frequency is custom.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "CustomIntervalDays",
+          "example": 14
+        },
         "customer_ids": {
           "description": "The custom recipients belonging to the billing alert.",
           "type": "array",
@@ -8890,10 +8919,11 @@
           "type": "string",
           "enum": [
             "daily",
+            "weekly",
             "monthly",
             "quarterly",
-            "weekly",
-            "once"
+            "yearly",
+            "custom"
           ],
           "x-go-name": "Frequency"
         },
@@ -8981,6 +9011,19 @@
         "name"
       ],
       "properties": {
+        "active": {
+          "description": "Whether the billing alert is active or paused.",
+          "type": "boolean",
+          "x-go-name": "Active",
+          "example": true
+        },
+        "custom_interval_days": {
+          "description": "Custom interval in days when frequency is custom.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "CustomIntervalDays",
+          "example": 14
+        },
         "customer_ids": {
           "description": "The custom recipients belonging to the billing alert.",
           "type": "array",
@@ -9001,10 +9044,11 @@
           "type": "string",
           "enum": [
             "daily",
+            "weekly",
             "monthly",
             "quarterly",
-            "weekly",
-            "once"
+            "yearly",
+            "custom"
           ],
           "x-go-name": "Frequency"
         },
