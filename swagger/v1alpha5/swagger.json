@@ -13710,7 +13710,6 @@
     },
     "LogEntry": {
       "type": "object",
-      "title": "Log Entry models the audit log entry.",
       "required": [
         "action",
         "actor_id",
@@ -13847,7 +13846,7 @@
           "example": "VM"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers/logservice"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "Manifest": {
       "type": "object",
