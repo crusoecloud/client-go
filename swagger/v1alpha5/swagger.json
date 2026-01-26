@@ -9877,6 +9877,65 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "DiagnosticResponse": {
+      "type": "object",
+      "title": "DiagnosticResponse is the REST response for creating a diagnostic.",
+      "required": [
+        "id",
+        "already_pending"
+      ],
+      "properties": {
+        "already_pending": {
+          "type": "boolean",
+          "x-go-name": "AlreadyPending",
+          "example": false
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "123e4567-e89b-12d3-a456-426614174000"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "DiagnosticStatusResponse": {
+      "type": "object",
+      "title": "DiagnosticStatusResponse is the REST response for diagnostic status.",
+      "required": [
+        "type",
+        "status",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2024-01-15T10:30:00Z"
+        },
+        "download_url": {
+          "type": "string",
+          "x-go-name": "DownloadURL",
+          "example": "https://storage.googleapis.com/..."
+        },
+        "status": {
+          "type": "string",
+          "x-go-name": "Status",
+          "example": "completed"
+        },
+        "type": {
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "nvidia_bug_report"
+        },
+        "updated_at": {
+          "type": "string",
+          "x-go-name": "UpdatedAt",
+          "example": "2024-01-15T10:35:00Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "DiskAttachment": {
       "type": "object",
       "required": [
@@ -12776,6 +12835,26 @@
         },
         "version_details": {
           "$ref": "#/definitions/VersionDetails"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "LatestDiagnosticResponse": {
+      "type": "object",
+      "title": "LatestDiagnosticResponse is the REST response for latest diagnostic.",
+      "required": [
+        "has_diagnostic"
+      ],
+      "properties": {
+        "download_url": {
+          "type": "string",
+          "x-go-name": "DownloadURL",
+          "example": "https://storage.googleapis.com/..."
+        },
+        "has_diagnostic": {
+          "type": "boolean",
+          "x-go-name": "HasDiagnostic",
+          "example": true
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -16541,6 +16620,12 @@
         "$ref": "#/definitions/BillingAlertPostResponse"
       }
     },
+    "createDiagnosticResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/DiagnosticResponse"
+      }
+    },
     "createInstanceGroupResponse": {
       "description": "",
       "schema": {
@@ -16666,6 +16751,12 @@
         }
       }
     },
+    "getDiagnosticStatusResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/DiagnosticStatusResponse"
+      }
+    },
     "getDiskResponse": {
       "description": "",
       "schema": {
@@ -16730,6 +16821,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/KubernetesNodePool"
+      }
+    },
+    "getLatestCompletedDiagnosticResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/LatestDiagnosticResponse"
       }
     },
     "getLoadBalancerResponse": {
