@@ -622,16 +622,18 @@ func (a *ObservabilityApiService) QueryTimeseriesWithParameters(ctx context.Cont
 
 /*
 ObservabilityApiService Export metrics in Prometheus text format for scraping.
-This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics in Prometheus text format.
+This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics in Prometheus text exposition format for scraping by external monitoring systems.  Supports filtering by: metric_name: Filter by exact metric name(s) metric_category: Filter by &#x27;system&#x27; (Crusoe-collected) or &#x27;custom&#x27; (user-defined) metrics Arbitrary labels: Any other query parameter is treated as a label filter (e.g., device&#x3D;vda1)  Multiple values for the same parameter create an OR condition (e.g., device&#x3D;vda1&amp;device&#x3D;vda2).  Internal metrics (cwa_*) and provisioned throughput metrics (crusoe_inference_*) are always excluded.  Rate limited to 10 requests per minute per project. Response limited to 50MB payload and 100,000 time series. Responses are cached for up to 1 minute.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId The project ID to scrape metrics from. User must have read access to the project.
  * @param optional nil or *ObservabilityApiScrapeMetricsOpts - Optional Parameters:
-     * @param "Match" (optional.Interface of []string) -  Label matchers to filter metrics. Can be specified multiple times. Uses Prometheus label matcher syntax.
+     * @param "MetricName" (optional.Interface of []string) -  Filter by exact metric name. Can be specified multiple times to match any of the provided names (OR logic).
+     * @param "MetricCategory" (optional.String) -  Filter by metric category. &#x27;system&#x27; returns Crusoe-collected metrics (crusoe_*, DCGM_FI_*, gpu_*, pcie_*). &#x27;custom&#x27; returns user-defined metrics with metrics_source&#x3D;custom-metrics label.
 
 */
 
 type ObservabilityApiScrapeMetricsOpts struct {
-	Match optional.Interface
+	MetricName     optional.Interface
+	MetricCategory optional.String
 }
 
 func (a *ObservabilityApiService) ScrapeMetrics(ctx context.Context, projectId string, localVarOptionals *ObservabilityApiScrapeMetricsOpts) (*http.Response, error) {
@@ -650,8 +652,11 @@ func (a *ObservabilityApiService) ScrapeMetrics(ctx context.Context, projectId s
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Match.IsSet() {
-		localVarQueryParams.Add("match[]", parameterToString(localVarOptionals.Match.Value(), "csv"))
+	if localVarOptionals != nil && localVarOptionals.MetricName.IsSet() {
+		localVarQueryParams.Add("metric_name", parameterToString(localVarOptionals.MetricName.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.MetricCategory.IsSet() {
+		localVarQueryParams.Add("metric_category", parameterToString(localVarOptionals.MetricCategory.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
@@ -713,6 +718,16 @@ func (a *ObservabilityApiService) ScrapeMetrics(ctx context.Context, projectId s
 		}
 		if localVarHttpResponse.StatusCode == 403 {
 			var v InlineResponse403
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 429 {
+			var v InlineResponse429
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

@@ -4523,7 +4523,7 @@
     },
     "/projects/{project_id}/metrics/scrape": {
       "get": {
-        "description": "This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics\nin Prometheus text format.",
+        "description": "This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics\nin Prometheus text exposition format for scraping by external monitoring systems.\n\nSupports filtering by:\nmetric_name: Filter by exact metric name(s)\nmetric_category: Filter by 'system' (Crusoe-collected) or 'custom' (user-defined) metrics\nArbitrary labels: Any other query parameter is treated as a label filter (e.g., device=vda1)\n\nMultiple values for the same parameter create an OR condition (e.g., device=vda1&device=vda2).\n\nInternal metrics (cwa_*) and provisioned throughput metrics (crusoe_inference_*) are always excluded.\n\nRate limited to 10 requests per minute per project.\nResponse limited to 50MB payload and 100,000 time series.\nResponses are cached for up to 1 minute.",
         "tags": [
           "Observability"
         ],
@@ -4534,6 +4534,7 @@
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "x-go-name": "ProjectID",
+            "description": "The project ID to scrape metrics from. User must have read access to the project.",
             "name": "project_id",
             "in": "path",
             "required": true
@@ -4543,10 +4544,22 @@
             "items": {
               "type": "string"
             },
-            "example": "{__name__=~\"cpu.*\"}",
-            "x-go-name": "Match",
-            "description": "Label matchers to filter metrics. Can be specified multiple times.\nUses Prometheus label matcher syntax.",
-            "name": "match[]",
+            "example": "crusoe_vm_cpu_usage",
+            "x-go-name": "MetricName",
+            "description": "Filter by exact metric name. Can be specified multiple times to match any of the provided names (OR logic).",
+            "name": "metric_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "system",
+              " custom"
+            ],
+            "type": "string",
+            "example": "system",
+            "x-go-name": "MetricCategory",
+            "description": "Filter by metric category. 'system' returns Crusoe-collected metrics (crusoe_*, DCGM_FI_*, gpu_*, pcie_*).\n'custom' returns user-defined metrics with metrics_source=custom-metrics label.",
+            "name": "metric_category",
             "in": "query"
           }
         ],
@@ -4562,6 +4575,9 @@
           },
           "403": {
             "$ref": "#/responses/permissionsError"
+          },
+          "429": {
+            "$ref": "#/responses/rateLimitError"
           },
           "500": {
             "$ref": "#/responses/serverError"
@@ -17254,6 +17270,28 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ProspectPostResponse"
+      }
+    },
+    "rateLimitError": {
+      "description": "Error Rate Limit Exceeded",
+      "schema": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "x-go-name": "Code",
+            "example": "429"
+          },
+          "message": {
+            "type": "string",
+            "x-go-name": "Message",
+            "example": "too_many_requests"
+          }
+        }
       }
     },
     "redirectSeeOther": {
