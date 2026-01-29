@@ -622,18 +622,20 @@ func (a *ObservabilityApiService) QueryTimeseriesWithParameters(ctx context.Cont
 
 /*
 ObservabilityApiService Export metrics in Prometheus text format for scraping.
-This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics in Prometheus text exposition format for scraping by external monitoring systems.  Supports filtering by: metric_name: Filter by exact metric name(s) metric_category: Filter by &#x27;system&#x27; (Crusoe-collected) or &#x27;custom&#x27; (user-defined) metrics Arbitrary labels: Any other query parameter is treated as a label filter (e.g., device&#x3D;vda1)  Multiple values for the same parameter create an OR condition (e.g., device&#x3D;vda1&amp;device&#x3D;vda2).  Internal metrics (cwa_*) and provisioned throughput metrics (crusoe_inference_*) are always excluded.  Rate limited to 10 requests per minute per project. Response limited to 50MB payload and 100,000 time series. Responses are cached for up to 1 minute.
+This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics in Prometheus text exposition format for scraping by external monitoring systems.  Supports filtering by: metric_name: Filter by metric name(s). Supports comma-separated values (e.g., metric_name&#x3D;http_requests_total,http_response_time) metric_category: Filter by &#x27;system&#x27; (Crusoe-collected) or &#x27;custom&#x27; (user-defined) metrics labels: Filter by label key:value pairs. Supports comma-separated values (e.g., labels&#x3D;job:api,region:us-east)  Internal metrics and provisioned throughput metrics are always excluded.  Rate limited to 10 requests per minute per project. Response limited to 50MB payload and 100,000 time series. Responses are cached for up to 1 minute.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId The project ID to scrape metrics from. User must have read access to the project.
  * @param optional nil or *ObservabilityApiScrapeMetricsOpts - Optional Parameters:
-     * @param "MetricName" (optional.Interface of []string) -  Filter by exact metric name. Can be specified multiple times to match any of the provided names (OR logic).
-     * @param "MetricCategory" (optional.String) -  Filter by metric category. &#x27;system&#x27; returns Crusoe-collected metrics (crusoe_*, DCGM_FI_*, gpu_*, pcie_*). &#x27;custom&#x27; returns user-defined metrics with metrics_source&#x3D;custom-metrics label.
+     * @param "MetricName" (optional.Interface of []string) -  Filter by metric name. Supports comma-separated values (e.g., metric_name&#x3D;http_requests_total,http_response_time).
+     * @param "MetricCategory" (optional.String) -  Filter by metric category. &#x27;system&#x27; returns Crusoe-collected metrics. &#x27;custom&#x27; returns user-defined metrics with metrics_source&#x3D;custom-metrics label.
+     * @param "Labels" (optional.Interface of []string) -  Filter by label key:value pairs. Use colon to separate key and value. Supports comma-separated values (e.g., labels&#x3D;job:api,region:us-east). Supports UNION (labels&#x3D;device:loop1|loop2)
 
 */
 
 type ObservabilityApiScrapeMetricsOpts struct {
 	MetricName     optional.Interface
 	MetricCategory optional.String
+	Labels         optional.Interface
 }
 
 func (a *ObservabilityApiService) ScrapeMetrics(ctx context.Context, projectId string, localVarOptionals *ObservabilityApiScrapeMetricsOpts) (*http.Response, error) {
@@ -657,6 +659,9 @@ func (a *ObservabilityApiService) ScrapeMetrics(ctx context.Context, projectId s
 	}
 	if localVarOptionals != nil && localVarOptionals.MetricCategory.IsSet() {
 		localVarQueryParams.Add("metric_category", parameterToString(localVarOptionals.MetricCategory.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Labels.IsSet() {
+		localVarQueryParams.Add("labels", parameterToString(localVarOptionals.Labels.Value(), "csv"))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}

@@ -4523,7 +4523,7 @@
     },
     "/projects/{project_id}/metrics/scrape": {
       "get": {
-        "description": "This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics\nin Prometheus text exposition format for scraping by external monitoring systems.\n\nSupports filtering by:\nmetric_name: Filter by exact metric name(s)\nmetric_category: Filter by 'system' (Crusoe-collected) or 'custom' (user-defined) metrics\nArbitrary labels: Any other query parameter is treated as a label filter (e.g., device=vda1)\n\nMultiple values for the same parameter create an OR condition (e.g., device=vda1&device=vda2).\n\nInternal metrics (cwa_*) and provisioned throughput metrics (crusoe_inference_*) are always excluded.\n\nRate limited to 10 requests per minute per project.\nResponse limited to 50MB payload and 100,000 time series.\nResponses are cached for up to 1 minute.",
+        "description": "This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics\nin Prometheus text exposition format for scraping by external monitoring systems.\n\nSupports filtering by:\nmetric_name: Filter by metric name(s). Supports comma-separated values (e.g., metric_name=http_requests_total,http_response_time)\nmetric_category: Filter by 'system' (Crusoe-collected) or 'custom' (user-defined) metrics\nlabels: Filter by label key:value pairs. Supports comma-separated values (e.g., labels=job:api,region:us-east)\n\nInternal metrics and provisioned throughput metrics are always excluded.\n\nRate limited to 10 requests per minute per project.\nResponse limited to 50MB payload and 100,000 time series.\nResponses are cached for up to 1 minute.",
         "tags": [
           "Observability"
         ],
@@ -4544,9 +4544,9 @@
             "items": {
               "type": "string"
             },
-            "example": "crusoe_vm_cpu_usage",
+            "example": "crusoe_vm_cpu_seconds_total,crusoe_vm_disk_writes_completed_total",
             "x-go-name": "MetricName",
-            "description": "Filter by exact metric name. Can be specified multiple times to match any of the provided names (OR logic).",
+            "description": "Filter by metric name. Supports comma-separated values (e.g., metric_name=http_requests_total,http_response_time).",
             "name": "metric_name",
             "in": "query"
           },
@@ -4558,8 +4558,19 @@
             "type": "string",
             "example": "system",
             "x-go-name": "MetricCategory",
-            "description": "Filter by metric category. 'system' returns Crusoe-collected metrics (crusoe_*, DCGM_FI_*, gpu_*, pcie_*).\n'custom' returns user-defined metrics with metrics_source=custom-metrics label.",
+            "description": "Filter by metric category. 'system' returns Crusoe-collected metrics.\n'custom' returns user-defined metrics with metrics_source=custom-metrics label.",
             "name": "metric_category",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "job:api,region:us-east",
+            "x-go-name": "Labels",
+            "description": "Filter by label key:value pairs. Use colon to separate key and value.\nSupports comma-separated values (e.g., labels=job:api,region:us-east). Supports UNION (labels=device:loop1|loop2)",
+            "name": "labels",
             "in": "query"
           }
         ],
