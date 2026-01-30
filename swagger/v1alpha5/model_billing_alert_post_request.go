@@ -9,6 +9,8 @@
 package swagger
 
 type BillingAlertPostRequest struct {
+	// Custom interval in days when frequency is custom.
+	CustomIntervalDays int32 `json:"custom_interval_days,omitempty"`
 	// The custom recipients belonging to the billing alert.
 	CustomerIds []string `json:"customer_ids,omitempty"`
 	// The date at which the billing alert expires.

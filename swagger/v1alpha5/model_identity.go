@@ -8,7 +8,7 @@
  */
 package swagger
 
-// Identity contains the Traits Island stores for a User inside of Kratos. These are the fields returned from a GET or PUT request.
+// Identity contains the information stored for a User. These are the fields returned from a GET or PUT request.
 type Identity struct {
 	AcceptedTos      bool          `json:"accepted_tos,omitempty"`
 	CompanyName      string        `json:"company_name,omitempty"`

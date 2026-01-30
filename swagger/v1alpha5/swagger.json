@@ -1718,6 +1718,20 @@
             "name": "project_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "Page",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "PageSize",
+            "name": "page_size",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1948,6 +1962,20 @@
             "x-go-name": "Location",
             "name": "location",
             "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "Page",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "PageSize",
+            "name": "page_size",
+            "in": "query"
           }
         ],
         "responses": {
@@ -2061,6 +2089,20 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "Page",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "PageSize",
+            "name": "page_size",
             "in": "query"
           }
         ],
@@ -4514,6 +4556,81 @@
           },
           "403": {
             "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/metrics/scrape": {
+      "get": {
+        "description": "This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics\nin Prometheus text exposition format for scraping by external monitoring systems.\n\nSupports filtering by:\nmetric_name: Filter by metric name(s). Supports comma-separated values (e.g., metric_name=http_requests_total,http_response_time)\nmetric_category: Filter by 'system' (Crusoe-collected) or 'custom' (user-defined) metrics\nlabels: Filter by label key:value pairs. Supports comma-separated values (e.g., labels=job:api,region:us-east)\n\nInternal metrics and provisioned throughput metrics are always excluded.\n\nRate limited to 10 requests per minute per project.\nResponse limited to 50MB payload and 100,000 time series.\nResponses are cached for up to 1 minute.",
+        "tags": [
+          "Observability"
+        ],
+        "summary": "Export metrics in Prometheus text format for scraping.",
+        "operationId": "scrapeMetrics",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "description": "The project ID to scrape metrics from. User must have read access to the project.",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "crusoe_vm_cpu_seconds_total,crusoe_vm_disk_writes_completed_total",
+            "x-go-name": "MetricName",
+            "description": "Filter by metric name. Supports comma-separated values (e.g., metric_name=http_requests_total,http_response_time).",
+            "name": "metric_name",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "system",
+              " custom"
+            ],
+            "type": "string",
+            "example": "system",
+            "x-go-name": "MetricCategory",
+            "description": "Filter by metric category. 'system' returns Crusoe-collected metrics.\n'custom' returns user-defined metrics with metrics_source=custom-metrics label.",
+            "name": "metric_category",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "job:api,region:us-east",
+            "x-go-name": "Labels",
+            "description": "Filter by label key:value pairs. Use colon to separate key and value.\nSupports comma-separated values (e.g., labels=job:api,region:us-east). Supports UNION (labels=device:loop1|loop2)",
+            "name": "labels",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/scrapeMetricsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "429": {
+            "$ref": "#/responses/rateLimitError"
           },
           "500": {
             "$ref": "#/responses/serverError"
@@ -8715,9 +8832,30 @@
         "scope",
         "percentage",
         "name",
-        "percentage_at"
+        "percentage_at",
+        "active",
+        "created_at"
       ],
       "properties": {
+        "active": {
+          "description": "Whether the billing alert is active or paused.",
+          "type": "boolean",
+          "x-go-name": "Active",
+          "example": true
+        },
+        "created_at": {
+          "description": "The date at which the billing alert was created.",
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2024-08-14T09:00:35Z"
+        },
+        "custom_interval_days": {
+          "description": "Custom interval in days when frequency is custom.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "CustomIntervalDays",
+          "example": 14
+        },
         "customer_ids": {
           "description": "The custom recipients belonging to the billing alert.",
           "type": "array",
@@ -8738,10 +8876,11 @@
           "type": "string",
           "enum": [
             "daily",
+            "weekly",
             "monthly",
             "quarterly",
-            "weekly",
-            "once"
+            "yearly",
+            "custom"
           ],
           "x-go-name": "Frequency"
         },
@@ -8870,6 +9009,13 @@
         "name"
       ],
       "properties": {
+        "custom_interval_days": {
+          "description": "Custom interval in days when frequency is custom.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "CustomIntervalDays",
+          "example": 14
+        },
         "customer_ids": {
           "description": "The custom recipients belonging to the billing alert.",
           "type": "array",
@@ -8890,10 +9036,11 @@
           "type": "string",
           "enum": [
             "daily",
+            "weekly",
             "monthly",
             "quarterly",
-            "weekly",
-            "once"
+            "yearly",
+            "custom"
           ],
           "x-go-name": "Frequency"
         },
@@ -8981,6 +9128,19 @@
         "name"
       ],
       "properties": {
+        "active": {
+          "description": "Whether the billing alert is active or paused.",
+          "type": "boolean",
+          "x-go-name": "Active",
+          "example": true
+        },
+        "custom_interval_days": {
+          "description": "Custom interval in days when frequency is custom.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "CustomIntervalDays",
+          "example": 14
+        },
         "customer_ids": {
           "description": "The custom recipients belonging to the billing alert.",
           "type": "array",
@@ -9001,10 +9161,11 @@
           "type": "string",
           "enum": [
             "daily",
+            "weekly",
             "monthly",
             "quarterly",
-            "weekly",
-            "once"
+            "yearly",
+            "custom"
           ],
           "x-go-name": "Frequency"
         },
@@ -9781,6 +9942,65 @@
           "type": "integer",
           "format": "int64",
           "x-go-name": "Value"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "DiagnosticResponse": {
+      "type": "object",
+      "title": "DiagnosticResponse is the REST response for creating a diagnostic.",
+      "required": [
+        "id",
+        "already_pending"
+      ],
+      "properties": {
+        "already_pending": {
+          "type": "boolean",
+          "x-go-name": "AlreadyPending",
+          "example": false
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "123e4567-e89b-12d3-a456-426614174000"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "DiagnosticStatusResponse": {
+      "type": "object",
+      "title": "DiagnosticStatusResponse is the REST response for diagnostic status.",
+      "required": [
+        "type",
+        "status",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2024-01-15T10:30:00Z"
+        },
+        "download_url": {
+          "type": "string",
+          "x-go-name": "DownloadURL",
+          "example": "https://storage.googleapis.com/..."
+        },
+        "status": {
+          "type": "string",
+          "x-go-name": "Status",
+          "example": "completed"
+        },
+        "type": {
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "nvidia_bug_report"
+        },
+        "updated_at": {
+          "type": "string",
+          "x-go-name": "UpdatedAt",
+          "example": "2024-01-15T10:35:00Z"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -10975,7 +11195,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "Identity": {
-      "description": "Identity contains the Traits Island stores for a User inside of Kratos. These are\nthe fields returned from a GET or PUT request.",
+      "description": "Identity contains the information stored for a User. These are\nthe fields returned from a GET or PUT request.",
       "type": "object",
       "required": [
         "id",
@@ -12688,6 +12908,26 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "LatestDiagnosticResponse": {
+      "type": "object",
+      "title": "LatestDiagnosticResponse is the REST response for latest diagnostic.",
+      "required": [
+        "has_diagnostic"
+      ],
+      "properties": {
+        "download_url": {
+          "type": "string",
+          "x-go-name": "DownloadURL",
+          "example": "https://storage.googleapis.com/..."
+        },
+        "has_diagnostic": {
+          "type": "boolean",
+          "x-go-name": "HasDiagnostic",
+          "example": true
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "LatestGPUTracking": {
       "type": "object",
       "properties": {
@@ -13618,7 +13858,6 @@
     },
     "LogEntry": {
       "type": "object",
-      "title": "Log Entry models the audit log entry.",
       "required": [
         "action",
         "actor_id",
@@ -13755,7 +13994,7 @@
           "example": "VM"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers/logservice"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "Manifest": {
       "type": "object",
@@ -16450,6 +16689,12 @@
         "$ref": "#/definitions/BillingAlertPostResponse"
       }
     },
+    "createDiagnosticResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/DiagnosticResponse"
+      }
+    },
     "createInstanceGroupResponse": {
       "description": "",
       "schema": {
@@ -16575,6 +16820,12 @@
         }
       }
     },
+    "getDiagnosticStatusResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/DiagnosticStatusResponse"
+      }
+    },
     "getDiskResponse": {
       "description": "",
       "schema": {
@@ -16639,6 +16890,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/KubernetesNodePool"
+      }
+    },
+    "getLatestCompletedDiagnosticResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/LatestDiagnosticResponse"
       }
     },
     "getLoadBalancerResponse": {
@@ -17068,6 +17325,28 @@
         "$ref": "#/definitions/ProspectPostResponse"
       }
     },
+    "rateLimitError": {
+      "description": "Error Rate Limit Exceeded",
+      "schema": {
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "x-go-name": "Code",
+            "example": "429"
+          },
+          "message": {
+            "type": "string",
+            "x-go-name": "Message",
+            "example": "too_many_requests"
+          }
+        }
+      }
+    },
     "redirectSeeOther": {
       "description": "Redirect See Other",
       "schema": {
@@ -17134,6 +17413,9 @@
       "schema": {
         "$ref": "#/definitions/ReservationsGetResponse"
       }
+    },
+    "scrapeMetricsResponse": {
+      "description": ""
     },
     "serverError": {
       "description": "Error Internal Server",
