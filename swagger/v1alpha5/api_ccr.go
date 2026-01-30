@@ -939,11 +939,15 @@ CcrApiService List all images in a CCR repository.
  * @param repositoryId
  * @param optional nil or *CcrApiListCcrImagesOpts - Optional Parameters:
      * @param "Location" (optional.String) -
+     * @param "Page" (optional.Int32) -
+     * @param "PageSize" (optional.Int32) -
 @return ListCcrImagesResponse
 */
 
 type CcrApiListCcrImagesOpts struct {
 	Location optional.String
+	Page     optional.Int32
+	PageSize optional.Int32
 }
 
 func (a *CcrApiService) ListCcrImages(ctx context.Context, projectId string, repositoryId string, localVarOptionals *CcrApiListCcrImagesOpts) (ListCcrImagesResponse, *http.Response, error) {
@@ -966,6 +970,12 @@ func (a *CcrApiService) ListCcrImages(ctx context.Context, projectId string, rep
 
 	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
 		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
+		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PageSize.IsSet() {
+		localVarQueryParams.Add("page_size", parameterToString(localVarOptionals.PageSize.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
@@ -1078,12 +1088,16 @@ CcrApiService List all manifests for an image in a CCR repository.
  * @param optional nil or *CcrApiListCcrManifestsOpts - Optional Parameters:
      * @param "TagContains" (optional.String) -
      * @param "Location" (optional.String) -
+     * @param "Page" (optional.Int32) -
+     * @param "PageSize" (optional.Int32) -
 @return ListManifestsResponse
 */
 
 type CcrApiListCcrManifestsOpts struct {
 	TagContains optional.String
 	Location    optional.String
+	Page        optional.Int32
+	PageSize    optional.Int32
 }
 
 func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, repositoryId string, imageId string, localVarOptionals *CcrApiListCcrManifestsOpts) (ListManifestsResponse, *http.Response, error) {
@@ -1110,6 +1124,12 @@ func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, 
 	}
 	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
 		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
+		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PageSize.IsSet() {
+		localVarQueryParams.Add("page_size", parameterToString(localVarOptionals.PageSize.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
@@ -1215,12 +1235,20 @@ func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, 
 
 /*
 CcrApiService List all CCR repositories in a project.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param projectId
+ * @param optional nil or *CcrApiListCcrRepositoriesOpts - Optional Parameters:
+     * @param "Page" (optional.Int32) -
+     * @param "PageSize" (optional.Int32) -
 @return ListRepositoriesResponse
 */
-func (a *CcrApiService) ListCcrRepositories(ctx context.Context, projectId string) (ListRepositoriesResponse, *http.Response, error) {
+
+type CcrApiListCcrRepositoriesOpts struct {
+	Page     optional.Int32
+	PageSize optional.Int32
+}
+
+func (a *CcrApiService) ListCcrRepositories(ctx context.Context, projectId string, localVarOptionals *CcrApiListCcrRepositoriesOpts) (ListRepositoriesResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -1237,6 +1265,12 @@ func (a *CcrApiService) ListCcrRepositories(ctx context.Context, projectId strin
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
+		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PageSize.IsSet() {
+		localVarQueryParams.Add("page_size", parameterToString(localVarOptionals.PageSize.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 

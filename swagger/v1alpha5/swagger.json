@@ -1718,6 +1718,20 @@
             "name": "project_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "Page",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "PageSize",
+            "name": "page_size",
+            "in": "query"
           }
         ],
         "responses": {
@@ -1948,6 +1962,20 @@
             "x-go-name": "Location",
             "name": "location",
             "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "Page",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "PageSize",
+            "name": "page_size",
+            "in": "query"
           }
         ],
         "responses": {
@@ -2061,6 +2089,20 @@
             "type": "string",
             "x-go-name": "Location",
             "name": "location",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "Page",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "x-go-name": "PageSize",
+            "name": "page_size",
             "in": "query"
           }
         ],
