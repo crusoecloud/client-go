@@ -629,6 +629,7 @@ This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics 
      * @param "MetricName" (optional.Interface of []string) -  Filter by metric name. Supports comma-separated values (e.g., metric_name&#x3D;http_requests_total,http_response_time).
      * @param "MetricCategory" (optional.String) -  Filter by metric category. &#x27;system&#x27; returns Crusoe-collected metrics. &#x27;custom&#x27; returns user-defined metrics with metrics_source&#x3D;custom-metrics label.
      * @param "Labels" (optional.Interface of []string) -  Filter by label key:value pairs. Use colon to separate key and value. Supports comma-separated values (e.g., labels&#x3D;job:api,region:us-east). Supports UNION (labels&#x3D;device:loop1|loop2)
+     * @param "Compress" (optional.String) -  Enable gzip compression for the response. Accepted values: &#x27;true&#x27; (enables gzip compression) or &#x27;false&#x27; (no compression). Invalid values will be logged and treated as &#x27;false&#x27;.
 
 */
 
@@ -636,6 +637,7 @@ type ObservabilityApiScrapeMetricsOpts struct {
 	MetricName     optional.Interface
 	MetricCategory optional.String
 	Labels         optional.Interface
+	Compress       optional.String
 }
 
 func (a *ObservabilityApiService) ScrapeMetrics(ctx context.Context, projectId string, localVarOptionals *ObservabilityApiScrapeMetricsOpts) (*http.Response, error) {
@@ -662,6 +664,9 @@ func (a *ObservabilityApiService) ScrapeMetrics(ctx context.Context, projectId s
 	}
 	if localVarOptionals != nil && localVarOptionals.Labels.IsSet() {
 		localVarQueryParams.Add("labels", parameterToString(localVarOptionals.Labels.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.Compress.IsSet() {
+		localVarQueryParams.Add("compress", parameterToString(localVarOptionals.Compress.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}

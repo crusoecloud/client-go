@@ -4614,6 +4614,14 @@
             "description": "Filter by label key:value pairs. Use colon to separate key and value.\nSupports comma-separated values (e.g., labels=job:api,region:us-east). Supports UNION (labels=device:loop1|loop2)",
             "name": "labels",
             "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "true",
+            "x-go-name": "Compress",
+            "description": "Enable gzip compression for the response. Accepted values: 'true' (enables gzip compression) or 'false' (no compression). Invalid values will be logged and treated as 'false'.",
+            "name": "compress",
+            "in": "query"
           }
         ],
         "responses": {
