@@ -12923,6 +12923,16 @@
         "has_diagnostic"
       ],
       "properties": {
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2024-01-15T10:30:00Z"
+        },
+        "diagnose_id": {
+          "type": "string",
+          "x-go-name": "DiagnoseID",
+          "example": "123e4567-e89b-12d3-a456-426614174000"
+        },
         "download_url": {
           "type": "string",
           "x-go-name": "DownloadURL",
@@ -12932,6 +12942,11 @@
           "type": "boolean",
           "x-go-name": "HasDiagnostic",
           "example": true
+        },
+        "updated_at": {
+          "type": "string",
+          "x-go-name": "UpdatedAt",
+          "example": "2024-01-15T10:35:00Z"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
