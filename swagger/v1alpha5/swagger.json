@@ -8927,7 +8927,12 @@
           "description": "The recipient group of the billing alert (e.g. admins, editors, viewers).",
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "admins",
+              "editors",
+              "viewers"
+            ]
           },
           "x-go-name": "Recipients"
         },
@@ -9075,7 +9080,12 @@
           "description": "The recipient group of the billing alert (e.g. admins, editors, viewers).",
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "admins",
+              "editors",
+              "viewers"
+            ]
           },
           "x-go-name": "Recipients"
         },
@@ -9200,7 +9210,12 @@
           "description": "The recipient group of the billing alert (e.g. admins, editors, viewers).",
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "admins",
+              "editors",
+              "viewers"
+            ]
           },
           "x-go-name": "Recipients"
         },
