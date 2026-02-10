@@ -16785,6 +16785,16 @@
         "$ref": "#/definitions/SSOProvider"
       }
     },
+    "downloadDiagnosticResponse": {
+      "description": "",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "format": "uint8"
+        }
+      }
+    },
     "emptyResponse": {
       "description": "Empty Response"
     },
