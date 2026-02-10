@@ -9,9 +9,8 @@
 package swagger
 
 type DiagnosticStatusResponse struct {
-	CreatedAt   string `json:"created_at"`
-	DownloadUrl string `json:"download_url,omitempty"`
-	Status      string `json:"status"`
-	Type_       string `json:"type"`
-	UpdatedAt   string `json:"updated_at"`
+	CreatedAt string `json:"created_at"`
+	Status    string `json:"status"`
+	Type_     string `json:"type"`
+	UpdatedAt string `json:"updated_at"`
 }

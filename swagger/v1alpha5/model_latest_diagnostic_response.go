@@ -11,7 +11,6 @@ package swagger
 type LatestDiagnosticResponse struct {
 	CreatedAt     string `json:"created_at,omitempty"`
 	DiagnoseId    string `json:"diagnose_id,omitempty"`
-	DownloadUrl   string `json:"download_url,omitempty"`
 	HasDiagnostic bool   `json:"has_diagnostic"`
 	UpdatedAt     string `json:"updated_at,omitempty"`
 }

@@ -10005,11 +10005,6 @@
           "x-go-name": "CreatedAt",
           "example": "2024-01-15T10:30:00Z"
         },
-        "download_url": {
-          "type": "string",
-          "x-go-name": "DownloadURL",
-          "example": "https://storage.googleapis.com/..."
-        },
         "status": {
           "type": "string",
           "x-go-name": "Status",
@@ -12947,11 +12942,6 @@
           "type": "string",
           "x-go-name": "DiagnoseID",
           "example": "123e4567-e89b-12d3-a456-426614174000"
-        },
-        "download_url": {
-          "type": "string",
-          "x-go-name": "DownloadURL",
-          "example": "https://storage.googleapis.com/..."
         },
         "has_diagnostic": {
           "type": "boolean",
