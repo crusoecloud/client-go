@@ -10,7 +10,7 @@ package swagger
 
 type LatestDiagnosticResponse struct {
 	CreatedAt     string `json:"created_at,omitempty"`
-	DiagnoseId    string `json:"diagnose_id,omitempty"`
 	HasDiagnostic bool   `json:"has_diagnostic"`
+	Id            string `json:"id,omitempty"`
 	UpdatedAt     string `json:"updated_at,omitempty"`
 }

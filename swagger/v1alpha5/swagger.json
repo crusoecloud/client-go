@@ -12938,15 +12938,15 @@
           "x-go-name": "CreatedAt",
           "example": "2024-01-15T10:30:00Z"
         },
-        "diagnose_id": {
-          "type": "string",
-          "x-go-name": "DiagnoseID",
-          "example": "123e4567-e89b-12d3-a456-426614174000"
-        },
         "has_diagnostic": {
           "type": "boolean",
           "x-go-name": "HasDiagnostic",
           "example": true
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "123e4567-e89b-12d3-a456-426614174000"
         },
         "updated_at": {
           "type": "string",
