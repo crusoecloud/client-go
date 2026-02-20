@@ -4021,6 +4021,110 @@
         }
       }
     },
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/autocluster-config": {
+      "get": {
+        "description": "Returns the cluster's autocluster configuration including alert handling defaults and any customer overrides.",
+        "tags": [
+          "AutoCluster Operations"
+        ],
+        "summary": "Retrieve the AutoCluster configuration for a specific cluster.",
+        "operationId": "getAutoClusterConfig",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "description": "Project ID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb",
+            "x-go-name": "ClusterID",
+            "description": "Cluster ID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getAutoClusterConfigResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "description": "Allows setting or removing alert action overrides and configuring project reservation fallback.",
+        "tags": [
+          "AutoCluster Operations"
+        ],
+        "summary": "Update the AutoCluster configuration for a specific cluster.",
+        "operationId": "updateAutoClusterConfig",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "description": "Project ID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb",
+            "x-go-name": "ClusterID",
+            "description": "Cluster ID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Request body",
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateAutoClusterConfigRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/updateAutoClusterConfigResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/kubernetes/clusters/{cluster_id}/get-credentials": {
       "post": {
         "tags": [
@@ -8545,6 +8649,48 @@
     }
   },
   "definitions": {
+    "AlertConfig": {
+      "type": "object",
+      "title": "AlertConfig represents a single alert configuration in the API response.",
+      "properties": {
+        "default_action": {
+          "$ref": "#/definitions/AutoRemediation"
+        },
+        "effective_action": {
+          "$ref": "#/definitions/AutoRemediation"
+        },
+        "issue_name": {
+          "description": "The issue name / alert type (e.g., \"XID_74\", \"GPU_FELL_OFF_THE_BUS\").",
+          "type": "string",
+          "x-go-name": "IssueName",
+          "example": "XID_74"
+        },
+        "user_override": {
+          "$ref": "#/definitions/AutoRemediation"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "AlertOverrideRequest": {
+      "type": "object",
+      "title": "AlertOverrideRequest represents an alert override in the API request.",
+      "required": [
+        "issue_name",
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/definitions/AutoRemediation"
+        },
+        "issue_name": {
+          "description": "The issue name to override (e.g., \"XID_74\", \"GPU_FELL_OFF_THE_BUS\").",
+          "type": "string",
+          "x-go-name": "IssueName",
+          "example": "XID_74"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "ApplyRoleBindingRequest": {
       "type": "object",
       "required": [
@@ -8725,6 +8871,40 @@
           "x-go-name": "OrgName"
         }
       },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "AutoClusterConfigResponse": {
+      "type": "object",
+      "title": "AutoClusterConfigResponse represents the cluster configuration in the API response.",
+      "properties": {
+        "alert_configs": {
+          "description": "Per-alert configuration showing defaults and any user overrides.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertConfig"
+          },
+          "x-go-name": "AlertConfigs"
+        },
+        "fallback_to_project_reservations": {
+          "description": "Whether to use project's unused reservations as fallback when Crusoe spares are exhausted.",
+          "type": "boolean",
+          "x-go-name": "FallbackToProjectReservations",
+          "example": false
+        },
+        "updated_at": {
+          "description": "When this config was last updated.",
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "UpdatedAt",
+          "example": "2025-01-15T10:30:00Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "AutoRemediation": {
+      "description": "example: REPLACE_NODE\nenum: REPLACE_NODE,OFF",
+      "type": "string",
+      "title": "AutoRemediation represents the auto remediation action type for an issue.",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
     "Backend": {
@@ -15864,6 +16044,39 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "UpdateAutoClusterConfigRequest": {
+      "type": "object",
+      "title": "UpdateAutoClusterConfigRequest represents the request body for updating cluster config.",
+      "properties": {
+        "fallback_to_project_reservations": {
+          "description": "Whether to use project's unused reservations as fallback. If not set, existing value is preserved.",
+          "type": "boolean",
+          "x-go-name": "FallbackToProjectReservations",
+          "example": true
+        },
+        "remove_alert_overrides": {
+          "description": "Alert overrides to remove (revert to system defaults).",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "RemoveAlertOverrides",
+          "example": [
+            "XID_74",
+            "GPU_FELL_OFF_THE_BUS"
+          ]
+        },
+        "set_alert_overrides": {
+          "description": "Alert overrides to add or update. These will override the system defaults.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AlertOverrideRequest"
+          },
+          "x-go-name": "SetAlertOverrides"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "UpdateS3BucketTagsRequest": {
       "type": "object",
       "title": "UpdateS3BucketTagsRequest is the request body for updating S3 bucket tags.",
@@ -16804,6 +17017,12 @@
         "$ref": "#/definitions/FeatureFlagsGetResponse"
       }
     },
+    "getAutoClusterConfigResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AutoClusterConfigResponse"
+      }
+    },
     "getAutoClusterOperationResponse": {
       "description": "",
       "schema": {
@@ -17525,6 +17744,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListTypesResponseV1Alpha5"
+      }
+    },
+    "updateAutoClusterConfigResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AutoClusterConfigResponse"
       }
     },
     "updateBillingAlertResponse": {
