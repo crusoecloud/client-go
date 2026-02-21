@@ -8,9 +8,8 @@
  */
 package swagger
 
-type LatestDiagnosticResponse struct {
-	CreatedAt     string `json:"created_at,omitempty"`
-	HasDiagnostic bool   `json:"has_diagnostic"`
-	Id            string `json:"id,omitempty"`
-	UpdatedAt     string `json:"updated_at,omitempty"`
+type AlertOverrideRequest struct {
+	Action string `json:"action"`
+	// The issue name to override (e.g., \"XID_74\", \"GPU_FELL_OFF_THE_BUS\").
+	IssueName string `json:"issue_name"`
 }

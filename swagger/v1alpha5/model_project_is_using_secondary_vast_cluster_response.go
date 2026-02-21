@@ -8,9 +8,6 @@
  */
 package swagger
 
-type LatestDiagnosticResponse struct {
-	CreatedAt     string `json:"created_at,omitempty"`
-	HasDiagnostic bool   `json:"has_diagnostic"`
-	Id            string `json:"id,omitempty"`
-	UpdatedAt     string `json:"updated_at,omitempty"`
+type ProjectIsUsingSecondaryVastClusterResponse struct {
+	Enabled bool `json:"enabled"`
 }
