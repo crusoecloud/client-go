@@ -621,7 +621,7 @@ func (a *ObservabilityApiService) QueryTimeseriesWithParameters(ctx context.Cont
 }
 
 /*
-ObservabilityApiService Export metrics in Prometheus text format for scraping.
+ObservabilityApiService Export metrics in Prometheus text format (default) or OpenMetrics format for scraping.
 This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics in Prometheus text exposition format for scraping by external monitoring systems.  Supports filtering by: metric_name: Filter by metric name(s). Supports comma-separated values (e.g., metric_name&#x3D;http_requests_total,http_response_time) metric_category: Filter by &#x27;system&#x27; (Crusoe-collected) or &#x27;custom&#x27; (user-defined) metrics labels: Filter by label key:value pairs. Supports comma-separated values (e.g., labels&#x3D;job:api,region:us-east)  Internal metrics and provisioned throughput metrics are always excluded.  Rate limited to 10 requests per minute per project. Response limited to 50MB payload and 100,000 time series. Responses are cached for up to 1 minute.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId The project ID to scrape metrics from. User must have read access to the project.
@@ -630,6 +630,7 @@ This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics 
      * @param "MetricCategory" (optional.String) -  Filter by metric category. &#x27;system&#x27; returns Crusoe-collected metrics. &#x27;custom&#x27; returns user-defined metrics with metrics_source&#x3D;custom-metrics label.
      * @param "Labels" (optional.Interface of []string) -  Filter by label key:value pairs. Use colon to separate key and value. Supports comma-separated values (e.g., labels&#x3D;job:api,region:us-east). Supports UNION (labels&#x3D;device:loop1|loop2)
      * @param "Compress" (optional.String) -  Enable gzip compression for the response. Accepted values: &#x27;true&#x27; (enables gzip compression) or &#x27;false&#x27; (no compression). Invalid values will be logged and treated as &#x27;false&#x27;.
+     * @param "Format" (optional.String) -  Response format. Default Prometheus text. Set to \&quot;openmetrics\&quot; to receive application/openmetrics-text (1.0) with # EOF marker.
 
 */
 
@@ -638,6 +639,7 @@ type ObservabilityApiScrapeMetricsOpts struct {
 	MetricCategory optional.String
 	Labels         optional.Interface
 	Compress       optional.String
+	Format         optional.String
 }
 
 func (a *ObservabilityApiService) ScrapeMetrics(ctx context.Context, projectId string, localVarOptionals *ObservabilityApiScrapeMetricsOpts) (*http.Response, error) {
@@ -667,6 +669,9 @@ func (a *ObservabilityApiService) ScrapeMetrics(ctx context.Context, projectId s
 	}
 	if localVarOptionals != nil && localVarOptionals.Compress.IsSet() {
 		localVarQueryParams.Add("compress", parameterToString(localVarOptionals.Compress.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Format.IsSet() {
+		localVarQueryParams.Add("format", parameterToString(localVarOptionals.Format.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}

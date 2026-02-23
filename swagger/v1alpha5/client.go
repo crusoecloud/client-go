@@ -48,6 +48,8 @@ type APIClient struct {
 
 	AutoClusterOperationsApi *AutoClusterOperationsApiService
 
+	AutoClustersApi *AutoClustersApiService
+
 	BillingApi *BillingApiService
 
 	CapacitiesApi *CapacitiesApiService
@@ -169,6 +171,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	// API Services
 	c.AuditLogsApi = (*AuditLogsApiService)(&c.common)
 	c.AutoClusterOperationsApi = (*AutoClusterOperationsApiService)(&c.common)
+	c.AutoClustersApi = (*AutoClustersApiService)(&c.common)
 	c.BillingApi = (*BillingApiService)(&c.common)
 	c.CapacitiesApi = (*CapacitiesApiService)(&c.common)
 	c.CcrApi = (*CcrApiService)(&c.common)
