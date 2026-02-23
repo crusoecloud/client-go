@@ -4673,7 +4673,7 @@
         "tags": [
           "Observability"
         ],
-        "summary": "Export metrics in Prometheus text format for scraping.",
+        "summary": "Export metrics in Prometheus text format (default) or OpenMetrics format for scraping.",
         "operationId": "scrapeMetrics",
         "parameters": [
           {
@@ -4725,6 +4725,18 @@
             "x-go-name": "Compress",
             "description": "Enable gzip compression for the response. Accepted values: 'true' (enables gzip compression) or 'false' (no compression). Invalid values will be logged and treated as 'false'.",
             "name": "compress",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "prometheus",
+              "openmetrics"
+            ],
+            "type": "string",
+            "example": "openmetrics",
+            "x-go-name": "Format",
+            "description": "Response format. Default Prometheus text. Set to \"openmetrics\" to receive application/openmetrics-text (1.0) with # EOF marker.",
+            "name": "format",
             "in": "query"
           }
         ],
