@@ -12,11 +12,11 @@ import (
 	"time"
 )
 
-type AutoClusterConfigResponse struct {
-	// Per-alert configuration showing defaults and any user overrides.
-	AlertConfigs []AlertConfig `json:"alert_configs,omitempty"`
+type AutoClustersConfigResponse struct {
 	// Whether to use project's unused reservations as fallback when Crusoe spares are exhausted.
 	FallbackToProjectReservations bool `json:"fallback_to_project_reservations,omitempty"`
+	// Per-issue configuration showing defaults and any user overrides.
+	RemediationConfigs []RemediationConfig `json:"remediation_configs,omitempty"`
 	// When this config was last updated.
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 }

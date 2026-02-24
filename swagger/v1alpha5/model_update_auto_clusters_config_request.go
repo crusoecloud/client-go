@@ -8,11 +8,11 @@
  */
 package swagger
 
-type UpdateAutoClusterConfigRequest struct {
+type UpdateAutoClustersConfigRequest struct {
 	// Whether to use project's unused reservations as fallback. If not set, existing value is preserved.
 	FallbackToProjectReservations bool `json:"fallback_to_project_reservations,omitempty"`
-	// Alert overrides to remove (revert to system defaults).
-	RemoveAlertOverrides []string `json:"remove_alert_overrides,omitempty"`
-	// Alert overrides to add or update. These will override the system defaults.
-	SetAlertOverrides []AlertOverrideRequest `json:"set_alert_overrides,omitempty"`
+	// Remediation overrides to remove (revert to system defaults).
+	RemoveRemediationOverrides []string `json:"remove_remediation_overrides,omitempty"`
+	// Remediation overrides to add or update. These will override the system defaults.
+	SetRemediationOverrides []RemediationOverrideRequest `json:"set_remediation_overrides,omitempty"`
 }

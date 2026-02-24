@@ -4021,14 +4021,14 @@
         }
       }
     },
-    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/autocluster-config": {
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/autoclusters/config": {
       "get": {
-        "description": "Returns the cluster's autocluster configuration including alert handling defaults and any customer overrides.",
+        "description": "Returns the cluster's autoclusters configuration including alert handling defaults and any customer overrides.",
         "tags": [
-          "AutoCluster Operations"
+          "AutoClusters"
         ],
-        "summary": "Retrieve the AutoCluster configuration for a specific cluster.",
-        "operationId": "getAutoClusterConfig",
+        "summary": "Retrieve the AutoClusters configuration for a specific cluster.",
+        "operationId": "getAutoClustersConfig",
         "parameters": [
           {
             "type": "string",
@@ -4051,7 +4051,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/getAutoClusterConfigResponse"
+            "$ref": "#/responses/getAutoClustersConfigResponse"
           },
           "401": {
             "$ref": "#/responses/authError"
@@ -4068,12 +4068,12 @@
         }
       },
       "patch": {
-        "description": "Allows setting or removing alert action overrides and configuring project reservation fallback.",
+        "description": "Allows setting or removing remediation overrides and configuring project reservation fallback.",
         "tags": [
-          "AutoCluster Operations"
+          "AutoClusters"
         ],
-        "summary": "Update the AutoCluster configuration for a specific cluster.",
-        "operationId": "updateAutoClusterConfig",
+        "summary": "Update the AutoClusters configuration for a specific cluster.",
+        "operationId": "updateAutoClustersConfig",
         "parameters": [
           {
             "type": "string",
@@ -4099,13 +4099,13 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/UpdateAutoClusterConfigRequest"
+              "$ref": "#/definitions/UpdateAutoClustersConfigRequest"
             }
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/updateAutoClusterConfigResponse"
+            "$ref": "#/responses/updateAutoClustersConfigResponse"
           },
           "400": {
             "$ref": "#/responses/badReqError"
@@ -8714,48 +8714,6 @@
     }
   },
   "definitions": {
-    "AlertConfig": {
-      "type": "object",
-      "title": "AlertConfig represents a single alert configuration in the API response.",
-      "properties": {
-        "default_action": {
-          "$ref": "#/definitions/AutoRemediation"
-        },
-        "effective_action": {
-          "$ref": "#/definitions/AutoRemediation"
-        },
-        "issue_name": {
-          "description": "The issue name / alert type (e.g., \"XID_74\", \"GPU_FELL_OFF_THE_BUS\").",
-          "type": "string",
-          "x-go-name": "IssueName",
-          "example": "XID_74"
-        },
-        "user_override": {
-          "$ref": "#/definitions/AutoRemediation"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
-    "AlertOverrideRequest": {
-      "type": "object",
-      "title": "AlertOverrideRequest represents an alert override in the API request.",
-      "required": [
-        "issue_name",
-        "action"
-      ],
-      "properties": {
-        "action": {
-          "$ref": "#/definitions/AutoRemediation"
-        },
-        "issue_name": {
-          "description": "The issue name to override (e.g., \"XID_74\", \"GPU_FELL_OFF_THE_BUS\").",
-          "type": "string",
-          "x-go-name": "IssueName",
-          "example": "XID_74"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
-    },
     "ApplyRoleBindingRequest": {
       "type": "object",
       "required": [
@@ -8938,23 +8896,23 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "AutoClusterConfigResponse": {
+    "AutoClustersConfigResponse": {
       "type": "object",
-      "title": "AutoClusterConfigResponse represents the cluster configuration in the API response.",
+      "title": "AutoClustersConfigResponse represents the cluster configuration in the API response.",
       "properties": {
-        "alert_configs": {
-          "description": "Per-alert configuration showing defaults and any user overrides.",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/AlertConfig"
-          },
-          "x-go-name": "AlertConfigs"
-        },
         "fallback_to_project_reservations": {
           "description": "Whether to use project's unused reservations as fallback when Crusoe spares are exhausted.",
           "type": "boolean",
           "x-go-name": "FallbackToProjectReservations",
           "example": false
+        },
+        "remediation_configs": {
+          "description": "Per-issue configuration showing defaults and any user overrides.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RemediationConfig"
+          },
+          "x-go-name": "RemediationConfigs"
         },
         "updated_at": {
           "description": "When this config was last updated.",
@@ -15086,6 +15044,48 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "RemediationConfig": {
+      "type": "object",
+      "title": "RemediationConfig represents a single remediation configuration in the API response.",
+      "properties": {
+        "default_action": {
+          "$ref": "#/definitions/AutoRemediation"
+        },
+        "effective_action": {
+          "$ref": "#/definitions/AutoRemediation"
+        },
+        "issue_name": {
+          "description": "The issue name / remediation type (e.g., \"XID_74\", \"GPU_FELL_OFF_THE_BUS\").",
+          "type": "string",
+          "x-go-name": "IssueName",
+          "example": "XID_74"
+        },
+        "user_override": {
+          "$ref": "#/definitions/AutoRemediation"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
+    "RemediationOverrideRequest": {
+      "type": "object",
+      "title": "RemediationOverrideRequest represents a remediation override in the API request.",
+      "required": [
+        "issue_name",
+        "action"
+      ],
+      "properties": {
+        "action": {
+          "$ref": "#/definitions/AutoRemediation"
+        },
+        "issue_name": {
+          "description": "The issue name to override (e.g., \"XID_74\", \"GPU_FELL_OFF_THE_BUS\").",
+          "type": "string",
+          "x-go-name": "IssueName",
+          "example": "XID_74"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+    },
     "Repository": {
       "type": "object",
       "properties": {
@@ -16109,9 +16109,9 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
-    "UpdateAutoClusterConfigRequest": {
+    "UpdateAutoClustersConfigRequest": {
       "type": "object",
-      "title": "UpdateAutoClusterConfigRequest represents the request body for updating cluster config.",
+      "title": "UpdateAutoClustersConfigRequest represents the request body for updating cluster config.",
       "properties": {
         "fallback_to_project_reservations": {
           "description": "Whether to use project's unused reservations as fallback. If not set, existing value is preserved.",
@@ -16119,25 +16119,25 @@
           "x-go-name": "FallbackToProjectReservations",
           "example": true
         },
-        "remove_alert_overrides": {
-          "description": "Alert overrides to remove (revert to system defaults).",
+        "remove_remediation_overrides": {
+          "description": "Remediation overrides to remove (revert to system defaults).",
           "type": "array",
           "items": {
             "type": "string"
           },
-          "x-go-name": "RemoveAlertOverrides",
+          "x-go-name": "RemoveRemediationOverrides",
           "example": [
             "XID_74",
             "GPU_FELL_OFF_THE_BUS"
           ]
         },
-        "set_alert_overrides": {
-          "description": "Alert overrides to add or update. These will override the system defaults.",
+        "set_remediation_overrides": {
+          "description": "Remediation overrides to add or update. These will override the system defaults.",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/AlertOverrideRequest"
+            "$ref": "#/definitions/RemediationOverrideRequest"
           },
-          "x-go-name": "SetAlertOverrides"
+          "x-go-name": "SetRemediationOverrides"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -17082,16 +17082,16 @@
         "$ref": "#/definitions/FeatureFlagsGetResponse"
       }
     },
-    "getAutoClusterConfigResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/AutoClusterConfigResponse"
-      }
-    },
     "getAutoClusterOperationResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/Operation"
+      }
+    },
+    "getAutoClustersConfigResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/AutoClustersConfigResponse"
       }
     },
     "getBillingAlertResponse": {
@@ -17811,10 +17811,10 @@
         "$ref": "#/definitions/ListTypesResponseV1Alpha5"
       }
     },
-    "updateAutoClusterConfigResponse": {
+    "updateAutoClustersConfigResponse": {
       "description": "",
       "schema": {
-        "$ref": "#/definitions/AutoClusterConfigResponse"
+        "$ref": "#/definitions/AutoClustersConfigResponse"
       }
     },
     "updateBillingAlertResponse": {
