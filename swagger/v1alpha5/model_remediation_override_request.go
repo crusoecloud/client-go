@@ -8,7 +8,7 @@
  */
 package swagger
 
-type AlertOverrideRequest struct {
+type RemediationOverrideRequest struct {
 	Action string `json:"action"`
 	// The issue name to override (e.g., \"XID_74\", \"GPU_FELL_OFF_THE_BUS\").
 	IssueName string `json:"issue_name"`

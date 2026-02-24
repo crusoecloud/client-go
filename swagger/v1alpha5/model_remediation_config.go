@@ -8,10 +8,10 @@
  */
 package swagger
 
-type AlertConfig struct {
+type RemediationConfig struct {
 	DefaultAction   string `json:"default_action,omitempty"`
 	EffectiveAction string `json:"effective_action,omitempty"`
-	// The issue name / alert type (e.g., \"XID_74\", \"GPU_FELL_OFF_THE_BUS\").
+	// The issue name / remediation type (e.g., \"XID_74\", \"GPU_FELL_OFF_THE_BUS\").
 	IssueName    string `json:"issue_name,omitempty"`
 	UserOverride string `json:"user_override,omitempty"`
 }
