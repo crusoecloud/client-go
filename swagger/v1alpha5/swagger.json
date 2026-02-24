@@ -16112,6 +16112,9 @@
     "UpdateAutoClustersConfigRequest": {
       "type": "object",
       "title": "UpdateAutoClustersConfigRequest represents the request body for updating cluster config.",
+      "required": [
+        "fallback_to_project_reservations"
+      ],
       "properties": {
         "fallback_to_project_reservations": {
           "description": "Whether to use project's unused reservations as fallback. If not set, existing value is preserved.",
@@ -16137,7 +16140,13 @@
           "items": {
             "$ref": "#/definitions/RemediationOverrideRequest"
           },
-          "x-go-name": "SetRemediationOverrides"
+          "x-go-name": "SetRemediationOverrides",
+          "example": [
+            {
+              "action": "OFF",
+              "issue_name": "XID_74"
+            }
+          ]
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
