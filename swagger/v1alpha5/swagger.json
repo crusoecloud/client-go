@@ -617,7 +617,7 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "OrgId",
+            "x-go-name": "OrgID",
             "name": "org_id",
             "in": "path",
             "required": true
@@ -651,7 +651,7 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "OrgId",
+            "x-go-name": "OrgID",
             "name": "org_id",
             "in": "path",
             "required": true
@@ -721,7 +721,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "$ref": "#/responses/okEmpty"
           },
           "401": {
@@ -7750,6 +7750,29 @@
             "name": "project_id",
             "in": "path",
             "required": true
+          },
+          {
+            "type": "string",
+            "example": "bXktZmlyc3Qtdm0",
+            "x-go-name": "NextPageToken",
+            "name": "next_page_token",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "bXktZmlyc3Qtdm0",
+            "x-go-name": "PrevPageToken",
+            "name": "prev_page_token",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "format": "int32",
+            "default": 20,
+            "example": 10,
+            "x-go-name": "PageSize",
+            "name": "page_size",
+            "in": "query"
           }
         ],
         "responses": {
@@ -7881,7 +7904,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "$ref": "#/responses/okEmpty"
           },
           "401": {
@@ -13693,11 +13716,22 @@
       ],
       "properties": {
         "items": {
+          "description": "List of buckets",
           "type": "array",
           "items": {
             "$ref": "#/definitions/S3Bucket"
           },
           "x-go-name": "Items"
+        },
+        "next_page_token": {
+          "description": "Next page token",
+          "type": "string",
+          "x-go-name": "NextPageToken"
+        },
+        "prev_page_token": {
+          "description": "Previous page token",
+          "type": "string",
+          "x-go-name": "PrevPageToken"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
@@ -15444,6 +15478,13 @@
           "x-go-name": "ArchivedAt",
           "example": "2021-12-03T19:58:34Z"
         },
+        "bucket_size": {
+          "description": "Size of the bucket in GiB.",
+          "type": "number",
+          "format": "float",
+          "x-go-name": "BucketSize",
+          "example": 2.42
+        },
         "created_at": {
           "description": "Creation date in RFC3339 format.",
           "type": "string",
@@ -15486,6 +15527,12 @@
         },
         "retention_period_unit": {
           "$ref": "#/definitions/S3RetentionPeriodUnit"
+        },
+        "s3_url": {
+          "description": "URL of the bucket.",
+          "type": "string",
+          "x-go-name": "S3URL",
+          "example": "https://object.us-eaststaging7-b.crusoecloudcompute.com/my-first-bucket"
         },
         "tags": {
           "description": "List of tags for this bucket.",
