@@ -680,12 +680,22 @@ func (a *S3BucketsApiService) GetS3Bucket(ctx context.Context, projectId string,
 
 /*
 S3BucketsApiService Retrieve details about all S3 buckets that belong to the project.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param projectId
+ * @param optional nil or *S3BucketsApiListS3BucketsOpts - Optional Parameters:
+     * @param "NextPageToken" (optional.String) -
+     * @param "PrevPageToken" (optional.String) -
+     * @param "PageSize" (optional.Int32) -
 @return ListS3BucketsResponse
 */
-func (a *S3BucketsApiService) ListS3Buckets(ctx context.Context, projectId string) (ListS3BucketsResponse, *http.Response, error) {
+
+type S3BucketsApiListS3BucketsOpts struct {
+	NextPageToken optional.String
+	PrevPageToken optional.String
+	PageSize      optional.Int32
+}
+
+func (a *S3BucketsApiService) ListS3Buckets(ctx context.Context, projectId string, localVarOptionals *S3BucketsApiListS3BucketsOpts) (ListS3BucketsResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -702,6 +712,15 @@ func (a *S3BucketsApiService) ListS3Buckets(ctx context.Context, projectId strin
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.NextPageToken.IsSet() {
+		localVarQueryParams.Add("next_page_token", parameterToString(localVarOptionals.NextPageToken.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PrevPageToken.IsSet() {
+		localVarQueryParams.Add("prev_page_token", parameterToString(localVarOptionals.PrevPageToken.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PageSize.IsSet() {
+		localVarQueryParams.Add("page_size", parameterToString(localVarOptionals.PageSize.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 

@@ -12,6 +12,8 @@ package swagger
 type S3Bucket struct {
 	// Archived date in RFC3339 format.
 	ArchivedAt string `json:"archived_at,omitempty"`
+	// Size of the bucket in GiB.
+	BucketSize float32 `json:"bucket_size,omitempty"`
 	// Creation date in RFC3339 format.
 	CreatedAt string `json:"created_at"`
 	// Location of the bucket.
@@ -26,6 +28,8 @@ type S3Bucket struct {
 	// How long objects are retained.
 	RetentionPeriod     int32  `json:"retention_period,omitempty"`
 	RetentionPeriodUnit string `json:"retention_period_unit,omitempty"`
+	// URL of the bucket.
+	S3Url string `json:"s3_url,omitempty"`
 	// List of tags for this bucket.
 	Tags map[string]string `json:"tags,omitempty"`
 	// Updated date in RFC3339 format.
