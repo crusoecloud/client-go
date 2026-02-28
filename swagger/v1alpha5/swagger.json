@@ -7834,6 +7834,39 @@
         }
       }
     },
+    "/projects/{project_id}/storage/s3/buckets/count": {
+      "get": {
+        "tags": [
+          "S3Buckets"
+        ],
+        "summary": "Retrieve the count of S3 buckets that belong to the project.",
+        "operationId": "getS3BucketsCount",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getS3BucketsCountResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/storage/s3/buckets/{bucket_name}": {
       "get": {
         "tags": [
@@ -17319,6 +17352,9 @@
       "schema": {
         "$ref": "#/definitions/S3Bucket"
       }
+    },
+    "getS3BucketsCountResponse": {
+      "description": ""
     },
     "getSSHKeysResponse": {
       "description": "",
