@@ -10681,7 +10681,8 @@
           "type": "string",
           "enum": [
             "standard",
-            "enterprise"
+            "enterprise",
+            "limited"
           ],
           "x-go-name": "OrganizationType"
         },
