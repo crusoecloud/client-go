@@ -11237,6 +11237,21 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
     },
+    "GetTopologyResponse": {
+      "type": "object",
+      "title": "GetTopologyResponse is a response containing the topology for a cluster.",
+      "properties": {
+        "ib_networks": {
+          "description": "List of InfiniBand networks in the cluster.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IBNetwork"
+          },
+          "x-go-name": "IbNetworks"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/schemas/api/island/v2/observability"
+    },
     "HealthCheckOptions": {
       "type": "object",
       "required": [
@@ -17379,6 +17394,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/DiskSnapshot"
+      }
+    },
+    "getTopologyResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetTopologyResponse"
       }
     },
     "getVPCNetworkResponse": {
