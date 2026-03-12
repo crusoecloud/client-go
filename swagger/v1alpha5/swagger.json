@@ -11239,18 +11239,17 @@
     },
     "GetTopologyResponse": {
       "type": "object",
-      "title": "GetTopologyResponse is a response containing the topology for a cluster.",
+      "title": "GetTopologyResponse is the gateway response for cluster topology.",
       "properties": {
         "ib_networks": {
-          "description": "List of InfiniBand networks in the cluster.",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/IBNetwork"
+            "$ref": "#/definitions/IbNetworkInfo"
           },
           "x-go-name": "IbNetworks"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/schemas/api/island/v2/observability"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "HealthCheckOptions": {
       "type": "object",
@@ -11483,6 +11482,28 @@
         },
         "public_ipv4": {
           "$ref": "#/definitions/PublicIPv4Address"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "IbNetworkInfo": {
+      "type": "object",
+      "title": "IbNetworkInfo contains information about an InfiniBand network.",
+      "properties": {
+        "ib_network_id": {
+          "type": "string",
+          "x-go-name": "IbNetworkID"
+        },
+        "ib_network_name": {
+          "type": "string",
+          "x-go-name": "IbNetworkName"
+        },
+        "nodepool_infos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NodepoolInfo"
+          },
+          "x-go-name": "NodepoolInfos"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -14438,6 +14459,36 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "NodepoolInfo": {
+      "type": "object",
+      "title": "NodepoolInfo contains information about a nodepool.",
+      "properties": {
+        "instance_type": {
+          "type": "string",
+          "x-go-name": "InstanceType"
+        },
+        "nodepool_id": {
+          "type": "string",
+          "x-go-name": "NodepoolID"
+        },
+        "nodepool_name": {
+          "type": "string",
+          "x-go-name": "NodepoolName"
+        },
+        "nodepool_state": {
+          "type": "string",
+          "x-go-name": "NodepoolState"
+        },
+        "vms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VMInfo"
+          },
+          "x-go-name": "Vms"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "NvlinkDomainSummaryResponse": {
       "type": "object",
       "title": "NvlinkDomainSummaryResponse represents summary information about an NVLink domain.",
@@ -16461,6 +16512,33 @@
           "type": "string",
           "x-go-name": "VMID",
           "example": "123e4567-e89b-12d3-a456-426614174000"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "VMInfo": {
+      "type": "object",
+      "title": "VMInfo contains information about a virtual machine.",
+      "properties": {
+        "nvlink_domain_id": {
+          "type": "string",
+          "x-go-name": "NvlinkDomainID"
+        },
+        "pod_id": {
+          "type": "string",
+          "x-go-name": "PodID"
+        },
+        "vm_id": {
+          "type": "string",
+          "x-go-name": "VMID"
+        },
+        "vm_name": {
+          "type": "string",
+          "x-go-name": "VMName"
+        },
+        "vm_state": {
+          "type": "string",
+          "x-go-name": "VMState"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"

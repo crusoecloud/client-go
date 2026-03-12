@@ -8,6 +8,8 @@
  */
 package swagger
 
-type GetTopologyResponse struct {
-	IbNetworks []IbNetworkInfo `json:"ib_networks,omitempty"`
+type IbNetworkInfo struct {
+	IbNetworkId   string         `json:"ib_network_id,omitempty"`
+	IbNetworkName string         `json:"ib_network_name,omitempty"`
+	NodepoolInfos []NodepoolInfo `json:"nodepool_infos,omitempty"`
 }
