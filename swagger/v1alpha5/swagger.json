@@ -7867,6 +7867,39 @@
         }
       }
     },
+    "/projects/{project_id}/storage/s3/buckets/quota": {
+      "get": {
+        "tags": [
+          "S3Buckets"
+        ],
+        "summary": "Retrieve the quota information for S3 buckets that belong to the project.",
+        "operationId": "getS3BucketsQuotaRequest",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getS3BucketsQuotaResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/storage/s3/buckets/{bucket_name}": {
       "get": {
         "tags": [
@@ -8792,7 +8825,7 @@
           "x-go-name": "BindingsToDelete"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "AsyncOperationResponse": {
       "type": "object",
@@ -8880,7 +8913,7 @@
           "example": "2021-12-03T19:58:34Z"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "AuditLogsGetResponse": {
       "type": "object",
@@ -8908,7 +8941,7 @@
           "example": "bXktZmlyc3Qtdm0"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "AuthCheckGetResponse": {
       "type": "object",
@@ -8927,7 +8960,7 @@
           "x-go-name": "Providers"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "AuthCheckProvider": {
       "type": "object",
@@ -8950,7 +8983,7 @@
           "x-go-name": "OrgName"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "AutoClustersConfigResponse": {
       "type": "object",
@@ -8978,13 +9011,13 @@
           "example": "2025-01-15T10:30:00Z"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "AutoRemediation": {
       "description": "example: REPLACE_NODE\nenum: REPLACE_NODE,OFF",
       "type": "string",
       "title": "AutoRemediation represents the auto remediation action type for an issue.",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Backend": {
       "type": "object",
@@ -9015,7 +9048,7 @@
           "example": "ONLINE"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Billing": {
       "type": "object",
@@ -9042,7 +9075,7 @@
           "example": true
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingAddress": {
       "type": "object",
@@ -9086,7 +9119,7 @@
           "example": "Colorado"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingAlert": {
       "type": "object",
@@ -9225,7 +9258,7 @@
           "example": 105050.5
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingAlertGetResponse": {
       "type": "object",
@@ -9238,7 +9271,7 @@
           "$ref": "#/definitions/BillingAlert"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingAlertListResponse": {
       "type": "object",
@@ -9267,7 +9300,7 @@
           "example": "bXktZmlyc3Qtbm9kZQ"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingAlertPostRequest": {
       "type": "object",
@@ -9378,7 +9411,7 @@
           "example": 105050.5
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingAlertPostResponse": {
       "type": "object",
@@ -9391,7 +9424,7 @@
           "$ref": "#/definitions/BillingAlert"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingAlertPutRequest": {
       "type": "object",
@@ -9508,7 +9541,7 @@
           "example": 105050.5
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingAlertPutResponse": {
       "type": "object",
@@ -9521,7 +9554,7 @@
           "$ref": "#/definitions/BillingAlert"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingCostData": {
       "type": "object",
@@ -9542,7 +9575,7 @@
           "x-go-name": "LastUpdated"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingCostDatum": {
       "type": "object",
@@ -9599,7 +9632,7 @@
           "example": 1.23
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingIntentGetResponse": {
       "type": "object",
@@ -9614,7 +9647,7 @@
           "example": "https://billing.stripe.com/session/{SESSION_SECRET}"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingResourceDatum": {
       "type": "object",
@@ -9686,7 +9719,7 @@
           "example": "\"1.23\""
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingResourcesResponse": {
       "type": "object",
@@ -9702,7 +9735,7 @@
           "x-go-name": "Data"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BulkCreateLocationInfo": {
       "type": "object",
@@ -9734,7 +9767,7 @@
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BulkInstancePostRequestV1Alpha5": {
       "type": "object",
@@ -9788,7 +9821,7 @@
           "$ref": "#/definitions/ReservationSpecification"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CCRTokenRequest": {
       "type": "object",
@@ -9802,7 +9835,7 @@
           "x-go-name": "ExpiresAt"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CCRTokenResponse": {
       "type": "object",
@@ -9812,7 +9845,7 @@
           "x-go-name": "Token"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CapacityV1Alpha5": {
       "type": "object",
@@ -9851,7 +9884,7 @@
           "example": "a100.2x"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CcrImage": {
       "type": "object",
@@ -9880,11 +9913,11 @@
           "x-go-name": "URL"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ContinueToEnum": {
       "type": "string",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateLimitedUsageAPIKeyRequest": {
       "type": "object",
@@ -9909,7 +9942,7 @@
           "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateS3BucketRequest": {
       "type": "object",
@@ -9959,7 +9992,7 @@
           "$ref": "#/definitions/S3VersioningState"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateS3KeyRequest": {
       "type": "object",
@@ -9978,7 +10011,7 @@
           "example": "2022-12-03T19:58:34Z"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateS3KeyResponse": {
       "description": "It includes the one-time-only secret key.",
@@ -10008,7 +10041,7 @@
           "example": "K7i+q0..."
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateSSHKeyRequest": {
       "type": "object",
@@ -10028,7 +10061,7 @@
           "example": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpuH/fqCFLbAConChyVH6rZzSaxlnHSwQk6qvtPsf5E"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateSSHKeyResponse": {
       "type": "object",
@@ -10040,7 +10073,7 @@
           "$ref": "#/definitions/SSHKey"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateSSOProviderRequest": {
       "type": "object",
@@ -10066,7 +10099,7 @@
           "x-go-name": "IssuerURI"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateTokenRequest": {
       "type": "object",
@@ -10085,7 +10118,7 @@
           "example": "2021-12-03T19:58:34Z"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CredentialsResponse": {
       "type": "object",
@@ -10106,7 +10139,7 @@
           "x-go-name": "CredentialsMap"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Credit": {
       "type": "object",
@@ -10132,7 +10165,7 @@
           "example": "\"2025-02-14T12:00:00Z\""
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CustomImageEditTagsRequest": {
       "type": "object",
@@ -10150,7 +10183,7 @@
           "example": "[latest]"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CustomImagePatchRequest": {
       "type": "object",
@@ -10165,7 +10198,7 @@
           "example": "\"Ubuntu is the modern, open source operating system on Linux for ...\""
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CustomImagePostRequest": {
       "type": "object",
@@ -10198,7 +10231,7 @@
           "example": "22.04,latest"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DeleteS3KeyRequest": {
       "type": "object",
@@ -10214,7 +10247,7 @@
           "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DesiredCount": {
       "type": "object",
@@ -10226,7 +10259,7 @@
           "x-go-name": "Value"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiagnosticResponse": {
       "type": "object",
@@ -10247,7 +10280,7 @@
           "example": "123e4567-e89b-12d3-a456-426614174000"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiagnosticStatusResponse": {
       "type": "object",
@@ -10280,7 +10313,7 @@
           "example": "2024-01-15T10:35:00Z"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiskAttachment": {
       "type": "object",
@@ -10314,11 +10347,11 @@
           "example": "read-only, read-write"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiskModeType": {
       "type": "string",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiskSnapshot": {
       "type": "object",
@@ -10368,7 +10401,7 @@
           "example": "2021-12-03T19:58:34Z"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiskSnapshotPatchRequest": {
       "type": "object",
@@ -10382,7 +10415,7 @@
           "example": "my-snapshot"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiskSnapshotPostRequestV1Alpha5": {
       "type": "object",
@@ -10402,7 +10435,7 @@
           "example": "my-snapshot-1"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiskTemplate": {
       "type": "object",
@@ -10427,7 +10460,7 @@
           "example": "persistent-ssd"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiskV1Alpha5": {
       "type": "object",
@@ -10498,7 +10531,7 @@
           "example": "2021-12-03T19:58:34Z"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DisksPatchRequest": {
       "type": "object",
@@ -10512,7 +10545,7 @@
           "example": "10GiB"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DisksPostRequestV1Alpha5": {
       "type": "object",
@@ -10557,7 +10590,7 @@
           "example": "persistent-ssd"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "EditOrgMFARequest": {
       "type": "object",
@@ -10574,7 +10607,7 @@
           "x-go-name": "IntendedMethods"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "EnableS3BucketObjectLockRequest": {
       "type": "object",
@@ -10591,7 +10624,7 @@
           "$ref": "#/definitions/S3RetentionPeriodUnit"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "EntitiesInvitesPatchRequest": {
       "type": "object",
@@ -10606,7 +10639,7 @@
           "example": "465a1fb5-f37e-4483-ad36-bf994efcb170"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "EntitiesPutPostRequest": {
       "type": "object",
@@ -10621,7 +10654,7 @@
           "example": "Crusoe Energy"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "EntitiesPutPostResponse": {
       "type": "object",
@@ -10634,7 +10667,7 @@
           "$ref": "#/definitions/Entity"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Entity": {
       "type": "object",
@@ -10681,7 +10714,8 @@
           "type": "string",
           "enum": [
             "standard",
-            "enterprise"
+            "enterprise",
+            "limited"
           ],
           "x-go-name": "OrganizationType"
         },
@@ -10704,7 +10738,7 @@
           "x-go-name": "StateReason"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ErrorBody": {
       "type": "object",
@@ -10795,7 +10829,7 @@
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ExternalLoadBalancerPatchRequest": {
       "type": "object",
@@ -10816,7 +10850,7 @@
           "x-go-name": "ListenPortsAndBackends"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ExternalLoadBalancerPostRequest": {
       "type": "object",
@@ -10865,7 +10899,7 @@
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "FeatureFlagsGetResponse": {
       "type": "object",
@@ -10884,7 +10918,7 @@
           }
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Fingerprints": {
       "type": "object",
@@ -10904,7 +10938,7 @@
           "example": "tARFxQkVHeqm6TzqpI897QsHVdgZlxgL2/YhVltmEUk"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "FirewallRuleObject": {
       "description": "It has two fields: CIDR and ResourceID. The CIDR field may either be a\nCIDR or an IP address. If an IP, it will be converted to a CIDR. Resource ids\nof VPC networks, Subnets, and VMs are the only allowed. Only one of the two\nfields can be non empty.",
@@ -10922,7 +10956,7 @@
           "example": "306aa10d-5570-4e47-88c9-46bf11bd8737"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GPUTrackingDatum": {
       "type": "object",
@@ -10969,7 +11003,7 @@
           "x-go-name": "RegionalCapacity"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GPUTrackingDatumMod": {
       "type": "object",
@@ -11016,7 +11050,7 @@
           "x-go-name": "GPUUsage"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GPUTrackingResponse": {
       "type": "object",
@@ -11029,7 +11063,7 @@
           "x-go-name": "Data"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GeneratedLimitedUsageAPIKey": {
       "type": "object",
@@ -11081,7 +11115,7 @@
           "example": "inference"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GeneratedToken": {
       "description": "These are the fields returned from a PUT request.",
@@ -11120,7 +11154,7 @@
           "example": "HrbZ3VTUb2YNAq53Md1EsA"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GetBillingMonthlySummaryResponseV1Alpha5": {
       "type": "object",
@@ -11195,7 +11229,7 @@
           "example": "\"12.34\""
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GetCreditsResponseV1Alpha5": {
       "type": "object",
@@ -11217,7 +11251,7 @@
           "example": "\"usd\""
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GetOrgMFAResponse": {
       "type": "object",
@@ -11234,7 +11268,21 @@
           "x-go-name": "MFAMethods"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "GetTopologyResponse": {
+      "type": "object",
+      "title": "GetTopologyResponse is the gateway response for cluster topology.",
+      "properties": {
+        "ib_networks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/IbNetworkInfo"
+          },
+          "x-go-name": "IbNetworks"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "HealthCheckOptions": {
       "type": "object",
@@ -11268,7 +11316,7 @@
           "example": "20"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "HealthCheckOptionsExternalLB": {
       "type": "object",
@@ -11309,7 +11357,7 @@
           "example": 5
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "HostChannelAdapter": {
       "type": "object",
@@ -11351,7 +11399,7 @@
           "example": "infiniband"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "IBNetwork": {
       "type": "object",
@@ -11385,7 +11433,7 @@
           "example": "ib-network-1"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "IBNetworkCapacity": {
       "type": "object",
@@ -11406,7 +11454,7 @@
           "example": "16 vCPUs & 125GB RAM & 1 A100 (40GB) GPU"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "IBPartition": {
       "type": "object",
@@ -11432,7 +11480,7 @@
           "example": "my-ib-partition"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "IBPartitionsPostRequestV1Alpha5": {
       "type": "object",
@@ -11453,7 +11501,7 @@
           "example": "my-ib-partition"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "IPAddresses": {
       "type": "object",
@@ -11469,7 +11517,29 @@
           "$ref": "#/definitions/PublicIPv4Address"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "IbNetworkInfo": {
+      "type": "object",
+      "title": "IbNetworkInfo contains information about an InfiniBand network.",
+      "properties": {
+        "ib_network_id": {
+          "type": "string",
+          "x-go-name": "IbNetworkID"
+        },
+        "ib_network_name": {
+          "type": "string",
+          "x-go-name": "IbNetworkName"
+        },
+        "nodepool_infos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NodepoolInfo"
+          },
+          "x-go-name": "NodepoolInfos"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Identity": {
       "description": "Identity contains the information stored for a User. These are\nthe fields returned from a GET or PUT request.",
@@ -11545,7 +11615,7 @@
           "$ref": "#/definitions/UserStateEnum"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "IdentityCredential": {
       "type": "object",
@@ -11590,7 +11660,7 @@
           "example": "Admin"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Image": {
       "type": "object",
@@ -11640,7 +11710,7 @@
           "example": "[20.4, latest]"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceDetails": {
       "type": "object",
@@ -11661,7 +11731,7 @@
           "example": true
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceGroup": {
       "type": "object",
@@ -11771,7 +11841,7 @@
           "example": "2024-01-01T00:00:00Z"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceGroupPatchRequest": {
       "description": "This is a separate type from InstanceGroupPostRequest for clearer documentation, as these fields are not required\nin the PATCH endpoint.",
@@ -11794,7 +11864,7 @@
           "example": "7e6a6c5a-1314-409a-9e4f-3cc9f2a68fcc"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceGroupPostRequest": {
       "type": "object",
@@ -11825,7 +11895,7 @@
           "example": "7e6a6c5a-1314-409a-9e4f-3cc9f2a68fcc"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceTemplate": {
       "type": "object",
@@ -11979,7 +12049,7 @@
           "$ref": "#/definitions/VirtualizationFeatures"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceTemplatePostRequestV1Alpha5": {
       "type": "object",
@@ -12096,7 +12166,7 @@
           "$ref": "#/definitions/VirtualizationFeatures"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceV1Alpha5": {
       "description": "InstanceV1Alpha5 contains identifying information about a vm instance for\nvms.instances endpoints.",
@@ -12230,7 +12300,7 @@
           "$ref": "#/definitions/VirtualizationFeatures"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstancesAttachDiskPostRequestV1Alpha5": {
       "description": "InstancesAttachDiskPostRequestV1Alpha5 is the request type for POST requests to the\nvms.instances.attach-disk endpoint.",
@@ -12248,7 +12318,7 @@
           "example": "[{disk_id: \"09ae8411-0fbb-411c-898c-2b8f19622ae1\", mode: \"read-write\", attachment_type: \"data\"}, {disk_id: \"b1f86d1b-42d2-490d-adb0-cc1029abf653\", mode: \"read-only\", attachment_type: \"data\"}]"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstancesDetachDiskPostRequest": {
       "description": "InstancesDetachDiskPostRequest is the request type for POST requests to the\nvms.instances.detach-disk endpoint.",
@@ -12269,7 +12339,7 @@
           ]
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstancesPatchRequestV1Alpha5": {
       "type": "object",
@@ -12329,7 +12399,7 @@
           "example": "a100.2x"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstancesPostRequestV1Alpha5": {
       "description": "InstancesPostRequestV1Alpha5 is the request type for POST requests to the\nvms.instances endpoint.",
@@ -12427,7 +12497,7 @@
           "$ref": "#/definitions/VirtualizationFeatures"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesAuthenticationDetails": {
       "description": "It supports both the new kubeconfig-based and legacy certificate-based authentication.",
@@ -12478,7 +12548,7 @@
           "x-go-name": "UserName"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesCancelNodePoolRotateResponse": {
       "type": "object",
@@ -12492,7 +12562,7 @@
           "x-go-name": "NoRotateInProgress"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesCluster": {
       "type": "object",
@@ -12632,7 +12702,7 @@
           "example": "1.29.5-crusoe.0"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesClusterAuthConfig": {
       "description": "This configures how users authenticate to the Kubernetes API server.\nexample: {\"oidc\": {\"issuer_url\": \"https://oauth2.example.com\", \"client_id\": \"kubernetes\"}}",
@@ -12643,7 +12713,7 @@
           "$ref": "#/definitions/OIDCAuthConfig"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesClusterPatchRequest": {
       "type": "object",
@@ -12659,7 +12729,7 @@
           "example": "ha"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesClusterPostRequest": {
       "type": "object",
@@ -12745,7 +12815,7 @@
           "example": "1.29.5-crusoe.0"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesClustersVersionInfo": {
       "type": "object",
@@ -12772,7 +12842,7 @@
           "$ref": "#/definitions/VersionDetails"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesGetNodePoolRotateStatusResponse": {
       "type": "object",
@@ -12795,7 +12865,7 @@
           "x-go-name": "State"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesNodePool": {
       "type": "object",
@@ -12938,7 +13008,7 @@
           "example": "2021-12-03T19:58:34Z"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesNodePoolPatchRequest": {
       "type": "object",
@@ -13007,7 +13077,7 @@
           "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesNodePoolPostRequest": {
       "type": "object",
@@ -13106,7 +13176,7 @@
           "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesNodePoolResponse": {
       "type": "object",
@@ -13121,7 +13191,7 @@
           "$ref": "#/definitions/KubernetesNodePool"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesNodePoolRotateStartRequest": {
       "type": "object",
@@ -13156,7 +13226,7 @@
           "example": "'count'"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesNodePoolsVersionInfo": {
       "type": "object",
@@ -13183,7 +13253,7 @@
           "$ref": "#/definitions/VersionDetails"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LatestDiagnosticResponse": {
       "type": "object",
@@ -13213,7 +13283,7 @@
           "example": "2024-01-15T10:35:00Z"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LatestGPUTracking": {
       "type": "object",
@@ -13233,7 +13303,7 @@
           "x-go-name": "ReservationID"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LimitedUsageAPIKeyInfo": {
       "description": "These are the fields returned from a GET request.",
@@ -13288,7 +13358,7 @@
           "example": "inference"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LimitedUsageAPIKeyPostResponse": {
       "type": "object",
@@ -13300,7 +13370,7 @@
           "$ref": "#/definitions/GeneratedLimitedUsageAPIKey"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListCapacitiesResponseV1Alpha5": {
       "type": "object",
@@ -13316,7 +13386,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListCcrImagesResponse": {
       "type": "object",
@@ -13329,7 +13399,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListDiskSnapshotsResponseV1Alpha5": {
       "type": "object",
@@ -13345,7 +13415,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListDisksResponseV1Alpha5": {
       "type": "object",
@@ -13362,7 +13432,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListEntitiesResponseV1Alpha5": {
       "type": "object",
@@ -13379,7 +13449,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListExternalLoadBalancersResponse": {
       "type": "object",
@@ -13395,7 +13465,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListIBNetworksResponseV1Alpha5": {
       "type": "object",
@@ -13412,7 +13482,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListIBPartitionsResponseV1Alpha5": {
       "type": "object",
@@ -13429,7 +13499,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListImagesResponseV1Alpha5": {
       "type": "object",
@@ -13446,7 +13516,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListInstanceGroupsResponse": {
       "description": "ListInstanceGroupsResponse is the resource response type for GET\nrequests to the InstanceGroup endpoint.",
@@ -13463,7 +13533,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListInstanceTemplatesResponseV1Alpha5": {
       "description": "ListInstanceTemplatesResponseV1Alpha5 is the resource response type for GET\nrequests to the InstanceTemplates endpoint.",
@@ -13480,7 +13550,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListInstancesResponseV1Alpha5": {
       "type": "object",
@@ -13509,7 +13579,7 @@
           "example": "bXktZmlyc3Qtdm0"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListKubernetesClustersResponse": {
       "type": "object",
@@ -13525,7 +13595,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListKubernetesNodePoolsResponse": {
       "type": "object",
@@ -13541,7 +13611,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListKubernetesVersionsResponse": {
       "type": "object",
@@ -13567,7 +13637,7 @@
           "x-go-name": "KubernetesNodePoolVersions"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListLimitedUsageAPIKeysResponseV1Alpha5": {
       "type": "object",
@@ -13583,7 +13653,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListLoadBalancersResponseV1Alpha5": {
       "type": "object",
@@ -13599,7 +13669,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListLocationsResponseV1Alpha5": {
       "type": "object",
@@ -13618,7 +13688,7 @@
           ]
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListManifestsResponse": {
       "type": "object",
@@ -13631,7 +13701,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListOperationsResponseV1Alpha5": {
       "type": "object",
@@ -13662,7 +13732,7 @@
           "x-go-name": "Quotas"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListProjectQuotasResponse": {
       "type": "object",
@@ -13677,7 +13747,7 @@
           "x-go-name": "Quotas"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListProjectsResponseV1Alpha5": {
       "type": "object",
@@ -13694,7 +13764,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListRepositoriesResponse": {
       "type": "object",
@@ -13707,7 +13777,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListRoleBindingsResponse": {
       "type": "object",
@@ -13723,7 +13793,7 @@
           "x-go-name": "RoleBindings"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListRolesResponse": {
       "type": "object",
@@ -13739,7 +13809,7 @@
           "x-go-name": "Roles"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListS3BucketsResponse": {
       "type": "object",
@@ -13767,7 +13837,7 @@
           "x-go-name": "PrevPageToken"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListS3KeysResponse": {
       "type": "object",
@@ -13784,7 +13854,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSSHKeysResponseV1Alpha5": {
       "type": "object",
@@ -13800,7 +13870,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSSOProvidersResponse": {
       "type": "object",
@@ -13816,7 +13886,7 @@
           "x-go-name": "SsoProviders"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSlurmClustersResponse": {
       "type": "object",
@@ -13832,7 +13902,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSlurmNodePoolsResponse": {
       "type": "object",
@@ -13848,7 +13918,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSupportedLocationsResponse": {
       "type": "object",
@@ -13861,7 +13931,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSupportedProvidersResponse": {
       "type": "object",
@@ -13874,7 +13944,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListTokensResponseV1Alpha5": {
       "type": "object",
@@ -13890,7 +13960,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListTypesResponseV1Alpha5": {
       "type": "object",
@@ -13906,7 +13976,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListVPCFirewallRulesResponseV1Alpha5": {
       "type": "object",
@@ -13923,7 +13993,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListVPCNetworksResponseV1Alpha5": {
       "type": "object",
@@ -13940,7 +14010,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListVPCSubnetsResponseV1Alpha5": {
       "type": "object",
@@ -13957,7 +14027,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListenPortAndBackend": {
       "type": "object",
@@ -13983,7 +14053,7 @@
           "example": 80
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LoadBalancer": {
       "type": "object",
@@ -14056,7 +14126,7 @@
           "example": "internal_ipv4,"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LoadBalancerNetworkInterface": {
       "type": "object",
@@ -14072,7 +14142,7 @@
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LoadBalancersPatchRequestV1Alpha5": {
       "type": "object",
@@ -14093,7 +14163,7 @@
           "example": "my-load-balancer"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LoadBalancersPostRequest": {
       "type": "object",
@@ -14152,7 +14222,7 @@
           "example": "internal_ipv4"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LogEntry": {
       "type": "object",
@@ -14292,7 +14362,7 @@
           "example": "VM"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Manifest": {
       "type": "object",
@@ -14323,7 +14393,7 @@
           "x-go-name": "Tags"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "NATGateway": {
       "type": "object",
@@ -14347,7 +14417,7 @@
           "x-go-name": "PublicIPV4ID"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "NetworkInterface": {
       "type": "object",
@@ -14404,7 +14474,7 @@
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "NetworkTarget": {
       "type": "object",
@@ -14420,7 +14490,37 @@
           "example": "306aa10d-5570-4e47-88c9-46bf11bd8737"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "NodepoolInfo": {
+      "type": "object",
+      "title": "NodepoolInfo contains information about a nodepool.",
+      "properties": {
+        "instance_type": {
+          "type": "string",
+          "x-go-name": "InstanceType"
+        },
+        "nodepool_id": {
+          "type": "string",
+          "x-go-name": "NodepoolID"
+        },
+        "nodepool_name": {
+          "type": "string",
+          "x-go-name": "NodepoolName"
+        },
+        "nodepool_state": {
+          "type": "string",
+          "x-go-name": "NodepoolState"
+        },
+        "vms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VMInfo"
+          },
+          "x-go-name": "Vms"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "NvlinkDomainSummaryResponse": {
       "type": "object",
@@ -14459,7 +14559,7 @@
           "example": 16
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "NvlinkDomainsSummaryListResponse": {
       "type": "object",
@@ -14474,7 +14574,7 @@
           "x-go-name": "NvlinkDomains"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "OIDCAuthConfig": {
       "description": "This allows the Kubernetes API server to authenticate users via an external OIDC provider.",
@@ -14517,7 +14617,7 @@
           "example": "oidc:"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ObservabilityMetrics": {
       "description": "see also https://prometheus.io/docs/prometheus/latest/querying/api/",
@@ -14564,7 +14664,7 @@
           "example": "???"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Operation": {
       "description": "Individual resources that use Operations should populate the `metadata` field\nwith resource-specific information.",
@@ -14629,7 +14729,7 @@
           "x-go-name": "NumVMsCreated"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "OrgQuota": {
       "type": "object",
@@ -14674,7 +14774,7 @@
           "example": 4
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "OrgUserCredentialsResponse": {
       "type": "object",
@@ -14690,7 +14790,7 @@
           "x-go-name": "UserCredentials"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "OrganizationMFA": {
       "type": "object",
@@ -14714,7 +14814,7 @@
           "x-go-name": "Method"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "PartialHostChannelAdapter": {
       "type": "object",
@@ -14730,7 +14830,7 @@
           "x-go-name": "TransportPartitionID"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "PrivateIPv4Address": {
       "type": "object",
@@ -14744,7 +14844,7 @@
           "example": "10.1.2.3"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Project": {
       "type": "object",
@@ -14782,7 +14882,7 @@
           "$ref": "#/definitions/ProjectResources"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectIsUsingNFSForSharedDisksResponse": {
       "type": "object",
@@ -14796,7 +14896,7 @@
           "example": false
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectIsUsingSecondaryVASTClusterResponse": {
       "type": "object",
@@ -14810,7 +14910,7 @@
           "example": false
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectQuota": {
       "type": "object",
@@ -14861,7 +14961,7 @@
           "example": 4
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectResourceDetails": {
       "type": "object",
@@ -14876,7 +14976,7 @@
           "example": 5
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectResources": {
       "type": "object",
@@ -14905,7 +15005,7 @@
           "$ref": "#/definitions/ProjectResourceDetails"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectUsageResponse": {
       "type": "object",
@@ -14956,7 +15056,7 @@
           "example": "\"a40.1x\""
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectsPostRequest": {
       "type": "object",
@@ -14977,7 +15077,7 @@
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectsPutPostResponseV1Alpha5": {
       "type": "object",
@@ -14990,7 +15090,7 @@
           "$ref": "#/definitions/Project"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectsPutRequest": {
       "type": "object",
@@ -15005,7 +15105,7 @@
           "example": "Admin"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProspectPostRequest": {
       "type": "object",
@@ -15078,12 +15178,12 @@
           "example": "training model to minimize energy usage"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProspectPostResponse": {
       "type": "object",
       "title": "ProspectPostResponse is the response type for POST requests to the prospects endpoint.",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "PublicIPv4Address": {
       "type": "object",
@@ -15109,7 +15209,27 @@
           "example": "dynamic"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "QuotaValidationResult": {
+      "type": "object",
+      "properties": {
+        "ActualUsed": {
+          "description": "ActualUsed is the amount of quota consumed based on actual resource usage",
+          "type": "integer",
+          "format": "int64"
+        },
+        "LimitReached": {
+          "description": "LimitReached will be true if the actual used is at or above the quota limit, false otherwise",
+          "type": "boolean"
+        },
+        "QuotaLimit": {
+          "description": "QuotaLimit is the amount of quota allocated for the resource",
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "RemediationConfig": {
       "type": "object",
@@ -15131,7 +15251,7 @@
           "$ref": "#/definitions/AutoRemediation"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "RemediationOverrideRequest": {
       "type": "object",
@@ -15151,7 +15271,7 @@
           "example": "XID_74"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Repository": {
       "type": "object",
@@ -15193,7 +15313,7 @@
           "x-go-name": "URL"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "RepositoryQuota": {
       "type": "object",
@@ -15211,7 +15331,7 @@
           "x-go-name": "UsedSizeBytes"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "RepositoryRequest": {
       "type": "object",
@@ -15236,7 +15356,7 @@
           "$ref": "#/definitions/UpstreamRegistry"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Reservation": {
       "type": "object",
@@ -15342,7 +15462,7 @@
           "example": "1a8ebda8-3c68-4ba6-adf6-961c3ec53748,6f70a988-fac6-4a9c-ae26-cb016d7bec72"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ReservationSpecification": {
       "type": "object",
@@ -15365,7 +15485,7 @@
           "example": "lowest_cost"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ReservationsGetResponse": {
       "type": "object",
@@ -15382,7 +15502,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Role": {
       "type": "object",
@@ -15418,7 +15538,7 @@
           "x-go-name": "RoleName"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "RoleBinding": {
       "type": "object",
@@ -15456,7 +15576,7 @@
           "x-go-name": "ScopeType"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "RoleBindingInput": {
       "type": "object",
@@ -15488,7 +15608,7 @@
           "x-go-name": "ScopeType"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3Bucket": {
       "description": "This is the REST-friendly model for the `BucketInfo` proto.",
@@ -15591,7 +15711,7 @@
           "$ref": "#/definitions/S3VersioningState"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3Key": {
       "type": "object",
@@ -15650,25 +15770,25 @@
           "example": "e7bed65d-e918-4fab-921c-03b8db94aa7b"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3RetentionMode": {
       "description": "enum: governance,compliance",
       "type": "string",
       "title": "S3RetentionMode defines the possible retention modes for S3 Object Lock.",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3RetentionPeriodUnit": {
       "description": "enum: days,years",
       "type": "string",
       "title": "S3RetentionPeriodUnit defines the unit of measurement for retention periods.",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3VersioningState": {
       "description": "enum: disabled,enabled,suspended",
       "type": "string",
       "title": "S3VersioningState defines the possible versioning states for an S3 bucket.",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SSHKey": {
       "type": "object",
@@ -15704,7 +15824,7 @@
           "example": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpuH/fqCFLbAConChyVH6rZzSaxlnHSwQk6qvtPsf5E"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SSOProvider": {
       "type": "object",
@@ -15745,7 +15865,7 @@
           "x-go-name": "OrganizationID"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmCluster": {
       "type": "object",
@@ -15840,7 +15960,7 @@
           "example": "100000"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmClusterPostRequest": {
       "type": "object",
@@ -15881,7 +16001,7 @@
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmNodePool": {
       "type": "object",
@@ -15978,7 +16098,7 @@
           "example": "a100.2x"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmNodePoolPatchRequest": {
       "type": "object",
@@ -15994,7 +16114,7 @@
           "example": 4
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmNodePoolPostRequest": {
       "type": "object",
@@ -16049,7 +16169,7 @@
           "example": "a100.2x"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SyncOperationResponse": {
       "type": "object",
@@ -16102,7 +16222,7 @@
           "example": "2021-11-03T22:22:55Z"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "TokensPostResponse": {
       "type": "object",
@@ -16114,7 +16234,7 @@
           "$ref": "#/definitions/GeneratedToken"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Type": {
       "type": "object",
@@ -16187,7 +16307,7 @@
           "example": "a100.2x"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UpdateAutoClustersConfigRequest": {
       "type": "object",
@@ -16229,7 +16349,7 @@
           ]
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UpdateS3BucketTagsRequest": {
       "type": "object",
@@ -16247,7 +16367,7 @@
           "x-go-name": "Tags"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UpdateUserSSOEnforcementRequest": {
       "type": "object",
@@ -16273,7 +16393,7 @@
           "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UpstreamRegistry": {
       "type": "object",
@@ -16290,7 +16410,7 @@
           "x-go-name": "URL"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UpstreamRegistryCredentials": {
       "type": "object",
@@ -16304,7 +16424,7 @@
           "x-go-name": "Username"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UsageByProjectGetResponse": {
       "type": "object",
@@ -16321,7 +16441,7 @@
           "x-go-name": "Items"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UsageOptions": {
       "description": "UsageOptions contains the values which exist for the fields which we allow filtering\non for the usageByProjectGet endpoint.",
@@ -16389,7 +16509,7 @@
           "example": "\"2022-07-01\""
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UserResponse": {
       "description": "The Identity of a user is returned.",
@@ -16418,7 +16538,7 @@
           "$ref": "#/definitions/Identity"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UserStateEnum": {
       "type": "string",
@@ -16426,7 +16546,7 @@
     },
     "VMAttachmentType": {
       "type": "string",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VMAttachmentV1Alpha5": {
       "type": "object",
@@ -16447,7 +16567,34 @@
           "example": "123e4567-e89b-12d3-a456-426614174000"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "VMInfo": {
+      "type": "object",
+      "title": "VMInfo contains information about a virtual machine.",
+      "properties": {
+        "nvlink_domain_id": {
+          "type": "string",
+          "x-go-name": "NvlinkDomainID"
+        },
+        "pod_id": {
+          "type": "string",
+          "x-go-name": "PodID"
+        },
+        "vm_id": {
+          "type": "string",
+          "x-go-name": "VMID"
+        },
+        "vm_name": {
+          "type": "string",
+          "x-go-name": "VMName"
+        },
+        "vm_state": {
+          "type": "string",
+          "x-go-name": "VMState"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCFirewallRule": {
       "type": "object",
@@ -16546,7 +16693,7 @@
           "example": "74927f69-f6f6-43f4-bc0d-7bb2e864250e"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCFirewallRulesPatchRequest": {
       "type": "object",
@@ -16596,7 +16743,7 @@
           "x-go-name": "Sources"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCFirewallRulesPostRequestV1Alpha5": {
       "type": "object",
@@ -16678,7 +16825,7 @@
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCNetwork": {
       "type": "object",
@@ -16719,7 +16866,7 @@
           "example": "[1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc]"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCNetworkPatchRequest": {
       "type": "object",
@@ -16734,7 +16881,7 @@
           "example": "my-cool-vpc-network"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCNetworkPostRequest": {
       "type": "object",
@@ -16755,7 +16902,7 @@
           "example": "my-cool-vpc-network"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCNetworkPostResponse": {
       "type": "object",
@@ -16768,7 +16915,7 @@
           "$ref": "#/definitions/VPCNetwork"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCSubnet": {
       "type": "object",
@@ -16814,7 +16961,7 @@
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCSubnetPatchRequest": {
       "type": "object",
@@ -16840,7 +16987,7 @@
           "example": "enable"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCSubnetPostRequest": {
       "type": "object",
@@ -16879,7 +17026,7 @@
           "example": "36c0b0d9-8b68-4869-addb-227b06b64ee0"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCSubnetPostResponse": {
       "type": "object",
@@ -16892,7 +17039,7 @@
           "$ref": "#/definitions/VPCSubnet"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VersionDetails": {
       "type": "object",
@@ -16907,7 +17054,7 @@
           "type": "string"
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VirtualizationFeatures": {
       "type": "object",
@@ -16918,7 +17065,7 @@
           "example": true
         }
       },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/handlers"
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     }
   },
   "responses": {
@@ -17356,6 +17503,12 @@
     "getS3BucketsCountResponse": {
       "description": ""
     },
+    "getS3BucketsQuotaResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/QuotaValidationResult"
+      }
+    },
     "getSSHKeysResponse": {
       "description": "",
       "schema": {
@@ -17378,6 +17531,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/DiskSnapshot"
+      }
+    },
+    "getTopologyResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetTopologyResponse"
       }
     },
     "getVPCNetworkResponse": {
