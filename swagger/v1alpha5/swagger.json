@@ -7867,6 +7867,39 @@
         }
       }
     },
+    "/projects/{project_id}/storage/s3/buckets/quota": {
+      "get": {
+        "tags": [
+          "S3Buckets"
+        ],
+        "summary": "Retrieve the quota information for S3 buckets that belong to the project.",
+        "operationId": "getS3BucketsQuotaRequest",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getS3BucketsQuotaResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/storage/s3/buckets/{bucket_name}": {
       "get": {
         "tags": [
@@ -15178,6 +15211,26 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "QuotaValidationResult": {
+      "type": "object",
+      "properties": {
+        "ActualUsed": {
+          "description": "ActualUsed is the amount of quota consumed based on actual resource usage",
+          "type": "integer",
+          "format": "int64"
+        },
+        "LimitReached": {
+          "description": "LimitReached will be true if the actual used is at or above the quota limit, false otherwise",
+          "type": "boolean"
+        },
+        "QuotaLimit": {
+          "description": "QuotaLimit is the amount of quota allocated for the resource",
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "RemediationConfig": {
       "type": "object",
       "title": "RemediationConfig represents a single remediation configuration in the API response.",
@@ -17449,6 +17502,12 @@
     },
     "getS3BucketsCountResponse": {
       "description": ""
+    },
+    "getS3BucketsQuotaResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/QuotaValidationResult"
+      }
     },
     "getSSHKeysResponse": {
       "description": "",
