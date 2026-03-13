@@ -26,7 +26,7 @@ type AutoClustersApiService service
 
 /*
 AutoClustersApiService Retrieve the AutoClusters configuration for a specific cluster.
-Returns the cluster&#x27;s autoclusters configuration including alert handling defaults and any customer overrides.
+Returns the cluster&#x27;s Autoclusters configuration including alert handling defaults and any customer overrides.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId Project ID
   - @param clusterId Cluster ID
@@ -155,7 +155,7 @@ func (a *AutoClustersApiService) GetAutoClustersConfig(ctx context.Context, proj
 
 /*
 AutoClustersApiService Trigger VM remediation.
-Trigger remediation for a specific AutoClusters VM. This creates an AutoClusters operation and returns an asynchronous operation handle. Currently, replace node operation is the only support remediation type.
+Trigger remediation for a VM within a Kubernetes cluster with AutoClusters add-on enabled. This creates an AutoClusters operation and returns an asynchronous operation handle. Currently, this defaults to performing a replace node operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
   - @param clusterId

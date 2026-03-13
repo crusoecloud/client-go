@@ -4023,7 +4023,7 @@
     },
     "/projects/{project_id}/kubernetes/clusters/{cluster_id}/autoclusters/config": {
       "get": {
-        "description": "Returns the cluster's autoclusters configuration including alert handling defaults and any customer overrides.",
+        "description": "Returns the cluster's Autoclusters configuration including alert handling defaults and any customer overrides.",
         "tags": [
           "AutoClusters"
         ],
@@ -4127,7 +4127,7 @@
     },
     "/projects/{project_id}/kubernetes/clusters/{cluster_id}/autoclusters/vms/{vm_id}/remediate": {
       "post": {
-        "description": "Trigger remediation for a specific AutoClusters VM. This creates an AutoClusters operation and returns an\nasynchronous operation handle. Currently, replace node operation is the only support remediation type.",
+        "description": "Trigger remediation for a VM within a Kubernetes cluster with AutoClusters add-on enabled. This creates an AutoClusters operation and returns an\nasynchronous operation handle. Currently, this defaults to performing a replace node operation.",
         "tags": [
           "AutoClusters"
         ],
@@ -13012,15 +13012,6 @@
     },
     "KubernetesNodePoolPatchRequest": {
       "type": "object",
-      "required": [
-        "count",
-        "node_labels",
-        "reservation_id",
-        "action",
-        "ephemeral_storage_for_containerd",
-        "node_pool_version",
-        "ssh_public_key"
-      ],
       "properties": {
         "action": {
           "description": "The action to perform on the NodePool. RESERVE and UNRESERVE operations are done synchronously,\nand so will have succeeded with a 200 response. Defaults to UPDATE if no action specified.",
@@ -13032,6 +13023,7 @@
             "UPDATE"
           ],
           "x-go-name": "Action",
+          "x-redocly-optional": true,
           "example": "UPDATE"
         },
         "count": {
@@ -13039,12 +13031,14 @@
           "type": "integer",
           "format": "int64",
           "x-go-name": "Count",
+          "x-redocly-optional": true,
           "example": 4
         },
         "ephemeral_storage_for_containerd": {
           "description": "Indicates whether local ephemeral NVMe disks should be used for containerd storage.",
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd",
+          "x-redocly-optional": true,
           "example": true
         },
         "node_labels": {
@@ -13054,6 +13048,7 @@
             "type": "string"
           },
           "x-go-name": "NodeLabels",
+          "x-redocly-optional": true,
           "example": {
             "label": "my_node"
           }
@@ -13062,18 +13057,21 @@
           "description": "Version of the Kubernetes node pool for newly created vms.",
           "type": "string",
           "x-go-name": "NodePoolVersion",
+          "x-redocly-optional": true,
           "example": "1.30"
         },
         "reservation_id": {
           "description": "The reservation ID of the node pool.",
           "type": "string",
           "x-go-name": "ReservationID",
+          "x-redocly-optional": true,
           "example": "ca39e669-47ee-456b-968d-303234fbf99f"
         },
         "ssh_public_key": {
           "description": "SSH public key to use for all VMs created from this node pool.",
           "type": "string",
           "x-go-name": "SSHPublicKey",
+          "x-redocly-optional": true,
           "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D"
         }
       },
@@ -16312,14 +16310,12 @@
     "UpdateAutoClustersConfigRequest": {
       "type": "object",
       "title": "UpdateAutoClustersConfigRequest represents the request body for updating cluster config.",
-      "required": [
-        "fallback_to_project_reservations"
-      ],
       "properties": {
         "fallback_to_project_reservations": {
           "description": "Whether to use project's unused reservations as fallback. If not set, existing value is preserved.",
           "type": "boolean",
           "x-go-name": "FallbackToProjectReservations",
+          "x-redocly-optional": true,
           "example": true
         },
         "remove_remediation_overrides": {
@@ -18205,7 +18201,9 @@
         "Kubernetes Cluster Operations",
         "Kubernetes Node Pools",
         "Kubernetes Node Pool Operations",
-        "Kubernetes Versions"
+        "Kubernetes Versions",
+        "AutoClusters",
+        "AutoCluster Operations"
       ]
     },
     {
