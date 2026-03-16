@@ -12594,6 +12594,17 @@
             "crusoe_csi"
           ]
         },
+        "apiserver_extra_args": {
+          "description": "Extra arguments passed to the kube-apiserver control plane component.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "ApiserverExtraArgs",
+          "example": {
+            "audit-log-maxage": "30"
+          }
+        },
         "auth_config": {
           "$ref": "#/definitions/KubernetesClusterAuthConfig"
         },
@@ -12611,6 +12622,17 @@
           ],
           "x-go-name": "Configuration",
           "example": "ha"
+        },
+        "controller_manager_extra_args": {
+          "description": "Extra arguments passed to the kube-controller-manager control plane component.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "ControllerManagerExtraArgs",
+          "example": {
+            "bind-address": "0.0.0.0"
+          }
         },
         "created_at": {
           "description": "The time when the cluster was created",
@@ -12670,6 +12692,17 @@
           "type": "string",
           "x-go-name": "ProjectID",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
+        },
+        "scheduler_extra_args": {
+          "description": "Extra arguments passed to the kube-scheduler control plane component.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "SchedulerExtraArgs",
+          "example": {
+            "bind-address": "0.0.0.0"
+          }
         },
         "service_cluster_ip_range": {
           "description": "The range of IP Addresses allocated to K8s services",
@@ -12753,6 +12786,17 @@
             "nvidia_network_operator"
           ]
         },
+        "apiserver_extra_args": {
+          "description": "Extra arguments to pass to the kube-apiserver control plane component.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "ApiserverExtraArgs",
+          "example": {
+            "audit-log-maxage": "30"
+          }
+        },
         "auth_config": {
           "$ref": "#/definitions/KubernetesClusterAuthConfig"
         },
@@ -12770,6 +12814,17 @@
           ],
           "x-go-name": "Configuration",
           "example": "ha"
+        },
+        "controller_manager_extra_args": {
+          "description": "Extra arguments to pass to the kube-controller-manager control plane component.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "ControllerManagerExtraArgs",
+          "example": {
+            "bind-address": "0.0.0.0"
+          }
         },
         "location": {
           "description": "Location to create the Kubernetes cluster in.",
@@ -12795,6 +12850,17 @@
           "type": "boolean",
           "x-go-name": "Private",
           "example": true
+        },
+        "scheduler_extra_args": {
+          "description": "Extra arguments to pass to the kube-scheduler control plane component.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "SchedulerExtraArgs",
+          "example": {
+            "bind-address": "0.0.0.0"
+          }
         },
         "service_cluster_ip_range": {
           "description": "defines: the range of IP Addresses allocated to K8s services",
@@ -13159,7 +13225,7 @@
           "description": "SSH public key to use for all VMs created from this node pool.",
           "type": "string",
           "x-go-name": "SSHPublicKey",
-          "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D"
+          "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8"
         },
         "subnet_id": {
           "description": "The ID of the subnet to create the node pool in. Must be in the location\nof the cluster if specified. If not provided, the default subnet for the\nlocation will be used, if there is one.",

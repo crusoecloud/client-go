@@ -10,12 +10,16 @@ package swagger
 
 type KubernetesClusterPostRequest struct {
 	// List of add-ons to be included to the cluster.
-	AddOns     []string                     `json:"add_ons,omitempty"`
-	AuthConfig *KubernetesClusterAuthConfig `json:"auth_config,omitempty"`
+	AddOns []string `json:"add_ons,omitempty"`
+	// Extra arguments to pass to the kube-apiserver control plane component.
+	ApiserverExtraArgs map[string]string            `json:"apiserver_extra_args,omitempty"`
+	AuthConfig         *KubernetesClusterAuthConfig `json:"auth_config,omitempty"`
 	// defines: the range of IP Addresses allocated to pods scheduled on worker nodes
 	ClusterCidr string `json:"cluster_cidr,omitempty"`
 	// Configuration setting is deprecated, defaults to HA configuration.
 	Configuration string `json:"configuration,omitempty"`
+	// Extra arguments to pass to the kube-controller-manager control plane component.
+	ControllerManagerExtraArgs map[string]string `json:"controller_manager_extra_args,omitempty"`
 	// Location to create the Kubernetes cluster in.
 	Location string `json:"location"`
 	// Name of the Kubernetes cluster.
@@ -24,6 +28,8 @@ type KubernetesClusterPostRequest struct {
 	NodeCidrMaskSize int32 `json:"node_cidr_mask_size,omitempty"`
 	// Whether the cluster should be private (without a public IP). Default is false.
 	Private bool `json:"private,omitempty"`
+	// Extra arguments to pass to the kube-scheduler control plane component.
+	SchedulerExtraArgs map[string]string `json:"scheduler_extra_args,omitempty"`
 	// defines: the range of IP Addresses allocated to K8s services
 	ServiceClusterIpRange string `json:"service_cluster_ip_range,omitempty"`
 	// The ID of the subnet to create the cluster in. Must be in the location specified. If not provided, the default subnet for the location will be used, if there is one.

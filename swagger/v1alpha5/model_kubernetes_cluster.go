@@ -10,12 +10,16 @@ package swagger
 
 type KubernetesCluster struct {
 	// List of add-ons associated with the cluster.
-	AddOns     []string                     `json:"add_ons"`
-	AuthConfig *KubernetesClusterAuthConfig `json:"auth_config,omitempty"`
+	AddOns []string `json:"add_ons"`
+	// Extra arguments passed to the kube-apiserver control plane component.
+	ApiserverExtraArgs map[string]string            `json:"apiserver_extra_args,omitempty"`
+	AuthConfig         *KubernetesClusterAuthConfig `json:"auth_config,omitempty"`
 	// The range of IP Addresses allocated to pods scheduled on worker nodes
 	ClusterCidr string `json:"cluster_cidr,omitempty"`
 	// Configuration setting of the Kubernetes cluster.
 	Configuration string `json:"configuration"`
+	// Extra arguments passed to the kube-controller-manager control plane component.
+	ControllerManagerExtraArgs map[string]string `json:"controller_manager_extra_args,omitempty"`
 	// The time when the cluster was created
 	CreatedAt string `json:"created_at"`
 	// DNS name of the cluster
@@ -34,6 +38,8 @@ type KubernetesCluster struct {
 	Private bool `json:"private,omitempty"`
 	// The ID of the project this Kubernetes cluster belongs to.
 	ProjectId string `json:"project_id"`
+	// Extra arguments passed to the kube-scheduler control plane component.
+	SchedulerExtraArgs map[string]string `json:"scheduler_extra_args,omitempty"`
 	// The range of IP Addresses allocated to K8s services
 	ServiceClusterIpRange string `json:"service_cluster_ip_range,omitempty"`
 	// State of the cluster
