@@ -12752,6 +12752,17 @@
       "type": "object",
       "title": "KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.",
       "properties": {
+        "apiserver_extra_args": {
+          "description": "Extra arguments to pass to the kube-apiserver control plane component.\nIf absent, existing args are preserved. If present but empty, args are cleared.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "ApiserverExtraArgs",
+          "example": {
+            "audit-log-maxage": "30"
+          }
+        },
         "configuration": {
           "description": "Configuration setting is deprecated, defaults to HA configuration.",
           "type": "string",
@@ -12760,6 +12771,28 @@
           ],
           "x-go-name": "Configuration",
           "example": "ha"
+        },
+        "controller_manager_extra_args": {
+          "description": "Extra arguments to pass to the kube-controller-manager control plane component.\nIf absent, existing args are preserved. If present but empty, args are cleared.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "ControllerManagerExtraArgs",
+          "example": {
+            "bind-address": "0.0.0.0"
+          }
+        },
+        "scheduler_extra_args": {
+          "description": "Extra arguments to pass to the kube-scheduler control plane component.\nIf absent, existing args are preserved. If present but empty, args are cleared.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "SchedulerExtraArgs",
+          "example": {
+            "bind-address": "0.0.0.0"
+          }
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
