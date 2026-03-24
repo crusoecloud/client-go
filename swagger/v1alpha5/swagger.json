@@ -9064,6 +9064,14 @@
           "x-go-name": "Balance",
           "example": "$1000.00"
         },
+        "billing_method": {
+          "type": "string",
+          "enum": [
+            "stripe",
+            "manual"
+          ],
+          "x-go-name": "BillingMethod"
+        },
         "delinquent": {
           "type": "boolean",
           "x-go-name": "Delinquent",
