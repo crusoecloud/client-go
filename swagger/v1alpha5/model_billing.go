@@ -10,6 +10,7 @@ package swagger
 
 type Billing struct {
 	Balance               string `json:"balance"`
+	BillingMethod         string `json:"billing_method,omitempty"`
 	Delinquent            bool   `json:"delinquent"`
 	HasValidPaymentMethod bool   `json:"has_valid_payment_method"`
 }
