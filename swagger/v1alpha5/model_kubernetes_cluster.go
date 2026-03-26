@@ -26,6 +26,8 @@ type KubernetesCluster struct {
 	DnsName string `json:"dns_name"`
 	// ID of the Kubernetes cluster.
 	Id string `json:"id"`
+	// Arguments for kubectl oidc-login plugin.
+	KubeloginArgs map[string]string `json:"kubelogin_args"`
 	// Location of the Kubernetes cluster.
 	Location string `json:"location"`
 	// Name of the Kubernetes cluster.
