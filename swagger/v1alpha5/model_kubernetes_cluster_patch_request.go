@@ -15,6 +15,8 @@ type KubernetesClusterPatchRequest struct {
 	Configuration string `json:"configuration,omitempty"`
 	// Extra arguments to pass to the kube-controller-manager control plane component. If absent, existing args are preserved. If present but empty, args are cleared.
 	ControllerManagerExtraArgs map[string]string `json:"controller_manager_extra_args,omitempty"`
+	// Arguments for kubectl oidc-login plugin.
+	KubeloginArgs map[string]string `json:"kubelogin_args"`
 	// Extra arguments to pass to the kube-scheduler control plane component. If absent, existing args are preserved. If present but empty, args are cleared.
 	SchedulerExtraArgs map[string]string `json:"scheduler_extra_args,omitempty"`
 }

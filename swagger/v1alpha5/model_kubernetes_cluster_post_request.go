@@ -20,6 +20,8 @@ type KubernetesClusterPostRequest struct {
 	Configuration string `json:"configuration,omitempty"`
 	// Extra arguments to pass to the kube-controller-manager control plane component.
 	ControllerManagerExtraArgs map[string]string `json:"controller_manager_extra_args,omitempty"`
+	// Arguments for kubectl oidc-login plugin.
+	KubeloginArgs map[string]string `json:"kubelogin_args,omitempty"`
 	// Location to create the Kubernetes cluster in.
 	Location string `json:"location"`
 	// Name of the Kubernetes cluster.

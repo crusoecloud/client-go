@@ -12588,7 +12588,8 @@
         "state",
         "dns_name",
         "created_at",
-        "updated_at"
+        "updated_at",
+        "kubelogin_args"
       ],
       "properties": {
         "add_ons": {
@@ -12659,6 +12660,18 @@
           "type": "string",
           "x-go-name": "ID",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "kubelogin_args": {
+          "description": "Arguments for kubectl oidc-login plugin.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "KubeloginArgs",
+          "example": {
+            "force-refresh": "",
+            "oidc-extra-scope": "email groups"
+          }
         },
         "location": {
           "description": "Location of the Kubernetes cluster.",
@@ -12759,6 +12772,9 @@
     "KubernetesClusterPatchRequest": {
       "type": "object",
       "title": "KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.",
+      "required": [
+        "kubelogin_args"
+      ],
       "properties": {
         "apiserver_extra_args": {
           "description": "Extra arguments to pass to the kube-apiserver control plane component.\nIf absent, existing args are preserved. If present but empty, args are cleared.",
@@ -12789,6 +12805,19 @@
           "x-go-name": "ControllerManagerExtraArgs",
           "example": {
             "bind-address": "0.0.0.0"
+          }
+        },
+        "kubelogin_args": {
+          "description": "Arguments for kubectl oidc-login plugin.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "KubeloginArgs",
+          "x-redocly-optional": true,
+          "example": {
+            "force-refresh": "",
+            "oidc-extra-scope": "email groups"
           }
         },
         "scheduler_extra_args": {
@@ -12865,6 +12894,18 @@
           "x-go-name": "ControllerManagerExtraArgs",
           "example": {
             "bind-address": "0.0.0.0"
+          }
+        },
+        "kubelogin_args": {
+          "description": "Arguments for kubectl oidc-login plugin.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "KubeloginArgs",
+          "example": {
+            "force-refresh": "",
+            "oidc-extra-scope": "email groups"
           }
         },
         "location": {
