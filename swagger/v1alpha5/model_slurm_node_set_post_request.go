@@ -10,6 +10,4 @@ package swagger
 
 type SlurmNodeSetPostRequest struct {
 	KubernetesNodepool *KubernetesNodePoolPostRequest `json:"kubernetes_nodepool"`
-	// Name of the node set.
-	Name string `json:"name"`
 }

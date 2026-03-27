@@ -17028,17 +17028,11 @@
     "SlurmNodeSetPostRequest": {
       "type": "object",
       "required": [
-        "name",
         "kubernetes_nodepool"
       ],
       "properties": {
         "kubernetes_nodepool": {
           "$ref": "#/definitions/KubernetesNodePoolPostRequest"
-        },
-        "name": {
-          "description": "Name of the node set.",
-          "type": "string",
-          "x-go-name": "Name"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
