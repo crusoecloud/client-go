@@ -92,6 +92,8 @@ type APIClient struct {
 
 	KubernetesNodePoolsApi *KubernetesNodePoolsApiService
 
+	KubernetesSupportAccessApi *KubernetesSupportAccessApiService
+
 	KubernetesVersionsApi *KubernetesVersionsApiService
 
 	LimitedUsageAPIKeyApi *LimitedUsageAPIKeyApiService
@@ -120,13 +122,15 @@ type APIClient struct {
 
 	S3KeysApi *S3KeysApiService
 
+	SCIMApi *SCIMApiService
+
 	SSHKeysApi *SSHKeysApiService
 
 	SSOApi *SSOApiService
 
 	SlurmClustersApi *SlurmClustersApiService
 
-	SlurmNodePoolsApi *SlurmNodePoolsApiService
+	SlurmNodeSetsApi *SlurmNodeSetsApiService
 
 	SnapshotOperationsApi *SnapshotOperationsApiService
 
@@ -193,6 +197,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.KubernetesClustersApi = (*KubernetesClustersApiService)(&c.common)
 	c.KubernetesNodePoolOperationsApi = (*KubernetesNodePoolOperationsApiService)(&c.common)
 	c.KubernetesNodePoolsApi = (*KubernetesNodePoolsApiService)(&c.common)
+	c.KubernetesSupportAccessApi = (*KubernetesSupportAccessApiService)(&c.common)
 	c.KubernetesVersionsApi = (*KubernetesVersionsApiService)(&c.common)
 	c.LimitedUsageAPIKeyApi = (*LimitedUsageAPIKeyApiService)(&c.common)
 	c.LoadBalancerOperationsApi = (*LoadBalancerOperationsApiService)(&c.common)
@@ -207,10 +212,11 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.RolesApi = (*RolesApiService)(&c.common)
 	c.S3BucketsApi = (*S3BucketsApiService)(&c.common)
 	c.S3KeysApi = (*S3KeysApiService)(&c.common)
+	c.SCIMApi = (*SCIMApiService)(&c.common)
 	c.SSHKeysApi = (*SSHKeysApiService)(&c.common)
 	c.SSOApi = (*SSOApiService)(&c.common)
 	c.SlurmClustersApi = (*SlurmClustersApiService)(&c.common)
-	c.SlurmNodePoolsApi = (*SlurmNodePoolsApiService)(&c.common)
+	c.SlurmNodeSetsApi = (*SlurmNodeSetsApiService)(&c.common)
 	c.SnapshotOperationsApi = (*SnapshotOperationsApiService)(&c.common)
 	c.SnapshotsApi = (*SnapshotsApiService)(&c.common)
 	c.TokensApi = (*TokensApiService)(&c.common)

@@ -8,7 +8,6 @@
  */
 package swagger
 
-type DeleteS3KeyRequest struct {
-	// The Access Key ID for S3 operations.
-	AccessKeyId string `json:"access_key_id"`
+type ListScimIntegrationsResponse struct {
+	Integrations []ScimIntegrationResponse `json:"integrations"`
 }

@@ -8,7 +8,6 @@
  */
 package swagger
 
-type SlurmNodePoolPatchRequest struct {
-	// The desired number of nodes to be created.
-	DesiredCount int64 `json:"desired_count"`
+type SlurmNodeSetPatchRequest struct {
+	KubernetesNodepool *KubernetesNodePoolPatchRequest `json:"kubernetes_nodepool"`
 }

@@ -9,28 +9,38 @@
 package swagger
 
 type SlurmCluster struct {
-	// Controller node URL.
-	ControllerNodeUrl string `json:"controller_node_url"`
-	// The timestamp of the cluster creation since 1970-01-01T00:00:00Z in seconds.
-	CreatedAt string `json:"created_at"`
-	// The timestamp of the cluster deletion since 1970-01-01T00:00:00Z in seconds.
-	DeletedAt string `json:"deleted_at"`
-	// ID of the slurm cluster.
-	Id string `json:"id"`
-	// Location of the slurm cluster.
+	// Location to create the Slurm cluster in.
 	Location string `json:"location"`
-	// Login node URL.
-	LoginNodeUrl string `json:"login_node_url"`
-	// Name of the slurm cluster.
+	// Node type to use for Slurm Controller and Login
+	LoginNodeType string `json:"login_node_type,omitempty"`
+	// Number of replica pods to use for LoginSet
+	LoginReplicas int64 `json:"login_replicas,omitempty"`
+	// Name of the Slurm cluster.
 	Name string `json:"name"`
-	// Nodepools associated with the cluster.
-	NodePools []string `json:"node_pools"`
-	// The ID of the project this slurm cluster belongs to.
-	ProjectId string `json:"project_id"`
-	// State of the cluster
+	// An array of SSH public keys which will be used to allow access as root user. This will be mounted as the \"root/.ssh/authorized_keys\" file.
+	RootSshPubKeys []string `json:"root_ssh_pub_keys"`
+	// Shared Volume Size (mounted to /home) in GiB. Set to 0 to omit shared volume
+	SharedHomeVolumeSize int64 `json:"shared_home_volume_size,omitempty"`
+	// Additional shared volumes to attach to the cluster.
+	SharedVolumes []SlurmSharedVolume `json:"shared_volumes,omitempty"`
+	// Node ID UUID running the Slurm controller node.
+	ControllerNodeId string `json:"controller_node_id,omitempty"`
+	// Message describing why slurm cluster is not in STATE_RUNNING
+	Error_ string `json:"error,omitempty"`
+	// Login node Endpoint (IP).
+	LoginNodeEndpoint string `json:"login_node_endpoint,omitempty"`
+	// Node ID UUID running the Slurm login node.
+	LoginNodeId string `json:"login_node_id,omitempty"`
+	// State of the slurm cluster
 	State string `json:"state"`
-	// The ID of the subnet this slurm cluster belongs to.
-	SubnetId string `json:"subnet_id"`
-	// The timestamp of the cluster update since 1970-01-01T00:00:00Z in seconds.
-	UpdatedAt string `json:"updated_at"`
+	// Current Version of the Crusoe Slurm Operator
+	Version string `json:"version,omitempty"`
+	// Nodepools running the Slurm Workers
+	WorkerNodePools []string `json:"worker_node_pools,omitempty"`
+	// ID of the Slurm cluster.
+	Id string `json:"id"`
+	// The id of the Kubernetes cluster this Slurm cluster belongs to
+	KubernetesClusterId string `json:"kubernetes_cluster_id"`
+	// The ID of the project this Slurm cluster belongs to.
+	ProjectId string `json:"project_id"`
 }

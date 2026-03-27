@@ -606,6 +606,370 @@
         }
       }
     },
+    "/organizations/{org_id}/scim/integrations": {
+      "get": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "List SCIM integrations for an organization.",
+        "operationId": "listSCIMIntegrations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listSCIMIntegrationsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Create a new SCIM integration for an organization.",
+        "operationId": "createSCIMIntegration",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSCIMIntegrationRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/createSCIMIntegrationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/organizations/{org_id}/scim/integrations/{integration_id}": {
+      "get": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Get a SCIM integration by ID.",
+        "operationId": "getSCIMIntegration",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getSCIMIntegrationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Delete a SCIM integration.",
+        "operationId": "deleteSCIMIntegration",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Update a SCIM integration.",
+        "operationId": "updateSCIMIntegration",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateSCIMIntegrationRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/updateSCIMIntegrationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/organizations/{org_id}/scim/integrations/{integration_id}/tokens": {
+      "get": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "List the tokens for a SCIM integration.",
+        "operationId": "listSCIMIntegrationTokens",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listSCIMIntegrationTokensResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Create a token for a SCIM integration.",
+        "operationId": "createSCIMIntegrationToken",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSCIMTokenRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/createSCIMIntegrationTokenResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Delete a token from a SCIM integration.",
+        "operationId": "deleteSCIMIntegrationToken",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "R7p5XctCQMuGlpVBmVdqzA",
+            "x-go-name": "KeyID",
+            "name": "key_id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/organizations/{org_id}/storage/s3/keys": {
       "get": {
         "tags": [
@@ -684,7 +1048,7 @@
         }
       }
     },
-    "/organizations/{org_id}/storage/s3/keys/{key_id}": {
+    "/organizations/{org_id}/storage/s3/keys/{access_key_id}": {
       "delete": {
         "consumes": [
           "application/json"
@@ -705,19 +1069,12 @@
           },
           {
             "type": "string",
-            "x-go-name": "KeyID",
-            "description": "The ID of the S3 key to delete",
-            "name": "key_id",
+            "example": "CKIA493K6LOVDNNAR4SZ",
+            "x-go-name": "AccessKeyID",
+            "description": "The AccessKeyID of the S3 key to delete",
+            "name": "access_key_id",
             "in": "path",
             "required": true
-          },
-          {
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/DeleteS3KeyRequest"
-            }
           }
         ],
         "responses": {
@@ -4232,6 +4589,100 @@
         }
       }
     },
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/support/settings": {
+      "get": {
+        "tags": [
+          "Kubernetes Support Access"
+        ],
+        "summary": "Retrieve support access settings for a Kubernetes cluster.",
+        "operationId": "getSupportSettings",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getSupportSettingsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Kubernetes Support Access"
+        ],
+        "summary": "Update support access settings for a Kubernetes cluster.",
+        "operationId": "updateSupportSettings",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KubernetesClusterSupportSettingsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/updateSupportSettingsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/kubernetes/nodepools": {
       "get": {
         "tags": [
@@ -7103,7 +7554,7 @@
         }
       }
     },
-    "/projects/{project_id}/slurm/clusters/{cluster_id}": {
+    "/projects/{project_id}/slurm/clusters/{slurm_cluster_id}": {
       "get": {
         "tags": [
           "Slurm Clusters"
@@ -7122,17 +7573,10 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
             "in": "path",
             "required": true
-          },
-          {
-            "type": "string",
-            "example": "my-slurm-cluster",
-            "x-go-name": "Name",
-            "name": "name",
-            "in": "query"
           }
         ],
         "responses": {
@@ -7165,8 +7609,8 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
             "in": "path",
             "required": true
           }
@@ -7187,13 +7631,13 @@
         }
       }
     },
-    "/projects/{project_id}/slurm/nodepools": {
+    "/projects/{project_id}/slurm/nodesets": {
       "get": {
         "tags": [
-          "Slurm Node Pools"
+          "Slurm Node Sets"
         ],
-        "summary": "Retrieve information about slurm node pools belonging to a project or cluster.",
-        "operationId": "listSlurmNodePools",
+        "summary": "Retrieve information about slurm node sets belonging to a project or cluster.",
+        "operationId": "listSlurmNodeSets",
         "parameters": [
           {
             "type": "string",
@@ -7206,8 +7650,8 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
             "in": "query"
           },
           {
@@ -7220,7 +7664,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/listSlurmNodePoolsResponse"
+            "$ref": "#/responses/listSlurmNodeSetsResponse"
           },
           "401": {
             "$ref": "#/responses/authError"
@@ -7233,17 +7677,17 @@
       "post": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "Slurm Node Pools"
+          "Slurm Node Sets"
         ],
-        "summary": "Create a new slurm node pool owned by the logged in user.",
-        "operationId": "createSlurmNodePool",
+        "summary": "Create a new slurm node set owned by the logged in user.",
+        "operationId": "createSlurmNodeSet",
         "parameters": [
           {
             "name": "Body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/SlurmNodePoolPostRequest"
+              "$ref": "#/definitions/SlurmNodeSetPostRequest"
             }
           },
           {
@@ -7274,13 +7718,13 @@
         }
       }
     },
-    "/projects/{project_id}/slurm/nodepools/{node_pool_id}": {
+    "/projects/{project_id}/slurm/nodesets/{node_set_id}": {
       "get": {
         "tags": [
-          "Slurm Node Pools"
+          "Slurm Node Sets"
         ],
-        "summary": "Retrieve information about a particular slurm node pool belonging to the project.",
-        "operationId": "getSlurmNodePool",
+        "summary": "Retrieve information about a particular slurm node set belonging to the project.",
+        "operationId": "getSlurmNodeSet",
         "parameters": [
           {
             "type": "string",
@@ -7293,15 +7737,15 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "NodePoolID",
-            "name": "node_pool_id",
+            "x-go-name": "NodeSetID",
+            "name": "node_set_id",
             "in": "path",
             "required": true
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/getSlurmNodePoolResponse"
+            "$ref": "#/responses/getSlurmNodeSetResponse"
           },
           "401": {
             "$ref": "#/responses/authError"
@@ -7313,10 +7757,10 @@
       },
       "delete": {
         "tags": [
-          "Slurm Node Pools"
+          "Slurm Node Sets"
         ],
-        "summary": "Delete a node pool that the logged in user owns.",
-        "operationId": "deleteSlurmNodePool",
+        "summary": "Delete a node set that the logged in user owns.",
+        "operationId": "deleteSlurmNodeSet",
         "parameters": [
           {
             "type": "string",
@@ -7329,8 +7773,8 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "NodePoolID",
-            "name": "node_pool_id",
+            "x-go-name": "NodeSetID",
+            "name": "node_set_id",
             "in": "path",
             "required": true
           }
@@ -7352,10 +7796,10 @@
       },
       "patch": {
         "tags": [
-          "Slurm Node Pools"
+          "Slurm Node Sets"
         ],
-        "summary": "Update a node pool that the logged in user owns.",
-        "operationId": "updateSlurmNodePool",
+        "summary": "Update a node set that the logged in user owns.",
+        "operationId": "updateSlurmNodeSet",
         "parameters": [
           {
             "type": "string",
@@ -7368,8 +7812,8 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "NodePoolID",
-            "name": "node_pool_id",
+            "x-go-name": "NodeSetID",
+            "name": "node_set_id",
             "in": "path",
             "required": true
           },
@@ -7378,7 +7822,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/SlurmNodePoolPatchRequest"
+              "$ref": "#/definitions/SlurmNodeSetPatchRequest"
             }
           }
         ],
@@ -10051,6 +10495,68 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "CreateSCIMIntegrationRequestBody": {
+      "type": "object",
+      "title": "CreateSCIMIntegrationRequestBody is the JSON request body for creating a SCIM integration.",
+      "required": [
+        "name",
+        "identity_provider"
+      ],
+      "properties": {
+        "identity_provider": {
+          "type": "string",
+          "x-go-name": "IdentityProvider",
+          "example": "okta"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "Okta SCIM Integration"
+        },
+        "token": {
+          "$ref": "#/definitions/CreateSCIMTokenRequestBody"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "CreateSCIMIntegrationResponse": {
+      "description": "optionally including an inline token when requested.",
+      "type": "object",
+      "title": "CreateSCIMIntegrationResponse is the JSON response for creating a SCIM integration,",
+      "required": [
+        "integration"
+      ],
+      "properties": {
+        "api_key_info": {
+          "$ref": "#/definitions/GeneratedLimitedUsageAPIKey"
+        },
+        "integration": {
+          "$ref": "#/definitions/SCIMIntegrationResponse"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "CreateSCIMTokenRequestBody": {
+      "type": "object",
+      "title": "CreateSCIMTokenRequestBody is the JSON request body for creating a SCIM integration token.",
+      "required": [
+        "alias",
+        "expires_at"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "x-go-name": "Alias",
+          "example": "my-scim-token"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2025-12-03T19:58:34Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "CreateSSHKeyRequest": {
       "type": "object",
       "required": [
@@ -10237,22 +10743,6 @@
           },
           "x-go-name": "Tags",
           "example": "22.04,latest"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "DeleteS3KeyRequest": {
-      "type": "object",
-      "title": "DeleteS3KeyRequest is the request body for deleting a S3 access key for a user.",
-      "required": [
-        "access_key_id"
-      ],
-      "properties": {
-        "access_key_id": {
-          "description": "The Access Key ID for S3 operations.",
-          "type": "string",
-          "x-go-name": "AccessKeyID",
-          "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -12965,6 +13455,68 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "KubernetesClusterSupportSettingsRequest": {
+      "description": "KubernetesClusterSupportSettingsRequest defines the request for updating\nsupport access settings for a Kubernetes cluster.",
+      "type": "object",
+      "properties": {
+        "access_enabled": {
+          "description": "Support access enabled master toggle",
+          "type": "boolean",
+          "x-go-name": "AccessEnabled",
+          "example": true
+        },
+        "enabled_roles": {
+          "description": "Enabled support access roles",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "EnabledRoles",
+          "example": [
+            "operator",
+            "readonly"
+          ]
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesClusterSupportSettingsResponse": {
+      "description": "KubernetesClusterSupportSettingsResponse defines the response for getting\nor setting support access settings for a Kubernetes cluster.",
+      "type": "object",
+      "required": [
+        "access_enabled",
+        "enabled_roles"
+      ],
+      "properties": {
+        "access_enabled": {
+          "description": "Support access enabled master toggle",
+          "type": "boolean",
+          "x-go-name": "AccessEnabled",
+          "example": true
+        },
+        "active_requests": {
+          "description": "List of current active requests",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KubernetesSupportAccessRequest"
+          },
+          "x-go-name": "ActiveRequests"
+        },
+        "enabled_roles": {
+          "description": "Enabled support access roles",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "EnabledRoles",
+          "example": [
+            "operator",
+            "readonly"
+          ]
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "KubernetesClustersVersionInfo": {
       "type": "object",
       "required": [
@@ -13406,6 +13958,82 @@
         },
         "version_details": {
           "$ref": "#/definitions/VersionDetails"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesSupportAccessRequest": {
+      "type": "object",
+      "title": "KubernetesSupportAccessRequest defines the information about a support access request.",
+      "required": [
+        "access_role"
+      ],
+      "properties": {
+        "access_role": {
+          "description": "Access role requested",
+          "type": "string",
+          "x-go-name": "AccessRole",
+          "example": "operator"
+        },
+        "cert_expires_at": {
+          "description": "Time when certificate expires (RFC3339)",
+          "type": "string",
+          "x-go-name": "CertExpiresAt",
+          "example": "2024-01-15T18:30:00Z"
+        },
+        "cert_fingerprint": {
+          "description": "Certificate fingerprint",
+          "type": "string",
+          "x-go-name": "CertFingerprint",
+          "example": "AA:BB:CC:DD:EE:FF"
+        },
+        "cert_issued_at": {
+          "description": "Time last certificate issued (RFC3339)",
+          "type": "string",
+          "x-go-name": "CertIssuedAt",
+          "example": "2024-01-15T10:30:00Z"
+        },
+        "cert_serial": {
+          "description": "Certificate serial number",
+          "type": "string",
+          "x-go-name": "CertSerial",
+          "example": "1234567890"
+        },
+        "expires_at": {
+          "description": "Time when access expires (RFC3339)",
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2024-01-15T18:30:00Z"
+        },
+        "requested_at": {
+          "description": "Time requested (RFC3339)",
+          "type": "string",
+          "x-go-name": "RequestedAt",
+          "example": "2024-01-15T10:30:00Z"
+        },
+        "requestor_id": {
+          "description": "User ID (UUID) of the user who requested access",
+          "type": "string",
+          "x-go-name": "RequestorID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "requestor_team": {
+          "description": "Name of team requesting support access",
+          "type": "string",
+          "x-go-name": "RequestorTeam",
+          "example": "SRE"
+        },
+        "support_reason": {
+          "description": "Reason for requesting support access",
+          "type": "string",
+          "x-go-name": "SupportReason",
+          "example": "Investigating cluster health issue"
+        },
+        "ticket_ref": {
+          "description": "Associated ticket for the support access request",
+          "type": "string",
+          "x-go-name": "TicketRef",
+          "example": "TICKET-12345"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -14011,6 +14639,40 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ListSCIMIntegrationTokensResponse": {
+      "type": "object",
+      "title": "ListSCIMIntegrationTokensResponse wraps a list of SCIM integration token responses.",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LimitedUsageAPIKeyInfo"
+          },
+          "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "ListSCIMIntegrationsResponse": {
+      "type": "object",
+      "title": "ListSCIMIntegrationsResponse wraps a list of SCIM integration responses.",
+      "required": [
+        "integrations"
+      ],
+      "properties": {
+        "integrations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SCIMIntegrationResponse"
+          },
+          "x-go-name": "Integrations"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "ListSSHKeysResponseV1Alpha5": {
       "type": "object",
       "required": [
@@ -14059,7 +14721,7 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "ListSlurmNodePoolsResponse": {
+    "ListSlurmNodeSetsResponse": {
       "type": "object",
       "required": [
         "items"
@@ -14068,7 +14730,7 @@
         "items": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/SlurmNodePool"
+            "$ref": "#/definitions/SlurmNodeSet"
           },
           "x-go-name": "Items"
         }
@@ -15945,6 +16607,77 @@
       "title": "S3VersioningState defines the possible versioning states for an S3 bucket.",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "SCIMIntegrationResponse": {
+      "type": "object",
+      "title": "SCIMIntegrationResponse is the JSON representation of a SCIM integration.",
+      "required": [
+        "id",
+        "organization_id",
+        "name",
+        "identity_provider",
+        "token_ids",
+        "status",
+        "created_at",
+        "updated_at",
+        "created_by"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2024-01-01T00:00:00Z"
+        },
+        "created_by": {
+          "type": "string",
+          "x-go-name": "CreatedBy",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "identity_provider": {
+          "type": "string",
+          "x-go-name": "IdentityProvider",
+          "example": "okta"
+        },
+        "last_activity_at": {
+          "description": "The timestamp of the last SCIM activity on this integration.",
+          "type": "string",
+          "x-go-name": "LastActivityAt",
+          "example": "2024-01-01T00:00:00Z"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "Okta SCIM Integration"
+        },
+        "organization_id": {
+          "type": "string",
+          "x-go-name": "OrganizationID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "status": {
+          "type": "string",
+          "x-go-name": "Status",
+          "example": "active"
+        },
+        "token_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "TokenIDs"
+        },
+        "updated_at": {
+          "type": "string",
+          "x-go-name": "UpdatedAt",
+          "example": "2024-01-01T00:00:00Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "SSHKey": {
       "type": "object",
       "required": [
@@ -16023,305 +16756,347 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmCluster": {
-      "type": "object",
       "title": "SlurmCluster defines the specifications of the slurm cluster.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SlurmClusterMetadata"
+        },
+        {
+          "$ref": "#/definitions/SlurmClusterConfig"
+        },
+        {
+          "$ref": "#/definitions/SlurmClusterStatus"
+        }
+      ],
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmClusterConfig": {
+      "type": "object",
+      "title": "Configurable fields of the Slurm Cluster.",
       "required": [
-        "id",
         "name",
         "location",
-        "subnet_id",
-        "project_id",
-        "state",
-        "node_pools",
-        "created_at",
-        "updated_at",
-        "deleted_at",
-        "login_node_url",
-        "controller_node_url"
+        "root_ssh_pub_keys"
       ],
       "properties": {
-        "controller_node_url": {
-          "description": "Controller node URL.",
-          "type": "string",
-          "x-go-name": "ControllerNodeURL"
-        },
-        "created_at": {
-          "description": "The timestamp of the cluster creation since 1970-01-01T00:00:00Z in seconds.",
-          "type": "string",
-          "x-go-name": "CreatedAt",
-          "example": "100000"
-        },
-        "deleted_at": {
-          "description": "The timestamp of the cluster deletion since 1970-01-01T00:00:00Z in seconds.",
-          "type": "string",
-          "x-go-name": "DeletedAt",
-          "example": "100000"
-        },
-        "id": {
-          "description": "ID of the slurm cluster.",
-          "type": "string",
-          "x-go-name": "ID",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
-        },
         "location": {
-          "description": "Location of the slurm cluster.",
+          "description": "Location to create the Slurm cluster in.",
           "type": "string",
-          "x-go-name": "Location"
+          "x-go-name": "Location",
+          "example": "us-northcentral1-a"
         },
-        "login_node_url": {
-          "description": "Login node URL.",
+        "login_node_type": {
+          "description": "Node type to use for Slurm Controller and Login",
           "type": "string",
-          "x-go-name": "LoginNodeURL"
+          "default": "c1a.4x",
+          "x-go-name": "LoginNodeType"
+        },
+        "login_replicas": {
+          "description": "Number of replica pods to use for LoginSet",
+          "type": "integer",
+          "format": "int64",
+          "default": 1,
+          "minimum": 1,
+          "x-go-name": "LoginReplicas"
         },
         "name": {
-          "description": "Name of the slurm cluster.",
+          "description": "Name of the Slurm cluster.",
           "type": "string",
           "x-go-name": "Name",
           "example": "my-slurm-cluster"
         },
-        "node_pools": {
-          "description": "Nodepools associated with the cluster.",
+        "root_ssh_pub_keys": {
+          "description": "An array of SSH public keys which will be used to allow access as root user.\nThis will be mounted as the \"root/.ssh/authorized_keys\" file.",
           "type": "array",
           "items": {
             "type": "string"
           },
-          "x-go-name": "NodePools",
+          "x-go-name": "RootSSHPubKeys",
           "example": [
-            "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D"
           ]
         },
+        "shared_home_volume_size": {
+          "description": "Shared Volume Size (mounted to /home) in GiB. Set to 0 to omit shared volume",
+          "type": "integer",
+          "format": "int64",
+          "default": 1024,
+          "minimum": 0,
+          "x-go-name": "SharedHomeVolumeSize"
+        },
+        "shared_volumes": {
+          "description": "Additional shared volumes to attach to the cluster.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SlurmSharedVolume"
+          },
+          "x-go-name": "SharedVolumes"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmClusterMetadata": {
+      "type": "object",
+      "title": "Non-configurable, unchanging fields for the Slurm Cluster.",
+      "required": [
+        "kubernetes_cluster_id",
+        "id",
+        "project_id"
+      ],
+      "properties": {
+        "id": {
+          "description": "ID of the Slurm cluster.",
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "kubernetes_cluster_id": {
+          "description": "The id of the Kubernetes cluster this Slurm cluster belongs to",
+          "type": "string",
+          "x-go-name": "KubernetesClusterID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
         "project_id": {
-          "description": "The ID of the project this slurm cluster belongs to.",
+          "description": "The ID of the project this Slurm cluster belongs to.",
           "type": "string",
           "x-go-name": "ProjectID",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
-        },
-        "state": {
-          "description": "State of the cluster",
-          "type": "string",
-          "x-go-name": "State",
-          "example": "RUNNING"
-        },
-        "subnet_id": {
-          "description": "The ID of the subnet this slurm cluster belongs to.",
-          "type": "string",
-          "x-go-name": "SubnetID",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
-        },
-        "updated_at": {
-          "description": "The timestamp of the cluster update since 1970-01-01T00:00:00Z in seconds.",
-          "type": "string",
-          "x-go-name": "UpdatedAt",
-          "example": "100000"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmClusterPostRequest": {
-      "type": "object",
       "title": "SlurmClusterPostRequest defines the specifications of the cluster to be created.",
-      "required": [
-        "name",
-        "location",
-        "ssh_pub_key"
-      ],
-      "properties": {
-        "location": {
-          "description": "Location to create the slurm cluster in.",
-          "type": "string",
-          "x-go-name": "Location"
+      "allOf": [
+        {
+          "$ref": "#/definitions/SlurmClusterConfig"
         },
-        "name": {
-          "description": "Name of the slurm cluster.",
-          "type": "string",
-          "x-go-name": "Name",
-          "example": "my-slurm-cluster"
-        },
-        "sans_shared_volume": {
-          "description": "If true, allows internal developers to create slurm clusters without shared volumes.",
-          "type": "boolean",
-          "x-go-name": "SansSharedVolume",
-          "example": true
-        },
-        "ssh_pub_key": {
-          "description": "A mapping of usernames to their SSH keys for accessing the cluster.\nBoth the username and ssh key must be named attributes, as shown in the example",
-          "type": "string",
-          "x-go-name": "SSHPubKey",
-          "example": "{ \"username1\" : \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D\"}"
-        },
-        "subnet_id": {
-          "description": "The ID of the subnet to create the cluster in. Must be in the location\nspecified. If not provided, the default subnet for the location will be\nused, if there is one.",
-          "type": "string",
-          "x-go-name": "SubnetID",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        {
+          "type": "object",
+          "properties": {
+            "kubernetes_cluster": {
+              "$ref": "#/definitions/KubernetesClusterPostRequest"
+            }
+          }
         }
-      },
+      ],
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "SlurmNodePool": {
+    "SlurmClusterStatus": {
       "type": "object",
+      "title": "Non-configurable, changing fields relating the current state of the cluster.",
       "required": [
-        "id",
-        "name",
-        "type",
-        "running_count",
-        "desired_count",
-        "ib_partition_id",
-        "transport_partition_id",
-        "project_id",
-        "cluster_id",
-        "image_id",
-        "instance_ids",
-        "partition_name"
+        "state"
       ],
       "properties": {
-        "cluster_id": {
-          "description": "The ID of the slurm cluster this node pool belongs to.",
+        "controller_node_id": {
+          "description": "Node ID UUID running the Slurm controller node.",
           "type": "string",
-          "x-go-name": "ClusterID",
-          "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
+          "x-go-name": "ControllerNodeID",
+          "example": "\"09ae8411-0fbb-411c-898c-2b8f19622ae1\""
         },
-        "desired_count": {
-          "description": "Desired number of nodes within the node pool.",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "DesiredCount",
-          "example": 4
-        },
-        "ib_partition_id": {
+        "error": {
+          "description": "Message describing why slurm cluster is not in STATE_RUNNING",
           "type": "string",
-          "x-go-name": "IBPartitionID"
+          "x-go-name": "Error",
+          "example": "\"Failed to provision slurm cluster: Login pods not ready\""
         },
-        "id": {
-          "description": "ID of the node pool.",
+        "login_node_endpoint": {
+          "description": "Login node Endpoint (IP).",
           "type": "string",
-          "x-go-name": "ID",
-          "example": "0a1b3c2d-5e6f-8b9c-4d7e-1a2b3c4d5e6f"
+          "x-go-name": "LoginNodeEndpoint"
         },
-        "image_id": {
-          "description": "Image ID for the slurm node pool.",
+        "login_node_id": {
+          "description": "Node ID UUID running the Slurm login node.",
           "type": "string",
-          "x-go-name": "ImageID",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+          "x-go-name": "LoginNodeID",
+          "example": "\"09ae8411-0fbb-411c-898c-2b8f19622ae1\""
         },
-        "instance_ids": {
-          "description": "List of IDs of instances within the node pool.",
+        "state": {
+          "description": "State of the slurm cluster",
+          "type": "string",
+          "x-go-name": "State",
+          "example": "STATE_RUNNING"
+        },
+        "version": {
+          "description": "Current Version of the Crusoe Slurm Operator",
+          "type": "string",
+          "x-go-name": "Version"
+        },
+        "worker_node_pools": {
+          "description": "Nodepools running the Slurm Workers",
           "type": "array",
           "items": {
             "type": "string"
           },
-          "x-go-name": "InstanceIDs",
+          "x-go-name": "WorkerNodePools",
           "example": [
-            "ca39e669-47ee-456b-968d-303234fbf99f"
+            "09ae8411-0fbb-411c-898c-2b8f19622ae1"
           ]
-        },
-        "name": {
-          "description": "Name of the node pool.",
-          "type": "string",
-          "x-go-name": "Name",
-          "example": "crusoe-node-pool"
-        },
-        "partition_name": {
-          "description": "Slurm partition name of the node pool.",
-          "type": "string",
-          "x-go-name": "SlurmPartitionName",
-          "example": "my-slurm-partition"
-        },
-        "project_id": {
-          "description": "The ID of the project this slurm node pool belongs to.",
-          "type": "string",
-          "x-go-name": "ProjectID",
-          "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
-        },
-        "running_count": {
-          "description": "Number of nodes within the node pool.",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "RunningCount",
-          "example": 4
-        },
-        "transport_partition_id": {
-          "description": "IB or RoCE partition ID of the node pool.",
-          "type": "string",
-          "x-go-name": "TransportPartitionID",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
-        },
-        "type": {
-          "description": "VM type of the node pool",
-          "type": "string",
-          "x-go-name": "Type",
-          "example": "a100.2x"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "SlurmNodePoolPatchRequest": {
+    "SlurmClusterStatusPostRequest": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/SlurmClusterStatus"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "worker_node_sets_status": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SlurmNodeSetStatus"
+              },
+              "x-go-name": "WorkerNodeSetsStatus"
+            }
+          }
+        }
+      ],
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmNodeSet": {
       "type": "object",
       "required": [
-        "desired_count"
+        "id",
+        "name",
+        "project_id",
+        "slurm_cluster_id",
+        "node_pool_id",
+        "state",
+        "ready_count"
       ],
       "properties": {
-        "desired_count": {
-          "description": "The desired number of nodes to be created.",
+        "error": {
+          "description": "Message describing why node set is not in running.",
+          "type": "string",
+          "x-go-name": "Error"
+        },
+        "id": {
+          "description": "ID of the node set.",
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "description": "Name of the node set.",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "node_pool_id": {
+          "description": "Underlying node pool id.",
+          "type": "string",
+          "x-go-name": "NodePoolID"
+        },
+        "project_id": {
+          "description": "The ID of the project this node set belongs to.",
+          "type": "string",
+          "x-go-name": "ProjectID"
+        },
+        "ready_count": {
+          "description": "Count of nodes that have all slurm replicas running.",
           "type": "integer",
           "format": "int64",
-          "x-go-name": "DesiredCount",
-          "example": 4
+          "x-go-name": "ReadyCount"
+        },
+        "slurm_cluster_id": {
+          "description": "The ID of the slurm cluster this node set belongs to.",
+          "type": "string",
+          "x-go-name": "SlurmClusterID"
+        },
+        "state": {
+          "description": "Current state.",
+          "type": "string",
+          "x-go-name": "State"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "SlurmNodePoolPostRequest": {
+    "SlurmNodeSetPatchRequest": {
+      "type": "object",
+      "required": [
+        "kubernetes_nodepool"
+      ],
+      "properties": {
+        "kubernetes_nodepool": {
+          "$ref": "#/definitions/KubernetesNodePoolPatchRequest"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmNodeSetPostRequest": {
       "type": "object",
       "required": [
         "name",
-        "type",
-        "desired_count",
-        "cluster_id",
-        "partition_name"
+        "kubernetes_nodepool"
       ],
       "properties": {
-        "cluster_id": {
-          "description": "Cluster ID of the cluster this node pool belongs to.",
-          "type": "string",
-          "x-go-name": "ClusterID",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
-        },
-        "desired_count": {
-          "description": "The desired number of nodes to be created.",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "DesiredCount",
-          "example": 4
-        },
-        "ib_partition_id": {
-          "description": "Deprecated: Use transport_partition_id instead.",
-          "type": "string",
-          "x-go-name": "IBPartitionID"
+        "kubernetes_nodepool": {
+          "$ref": "#/definitions/KubernetesNodePoolPostRequest"
         },
         "name": {
-          "description": "Name of the slurm node pool.",
+          "description": "Name of the node set.",
           "type": "string",
-          "x-go-name": "Name",
-          "example": "my-slurm-node-pool"
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmNodeSetStatus": {
+      "type": "object",
+      "required": [
+        "id",
+        "ready_count",
+        "state"
+      ],
+      "properties": {
+        "error": {
+          "description": "Message describing why node set is not in STATE_RUNNING",
+          "type": "string",
+          "x-go-name": "Error",
+          "example": "Slurm Worker pods are initializing"
         },
-        "partition_name": {
-          "description": "Name of the slurm partition.",
+        "id": {
+          "description": "ID of the worker node set.",
           "type": "string",
-          "x-go-name": "SlurmPartitionName",
-          "example": "my-slurm-partition"
+          "x-go-name": "ID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         },
-        "transport_partition_id": {
-          "description": "The ID of the Infiniband or RoCE partition to create node pool in. Must be in the location\nof the cluster if specified.",
-          "type": "string",
-          "x-go-name": "TransportPartitionID",
-          "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653"
+        "ready_count": {
+          "description": "Count of nodes that are not only \"running\" but have all slurm replicas running",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ReadyCount",
+          "example": 4
         },
-        "type": {
-          "description": "Product name of the VM type to be created within this node pool.",
+        "state": {
+          "description": "State of the slurm node set",
           "type": "string",
-          "x-go-name": "Type",
-          "example": "a100.2x"
+          "x-go-name": "State",
+          "example": "STATE_RUNNING"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmSharedVolume": {
+      "type": "object",
+      "title": "SlurmSharedVolume defines a shared volume attached to a Slurm cluster.",
+      "required": [
+        "size",
+        "mount_point"
+      ],
+      "properties": {
+        "mount_point": {
+          "description": "Mount point for the volume (e.g. \"/data\").",
+          "type": "string",
+          "x-go-name": "MountPoint"
+        },
+        "size": {
+          "description": "Size of the volume in GiB.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Size"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -16521,6 +17296,19 @@
             "type": "string"
           },
           "x-go-name": "Tags"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "UpdateSCIMIntegrationRequestBody": {
+      "type": "object",
+      "title": "UpdateSCIMIntegrationRequestBody is the JSON request body for updating a SCIM integration.",
+      "properties": {
+        "status": {
+          "description": "The new status for the integration.",
+          "type": "string",
+          "x-go-name": "Status",
+          "example": "active"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -17425,6 +18213,18 @@
         "$ref": "#/definitions/CreateS3KeyResponse"
       }
     },
+    "createSCIMIntegrationResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/CreateSCIMIntegrationResponse"
+      }
+    },
+    "createSCIMIntegrationTokenResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/LimitedUsageAPIKeyPostResponse"
+      }
+    },
     "createSSHKeysResponse": {
       "description": "",
       "schema": {
@@ -17665,6 +18465,12 @@
         "$ref": "#/definitions/QuotaValidationResult"
       }
     },
+    "getSCIMIntegrationResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/SCIMIntegrationResponse"
+      }
+    },
     "getSSHKeysResponse": {
       "description": "",
       "schema": {
@@ -17677,16 +18483,22 @@
         "$ref": "#/definitions/SlurmCluster"
       }
     },
-    "getSlurmNodePoolResponse": {
+    "getSlurmNodeSetResponse": {
       "description": "",
       "schema": {
-        "$ref": "#/definitions/SlurmNodePool"
+        "$ref": "#/definitions/SlurmNodeSet"
       }
     },
     "getSnapshotResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/DiskSnapshot"
+      }
+    },
+    "getSupportSettingsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesClusterSupportSettingsResponse"
       }
     },
     "getTopologyResponse": {
@@ -17881,6 +18693,18 @@
         "$ref": "#/definitions/ListS3KeysResponse"
       }
     },
+    "listSCIMIntegrationTokensResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListSCIMIntegrationTokensResponse"
+      }
+    },
+    "listSCIMIntegrationsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListSCIMIntegrationsResponse"
+      }
+    },
     "listSSOProvidersResponse": {
       "description": "",
       "schema": {
@@ -17893,10 +18717,10 @@
         "$ref": "#/definitions/ListSlurmClustersResponse"
       }
     },
-    "listSlurmNodePoolsResponse": {
+    "listSlurmNodeSetsResponse": {
       "description": "",
       "schema": {
-        "$ref": "#/definitions/ListSlurmNodePoolsResponse"
+        "$ref": "#/definitions/ListSlurmNodeSetsResponse"
       }
     },
     "listVPCNetworksResponse": {
@@ -18230,6 +19054,18 @@
         "$ref": "#/definitions/BillingAlertPutResponse"
       }
     },
+    "updateSCIMIntegrationResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/SCIMIntegrationResponse"
+      }
+    },
+    "updateSupportSettingsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesClusterSupportSettingsResponse"
+      }
+    },
     "usageExportGetResponse": {
       "description": "",
       "headers": {
@@ -18320,7 +19156,8 @@
         "Prospects",
         "Usage",
         "Quotas",
-        "Audit Logs"
+        "Audit Logs",
+        "SCIM"
       ]
     },
     {

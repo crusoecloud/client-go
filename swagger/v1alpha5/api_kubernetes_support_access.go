@@ -22,35 +22,36 @@ var (
 	_ context.Context
 )
 
-type S3KeysApiService service
+type KubernetesSupportAccessApiService service
 
 /*
-S3KeysApiService Creates a new S3 key and generates access/secret key pair.
+KubernetesSupportAccessApiService Retrieve support access settings for a Kubernetes cluster.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
-  - @param orgId
+  - @param projectId
+  - @param clusterId
 
-@return CreateS3KeyResponse
+@return KubernetesClusterSupportSettingsResponse
 */
-func (a *S3KeysApiService) CreateS3Key(ctx context.Context, body CreateS3KeyRequest, orgId string) (CreateS3KeyResponse, *http.Response, error) {
+func (a *KubernetesSupportAccessApiService) GetSupportSettings(ctx context.Context, projectId string, clusterId string) (KubernetesClusterSupportSettingsResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod  = strings.ToUpper("Post")
+		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue CreateS3KeyResponse
+		localVarReturnValue KubernetesClusterSupportSettingsResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/{org_id}/storage/s3/keys"
-	localVarPath = strings.Replace(localVarPath, "{"+"org_id"+"}", fmt.Sprintf("%v", orgId), -1)
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/clusters/{cluster_id}/support/settings"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -66,8 +67,6 @@ func (a *S3KeysApiService) CreateS3Key(ctx context.Context, body CreateS3KeyRequ
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	// body params
-	localVarPostBody = &body
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -98,7 +97,7 @@ func (a *S3KeysApiService) CreateS3Key(ctx context.Context, body CreateS3KeyRequ
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CreateS3KeyResponse
+			var v KubernetesClusterSupportSettingsResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -154,138 +153,34 @@ func (a *S3KeysApiService) CreateS3Key(ctx context.Context, body CreateS3KeyRequ
 }
 
 /*
-S3KeysApiService Deletes an S3 key based on its ID.
+KubernetesSupportAccessApiService Update support access settings for a Kubernetes cluster.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId The ID of the organization
-  - @param accessKeyId The AccessKeyID of the S3 key to delete
+  - @param body
+  - @param projectId
+  - @param clusterId
+
+@return KubernetesClusterSupportSettingsResponse
 */
-func (a *S3KeysApiService) DeleteS3Key(ctx context.Context, orgId string, accessKeyId string) (*http.Response, error) {
+func (a *KubernetesSupportAccessApiService) UpdateSupportSettings(ctx context.Context, body KubernetesClusterSupportSettingsRequest, projectId string, clusterId string) (KubernetesClusterSupportSettingsResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/{org_id}/storage/s3/keys/{access_key_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"org_id"+"}", fmt.Sprintf("%v", orgId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"access_key_id"+"}", fmt.Sprintf("%v", accessKeyId), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"application/json"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body:  localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		if localVarHttpResponse.StatusCode == 401 {
-			var v InlineResponse401
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 403 {
-			var v InlineResponse403
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 404 {
-			var v InlineResponse404
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-		if localVarHttpResponse.StatusCode == 500 {
-			var v InlineResponse500
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHttpResponse, newErr
-			}
-			newErr.model = v
-			return localVarHttpResponse, newErr
-		}
-		return localVarHttpResponse, newErr
-	}
-
-	return localVarHttpResponse, nil
-}
-
-/*
-S3KeysApiService Lists all S3 keys for a organization.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId
-
-@return ListS3KeysResponse
-*/
-func (a *S3KeysApiService) ListS3Keys(ctx context.Context, orgId string) (ListS3KeysResponse, *http.Response, error) {
-	var (
-		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListS3KeysResponse
+		localVarReturnValue KubernetesClusterSupportSettingsResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/{org_id}/storage/s3/keys"
-	localVarPath = strings.Replace(localVarPath, "{"+"org_id"+"}", fmt.Sprintf("%v", orgId), -1)
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/clusters/{cluster_id}/support/settings"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{}
+	localVarHttpContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -301,6 +196,8 @@ func (a *S3KeysApiService) ListS3Keys(ctx context.Context, orgId string) (ListS3
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
+	// body params
+	localVarPostBody = &body
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -331,7 +228,17 @@ func (a *S3KeysApiService) ListS3Keys(ctx context.Context, orgId string) (ListS3
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListS3KeysResponse
+			var v KubernetesClusterSupportSettingsResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 400 {
+			var v InlineResponse400
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
