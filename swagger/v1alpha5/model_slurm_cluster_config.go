@@ -8,7 +8,7 @@
  */
 package swagger
 
-type SlurmClusterPostRequest struct {
+type SlurmClusterConfig struct {
 	// Location to create the Slurm cluster in.
 	Location string `json:"location"`
 	// Node type to use for Slurm Controller and Login
@@ -22,6 +22,5 @@ type SlurmClusterPostRequest struct {
 	// Shared Volume Size (mounted to /home) in GiB. Set to 0 to omit shared volume
 	SharedHomeVolumeSize int64 `json:"shared_home_volume_size,omitempty"`
 	// Additional shared volumes to attach to the cluster.
-	SharedVolumes     []SlurmSharedVolume           `json:"shared_volumes,omitempty"`
-	KubernetesCluster *KubernetesClusterPostRequest `json:"kubernetes_cluster,omitempty"`
+	SharedVolumes []SlurmSharedVolume `json:"shared_volumes,omitempty"`
 }
