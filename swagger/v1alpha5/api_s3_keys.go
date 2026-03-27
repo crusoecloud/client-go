@@ -156,11 +156,10 @@ func (a *S3KeysApiService) CreateS3Key(ctx context.Context, body CreateS3KeyRequ
 /*
 S3KeysApiService Deletes an S3 key based on its ID.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
   - @param orgId The ID of the organization
-  - @param keyId The ID of the S3 key to delete
+  - @param accessKeyId The AccessKeyID of the S3 key to delete
 */
-func (a *S3KeysApiService) DeleteS3Key(ctx context.Context, body DeleteS3KeyRequest, orgId string, keyId string) (*http.Response, error) {
+func (a *S3KeysApiService) DeleteS3Key(ctx context.Context, orgId string, accessKeyId string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -169,16 +168,16 @@ func (a *S3KeysApiService) DeleteS3Key(ctx context.Context, body DeleteS3KeyRequ
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/{org_id}/storage/s3/keys/{key_id}"
+	localVarPath := a.client.cfg.BasePath + "/organizations/{org_id}/storage/s3/keys/{access_key_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"org_id"+"}", fmt.Sprintf("%v", orgId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"key_id"+"}", fmt.Sprintf("%v", keyId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"access_key_id"+"}", fmt.Sprintf("%v", accessKeyId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
+	localVarHttpContentTypes := []string{}
 
 	// set Content-Type header
 	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
@@ -194,8 +193,6 @@ func (a *S3KeysApiService) DeleteS3Key(ctx context.Context, body DeleteS3KeyRequ
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	// body params
-	localVarPostBody = &body
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return nil, err

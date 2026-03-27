@@ -1048,7 +1048,7 @@
         }
       }
     },
-    "/organizations/{org_id}/storage/s3/keys/{key_id}": {
+    "/organizations/{org_id}/storage/s3/keys/{access_key_id}": {
       "delete": {
         "consumes": [
           "application/json"
@@ -1069,19 +1069,12 @@
           },
           {
             "type": "string",
-            "x-go-name": "KeyID",
-            "description": "The ID of the S3 key to delete",
-            "name": "key_id",
+            "example": "CKIA493K6LOVDNNAR4SZ",
+            "x-go-name": "AccessKeyID",
+            "description": "The AccessKeyID of the S3 key to delete",
+            "name": "access_key_id",
             "in": "path",
             "required": true
-          },
-          {
-            "name": "Body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/DeleteS3KeyRequest"
-            }
           }
         ],
         "responses": {
@@ -10663,22 +10656,6 @@
           },
           "x-go-name": "Tags",
           "example": "22.04,latest"
-        }
-      },
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "DeleteS3KeyRequest": {
-      "type": "object",
-      "title": "DeleteS3KeyRequest is the request body for deleting a S3 access key for a user.",
-      "required": [
-        "access_key_id"
-      ],
-      "properties": {
-        "access_key_id": {
-          "description": "The Access Key ID for S3 operations.",
-          "type": "string",
-          "x-go-name": "AccessKeyID",
-          "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
