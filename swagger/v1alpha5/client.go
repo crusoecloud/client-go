@@ -92,6 +92,8 @@ type APIClient struct {
 
 	KubernetesNodePoolsApi *KubernetesNodePoolsApiService
 
+	KubernetesSupportAccessApi *KubernetesSupportAccessApiService
+
 	KubernetesVersionsApi *KubernetesVersionsApiService
 
 	LimitedUsageAPIKeyApi *LimitedUsageAPIKeyApiService
@@ -195,6 +197,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.KubernetesClustersApi = (*KubernetesClustersApiService)(&c.common)
 	c.KubernetesNodePoolOperationsApi = (*KubernetesNodePoolOperationsApiService)(&c.common)
 	c.KubernetesNodePoolsApi = (*KubernetesNodePoolsApiService)(&c.common)
+	c.KubernetesSupportAccessApi = (*KubernetesSupportAccessApiService)(&c.common)
 	c.KubernetesVersionsApi = (*KubernetesVersionsApiService)(&c.common)
 	c.LimitedUsageAPIKeyApi = (*LimitedUsageAPIKeyApiService)(&c.common)
 	c.LoadBalancerOperationsApi = (*LoadBalancerOperationsApiService)(&c.common)

@@ -4589,6 +4589,100 @@
         }
       }
     },
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/support/settings": {
+      "get": {
+        "tags": [
+          "Kubernetes Support Access"
+        ],
+        "summary": "Retrieve support access settings for a Kubernetes cluster.",
+        "operationId": "getSupportSettings",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getSupportSettingsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Kubernetes Support Access"
+        ],
+        "summary": "Update support access settings for a Kubernetes cluster.",
+        "operationId": "updateSupportSettings",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ClusterID",
+            "name": "cluster_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KubernetesClusterSupportSettingsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/updateSupportSettingsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/projects/{project_id}/kubernetes/nodepools": {
       "get": {
         "tags": [
@@ -13361,6 +13455,68 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "KubernetesClusterSupportSettingsRequest": {
+      "description": "KubernetesClusterSupportSettingsRequest defines the request for updating\nsupport access settings for a Kubernetes cluster.",
+      "type": "object",
+      "properties": {
+        "access_enabled": {
+          "description": "Support access enabled master toggle",
+          "type": "boolean",
+          "x-go-name": "AccessEnabled",
+          "example": true
+        },
+        "enabled_roles": {
+          "description": "Enabled support access roles",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "EnabledRoles",
+          "example": [
+            "operator",
+            "readonly"
+          ]
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesClusterSupportSettingsResponse": {
+      "description": "KubernetesClusterSupportSettingsResponse defines the response for getting\nor setting support access settings for a Kubernetes cluster.",
+      "type": "object",
+      "required": [
+        "access_enabled",
+        "enabled_roles"
+      ],
+      "properties": {
+        "access_enabled": {
+          "description": "Support access enabled master toggle",
+          "type": "boolean",
+          "x-go-name": "AccessEnabled",
+          "example": true
+        },
+        "active_requests": {
+          "description": "List of current active requests",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KubernetesSupportAccessRequest"
+          },
+          "x-go-name": "ActiveRequests"
+        },
+        "enabled_roles": {
+          "description": "Enabled support access roles",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "EnabledRoles",
+          "example": [
+            "operator",
+            "readonly"
+          ]
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "KubernetesClustersVersionInfo": {
       "type": "object",
       "required": [
@@ -13802,6 +13958,82 @@
         },
         "version_details": {
           "$ref": "#/definitions/VersionDetails"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesSupportAccessRequest": {
+      "type": "object",
+      "title": "KubernetesSupportAccessRequest defines the information about a support access request.",
+      "required": [
+        "access_role"
+      ],
+      "properties": {
+        "access_role": {
+          "description": "Access role requested",
+          "type": "string",
+          "x-go-name": "AccessRole",
+          "example": "operator"
+        },
+        "cert_expires_at": {
+          "description": "Time when certificate expires (RFC3339)",
+          "type": "string",
+          "x-go-name": "CertExpiresAt",
+          "example": "2024-01-15T18:30:00Z"
+        },
+        "cert_fingerprint": {
+          "description": "Certificate fingerprint",
+          "type": "string",
+          "x-go-name": "CertFingerprint",
+          "example": "AA:BB:CC:DD:EE:FF"
+        },
+        "cert_issued_at": {
+          "description": "Time last certificate issued (RFC3339)",
+          "type": "string",
+          "x-go-name": "CertIssuedAt",
+          "example": "2024-01-15T10:30:00Z"
+        },
+        "cert_serial": {
+          "description": "Certificate serial number",
+          "type": "string",
+          "x-go-name": "CertSerial",
+          "example": "1234567890"
+        },
+        "expires_at": {
+          "description": "Time when access expires (RFC3339)",
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2024-01-15T18:30:00Z"
+        },
+        "requested_at": {
+          "description": "Time requested (RFC3339)",
+          "type": "string",
+          "x-go-name": "RequestedAt",
+          "example": "2024-01-15T10:30:00Z"
+        },
+        "requestor_id": {
+          "description": "User ID (UUID) of the user who requested access",
+          "type": "string",
+          "x-go-name": "RequestorID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+        },
+        "requestor_team": {
+          "description": "Name of team requesting support access",
+          "type": "string",
+          "x-go-name": "RequestorTeam",
+          "example": "SRE"
+        },
+        "support_reason": {
+          "description": "Reason for requesting support access",
+          "type": "string",
+          "x-go-name": "SupportReason",
+          "example": "Investigating cluster health issue"
+        },
+        "ticket_ref": {
+          "description": "Associated ticket for the support access request",
+          "type": "string",
+          "x-go-name": "TicketRef",
+          "example": "TICKET-12345"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -18263,6 +18495,12 @@
         "$ref": "#/definitions/DiskSnapshot"
       }
     },
+    "getSupportSettingsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesClusterSupportSettingsResponse"
+      }
+    },
     "getTopologyResponse": {
       "description": "",
       "schema": {
@@ -18820,6 +19058,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/SCIMIntegrationResponse"
+      }
+    },
+    "updateSupportSettingsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesClusterSupportSettingsResponse"
       }
     },
     "usageExportGetResponse": {
