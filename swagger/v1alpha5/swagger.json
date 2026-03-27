@@ -606,6 +606,370 @@
         }
       }
     },
+    "/organizations/{org_id}/scim/integrations": {
+      "get": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "List SCIM integrations for an organization.",
+        "operationId": "listSCIMIntegrations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listSCIMIntegrationsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Create a new SCIM integration for an organization.",
+        "operationId": "createSCIMIntegration",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSCIMIntegrationRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/createSCIMIntegrationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/organizations/{org_id}/scim/integrations/{integration_id}": {
+      "get": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Get a SCIM integration by ID.",
+        "operationId": "getSCIMIntegration",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getSCIMIntegrationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Delete a SCIM integration.",
+        "operationId": "deleteSCIMIntegration",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Update a SCIM integration.",
+        "operationId": "updateSCIMIntegration",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateSCIMIntegrationRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/updateSCIMIntegrationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/organizations/{org_id}/scim/integrations/{integration_id}/tokens": {
+      "get": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "List the tokens for a SCIM integration.",
+        "operationId": "listSCIMIntegrationTokens",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listSCIMIntegrationTokensResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Create a token for a SCIM integration.",
+        "operationId": "createSCIMIntegrationToken",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateSCIMTokenRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/createSCIMIntegrationTokenResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "SCIM"
+        ],
+        "summary": "Delete a token from a SCIM integration.",
+        "operationId": "deleteSCIMIntegrationToken",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OrgID",
+            "name": "org_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "IntegrationID",
+            "name": "integration_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "R7p5XctCQMuGlpVBmVdqzA",
+            "x-go-name": "KeyID",
+            "name": "key_id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/organizations/{org_id}/storage/s3/keys": {
       "get": {
         "tags": [
@@ -10051,6 +10415,68 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "CreateSCIMIntegrationRequestBody": {
+      "type": "object",
+      "title": "CreateSCIMIntegrationRequestBody is the JSON request body for creating a SCIM integration.",
+      "required": [
+        "name",
+        "identity_provider"
+      ],
+      "properties": {
+        "identity_provider": {
+          "type": "string",
+          "x-go-name": "IdentityProvider",
+          "example": "okta"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "Okta SCIM Integration"
+        },
+        "token": {
+          "$ref": "#/definitions/CreateSCIMTokenRequestBody"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "CreateSCIMIntegrationResponse": {
+      "description": "optionally including an inline token when requested.",
+      "type": "object",
+      "title": "CreateSCIMIntegrationResponse is the JSON response for creating a SCIM integration,",
+      "required": [
+        "integration"
+      ],
+      "properties": {
+        "api_key_info": {
+          "$ref": "#/definitions/GeneratedLimitedUsageAPIKey"
+        },
+        "integration": {
+          "$ref": "#/definitions/SCIMIntegrationResponse"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "CreateSCIMTokenRequestBody": {
+      "type": "object",
+      "title": "CreateSCIMTokenRequestBody is the JSON request body for creating a SCIM integration token.",
+      "required": [
+        "alias",
+        "expires_at"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "x-go-name": "Alias",
+          "example": "my-scim-token"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2025-12-03T19:58:34Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "CreateSSHKeyRequest": {
       "type": "object",
       "required": [
@@ -14011,6 +14437,40 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ListSCIMIntegrationTokensResponse": {
+      "type": "object",
+      "title": "ListSCIMIntegrationTokensResponse wraps a list of SCIM integration token responses.",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LimitedUsageAPIKeyInfo"
+          },
+          "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "ListSCIMIntegrationsResponse": {
+      "type": "object",
+      "title": "ListSCIMIntegrationsResponse wraps a list of SCIM integration responses.",
+      "required": [
+        "integrations"
+      ],
+      "properties": {
+        "integrations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SCIMIntegrationResponse"
+          },
+          "x-go-name": "Integrations"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "ListSSHKeysResponseV1Alpha5": {
       "type": "object",
       "required": [
@@ -15945,6 +16405,77 @@
       "title": "S3VersioningState defines the possible versioning states for an S3 bucket.",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "SCIMIntegrationResponse": {
+      "type": "object",
+      "title": "SCIMIntegrationResponse is the JSON representation of a SCIM integration.",
+      "required": [
+        "id",
+        "organization_id",
+        "name",
+        "identity_provider",
+        "token_ids",
+        "status",
+        "created_at",
+        "updated_at",
+        "created_by"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2024-01-01T00:00:00Z"
+        },
+        "created_by": {
+          "type": "string",
+          "x-go-name": "CreatedBy",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "identity_provider": {
+          "type": "string",
+          "x-go-name": "IdentityProvider",
+          "example": "okta"
+        },
+        "last_activity_at": {
+          "description": "The timestamp of the last SCIM activity on this integration.",
+          "type": "string",
+          "x-go-name": "LastActivityAt",
+          "example": "2024-01-01T00:00:00Z"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name",
+          "example": "Okta SCIM Integration"
+        },
+        "organization_id": {
+          "type": "string",
+          "x-go-name": "OrganizationID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "status": {
+          "type": "string",
+          "x-go-name": "Status",
+          "example": "active"
+        },
+        "token_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "TokenIDs"
+        },
+        "updated_at": {
+          "type": "string",
+          "x-go-name": "UpdatedAt",
+          "example": "2024-01-01T00:00:00Z"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "SSHKey": {
       "type": "object",
       "required": [
@@ -16521,6 +17052,19 @@
             "type": "string"
           },
           "x-go-name": "Tags"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "UpdateSCIMIntegrationRequestBody": {
+      "type": "object",
+      "title": "UpdateSCIMIntegrationRequestBody is the JSON request body for updating a SCIM integration.",
+      "properties": {
+        "status": {
+          "description": "The new status for the integration.",
+          "type": "string",
+          "x-go-name": "Status",
+          "example": "active"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -17425,6 +17969,18 @@
         "$ref": "#/definitions/CreateS3KeyResponse"
       }
     },
+    "createSCIMIntegrationResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/CreateSCIMIntegrationResponse"
+      }
+    },
+    "createSCIMIntegrationTokenResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/LimitedUsageAPIKeyPostResponse"
+      }
+    },
     "createSSHKeysResponse": {
       "description": "",
       "schema": {
@@ -17665,6 +18221,12 @@
         "$ref": "#/definitions/QuotaValidationResult"
       }
     },
+    "getSCIMIntegrationResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/SCIMIntegrationResponse"
+      }
+    },
     "getSSHKeysResponse": {
       "description": "",
       "schema": {
@@ -17879,6 +18441,18 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListS3KeysResponse"
+      }
+    },
+    "listSCIMIntegrationTokensResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListSCIMIntegrationTokensResponse"
+      }
+    },
+    "listSCIMIntegrationsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListSCIMIntegrationsResponse"
       }
     },
     "listSSOProvidersResponse": {
@@ -18230,6 +18804,12 @@
         "$ref": "#/definitions/BillingAlertPutResponse"
       }
     },
+    "updateSCIMIntegrationResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/SCIMIntegrationResponse"
+      }
+    },
     "usageExportGetResponse": {
       "description": "",
       "headers": {
@@ -18320,7 +18900,8 @@
         "Prospects",
         "Usage",
         "Quotas",
-        "Audit Logs"
+        "Audit Logs",
+        "SCIM"
       ]
     },
     {
