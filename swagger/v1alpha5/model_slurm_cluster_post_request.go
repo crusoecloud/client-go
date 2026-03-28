@@ -9,19 +9,14 @@
 package swagger
 
 type SlurmClusterPostRequest struct {
-	// Location to create the Slurm cluster in.
+	// Location to create the slurm cluster in.
 	Location string `json:"location"`
-	// Node type to use for Slurm Controller and Login
-	LoginNodeType string `json:"login_node_type,omitempty"`
-	// Number of replica pods to use for LoginSet
-	LoginReplicas int64 `json:"login_replicas,omitempty"`
-	// Name of the Slurm cluster.
+	// Name of the slurm cluster.
 	Name string `json:"name"`
-	// An array of SSH public keys which will be used to allow access as root user. This will be mounted as the \"root/.ssh/authorized_keys\" file.
-	RootSshPubKeys []string `json:"root_ssh_pub_keys"`
-	// Shared Volume Size (mounted to /home) in GiB. Set to 0 to omit shared volume
-	SharedHomeVolumeSize int64 `json:"shared_home_volume_size,omitempty"`
-	// Additional shared volumes to attach to the cluster.
-	SharedVolumes     []SlurmSharedVolume           `json:"shared_volumes,omitempty"`
-	KubernetesCluster *KubernetesClusterPostRequest `json:"kubernetes_cluster,omitempty"`
+	// If true, allows internal developers to create slurm clusters without shared volumes.
+	SansSharedVolume bool `json:"sans_shared_volume,omitempty"`
+	// A mapping of usernames to their SSH keys for accessing the cluster. Both the username and ssh key must be named attributes, as shown in the example
+	SshPubKey string `json:"ssh_pub_key"`
+	// The ID of the subnet to create the cluster in. Must be in the location specified. If not provided, the default subnet for the location will be used, if there is one.
+	SubnetId string `json:"subnet_id,omitempty"`
 }
