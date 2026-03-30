@@ -130,7 +130,7 @@ type APIClient struct {
 
 	SlurmClustersApi *SlurmClustersApiService
 
-	SlurmNodeSetsApi *SlurmNodeSetsApiService
+	SlurmNodePoolsApi *SlurmNodePoolsApiService
 
 	SnapshotOperationsApi *SnapshotOperationsApiService
 
@@ -216,7 +216,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.SSHKeysApi = (*SSHKeysApiService)(&c.common)
 	c.SSOApi = (*SSOApiService)(&c.common)
 	c.SlurmClustersApi = (*SlurmClustersApiService)(&c.common)
-	c.SlurmNodeSetsApi = (*SlurmNodeSetsApiService)(&c.common)
+	c.SlurmNodePoolsApi = (*SlurmNodePoolsApiService)(&c.common)
 	c.SnapshotOperationsApi = (*SnapshotOperationsApiService)(&c.common)
 	c.SnapshotsApi = (*SnapshotsApiService)(&c.common)
 	c.TokensApi = (*TokensApiService)(&c.common)

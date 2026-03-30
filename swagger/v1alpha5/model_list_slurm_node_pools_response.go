@@ -8,6 +8,6 @@
  */
 package swagger
 
-type ListSlurmNodeSetsResponse struct {
-	Items []SlurmNodeSet `json:"items"`
+type ListSlurmNodePoolsResponse struct {
+	Items []SlurmNodePool `json:"items"`
 }
