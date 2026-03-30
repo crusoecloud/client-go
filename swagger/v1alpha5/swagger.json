@@ -14524,6 +14524,22 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ListPaymentMethodsResponse": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PaymentMethodCard"
+          },
+          "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "ListProjectQuotasResponse": {
       "type": "object",
       "title": "ListProjectQuotasResponse is the response for listing a project's quotas.",
@@ -15652,6 +15668,49 @@
         "transport_partition_id": {
           "type": "string",
           "x-go-name": "TransportPartitionID"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "PaymentMethodCard": {
+      "type": "object",
+      "properties": {
+        "brand": {
+          "type": "string",
+          "x-go-name": "Brand",
+          "example": "visa"
+        },
+        "cardholder_name": {
+          "type": "string",
+          "x-go-name": "CardholderName",
+          "example": "John Doe"
+        },
+        "exp_month": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ExpMonth",
+          "example": 12
+        },
+        "exp_year": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ExpYear",
+          "example": 2027
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "pm_1OqJzX2eZvKYlo2C0000000"
+        },
+        "is_default": {
+          "type": "boolean",
+          "x-go-name": "IsDefault",
+          "example": true
+        },
+        "last4": {
+          "type": "string",
+          "x-go-name": "Last4",
+          "example": "\"4242\""
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -18620,6 +18679,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListOrgQuotasResponse"
+      }
+    },
+    "listPaymentMethodsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListPaymentMethodsResponse"
       }
     },
     "listProjectQuotasResponse": {
