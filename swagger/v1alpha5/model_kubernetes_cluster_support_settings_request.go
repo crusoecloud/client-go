@@ -11,7 +11,7 @@ package swagger
 // KubernetesClusterSupportSettingsRequest defines the request for updating support access settings for a Kubernetes cluster.
 type KubernetesClusterSupportSettingsRequest struct {
 	// Support access enabled master toggle
-	AccessEnabled bool `json:"access_enabled,omitempty"`
+	AccessEnabled bool `json:"access_enabled"`
 	// Enabled support access roles
 	EnabledRoles []string `json:"enabled_roles,omitempty"`
 }

@@ -13465,6 +13465,9 @@
     "KubernetesClusterSupportSettingsRequest": {
       "description": "KubernetesClusterSupportSettingsRequest defines the request for updating\nsupport access settings for a Kubernetes cluster.",
       "type": "object",
+      "required": [
+        "access_enabled"
+      ],
       "properties": {
         "access_enabled": {
           "description": "Support access enabled master toggle",
