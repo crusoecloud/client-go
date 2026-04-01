@@ -10242,6 +10242,11 @@
           "x-go-name": "Count",
           "example": 6
         },
+        "install_crusoe_watch_agent": {
+          "description": "optional field to control whether the Crusoe Watch Agent is installed (defaults to true)",
+          "type": "boolean",
+          "x-go-name": "InstallCrusoeWatchAgent"
+        },
         "instance_group_id": {
           "description": "The ID of the instance group the VMs will be created in.",
           "type": "string",
@@ -12946,6 +12951,11 @@
           "type": "string",
           "x-go-name": "Image",
           "example": "ubuntu:20.04"
+        },
+        "install_crusoe_watch_agent": {
+          "description": "optional field to control whether the Crusoe Watch Agent is installed (defaults to true)",
+          "type": "boolean",
+          "x-go-name": "InstallCrusoeWatchAgent"
         },
         "location": {
           "type": "string",
