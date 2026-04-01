@@ -15677,6 +15677,14 @@
     },
     "PaymentMethodCard": {
       "type": "object",
+      "required": [
+        "id",
+        "brand",
+        "last4",
+        "exp_month",
+        "exp_year",
+        "is_default"
+      ],
       "properties": {
         "brand": {
           "type": "string",

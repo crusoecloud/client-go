@@ -9,11 +9,11 @@
 package swagger
 
 type PaymentMethodCard struct {
-	Brand          string `json:"brand,omitempty"`
+	Brand          string `json:"brand"`
 	CardholderName string `json:"cardholder_name,omitempty"`
-	ExpMonth       int64  `json:"exp_month,omitempty"`
-	ExpYear        int64  `json:"exp_year,omitempty"`
-	Id             string `json:"id,omitempty"`
-	IsDefault      bool   `json:"is_default,omitempty"`
-	Last4          string `json:"last4,omitempty"`
+	ExpMonth       int64  `json:"exp_month"`
+	ExpYear        int64  `json:"exp_year"`
+	Id             string `json:"id"`
+	IsDefault      bool   `json:"is_default"`
+	Last4          string `json:"last4"`
 }
