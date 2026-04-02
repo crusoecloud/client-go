@@ -8,7 +8,9 @@
  */
 package swagger
 
-type SlurmNodePoolPatchRequest struct {
-	// The desired number of nodes to be created.
-	DesiredCount int64 `json:"desired_count"`
+type SlurmClusterIssue struct {
+	// Machine-readable issue code.
+	Code string `json:"code,omitempty"`
+	// Human-readable description.
+	Message string `json:"message,omitempty"`
 }
