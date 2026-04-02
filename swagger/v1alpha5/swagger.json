@@ -7491,10 +7491,37 @@
             "required": true
           },
           {
-            "type": "string",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "example": "my-slurm-cluster",
-            "x-go-name": "Name",
+            "x-go-name": "Names",
             "name": "name",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "us-east-1",
+            "x-go-name": "Location",
+            "name": "location",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "running",
+            "x-go-name": "State",
+            "name": "state",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "SlurmClusterIDs",
+            "name": "slurm_cluster_ids",
             "in": "query"
           }
         ],
@@ -7554,7 +7581,111 @@
         }
       }
     },
-    "/projects/{project_id}/slurm/clusters/{cluster_id}": {
+    "/projects/{project_id}/slurm/clusters/operations": {
+      "get": {
+        "description": "This resource retrieves information about the status of asynchronous operations for\nslurm clusters. Query parameters can be used to filter results by slurm cluster ID or operation state.",
+        "tags": [
+          "Slurm Cluster Operations"
+        ],
+        "summary": "Get status of asynchronous operations.",
+        "operationId": "listSlurmClusterOperations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
+            "x-go-name": "ResourceID",
+            "name": "resource_id",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "IN_PROGRESS"
+            ],
+            "x-go-name": "State",
+            "name": "state",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/slurm/clusters/operations/{operation_id}": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation\nfor a slurm cluster. Only information about the operation specified in the\npath will be returned.",
+        "tags": [
+          "Slurm Cluster Operations"
+        ],
+        "summary": "Get status of a single asynchronous operation.",
+        "operationId": "getSlurmClusterOperation",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/slurm/clusters/{slurm_cluster_id}": {
       "get": {
         "tags": [
           "Slurm Clusters"
@@ -7573,17 +7704,10 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
             "in": "path",
             "required": true
-          },
-          {
-            "type": "string",
-            "example": "my-slurm-cluster",
-            "x-go-name": "Name",
-            "name": "name",
-            "in": "query"
           }
         ],
         "responses": {
@@ -7616,8 +7740,8 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
             "in": "path",
             "required": true
           }
@@ -7638,13 +7762,13 @@
         }
       }
     },
-    "/projects/{project_id}/slurm/nodepools": {
+    "/projects/{project_id}/slurm/{slurm_cluster_id}/nodesets": {
       "get": {
         "tags": [
-          "Slurm Node Pools"
+          "Slurm Nodesets"
         ],
-        "summary": "Retrieve information about slurm node pools belonging to a project or cluster.",
-        "operationId": "listSlurmNodePools",
+        "summary": "Retrieve information about slurm nodesets belonging to a project or cluster.",
+        "operationId": "listSlurmNodesets",
         "parameters": [
           {
             "type": "string",
@@ -7657,9 +7781,10 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "ClusterID",
-            "name": "cluster_id",
-            "in": "query"
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
+            "in": "path",
+            "required": true
           },
           {
             "type": "string",
@@ -7671,7 +7796,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/listSlurmNodePoolsResponse"
+            "$ref": "#/responses/listSlurmNodesetsResponse"
           },
           "401": {
             "$ref": "#/responses/authError"
@@ -7684,17 +7809,17 @@
       "post": {
         "description": "A successful response from this resource will contain the async operation.",
         "tags": [
-          "Slurm Node Pools"
+          "Slurm Nodesets"
         ],
-        "summary": "Create a new slurm node pool owned by the logged in user.",
-        "operationId": "createSlurmNodePool",
+        "summary": "Create a new slurm nodeset owned by the logged in user.",
+        "operationId": "createSlurmNodeset",
         "parameters": [
           {
             "name": "Body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/SlurmNodePoolPostRequest"
+              "$ref": "#/definitions/SlurmNodesetPostRequest"
             }
           },
           {
@@ -7702,6 +7827,14 @@
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "x-go-name": "ProjectID",
             "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
             "in": "path",
             "required": true
           }
@@ -7725,13 +7858,78 @@
         }
       }
     },
-    "/projects/{project_id}/slurm/nodepools/{node_pool_id}": {
+    "/projects/{project_id}/slurm/{slurm_cluster_id}/nodesets/operations": {
       "get": {
+        "description": "This resource retrieves information about the status of asynchronous operations for\nslurm nodesets. Query parameters can be used to filter results by slurm nodeset ID or operation state.",
         "tags": [
-          "Slurm Node Pools"
+          "Slurm Nodeset Operations"
         ],
-        "summary": "Retrieve information about a particular slurm node pool belonging to the project.",
-        "operationId": "getSlurmNodePool",
+        "summary": "Get status of asynchronous operations.",
+        "operationId": "listSlurmNodesetsOperations",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
+            "x-go-name": "ResourceID",
+            "name": "resource_id",
+            "in": "query"
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "IN_PROGRESS"
+            ],
+            "x-go-name": "State",
+            "name": "state",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/slurm/{slurm_cluster_id}/nodesets/operations/{operation_id}": {
+      "get": {
+        "description": "This resource retrieves information about the status of an asynchronous operation\nfor a slurm nodeset. Only information about the operation specified in the\npath will be returned.",
+        "tags": [
+          "Slurm Nodeset Operations"
+        ],
+        "summary": "Get status of a single asynchronous operation.",
+        "operationId": "getSlurmNodesetOperation",
         "parameters": [
           {
             "type": "string",
@@ -7744,15 +7942,78 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "NodePoolID",
-            "name": "node_pool_id",
+            "x-go-name": "OperationID",
+            "name": "operation_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
             "in": "path",
             "required": true
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/getSlurmNodePoolResponse"
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
+    "/projects/{project_id}/slurm/{slurm_cluster_id}/nodesets/{nodeset_id}": {
+      "get": {
+        "tags": [
+          "Slurm Nodesets"
+        ],
+        "summary": "Retrieve information about a particular slurm nodeset belonging to the project.",
+        "operationId": "getSlurmNodeset",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "ProjectID",
+            "name": "project_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "NodesetID",
+            "name": "nodeset_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getSlurmNodesetResponse"
           },
           "401": {
             "$ref": "#/responses/authError"
@@ -7764,10 +8025,10 @@
       },
       "delete": {
         "tags": [
-          "Slurm Node Pools"
+          "Slurm Nodesets"
         ],
-        "summary": "Delete a node pool that the logged in user owns.",
-        "operationId": "deleteSlurmNodePool",
+        "summary": "Delete a nodeset that the logged in user owns.",
+        "operationId": "deleteSlurmNodeset",
         "parameters": [
           {
             "type": "string",
@@ -7780,8 +8041,16 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "NodePoolID",
-            "name": "node_pool_id",
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "NodesetID",
+            "name": "nodeset_id",
             "in": "path",
             "required": true
           }
@@ -7803,10 +8072,10 @@
       },
       "patch": {
         "tags": [
-          "Slurm Node Pools"
+          "Slurm Nodesets"
         ],
-        "summary": "Update a node pool that the logged in user owns.",
-        "operationId": "updateSlurmNodePool",
+        "summary": "Update a nodeset that the logged in user owns.",
+        "operationId": "updateSlurmNodeset",
         "parameters": [
           {
             "type": "string",
@@ -7819,8 +8088,16 @@
           {
             "type": "string",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "x-go-name": "NodePoolID",
-            "name": "node_pool_id",
+            "x-go-name": "SlurmClusterID",
+            "name": "slurm_cluster_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "x-go-name": "NodesetID",
+            "name": "nodeset_id",
             "in": "path",
             "required": true
           },
@@ -7829,7 +8106,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/SlurmNodePoolPatchRequest"
+              "$ref": "#/definitions/SlurmNodesetPatchRequest"
             }
           }
         ],
@@ -10241,6 +10518,11 @@
           "format": "int64",
           "x-go-name": "Count",
           "example": 6
+        },
+        "install_crusoe_watch_agent": {
+          "description": "optional field to control whether the Crusoe Watch Agent is installed (defaults to true)",
+          "type": "boolean",
+          "x-go-name": "InstallCrusoeWatchAgent"
         },
         "instance_group_id": {
           "description": "The ID of the instance group the VMs will be created in.",
@@ -12947,6 +13229,11 @@
           "x-go-name": "Image",
           "example": "ubuntu:20.04"
         },
+        "install_crusoe_watch_agent": {
+          "description": "optional field to control whether the Crusoe Watch Agent is installed (defaults to true)",
+          "type": "boolean",
+          "x-go-name": "InstallCrusoeWatchAgent"
+        },
         "location": {
           "type": "string",
           "x-go-name": "Location",
@@ -13465,6 +13752,9 @@
     "KubernetesClusterSupportSettingsRequest": {
       "description": "KubernetesClusterSupportSettingsRequest defines the request for updating\nsupport access settings for a Kubernetes cluster.",
       "type": "object",
+      "required": [
+        "access_enabled"
+      ],
       "properties": {
         "access_enabled": {
           "description": "Support access enabled master toggle",
@@ -14524,6 +14814,22 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ListPaymentMethodsResponse": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PaymentMethodCard"
+          },
+          "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "ListProjectQuotasResponse": {
       "type": "object",
       "title": "ListProjectQuotasResponse is the response for listing a project's quotas.",
@@ -14728,7 +15034,7 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "ListSlurmNodePoolsResponse": {
+    "ListSlurmNodesetsResponse": {
       "type": "object",
       "required": [
         "items"
@@ -14737,7 +15043,7 @@
         "items": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/SlurmNodePool"
+            "$ref": "#/definitions/SlurmNodeset"
           },
           "x-go-name": "Items"
         }
@@ -15652,6 +15958,57 @@
         "transport_partition_id": {
           "type": "string",
           "x-go-name": "TransportPartitionID"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "PaymentMethodCard": {
+      "type": "object",
+      "required": [
+        "id",
+        "brand",
+        "last4",
+        "exp_month",
+        "exp_year",
+        "is_default"
+      ],
+      "properties": {
+        "brand": {
+          "type": "string",
+          "x-go-name": "Brand",
+          "example": "visa"
+        },
+        "cardholder_name": {
+          "type": "string",
+          "x-go-name": "CardholderName",
+          "example": "John Doe"
+        },
+        "exp_month": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ExpMonth",
+          "example": 12
+        },
+        "exp_year": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ExpYear",
+          "example": 2027
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "pm_1OqJzX2eZvKYlo2C0000000"
+        },
+        "is_default": {
+          "type": "boolean",
+          "x-go-name": "IsDefault",
+          "example": true
+        },
+        "last4": {
+          "type": "string",
+          "x-go-name": "Last4",
+          "example": "\"4242\""
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -16763,305 +17120,402 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmCluster": {
-      "type": "object",
       "title": "SlurmCluster defines the specifications of the slurm cluster.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SlurmClusterConfig"
+        },
+        {
+          "$ref": "#/definitions/SlurmClusterStatus"
+        },
+        {
+          "type": "object",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "description": "ID of the Slurm cluster.",
+              "type": "string",
+              "x-go-name": "ID",
+              "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+            }
+          }
+        }
+      ],
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmClusterConfig": {
+      "type": "object",
+      "title": "Configurable fields of the Slurm Cluster.",
       "required": [
-        "id",
         "name",
         "location",
-        "subnet_id",
-        "project_id",
-        "state",
-        "node_pools",
-        "created_at",
-        "updated_at",
-        "deleted_at",
-        "login_node_url",
-        "controller_node_url"
+        "root_ssh_pub_keys"
       ],
       "properties": {
-        "controller_node_url": {
-          "description": "Controller node URL.",
+        "home_volume_size": {
+          "description": "Size of the shared home volume as a Kubernetes quantity string (e.g. \"10Ti\"). Set empty to omit.",
           "type": "string",
-          "x-go-name": "ControllerNodeURL"
-        },
-        "created_at": {
-          "description": "The timestamp of the cluster creation since 1970-01-01T00:00:00Z in seconds.",
-          "type": "string",
-          "x-go-name": "CreatedAt",
-          "example": "100000"
-        },
-        "deleted_at": {
-          "description": "The timestamp of the cluster deletion since 1970-01-01T00:00:00Z in seconds.",
-          "type": "string",
-          "x-go-name": "DeletedAt",
-          "example": "100000"
-        },
-        "id": {
-          "description": "ID of the slurm cluster.",
-          "type": "string",
-          "x-go-name": "ID",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+          "default": "\"10Ti\"",
+          "x-go-name": "HomeVolumeSize"
         },
         "location": {
-          "description": "Location of the slurm cluster.",
+          "description": "Location to create the Slurm cluster in.",
           "type": "string",
-          "x-go-name": "Location"
+          "x-go-name": "Location",
+          "example": "us-northcentral1-a"
         },
-        "login_node_url": {
-          "description": "Login node URL.",
+        "login_node_type": {
+          "description": "Node type to use for Slurm Controller and Login.",
           "type": "string",
-          "x-go-name": "LoginNodeURL"
+          "default": "c1a.8x",
+          "x-go-name": "LoginNodeType"
+        },
+        "login_replicas": {
+          "description": "Number of replica pods to use for LoginSet.",
+          "type": "integer",
+          "format": "int64",
+          "default": 1,
+          "minimum": 1,
+          "x-go-name": "LoginReplicas"
         },
         "name": {
-          "description": "Name of the slurm cluster.",
+          "description": "Name of the Slurm cluster.",
           "type": "string",
           "x-go-name": "Name",
           "example": "my-slurm-cluster"
         },
-        "node_pools": {
-          "description": "Nodepools associated with the cluster.",
+        "root_ssh_pub_keys": {
+          "description": "An array of SSH public keys which will be used to allow access as root user.\nThis will be mounted as the \"root/.ssh/authorized_keys\" file.",
           "type": "array",
           "items": {
             "type": "string"
           },
-          "x-go-name": "NodePools",
+          "x-go-name": "RootSSHPubKeys",
           "example": [
-            "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+            "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D"
           ]
         },
-        "project_id": {
-          "description": "The ID of the project this slurm cluster belongs to.",
-          "type": "string",
-          "x-go-name": "ProjectID",
-          "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
-        },
-        "state": {
-          "description": "State of the cluster",
-          "type": "string",
-          "x-go-name": "State",
-          "example": "RUNNING"
-        },
         "subnet_id": {
-          "description": "The ID of the subnet this slurm cluster belongs to.",
+          "description": "The ID of the subnet to deploy the Slurm cluster into.",
           "type": "string",
-          "x-go-name": "SubnetID",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+          "x-go-name": "SubnetID"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmClusterIssue": {
+      "type": "object",
+      "title": "SlurmClusterIssue describes a problem preventing the cluster from reaching RUNNING state.",
+      "properties": {
+        "code": {
+          "description": "Machine-readable issue code.",
+          "type": "string",
+          "x-go-name": "Code"
         },
-        "updated_at": {
-          "description": "The timestamp of the cluster update since 1970-01-01T00:00:00Z in seconds.",
+        "message": {
+          "description": "Human-readable description.",
           "type": "string",
-          "x-go-name": "UpdatedAt",
-          "example": "100000"
+          "x-go-name": "Message"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmClusterPostRequest": {
-      "type": "object",
       "title": "SlurmClusterPostRequest defines the specifications of the cluster to be created.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SlurmClusterConfig"
+        }
+      ],
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmClusterStatus": {
+      "type": "object",
+      "title": "Non-configurable, changing fields relating the current state of the cluster.",
       "required": [
-        "name",
-        "location",
-        "ssh_pub_key"
+        "state"
       ],
       "properties": {
-        "location": {
-          "description": "Location to create the slurm cluster in.",
-          "type": "string",
-          "x-go-name": "Location"
+        "issues": {
+          "description": "Issues describing why the cluster is not in STATE_RUNNING.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SlurmClusterIssue"
+          },
+          "x-go-name": "Issues"
         },
-        "name": {
-          "description": "Name of the slurm cluster.",
+        "login_node_endpoint": {
+          "description": "Login node Endpoint (IP).",
           "type": "string",
-          "x-go-name": "Name",
-          "example": "my-slurm-cluster"
+          "x-go-name": "LoginNodeEndpoint"
         },
-        "sans_shared_volume": {
-          "description": "If true, allows internal developers to create slurm clusters without shared volumes.",
-          "type": "boolean",
-          "x-go-name": "SansSharedVolume",
-          "example": true
+        "nodesets": {
+          "description": "Nodeset IDs running the Slurm Workers.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Nodesets"
         },
-        "ssh_pub_key": {
-          "description": "A mapping of usernames to their SSH keys for accessing the cluster.\nBoth the username and ssh key must be named attributes, as shown in the example",
+        "state": {
+          "description": "State of the slurm cluster.",
           "type": "string",
-          "x-go-name": "SSHPubKey",
-          "example": "{ \"username1\" : \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D\"}"
-        },
-        "subnet_id": {
-          "description": "The ID of the subnet to create the cluster in. Must be in the location\nspecified. If not provided, the default subnet for the location will be\nused, if there is one.",
-          "type": "string",
-          "x-go-name": "SubnetID",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+          "x-go-name": "State",
+          "example": "STATE_RUNNING"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "SlurmNodePool": {
+    "SlurmClusterStatusPostRequest": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/SlurmClusterStatus"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "home_volume_size": {
+              "description": "Size of the shared home volume as a Kubernetes quantity string.",
+              "type": "string",
+              "x-go-name": "HomeVolumeSize"
+            },
+            "login_replicas": {
+              "description": "Number of replica pods to use for LoginSet.",
+              "type": "integer",
+              "format": "int64",
+              "x-go-name": "LoginReplicas"
+            },
+            "nodeset_status": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SlurmNodesetStatus"
+              },
+              "x-go-name": "NodesetStatus"
+            },
+            "volumes": {
+              "description": "Additional shared volumes attached to the cluster.",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SlurmSharedVolume"
+              },
+              "x-go-name": "Volumes"
+            }
+          }
+        }
+      ],
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmNodeset": {
       "type": "object",
       "required": [
         "id",
         "name",
         "type",
-        "running_count",
-        "desired_count",
-        "ib_partition_id",
-        "transport_partition_id",
-        "project_id",
-        "cluster_id",
-        "image_id",
-        "instance_ids",
-        "partition_name"
+        "state",
+        "count"
       ],
       "properties": {
-        "cluster_id": {
-          "description": "The ID of the slurm cluster this node pool belongs to.",
-          "type": "string",
-          "x-go-name": "ClusterID",
-          "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
-        },
-        "desired_count": {
-          "description": "Desired number of nodes within the node pool.",
+        "count": {
+          "description": "Count of nodes that have all slurm replicas running.",
           "type": "integer",
           "format": "int64",
-          "x-go-name": "DesiredCount",
-          "example": 4
+          "x-go-name": "Count"
         },
-        "ib_partition_id": {
+        "created_at": {
+          "description": "Created at timestamp of the nodeset.",
           "type": "string",
-          "x-go-name": "IBPartitionID"
+          "x-go-name": "CreatedAt"
         },
         "id": {
-          "description": "ID of the node pool.",
+          "description": "ID of the nodeset.",
           "type": "string",
-          "x-go-name": "ID",
-          "example": "0a1b3c2d-5e6f-8b9c-4d7e-1a2b3c4d5e6f"
+          "x-go-name": "ID"
         },
-        "image_id": {
-          "description": "Image ID for the slurm node pool.",
-          "type": "string",
-          "x-go-name": "ImageID",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
-        },
-        "instance_ids": {
-          "description": "List of IDs of instances within the node pool.",
+        "issues": {
+          "description": "Message describing why nodeset is not in running.",
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/SlurmNodesetIssue"
           },
-          "x-go-name": "InstanceIDs",
-          "example": [
-            "ca39e669-47ee-456b-968d-303234fbf99f"
-          ]
+          "x-go-name": "Issues"
         },
         "name": {
-          "description": "Name of the node pool.",
+          "description": "Name of the nodeset.",
           "type": "string",
-          "x-go-name": "Name",
-          "example": "crusoe-node-pool"
+          "x-go-name": "Name"
         },
-        "partition_name": {
-          "description": "Slurm partition name of the node pool.",
+        "state": {
+          "description": "Current state.",
           "type": "string",
-          "x-go-name": "SlurmPartitionName",
-          "example": "my-slurm-partition"
+          "x-go-name": "State"
         },
-        "project_id": {
-          "description": "The ID of the project this slurm node pool belongs to.",
+        "subnet_id": {
+          "description": "Subnet ID of the nodeset.",
           "type": "string",
-          "x-go-name": "ProjectID",
-          "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f"
-        },
-        "running_count": {
-          "description": "Number of nodes within the node pool.",
-          "type": "integer",
-          "format": "int64",
-          "x-go-name": "RunningCount",
-          "example": 4
+          "x-go-name": "SubnetID"
         },
         "transport_partition_id": {
-          "description": "IB or RoCE partition ID of the node pool.",
+          "description": "Transport Partition ID of the nodeset.",
           "type": "string",
-          "x-go-name": "TransportPartitionID",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+          "x-go-name": "TransportPartitionID"
         },
         "type": {
-          "description": "VM type of the node pool",
+          "description": "VM type in the nodeset",
           "type": "string",
-          "x-go-name": "Type",
-          "example": "a100.2x"
+          "x-go-name": "Type"
+        },
+        "updated_at": {
+          "description": "Updated at timestamp of the nodeset.",
+          "type": "string",
+          "x-go-name": "UpdatedAt"
+        },
+        "vm_ssh_public_key": {
+          "description": "VM SSH Public Key of the nodeset.",
+          "type": "string",
+          "x-go-name": "VMSSHPublicKey"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "SlurmNodePoolPatchRequest": {
+    "SlurmNodesetIssue": {
+      "type": "object",
+      "title": "SlurmNodesetIssue describes a problem preventing the nodeset from reaching RUNNING state.",
+      "properties": {
+        "code": {
+          "description": "Machine-readable issue code.",
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "message": {
+          "description": "Human-readable description.",
+          "type": "string",
+          "x-go-name": "Message"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmNodesetPatchRequest": {
       "type": "object",
       "required": [
-        "desired_count"
+        "count"
       ],
       "properties": {
-        "desired_count": {
-          "description": "The desired number of nodes to be created.",
+        "count": {
+          "description": "Count of nodes in the nodeset.",
           "type": "integer",
           "format": "int64",
-          "x-go-name": "DesiredCount",
-          "example": 4
+          "x-go-name": "Count",
+          "example": 8
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "SlurmNodePoolPostRequest": {
+    "SlurmNodesetPostRequest": {
       "type": "object",
       "required": [
         "name",
         "type",
-        "desired_count",
-        "cluster_id",
-        "partition_name"
+        "count"
       ],
       "properties": {
-        "cluster_id": {
-          "description": "Cluster ID of the cluster this node pool belongs to.",
-          "type": "string",
-          "x-go-name": "ClusterID",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
-        },
-        "desired_count": {
-          "description": "The desired number of nodes to be created.",
+        "count": {
+          "description": "Count of nodes in the nodeset.",
           "type": "integer",
           "format": "int64",
-          "x-go-name": "DesiredCount",
+          "x-go-name": "Count",
           "example": 4
         },
-        "ib_partition_id": {
-          "description": "Deprecated: Use transport_partition_id instead.",
-          "type": "string",
-          "x-go-name": "IBPartitionID"
-        },
         "name": {
-          "description": "Name of the slurm node pool.",
+          "description": "Name of the nodeset.",
           "type": "string",
           "x-go-name": "Name",
-          "example": "my-slurm-node-pool"
+          "example": "my-slurm-nodeset"
         },
-        "partition_name": {
-          "description": "Name of the slurm partition.",
+        "subnet_id": {
+          "description": "ID of the subnet.",
           "type": "string",
-          "x-go-name": "SlurmPartitionName",
-          "example": "my-slurm-partition"
+          "x-go-name": "SubnetID",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1"
         },
         "transport_partition_id": {
-          "description": "The ID of the Infiniband or RoCE partition to create node pool in. Must be in the location\nof the cluster if specified.",
+          "description": "ID of the transport partition.",
           "type": "string",
           "x-go-name": "TransportPartitionID",
           "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653"
         },
         "type": {
-          "description": "Product name of the VM type to be created within this node pool.",
+          "description": "VM type of the nodeset.",
           "type": "string",
           "x-go-name": "Type",
           "example": "a100.2x"
+        },
+        "vm_ssh_public_key": {
+          "description": "VM SSH public key.",
+          "type": "string",
+          "x-go-name": "VMSSHPublicKey",
+          "example": "ssh-rsa AAAA..."
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmNodesetStatus": {
+      "type": "object",
+      "required": [
+        "id",
+        "ready_count",
+        "state"
+      ],
+      "properties": {
+        "id": {
+          "description": "ID of the worker nodeset.",
+          "type": "string",
+          "x-go-name": "ID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "issues": {
+          "description": "Message describing why nodeset is not in STATE_RUNNING",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SlurmNodesetIssue"
+          },
+          "x-go-name": "Issues",
+          "example": "Slurm Worker pods are initializing"
+        },
+        "ready_count": {
+          "description": "Count of nodes that are not only \"running\" but have all slurm replicas running",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ReadyCount",
+          "example": 4
+        },
+        "state": {
+          "description": "State of the slurm nodeset",
+          "type": "string",
+          "x-go-name": "State",
+          "example": "STATE_RUNNING"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SlurmSharedVolume": {
+      "type": "object",
+      "title": "SlurmSharedVolume defines a shared volume attached to a Slurm cluster.",
+      "required": [
+        "size",
+        "mount_point"
+      ],
+      "properties": {
+        "mount_point": {
+          "description": "Mount point for the volume (e.g. \"/data\").",
+          "type": "string",
+          "x-go-name": "MountPoint"
+        },
+        "size": {
+          "description": "Size of the volume as a Kubernetes quantity string (e.g. \"2Ti\").",
+          "type": "string",
+          "x-go-name": "Size"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -18448,10 +18902,10 @@
         "$ref": "#/definitions/SlurmCluster"
       }
     },
-    "getSlurmNodePoolResponse": {
+    "getSlurmNodesetResponse": {
       "description": "",
       "schema": {
-        "$ref": "#/definitions/SlurmNodePool"
+        "$ref": "#/definitions/SlurmNodeset"
       }
     },
     "getSnapshotResponse": {
@@ -18622,6 +19076,12 @@
         "$ref": "#/definitions/ListOrgQuotasResponse"
       }
     },
+    "listPaymentMethodsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListPaymentMethodsResponse"
+      }
+    },
     "listProjectQuotasResponse": {
       "description": "",
       "schema": {
@@ -18682,10 +19142,10 @@
         "$ref": "#/definitions/ListSlurmClustersResponse"
       }
     },
-    "listSlurmNodePoolsResponse": {
+    "listSlurmNodesetsResponse": {
       "description": "",
       "schema": {
-        "$ref": "#/definitions/ListSlurmNodePoolsResponse"
+        "$ref": "#/definitions/ListSlurmNodesetsResponse"
       }
     },
     "listVPCNetworksResponse": {

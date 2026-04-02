@@ -160,11 +160,11 @@ func (a *SlurmClustersApiService) CreateSlurmCluster(ctx context.Context, body S
 SlurmClustersApiService Delete a slurm cluster that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
-  - @param clusterId
+  - @param slurmClusterId
 
 @return AsyncOperationResponse
 */
-func (a *SlurmClustersApiService) DeleteSlurmCluster(ctx context.Context, projectId string, clusterId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *SlurmClustersApiService) DeleteSlurmCluster(ctx context.Context, projectId string, slurmClusterId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
@@ -174,9 +174,9 @@ func (a *SlurmClustersApiService) DeleteSlurmCluster(ctx context.Context, projec
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/clusters/{cluster_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/clusters/{slurm_cluster_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"slurm_cluster_id"+"}", fmt.Sprintf("%v", slurmClusterId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -276,19 +276,13 @@ func (a *SlurmClustersApiService) DeleteSlurmCluster(ctx context.Context, projec
 
 /*
 SlurmClustersApiService Retrieve information about a particular slurm cluster belonged to the project.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param clusterId
- * @param optional nil or *SlurmClustersApiGetSlurmClusterOpts - Optional Parameters:
-     * @param "Name" (optional.String) -
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param projectId
+  - @param slurmClusterId
+
 @return SlurmCluster
 */
-
-type SlurmClustersApiGetSlurmClusterOpts struct {
-	Name optional.String
-}
-
-func (a *SlurmClustersApiService) GetSlurmCluster(ctx context.Context, projectId string, clusterId string, localVarOptionals *SlurmClustersApiGetSlurmClusterOpts) (SlurmCluster, *http.Response, error) {
+func (a *SlurmClustersApiService) GetSlurmCluster(ctx context.Context, projectId string, slurmClusterId string) (SlurmCluster, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -298,17 +292,14 @@ func (a *SlurmClustersApiService) GetSlurmCluster(ctx context.Context, projectId
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/clusters/{cluster_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/clusters/{slurm_cluster_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"cluster_id"+"}", fmt.Sprintf("%v", clusterId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"slurm_cluster_id"+"}", fmt.Sprintf("%v", slurmClusterId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Name.IsSet() {
-		localVarQueryParams.Add("name", parameterToString(localVarOptionals.Name.Value(), ""))
-	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -396,12 +387,18 @@ SlurmClustersApiService Retrieve information about slurm clusters belonged to th
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param optional nil or *SlurmClustersApiListSlurmClustersOpts - Optional Parameters:
-     * @param "Name" (optional.String) -
+     * @param "Name" (optional.Interface of []string) -
+     * @param "Location" (optional.String) -
+     * @param "State" (optional.String) -
+     * @param "SlurmClusterIds" (optional.Interface of []string) -
 @return ListSlurmClustersResponse
 */
 
 type SlurmClustersApiListSlurmClustersOpts struct {
-	Name optional.String
+	Name            optional.Interface
+	Location        optional.String
+	State           optional.String
+	SlurmClusterIds optional.Interface
 }
 
 func (a *SlurmClustersApiService) ListSlurmClusters(ctx context.Context, projectId string, localVarOptionals *SlurmClustersApiListSlurmClustersOpts) (ListSlurmClustersResponse, *http.Response, error) {
@@ -422,7 +419,16 @@ func (a *SlurmClustersApiService) ListSlurmClusters(ctx context.Context, project
 	localVarFormParams := url.Values{}
 
 	if localVarOptionals != nil && localVarOptionals.Name.IsSet() {
-		localVarQueryParams.Add("name", parameterToString(localVarOptionals.Name.Value(), ""))
+		localVarQueryParams.Add("name", parameterToString(localVarOptionals.Name.Value(), "csv"))
+	}
+	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
+		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
+		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.SlurmClusterIds.IsSet() {
+		localVarQueryParams.Add("slurm_cluster_ids", parameterToString(localVarOptionals.SlurmClusterIds.Value(), "csv"))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}

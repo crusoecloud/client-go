@@ -24,18 +24,19 @@ var (
 	_ context.Context
 )
 
-type SlurmNodePoolsApiService service
+type SlurmNodesetsApiService service
 
 /*
-SlurmNodePoolsApiService Create a new slurm node pool owned by the logged in user.
+SlurmNodesetsApiService Create a new slurm nodeset owned by the logged in user.
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
+  - @param slurmClusterId
 
 @return AsyncOperationResponse
 */
-func (a *SlurmNodePoolsApiService) CreateSlurmNodePool(ctx context.Context, body SlurmNodePoolPostRequest, projectId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *SlurmNodesetsApiService) CreateSlurmNodeset(ctx context.Context, body SlurmNodesetPostRequest, projectId string, slurmClusterId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
@@ -45,8 +46,9 @@ func (a *SlurmNodePoolsApiService) CreateSlurmNodePool(ctx context.Context, body
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/nodepools"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/{slurm_cluster_id}/nodesets"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"slurm_cluster_id"+"}", fmt.Sprintf("%v", slurmClusterId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -157,14 +159,15 @@ func (a *SlurmNodePoolsApiService) CreateSlurmNodePool(ctx context.Context, body
 }
 
 /*
-SlurmNodePoolsApiService Delete a node pool that the logged in user owns.
+SlurmNodesetsApiService Delete a nodeset that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
-  - @param nodePoolId
+  - @param slurmClusterId
+  - @param nodesetId
 
 @return AsyncOperationResponse
 */
-func (a *SlurmNodePoolsApiService) DeleteSlurmNodePool(ctx context.Context, projectId string, nodePoolId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *SlurmNodesetsApiService) DeleteSlurmNodeset(ctx context.Context, projectId string, slurmClusterId string, nodesetId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Delete")
 		localVarPostBody    interface{}
@@ -174,9 +177,10 @@ func (a *SlurmNodePoolsApiService) DeleteSlurmNodePool(ctx context.Context, proj
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/nodepools/{node_pool_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/{slurm_cluster_id}/nodesets/{nodeset_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"node_pool_id"+"}", fmt.Sprintf("%v", nodePoolId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"slurm_cluster_id"+"}", fmt.Sprintf("%v", slurmClusterId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"nodeset_id"+"}", fmt.Sprintf("%v", nodesetId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -275,26 +279,28 @@ func (a *SlurmNodePoolsApiService) DeleteSlurmNodePool(ctx context.Context, proj
 }
 
 /*
-SlurmNodePoolsApiService Retrieve information about a particular slurm node pool belonging to the project.
+SlurmNodesetsApiService Retrieve information about a particular slurm nodeset belonging to the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
-  - @param nodePoolId
+  - @param slurmClusterId
+  - @param nodesetId
 
-@return SlurmNodePool
+@return SlurmNodeset
 */
-func (a *SlurmNodePoolsApiService) GetSlurmNodePool(ctx context.Context, projectId string, nodePoolId string) (SlurmNodePool, *http.Response, error) {
+func (a *SlurmNodesetsApiService) GetSlurmNodeset(ctx context.Context, projectId string, slurmClusterId string, nodesetId string) (SlurmNodeset, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue SlurmNodePool
+		localVarReturnValue SlurmNodeset
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/nodepools/{node_pool_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/{slurm_cluster_id}/nodesets/{nodeset_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"node_pool_id"+"}", fmt.Sprintf("%v", nodePoolId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"slurm_cluster_id"+"}", fmt.Sprintf("%v", slurmClusterId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"nodeset_id"+"}", fmt.Sprintf("%v", nodesetId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -347,7 +353,7 @@ func (a *SlurmNodePoolsApiService) GetSlurmNodePool(ctx context.Context, project
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v SlurmNodePool
+			var v SlurmNodeset
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -383,40 +389,37 @@ func (a *SlurmNodePoolsApiService) GetSlurmNodePool(ctx context.Context, project
 }
 
 /*
-SlurmNodePoolsApiService Retrieve information about slurm node pools belonging to a project or cluster.
+SlurmNodesetsApiService Retrieve information about slurm nodesets belonging to a project or cluster.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
- * @param optional nil or *SlurmNodePoolsApiListSlurmNodePoolsOpts - Optional Parameters:
-     * @param "ClusterId" (optional.String) -
+ * @param slurmClusterId
+ * @param optional nil or *SlurmNodesetsApiListSlurmNodesetsOpts - Optional Parameters:
      * @param "Name" (optional.String) -
-@return ListSlurmNodePoolsResponse
+@return ListSlurmNodesetsResponse
 */
 
-type SlurmNodePoolsApiListSlurmNodePoolsOpts struct {
-	ClusterId optional.String
-	Name      optional.String
+type SlurmNodesetsApiListSlurmNodesetsOpts struct {
+	Name optional.String
 }
 
-func (a *SlurmNodePoolsApiService) ListSlurmNodePools(ctx context.Context, projectId string, localVarOptionals *SlurmNodePoolsApiListSlurmNodePoolsOpts) (ListSlurmNodePoolsResponse, *http.Response, error) {
+func (a *SlurmNodesetsApiService) ListSlurmNodesets(ctx context.Context, projectId string, slurmClusterId string, localVarOptionals *SlurmNodesetsApiListSlurmNodesetsOpts) (ListSlurmNodesetsResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue ListSlurmNodePoolsResponse
+		localVarReturnValue ListSlurmNodesetsResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/nodepools"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/{slurm_cluster_id}/nodesets"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"slurm_cluster_id"+"}", fmt.Sprintf("%v", slurmClusterId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.ClusterId.IsSet() {
-		localVarQueryParams.Add("cluster_id", parameterToString(localVarOptionals.ClusterId.Value(), ""))
-	}
 	if localVarOptionals != nil && localVarOptionals.Name.IsSet() {
 		localVarQueryParams.Add("name", parameterToString(localVarOptionals.Name.Value(), ""))
 	}
@@ -467,7 +470,7 @@ func (a *SlurmNodePoolsApiService) ListSlurmNodePools(ctx context.Context, proje
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v ListSlurmNodePoolsResponse
+			var v ListSlurmNodesetsResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -503,15 +506,16 @@ func (a *SlurmNodePoolsApiService) ListSlurmNodePools(ctx context.Context, proje
 }
 
 /*
-SlurmNodePoolsApiService Update a node pool that the logged in user owns.
+SlurmNodesetsApiService Update a nodeset that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
-  - @param nodePoolId
+  - @param slurmClusterId
+  - @param nodesetId
 
 @return AsyncOperationResponse
 */
-func (a *SlurmNodePoolsApiService) UpdateSlurmNodePool(ctx context.Context, body SlurmNodePoolPatchRequest, projectId string, nodePoolId string) (AsyncOperationResponse, *http.Response, error) {
+func (a *SlurmNodesetsApiService) UpdateSlurmNodeset(ctx context.Context, body SlurmNodesetPatchRequest, projectId string, slurmClusterId string, nodesetId string) (AsyncOperationResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
@@ -521,9 +525,10 @@ func (a *SlurmNodePoolsApiService) UpdateSlurmNodePool(ctx context.Context, body
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/nodepools/{node_pool_id}"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/slurm/{slurm_cluster_id}/nodesets/{nodeset_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"node_pool_id"+"}", fmt.Sprintf("%v", nodePoolId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"slurm_cluster_id"+"}", fmt.Sprintf("%v", slurmClusterId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"nodeset_id"+"}", fmt.Sprintf("%v", nodesetId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}

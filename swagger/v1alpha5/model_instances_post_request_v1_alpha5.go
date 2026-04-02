@@ -17,7 +17,9 @@ type InstancesPostRequestV1Alpha5 struct {
 	Disks               []DiskAttachment            `json:"disks,omitempty"`
 	HostChannelAdapters []PartialHostChannelAdapter `json:"host_channel_adapters,omitempty"`
 	Image               string                      `json:"image,omitempty"`
-	Location            string                      `json:"location"`
+	// optional field to control whether the Crusoe Watch Agent is installed (defaults to true)
+	InstallCrusoeWatchAgent bool   `json:"install_crusoe_watch_agent,omitempty"`
+	Location                string `json:"location"`
 	// The Host Maintenance Policy to use.
 	MaintenancePolicy string             `json:"maintenance_policy,omitempty"`
 	Name              string             `json:"name"`

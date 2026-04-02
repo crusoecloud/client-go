@@ -8,6 +8,9 @@
  */
 package swagger
 
-type ListSlurmNodePoolsResponse struct {
-	Items []SlurmNodePool `json:"items"`
+type SlurmClusterIssue struct {
+	// Machine-readable issue code.
+	Code string `json:"code,omitempty"`
+	// Human-readable description.
+	Message string `json:"message,omitempty"`
 }
