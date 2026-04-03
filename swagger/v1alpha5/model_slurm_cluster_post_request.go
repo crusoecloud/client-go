@@ -22,5 +22,6 @@ type SlurmClusterPostRequest struct {
 	// An array of SSH public keys which will be used to allow access as root user. This will be mounted as the \"root/.ssh/authorized_keys\" file.
 	RootSshPubKeys []string `json:"root_ssh_pub_keys"`
 	// The ID of the subnet to deploy the Slurm cluster into.
-	SubnetId string `json:"subnet_id,omitempty"`
+	SubnetId       string             `json:"subnet_id,omitempty"`
+	InternalConfig *map[string]string `json:"internal_config,omitempty"`
 }
