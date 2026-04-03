@@ -17205,6 +17205,14 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "SlurmClusterInternalConfig": {
+      "description": "SlurmClusterInternalConfig holds internal-only configuration that is used\nfor support and development purposes only.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "SlurmClusterIssue": {
       "type": "object",
       "title": "SlurmClusterIssue describes a problem preventing the cluster from reaching RUNNING state.",
@@ -17227,6 +17235,14 @@
       "allOf": [
         {
           "$ref": "#/definitions/SlurmClusterConfig"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "internal_config": {
+              "$ref": "#/definitions/SlurmClusterInternalConfig"
+            }
+          }
         }
       ],
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
