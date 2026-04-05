@@ -17134,11 +17134,21 @@
             "id"
           ],
           "properties": {
+            "created_at": {
+              "description": "Created at timestamp of the cluster.",
+              "type": "string",
+              "x-go-name": "CreatedAt"
+            },
             "id": {
               "description": "ID of the Slurm cluster.",
               "type": "string",
               "x-go-name": "ID",
               "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+            },
+            "updated_at": {
+              "description": "Updated at timestamp of the cluster.",
+              "type": "string",
+              "x-go-name": "UpdatedAt"
             }
           }
         }

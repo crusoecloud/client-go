@@ -31,6 +31,10 @@ type SlurmCluster struct {
 	RootSshPubKeys []string `json:"root_ssh_pub_keys"`
 	// The ID of the subnet to deploy the Slurm cluster into.
 	SubnetId string `json:"subnet_id,omitempty"`
+	// Created at timestamp of the cluster.
+	CreatedAt string `json:"created_at,omitempty"`
 	// ID of the Slurm cluster.
 	Id string `json:"id"`
+	// Updated at timestamp of the cluster.
+	UpdatedAt string `json:"updated_at,omitempty"`
 }
