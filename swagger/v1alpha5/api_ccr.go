@@ -941,13 +941,17 @@ CcrApiService List all images in a CCR repository.
      * @param "Location" (optional.String) -
      * @param "Page" (optional.Int32) -
      * @param "PageSize" (optional.Int32) -
+     * @param "SortBy" (optional.Int32) -
+     * @param "SortOrder" (optional.Int32) -
 @return ListCcrImagesResponse
 */
 
 type CcrApiListCcrImagesOpts struct {
-	Location optional.String
-	Page     optional.Int32
-	PageSize optional.Int32
+	Location  optional.String
+	Page      optional.Int32
+	PageSize  optional.Int32
+	SortBy    optional.Int32
+	SortOrder optional.Int32
 }
 
 func (a *CcrApiService) ListCcrImages(ctx context.Context, projectId string, repositoryId string, localVarOptionals *CcrApiListCcrImagesOpts) (ListCcrImagesResponse, *http.Response, error) {
@@ -976,6 +980,12 @@ func (a *CcrApiService) ListCcrImages(ctx context.Context, projectId string, rep
 	}
 	if localVarOptionals != nil && localVarOptionals.PageSize.IsSet() {
 		localVarQueryParams.Add("page_size", parameterToString(localVarOptionals.PageSize.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.SortBy.IsSet() {
+		localVarQueryParams.Add("sort_by", parameterToString(localVarOptionals.SortBy.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.SortOrder.IsSet() {
+		localVarQueryParams.Add("sort_order", parameterToString(localVarOptionals.SortOrder.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
@@ -1090,6 +1100,8 @@ CcrApiService List all manifests for an image in a CCR repository.
      * @param "Location" (optional.String) -
      * @param "Page" (optional.Int32) -
      * @param "PageSize" (optional.Int32) -
+     * @param "SortBy" (optional.Int32) -
+     * @param "SortOrder" (optional.Int32) -
 @return ListManifestsResponse
 */
 
@@ -1098,6 +1110,8 @@ type CcrApiListCcrManifestsOpts struct {
 	Location    optional.String
 	Page        optional.Int32
 	PageSize    optional.Int32
+	SortBy      optional.Int32
+	SortOrder   optional.Int32
 }
 
 func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, repositoryId string, imageId string, localVarOptionals *CcrApiListCcrManifestsOpts) (ListManifestsResponse, *http.Response, error) {
@@ -1130,6 +1144,12 @@ func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, 
 	}
 	if localVarOptionals != nil && localVarOptionals.PageSize.IsSet() {
 		localVarQueryParams.Add("page_size", parameterToString(localVarOptionals.PageSize.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.SortBy.IsSet() {
+		localVarQueryParams.Add("sort_by", parameterToString(localVarOptionals.SortBy.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.SortOrder.IsSet() {
+		localVarQueryParams.Add("sort_order", parameterToString(localVarOptionals.SortOrder.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
@@ -1240,12 +1260,16 @@ CcrApiService List all CCR repositories in a project.
  * @param optional nil or *CcrApiListCcrRepositoriesOpts - Optional Parameters:
      * @param "Page" (optional.Int32) -
      * @param "PageSize" (optional.Int32) -
+     * @param "SortBy" (optional.Int32) -
+     * @param "SortOrder" (optional.Int32) -
 @return ListRepositoriesResponse
 */
 
 type CcrApiListCcrRepositoriesOpts struct {
-	Page     optional.Int32
-	PageSize optional.Int32
+	Page      optional.Int32
+	PageSize  optional.Int32
+	SortBy    optional.Int32
+	SortOrder optional.Int32
 }
 
 func (a *CcrApiService) ListCcrRepositories(ctx context.Context, projectId string, localVarOptionals *CcrApiListCcrRepositoriesOpts) (ListRepositoriesResponse, *http.Response, error) {
@@ -1270,6 +1294,12 @@ func (a *CcrApiService) ListCcrRepositories(ctx context.Context, projectId strin
 	}
 	if localVarOptionals != nil && localVarOptionals.PageSize.IsSet() {
 		localVarQueryParams.Add("page_size", parameterToString(localVarOptionals.PageSize.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.SortBy.IsSet() {
+		localVarQueryParams.Add("sort_by", parameterToString(localVarOptionals.SortBy.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.SortOrder.IsSet() {
+		localVarQueryParams.Add("sort_order", parameterToString(localVarOptionals.SortOrder.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
