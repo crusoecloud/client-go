@@ -17727,6 +17727,48 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "UpdatePaymentMethodRequest": {
+      "description": "Omitted fields are left unchanged.",
+      "type": "object",
+      "title": "UpdatePaymentMethodRequest defines the optional fields that can be patched on a payment method.",
+      "properties": {
+        "cardholder_name": {
+          "type": "string",
+          "x-go-name": "CardholderName",
+          "example": "Jane Doe"
+        },
+        "exp_month": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ExpMonth",
+          "example": 12
+        },
+        "exp_year": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ExpYear",
+          "example": 2030
+        },
+        "is_default": {
+          "type": "boolean",
+          "x-go-name": "IsDefault",
+          "example": true
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "UpdatePaymentMethodResponse": {
+      "type": "object",
+      "required": [
+        "item"
+      ],
+      "properties": {
+        "item": {
+          "$ref": "#/definitions/PaymentMethodCard"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "UpdateS3BucketTagsRequest": {
       "type": "object",
       "title": "UpdateS3BucketTagsRequest is the request body for updating S3 bucket tags.",
@@ -19503,6 +19545,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/BillingAlertPutResponse"
+      }
+    },
+    "updatePaymentMethodResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/UpdatePaymentMethodResponse"
       }
     },
     "updateSCIMIntegrationResponse": {
