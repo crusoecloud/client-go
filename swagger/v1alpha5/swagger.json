@@ -17265,7 +17265,7 @@
       ],
       "properties": {
         "issues": {
-          "description": "Issues describing why the cluster is not in STATE_RUNNING.",
+          "description": "Issues describing why the cluster is not in RUNNING.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/SlurmClusterIssue"
@@ -17288,8 +17288,18 @@
         "state": {
           "description": "State of the slurm cluster.",
           "type": "string",
-          "x-go-name": "State",
-          "example": "STATE_RUNNING"
+          "enum": [
+            "PROVISIONING",
+            "RUNNING",
+            "DELETING",
+            "DELETED",
+            "FAILED",
+            "UPDATING",
+            "UNHEALTHY",
+            "CREATE_FAILED",
+            "DELETE_FAILED"
+          ],
+          "x-go-name": "State"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -17375,6 +17385,16 @@
         "state": {
           "description": "Current state.",
           "type": "string",
+          "enum": [
+            "PROVISIONING",
+            "RUNNING",
+            "DELETING",
+            "DELETED",
+            "UPDATING",
+            "UNHEALTHY",
+            "CREATE_FAILED",
+            "DELETE_FAILED"
+          ],
           "x-go-name": "State"
         },
         "subnet_id": {
@@ -17501,7 +17521,7 @@
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         },
         "issues": {
-          "description": "Message describing why nodeset is not in STATE_RUNNING",
+          "description": "Message describing why nodeset is not in RUNNING",
           "type": "array",
           "items": {
             "$ref": "#/definitions/SlurmNodesetIssue"
@@ -17519,8 +17539,17 @@
         "state": {
           "description": "State of the slurm nodeset",
           "type": "string",
-          "x-go-name": "State",
-          "example": "STATE_RUNNING"
+          "enum": [
+            "PROVISIONING",
+            "RUNNING",
+            "DELETING",
+            "DELETED",
+            "UPDATING",
+            "UNHEALTHY",
+            "CREATE_FAILED",
+            "DELETE_FAILED"
+          ],
+          "x-go-name": "State"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"

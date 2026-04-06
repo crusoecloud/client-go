@@ -11,7 +11,7 @@ package swagger
 type SlurmNodesetStatus struct {
 	// ID of the worker nodeset.
 	Id string `json:"id"`
-	// Message describing why nodeset is not in STATE_RUNNING
+	// Message describing why nodeset is not in RUNNING
 	Issues []SlurmNodesetIssue `json:"issues,omitempty"`
 	// Count of nodes that are not only \"running\" but have all slurm replicas running
 	ReadyCount int64 `json:"ready_count"`
