@@ -941,8 +941,8 @@ CcrApiService List all images in a CCR repository.
      * @param "Location" (optional.String) -
      * @param "Page" (optional.Int32) -
      * @param "PageSize" (optional.Int32) -
-     * @param "SortBy" (optional.Int32) -
-     * @param "SortOrder" (optional.Int32) -
+     * @param "SortBy" (optional.String) -
+     * @param "SortOrder" (optional.String) -
 @return ListCcrImagesResponse
 */
 
@@ -950,8 +950,8 @@ type CcrApiListCcrImagesOpts struct {
 	Location  optional.String
 	Page      optional.Int32
 	PageSize  optional.Int32
-	SortBy    optional.Int32
-	SortOrder optional.Int32
+	SortBy    optional.String
+	SortOrder optional.String
 }
 
 func (a *CcrApiService) ListCcrImages(ctx context.Context, projectId string, repositoryId string, localVarOptionals *CcrApiListCcrImagesOpts) (ListCcrImagesResponse, *http.Response, error) {
@@ -1100,8 +1100,8 @@ CcrApiService List all manifests for an image in a CCR repository.
      * @param "Location" (optional.String) -
      * @param "Page" (optional.Int32) -
      * @param "PageSize" (optional.Int32) -
-     * @param "SortBy" (optional.Int32) -
-     * @param "SortOrder" (optional.Int32) -
+     * @param "SortBy" (optional.String) -
+     * @param "SortOrder" (optional.String) -
 @return ListManifestsResponse
 */
 
@@ -1110,8 +1110,8 @@ type CcrApiListCcrManifestsOpts struct {
 	Location    optional.String
 	Page        optional.Int32
 	PageSize    optional.Int32
-	SortBy      optional.Int32
-	SortOrder   optional.Int32
+	SortBy      optional.String
+	SortOrder   optional.String
 }
 
 func (a *CcrApiService) ListCcrManifests(ctx context.Context, projectId string, repositoryId string, imageId string, localVarOptionals *CcrApiListCcrManifestsOpts) (ListManifestsResponse, *http.Response, error) {
@@ -1260,16 +1260,16 @@ CcrApiService List all CCR repositories in a project.
  * @param optional nil or *CcrApiListCcrRepositoriesOpts - Optional Parameters:
      * @param "Page" (optional.Int32) -
      * @param "PageSize" (optional.Int32) -
-     * @param "SortBy" (optional.Int32) -
-     * @param "SortOrder" (optional.Int32) -
+     * @param "SortBy" (optional.String) -
+     * @param "SortOrder" (optional.String) -
 @return ListRepositoriesResponse
 */
 
 type CcrApiListCcrRepositoriesOpts struct {
 	Page      optional.Int32
 	PageSize  optional.Int32
-	SortBy    optional.Int32
-	SortOrder optional.Int32
+	SortBy    optional.String
+	SortOrder optional.String
 }
 
 func (a *CcrApiService) ListCcrRepositories(ctx context.Context, projectId string, localVarOptionals *CcrApiListCcrRepositoriesOpts) (ListRepositoriesResponse, *http.Response, error) {

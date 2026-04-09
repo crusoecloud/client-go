@@ -2093,15 +2093,13 @@
             "in": "query"
           },
           {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "x-go-name": "SortBy",
             "name": "sort_by",
             "in": "query"
           },
           {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "x-go-name": "SortOrder",
             "name": "sort_order",
             "in": "query"
@@ -2351,15 +2349,13 @@
             "in": "query"
           },
           {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "x-go-name": "SortBy",
             "name": "sort_by",
             "in": "query"
           },
           {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "x-go-name": "SortOrder",
             "name": "sort_order",
             "in": "query"
@@ -2493,15 +2489,13 @@
             "in": "query"
           },
           {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "x-go-name": "SortBy",
             "name": "sort_by",
             "in": "query"
           },
           {
-            "type": "integer",
-            "format": "int32",
+            "type": "string",
             "x-go-name": "SortOrder",
             "name": "sort_order",
             "in": "query"
