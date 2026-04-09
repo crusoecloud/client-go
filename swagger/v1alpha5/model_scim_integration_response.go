@@ -20,4 +20,6 @@ type ScimIntegrationResponse struct {
 	Status         string   `json:"status"`
 	TokenIds       []string `json:"token_ids"`
 	UpdatedAt      string   `json:"updated_at"`
+	// UserCount is the number of users provisioned via this SCIM integration.
+	UserCount int32 `json:"user_count,omitempty"`
 }

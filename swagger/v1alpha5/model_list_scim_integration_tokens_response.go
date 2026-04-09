@@ -9,5 +9,5 @@
 package swagger
 
 type ListScimIntegrationTokensResponse struct {
-	Items []LimitedUsageApiKeyInfo `json:"items"`
+	Items []ScimIntegrationTokenInfo `json:"items"`
 }

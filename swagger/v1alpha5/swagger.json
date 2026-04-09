@@ -915,7 +915,9 @@
             "$ref": "#/responses/serverError"
           }
         }
-      },
+      }
+    },
+    "/organizations/{org_id}/scim/integrations/{integration_id}/tokens/{access_key_id}": {
       "delete": {
         "tags": [
           "SCIM"
@@ -942,9 +944,9 @@
           {
             "type": "string",
             "example": "R7p5XctCQMuGlpVBmVdqzA",
-            "x-go-name": "KeyID",
-            "name": "key_id",
-            "in": "query",
+            "x-go-name": "AccessKeyID",
+            "name": "access_key_id",
+            "in": "path",
             "required": true
           }
         ],
@@ -15004,7 +15006,7 @@
         "items": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/LimitedUsageAPIKeyInfo"
+            "$ref": "#/definitions/SCIMIntegrationTokenInfo"
           },
           "x-go-name": "Items"
         }
@@ -17080,6 +17082,72 @@
           "type": "string",
           "x-go-name": "UpdatedAt",
           "example": "2024-01-01T00:00:00Z"
+        },
+        "user_count": {
+          "description": "UserCount is the number of users provisioned via this SCIM integration.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "UserCount"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SCIMIntegrationTokenInfo": {
+      "type": "object",
+      "title": "SCIMIntegrationTokenInfo extends LimitedUsageAPIKeyInfo with a user ID.",
+      "required": [
+        "usage",
+        "alias",
+        "key_id",
+        "created_at",
+        "expires_at",
+        "last_used",
+        "user_id"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "x-go-name": "Alias",
+          "example": "token1"
+        },
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2021-11-03T22:16:27Z"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2021-12-03T19:58:34Z"
+        },
+        "key_id": {
+          "type": "string",
+          "x-go-name": "KeyID",
+          "example": "Hm11C1coQZm2+Aihn9ofYg"
+        },
+        "last_used": {
+          "type": "string",
+          "x-go-name": "LastUsed",
+          "example": "2021-11-03T22:22:55Z"
+        },
+        "project_id": {
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        },
+        "usage": {
+          "type": "string",
+          "enum": [
+            "inference",
+            "observability"
+          ],
+          "x-go-name": "Usage",
+          "example": "inference"
+        },
+        "user_id": {
+          "type": "string",
+          "x-go-name": "UserID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"

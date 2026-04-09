@@ -406,9 +406,9 @@ SCIMApiService Delete a token from a SCIM integration.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param orgId
   - @param integrationId
-  - @param keyId
+  - @param accessKeyId
 */
-func (a *SCIMApiService) DeleteSCIMIntegrationToken(ctx context.Context, orgId string, integrationId string, keyId string) (*http.Response, error) {
+func (a *SCIMApiService) DeleteSCIMIntegrationToken(ctx context.Context, orgId string, integrationId string, accessKeyId string) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Delete")
 		localVarPostBody   interface{}
@@ -417,15 +417,15 @@ func (a *SCIMApiService) DeleteSCIMIntegrationToken(ctx context.Context, orgId s
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/{org_id}/scim/integrations/{integration_id}/tokens"
+	localVarPath := a.client.cfg.BasePath + "/organizations/{org_id}/scim/integrations/{integration_id}/tokens/{access_key_id}"
 	localVarPath = strings.Replace(localVarPath, "{"+"org_id"+"}", fmt.Sprintf("%v", orgId), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"integration_id"+"}", fmt.Sprintf("%v", integrationId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"access_key_id"+"}", fmt.Sprintf("%v", accessKeyId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("key_id", parameterToString(keyId, ""))
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
