@@ -10671,6 +10671,71 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "CardTransaction": {
+      "type": "object",
+      "title": "CardTransaction represents a single Stripe charge for an org.",
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Amount"
+        },
+        "created": {
+          "type": "string",
+          "x-go-name": "Created"
+        },
+        "currency": {
+          "type": "string",
+          "x-go-name": "Currency"
+        },
+        "failure_message": {
+          "type": "string",
+          "x-go-name": "FailureMessage"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "invoice_url": {
+          "type": "string",
+          "x-go-name": "InvoiceURL"
+        },
+        "payment_method": {
+          "$ref": "#/definitions/CardTransactionPaymentMethod"
+        },
+        "receipt_url": {
+          "type": "string",
+          "x-go-name": "ReceiptURL"
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Resources"
+        },
+        "status": {
+          "type": "string",
+          "x-go-name": "Status"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "CardTransactionPaymentMethod": {
+      "type": "object",
+      "title": "CardTransactionPaymentMethod holds card details for a charge.",
+      "properties": {
+        "brand": {
+          "type": "string",
+          "x-go-name": "Brand"
+        },
+        "last4": {
+          "type": "string",
+          "x-go-name": "Last4"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "CcrImage": {
       "type": "object",
       "properties": {
@@ -14508,6 +14573,28 @@
             "$ref": "#/definitions/CapacityV1Alpha5"
           },
           "x-go-name": "Items"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "ListCardTransactionsResponse": {
+      "type": "object",
+      "title": "ListCardTransactionsResponse holds the response payload for listing card transactions.",
+      "properties": {
+        "has_more": {
+          "type": "boolean",
+          "x-go-name": "HasMore"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CardTransaction"
+          },
+          "x-go-name": "Items"
+        },
+        "next_cursor": {
+          "type": "string",
+          "x-go-name": "NextCursor"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -19185,6 +19272,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/BillingAlertListResponse"
+      }
+    },
+    "listCardTransactionsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListCardTransactionsResponse"
       }
     },
     "listDiskSnapshotsResponse": {
