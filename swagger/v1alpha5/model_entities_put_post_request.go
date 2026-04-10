@@ -10,5 +10,8 @@ package swagger
 
 type EntitiesPutPostRequest struct {
 	BillingAddr      *BillingAddress `json:"billing_addr,omitempty"`
+	CompanyName      string          `json:"company_name,omitempty"`
 	OrganizationName string          `json:"organization_name,omitempty"`
+	TaxId            string          `json:"tax_id,omitempty"`
+	TaxIdType        string          `json:"tax_id_type,omitempty"`
 }

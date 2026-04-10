@@ -11538,10 +11538,27 @@
         "billing_addr": {
           "$ref": "#/definitions/BillingAddress"
         },
+        "company_name": {
+          "type": "string",
+          "x-go-name": "CompanyName",
+          "example": "mycompany"
+        },
         "organization_name": {
           "type": "string",
           "x-go-name": "OrganizationName",
           "example": "Crusoe Energy"
+        },
+        "tax_id": {
+          "type": "string",
+          "x-go-name": "TaxID",
+          "example": "51-2144346"
+        },
+        "tax_id_type": {
+          "type": "string",
+          "enum": [
+            "EIN"
+          ],
+          "x-go-name": "TaxIDType"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -11577,6 +11594,11 @@
         },
         "billing_addr": {
           "$ref": "#/definitions/BillingAddress"
+        },
+        "company_name": {
+          "type": "string",
+          "x-go-name": "CompanyName",
+          "example": "mycompany"
         },
         "features": {
           "type": "object",
@@ -11626,6 +11648,18 @@
         "state_reason": {
           "type": "string",
           "x-go-name": "StateReason"
+        },
+        "tax_id": {
+          "type": "string",
+          "x-go-name": "TaxID",
+          "example": "51-2144346"
+        },
+        "tax_id_type": {
+          "type": "string",
+          "enum": [
+            "EIN"
+          ],
+          "x-go-name": "TaxIDType"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
