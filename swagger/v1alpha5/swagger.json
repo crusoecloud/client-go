@@ -7517,7 +7517,7 @@
         "tags": [
           "Slurm Clusters"
         ],
-        "summary": "Retrieve information about slurm clusters belonged to the project.",
+        "summary": "Retrieve information about slurm clusters belonging to the project.",
         "operationId": "listSlurmClusters",
         "parameters": [
           {
@@ -7535,7 +7535,7 @@
             },
             "example": "my-slurm-cluster",
             "x-go-name": "Names",
-            "name": "name",
+            "name": "names",
             "in": "query"
           },
           {
