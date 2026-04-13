@@ -37,4 +37,6 @@ type SlurmCluster struct {
 	Id string `json:"id"`
 	// Updated at timestamp of the cluster.
 	UpdatedAt string `json:"updated_at,omitempty"`
+	// Version of the cluster.
+	Version string `json:"version,omitempty"`
 }

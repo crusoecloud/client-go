@@ -17374,6 +17374,11 @@
               "description": "Updated at timestamp of the cluster.",
               "type": "string",
               "x-go-name": "UpdatedAt"
+            },
+            "version": {
+              "description": "Version of the cluster.",
+              "type": "string",
+              "x-go-name": "Version"
             }
           }
         }
