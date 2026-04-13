@@ -383,11 +383,11 @@ func (a *SlurmClustersApiService) GetSlurmCluster(ctx context.Context, projectId
 }
 
 /*
-SlurmClustersApiService Retrieve information about slurm clusters belonged to the project.
+SlurmClustersApiService Retrieve information about slurm clusters belonging to the project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param optional nil or *SlurmClustersApiListSlurmClustersOpts - Optional Parameters:
-     * @param "Name" (optional.Interface of []string) -
+     * @param "Names" (optional.Interface of []string) -
      * @param "Location" (optional.String) -
      * @param "State" (optional.String) -
      * @param "SlurmClusterIds" (optional.Interface of []string) -
@@ -395,7 +395,7 @@ SlurmClustersApiService Retrieve information about slurm clusters belonged to th
 */
 
 type SlurmClustersApiListSlurmClustersOpts struct {
-	Name            optional.Interface
+	Names           optional.Interface
 	Location        optional.String
 	State           optional.String
 	SlurmClusterIds optional.Interface
@@ -418,8 +418,8 @@ func (a *SlurmClustersApiService) ListSlurmClusters(ctx context.Context, project
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Name.IsSet() {
-		localVarQueryParams.Add("name", parameterToString(localVarOptionals.Name.Value(), "csv"))
+	if localVarOptionals != nil && localVarOptionals.Names.IsSet() {
+		localVarQueryParams.Add("names", parameterToString(localVarOptionals.Names.Value(), "csv"))
 	}
 	if localVarOptionals != nil && localVarOptionals.Location.IsSet() {
 		localVarQueryParams.Add("location", parameterToString(localVarOptionals.Location.Value(), ""))

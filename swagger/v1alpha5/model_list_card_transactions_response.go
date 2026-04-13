@@ -8,6 +8,8 @@
  */
 package swagger
 
-type ListScimIntegrationTokensResponse struct {
-	Items []ScimIntegrationTokenInfo `json:"items"`
+type ListCardTransactionsResponse struct {
+	HasMore    bool              `json:"has_more,omitempty"`
+	Items      []CardTransaction `json:"items,omitempty"`
+	NextCursor string            `json:"next_cursor,omitempty"`
 }

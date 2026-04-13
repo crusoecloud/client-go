@@ -8,6 +8,7 @@
  */
 package swagger
 
-type ListScimIntegrationTokensResponse struct {
-	Items []ScimIntegrationTokenInfo `json:"items"`
+type CardTransactionPaymentMethod struct {
+	Brand string `json:"brand,omitempty"`
+	Last4 string `json:"last4,omitempty"`
 }

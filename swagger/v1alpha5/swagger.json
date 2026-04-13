@@ -915,7 +915,9 @@
             "$ref": "#/responses/serverError"
           }
         }
-      },
+      }
+    },
+    "/organizations/{org_id}/scim/integrations/{integration_id}/tokens/{access_key_id}": {
       "delete": {
         "tags": [
           "SCIM"
@@ -942,9 +944,9 @@
           {
             "type": "string",
             "example": "R7p5XctCQMuGlpVBmVdqzA",
-            "x-go-name": "KeyID",
-            "name": "key_id",
-            "in": "query",
+            "x-go-name": "AccessKeyID",
+            "name": "access_key_id",
+            "in": "path",
             "required": true
           }
         ],
@@ -2089,6 +2091,18 @@
             "x-go-name": "PageSize",
             "name": "page_size",
             "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "SortBy",
+            "name": "sort_by",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "SortOrder",
+            "name": "sort_order",
+            "in": "query"
           }
         ],
         "responses": {
@@ -2333,6 +2347,18 @@
             "x-go-name": "PageSize",
             "name": "page_size",
             "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "SortBy",
+            "name": "sort_by",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "SortOrder",
+            "name": "sort_order",
+            "in": "query"
           }
         ],
         "responses": {
@@ -2460,6 +2486,18 @@
             "format": "int32",
             "x-go-name": "PageSize",
             "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "SortBy",
+            "name": "sort_by",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "SortOrder",
+            "name": "sort_order",
             "in": "query"
           }
         ],
@@ -7479,7 +7517,7 @@
         "tags": [
           "Slurm Clusters"
         ],
-        "summary": "Retrieve information about slurm clusters belonged to the project.",
+        "summary": "Retrieve information about slurm clusters belonging to the project.",
         "operationId": "listSlurmClusters",
         "parameters": [
           {
@@ -7497,7 +7535,7 @@
             },
             "example": "my-slurm-cluster",
             "x-go-name": "Names",
-            "name": "name",
+            "name": "names",
             "in": "query"
           },
           {
@@ -10627,6 +10665,71 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "CardTransaction": {
+      "type": "object",
+      "title": "CardTransaction represents a single Stripe charge for an org.",
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Amount"
+        },
+        "created": {
+          "type": "string",
+          "x-go-name": "Created"
+        },
+        "currency": {
+          "type": "string",
+          "x-go-name": "Currency"
+        },
+        "failure_message": {
+          "type": "string",
+          "x-go-name": "FailureMessage"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "invoice_url": {
+          "type": "string",
+          "x-go-name": "InvoiceURL"
+        },
+        "payment_method": {
+          "$ref": "#/definitions/CardTransactionPaymentMethod"
+        },
+        "receipt_url": {
+          "type": "string",
+          "x-go-name": "ReceiptURL"
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Resources"
+        },
+        "status": {
+          "type": "string",
+          "x-go-name": "Status"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "CardTransactionPaymentMethod": {
+      "type": "object",
+      "title": "CardTransactionPaymentMethod holds card details for a charge.",
+      "properties": {
+        "brand": {
+          "type": "string",
+          "x-go-name": "Brand"
+        },
+        "last4": {
+          "type": "string",
+          "x-go-name": "Last4"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "CcrImage": {
       "type": "object",
       "properties": {
@@ -11435,10 +11538,27 @@
         "billing_addr": {
           "$ref": "#/definitions/BillingAddress"
         },
+        "company_name": {
+          "type": "string",
+          "x-go-name": "CompanyName",
+          "example": "mycompany"
+        },
         "organization_name": {
           "type": "string",
           "x-go-name": "OrganizationName",
           "example": "Crusoe Energy"
+        },
+        "tax_id": {
+          "type": "string",
+          "x-go-name": "TaxID",
+          "example": "51-2144346"
+        },
+        "tax_id_type": {
+          "type": "string",
+          "enum": [
+            "EIN"
+          ],
+          "x-go-name": "TaxIDType"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -11474,6 +11594,11 @@
         },
         "billing_addr": {
           "$ref": "#/definitions/BillingAddress"
+        },
+        "company_name": {
+          "type": "string",
+          "x-go-name": "CompanyName",
+          "example": "mycompany"
         },
         "features": {
           "type": "object",
@@ -11523,6 +11648,18 @@
         "state_reason": {
           "type": "string",
           "x-go-name": "StateReason"
+        },
+        "tax_id": {
+          "type": "string",
+          "x-go-name": "TaxID",
+          "example": "51-2144346"
+        },
+        "tax_id_type": {
+          "type": "string",
+          "enum": [
+            "EIN"
+          ],
+          "x-go-name": "TaxIDType"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -14468,6 +14605,28 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ListCardTransactionsResponse": {
+      "type": "object",
+      "title": "ListCardTransactionsResponse holds the response payload for listing card transactions.",
+      "properties": {
+        "has_more": {
+          "type": "boolean",
+          "x-go-name": "HasMore"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CardTransaction"
+          },
+          "x-go-name": "Items"
+        },
+        "next_cursor": {
+          "type": "string",
+          "x-go-name": "NextCursor"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "ListCcrImagesResponse": {
       "type": "object",
       "properties": {
@@ -14962,7 +15121,7 @@
         "items": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/LimitedUsageAPIKeyInfo"
+            "$ref": "#/definitions/SCIMIntegrationTokenInfo"
           },
           "x-go-name": "Items"
         }
@@ -17038,6 +17197,72 @@
           "type": "string",
           "x-go-name": "UpdatedAt",
           "example": "2024-01-01T00:00:00Z"
+        },
+        "user_count": {
+          "description": "UserCount is the number of users provisioned via this SCIM integration.",
+          "type": "integer",
+          "format": "int32",
+          "x-go-name": "UserCount"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SCIMIntegrationTokenInfo": {
+      "type": "object",
+      "title": "SCIMIntegrationTokenInfo extends LimitedUsageAPIKeyInfo with a user ID.",
+      "required": [
+        "usage",
+        "alias",
+        "key_id",
+        "created_at",
+        "expires_at",
+        "last_used",
+        "user_id"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "x-go-name": "Alias",
+          "example": "token1"
+        },
+        "created_at": {
+          "type": "string",
+          "x-go-name": "CreatedAt",
+          "example": "2021-11-03T22:16:27Z"
+        },
+        "expires_at": {
+          "type": "string",
+          "x-go-name": "ExpiresAt",
+          "example": "2021-12-03T19:58:34Z"
+        },
+        "key_id": {
+          "type": "string",
+          "x-go-name": "KeyID",
+          "example": "Hm11C1coQZm2+Aihn9ofYg"
+        },
+        "last_used": {
+          "type": "string",
+          "x-go-name": "LastUsed",
+          "example": "2021-11-03T22:22:55Z"
+        },
+        "project_id": {
+          "type": "string",
+          "x-go-name": "ProjectID",
+          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+        },
+        "usage": {
+          "type": "string",
+          "enum": [
+            "inference",
+            "observability"
+          ],
+          "x-go-name": "Usage",
+          "example": "inference"
+        },
+        "user_id": {
+          "type": "string",
+          "x-go-name": "UserID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -17265,7 +17490,7 @@
       ],
       "properties": {
         "issues": {
-          "description": "Issues describing why the cluster is not in STATE_RUNNING.",
+          "description": "Issues describing why the cluster is not in RUNNING.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/SlurmClusterIssue"
@@ -17288,8 +17513,18 @@
         "state": {
           "description": "State of the slurm cluster.",
           "type": "string",
-          "x-go-name": "State",
-          "example": "STATE_RUNNING"
+          "enum": [
+            "PROVISIONING",
+            "RUNNING",
+            "DELETING",
+            "DELETED",
+            "FAILED",
+            "UPDATING",
+            "UNHEALTHY",
+            "CREATE_FAILED",
+            "DELETE_FAILED"
+          ],
+          "x-go-name": "State"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -17375,6 +17610,16 @@
         "state": {
           "description": "Current state.",
           "type": "string",
+          "enum": [
+            "PROVISIONING",
+            "RUNNING",
+            "DELETING",
+            "DELETED",
+            "UPDATING",
+            "UNHEALTHY",
+            "CREATE_FAILED",
+            "DELETE_FAILED"
+          ],
           "x-go-name": "State"
         },
         "subnet_id": {
@@ -17501,7 +17746,7 @@
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
         },
         "issues": {
-          "description": "Message describing why nodeset is not in STATE_RUNNING",
+          "description": "Message describing why nodeset is not in RUNNING",
           "type": "array",
           "items": {
             "$ref": "#/definitions/SlurmNodesetIssue"
@@ -17519,8 +17764,17 @@
         "state": {
           "description": "State of the slurm nodeset",
           "type": "string",
-          "x-go-name": "State",
-          "example": "STATE_RUNNING"
+          "enum": [
+            "PROVISIONING",
+            "RUNNING",
+            "DELETING",
+            "DELETED",
+            "UPDATING",
+            "UNHEALTHY",
+            "CREATE_FAILED",
+            "DELETE_FAILED"
+          ],
+          "x-go-name": "State"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -17723,6 +17977,48 @@
               "issue_name": "XID_74"
             }
           ]
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "UpdatePaymentMethodRequest": {
+      "description": "Omitted fields are left unchanged.",
+      "type": "object",
+      "title": "UpdatePaymentMethodRequest defines the optional fields that can be patched on a payment method.",
+      "properties": {
+        "cardholder_name": {
+          "type": "string",
+          "x-go-name": "CardholderName",
+          "example": "Jane Doe"
+        },
+        "exp_month": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ExpMonth",
+          "example": 12
+        },
+        "exp_year": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ExpYear",
+          "example": 2030
+        },
+        "is_default": {
+          "type": "boolean",
+          "x-go-name": "IsDefault",
+          "example": true
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "UpdatePaymentMethodResponse": {
+      "type": "object",
+      "required": [
+        "item"
+      ],
+      "properties": {
+        "item": {
+          "$ref": "#/definitions/PaymentMethodCard"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -19006,6 +19302,12 @@
         "$ref": "#/definitions/BillingAlertListResponse"
       }
     },
+    "listCardTransactionsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListCardTransactionsResponse"
+      }
+    },
     "listDiskSnapshotsResponse": {
       "description": "",
       "schema": {
@@ -19503,6 +19805,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/BillingAlertPutResponse"
+      }
+    },
+    "updatePaymentMethodResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/UpdatePaymentMethodResponse"
       }
     },
     "updateSCIMIntegrationResponse": {

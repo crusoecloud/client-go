@@ -9,7 +9,7 @@
 package swagger
 
 type SlurmClusterStatus struct {
-	// Issues describing why the cluster is not in STATE_RUNNING.
+	// Issues describing why the cluster is not in RUNNING.
 	Issues []SlurmClusterIssue `json:"issues,omitempty"`
 	// Login node Endpoint (IP).
 	LoginNodeEndpoint string `json:"login_node_endpoint,omitempty"`
