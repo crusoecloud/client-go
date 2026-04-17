@@ -11556,7 +11556,8 @@
         "tax_id_type": {
           "type": "string",
           "enum": [
-            "EIN"
+            "EIN",
+            "VAT"
           ],
           "x-go-name": "TaxIDType"
         }
