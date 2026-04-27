@@ -12,6 +12,7 @@ type DiskV1Alpha5 struct {
 	AttachedTo   []VmAttachmentV1Alpha5 `json:"attached_to"`
 	BlockSize    int64                  `json:"block_size"`
 	CreatedAt    string                 `json:"created_at"`
+	DnsName      string                 `json:"dns_name,omitempty"`
 	Id           string                 `json:"id"`
 	Location     string                 `json:"location"`
 	Name         string                 `json:"name"`
@@ -19,4 +20,5 @@ type DiskV1Alpha5 struct {
 	Size         string                 `json:"size"`
 	Type_        string                 `json:"type"`
 	UpdatedAt    string                 `json:"updated_at"`
+	Vips         []string               `json:"vips,omitempty"`
 }
