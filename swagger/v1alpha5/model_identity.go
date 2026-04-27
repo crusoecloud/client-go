@@ -15,6 +15,7 @@ type Identity struct {
 	Email            string        `json:"email"`
 	Id               string        `json:"id"`
 	IsRecovery       bool          `json:"is_recovery,omitempty"`
+	ManagedBy        string        `json:"managed_by,omitempty"`
 	Name             string        `json:"name"`
 	OrgRole          string        `json:"org_role,omitempty"`
 	RegistrationType string        `json:"registration_type,omitempty"`

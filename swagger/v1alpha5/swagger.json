@@ -12500,6 +12500,11 @@
           "x-go-name": "IsRecoveryFlow",
           "example": true
         },
+        "managed_by": {
+          "type": "string",
+          "x-go-name": "ManagedBy",
+          "example": "scim_okta"
+        },
         "name": {
           "type": "string",
           "x-go-name": "Name",
