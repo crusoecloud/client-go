@@ -11385,6 +11385,11 @@
           "x-go-name": "CreatedAt",
           "example": "2021-12-03T19:58:34Z"
         },
+        "dns_name": {
+          "type": "string",
+          "x-go-name": "DNSName",
+          "example": "nfs.crusoecloudcompute.com"
+        },
         "id": {
           "type": "string",
           "x-go-name": "ID",
@@ -11419,6 +11424,17 @@
           "type": "string",
           "x-go-name": "UpdatedAt",
           "example": "2021-12-03T19:58:34Z"
+        },
+        "vips": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "VIPAddrs",
+          "example": [
+            "1.2.3.4",
+            "1.2.3.8"
+          ]
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -11556,7 +11572,8 @@
         "tax_id_type": {
           "type": "string",
           "enum": [
-            "EIN"
+            "EIN",
+            "VAT"
           ],
           "x-go-name": "TaxIDType"
         }
@@ -12498,6 +12515,11 @@
           "type": "boolean",
           "x-go-name": "IsRecoveryFlow",
           "example": true
+        },
+        "managed_by": {
+          "type": "string",
+          "x-go-name": "ManagedBy",
+          "example": "scim_okta"
         },
         "name": {
           "type": "string",
