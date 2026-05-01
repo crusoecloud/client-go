@@ -9225,6 +9225,26 @@
         }
       }
     },
+    "/storage/object-storage/supported-locations": {
+      "get": {
+        "tags": [
+          "S3Buckets"
+        ],
+        "summary": "List locations where object storage (S3) is enabled.",
+        "operationId": "listS3SupportedLocations",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listS3SupportedLocationsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        }
+      }
+    },
     "/users/identities": {
       "get": {
         "tags": [
@@ -15133,6 +15153,28 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ListS3SupportedLocationsResponse": {
+      "type": "object",
+      "title": "ListS3SupportedLocationsResponse is the response type for GET requests to the S3 supported-locations endpoint.",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "description": "List of locations where object storage (S3) is enabled.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Items",
+          "example": [
+            "us-east1-a",
+            "us-northcentral1-a"
+          ]
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "ListSCIMIntegrationTokensResponse": {
       "type": "object",
       "title": "ListSCIMIntegrationTokensResponse wraps a list of SCIM integration token responses.",
@@ -19471,6 +19513,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListS3KeysResponse"
+      }
+    },
+    "listS3SupportedLocationsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListS3SupportedLocationsResponse"
       }
     },
     "listSCIMIntegrationTokensResponse": {
