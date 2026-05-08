@@ -19,6 +19,8 @@ type KubernetesNodePoolPatchRequest struct {
 	NodeLabels map[string]string `json:"node_labels"`
 	// Version of the Kubernetes node pool for newly created vms.
 	NodePoolVersion string `json:"node_pool_version"`
+	// Taints to apply to nodes in this node pool. Taints provided in the PATCH request will not modify existing nodes, but will apply to any newly created nodes. This field has three behaviors: Omitted (null): existing taints are left unchanged. Empty array ([]): all existing taints are cleared. Non-empty array: existing taints are fully replaced by the provided list. Each (key, effect) pair in the list must be unique. Up to 50 taints are allowed. See KubernetesNodeTaint for per-field format rules.
+	NodeTaints []KubernetesNodeTaint `json:"node_taints"`
 	// The reservation ID of the node pool.
 	ReservationId string `json:"reservation_id"`
 	// SSH public key to use for all VMs created from this node pool.

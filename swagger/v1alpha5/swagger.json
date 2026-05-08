@@ -14053,6 +14053,7 @@
         "cluster_id",
         "image_id",
         "node_labels",
+        "node_taints",
         "subnet_id",
         "instance_ids",
         "state",
@@ -14134,6 +14135,21 @@
           "x-go-name": "NodeLabels",
           "example": "\"nvidia.a100\""
         },
+        "node_taints": {
+          "description": "Taints applied to nodes in the node pool.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KubernetesNodeTaint"
+          },
+          "x-go-name": "NodeTaints",
+          "example": [
+            {
+              "effect": "NoSchedule",
+              "key": "gpu",
+              "value": "true"
+            }
+          ]
+        },
         "nvlink_domain_id": {
           "description": "NVLink domain ID assigned to this node pool",
           "type": "string",
@@ -14191,6 +14207,7 @@
       "required": [
         "count",
         "node_labels",
+        "node_taints",
         "reservation_id",
         "action",
         "ephemeral_storage_for_containerd",
@@ -14244,6 +14261,22 @@
           "x-go-name": "NodePoolVersion",
           "x-redocly-optional": true,
           "example": "1.30"
+        },
+        "node_taints": {
+          "description": "Taints to apply to nodes in this node pool. Taints provided in the PATCH request will not modify existing nodes,\nbut will apply to any newly created nodes.\nThis field has three behaviors:\nOmitted (null): existing taints are left unchanged.\nEmpty array ([]): all existing taints are cleared.\nNon-empty array: existing taints are fully replaced by the\nprovided list.\nEach (key, effect) pair in the list must be unique. Up to 50\ntaints are allowed. See KubernetesNodeTaint for per-field format rules.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KubernetesNodeTaint"
+          },
+          "x-go-name": "NodeTaints",
+          "x-redocly-optional": true,
+          "example": [
+            {
+              "effect": "NoSchedule",
+              "key": "gpu-type",
+              "value": "h100"
+            }
+          ]
         },
         "reservation_id": {
           "description": "The reservation ID of the node pool.",
@@ -14317,6 +14350,21 @@
           "type": "string",
           "x-go-name": "NodePoolVersion",
           "example": "1.30"
+        },
+        "node_taints": {
+          "description": "Taints applied to nodes in the node pool. Each (key, effect) pair\nmust be unique within the list. The list may contain at most\n50 taints.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/KubernetesNodeTaint"
+          },
+          "x-go-name": "NodeTaints",
+          "example": [
+            {
+              "effect": "NoSchedule",
+              "key": "gpu-type",
+              "value": "h100"
+            }
+          ]
         },
         "nvlink_domain_id": {
           "description": "Optional NVLink domain ID to assign to nodes in this node pool",
@@ -14434,6 +14482,42 @@
         },
         "version_details": {
           "$ref": "#/definitions/VersionDetails"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesNodeTaint": {
+      "description": "A taint allows a node to repel a set of pods unless those pods\ntolerate the taint. Taints follow standard Kubernetes semantics\n(see https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/).",
+      "type": "object",
+      "title": "KubernetesNodeTaint represents a Kubernetes node taint.",
+      "required": [
+        "key",
+        "effect"
+      ],
+      "properties": {
+        "effect": {
+          "description": "Effect is the taint effect, controlling how pods are treated on\nmatching nodes:\nNoSchedule: new pods are not scheduled unless they tolerate.\nPreferNoSchedule: new pods avoid the node if possible.\nNoExecute: new pods are not scheduled AND existing non-tolerating\npods are evicted.",
+          "type": "string",
+          "enum": [
+            "NoSchedule",
+            "PreferNoSchedule",
+            "NoExecute"
+          ],
+          "x-go-name": "Effect",
+          "example": "NoSchedule"
+        },
+        "key": {
+          "description": "Key is the taint key. Follows the Kubernetes qualified-name\nformat: an optional DNS subdomain prefix (up to 253 characters)\nfollowed by a '/', then a name segment (up to 63 characters).\nAllowed characters: alphanumerics, '-', '_', and '.'. Must start\nand end with an alphanumeric character.\nKeys beginning with \"crusoe.ai/\" are reserved for internal use.",
+          "type": "string",
+          "x-go-name": "Key",
+          "example": "gpu-type"
+        },
+        "value": {
+          "description": "Value is the taint value. May be empty. Follows the same format\nrules as a Kubernetes label value: up to 63 characters, alphanumerics\nand '-', '_', '.'.",
+          "type": "string",
+          "maxLength": 63,
+          "x-go-name": "Value",
+          "example": "h100"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"

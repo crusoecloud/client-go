@@ -23,6 +23,8 @@ type KubernetesNodePoolPostRequest struct {
 	NodeLabels map[string]string `json:"node_labels,omitempty"`
 	// Version of the Kubernetes node pool.
 	NodePoolVersion string `json:"node_pool_version,omitempty"`
+	// Taints applied to nodes in the node pool. Each (key, effect) pair must be unique within the list. The list may contain at most 50 taints.
+	NodeTaints []KubernetesNodeTaint `json:"node_taints,omitempty"`
 	// Optional NVLink domain ID to assign to nodes in this node pool
 	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
 	// Product name of the VM type to be created within this node pool.
