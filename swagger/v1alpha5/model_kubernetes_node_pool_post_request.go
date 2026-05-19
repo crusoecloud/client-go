@@ -13,7 +13,7 @@ type KubernetesNodePoolPostRequest struct {
 	ClusterId string `json:"cluster_id"`
 	// The number of nodes to be created.
 	Count int64 `json:"count"`
-	// Indicates whether local ephemeral NVMe disks should be used for containerd storage.
+	// Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.
 	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd,omitempty"`
 	// Deprecated: Use transport_partition_id instead.
 	IbPartitionId string `json:"ib_partition_id,omitempty"`

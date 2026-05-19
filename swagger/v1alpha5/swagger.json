@@ -14084,7 +14084,7 @@
           "example": "2021-12-03T19:58:34Z"
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Indicates whether local ephemeral NVMe disks should be used for containerd storage.",
+          "description": "Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.",
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd",
           "example": true
@@ -14237,7 +14237,7 @@
           "example": 4
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Indicates whether local ephemeral NVMe disks should be used for containerd storage.",
+          "description": "Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.",
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd",
           "x-redocly-optional": true,
@@ -14318,7 +14318,7 @@
           "example": 4
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Indicates whether local ephemeral NVMe disks should be used for containerd storage.",
+          "description": "Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.",
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd",
           "example": true
