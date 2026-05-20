@@ -13998,13 +13998,22 @@
       "required": [
         "cluster_version_name",
         "tags",
-        "version_details"
+        "version_details",
+        "supported_features"
       ],
       "properties": {
         "cluster_version_name": {
           "description": "The version name of Crusoe's Kubernetes clusters.",
           "type": "string",
           "x-go-name": "ClusterVersionName"
+        },
+        "supported_features": {
+          "description": "Features supported by this cluster version. Possible values today: \"oidc\",\n\"autoclusters\", \"active_health_checks\". New feature names may be added over time.\nAPI consumers should ignore unrecognized feature names.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "SupportedFeatures"
         },
         "tags": {
           "description": "A list of tags associated with the version.",
@@ -14084,7 +14093,7 @@
           "example": "2021-12-03T19:58:34Z"
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Indicates whether local ephemeral NVMe disks should be used for containerd storage.",
+          "description": "Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.",
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd",
           "example": true
@@ -14237,7 +14246,7 @@
           "example": 4
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Indicates whether local ephemeral NVMe disks should be used for containerd storage.",
+          "description": "Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.",
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd",
           "x-redocly-optional": true,
@@ -14318,7 +14327,7 @@
           "example": 4
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Indicates whether local ephemeral NVMe disks should be used for containerd storage.",
+          "description": "Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.",
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd",
           "example": true
@@ -14464,13 +14473,22 @@
       "required": [
         "node_pool_version_name",
         "tags",
-        "version_details"
+        "version_details",
+        "supported_features"
       ],
       "properties": {
         "node_pool_version_name": {
           "description": "The version name of Crusoe's Kubernetes node pools.",
           "type": "string",
           "x-go-name": "NodePoolVersionName"
+        },
+        "supported_features": {
+          "description": "Features supported by this node pool version. Possible values today: \"node_taints\",\n\"ephemeral_storage_for_containerd\". New feature names may be added over time.\nAPI consumers should ignore unrecognized feature names.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "SupportedFeatures"
         },
         "tags": {
           "description": "A list of tags associated with the version.",
