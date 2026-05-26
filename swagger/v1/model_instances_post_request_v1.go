@@ -32,4 +32,6 @@ type InstancesPostRequestV1 struct {
 	StartupScript            string                    `json:"startup_script,omitempty"`
 	Type_                    string                    `json:"type"`
 	VirtualizationFeatures   *VirtualizationFeatures   `json:"virtualization_features,omitempty"`
+	// optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")
+	WatchAgentInstallMode string `json:"watch_agent_install_mode,omitempty"`
 }

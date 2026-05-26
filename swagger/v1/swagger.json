@@ -10642,6 +10642,15 @@
         },
         "reservation_specification": {
           "$ref": "#/definitions/ReservationSpecification"
+        },
+        "watch_agent_install_mode": {
+          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
+          "type": "string",
+          "enum": [
+            "docker",
+            "native"
+          ],
+          "x-go-name": "WatchAgentInstallMode"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -13622,6 +13631,15 @@
         },
         "virtualization_features": {
           "$ref": "#/definitions/VirtualizationFeatures"
+        },
+        "watch_agent_install_mode": {
+          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
+          "type": "string",
+          "enum": [
+            "docker",
+            "native"
+          ],
+          "x-go-name": "WatchAgentInstallMode"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"

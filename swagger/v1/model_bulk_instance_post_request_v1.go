@@ -25,4 +25,6 @@ type BulkInstancePostRequestV1 struct {
 	// optional field for specifying an NVLink domain ID
 	NvlinkDomainId           string                    `json:"nvlink_domain_id,omitempty"`
 	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
+	// optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")
+	WatchAgentInstallMode string `json:"watch_agent_install_mode,omitempty"`
 }
