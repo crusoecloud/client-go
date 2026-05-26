@@ -15,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -152,11 +154,17 @@ func (a *ImagesApiService) GetImage(ctx context.Context, imageId string) (Image,
 
 /*
 ImagesApiService Lists all VM images available for use.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param optional nil or *ImagesApiListImagesOpts - Optional Parameters:
+     * @param "ProductGroup" (optional.String) -  Optional filter to return only images compatible with the specified product group (e.g. \&quot;a100\&quot;, \&quot;h100\&quot;).
 @return ListImagesResponseV1Alpha5
 */
-func (a *ImagesApiService) ListImages(ctx context.Context) (ListImagesResponseV1Alpha5, *http.Response, error) {
+
+type ImagesApiListImagesOpts struct {
+	ProductGroup optional.String
+}
+
+func (a *ImagesApiService) ListImages(ctx context.Context, localVarOptionals *ImagesApiListImagesOpts) (ListImagesResponseV1Alpha5, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -172,6 +180,9 @@ func (a *ImagesApiService) ListImages(ctx context.Context) (ListImagesResponseV1
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.ProductGroup.IsSet() {
+		localVarQueryParams.Add("product_group", parameterToString(localVarOptionals.ProductGroup.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
