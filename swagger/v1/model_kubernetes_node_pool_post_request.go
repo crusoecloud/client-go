@@ -27,6 +27,8 @@ type KubernetesNodePoolPostRequest struct {
 	NodeTaints []KubernetesNodeTaint `json:"node_taints,omitempty"`
 	// Optional NVLink domain ID to assign to nodes in this node pool
 	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
+	// Placement policy for VMs in the node pool. Possible values: spread, unspecified. Ignored for GPU node types (one VM per host is already enforced for GPUs).
+	PlacementPolicy string `json:"placement_policy,omitempty"`
 	// Product name of the VM type to be created within this node pool.
 	ProductName string `json:"product_name"`
 	// Public IP type for nodepool nodes. Possible values: dynamic, static, none

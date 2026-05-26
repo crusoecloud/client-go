@@ -14555,6 +14555,17 @@
           "x-go-name": "NvlinkDomainID",
           "example": "550e8400-e29b-41d4-a716-446655440000"
         },
+        "placement_policy": {
+          "description": "Placement policy for VMs in the node pool. Possible values: spread, unspecified.\nIgnored for GPU node types (one VM per host is already enforced for GPUs).",
+          "type": "string",
+          "default": "unspecified",
+          "enum": [
+            "spread",
+            "unspecified"
+          ],
+          "x-go-name": "PlacementPolicy",
+          "example": "spread"
+        },
         "product_name": {
           "description": "Product name of the VM type to be created within this node pool.",
           "type": "string",
