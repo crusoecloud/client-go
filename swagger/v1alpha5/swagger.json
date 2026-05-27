@@ -68,7 +68,6 @@
     "/ccr/supported-locations": {
       "get": {
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "List supported CCR locations.",
@@ -90,7 +89,6 @@
       "get": {
         "description": "Returns the list of supported upstream registry providers that can be used\nwhen creating pull-through cache repositories. These providers are validated\nduring repository creation.",
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "List supported CCR providers.",
@@ -111,7 +109,6 @@
     "/ccr/tokens": {
       "post": {
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "Create a CCR token for a user.",
@@ -2079,7 +2076,6 @@
     "/projects/{project_id}/ccr/repositories": {
       "get": {
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "List all CCR repositories in a project.",
@@ -2139,7 +2135,6 @@
       },
       "post": {
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "Create a CCR repository.",
@@ -2182,7 +2177,6 @@
     "/projects/{project_id}/ccr/repositories/{repository_id}": {
       "get": {
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "Get a specific CCR repository.",
@@ -2229,7 +2223,6 @@
       },
       "delete": {
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "Delete a CCR repository.",
@@ -2277,7 +2270,6 @@
       "patch": {
         "description": "Updates the username and password credentials for the upstream registry\nof a pull-through cache repository.",
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "Update upstream registry credentials for a CCR repository.",
@@ -2327,7 +2319,6 @@
     "/projects/{project_id}/ccr/repositories/{repository_id}/images": {
       "get": {
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "List all images in a CCR repository.",
@@ -2400,7 +2391,6 @@
       },
       "delete": {
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "Delete an image from a CCR repository.",
@@ -2456,7 +2446,6 @@
     "/projects/{project_id}/ccr/repositories/{repository_id}/manifests": {
       "get": {
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "List all manifests for an image in a CCR repository.",
@@ -2542,7 +2531,6 @@
       },
       "delete": {
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "Delete a manifest from an image in a CCR repository.",
@@ -2610,7 +2598,6 @@
     "/projects/{project_id}/ccr/repositories/{repository_id}/usage": {
       "get": {
         "tags": [
-          "ContainerRegistry",
           "Ccr"
         ],
         "summary": "Get usage data for a specific CCR repository.",
