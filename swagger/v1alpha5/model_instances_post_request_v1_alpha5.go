@@ -12,6 +12,8 @@ package swagger
 type InstancesPostRequestV1Alpha5 struct {
 	// commitment is no longer supported
 	CommitmentPeriod int64 `json:"commitment_period,omitempty"`
+	// optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")
+	CrusoeWatchAgentInstallMode string `json:"crusoe_watch_agent_install_mode,omitempty"`
 	// either image or custom image should be supplied, not both.
 	CustomImage         string                      `json:"custom_image,omitempty"`
 	Disks               []DiskAttachment            `json:"disks,omitempty"`
@@ -32,6 +34,4 @@ type InstancesPostRequestV1Alpha5 struct {
 	StartupScript            string                    `json:"startup_script,omitempty"`
 	Type_                    string                    `json:"type"`
 	VirtualizationFeatures   *VirtualizationFeatures   `json:"virtualization_features,omitempty"`
-	// optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")
-	WatchAgentInstallMode string `json:"watch_agent_install_mode,omitempty"`
 }

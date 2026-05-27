@@ -9612,6 +9612,41 @@
     }
   },
   "definitions": {
+    "AggregateMetrics": {
+      "type": "object",
+      "title": "AggregateMetrics contains pre-computed metric aggregates for a pod or cluster.",
+      "properties": {
+        "cpu_utilization_avg": {
+          "description": "Average CPU utilization (%) across VMs in this group.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "CPUUtilizationAvg",
+          "example": 0
+        },
+        "gpu_utilization_avg": {
+          "description": "Average GPU utilization (%) across VMs in this group.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "GPUUtilizationAvg",
+          "example": 82
+        },
+        "p95_power_watts": {
+          "description": "P95 GPU power draw in watts across VMs in this group.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "P95PowerWatts",
+          "example": 425
+        },
+        "p95_temperature_celsius": {
+          "description": "P95 GPU temperature in Celsius across VMs in this group.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "P95TemperatureCelsius",
+          "example": 81
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "ApplyRoleBindingRequest": {
       "type": "object",
       "required": [
@@ -10600,6 +10635,15 @@
           "x-go-name": "Count",
           "example": 6
         },
+        "crusoe_watch_agent_install_mode": {
+          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
+          "type": "string",
+          "enum": [
+            "docker",
+            "native"
+          ],
+          "x-go-name": "CrusoeWatchAgentInstallMode"
+        },
         "install_crusoe_watch_agent": {
           "description": "optional field to control whether the Crusoe Watch Agent is installed (defaults to true)",
           "type": "boolean",
@@ -10642,15 +10686,6 @@
         },
         "reservation_specification": {
           "$ref": "#/definitions/ReservationSpecification"
-        },
-        "watch_agent_install_mode": {
-          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
-          "type": "string",
-          "enum": [
-            "docker",
-            "native"
-          ],
-          "x-go-name": "WatchAgentInstallMode"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -10808,6 +10843,39 @@
         "url": {
           "type": "string",
           "x-go-name": "URL"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "ClusterOverview": {
+      "type": "object",
+      "title": "ClusterOverview contains the data for a single cluster within a pod (IB) or at the top level (non-IB).",
+      "required": [
+        "vms"
+      ],
+      "properties": {
+        "cluster_id": {
+          "description": "Cluster UUID. Empty string for standalone VMs.",
+          "type": "string",
+          "x-go-name": "ClusterID",
+          "example": "f2d6f4ed-5dd3-4bc7-8765-22f1d7a05877"
+        },
+        "cluster_name": {
+          "description": "Cluster display name. Empty string for standalone VMs.",
+          "type": "string",
+          "x-go-name": "ClusterName",
+          "example": "cmk-training-a"
+        },
+        "metrics": {
+          "$ref": "#/definitions/AggregateMetrics"
+        },
+        "vms": {
+          "description": "VMs in this cluster.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VMDetail"
+          },
+          "x-go-name": "VMs"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -13226,6 +13294,50 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "InstanceTypeDetailResponse": {
+      "description": "The layout field determines which section is populated: network_topology (IB) or clusters (non-IB).",
+      "type": "object",
+      "title": "InstanceTypeDetailResponse is the gateway response for the instance type detail view.",
+      "required": [
+        "layout",
+        "instance_type",
+        "summary"
+      ],
+      "properties": {
+        "clusters": {
+          "description": "Clusters with VMs. Populated for non-IB layouts only.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClusterOverview"
+          },
+          "x-go-name": "Clusters"
+        },
+        "instance_type": {
+          "description": "The instance type name.",
+          "type": "string",
+          "x-go-name": "InstanceType",
+          "example": "gb200-186gb-nvl-ib.4x"
+        },
+        "layout": {
+          "description": "The layout type: \"ib-instances\" or \"non-ib-instances\".",
+          "type": "string",
+          "x-go-name": "Layout",
+          "example": "ib-instances"
+        },
+        "network_topology": {
+          "description": "Network topology with pods and clusters. Populated for IB layouts only.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PodOverview"
+          },
+          "x-go-name": "NetworkTopology"
+        },
+        "summary": {
+          "$ref": "#/definitions/InstanceTypeSummary"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "InstanceTypeMetrics": {
       "type": "object",
       "title": "InstanceTypeMetrics contains the metric values for an instance type.",
@@ -13294,6 +13406,41 @@
         },
         "remediation": {
           "$ref": "#/definitions/RemediationCounts"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "InstanceTypeSummary": {
+      "type": "object",
+      "title": "InstanceTypeSummary contains the top-level summary metrics for an instance type.",
+      "properties": {
+        "cpu_utilization_avg": {
+          "description": "Average CPU utilization (%) across all VMs of this instance type.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "CPUUtilizationAvg",
+          "example": 45
+        },
+        "gpu_utilization_avg": {
+          "description": "Average GPU utilization (%) across all VMs of this instance type.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "GPUUtilizationAvg",
+          "example": 84.2
+        },
+        "p95_power_watts": {
+          "description": "P95 GPU power draw in watts across all VMs of this instance type.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "P95PowerWatts",
+          "example": 425
+        },
+        "p95_temperature_celsius": {
+          "description": "P95 GPU temperature in Celsius across all VMs of this instance type.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "P95TemperatureCelsius",
+          "example": 81
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -13547,6 +13694,15 @@
           "format": "int64",
           "x-go-name": "CommitmentPeriod"
         },
+        "crusoe_watch_agent_install_mode": {
+          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
+          "type": "string",
+          "enum": [
+            "docker",
+            "native"
+          ],
+          "x-go-name": "CrusoeWatchAgentInstallMode"
+        },
         "custom_image": {
           "description": "either image or custom image should be supplied, not both.",
           "type": "string",
@@ -13631,15 +13787,6 @@
         },
         "virtualization_features": {
           "$ref": "#/definitions/VirtualizationFeatures"
-        },
-        "watch_agent_install_mode": {
-          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
-          "type": "string",
-          "enum": [
-            "docker",
-            "native"
-          ],
-          "x-go-name": "WatchAgentInstallMode"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -16567,6 +16714,35 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "PodOverview": {
+      "type": "object",
+      "title": "PodOverview contains the data for a single IB network pod.",
+      "required": [
+        "pod_id",
+        "metrics",
+        "clusters"
+      ],
+      "properties": {
+        "clusters": {
+          "description": "Clusters within this pod.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClusterOverview"
+          },
+          "x-go-name": "Clusters"
+        },
+        "metrics": {
+          "$ref": "#/definitions/AggregateMetrics"
+        },
+        "pod_id": {
+          "description": "Pod UUID.",
+          "type": "string",
+          "x-go-name": "PodID",
+          "example": "68e33474-cff1-a5cd-dcc2-a269863e019e"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "PrivateIPv4Address": {
       "type": "object",
       "required": [
@@ -18705,6 +18881,120 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "VMDetail": {
+      "type": "object",
+      "title": "VMDetail contains all per-VM data for the instance type detail view.",
+      "required": [
+        "vm_id",
+        "vm_name",
+        "health",
+        "reasons"
+      ],
+      "properties": {
+        "cpu_utilization": {
+          "description": "CPU utilization (%) for this VM. 0 when no data.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "CPUUtilization",
+          "example": 45
+        },
+        "gpu_utilization": {
+          "description": "GPU utilization (%) for this VM. 0 when no data.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "GPUUtilization",
+          "example": 84
+        },
+        "health": {
+          "description": "VM health status: healthy, degraded, unhealthy, or not_evaluated.",
+          "type": "string",
+          "x-go-name": "Health",
+          "example": "healthy"
+        },
+        "ib_max_gbps": {
+          "description": "Max IB line rate in Gbps for this VM. 0 when no data or non-IB.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "IBMaxGbps",
+          "example": 400
+        },
+        "ib_rx_gbps": {
+          "description": "IB receive throughput in Gbps for this VM. 0 when no data or non-IB.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "IBRxGbps",
+          "example": 320
+        },
+        "ib_tx_gbps": {
+          "description": "IB transmit throughput in Gbps for this VM. 0 when no data or non-IB.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "IBTxGbps",
+          "example": 340
+        },
+        "p95_power_watts": {
+          "description": "P95 GPU power draw in watts for this VM. 0 when no data.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "P95PowerWatts",
+          "example": 420
+        },
+        "p95_temperature_celsius": {
+          "description": "P95 GPU temperature in Celsius for this VM. 0 when no data.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "P95TemperatureCelsius",
+          "example": 81
+        },
+        "reasons": {
+          "description": "List of health reasons for this VM. Empty array if healthy.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VMHealthReason"
+          },
+          "x-go-name": "Reasons"
+        },
+        "remediation": {
+          "$ref": "#/definitions/VMRemediation"
+        },
+        "vm_id": {
+          "description": "VM UUID.",
+          "type": "string",
+          "x-go-name": "VMID",
+          "example": "e41b19c2-e44b-44ce-8dd4-6053923fe50c"
+        },
+        "vm_name": {
+          "description": "VM display name.",
+          "type": "string",
+          "x-go-name": "VMName",
+          "example": "vm-gb200-01"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "VMHealthReason": {
+      "type": "object",
+      "title": "VMHealthReason describes a single health reason for a VM.",
+      "required": [
+        "reason",
+        "detail"
+      ],
+      "properties": {
+        "detail": {
+          "description": "Specific detail within the reason.",
+          "type": "string",
+          "x-go-name": "Detail",
+          "example": "MemoryPressure"
+        },
+        "reason": {
+          "description": "Reason category.",
+          "type": "string",
+          "x-go-name": "Reason",
+          "example": "node_condition"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "VMInfo": {
       "type": "object",
       "title": "VMInfo contains information about a virtual machine.",
@@ -18728,6 +19018,29 @@
         "vm_state": {
           "type": "string",
           "x-go-name": "VMState"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "VMRemediation": {
+      "type": "object",
+      "title": "VMRemediation describes an active remediation operation for a VM.",
+      "required": [
+        "state",
+        "type"
+      ],
+      "properties": {
+        "state": {
+          "description": "Operation state: in_progress, succeeded, or failed.",
+          "type": "string",
+          "x-go-name": "State",
+          "example": "in_progress"
+        },
+        "type": {
+          "description": "Operation type: replace_node, reset_vm, or detect_only.",
+          "type": "string",
+          "x-go-name": "Type",
+          "example": "replace_node"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -19592,6 +19905,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/InstanceTemplate"
+      }
+    },
+    "getInstanceTypeDetailResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/InstanceTypeDetailResponse"
       }
     },
     "getKubernetesClusterCredentialsResponse": {

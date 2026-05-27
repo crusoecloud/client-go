@@ -11,6 +11,8 @@ package swagger
 type BulkInstancePostRequestV1Alpha5 struct {
 	// The number of VMs to create. If multiple locations are specified, this will be the number of VMs created in each location.
 	Count int64 `json:"count"`
+	// optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")
+	CrusoeWatchAgentInstallMode string `json:"crusoe_watch_agent_install_mode,omitempty"`
 	// optional field to control whether the Crusoe Watch Agent is installed (defaults to true)
 	InstallCrusoeWatchAgent *bool `json:"install_crusoe_watch_agent,omitempty"`
 	// The ID of the instance group the VMs will be created in.
@@ -25,6 +27,4 @@ type BulkInstancePostRequestV1Alpha5 struct {
 	// optional field for specifying an NVLink domain ID
 	NvlinkDomainId           string                    `json:"nvlink_domain_id,omitempty"`
 	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
-	// optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")
-	WatchAgentInstallMode string `json:"watch_agent_install_mode,omitempty"`
 }
