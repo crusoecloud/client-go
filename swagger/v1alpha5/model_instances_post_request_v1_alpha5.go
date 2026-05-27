@@ -18,7 +18,7 @@ type InstancesPostRequestV1Alpha5 struct {
 	HostChannelAdapters []PartialHostChannelAdapter `json:"host_channel_adapters,omitempty"`
 	Image               string                      `json:"image,omitempty"`
 	// optional field to control whether the Crusoe Watch Agent is installed (defaults to true)
-	InstallCrusoeWatchAgent *bool  `json:"install_crusoe_watch_agent,omitempty"`
+	InstallCrusoeWatchAgent *bool   `json:"install_crusoe_watch_agent,omitempty"`
 	Location                string `json:"location"`
 	// The Host Maintenance Policy to use.
 	MaintenancePolicy string             `json:"maintenance_policy,omitempty"`
@@ -32,4 +32,6 @@ type InstancesPostRequestV1Alpha5 struct {
 	StartupScript            string                    `json:"startup_script,omitempty"`
 	Type_                    string                    `json:"type"`
 	VirtualizationFeatures   *VirtualizationFeatures   `json:"virtualization_features,omitempty"`
+	// optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")
+	WatchAgentInstallMode string `json:"watch_agent_install_mode,omitempty"`
 }

@@ -59,7 +59,7 @@ type Configuration struct {
 
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
-		BasePath:      "https://api.crusoecloud.com/v1alpha5",
+		BasePath:      "https://api.cloud.crusoe.ai/v1alpha5",
 		DefaultHeader: make(map[string]string),
 		UserAgent:     "Swagger-Codegen/1.0.0/go",
 	}

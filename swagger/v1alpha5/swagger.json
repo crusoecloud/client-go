@@ -5,7 +5,7 @@
     "title": "Crusoe Cloud API Gateway",
     "version": "v1alpha5"
   },
-  "host": "api.crusoecloud.com",
+  "host": "api.cloud.crusoe.ai",
   "basePath": "/v1alpha5",
   "schemes": [
     "https"
@@ -68,7 +68,8 @@
     "/ccr/supported-locations": {
       "get": {
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "List supported CCR locations.",
         "operationId": "listSupportedLocations",
@@ -89,7 +90,8 @@
       "get": {
         "description": "Returns the list of supported upstream registry providers that can be used\nwhen creating pull-through cache repositories. These providers are validated\nduring repository creation.",
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "List supported CCR providers.",
         "operationId": "listSupportedProviders",
@@ -109,7 +111,8 @@
     "/ccr/tokens": {
       "post": {
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "Create a CCR token for a user.",
         "operationId": "createCcrToken",
@@ -145,6 +148,16 @@
         ],
         "summary": "Lists all VM images available for use.",
         "operationId": "listImages",
+        "parameters": [
+          {
+            "type": "string",
+            "example": "a100",
+            "x-go-name": "ProductGroup",
+            "description": "Optional filter to return only images compatible with the specified product group (e.g. \"a100\", \"h100\").",
+            "name": "product_group",
+            "in": "query"
+          }
+        ],
         "responses": {
           "200": {
             "$ref": "#/responses/listImagesResponse"
@@ -2066,7 +2079,8 @@
     "/projects/{project_id}/ccr/repositories": {
       "get": {
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "List all CCR repositories in a project.",
         "operationId": "listCcrRepositories",
@@ -2125,7 +2139,8 @@
       },
       "post": {
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "Create a CCR repository.",
         "operationId": "createCcrRepository",
@@ -2167,7 +2182,8 @@
     "/projects/{project_id}/ccr/repositories/{repository_id}": {
       "get": {
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "Get a specific CCR repository.",
         "operationId": "getCcrRepository",
@@ -2213,7 +2229,8 @@
       },
       "delete": {
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "Delete a CCR repository.",
         "operationId": "deleteCcrRepository",
@@ -2260,7 +2277,8 @@
       "patch": {
         "description": "Updates the username and password credentials for the upstream registry\nof a pull-through cache repository.",
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "Update upstream registry credentials for a CCR repository.",
         "operationId": "updateCcrRepositoryCredentials",
@@ -2309,7 +2327,8 @@
     "/projects/{project_id}/ccr/repositories/{repository_id}/images": {
       "get": {
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "List all images in a CCR repository.",
         "operationId": "listCcrImages",
@@ -2381,7 +2400,8 @@
       },
       "delete": {
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "Delete an image from a CCR repository.",
         "operationId": "deleteCcrImage",
@@ -2436,7 +2456,8 @@
     "/projects/{project_id}/ccr/repositories/{repository_id}/manifests": {
       "get": {
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "List all manifests for an image in a CCR repository.",
         "operationId": "listCcrManifests",
@@ -2521,7 +2542,8 @@
       },
       "delete": {
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "Delete a manifest from an image in a CCR repository.",
         "operationId": "deleteCcrManifest",
@@ -2588,7 +2610,8 @@
     "/projects/{project_id}/ccr/repositories/{repository_id}/usage": {
       "get": {
         "tags": [
-          "Ccr"
+          "Ccr",
+          "ContainerRegistry"
         ],
         "summary": "Get usage data for a specific CCR repository.",
         "operationId": "getCcrRepositoryUsage",
@@ -10580,7 +10603,8 @@
         "install_crusoe_watch_agent": {
           "description": "optional field to control whether the Crusoe Watch Agent is installed (defaults to true)",
           "type": "boolean",
-          "x-go-name": "InstallCrusoeWatchAgent"
+          "x-go-name": "InstallCrusoeWatchAgent",
+          "x-nullable": true
         },
         "instance_group_id": {
           "description": "The ID of the instance group the VMs will be created in.",
@@ -10618,6 +10642,15 @@
         },
         "reservation_specification": {
           "$ref": "#/definitions/ReservationSpecification"
+        },
+        "watch_agent_install_mode": {
+          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
+          "type": "string",
+          "enum": [
+            "docker",
+            "native"
+          ],
+          "x-go-name": "WatchAgentInstallMode"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -12320,6 +12353,65 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "HealthCounts": {
+      "type": "object",
+      "title": "HealthCounts contains the count of VMs by health status.",
+      "required": [
+        "healthy",
+        "degraded",
+        "unhealthy",
+        "not_evaluated",
+        "non_healthy_vms",
+        "not_evaluated_vms"
+      ],
+      "properties": {
+        "degraded": {
+          "description": "Number of degraded VMs.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Degraded",
+          "example": 1
+        },
+        "healthy": {
+          "description": "Number of healthy VMs.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Healthy",
+          "example": 5
+        },
+        "non_healthy_vms": {
+          "description": "VMs that are degraded or unhealthy, with reason details.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NonHealthyVM"
+          },
+          "x-go-name": "NonHealthyVMs"
+        },
+        "not_evaluated": {
+          "description": "Number of VMs whose health could not be evaluated.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "NotEvaluated",
+          "example": 2
+        },
+        "not_evaluated_vms": {
+          "description": "VMs whose health could not be evaluated, with reason details.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NonHealthyVM"
+          },
+          "x-go-name": "NotEvaluatedVMs"
+        },
+        "unhealthy": {
+          "description": "Number of unhealthy VMs.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Unhealthy",
+          "example": 0
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "HostChannelAdapter": {
       "type": "object",
       "required": [
@@ -13134,6 +13226,78 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "InstanceTypeMetrics": {
+      "type": "object",
+      "title": "InstanceTypeMetrics contains the metric values for an instance type.",
+      "required": [
+        "health"
+      ],
+      "properties": {
+        "cpu_utilization_avg": {
+          "description": "Average CPU utilization across all VMs of this instance type (0-100).",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "CPUUtilizationAvg",
+          "example": 45.2
+        },
+        "gpu_utilization_avg": {
+          "description": "Average GPU utilization across all VMs of this instance type (0-100).",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "GPUUtilizationAvg",
+          "example": 72.5
+        },
+        "health": {
+          "$ref": "#/definitions/HealthCounts"
+        },
+        "p95_power_watts": {
+          "description": "P95 GPU power draw in watts across all VMs of this instance type.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "P95PowerWatts",
+          "example": 320
+        },
+        "p95_temperature_celsius": {
+          "description": "P95 GPU temperature in Celsius across all VMs of this instance type.",
+          "type": "number",
+          "format": "double",
+          "x-go-name": "P95TemperatureCelsius",
+          "example": 68
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "InstanceTypeOverview": {
+      "type": "object",
+      "title": "InstanceTypeOverview contains summary metrics for a single instance type.",
+      "required": [
+        "instance_type",
+        "instance_count",
+        "metrics"
+      ],
+      "properties": {
+        "instance_count": {
+          "description": "The number of VMs of this instance type.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "InstanceCount",
+          "example": 8
+        },
+        "instance_type": {
+          "description": "The instance type name.",
+          "type": "string",
+          "x-go-name": "InstanceType",
+          "example": "h100-80gb-sxm-ib.8x"
+        },
+        "metrics": {
+          "$ref": "#/definitions/InstanceTypeMetrics"
+        },
+        "remediation": {
+          "$ref": "#/definitions/RemediationCounts"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "InstanceV1Alpha5": {
       "description": "InstanceV1Alpha5 contains identifying information about a vm instance for\nvms.instances endpoints.",
       "type": "object",
@@ -13411,7 +13575,8 @@
         "install_crusoe_watch_agent": {
           "description": "optional field to control whether the Crusoe Watch Agent is installed (defaults to true)",
           "type": "boolean",
-          "x-go-name": "InstallCrusoeWatchAgent"
+          "x-go-name": "InstallCrusoeWatchAgent",
+          "x-nullable": true
         },
         "location": {
           "type": "string",
@@ -13466,6 +13631,15 @@
         },
         "virtualization_features": {
           "$ref": "#/definitions/VirtualizationFeatures"
+        },
+        "watch_agent_install_mode": {
+          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
+          "type": "string",
+          "enum": [
+            "docker",
+            "native"
+          ],
+          "x-go-name": "WatchAgentInstallMode"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -14380,6 +14554,17 @@
           "type": "string",
           "x-go-name": "NvlinkDomainID",
           "example": "550e8400-e29b-41d4-a716-446655440000"
+        },
+        "placement_policy": {
+          "description": "Placement policy for VMs in the node pool. Possible values: spread, unspecified.\nIgnored for GPU node types (one VM per host is already enforced for GPUs).",
+          "type": "string",
+          "default": "unspecified",
+          "enum": [
+            "spread",
+            "unspecified"
+          ],
+          "x-go-name": "PlacementPolicy",
+          "example": "spread"
         },
         "product_name": {
           "description": "Product name of the VM type to be created within this node pool.",
@@ -15977,6 +16162,50 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "NonHealthyVM": {
+      "type": "object",
+      "title": "NonHealthyVM describes a single non-healthy or not-evaluated VM and the reason for its status.",
+      "required": [
+        "vm_id",
+        "vm_name",
+        "status",
+        "reason",
+        "detail"
+      ],
+      "properties": {
+        "detail": {
+          "description": "Human-readable detail about the health status.",
+          "type": "string",
+          "x-go-name": "Detail",
+          "example": "MemoryPressure"
+        },
+        "reason": {
+          "description": "The reason code for the health status.",
+          "type": "string",
+          "x-go-name": "Reason",
+          "example": "node_condition"
+        },
+        "status": {
+          "description": "The health status (degraded, unhealthy, or not_evaluated).",
+          "type": "string",
+          "x-go-name": "Status",
+          "example": "degraded"
+        },
+        "vm_id": {
+          "description": "The VM ID.",
+          "type": "string",
+          "x-go-name": "VMID",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab"
+        },
+        "vm_name": {
+          "description": "The VM name.",
+          "type": "string",
+          "x-go-name": "VMName",
+          "example": "my-gpu-node-1"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "NvlinkDomainSummaryResponse": {
       "type": "object",
       "title": "NvlinkDomainSummaryResponse represents summary information about an NVLink domain.",
@@ -16418,6 +16647,24 @@
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ProjectOverviewResponse": {
+      "type": "object",
+      "title": "ProjectOverviewResponse is the gateway response for the project-level infrastructure overview.",
+      "required": [
+        "instance_types"
+      ],
+      "properties": {
+        "instance_types": {
+          "description": "List of instance type summaries for the project.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/InstanceTypeOverview"
+          },
+          "x-go-name": "InstanceTypes"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "ProjectQuota": {
       "type": "object",
       "properties": {
@@ -16755,6 +17002,39 @@
         },
         "user_override": {
           "$ref": "#/definitions/AutoRemediation"
+        }
+      },
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "RemediationCounts": {
+      "type": "object",
+      "title": "RemediationCounts contains counts of auto-remediation operations by state.",
+      "required": [
+        "in_progress",
+        "succeeded",
+        "failed"
+      ],
+      "properties": {
+        "failed": {
+          "description": "Number of remediation operations that failed.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Failed",
+          "example": 0
+        },
+        "in_progress": {
+          "description": "Number of remediation operations currently in progress.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "InProgress",
+          "example": 1
+        },
+        "succeeded": {
+          "description": "Number of remediation operations that succeeded.",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Succeeded",
+          "example": 3
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -19354,6 +19634,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/Operation"
+      }
+    },
+    "getProjectOverviewResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ProjectOverviewResponse"
       }
     },
     "getProjectResponse": {
