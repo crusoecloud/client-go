@@ -10635,6 +10635,15 @@
           "x-go-name": "Count",
           "example": 6
         },
+        "crusoe_watch_agent_install_mode": {
+          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
+          "type": "string",
+          "enum": [
+            "docker",
+            "native"
+          ],
+          "x-go-name": "CrusoeWatchAgentInstallMode"
+        },
         "install_crusoe_watch_agent": {
           "description": "optional field to control whether the Crusoe Watch Agent is installed (defaults to true)",
           "type": "boolean",
@@ -10677,15 +10686,6 @@
         },
         "reservation_specification": {
           "$ref": "#/definitions/ReservationSpecification"
-        },
-        "watch_agent_install_mode": {
-          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
-          "type": "string",
-          "enum": [
-            "docker",
-            "native"
-          ],
-          "x-go-name": "WatchAgentInstallMode"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -13694,6 +13694,15 @@
           "format": "int64",
           "x-go-name": "CommitmentPeriod"
         },
+        "crusoe_watch_agent_install_mode": {
+          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
+          "type": "string",
+          "enum": [
+            "docker",
+            "native"
+          ],
+          "x-go-name": "CrusoeWatchAgentInstallMode"
+        },
         "custom_image": {
           "description": "either image or custom image should be supplied, not both.",
           "type": "string",
@@ -13778,15 +13787,6 @@
         },
         "virtualization_features": {
           "$ref": "#/definitions/VirtualizationFeatures"
-        },
-        "watch_agent_install_mode": {
-          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
-          "type": "string",
-          "enum": [
-            "docker",
-            "native"
-          ],
-          "x-go-name": "WatchAgentInstallMode"
         }
       },
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
