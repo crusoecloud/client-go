@@ -27,7 +27,7 @@ var (
 type ContainerRegistryApiService service
 
 /*
-ContainerRegistryApiService Create a CCR repository.
+ContainerRegistryApiService Create a container registry repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param optional nil or *ContainerRegistryApiCreateCcrRepositoryOpts - Optional Parameters:
@@ -165,7 +165,7 @@ func (a *ContainerRegistryApiService) CreateCcrRepository(ctx context.Context, p
 }
 
 /*
-ContainerRegistryApiService Create a CCR token for a user.
+ContainerRegistryApiService Create a container registry specific limited scope token for a user.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *ContainerRegistryApiCreateCcrTokenOpts - Optional Parameters:
      * @param "Body" (optional.Interface of CcrTokenRequest) -
@@ -291,7 +291,7 @@ func (a *ContainerRegistryApiService) CreateCcrToken(ctx context.Context, localV
 }
 
 /*
-ContainerRegistryApiService Delete an image from a CCR repository.
+ContainerRegistryApiService Delete an image from a container registry repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param repositoryId
@@ -411,7 +411,7 @@ func (a *ContainerRegistryApiService) DeleteCcrImage(ctx context.Context, projec
 }
 
 /*
-ContainerRegistryApiService Delete a manifest from an image in a CCR repository.
+ContainerRegistryApiService Delete a manifest from an image in a container registry repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param repositoryId
@@ -541,7 +541,7 @@ func (a *ContainerRegistryApiService) DeleteCcrManifest(ctx context.Context, pro
 }
 
 /*
-ContainerRegistryApiService Delete a CCR repository.
+ContainerRegistryApiService Delete a container registry repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param repositoryId
@@ -796,7 +796,7 @@ func (a *ContainerRegistryApiService) GetCcrRepository(ctx context.Context, proj
 }
 
 /*
-ContainerRegistryApiService Get usage data for a specific CCR repository.
+ContainerRegistryApiService Get usage data for a specific container registry repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param repositoryId
@@ -933,7 +933,7 @@ func (a *ContainerRegistryApiService) GetCcrRepositoryUsage(ctx context.Context,
 }
 
 /*
-ContainerRegistryApiService List all images in a CCR repository.
+ContainerRegistryApiService List all images in a container registry repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param repositoryId
@@ -1090,7 +1090,7 @@ func (a *ContainerRegistryApiService) ListCcrImages(ctx context.Context, project
 }
 
 /*
-ContainerRegistryApiService List all manifests for an image in a CCR repository.
+ContainerRegistryApiService List all manifests for an image in a container registry repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param repositoryId
@@ -1254,7 +1254,7 @@ func (a *ContainerRegistryApiService) ListCcrManifests(ctx context.Context, proj
 }
 
 /*
-ContainerRegistryApiService List all CCR repositories in a project.
+ContainerRegistryApiService List all container registry repositories in a project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param optional nil or *ContainerRegistryApiListCcrRepositoriesOpts - Optional Parameters:
@@ -1404,7 +1404,7 @@ func (a *ContainerRegistryApiService) ListCcrRepositories(ctx context.Context, p
 }
 
 /*
-ContainerRegistryApiService List supported CCR locations.
+ContainerRegistryApiService List locations where the container registry is hosted in the Crusoe Cloud.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return ListSupportedLocationsResponse
@@ -1508,8 +1508,7 @@ func (a *ContainerRegistryApiService) ListSupportedLocations(ctx context.Context
 }
 
 /*
-ContainerRegistryApiService List supported CCR providers.
-Returns the list of supported upstream registry providers that can be used when creating pull-through cache repositories. These providers are validated during repository creation.
+ContainerRegistryApiService Returns the list of supported upstream registry providers for pull-through-caches.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return ListSupportedProvidersResponse
@@ -1613,7 +1612,7 @@ func (a *ContainerRegistryApiService) ListSupportedProviders(ctx context.Context
 }
 
 /*
-ContainerRegistryApiService Update upstream registry credentials for a CCR repository.
+ContainerRegistryApiService Update upstream registry credentials for a repository.
 Updates the username and password credentials for the upstream registry of a pull-through cache repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId

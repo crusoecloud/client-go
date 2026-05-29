@@ -71,7 +71,7 @@
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "List supported CCR locations.",
+        "summary": "List locations where the container registry is hosted in the Crusoe Cloud.",
         "operationId": "listSupportedLocations",
         "responses": {
           "200": {
@@ -88,12 +88,11 @@
     },
     "/ccr/supported-providers": {
       "get": {
-        "description": "Returns the list of supported upstream registry providers that can be used\nwhen creating pull-through cache repositories. These providers are validated\nduring repository creation.",
         "tags": [
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "List supported CCR providers.",
+        "summary": "Returns the list of supported upstream registry providers for pull-through-caches.",
         "operationId": "listSupportedProviders",
         "responses": {
           "200": {
@@ -114,7 +113,7 @@
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "Create a CCR token for a user.",
+        "summary": "Create a container registry specific limited scope token for a user.",
         "operationId": "createCcrToken",
         "parameters": [
           {
@@ -2082,7 +2081,7 @@
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "List all CCR repositories in a project.",
+        "summary": "List all container registry repositories in a project.",
         "operationId": "listCcrRepositories",
         "parameters": [
           {
@@ -2142,7 +2141,7 @@
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "Create a CCR repository.",
+        "summary": "Create a container registry repository.",
         "operationId": "createCcrRepository",
         "parameters": [
           {
@@ -2232,7 +2231,7 @@
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "Delete a CCR repository.",
+        "summary": "Delete a container registry repository.",
         "operationId": "deleteCcrRepository",
         "parameters": [
           {
@@ -2280,7 +2279,7 @@
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "Update upstream registry credentials for a CCR repository.",
+        "summary": "Update upstream registry credentials for a repository.",
         "operationId": "updateCcrRepositoryCredentials",
         "parameters": [
           {
@@ -2330,7 +2329,7 @@
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "List all images in a CCR repository.",
+        "summary": "List all images in a container registry repository.",
         "operationId": "listCcrImages",
         "parameters": [
           {
@@ -2403,7 +2402,7 @@
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "Delete an image from a CCR repository.",
+        "summary": "Delete an image from a container registry repository.",
         "operationId": "deleteCcrImage",
         "parameters": [
           {
@@ -2459,7 +2458,7 @@
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "List all manifests for an image in a CCR repository.",
+        "summary": "List all manifests for an image in a container registry repository.",
         "operationId": "listCcrManifests",
         "parameters": [
           {
@@ -2545,7 +2544,7 @@
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "Delete a manifest from an image in a CCR repository.",
+        "summary": "Delete a manifest from an image in a container registry repository.",
         "operationId": "deleteCcrManifest",
         "parameters": [
           {
@@ -2613,7 +2612,7 @@
           "Ccr",
           "ContainerRegistry"
         ],
-        "summary": "Get usage data for a specific CCR repository.",
+        "summary": "Get usage data for a specific container registry repository.",
         "operationId": "getCcrRepositoryUsage",
         "parameters": [
           {
@@ -20759,7 +20758,7 @@
     {
       "name": "Container Registry",
       "tags": [
-        "Ccr"
+        "ContainerRegistry"
       ]
     }
   ]
