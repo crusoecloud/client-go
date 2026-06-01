@@ -19037,6 +19037,45 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "VMHealthResponse": {
+      "properties": {
+        "health": {
+          "description": "The computed health status of the VM.\nPossible values: healthy, degraded, unhealthy, not_evaluated.",
+          "example": "healthy",
+          "type": "string",
+          "x-go-name": "Health"
+        },
+        "project_id": {
+          "description": "The project ID that owns the VM.",
+          "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+          "type": "string",
+          "x-go-name": "ProjectID"
+        },
+        "reasons": {
+          "description": "Health reasons for this VM. Empty array if healthy.",
+          "items": {
+            "$ref": "#/definitions/VMHealthReason"
+          },
+          "type": "array",
+          "x-go-name": "Reasons"
+        },
+        "vm_id": {
+          "description": "The VM ID.",
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+          "type": "string",
+          "x-go-name": "VMID"
+        }
+      },
+      "required": [
+        "vm_id",
+        "project_id",
+        "health",
+        "reasons"
+      ],
+      "title": "VMHealthResponse is the gateway response for VM-level health status.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "VMInfo": {
       "properties": {
         "nvlink_domain_id": {
@@ -20336,6 +20375,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/GetTopologyResponse"
+      }
+    },
+    "getVMHealthResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/VMHealthResponse"
       }
     },
     "getVPCNetworkResponse": {
