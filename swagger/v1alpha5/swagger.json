@@ -19089,6 +19089,12 @@
     },
     "VMInfo": {
       "properties": {
+        "health": {
+          "description": "VM health status: healthy, degraded, unhealthy, or not_evaluated. Empty string if health could not be determined.",
+          "example": "healthy",
+          "type": "string",
+          "x-go-name": "Health"
+        },
         "nvlink_domain_id": {
           "type": "string",
           "x-go-name": "NvlinkDomainID"
@@ -19096,6 +19102,14 @@
         "pod_id": {
           "type": "string",
           "x-go-name": "PodID"
+        },
+        "reasons": {
+          "description": "List of health reasons for this VM. Empty array if healthy or health could not be determined.",
+          "items": {
+            "$ref": "#/definitions/VMHealthReason"
+          },
+          "type": "array",
+          "x-go-name": "Reasons"
         },
         "vm_id": {
           "type": "string",
