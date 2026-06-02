@@ -212,13 +212,24 @@
         "operationId": "getFeatureFlags",
         "responses": {
           "200": {
-            "$ref": "#/responses/featureFlagsGetResponse"
+            "description": "Feature flags retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerListFeatureFlagsResponse"
+            }
           },
           "401": {
-            "$ref": "#/responses/authError"
+            "description": "Authentication required",
+            "schema": {}
           },
           "500": {
-            "$ref": "#/responses/serverError"
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
           }
         },
         "summary": "Get feature flags for the currently logged in user.",
@@ -19621,6 +19632,21 @@
       },
       "type": "object"
     },
+    "customerListFeatureFlagsResponse": {
+      "properties": {
+        "feature_flags": {
+          "additionalProperties": {},
+          "example": {
+            "curated-images": true,
+            "infiniband": false
+          },
+          "title": "feature_flags is a map of feature flag names to their values",
+          "type": "object"
+        }
+      },
+      "title": "ListFeatureFlagsResponse is the list feature flags response",
+      "type": "object"
+    },
     "customerListProjectsResponse": {
       "properties": {
         "projects": {
@@ -19849,6 +19875,14 @@
         }
       },
       "type": "object"
+    },
+    "protobufNullValue": {
+      "default": "NULL_VALUE",
+      "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+      "enum": [
+        "NULL_VALUE"
+      ],
+      "type": "string"
     },
     "rpcStatus": {
       "properties": {
@@ -21038,6 +21072,9 @@
     }
   },
   "tags": [
+    {
+      "name": "FeatureFlagsService"
+    },
     {
       "name": "ProjectsService"
     },
