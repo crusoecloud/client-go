@@ -21095,5 +21095,90 @@
     {
       "name": "UsersService"
     }
+  ],
+  "x-tagGroups": [
+    {
+      "name": "Compute",
+      "tags": [
+        "VMs",
+        "VM Operations",
+        "Images",
+        "Instance Templates"
+      ]
+    },
+    {
+      "name": "Organizations",
+      "tags": [
+        "Projects",
+        "Billing",
+        "Entities",
+        "Prospects",
+        "Usage",
+        "Quotas",
+        "Audit Logs",
+        "SCIM"
+      ]
+    },
+    {
+      "name": "Users",
+      "tags": [
+        "Identities",
+        "SSH Keys",
+        "Tokens"
+      ]
+    },
+    {
+      "name": "Storage",
+      "tags": [
+        "Disks",
+        "Disk Operations",
+        "Snapshots",
+        "Snapshot Operations",
+        "S3Buckets",
+        "S3Users"
+      ]
+    },
+    {
+      "name": "Networking",
+      "tags": [
+        "VPC Firewall Rules",
+        "VPC Firewall Rule Operations",
+        "VPC Networks",
+        "VPC Subnets",
+        "IB Partitions",
+        "Load Balancers",
+        "NVLink Domains"
+      ]
+    },
+    {
+      "name": "Orchestration",
+      "tags": [
+        "Kubernetes Clusters",
+        "Kubernetes Cluster Operations",
+        "Kubernetes Node Pools",
+        "Kubernetes Node Pool Operations",
+        "Kubernetes Versions",
+        "AutoClusters",
+        "AutoCluster Operations"
+      ]
+    },
+    {
+      "name": "Locations",
+      "tags": [
+        "Locations"
+      ]
+    },
+    {
+      "name": "Capacities",
+      "tags": [
+        "Capacities"
+      ]
+    },
+    {
+      "name": "Container Registry",
+      "tags": [
+        "Container Registry"
+      ]
+    }
   ]
 }
