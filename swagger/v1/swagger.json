@@ -5192,6 +5192,81 @@
         ]
       }
     },
+    "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/vms": {
+      "get": {
+        "operationId": "listKubernetesNodePoolVMs",
+        "parameters": [
+          {
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "node_pool_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "NodePoolID"
+          },
+          {
+            "example": "20",
+            "in": "query",
+            "name": "limit",
+            "type": "string",
+            "x-go-name": "Limit"
+          },
+          {
+            "example": "name",
+            "in": "query",
+            "name": "sort",
+            "type": "string",
+            "x-go-name": "Sort"
+          },
+          {
+            "example": "bXktZmlyc3Qtdm0",
+            "in": "query",
+            "name": "next_token",
+            "type": "string",
+            "x-go-name": "NextToken"
+          },
+          {
+            "example": "bXktZmlyc3Qtdm0",
+            "in": "query",
+            "name": "prev_token",
+            "type": "string",
+            "x-go-name": "PrevToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listKubernetesNodePoolVMsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Retrieve the VMs that belong to a particular Kubernetes node pool.",
+        "tags": [
+          "Kubernetes Node Pools"
+        ]
+      }
+    },
     "/projects/{project_id}/kubernetes/versions": {
       "get": {
         "operationId": "listKubernetesVersions",
@@ -15322,6 +15397,35 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ListKubernetesNodePoolVMsResponse": {
+      "description": "ListKubernetesNodePoolVMsResponse is the response type for\nGET /projects/{project_id}/kubernetes/nodepools/{node_pool_id}/vms. Uses the\ncanonical short-form `next_token` / `prev_token` field names that match\n`fetch`'s request params, rather than the legacy `*_page_token` naming used\nby /compute/vms/instances.",
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/definitions/InstanceV1"
+          },
+          "type": "array",
+          "x-go-name": "Items"
+        },
+        "next_token": {
+          "description": "Base64 encoded token representing the next page of instances. Empty if\ncurrently on the last page.",
+          "example": "bXktbGFzdC12bQ",
+          "type": "string",
+          "x-go-name": "NextToken"
+        },
+        "prev_token": {
+          "description": "Base64 encoded token representing the previous page of instances. Empty\nif currently on the first page.",
+          "example": "bXktZmlyc3Qtdm0",
+          "type": "string",
+          "x-go-name": "PrevToken"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "ListKubernetesNodePoolsResponse": {
       "properties": {
         "items": {
@@ -20549,6 +20653,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListKubernetesClustersResponse"
+      }
+    },
+    "listKubernetesNodePoolVMsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListKubernetesNodePoolVMsResponse"
       }
     },
     "listKubernetesNodePoolsResponse": {
