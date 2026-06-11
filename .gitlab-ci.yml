@@ -3,8 +3,8 @@ include:
     file: '/templates/go.gitlab-ci.yml'
 
 variables: 
-  MAJOR_VERSION: "0"
-  MINOR_VERSION: "1"
+  MAJOR_VERSION: "1"
+  MINOR_VERSION: "0"
   CI_IMAGE: registry.gitlab.com/crusoeenergy/tools/go-ci-1.18
 
 analyze:
