@@ -3,8 +3,8 @@ include:
     file: '/templates/go.gitlab-ci.yml'
 
 variables: 
-  MAJOR_VERSION: "0"
-  MINOR_VERSION: "1"
+  MAJOR_VERSION: "1"
+  MINOR_VERSION: "0"
   CI_IMAGE: registry.gitlab.com/crusoeenergy/tools/go-ci-1.18
 
 analyze:
@@ -21,6 +21,10 @@ analyze:
       changes:
         - swagger/**/*
 
+.version-changes: &version-changes
+      changes:
+        - .gitlab-ci.yml
+
 .swagger-and-code-changes: &swagger-and-code-changes
       changes:
         - .gitlab-ci.yml
@@ -33,11 +37,13 @@ test_and_lint:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "auto-gen" || $CI_MERGE_REQUEST_ID'
       changes: !reference [.swagger-and-code-changes, changes]
 
-# trigger semantic versioning + tagging if .swagger-changes occur when pushing to the default branch
+# trigger semantic versioning + tagging if .swagger-changes or version variables change on the default branch
 tag_semver:
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
       changes: !reference [.swagger-changes, changes]
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes: !reference [.version-changes, changes]
   needs: ["test_and_lint"]
 
 # job that will ensure swagger pipeline is created when modifying swagger code
