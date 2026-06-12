@@ -16850,7 +16850,6 @@
       },
       "required": [
         "pod_id",
-        "metrics",
         "clusters"
       ],
       "title": "PodOverview contains the data for a single IB network pod.",
