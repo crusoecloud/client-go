@@ -1964,93 +1964,6 @@
         ]
       }
     },
-    "/organizations/{organization_id}/usage": {
-      "get": {
-        "operationId": "getUsage",
-        "parameters": [
-          {
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "in": "path",
-            "name": "organization_id",
-            "required": true,
-            "type": "string",
-            "x-go-name": "OrgID"
-          },
-          {
-            "example": [
-              "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb"
-            ],
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "projects",
-            "required": true,
-            "type": "array",
-            "x-go-name": "Projects"
-          },
-          {
-            "example": [
-              "persistent-ssd",
-              "a40.1x"
-            ],
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "resource_types",
-            "required": true,
-            "type": "array",
-            "x-go-name": "ResourceTypes"
-          },
-          {
-            "example": [
-              "us-east1",
-              "us-northcentral1"
-            ],
-            "in": "query",
-            "items": {
-              "type": "string"
-            },
-            "name": "regions",
-            "required": true,
-            "type": "array",
-            "x-go-name": "Regions"
-          },
-          {
-            "example": "\"2022-07-01\"",
-            "in": "query",
-            "name": "start_date",
-            "required": true,
-            "type": "string",
-            "x-go-name": "StartDate"
-          },
-          {
-            "example": "\"2023-08-08\"",
-            "in": "query",
-            "name": "end_date",
-            "required": true,
-            "type": "string",
-            "x-go-name": "EndDate"
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/usageGetResponse"
-          },
-          "400": {
-            "$ref": "#/responses/badReqError"
-          },
-          "500": {
-            "$ref": "#/responses/serverError"
-          }
-        },
-        "summary": "Get project-level usage for products in Crusoe Cloud.",
-        "tags": [
-          "Usage"
-        ]
-      }
-    },
     "/organizations/{organization_id}/usage/export": {
       "get": {
         "operationId": "getUsageExport",
@@ -17144,57 +17057,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "ProjectUsageResponse": {
-      "properties": {
-        "billable_metric": {
-          "example": "\"gpu-hours\"",
-          "type": "string",
-          "x-go-name": "Metric"
-        },
-        "date": {
-          "example": "\"2022-07-01\"",
-          "type": "string",
-          "x-go-name": "Date"
-        },
-        "project_id": {
-          "example": "\"d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb\"",
-          "type": "string",
-          "x-go-name": "ProjectID"
-        },
-        "quantity": {
-          "example": 2.123,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "Quantity"
-        },
-        "region": {
-          "example": "\"us-northcentral1\"",
-          "type": "string",
-          "x-go-name": "Region"
-        },
-        "reservation_id": {
-          "example": "\"d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb\"",
-          "type": "string",
-          "x-go-name": "ReservationID"
-        },
-        "resource_type": {
-          "example": "\"a40.1x\"",
-          "type": "string",
-          "x-go-name": "ResourceType"
-        }
-      },
-      "required": [
-        "resource_type",
-        "project_id",
-        "reservation_id",
-        "region",
-        "date",
-        "quantity",
-        "billable_metric"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "ProjectsPostRequest": {
       "properties": {
         "name": {
@@ -18965,23 +18827,6 @@
           "x-go-name": "Username"
         }
       },
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "UsageByProjectGetResponse": {
-      "properties": {
-        "items": {
-          "items": {
-            "$ref": "#/definitions/ProjectUsageResponse"
-          },
-          "type": "array",
-          "x-go-name": "Items"
-        }
-      },
-      "required": [
-        "items"
-      ],
-      "title": "UsageByProjectGetResponse is the response type for GET requests to the usage.usageByProject endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -21307,12 +21152,6 @@
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string"
         }
-      }
-    },
-    "usageGetResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/UsageByProjectGetResponse"
       }
     },
     "usageOptionsGetResponse": {
