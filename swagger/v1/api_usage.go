@@ -15,6 +15,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -26,38 +28,62 @@ type UsageApiService service
 
 /*
 UsageApiService Get project-level usage for products in Crusoe Cloud.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
-  - @param projects
-  - @param resourceTypes
-  - @param regions
-  - @param startDate
-  - @param endDate
-
-@return UsageByProjectGetResponse
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param orgId org_id is the ID of the org to fetch usage for
+ * @param optional nil or *UsageApiGetUsageOpts - Optional Parameters:
+     * @param "Projects" (optional.Interface of []string) -  projects is an optional list of project IDs to filter usage by; absent means all projects
+     * @param "ResourceTypes" (optional.Interface of []string) -  resource_types is an optional list of product types to filter usage by; absent means all products
+     * @param "Regions" (optional.Interface of []string) -  regions is an optional list of regions to filter usage by; absent means all regions
+     * @param "StartDate" (optional.String) -  start_date is the optional start date (inclusive) of the usage period, formatted YYYY-MM-DD
+     * @param "EndDate" (optional.String) -  end_date is the optional end date of the usage period, formatted YYYY-MM-DD
+     * @param "Interval" (optional.String) -  interval controls how usage is aggregated over the period: \&quot;daily\&quot; (the default) or \&quot;monthly\&quot;
+@return CustomerOrganizationUsage
 */
-func (a *UsageApiService) GetUsage(ctx context.Context, organizationId string, projects []string, resourceTypes []string, regions []string, startDate string, endDate string) (UsageByProjectGetResponse, *http.Response, error) {
+
+type UsageApiGetUsageOpts struct {
+	Projects      optional.Interface
+	ResourceTypes optional.Interface
+	Regions       optional.Interface
+	StartDate     optional.String
+	EndDate       optional.String
+	Interval      optional.String
+}
+
+func (a *UsageApiService) GetUsage(ctx context.Context, orgId string, localVarOptionals *UsageApiGetUsageOpts) (CustomerOrganizationUsage, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue UsageByProjectGetResponse
+		localVarReturnValue CustomerOrganizationUsage
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/organizations/{organization_id}/usage"
-	localVarPath = strings.Replace(localVarPath, "{"+"organization_id"+"}", fmt.Sprintf("%v", organizationId), -1)
+	localVarPath := a.client.cfg.BasePath + "/organizations/{org_id}/usage"
+	localVarPath = strings.Replace(localVarPath, "{"+"org_id"+"}", fmt.Sprintf("%v", orgId), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	localVarQueryParams.Add("projects", parameterToString(projects, "csv"))
-	localVarQueryParams.Add("resource_types", parameterToString(resourceTypes, "csv"))
-	localVarQueryParams.Add("regions", parameterToString(regions, "csv"))
-	localVarQueryParams.Add("start_date", parameterToString(startDate, ""))
-	localVarQueryParams.Add("end_date", parameterToString(endDate, ""))
+	if localVarOptionals != nil && localVarOptionals.Projects.IsSet() {
+		localVarQueryParams.Add("projects", parameterToString(localVarOptionals.Projects.Value(), "multi"))
+	}
+	if localVarOptionals != nil && localVarOptionals.ResourceTypes.IsSet() {
+		localVarQueryParams.Add("resource_types", parameterToString(localVarOptionals.ResourceTypes.Value(), "multi"))
+	}
+	if localVarOptionals != nil && localVarOptionals.Regions.IsSet() {
+		localVarQueryParams.Add("regions", parameterToString(localVarOptionals.Regions.Value(), "multi"))
+	}
+	if localVarOptionals != nil && localVarOptionals.StartDate.IsSet() {
+		localVarQueryParams.Add("start_date", parameterToString(localVarOptionals.StartDate.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.EndDate.IsSet() {
+		localVarQueryParams.Add("end_date", parameterToString(localVarOptionals.EndDate.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Interval.IsSet() {
+		localVarQueryParams.Add("interval", parameterToString(localVarOptionals.Interval.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -105,7 +131,7 @@ func (a *UsageApiService) GetUsage(ctx context.Context, organizationId string, p
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v UsageByProjectGetResponse
+			var v CustomerOrganizationUsage
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -115,7 +141,7 @@ func (a *UsageApiService) GetUsage(ctx context.Context, organizationId string, p
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 400 {
-			var v InlineResponse400
+			var v interface{}
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -125,7 +151,17 @@ func (a *UsageApiService) GetUsage(ctx context.Context, organizationId string, p
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 500 {
-			var v InlineResponse500
+			var v interface{}
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 0 {
+			var v RpcStatus
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -309,6 +345,122 @@ func (a *UsageApiService) GetUsageOptions(ctx context.Context, organizationId st
 		}
 		if localVarHttpResponse.StatusCode == 200 {
 			var v UsageOptions
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 500 {
+			var v InlineResponse500
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}
+
+/*
+UsageApiService Get project-level usage for products in Crusoe Cloud.
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param organizationId
+  - @param projects
+  - @param resourceTypes
+  - @param regions
+  - @param startDate
+  - @param endDate
+
+@return UsageByProjectGetResponse
+*/
+func (a *UsageApiService) GetUsage_1(ctx context.Context, organizationId string, projects []string, resourceTypes []string, regions []string, startDate string, endDate string) (UsageByProjectGetResponse, *http.Response, error) {
+	var (
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
+		localVarReturnValue UsageByProjectGetResponse
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/organizations/{organization_id}/usage"
+	localVarPath = strings.Replace(localVarPath, "{"+"organization_id"+"}", fmt.Sprintf("%v", organizationId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	localVarQueryParams.Add("projects", parameterToString(projects, "csv"))
+	localVarQueryParams.Add("resource_types", parameterToString(resourceTypes, "csv"))
+	localVarQueryParams.Add("regions", parameterToString(regions, "csv"))
+	localVarQueryParams.Add("start_date", parameterToString(startDate, ""))
+	localVarQueryParams.Add("end_date", parameterToString(endDate, ""))
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body:  localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v UsageByProjectGetResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 400 {
+			var v InlineResponse400
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

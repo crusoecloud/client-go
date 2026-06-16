@@ -1121,6 +1121,101 @@
         ]
       }
     },
+    "/organizations/{org_id}/usage": {
+      "get": {
+        "operationId": "getUsage",
+        "parameters": [
+          {
+            "description": "org_id is the ID of the org to fetch usage for",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "projects is an optional list of project IDs to filter usage by; absent means all projects",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "projects",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "resource_types is an optional list of product types to filter usage by; absent means all products",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "resource_types",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "regions is an optional list of regions to filter usage by; absent means all regions",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "regions",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "description": "start_date is the optional start date (inclusive) of the usage period, formatted YYYY-MM-DD",
+            "in": "query",
+            "name": "start_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "end_date is the optional end date of the usage period, formatted YYYY-MM-DD",
+            "in": "query",
+            "name": "end_date",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "interval controls how usage is aggregated over the period: \"daily\" (the default) or \"monthly\"",
+            "in": "query",
+            "name": "interval",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usage retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerOrganizationUsage"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Get project-level usage for products in Crusoe Cloud.",
+        "tags": [
+          "Usage"
+        ]
+      }
+    },
     "/organizations/{organization_id}/audit-logs": {
       "get": {
         "operationId": "getAuditLogs",
@@ -19778,6 +19873,63 @@
       "title": "ListProjectsResponse is the response for listing projects",
       "type": "object"
     },
+    "customerOrganizationUsage": {
+      "description": "OrganizationUsage is the project-level usage of products across an organization.",
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/definitions/customerProductProjectUsage",
+            "type": "object"
+          },
+          "readOnly": true,
+          "title": "items is the list of per-project usage line items",
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "customerProductProjectUsage": {
+      "description": "ProductProjectUsage is the usage of a product within a project for a single date.",
+      "properties": {
+        "billable_metric": {
+          "example": "gpu-hours",
+          "title": "billable_metric is the unit the quantity is measured in",
+          "type": "string"
+        },
+        "date": {
+          "example": "2022-07-01",
+          "title": "date is the date the usage was incurred, formatted YYYY-MM-DD",
+          "type": "string"
+        },
+        "project_id": {
+          "example": "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb",
+          "title": "project_id is the ID of the project the usage was incurred in",
+          "type": "string"
+        },
+        "quantity": {
+          "example": 2.123,
+          "format": "double",
+          "title": "quantity is the amount of the product used",
+          "type": "number"
+        },
+        "region": {
+          "example": "us-northcentral1",
+          "title": "region is the region the usage was incurred in",
+          "type": "string"
+        },
+        "reservation_id": {
+          "example": "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb",
+          "title": "reservation_id is the ID of the reservation the usage was incurred under",
+          "type": "string"
+        },
+        "resource_type": {
+          "example": "a40.1x",
+          "title": "resource_type is the product type the usage was incurred for",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "customerProject": {
       "description": "Project represents a Crusoe project resource.",
       "properties": {
@@ -21200,6 +21352,9 @@
     },
     {
       "name": "ProjectsService"
+    },
+    {
+      "name": "UsageService"
     },
     {
       "name": "UsersService"
