@@ -14,4 +14,6 @@ type UsersServiceUpdateUserBody struct {
 	AcceptTos   bool   `json:"accept_tos,omitempty"`
 	CompanyName string `json:"company_name,omitempty"`
 	Name        string `json:"name,omitempty"`
+	// submit_byom_request_form indicates the user submitted the BYOM request form. If true, the user is marked as having submitted it. If false, the value is ignored (there is no way to un-submit).
+	SubmitByomRequestForm bool `json:"submit_byom_request_form,omitempty"`
 }

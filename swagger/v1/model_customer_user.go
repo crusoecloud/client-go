@@ -10,8 +10,9 @@ package swagger
 
 // User is the user resource.
 type CustomerUser struct {
-	AcceptedTos bool   `json:"accepted_tos,omitempty"`
-	CompanyName string `json:"company_name,omitempty"`
+	AcceptedTos              bool   `json:"accepted_tos,omitempty"`
+	ByomRequestFormSubmitted bool   `json:"byom_request_form_submitted,omitempty"`
+	CompanyName              string `json:"company_name,omitempty"`
 	// credentials is the user's credential types. Deprecated: use credentials_map instead.
 	Credentials      []string                              `json:"credentials,omitempty"`
 	CredentialsMap   map[string]CustomerIdentityCredential `json:"credentials_map,omitempty"`

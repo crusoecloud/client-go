@@ -18949,6 +18949,11 @@
           "example": "John Doe",
           "title": "name is the user's display name",
           "type": "string"
+        },
+        "submit_byom_request_form": {
+          "description": "submit_byom_request_form indicates the user submitted the BYOM request form. If true, the user is marked as\nhaving submitted it. If false, the value is ignored (there is no way to un-submit).",
+          "example": true,
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -19885,6 +19890,11 @@
         "accepted_tos": {
           "example": true,
           "title": "accepted_tos indicates whether the user has accepted the latest terms of service",
+          "type": "boolean"
+        },
+        "byom_request_form_submitted": {
+          "example": true,
+          "title": "byom_request_form_submitted indicates whether the user has submitted the BYOM request form",
           "type": "boolean"
         },
         "company_name": {
