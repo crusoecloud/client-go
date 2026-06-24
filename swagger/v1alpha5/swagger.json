@@ -19724,6 +19724,21 @@
       "title": "ListProjectsResponse is the response for listing projects",
       "type": "object"
     },
+    "customerListPublicFeatureFlagsResponse": {
+      "properties": {
+        "feature_flags": {
+          "additionalProperties": {},
+          "example": {
+            "curated-images": true,
+            "infiniband": false
+          },
+          "title": "feature_flags is a map of feature flag names to their values",
+          "type": "object"
+        }
+      },
+      "title": "ListPublicFeatureFlagsResponse is the list public feature flags response",
+      "type": "object"
+    },
     "customerOrganizationUsage": {
       "description": "OrganizationUsage is the project-level usage of products across an organization.",
       "properties": {
