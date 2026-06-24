@@ -19675,6 +19675,17 @@
       "description": "DeleteProjectResponse is the response for deleting an existing project.\n\nSuccessful delete calls should be empty",
       "type": "object"
     },
+    "customerGenerateNameResponse": {
+      "description": "GenerateNameResponse is the response containing a suggested project name.",
+      "properties": {
+        "name": {
+          "example": "fresh-earth-782",
+          "title": "name is an available project name that does not collide with an existing project in the organization",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "customerIdentityCredential": {
       "description": "IdentityCredential describes a single credential registered for a user.",
       "properties": {
