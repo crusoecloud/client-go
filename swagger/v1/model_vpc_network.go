@@ -9,9 +9,14 @@
 package swagger
 
 type VpcNetwork struct {
-	Cidr    string   `json:"cidr"`
-	Gateway string   `json:"gateway"`
-	Id      string   `json:"id"`
-	Name    string   `json:"name"`
+	// Address range of the VPC network, in CIDR notation.
+	Cidr string `json:"cidr"`
+	// Unique identifier of the VPC network's gateway.
+	Gateway string `json:"gateway"`
+	// Unique identifier of the VPC network, assigned at creation.
+	Id string `json:"id"`
+	// Name of the VPC network.
+	Name string `json:"name"`
+	// IDs of the subnets that belong to the VPC network. Empty if the network has none.
 	Subnets []string `json:"subnets"`
 }

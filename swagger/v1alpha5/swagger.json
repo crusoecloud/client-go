@@ -6992,13 +6992,12 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about all VPC networks that belong to the logged in user.",
+        "summary": "Lists all VPC networks in the project and returns their details.",
         "tags": [
           "VPC Networks"
         ]
       },
       "post": {
-        "description": "A successful response from this resource will contain information regarding the created VPC network.",
         "operationId": "createVPCNetwork",
         "parameters": [
           {
@@ -7035,7 +7034,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new VPC network owned by the logged in user.",
+        "summary": "Creates a VPC network in the project and returns the created network.",
         "tags": [
           "VPC Networks"
         ]
@@ -7141,10 +7140,10 @@
     },
     "/projects/{project_id}/networking/vpc-networks/{vpc_network_id}": {
       "delete": {
-        "description": "A successful response from this resource will contain the async operation.",
         "operationId": "deleteVPCNetwork",
         "parameters": [
           {
+            "description": "ID of the project that owns the VPC network.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -7153,6 +7152,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VPC network.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vpc_network_id",
@@ -7181,7 +7181,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a VPC network owned by the logged in user.",
+        "summary": "Deletes a VPC network from the project and returns the async operation.",
         "tags": [
           "VPC Networks"
         ]
@@ -7190,6 +7190,7 @@
         "operationId": "getVPCNetwork",
         "parameters": [
           {
+            "description": "ID of the project that owns the VPC network.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -7198,6 +7199,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VPC network.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vpc_network_id",
@@ -7220,16 +7222,16 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details for a VPC network that belongs to the logged in user.",
+        "summary": "Returns details for a single VPC network in the project.",
         "tags": [
           "VPC Networks"
         ]
       },
       "patch": {
-        "description": "A successful response from this resource will contain the async operation.",
         "operationId": "patchVPCNetwork",
         "parameters": [
           {
+            "description": "ID of the project that owns the VPC network.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -7238,6 +7240,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VPC network.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vpc_network_id",
@@ -7274,7 +7277,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Patch (update) a VPC network owned by the logged in user.",
+        "summary": "Updates a VPC network in the project and returns the async operation.",
         "tags": [
           "VPC Networks"
         ]
@@ -19439,26 +19442,31 @@
     "VPCNetwork": {
       "properties": {
         "cidr": {
+          "description": "Address range of the VPC network, in CIDR notation.",
           "example": "121.0.0.0/20",
           "type": "string",
           "x-go-name": "CIDR"
         },
         "gateway": {
+          "description": "Unique identifier of the VPC network's gateway.",
           "example": "11bf5b4c-e0e5-4017-bdb8-3861f3acedc1",
           "type": "string",
           "x-go-name": "Gateway"
         },
         "id": {
+          "description": "Unique identifier of the VPC network, assigned at creation.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
         },
         "name": {
+          "description": "Name of the VPC network.",
           "example": "default-ethernet",
           "type": "string",
           "x-go-name": "Name"
         },
         "subnets": {
+          "description": "IDs of the subnets that belong to the VPC network. Empty if the network has none.",
           "example": "[1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc]",
           "items": {
             "type": "string"
@@ -19480,6 +19488,7 @@
     "VPCNetworkPatchRequest": {
       "properties": {
         "name": {
+          "description": "New name for the VPC network.",
           "example": "my-cool-vpc-network",
           "type": "string",
           "x-go-name": "Name"
@@ -19495,11 +19504,13 @@
     "VPCNetworkPostRequest": {
       "properties": {
         "cidr": {
+          "description": "Address range for the VPC network, in CIDR notation (for example, 172.27.0.0/16).",
           "example": "172.27.0.0/16",
           "type": "string",
           "x-go-name": "Cidr"
         },
         "name": {
+          "description": "Name for the new VPC network.",
           "example": "my-cool-vpc-network",
           "type": "string",
           "x-go-name": "Name"
