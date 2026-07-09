@@ -5860,7 +5860,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details for all Infiniband partitions that belongs to the user.",
+        "summary": "Lists all Infiniband partitions in the project and returns their details.",
         "tags": [
           "IB Partitions"
         ]
@@ -5902,7 +5902,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new Infiniband partition owned by the logged in user.",
+        "summary": "Creates an Infiniband partition in the project and returns the created Infiniband partition.",
         "tags": [
           "IB Partitions"
         ]
@@ -5913,6 +5913,7 @@
         "operationId": "deleteIBPartition",
         "parameters": [
           {
+            "description": "ID of the project that owns the Infiniband partition.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -5921,6 +5922,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the Infiniband partition.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "ib_partition_id",
@@ -5946,7 +5948,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete an Infiniband partition owned by the logged in user.",
+        "summary": "Deletes an Infiniband partition from the project and returns an empty response.",
         "tags": [
           "IB Partitions"
         ]
@@ -5955,6 +5957,7 @@
         "operationId": "getIBPartition",
         "parameters": [
           {
+            "description": "ID of the project that owns the Infiniband partition.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -5963,6 +5966,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the Infiniband partition.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "ib_partition_id",
@@ -5988,7 +5992,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details for an Infiniband partition that belongs to the user.",
+        "summary": "Returns details for a single Infiniband partition in the project.",
         "tags": [
           "IB Partitions"
         ]
@@ -12695,16 +12699,19 @@
     "IBPartition": {
       "properties": {
         "ib_network_id": {
+          "description": "Identifier of the Infiniband network the partition belongs to.",
           "example": "36c0b0d9-8b68-4869-addb-227b06b64ee0",
           "type": "string",
           "x-go-name": "IBNetworkID"
         },
         "id": {
+          "description": "Unique identifier of the Infiniband partition, assigned at creation.",
           "example": "44701f9e-845c-4005-9240-adee6401b8d3",
           "type": "string",
           "x-go-name": "ID"
         },
         "name": {
+          "description": "Name of the Infiniband partition.",
           "example": "my-ib-partition",
           "type": "string",
           "x-go-name": "Name"
@@ -12721,11 +12728,13 @@
     "IBPartitionsPostRequestV1": {
       "properties": {
         "ib_network_id": {
+          "description": "Identifier of the Infiniband network to create the partition in.",
           "example": "36c0b0d9-8b68-4869-addb-227b06b64ee0",
           "type": "string",
           "x-go-name": "IBNetworkID"
         },
         "name": {
+          "description": "Name for the new Infiniband partition.",
           "example": "my-ib-partition",
           "type": "string",
           "x-go-name": "Name"

@@ -9,7 +9,10 @@
 package swagger
 
 type IbPartition struct {
+	// Identifier of the Infiniband network the partition belongs to.
 	IbNetworkId string `json:"ib_network_id"`
-	Id          string `json:"id"`
-	Name        string `json:"name"`
+	// Unique identifier of the Infiniband partition, assigned at creation.
+	Id string `json:"id"`
+	// Name of the Infiniband partition.
+	Name string `json:"name"`
 }
