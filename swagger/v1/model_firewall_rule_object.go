@@ -10,6 +10,8 @@ package swagger
 
 // It has two fields: CIDR and ResourceID. The CIDR field may either be a CIDR or an IP address. If an IP, it will be converted to a CIDR. Resource ids of VPC networks, Subnets, and VMs are the only allowed. Only one of the two fields can be non empty.
 type FirewallRuleObject struct {
-	Cidr       string `json:"cidr,omitempty"`
+	// CIDR block, or an IP address that is converted to a CIDR. Mutually exclusive with resource_id.
+	Cidr string `json:"cidr,omitempty"`
+	// Unique identifier of a VPC network, subnet, or VM. Mutually exclusive with cidr.
 	ResourceId string `json:"resource_id,omitempty"`
 }

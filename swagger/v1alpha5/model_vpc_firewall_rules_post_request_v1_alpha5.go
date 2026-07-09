@@ -9,13 +9,22 @@
 package swagger
 
 type VpcFirewallRulesPostRequestV1Alpha5 struct {
-	Action           string               `json:"action"`
-	DestinationPorts []string             `json:"destination_ports,omitempty"`
-	Destinations     []FirewallRuleObject `json:"destinations"`
-	Direction        string               `json:"direction"`
-	Name             string               `json:"name"`
-	Protocols        []string             `json:"protocols"`
-	SourcePorts      []string             `json:"source_ports,omitempty"`
-	Sources          []FirewallRuleObject `json:"sources"`
-	VpcNetworkId     string               `json:"vpc_network_id"`
+	// Action applied to traffic that matches the rule: allow or deny.
+	Action string `json:"action"`
+	// Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).
+	DestinationPorts []string `json:"destination_ports,omitempty"`
+	// Destinations the rule matches, given as CIDR blocks or resource IDs.
+	Destinations []FirewallRuleObject `json:"destinations"`
+	// Direction of traffic the rule applies to: ingress (inbound) or egress (outbound).
+	Direction string `json:"direction"`
+	// Name for the new firewall rule.
+	Name string `json:"name"`
+	// Network protocols the rule matches (for example, tcp, udp).
+	Protocols []string `json:"protocols"`
+	// Source ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).
+	SourcePorts []string `json:"source_ports,omitempty"`
+	// Sources the rule matches, given as CIDR blocks or resource IDs.
+	Sources []FirewallRuleObject `json:"sources"`
+	// Unique identifier of the VPC network to create the rule in.
+	VpcNetworkId string `json:"vpc_network_id"`
 }

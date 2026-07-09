@@ -6691,13 +6691,12 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about all VPC firewall rules that belong to the logged in user.",
+        "summary": "Lists all VPC firewall rules in the project and returns their details.",
         "tags": [
           "VPC Firewall Rules"
         ]
       },
       "post": {
-        "description": "A successful response from this resource will contain the async operation.",
         "operationId": "createVPCFirewallRule",
         "parameters": [
           {
@@ -6734,7 +6733,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new VPC firewall rule owned by the logged in user.",
+        "summary": "Creates a VPC firewall rule in the project and returns the async operation.",
         "tags": [
           "VPC Firewall Rules"
         ]
@@ -6840,10 +6839,10 @@
     },
     "/projects/{project_id}/networking/vpc-firewall-rules/{vpc_firewall_rule_id}": {
       "delete": {
-        "description": "A successful response from this resource will contain the async operation.",
         "operationId": "deleteVPCFirewallRule",
         "parameters": [
           {
+            "description": "ID of the project that owns the VPC firewall rule.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6852,6 +6851,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VPC firewall rule.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vpc_firewall_rule_id",
@@ -6874,7 +6874,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a VPC firewall rule owned by the logged in user.",
+        "summary": "Deletes a VPC firewall rule from the project and returns the async operation.",
         "tags": [
           "VPC Firewall Rules"
         ]
@@ -6883,6 +6883,7 @@
         "operationId": "getVPCFirewallRule",
         "parameters": [
           {
+            "description": "ID of the project that owns the VPC firewall rule.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6891,6 +6892,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VPC firewall rule.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vpc_firewall_rule_id",
@@ -6913,16 +6915,16 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details for a VPC firewall rule that belongs to the logged in user.",
+        "summary": "Returns details for a single VPC firewall rule in the project.",
         "tags": [
           "VPC Firewall Rules"
         ]
       },
       "patch": {
-        "description": "A successful response from this resource will contain the async operation.",
         "operationId": "patchVPCFirewallRule",
         "parameters": [
           {
+            "description": "ID of the project that owns the VPC firewall rule.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6931,6 +6933,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VPC firewall rule.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vpc_firewall_rule_id",
@@ -6964,7 +6967,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Patch (update) a VPC firewall rule owned by the logged in user.",
+        "summary": "Updates a VPC firewall rule in the project and returns the async operation.",
         "tags": [
           "VPC Firewall Rules"
         ]
@@ -12116,11 +12119,13 @@
       "description": "It has two fields: CIDR and ResourceID. The CIDR field may either be a\nCIDR or an IP address. If an IP, it will be converted to a CIDR. Resource ids\nof VPC networks, Subnets, and VMs are the only allowed. Only one of the two\nfields can be non empty.",
       "properties": {
         "cidr": {
+          "description": "CIDR block, or an IP address that is converted to a CIDR. Mutually exclusive with resource_id.",
           "example": "10.1.2.3/24",
           "type": "string",
           "x-go-name": "CIDR"
         },
         "resource_id": {
+          "description": "Unique identifier of a VPC network, subnet, or VM. Mutually exclusive with cidr.",
           "example": "306aa10d-5570-4e47-88c9-46bf11bd8737",
           "type": "string",
           "x-go-name": "ResourceID"
@@ -19234,6 +19239,7 @@
     "VPCFirewallRule": {
       "properties": {
         "action": {
+          "description": "Action applied to traffic that matches the rule: allow or deny.",
           "enum": [
             "allow",
             "deny"
@@ -19243,6 +19249,7 @@
           "x-go-name": "Action"
         },
         "destination_ports": {
+          "description": "Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).",
           "example": "[80, 443, 3000-8080]",
           "items": {
             "type": "string"
@@ -19251,6 +19258,7 @@
           "x-go-name": "DestinationPorts"
         },
         "destinations": {
+          "description": "Destinations the rule matches, given as CIDR blocks or resource IDs.",
           "items": {
             "$ref": "#/definitions/FirewallRuleObject"
           },
@@ -19258,6 +19266,7 @@
           "x-go-name": "Destinations"
         },
         "direction": {
+          "description": "Direction of traffic the rule applies to: ingress (inbound) or egress (outbound).",
           "enum": [
             "ingress",
             "egress"
@@ -19267,16 +19276,19 @@
           "x-go-name": "Direction"
         },
         "id": {
+          "description": "Unique identifier of the firewall rule, assigned at creation.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
         },
         "name": {
+          "description": "Name of the firewall rule.",
           "example": "my-firewall-rule",
           "type": "string",
           "x-go-name": "Name"
         },
         "protocols": {
+          "description": "Network protocols the rule matches (for example, tcp, udp).",
           "example": "[tcp, udp]",
           "items": {
             "type": "string"
@@ -19285,6 +19297,7 @@
           "x-go-name": "Protocols"
         },
         "source_ports": {
+          "description": "Source ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).",
           "example": "[80, 443, 3000-8080]",
           "items": {
             "type": "string"
@@ -19293,6 +19306,7 @@
           "x-go-name": "SourcePorts"
         },
         "sources": {
+          "description": "Sources the rule matches, given as CIDR blocks or resource IDs.",
           "items": {
             "$ref": "#/definitions/FirewallRuleObject"
           },
@@ -19300,6 +19314,7 @@
           "x-go-name": "Sources"
         },
         "state": {
+          "description": "State of the firewall rule: active or inactive.",
           "enum": [
             "active",
             "inactive"
@@ -19309,6 +19324,7 @@
           "x-go-name": "State"
         },
         "vpc_network_id": {
+          "description": "Unique identifier of the VPC network the rule belongs to.",
           "example": "74927f69-f6f6-43f4-bc0d-7bb2e864250e",
           "type": "string",
           "x-go-name": "VPCNetworkID"
@@ -19333,6 +19349,7 @@
     "VPCFirewallRulesPatchRequest": {
       "properties": {
         "destination_ports": {
+          "description": "Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).",
           "example": "[80, 443, 3000-8080]",
           "items": {
             "type": "string"
@@ -19341,6 +19358,7 @@
           "x-go-name": "DestinationPorts"
         },
         "destinations": {
+          "description": "Destinations the rule matches, given as CIDR blocks or resource IDs.",
           "items": {
             "$ref": "#/definitions/FirewallRuleObject"
           },
@@ -19348,11 +19366,13 @@
           "x-go-name": "Destinations"
         },
         "name": {
+          "description": "New name for the firewall rule.",
           "example": "my-firewall-rule",
           "type": "string",
           "x-go-name": "Name"
         },
         "protocols": {
+          "description": "Network protocols the rule matches (for example, tcp, udp).",
           "example": "[tcp, udp]",
           "items": {
             "type": "string"
@@ -19361,6 +19381,7 @@
           "x-go-name": "Protocols"
         },
         "source_ports": {
+          "description": "Source ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).",
           "example": "[80, 443, 3000-8080]",
           "items": {
             "type": "string"
@@ -19369,6 +19390,7 @@
           "x-go-name": "SourcePorts"
         },
         "sources": {
+          "description": "Sources the rule matches, given as CIDR blocks or resource IDs.",
           "items": {
             "$ref": "#/definitions/FirewallRuleObject"
           },
@@ -19383,6 +19405,7 @@
     "VPCFirewallRulesPostRequestV1Alpha5": {
       "properties": {
         "action": {
+          "description": "Action applied to traffic that matches the rule: allow or deny.",
           "enum": [
             "allow",
             "deny"
@@ -19392,6 +19415,7 @@
           "x-go-name": "Action"
         },
         "destination_ports": {
+          "description": "Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).",
           "example": "[80, 443, 3000-8080]",
           "items": {
             "type": "string"
@@ -19400,6 +19424,7 @@
           "x-go-name": "DestinationPorts"
         },
         "destinations": {
+          "description": "Destinations the rule matches, given as CIDR blocks or resource IDs.",
           "items": {
             "$ref": "#/definitions/FirewallRuleObject"
           },
@@ -19407,6 +19432,7 @@
           "x-go-name": "Destinations"
         },
         "direction": {
+          "description": "Direction of traffic the rule applies to: ingress (inbound) or egress (outbound).",
           "enum": [
             "ingress",
             "egress"
@@ -19416,11 +19442,13 @@
           "x-go-name": "Direction"
         },
         "name": {
+          "description": "Name for the new firewall rule.",
           "example": "my-firewall-rule",
           "type": "string",
           "x-go-name": "Name"
         },
         "protocols": {
+          "description": "Network protocols the rule matches (for example, tcp, udp).",
           "example": "[tcp, udp]",
           "items": {
             "type": "string"
@@ -19429,6 +19457,7 @@
           "x-go-name": "Protocols"
         },
         "source_ports": {
+          "description": "Source ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).",
           "example": "[80, 443, 3000-8080]",
           "items": {
             "type": "string"
@@ -19437,6 +19466,7 @@
           "x-go-name": "SourcePorts"
         },
         "sources": {
+          "description": "Sources the rule matches, given as CIDR blocks or resource IDs.",
           "items": {
             "$ref": "#/definitions/FirewallRuleObject"
           },
@@ -19444,6 +19474,7 @@
           "x-go-name": "Sources"
         },
         "vpc_network_id": {
+          "description": "Unique identifier of the VPC network to create the rule in.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "VPCNetworkID"
