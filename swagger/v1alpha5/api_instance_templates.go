@@ -25,7 +25,7 @@ var (
 type InstanceTemplatesApiService service
 
 /*
-InstanceTemplatesApiService Create a VM instance template, for use in bulk VM creation.
+InstanceTemplatesApiService Creates an instance template in the project and returns the created instance template.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
@@ -144,9 +144,9 @@ func (a *InstanceTemplatesApiService) CreateInstanceTemplate(ctx context.Context
 }
 
 /*
-InstanceTemplatesApiService Delete a VM instance template.
+InstanceTemplatesApiService Deletes an instance template from the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param instanceTemplateId
+  - @param instanceTemplateId ID of the instance template.
   - @param projectId
 */
 func (a *InstanceTemplatesApiService) DeleteInstanceTemplate(ctx context.Context, instanceTemplateId string, projectId string) (*http.Response, error) {
@@ -251,9 +251,9 @@ func (a *InstanceTemplatesApiService) DeleteInstanceTemplate(ctx context.Context
 }
 
 /*
-InstanceTemplatesApiService Retrieve details about a VM instance template.
+InstanceTemplatesApiService Returns details for a single instance template in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param instanceTemplateId
+  - @param instanceTemplateId ID of the instance template.
   - @param projectId
 
 @return InstanceTemplate
@@ -379,7 +379,7 @@ func (a *InstanceTemplatesApiService) GetInstanceTemplate(ctx context.Context, i
 }
 
 /*
-InstanceTemplatesApiService Lists all VM instance templates available for use.
+InstanceTemplatesApiService Lists all instance templates in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
 

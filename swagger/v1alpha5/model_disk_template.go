@@ -9,6 +9,8 @@
 package swagger
 
 type DiskTemplate struct {
-	Size  string `json:"size"`
+	// Size of the disk, including a unit suffix.
+	Size string `json:"size"`
+	// Type of disk to create: persistent-ssd or shared-volume.
 	Type_ string `json:"type"`
 }

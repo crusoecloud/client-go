@@ -11,7 +11,7 @@ package swagger
 type InstanceTemplatePostRequestV1 struct {
 	// Custom image to use for all VMs created from this instance template. Only one of Image or CustomImage should be supplied at once.
 	CustomImageName string `json:"custom_image_name,omitempty"`
-	// Disks to create for all VMs created from this instance template.
+	// Disks to attach to all VMs created from this instance template.
 	Disks []DiskTemplate `json:"disks,omitempty"`
 	// Deprecated: Use transport_partition_id instead.
 	IbPartitionId string `json:"ib_partition_id,omitempty"`
@@ -19,15 +19,16 @@ type InstanceTemplatePostRequestV1 struct {
 	ImageName string `json:"image_name,omitempty"`
 	// Location to use for all VMs created from this instance template. If provided, all location-specific resources must also be provided.
 	Location string `json:"location,omitempty"`
-	// THe Host Maintenance Policy to use.
+	// Host maintenance policy controlling how VMs created from this instance template behave during host maintenance.
 	MaintenancePolicy string `json:"maintenance_policy,omitempty"`
-	// Optional NVLink domain ID to assign to VMs
+	// NVLink domain to assign to all VMs created from this instance template.
 	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
-	// The VM Placement Policy to use.
+	// Placement policy controlling how VMs created from this instance template are distributed across hosts: spread or unspecified.
 	PlacementPolicy string `json:"placement_policy,omitempty"`
 	// Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".
 	PublicIpAddressType string `json:"public_ip_address_type,omitempty"`
-	ReservationId       string `json:"reservation_id,omitempty"`
+	// Reservation to use for all VMs created from this instance template.
+	ReservationId string `json:"reservation_id,omitempty"`
 	// Shutdown script to use for all VMs created from this instance template.
 	ShutdownScript string `json:"shutdown_script,omitempty"`
 	// SSH public key to use for all VMs created from this instance template.

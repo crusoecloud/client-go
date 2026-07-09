@@ -3314,7 +3314,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Lists all VM instance templates available for use.",
+        "summary": "Lists all instance templates in the project and returns their details.",
         "tags": [
           "Instance Templates"
         ]
@@ -3353,7 +3353,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a VM instance template, for use in bulk VM creation.",
+        "summary": "Creates an instance template in the project and returns the created instance template.",
         "tags": [
           "Instance Templates"
         ]
@@ -3364,6 +3364,7 @@
         "operationId": "deleteInstanceTemplate",
         "parameters": [
           {
+            "description": "ID of the instance template.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "instance_template_id",
@@ -3397,7 +3398,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a VM instance template.",
+        "summary": "Deletes an instance template from the project.",
         "tags": [
           "Instance Templates"
         ]
@@ -3406,6 +3407,7 @@
         "operationId": "getInstanceTemplate",
         "parameters": [
           {
+            "description": "ID of the instance template.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "instance_template_id",
@@ -3439,7 +3441,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about a VM instance template.",
+        "summary": "Returns details for a single instance template in the project.",
         "tags": [
           "Instance Templates"
         ]
@@ -11732,11 +11734,13 @@
     "DiskTemplate": {
       "properties": {
         "size": {
+          "description": "Size of the disk, including a unit suffix.",
           "example": "10GiB",
           "type": "string",
           "x-go-name": "Size"
         },
         "type": {
+          "description": "Type of disk to create: persistent-ssd or shared-volume.",
           "enum": [
             "persistent-ssd",
             "shared-volume"
@@ -13357,7 +13361,7 @@
           "x-go-name": "CustomImage"
         },
         "disks": {
-          "description": "Disks to create for all VMs created from this instance template.",
+          "description": "Disks attached to all VMs created from this instance template.",
           "items": {
             "$ref": "#/definitions/DiskTemplate"
           },
@@ -13387,7 +13391,7 @@
           "x-go-name": "Location"
         },
         "maintenance_policy": {
-          "description": "The VM Host Maintenance Policy",
+          "description": "Host maintenance policy controlling how VMs created from this instance template behave during\nhost maintenance: manual, stop-vm, or unspecified.",
           "enum": [
             "manual",
             "stop-vm",
@@ -13403,13 +13407,13 @@
           "x-go-name": "Name"
         },
         "nvlink_domain_id": {
-          "description": "NVLink domain ID assigned to this instance template",
+          "description": "NVLink domain assigned to all VMs created from this instance template.",
           "example": "550e8400-e29b-41d4-a716-446655440000",
           "type": "string",
           "x-go-name": "NvlinkDomainID"
         },
         "placement_policy": {
-          "description": "The VM Placement Policy",
+          "description": "Placement policy controlling how VMs created from this instance template are\ndistributed across hosts: spread or unspecified.",
           "enum": [
             "spread",
             "unspecified"
@@ -13430,6 +13434,7 @@
           "x-go-name": "PublicIPAddressType"
         },
         "reservation_id": {
+          "description": "Reservation used for all VMs created from this instance template.",
           "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
           "type": "string",
           "x-go-name": "ReservationID"
@@ -13505,7 +13510,7 @@
           "x-go-name": "CustomImage"
         },
         "disks": {
-          "description": "Disks to create for all VMs created from this instance template.",
+          "description": "Disks to attach to all VMs created from this instance template.",
           "items": {
             "$ref": "#/definitions/DiskTemplate"
           },
@@ -13530,19 +13535,19 @@
           "x-go-name": "Location"
         },
         "maintenance_policy": {
-          "description": "THe Host Maintenance Policy to use.",
+          "description": "Host maintenance policy controlling how VMs created from this instance template behave during host maintenance.",
           "example": "manual,auto-stop,stop-vm,unspecified",
           "type": "string",
           "x-go-name": "MaintenancePolicy"
         },
         "nvlink_domain_id": {
-          "description": "Optional NVLink domain ID to assign to VMs",
+          "description": "NVLink domain to assign to all VMs created from this instance template.",
           "example": "550e8400-e29b-41d4-a716-446655440000",
           "type": "string",
           "x-go-name": "NvlinkDomainID"
         },
         "placement_policy": {
-          "description": "The VM Placement Policy to use.",
+          "description": "Placement policy controlling how VMs created from this instance template are\ndistributed across hosts: spread or unspecified.",
           "example": "spread",
           "type": "string",
           "x-go-name": "PlacementPolicy"
@@ -13554,6 +13559,7 @@
           "x-go-name": "PublicIPAddressType"
         },
         "reservation_id": {
+          "description": "Reservation to use for all VMs created from this instance template.",
           "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
           "type": "string",
           "x-go-name": "ReservationID"
