@@ -9,7 +9,8 @@
 package swagger
 
 type VpcSubnetPatchRequest struct {
+	// New name for the VPC subnet.
 	Name string `json:"name"`
-	//  enable NATGatewayActionEnable disable NATGatewayActionDisable
+	// Action to take on the subnet's NAT gateway. \"enable\" creates a NAT gateway if one does not exist; \"disable\" deletes the NAT gateway if one exists. If omitted, the subnet's NAT gateway is left unchanged. enable NATGatewayActionEnable disable NATGatewayActionDisable
 	NatGatewayAction string `json:"nat_gateway_action,omitempty"`
 }

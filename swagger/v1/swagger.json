@@ -7310,13 +7310,12 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about all VPC subnets that belong to the logged in user.",
+        "summary": "Lists all VPC subnets in the project and returns their details.",
         "tags": [
           "VPC Subnets"
         ]
       },
       "post": {
-        "description": "A successful response from this resource will contain information regarding the created subnet.",
         "operationId": "createVPCSubnet",
         "parameters": [
           {
@@ -7353,7 +7352,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new VPC subnet owned by the logged in user.",
+        "summary": "Creates a VPC subnet in the project and returns the created subnet.",
         "tags": [
           "VPC Subnets"
         ]
@@ -7459,10 +7458,10 @@
     },
     "/projects/{project_id}/networking/vpc-subnets/{vpc_subnet_id}": {
       "delete": {
-        "description": "A successful response from this resource will contain the async operation.",
         "operationId": "deleteVPCSubnet",
         "parameters": [
           {
+            "description": "ID of the project that owns the VPC subnet.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -7471,6 +7470,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VPC subnet.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vpc_subnet_id",
@@ -7499,7 +7499,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a VPC subnet owned by the logged in user.",
+        "summary": "Deletes a VPC subnet from the project and returns the async operation.",
         "tags": [
           "VPC Subnets"
         ]
@@ -7508,6 +7508,7 @@
         "operationId": "getVPCSubnet",
         "parameters": [
           {
+            "description": "ID of the project that owns the VPC subnet.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -7516,6 +7517,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VPC subnet.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vpc_subnet_id",
@@ -7538,16 +7540,16 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details for a VPC subnet that belongs to the logged in user.",
+        "summary": "Returns details for a single VPC subnet in the project.",
         "tags": [
           "VPC Subnets"
         ]
       },
       "patch": {
-        "description": "A successful response from this resource will contain the async operation.",
         "operationId": "patchVPCSubnet",
         "parameters": [
           {
+            "description": "ID of the project that owns the VPC subnet.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -7556,6 +7558,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VPC subnet.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vpc_subnet_id",
@@ -7592,7 +7595,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Patch (update) a VPC subnet owned by the logged in user.",
+        "summary": "Updates a VPC subnet in the project and returns the async operation.",
         "tags": [
           "VPC Subnets"
         ]
@@ -16316,15 +16319,20 @@
     "NATGateway": {
       "properties": {
         "id": {
+          "description": "Unique identifier of the NAT gateway.",
           "example": "8f3c4b7d-3c3b-4a63-8e1a-6cd14c1dfe91",
           "type": "string",
           "x-go-name": "ID"
         },
         "public_ipv4_address": {
+          "description": "Public IPv4 address assigned to the NAT gateway.",
+          "example": "121.0.0.0",
           "type": "string",
           "x-go-name": "PublicIPV4Address"
         },
         "public_ipv4_id": {
+          "description": "Unique identifier of the public IPv4 address assigned to the NAT gateway.",
+          "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "PublicIPV4ID"
         }
@@ -19540,27 +19548,31 @@
     "VPCSubnet": {
       "properties": {
         "cidr": {
+          "description": "Address range of the VPC subnet, in CIDR notation.",
           "example": "121.0.0.0/24",
           "type": "string",
           "x-go-name": "CIDR"
         },
         "id": {
+          "description": "Unique identifier of the VPC subnet, assigned at creation.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
         },
         "location": {
+          "description": "Location of the VPC subnet.",
           "example": "us-northcentraleast1-a",
           "type": "string",
           "x-go-name": "Location"
         },
         "name": {
+          "description": "Name of the VPC subnet.",
           "example": "my-subnet",
           "type": "string",
           "x-go-name": "Name"
         },
         "nat_gateways": {
-          "description": "require: true",
+          "description": "NAT gateways attached to the subnet. Empty unless a NAT gateway is enabled for the subnet.",
           "items": {
             "$ref": "#/definitions/NATGateway"
           },
@@ -19568,6 +19580,7 @@
           "x-go-name": "NATGateways"
         },
         "vpc_network_id": {
+          "description": "Unique identifier of the VPC network that the subnet belongs to.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "VPCNetworkID"
@@ -19586,12 +19599,13 @@
     "VPCSubnetPatchRequest": {
       "properties": {
         "name": {
+          "description": "New name for the VPC subnet.",
           "example": "my-cool-vpc-subnet",
           "type": "string",
           "x-go-name": "Name"
         },
         "nat_gateway_action": {
-          "description": "\nenable NATGatewayActionEnable\ndisable NATGatewayActionDisable",
+          "description": "Action to take on the subnet's NAT gateway. \"enable\" creates a NAT gateway if one does not\nexist; \"disable\" deletes the NAT gateway if one exists. If omitted, the subnet's NAT gateway\nis left unchanged.\nenable NATGatewayActionEnable\ndisable NATGatewayActionDisable",
           "enum": [
             "enable",
             "disable"
@@ -19612,26 +19626,31 @@
     "VPCSubnetPostRequest": {
       "properties": {
         "cidr": {
+          "description": "Address range for the VPC subnet, in CIDR notation (for example, 172.27.0.0/16).",
           "example": "172.27.0.0/16",
           "type": "string",
           "x-go-name": "Cidr"
         },
         "location": {
+          "description": "Location to create the subnet in.",
           "example": "us-east",
           "type": "string",
           "x-go-name": "Location"
         },
         "name": {
+          "description": "Name for the new VPC subnet.",
           "example": "my-cool-vpc-subnet",
           "type": "string",
           "x-go-name": "Name"
         },
         "nat_gateway_enabled": {
+          "description": "Whether to create a NAT gateway for the subnet.",
           "example": true,
           "type": "boolean",
           "x-go-name": "NATGatewayEnabled"
         },
         "vpc_network_id": {
+          "description": "Unique identifier of the VPC network to create the subnet in.",
           "example": "36c0b0d9-8b68-4869-addb-227b06b64ee0",
           "type": "string",
           "x-go-name": "VPCNetworkID"
