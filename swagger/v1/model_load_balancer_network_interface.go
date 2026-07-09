@@ -9,6 +9,8 @@
 package swagger
 
 type LoadBalancerNetworkInterface struct {
+	// Unique identifier of the VPC network for the interface.
 	Network string `json:"network,omitempty"`
-	Subnet  string `json:"subnet,omitempty"`
+	// Unique identifier of the subnet for the interface.
+	Subnet string `json:"subnet,omitempty"`
 }

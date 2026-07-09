@@ -9,7 +9,9 @@
 package swagger
 
 type LoadBalancersPatchRequestV1 struct {
+	// Backend targets the load balancer forwards traffic to, given as CIDR blocks or resource IDs.
 	Destinations []NetworkTarget     `json:"destinations,omitempty"`
 	HealthCheck  *HealthCheckOptions `json:"health_check,omitempty"`
-	Name         string              `json:"name,omitempty"`
+	// New name for the load balancer.
+	Name string `json:"name,omitempty"`
 }

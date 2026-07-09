@@ -9,9 +9,14 @@
 package swagger
 
 type HealthCheckOptions struct {
+	// Number of allowed failures before considering a backend unhealthy.
 	FailureCount string `json:"failure_count,omitempty"`
-	Interval     string `json:"interval,omitempty"`
-	Port         string `json:"port"`
+	// Interval between health checks, in seconds.
+	Interval string `json:"interval,omitempty"`
+	// Port on which to perform health checks.
+	Port string `json:"port"`
+	// Number of successful checks required to consider a backend healthy.
 	SuccessCount string `json:"success_count,omitempty"`
-	Timeout      string `json:"timeout,omitempty"`
+	// Timeout for a health check response, in seconds.
+	Timeout string `json:"timeout,omitempty"`
 }

@@ -6143,13 +6143,12 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about all load balancers that belong to the logged in user.",
+        "summary": "Lists all load balancers in the project and returns their details.",
         "tags": [
           "Internal Load Balancers"
         ]
       },
       "post": {
-        "description": "A successful response from this resource will contain the async operation.",
         "operationId": "createLoadBalancer",
         "parameters": [
           {
@@ -6186,7 +6185,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new load balancer owned by the logged in user.",
+        "summary": "Creates a load balancer in the project and returns the async operation.",
         "tags": [
           "Internal Load Balancers"
         ]
@@ -6292,10 +6291,10 @@
     },
     "/projects/{project_id}/networking/internal-load-balancers/{load_balancer_id}": {
       "delete": {
-        "description": "A successful response from this resource will contain the async operation.",
         "operationId": "deleteLoadBalancer",
         "parameters": [
           {
+            "description": "ID of the project that owns the load balancer.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6304,6 +6303,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the load balancer.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "load_balancer_id",
@@ -6326,7 +6326,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a load balancer owned by the logged in user.",
+        "summary": "Deletes a load balancer from the project and returns the async operation.",
         "tags": [
           "Internal Load Balancers"
         ]
@@ -6335,6 +6335,7 @@
         "operationId": "getLoadBalancer",
         "parameters": [
           {
+            "description": "ID of the project that owns the load balancer.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6343,6 +6344,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the load balancer.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "load_balancer_id",
@@ -6365,16 +6367,17 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details for a load balancer that belongs to the logged in user.",
+        "summary": "Returns details for a single load balancer in the project.",
         "tags": [
           "Internal Load Balancers"
         ]
       },
       "patch": {
-        "description": "A successful response from this resource will contain the async operation.\nTo disable health checking, pass \"health_check\": {\"port\": 0}",
+        "description": "To disable health checking, pass \"health_check\": {\"port\": 0}.",
         "operationId": "patchLoadBalancer",
         "parameters": [
           {
+            "description": "ID of the project that owns the load balancer.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6383,6 +6386,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the load balancer.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "load_balancer_id",
@@ -6416,7 +6420,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Patch (update) a load balancer owned by the logged in user.",
+        "summary": "Updates a load balancer in the project and returns the async operation.",
         "tags": [
           "Internal Load Balancers"
         ]
@@ -6427,6 +6431,7 @@
         "operationId": "listExternalLoadBalancers",
         "parameters": [
           {
+            "description": "ID of the project that owns the external load balancers.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6435,6 +6440,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "Filters results to external load balancers in this location.",
             "example": "us-east1",
             "in": "query",
             "name": "location",
@@ -6442,6 +6448,7 @@
             "x-go-name": "Location"
           },
           {
+            "description": "Filters results to external load balancers in this VPC network.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "query",
             "name": "vpc_network_id",
@@ -6449,6 +6456,7 @@
             "x-go-name": "VPCNetworkID"
           },
           {
+            "description": "Filters results to external load balancers with this name.",
             "example": "my-loadbalancer-test",
             "in": "query",
             "name": "name",
@@ -6467,7 +6475,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve information about external load balancers belonging to the project.",
+        "summary": "Lists all external load balancers in the project and returns their details.",
         "tags": [
           "Load Balancers"
         ]
@@ -6509,7 +6517,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new external load balancer.",
+        "summary": "Creates an external load balancer in the project and returns the async operation.",
         "tags": [
           "Load Balancers"
         ]
@@ -6657,7 +6665,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete an external load balancer.",
+        "summary": "Deletes an external load balancer from the project and returns the async operation.",
         "tags": [
           "Load Balancers"
         ]
@@ -6666,6 +6674,7 @@
         "operationId": "getExternalLoadBalancer",
         "parameters": [
           {
+            "description": "ID of the project that owns the external load balancer.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6674,6 +6683,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the external load balancer.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "load_balancer_id",
@@ -6693,7 +6703,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve information about a particular external load balancer belonging to the project.",
+        "summary": "Returns details for a single external load balancer in the project.",
         "tags": [
           "Load Balancers"
         ]
@@ -6747,7 +6757,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Update an existing external load balancer.",
+        "summary": "Updates an external load balancer in the project and returns the async operation.",
         "tags": [
           "Load Balancers"
         ]
@@ -12150,6 +12160,7 @@
         },
         "location": {
           "description": "Location of the External Load Balancer.",
+          "example": "us-northcentral1-a",
           "type": "string",
           "x-go-name": "Location"
         },
@@ -12167,6 +12178,7 @@
         },
         "protocol": {
           "description": "The protocol of the External Load Balancer.",
+          "example": "tcp",
           "type": "string",
           "x-go-name": "Protocol"
         },
@@ -12656,26 +12668,31 @@
     "HealthCheckOptions": {
       "properties": {
         "failure_count": {
+          "description": "Number of allowed failures before considering a backend unhealthy.",
           "example": "3",
           "type": "string",
           "x-go-name": "FailureCount"
         },
         "interval": {
+          "description": "Interval between health checks, in seconds.",
           "example": "60",
           "type": "string",
           "x-go-name": "Interval"
         },
         "port": {
+          "description": "Port on which to perform health checks.",
           "example": "8080",
           "type": "string",
           "x-go-name": "Port"
         },
         "success_count": {
+          "description": "Number of successful checks required to consider a backend healthy.",
           "example": "2",
           "type": "string",
           "x-go-name": "SuccessCount"
         },
         "timeout": {
+          "description": "Timeout for a health check response, in seconds.",
           "example": "20",
           "type": "string",
           "x-go-name": "Timeout"
@@ -14298,6 +14315,7 @@
         },
         "location": {
           "description": "Location of the Kubernetes cluster.",
+          "example": "us-northcentral1-a",
           "type": "string",
           "x-go-name": "Location"
         },
@@ -16231,11 +16249,13 @@
     "LoadBalancer": {
       "properties": {
         "algorithm": {
+          "description": "Load balancing algorithm used to distribute traffic across destinations (for example, random).",
           "example": "random",
           "type": "string",
           "x-go-name": "Algorithm"
         },
         "destinations": {
+          "description": "Backend targets the load balancer forwards traffic to, given as CIDR blocks or resource IDs.",
           "items": {
             "$ref": "#/definitions/NetworkTarget"
           },
@@ -16246,11 +16266,13 @@
           "$ref": "#/definitions/HealthCheckOptions"
         },
         "id": {
+          "description": "Unique identifier of the load balancer, assigned at creation.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
         },
         "ips": {
+          "description": "IP addresses assigned to the load balancer.",
           "items": {
             "$ref": "#/definitions/IPAddresses"
           },
@@ -16258,16 +16280,19 @@
           "x-go-name": "IPs"
         },
         "location": {
+          "description": "Location of the load balancer.",
           "example": "us-northcentraleast1-a",
           "type": "string",
           "x-go-name": "Location"
         },
         "name": {
-          "example": "my-subnet",
+          "description": "Name of the load balancer.",
+          "example": "my-load-balancer",
           "type": "string",
           "x-go-name": "Name"
         },
         "network_interfaces": {
+          "description": "Network interfaces the load balancer is attached to.",
           "items": {
             "$ref": "#/definitions/LoadBalancerNetworkInterface"
           },
@@ -16275,6 +16300,7 @@
           "x-go-name": "NetworkInterfaces"
         },
         "protocols": {
+          "description": "Network protocols the load balancer handles. One of: tcp, udp.",
           "example": "[tcp]",
           "items": {
             "type": "string"
@@ -16283,7 +16309,8 @@
           "x-go-name": "Protocols"
         },
         "type": {
-          "example": "internal_ipv4,",
+          "description": "Type of the load balancer (for example, internal_ipv4).",
+          "example": "internal_ipv4",
           "type": "string",
           "x-go-name": "Type"
         }
@@ -16304,11 +16331,13 @@
     "LoadBalancerNetworkInterface": {
       "properties": {
         "network": {
+          "description": "Unique identifier of the VPC network for the interface.",
           "example": "dbaafd53-96ea-4754-9cce-78e7f08ac151",
           "type": "string",
           "x-go-name": "Network"
         },
         "subnet": {
+          "description": "Unique identifier of the subnet for the interface.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "Subnet"
@@ -16320,6 +16349,7 @@
     "LoadBalancersPatchRequestV1": {
       "properties": {
         "destinations": {
+          "description": "Backend targets the load balancer forwards traffic to, given as CIDR blocks or resource IDs.",
           "items": {
             "$ref": "#/definitions/NetworkTarget"
           },
@@ -16330,6 +16360,7 @@
           "$ref": "#/definitions/HealthCheckOptions"
         },
         "name": {
+          "description": "New name for the load balancer.",
           "example": "my-load-balancer",
           "type": "string",
           "x-go-name": "Name"
@@ -16341,11 +16372,13 @@
     "LoadBalancersPostRequest": {
       "properties": {
         "algorithm": {
+          "description": "Load balancing algorithm used to distribute traffic across destinations (for example, random).",
           "example": "random",
           "type": "string",
           "x-go-name": "Algorithm"
         },
         "destinations": {
+          "description": "Backend targets the load balancer forwards traffic to, given as CIDR blocks or resource IDs.",
           "items": {
             "$ref": "#/definitions/NetworkTarget"
           },
@@ -16356,16 +16389,19 @@
           "$ref": "#/definitions/HealthCheckOptions"
         },
         "location": {
+          "description": "Location to create the load balancer in.",
           "example": "us-northcentraleast1-a",
           "type": "string",
           "x-go-name": "Location"
         },
         "name": {
+          "description": "Name for the new load balancer.",
           "example": "my-load-balancer",
           "type": "string",
           "x-go-name": "Name"
         },
         "network_interfaces": {
+          "description": "Network interfaces to attach the load balancer to.",
           "items": {
             "$ref": "#/definitions/LoadBalancerNetworkInterface"
           },
@@ -16373,6 +16409,7 @@
           "x-go-name": "NetworkInterfaces"
         },
         "protocols": {
+          "description": "Network protocols the load balancer handles. Currently only one of: tcp, udp.",
           "example": "[tcp]",
           "items": {
             "type": "string"
@@ -16381,6 +16418,7 @@
           "x-go-name": "Protocols"
         },
         "type": {
+          "description": "Type of the load balancer (for example, internal_ipv4).",
           "example": "internal_ipv4",
           "type": "string",
           "x-go-name": "Type"
@@ -16670,11 +16708,13 @@
     "NetworkTarget": {
       "properties": {
         "cidr": {
+          "description": "CIDR block, or an IP address that is converted to a CIDR. Mutually exclusive with resource_id.",
           "example": "10.1.2.3/24",
           "type": "string",
           "x-go-name": "CIDR"
         },
         "resource_id": {
+          "description": "Unique identifier of a backend resource. Mutually exclusive with cidr.",
           "example": "306aa10d-5570-4e47-88c9-46bf11bd8737",
           "type": "string",
           "x-go-name": "ResourceID"
@@ -17150,6 +17190,7 @@
     "PrivateIPv4Address": {
       "properties": {
         "address": {
+          "description": "Private IPv4 address.",
           "example": "10.1.2.3",
           "type": "string",
           "x-go-name": "Address"
@@ -17502,16 +17543,19 @@
     "PublicIPv4Address": {
       "properties": {
         "address": {
+          "description": "Public IPv4 address.",
           "example": "121.0.0.0",
           "type": "string",
           "x-go-name": "Address"
         },
         "id": {
+          "description": "Unique identifier of the public IPv4 address.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
         },
         "type": {
+          "description": "Allocation type of the public IPv4 address (for example, dynamic).",
           "example": "dynamic",
           "type": "string",
           "x-go-name": "Type"

@@ -25,8 +25,7 @@ var (
 type InternalLoadBalancersApiService service
 
 /*
-InternalLoadBalancersApiService Create a new load balancer owned by the logged in user.
-A successful response from this resource will contain the async operation.
+InternalLoadBalancersApiService Creates a load balancer in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
@@ -155,11 +154,10 @@ func (a *InternalLoadBalancersApiService) CreateLoadBalancer(ctx context.Context
 }
 
 /*
-InternalLoadBalancersApiService Delete a load balancer owned by the logged in user.
-A successful response from this resource will contain the async operation.
+InternalLoadBalancersApiService Deletes a load balancer from the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param loadBalancerId
+  - @param projectId ID of the project that owns the load balancer.
+  - @param loadBalancerId ID of the load balancer.
 
 @return AsyncOperationResponse
 */
@@ -274,10 +272,10 @@ func (a *InternalLoadBalancersApiService) DeleteLoadBalancer(ctx context.Context
 }
 
 /*
-InternalLoadBalancersApiService Retrieve details for a load balancer that belongs to the logged in user.
+InternalLoadBalancersApiService Returns details for a single load balancer in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param loadBalancerId
+  - @param projectId ID of the project that owns the load balancer.
+  - @param loadBalancerId ID of the load balancer.
 
 @return LoadBalancer
 */
@@ -392,7 +390,7 @@ func (a *InternalLoadBalancersApiService) GetLoadBalancer(ctx context.Context, p
 }
 
 /*
-InternalLoadBalancersApiService Retrieve details about all load balancers that belong to the logged in user.
+InternalLoadBalancersApiService Lists all load balancers in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
 
@@ -508,12 +506,12 @@ func (a *InternalLoadBalancersApiService) ListLoadBalancers(ctx context.Context,
 }
 
 /*
-InternalLoadBalancersApiService Patch (update) a load balancer owned by the logged in user.
-A successful response from this resource will contain the async operation. To disable health checking, pass \&quot;health_check\&quot;: {\&quot;port\&quot;: 0}
+InternalLoadBalancersApiService Updates a load balancer in the project and returns the async operation.
+To disable health checking, pass \&quot;health_check\&quot;: {\&quot;port\&quot;: 0}.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param loadBalancerId
+  - @param projectId ID of the project that owns the load balancer.
+  - @param loadBalancerId ID of the load balancer.
 
 @return AsyncOperationResponse
 */
