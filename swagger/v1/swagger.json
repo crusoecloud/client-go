@@ -451,6 +451,7 @@
         "operationId": "listProjects",
         "parameters": [
           {
+            "description": "Filters results to projects in this organization.",
             "example": "ee2a6bc3-aed5-4756-8995-9990a53d3a17",
             "in": "query",
             "name": "org_id",
@@ -458,6 +459,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "Filters results to projects with this name.",
             "example": "default",
             "in": "query",
             "name": "project_name",
@@ -465,6 +467,7 @@
             "x-go-name": "ProjectName"
           },
           {
+            "description": "Whether to skip loading the resource counts for each project.",
             "example": true,
             "in": "query",
             "name": "skip_loading_project_resources",
@@ -483,7 +486,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about projects that the logged in user belongs to or owns.",
+        "summary": "Lists all projects the logged in user belongs to or owns and returns their details.",
         "tags": [
           "Projects"
         ]
@@ -518,7 +521,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new project that will be owned by the logged in user.",
+        "summary": "Creates a project and returns the created project.",
         "tags": [
           "Projects"
         ]
@@ -528,6 +531,7 @@
         "operationId": "updateProject",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "f058d0db-2fa4-4cf2-8cf1-dfbcfe05a814",
             "in": "query",
             "name": "project_id",
@@ -561,7 +565,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Update details for a project that the logged in user owns.",
+        "summary": "Updates a project and returns the updated project.",
         "tags": [
           "Projects"
         ]
@@ -595,7 +599,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a project that the logged in user owns.",
+        "summary": "Deletes a project.",
         "tags": [
           "Projects"
         ]
@@ -604,6 +608,7 @@
         "operationId": "getProject",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ee2a6bc3-aed5-4756-8995-9990a53d3a17",
             "in": "path",
             "name": "project_id",
@@ -623,7 +628,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about a project that the logged in user belongs to or owns.",
+        "summary": "Returns details for a single project.",
         "tags": [
           "Projects"
         ]
@@ -16898,22 +16903,25 @@
     "Project": {
       "properties": {
         "id": {
+          "description": "Unique identifier of the project, assigned at creation.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "ID"
         },
         "name": {
+          "description": "Name of the project.",
           "example": "Admin",
           "type": "string",
           "x-go-name": "Name"
         },
         "organization_id": {
+          "description": "ID of the organization that owns the project.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "OrganizationID"
         },
         "relation": {
-          "description": "relation is deprecated",
+          "description": "Relation of the logged in user to the project. Deprecated.",
           "example": "owner",
           "type": "string",
           "x-go-name": "Relation"
@@ -16936,6 +16944,7 @@
     "ProjectIsUsingNFSForSharedDisksResponse": {
       "properties": {
         "status": {
+          "description": "Whether the project has migrated to NFS for shared volumes.",
           "example": false,
           "type": "boolean",
           "x-go-name": "Status"
@@ -16950,6 +16959,7 @@
     "ProjectIsUsingSecondaryVASTClusterResponse": {
       "properties": {
         "enabled": {
+          "description": "Whether the project is enabled for the secondary VAST cluster.",
           "example": false,
           "type": "boolean",
           "x-go-name": "Enabled"
@@ -17033,6 +17043,7 @@
     "ProjectResourceDetails": {
       "properties": {
         "count": {
+          "description": "Number of resources of this type in the project.",
           "example": 5,
           "format": "int64",
           "type": "integer",
@@ -17042,6 +17053,7 @@
       "required": [
         "count"
       ],
+      "title": "ProjectResourceDetails contains a count of resources of a single type within a project.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -17077,11 +17089,13 @@
     "ProjectsPostRequest": {
       "properties": {
         "name": {
+          "description": "Name for the new project.",
           "example": "Admin",
           "type": "string",
           "x-go-name": "Name"
         },
         "organization_id": {
+          "description": "ID of the organization that will own the new project.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "OrganizationID"
@@ -17111,6 +17125,7 @@
     "ProjectsPutRequest": {
       "properties": {
         "name": {
+          "description": "New name for the project.",
           "example": "Admin",
           "type": "string",
           "x-go-name": "Name"

@@ -9,5 +9,6 @@
 package swagger
 
 type ProjectIsUsingSecondaryVastClusterResponse struct {
+	// Whether the project is enabled for the secondary VAST cluster.
 	Enabled bool `json:"enabled"`
 }

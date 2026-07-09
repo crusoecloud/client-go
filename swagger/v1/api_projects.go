@@ -27,7 +27,7 @@ var (
 type ProjectsApiService service
 
 /*
-ProjectsApiService Create a new project that will be owned by the logged in user.
+ProjectsApiService Creates a project and returns the created project.
 The logged in user must have the permission to create projects within the organization. A successful response from this resource contains details of the created project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
@@ -155,7 +155,7 @@ func (a *ProjectsApiService) CreateProject(ctx context.Context, body ProjectsPos
 }
 
 /*
-ProjectsApiService Delete a project that the logged in user owns.
+ProjectsApiService Deletes a project.
 Delete operations cascade to VMs created under that project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
@@ -251,9 +251,9 @@ func (a *ProjectsApiService) DeleteProject(ctx context.Context, projectId string
 }
 
 /*
-ProjectsApiService Retrieve details about a project that the logged in user belongs to or owns.
+ProjectsApiService Returns details for a single project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return Project
 */
@@ -357,13 +357,13 @@ func (a *ProjectsApiService) GetProject(ctx context.Context, projectId string) (
 }
 
 /*
-ProjectsApiService Retrieve details about projects that the logged in user belongs to or owns.
+ProjectsApiService Lists all projects the logged in user belongs to or owns and returns their details.
 If querying for projects within an organization, the logged in user must be the owner of the organization.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *ProjectsApiListProjectsOpts - Optional Parameters:
-     * @param "OrgId" (optional.String) -
-     * @param "ProjectName" (optional.String) -
-     * @param "SkipLoadingProjectResources" (optional.Bool) -
+     * @param "OrgId" (optional.String) -  Filters results to projects in this organization.
+     * @param "ProjectName" (optional.String) -  Filters results to projects with this name.
+     * @param "SkipLoadingProjectResources" (optional.Bool) -  Whether to skip loading the resource counts for each project.
 @return ListProjectsResponseV1
 */
 
@@ -481,11 +481,11 @@ func (a *ProjectsApiService) ListProjects(ctx context.Context, localVarOptionals
 }
 
 /*
-ProjectsApiService Update details for a project that the logged in user owns.
+ProjectsApiService Updates a project and returns the updated project.
 Requests to this resource must contain the json-encoded representation of the changes they want to make to the project. Currently only the project&#x27;s name can be changed.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ProjectsPutPostResponseV1
 */
