@@ -10,10 +10,10 @@ package swagger
 
 // It includes the one-time-only secret key.
 type CreateS3KeyResponse struct {
-	// The Access Key ID for S3 operations.
+	// Access key ID used to authenticate S3 requests.
 	AccessKeyId string `json:"access_key_id"`
-	// Formatted timestamp for when the user access key expire.
+	// Expiration timestamp of the S3 access key, in RFC3339 format.
 	ExpireAt string `json:"expire_at,omitempty"`
-	// The secret key. This is only shown once.
+	// Secret access key paired with the access key ID. Returned only once, at creation.
 	SecretKey string `json:"secret_key"`
 }

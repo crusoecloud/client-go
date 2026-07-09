@@ -1005,6 +1005,7 @@
         "operationId": "listS3Keys",
         "parameters": [
           {
+            "description": "ID of the organization that owns the S3 access keys.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "org_id",
@@ -1027,7 +1028,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Lists all S3 keys for a organization.",
+        "summary": "Lists all S3 access keys in the organization and returns their details.",
         "tags": [
           "S3Keys"
         ]
@@ -1039,6 +1040,7 @@
         "operationId": "createS3Key",
         "parameters": [
           {
+            "description": "ID of the organization that owns the S3 access key.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "org_id",
@@ -1072,7 +1074,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Creates a new S3 key and generates access/secret key pair.",
+        "summary": "Creates an S3 access key in the organization and returns the access key ID and one-time secret key.",
         "tags": [
           "S3Keys"
         ]
@@ -1086,7 +1088,7 @@
         "operationId": "deleteS3Key",
         "parameters": [
           {
-            "description": "The ID of the organization",
+            "description": "ID of the organization that owns the S3 access key.",
             "in": "path",
             "name": "org_id",
             "required": true,
@@ -1094,7 +1096,7 @@
             "x-go-name": "OrgID"
           },
           {
-            "description": "The AccessKeyID of the S3 key to delete",
+            "description": "Access key ID of the S3 access key to delete.",
             "example": "CKIA493K6LOVDNNAR4SZ",
             "in": "path",
             "name": "access_key_id",
@@ -1120,7 +1122,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Deletes an S3 key based on its ID.",
+        "summary": "Deletes an S3 access key from the organization.",
         "tags": [
           "S3Keys"
         ]
@@ -11095,13 +11097,13 @@
     "CreateS3KeyRequest": {
       "properties": {
         "alias": {
-          "description": "Alias for the access key.",
+          "description": "Human-readable alias for the new S3 access key.",
           "example": "my-service-account",
           "type": "string",
           "x-go-name": "Alias"
         },
         "expire_at": {
-          "description": "Formatted timestamp for when the access keys expire.",
+          "description": "Expiration timestamp for the new S3 access key, in RFC3339 format.",
           "example": "2022-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpireAt"
@@ -11115,19 +11117,19 @@
       "description": "It includes the one-time-only secret key.",
       "properties": {
         "access_key_id": {
-          "description": "The Access Key ID for S3 operations.",
+          "description": "Access key ID used to authenticate S3 requests.",
           "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab",
           "type": "string",
           "x-go-name": "AccessKeyID"
         },
         "expire_at": {
-          "description": "Formatted timestamp for when the user access key expire.",
+          "description": "Expiration timestamp of the S3 access key, in RFC3339 format.",
           "example": "2022-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpireAt"
         },
         "secret_key": {
-          "description": "The secret key. This is only shown once.",
+          "description": "Secret access key paired with the access key ID. Returned only once, at creation.",
           "example": "K7i+q0...",
           "type": "string",
           "x-go-name": "SecretKey"
@@ -17873,37 +17875,37 @@
     "S3Key": {
       "properties": {
         "access_key_id": {
-          "description": "The Access Key ID for S3 operations.",
+          "description": "Access key ID used to authenticate S3 requests.",
           "example": "S3U_ab4a6b00aa5f408ea9fbac6de5eb45ab",
           "type": "string",
           "x-go-name": "AccessKeyID"
         },
         "alias": {
-          "description": "Alias for the access key.",
+          "description": "Human-readable alias for the S3 access key.",
           "example": "my-service-account",
           "type": "string",
           "x-go-name": "Alias"
         },
         "created_at": {
-          "description": "Creation date of S3 key in RFC3339 format.",
+          "description": "Creation timestamp of the S3 access key, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "expire_at": {
-          "description": "Expiration date of S3 key in RFC3339 format.",
+          "description": "Expiration timestamp of the S3 access key, in RFC3339 format.",
           "example": "2022-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpireAt"
         },
         "key_uuid": {
-          "description": "The Key UUID for the S3 access key.",
+          "description": "Unique identifier of the S3 access key, assigned at creation.",
           "example": "f5705300-79f8-4686-9b9f-02496a053bc0",
           "type": "string",
           "x-go-name": "KeyUUID"
         },
         "status": {
-          "description": "The current status of the user's key.",
+          "description": "Status of the S3 access key: enabled or disabled.",
           "enum": [
             "enabled",
             "disabled"
@@ -17912,7 +17914,7 @@
           "x-go-name": "Status"
         },
         "user_id": {
-          "description": "The user ID for the S3 user.",
+          "description": "Unique identifier of the user that owns the S3 access key.",
           "example": "e7bed65d-e918-4fab-921c-03b8db94aa7b",
           "type": "string",
           "x-go-name": "UserID"

@@ -25,10 +25,10 @@ var (
 type S3KeysApiService service
 
 /*
-S3KeysApiService Creates a new S3 key and generates access/secret key pair.
+S3KeysApiService Creates an S3 access key in the organization and returns the access key ID and one-time secret key.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param orgId
+  - @param orgId ID of the organization that owns the S3 access key.
 
 @return CreateS3KeyResponse
 */
@@ -154,10 +154,10 @@ func (a *S3KeysApiService) CreateS3Key(ctx context.Context, body CreateS3KeyRequ
 }
 
 /*
-S3KeysApiService Deletes an S3 key based on its ID.
+S3KeysApiService Deletes an S3 access key from the organization.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId The ID of the organization
-  - @param accessKeyId The AccessKeyID of the S3 key to delete
+  - @param orgId ID of the organization that owns the S3 access key.
+  - @param accessKeyId Access key ID of the S3 access key to delete.
 */
 func (a *S3KeysApiService) DeleteS3Key(ctx context.Context, orgId string, accessKeyId string) (*http.Response, error) {
 	var (
@@ -261,9 +261,9 @@ func (a *S3KeysApiService) DeleteS3Key(ctx context.Context, orgId string, access
 }
 
 /*
-S3KeysApiService Lists all S3 keys for a organization.
+S3KeysApiService Lists all S3 access keys in the organization and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId
+  - @param orgId ID of the organization that owns the S3 access keys.
 
 @return ListS3KeysResponse
 */
