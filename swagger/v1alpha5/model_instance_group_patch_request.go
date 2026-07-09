@@ -11,8 +11,8 @@ package swagger
 // This is a separate type from InstanceGroupPostRequest for clearer documentation, as these fields are not required in the PATCH endpoint.
 type InstanceGroupPatchRequest struct {
 	DesiredCount *DesiredCount `json:"desired_count,omitempty"`
-	// Name of the instance group.
+	// New name for the instance group.
 	Name string `json:"name,omitempty"`
-	// Instance Template ID to be associated with the instance group.
+	// ID of the instance template to associate with the instance group.
 	TemplateId string `json:"template_id,omitempty"`
 }

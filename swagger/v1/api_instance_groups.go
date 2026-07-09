@@ -25,7 +25,7 @@ var (
 type InstanceGroupsApiService service
 
 /*
-InstanceGroupsApiService Create an instance group.
+InstanceGroupsApiService Creates an instance group in the project and returns the created instance group.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
@@ -144,9 +144,9 @@ func (a *InstanceGroupsApiService) CreateInstanceGroup(ctx context.Context, body
 }
 
 /*
-InstanceGroupsApiService Delete an instance group.
+InstanceGroupsApiService Deletes an instance group from the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param instanceGroupId
+  - @param instanceGroupId ID of the instance group.
   - @param projectId
 */
 func (a *InstanceGroupsApiService) DeleteInstanceGroup(ctx context.Context, instanceGroupId string, projectId string) (*http.Response, error) {
@@ -241,9 +241,9 @@ func (a *InstanceGroupsApiService) DeleteInstanceGroup(ctx context.Context, inst
 }
 
 /*
-InstanceGroupsApiService Retrieve details about an instance group.
+InstanceGroupsApiService Returns details for a single instance group in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param instanceGroupId
+  - @param instanceGroupId ID of the instance group.
   - @param projectId
 
 @return InstanceGroup
@@ -369,7 +369,7 @@ func (a *InstanceGroupsApiService) GetInstanceGroup(ctx context.Context, instanc
 }
 
 /*
-InstanceGroupsApiService Lists all instance groups.
+InstanceGroupsApiService Lists all instance groups in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
 
@@ -475,10 +475,10 @@ func (a *InstanceGroupsApiService) ListInstanceGroups(ctx context.Context, proje
 }
 
 /*
-InstanceGroupsApiService Update an instance group.
+InstanceGroupsApiService Updates an instance group in the project and returns the updated instance group.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param instanceGroupId
+  - @param instanceGroupId ID of the instance group.
   - @param projectId
 
 @return InstanceGroup

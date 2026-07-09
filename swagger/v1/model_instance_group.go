@@ -9,27 +9,27 @@
 package swagger
 
 type InstanceGroup struct {
-	// A list of IDs of running instances in the instance group.
+	// List of IDs of running instances in the instance group.
 	ActiveInstances []string `json:"active_instances"`
-	// Time the instance template was created.
+	// Time the instance group was created.
 	CreatedAt string `json:"created_at"`
-	// Desired VM Count for the instance group.
+	// Desired number of instances for the instance group.
 	DesiredCount int64 `json:"desired_count"`
-	// ID of the instance group.
+	// Unique identifier of the instance group, assigned at creation.
 	Id string `json:"id"`
-	// A list of IDs of non-running instances in the instance group.
+	// List of IDs of non-running instances in the instance group.
 	InactiveInstances []string `json:"inactive_instances"`
-	// [To be deprecated] A list of IDs of running instances in the instance group.
+	// [To be deprecated] List of IDs of running instances in the instance group.
 	Instances []string `json:"instances"`
 	// Name of the instance group.
 	Name string `json:"name"`
-	// Project ID of the project this instance template belongs to.
+	// ID of the project that owns the instance group.
 	ProjectId string `json:"project_id"`
-	// The number of running instances currently in the Instance Group.
+	// Number of running instances currently in the instance group.
 	RunningInstanceCount int64 `json:"running_instance_count"`
-	// State of the instance group.
+	// Current state of the instance group.
 	State string `json:"state"`
-	// Instance Template ID currently associated with the instance group.
+	// ID of the instance template currently associated with the instance group.
 	TemplateId string `json:"template_id"`
 	// Most recent time the instance group was updated.
 	UpdatedAt string `json:"updated_at"`

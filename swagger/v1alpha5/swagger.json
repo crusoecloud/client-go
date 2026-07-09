@@ -3062,7 +3062,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Lists all instance groups.",
+        "summary": "Lists all instance groups in the project and returns their details.",
         "tags": [
           "Instance Groups"
         ]
@@ -3101,7 +3101,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create an instance group.",
+        "summary": "Creates an instance group in the project and returns the created instance group.",
         "tags": [
           "Instance Groups"
         ]
@@ -3112,6 +3112,7 @@
         "operationId": "deleteInstanceGroup",
         "parameters": [
           {
+            "description": "ID of the instance group.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "instance_group_id",
@@ -3142,7 +3143,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete an instance group.",
+        "summary": "Deletes an instance group from the project.",
         "tags": [
           "Instance Groups"
         ]
@@ -3151,6 +3152,7 @@
         "operationId": "getInstanceGroup",
         "parameters": [
           {
+            "description": "ID of the instance group.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "instance_group_id",
@@ -3184,7 +3186,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about an instance group.",
+        "summary": "Returns details for a single instance group in the project.",
         "tags": [
           "Instance Groups"
         ]
@@ -3193,6 +3195,7 @@
         "operationId": "patchInstanceGroup",
         "parameters": [
           {
+            "description": "ID of the instance group.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "instance_group_id",
@@ -3231,7 +3234,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Update an instance group.",
+        "summary": "Updates an instance group in the project and returns the updated instance group.",
         "tags": [
           "Instance Groups"
         ]
@@ -11356,6 +11359,8 @@
     "DesiredCount": {
       "properties": {
         "value": {
+          "description": "New desired number of instances for the instance group.",
+          "example": 3,
           "format": "int64",
           "type": "integer",
           "x-go-name": "Value"
@@ -12956,7 +12961,7 @@
     "InstanceGroup": {
       "properties": {
         "active_instances": {
-          "description": "A list of IDs of running instances in the instance group.",
+          "description": "List of IDs of running instances in the instance group.",
           "example": [
             "066ce497-889e-4899-b53e-400df3fb7c0e"
           ],
@@ -12967,26 +12972,26 @@
           "x-go-name": "ActiveInstances"
         },
         "created_at": {
-          "description": "Time the instance template was created.",
+          "description": "Time the instance group was created.",
           "example": "2024-01-01T00:00:00Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "desired_count": {
-          "description": "Desired VM Count for the instance group.",
+          "description": "Desired number of instances for the instance group.",
           "example": 3,
           "format": "int64",
           "type": "integer",
           "x-go-name": "DesiredCount"
         },
         "id": {
-          "description": "ID of the instance group.",
+          "description": "Unique identifier of the instance group, assigned at creation.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "ID"
         },
         "inactive_instances": {
-          "description": "A list of IDs of non-running instances in the instance group.",
+          "description": "List of IDs of non-running instances in the instance group.",
           "example": [
             "066ce497-889e-4899-b53e-400df3fb7c0e"
           ],
@@ -12997,7 +13002,7 @@
           "x-go-name": "InactiveInstances"
         },
         "instances": {
-          "description": "[To be deprecated] A list of IDs of running instances in the instance group.",
+          "description": "[To be deprecated] List of IDs of running instances in the instance group.",
           "example": [
             "066ce497-889e-4899-b53e-400df3fb7c0e"
           ],
@@ -13014,26 +13019,26 @@
           "x-go-name": "Name"
         },
         "project_id": {
-          "description": "Project ID of the project this instance template belongs to.",
+          "description": "ID of the project that owns the instance group.",
           "example": "b67aec22-2908-4427-994c-4e32be87477e",
           "type": "string",
           "x-go-name": "ProjectID"
         },
         "running_instance_count": {
-          "description": "The number of running instances currently in the Instance Group.",
+          "description": "Number of running instances currently in the instance group.",
           "example": 3,
           "format": "int64",
           "type": "integer",
           "x-go-name": "RunningInstanceCount"
         },
         "state": {
-          "description": "State of the instance group.",
+          "description": "Current state of the instance group.",
           "example": "HEALTHY",
           "type": "string",
           "x-go-name": "State"
         },
         "template_id": {
-          "description": "Instance Template ID currently associated with the instance group.",
+          "description": "ID of the instance template currently associated with the instance group.",
           "example": "7e6a6c5a-1314-409a-9e4f-3cc9f2a68fcc",
           "type": "string",
           "x-go-name": "TemplateID"
@@ -13070,13 +13075,13 @@
           "$ref": "#/definitions/DesiredCount"
         },
         "name": {
-          "description": "Name of the instance group.",
+          "description": "New name for the instance group.",
           "example": "my-instance-group",
           "type": "string",
           "x-go-name": "Name"
         },
         "template_id": {
-          "description": "Instance Template ID to be associated with the instance group.",
+          "description": "ID of the instance template to associate with the instance group.",
           "example": "7e6a6c5a-1314-409a-9e4f-3cc9f2a68fcc",
           "type": "string",
           "x-go-name": "TemplateID"
@@ -13089,20 +13094,20 @@
     "InstanceGroupPostRequest": {
       "properties": {
         "desired_count": {
-          "description": "Desired VM Count for the instance group.",
+          "description": "Desired number of instances for the new instance group.",
           "example": 3,
           "format": "int64",
           "type": "integer",
           "x-go-name": "DesiredCount"
         },
         "name": {
-          "description": "Name of the instance group.",
+          "description": "Name for the new instance group.",
           "example": "my-instance-group",
           "type": "string",
           "x-go-name": "Name"
         },
         "template_id": {
-          "description": "Instance Template ID to be associated with the instance group.",
+          "description": "ID of the instance template to create the group's instances from.",
           "example": "7e6a6c5a-1314-409a-9e4f-3cc9f2a68fcc",
           "type": "string",
           "x-go-name": "TemplateID"
