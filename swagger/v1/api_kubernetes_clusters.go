@@ -27,11 +27,10 @@ var (
 type KubernetesClustersApiService service
 
 /*
-KubernetesClustersApiService Create a new Kubernetes cluster owned by the logged in user.
-A successful response from this resource will contain the async operation.
+KubernetesClustersApiService Creates a Kubernetes cluster in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
+  - @param projectId ID of the project to create the cluster in.
 
 @return AsyncOperationResponse
 */
@@ -157,10 +156,10 @@ func (a *KubernetesClustersApiService) CreateCluster(ctx context.Context, body K
 }
 
 /*
-KubernetesClustersApiService Delete a cluster that the logged in user owns.
+KubernetesClustersApiService Deletes a Kubernetes cluster from the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param clusterId
+  - @param projectId ID of the project that owns the cluster.
+  - @param clusterId ID of the cluster.
 
 @return AsyncOperationResponse
 */
@@ -275,10 +274,10 @@ func (a *KubernetesClustersApiService) DeleteCluster(ctx context.Context, projec
 }
 
 /*
-KubernetesClustersApiService Retrieve information about a particular Kubernetes cluster belonged to the project.
+KubernetesClustersApiService Returns details for a single Kubernetes cluster in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param clusterId
+  - @param projectId ID of the project that owns the cluster.
+  - @param clusterId ID of the cluster.
 
 @return KubernetesCluster
 */
@@ -383,12 +382,12 @@ func (a *KubernetesClustersApiService) GetCluster(ctx context.Context, projectId
 }
 
 /*
-KubernetesClustersApiService Retrieve credentials for the user to authenticate to the specified cluster.
+KubernetesClustersApiService Returns credentials for the user to authenticate to the cluster.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param clusterId
+ * @param projectId ID of the project that owns the cluster.
+ * @param clusterId ID of the cluster.
  * @param optional nil or *KubernetesClustersApiGetClusterCredentialsOpts - Optional Parameters:
-     * @param "AuthType" (optional.String) -
+     * @param "AuthType" (optional.String) -  Type of credentials to return: oidc or admin_cert.
 @return KubernetesAuthenticationDetails
 */
 
@@ -520,20 +519,20 @@ func (a *KubernetesClustersApiService) GetClusterCredentials(ctx context.Context
 }
 
 /*
-KubernetesClustersApiService Retrieve information about Kubernetes clusters belonged to the project.
+KubernetesClustersApiService Lists all Kubernetes clusters in the project and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project that owns the clusters.
  * @param optional nil or *KubernetesClustersApiListClustersOpts - Optional Parameters:
-     * @param "ClusterId" (optional.String) -
-     * @param "ClusterName" (optional.String) -
-     * @param "ClusterSearchNames" (optional.Interface of []string) -
-     * @param "Locations" (optional.Interface of []string) -
-     * @param "States" (optional.Interface of []string) -
-     * @param "Versions" (optional.Interface of []string) -
-     * @param "Sort" (optional.String) -
-     * @param "ShowInactive" (optional.Bool) -
-     * @param "NextToken" (optional.String) -
-     * @param "PrevToken" (optional.String) -
+     * @param "ClusterId" (optional.String) -  Filters results to the cluster with this ID.
+     * @param "ClusterName" (optional.String) -  Filters results to the cluster with this name.
+     * @param "ClusterSearchNames" (optional.Interface of []string) -  Filters results to clusters whose name matches one of these search names.
+     * @param "Locations" (optional.Interface of []string) -  Filters results to clusters in these locations.
+     * @param "States" (optional.Interface of []string) -  Filters results to clusters in these states.
+     * @param "Versions" (optional.Interface of []string) -  Filters results to clusters running these versions.
+     * @param "Sort" (optional.String) -  Field to sort results by; prefix with &#x27;-&#x27; for descending order.
+     * @param "ShowInactive" (optional.Bool) -  Whether to include inactive clusters in the results.
+     * @param "NextToken" (optional.String) -  Base64-encoded token for the next page of results.
+     * @param "PrevToken" (optional.String) -  Base64-encoded token for the previous page of results.
 @return ListKubernetesClustersResponse
 */
 
@@ -680,11 +679,11 @@ func (a *KubernetesClustersApiService) ListClusters(ctx context.Context, project
 }
 
 /*
-KubernetesClustersApiService Update a cluster that the logged in user owns.
+KubernetesClustersApiService Updates a Kubernetes cluster in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param clusterId
+  - @param projectId ID of the project that owns the cluster.
+  - @param clusterId ID of the cluster.
 
 @return AsyncOperationResponse
 */

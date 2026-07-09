@@ -10,10 +10,10 @@ package swagger
 
 // KubernetesClusterSupportSettingsResponse defines the response for getting or setting support access settings for a Kubernetes cluster.
 type KubernetesClusterSupportSettingsResponse struct {
-	// Support access enabled master toggle
+	// Master toggle for whether support access is enabled.
 	AccessEnabled bool `json:"access_enabled"`
-	// List of current active requests
+	// Currently active support access requests.
 	ActiveRequests []KubernetesSupportAccessRequest `json:"active_requests,omitempty"`
-	// Enabled support access roles
+	// Enabled support access roles.
 	EnabledRoles []string `json:"enabled_roles"`
 }

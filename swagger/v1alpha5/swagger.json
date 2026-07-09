@@ -4092,6 +4092,7 @@
         "operationId": "listClusters",
         "parameters": [
           {
+            "description": "ID of the project that owns the clusters.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4100,6 +4101,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "Filters results to the cluster with this ID.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "query",
             "name": "cluster_id",
@@ -4107,6 +4109,7 @@
             "x-go-name": "ClusterID"
           },
           {
+            "description": "Filters results to the cluster with this name.",
             "example": "my-first-cluster",
             "in": "query",
             "name": "cluster_name",
@@ -4114,6 +4117,7 @@
             "x-go-name": "ClusterName"
           },
           {
+            "description": "Filters results to clusters whose name matches one of these search names.",
             "example": "a40.2x,a100.8x",
             "in": "query",
             "items": {
@@ -4124,6 +4128,7 @@
             "x-go-name": "ClusterSearchNames"
           },
           {
+            "description": "Filters results to clusters in these locations.",
             "example": "us-east1,us-northcentral1",
             "in": "query",
             "items": {
@@ -4134,6 +4139,7 @@
             "x-go-name": "Locations"
           },
           {
+            "description": "Filters results to clusters in these states.",
             "example": "STATE_RUNNING",
             "in": "query",
             "items": {
@@ -4144,6 +4150,7 @@
             "x-go-name": "States"
           },
           {
+            "description": "Filters results to clusters running these versions.",
             "example": "1.30",
             "in": "query",
             "items": {
@@ -4154,6 +4161,7 @@
             "x-go-name": "Versions"
           },
           {
+            "description": "Field to sort results by; prefix with '-' for descending order.",
             "example": "name, -name",
             "in": "query",
             "name": "sort",
@@ -4161,6 +4169,7 @@
             "x-go-name": "SortBy"
           },
           {
+            "description": "Whether to include inactive clusters in the results.",
             "example": true,
             "in": "query",
             "name": "show_inactive",
@@ -4168,6 +4177,7 @@
             "x-go-name": "ShowInactive"
           },
           {
+            "description": "Base64-encoded token for the next page of results.",
             "example": "bXktZmlyc3Qtdm0",
             "in": "query",
             "name": "next_token",
@@ -4175,6 +4185,7 @@
             "x-go-name": "NextToken"
           },
           {
+            "description": "Base64-encoded token for the previous page of results.",
             "example": "bXktZmlyc3Qtdm0",
             "in": "query",
             "name": "prev_token",
@@ -4193,13 +4204,12 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve information about Kubernetes clusters belonged to the project.",
+        "summary": "Lists all Kubernetes clusters in the project and returns their details.",
         "tags": [
           "Kubernetes Clusters"
         ]
       },
       "post": {
-        "description": "A successful response from this resource will contain the async operation.",
         "operationId": "createCluster",
         "parameters": [
           {
@@ -4211,6 +4221,7 @@
             }
           },
           {
+            "description": "ID of the project to create the cluster in.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4236,7 +4247,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new Kubernetes cluster owned by the logged in user.",
+        "summary": "Creates a Kubernetes cluster in the project and returns the async operation.",
         "tags": [
           "Kubernetes Clusters"
         ]
@@ -4348,6 +4359,7 @@
         "operationId": "deleteCluster",
         "parameters": [
           {
+            "description": "ID of the project that owns the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4356,6 +4368,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "cluster_id",
@@ -4378,7 +4391,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a cluster that the logged in user owns.",
+        "summary": "Deletes a Kubernetes cluster from the project and returns the async operation.",
         "tags": [
           "Kubernetes Clusters"
         ]
@@ -4387,6 +4400,7 @@
         "operationId": "getCluster",
         "parameters": [
           {
+            "description": "ID of the project that owns the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4395,6 +4409,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "cluster_id",
@@ -4414,7 +4429,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve information about a particular Kubernetes cluster belonged to the project.",
+        "summary": "Returns details for a single Kubernetes cluster in the project.",
         "tags": [
           "Kubernetes Clusters"
         ]
@@ -4423,6 +4438,7 @@
         "operationId": "updateCluster",
         "parameters": [
           {
+            "description": "ID of the project that owns the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4431,6 +4447,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "cluster_id",
@@ -4461,7 +4478,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Update a cluster that the logged in user owns.",
+        "summary": "Updates a Kubernetes cluster in the project and returns the async operation.",
         "tags": [
           "Kubernetes Clusters"
         ]
@@ -4629,6 +4646,7 @@
         "operationId": "getClusterCredentials",
         "parameters": [
           {
+            "description": "ID of the project that owns the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4637,6 +4655,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "cluster_id",
@@ -4645,6 +4664,7 @@
             "x-go-name": "ClusterID"
           },
           {
+            "description": "Type of credentials to return: oidc or admin_cert.",
             "enum": [
               "oidc",
               "admin_cert"
@@ -4672,7 +4692,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve credentials for the user to authenticate to the specified cluster.",
+        "summary": "Returns credentials for the user to authenticate to the cluster.",
         "tags": [
           "Kubernetes Clusters"
         ]
@@ -4683,6 +4703,7 @@
         "operationId": "getSupportSettings",
         "parameters": [
           {
+            "description": "ID of the project that owns the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4691,6 +4712,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "cluster_id",
@@ -4716,7 +4738,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve support access settings for a Kubernetes cluster.",
+        "summary": "Returns support access settings for a Kubernetes cluster in the project.",
         "tags": [
           "Kubernetes Support Access"
         ]
@@ -4725,6 +4747,7 @@
         "operationId": "updateSupportSettings",
         "parameters": [
           {
+            "description": "ID of the project that owns the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4733,6 +4756,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "cluster_id",
@@ -4766,7 +4790,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Update support access settings for a Kubernetes cluster.",
+        "summary": "Updates support access settings for a Kubernetes cluster in the project.",
         "tags": [
           "Kubernetes Support Access"
         ]
@@ -4774,9 +4798,11 @@
     },
     "/projects/{project_id}/kubernetes/nodepools": {
       "get": {
+        "description": "Results can be narrowed to a single cluster with the cluster_id query parameter.",
         "operationId": "listNodePools",
         "parameters": [
           {
+            "description": "ID of the project that owns the node pools.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4785,6 +4811,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "Filters results to node pools in this cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "query",
             "name": "cluster_id",
@@ -4792,6 +4819,7 @@
             "x-go-name": "ClusterID"
           },
           {
+            "description": "Field to sort results by; prefix with '-' for descending order.",
             "example": "created_at, -created_at",
             "in": "query",
             "name": "sort",
@@ -4810,13 +4838,12 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve information about Kubernetes node pools belonging to a project or cluster.",
+        "summary": "Lists all Kubernetes node pools in the project and returns their details.",
         "tags": [
           "Kubernetes Node Pools"
         ]
       },
       "post": {
-        "description": "A successful response from this resource will contain the async operation.",
         "operationId": "createNodePool",
         "parameters": [
           {
@@ -4828,6 +4855,7 @@
             }
           },
           {
+            "description": "ID of the project to create the node pool in.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4853,7 +4881,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new Kubernetes node pool owned by the logged in user.",
+        "summary": "Creates a Kubernetes node pool in the project and returns the async operation.",
         "tags": [
           "Kubernetes Node Pools"
         ]
@@ -4946,6 +4974,7 @@
         "operationId": "deleteNodePool",
         "parameters": [
           {
+            "description": "ID of the project that owns the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4954,6 +4983,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "node_pool_id",
@@ -4976,7 +5006,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a node pool that the logged in user owns.",
+        "summary": "Deletes a Kubernetes node pool from the project and returns the async operation.",
         "tags": [
           "Kubernetes Node Pools"
         ]
@@ -4985,6 +5015,7 @@
         "operationId": "getNodePool",
         "parameters": [
           {
+            "description": "ID of the project that owns the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4993,6 +5024,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "node_pool_id",
@@ -5012,7 +5044,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve information about a particular Kubernetes node pool belonging to the project.",
+        "summary": "Returns details for a single Kubernetes node pool in the project.",
         "tags": [
           "Kubernetes Node Pools"
         ]
@@ -5021,6 +5053,7 @@
         "operationId": "updateNodePool",
         "parameters": [
           {
+            "description": "ID of the project that owns the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -5029,6 +5062,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "node_pool_id",
@@ -5059,7 +5093,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Update a node pool that the logged in user owns.",
+        "summary": "Updates a Kubernetes node pool in the project and returns the async operation.",
         "tags": [
           "Kubernetes Node Pools"
         ]
@@ -5070,6 +5104,7 @@
         "operationId": "cancelNodePoolRotate",
         "parameters": [
           {
+            "description": "ID of the project that owns the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -5078,6 +5113,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "node_pool_id",
@@ -5106,7 +5142,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Cancel an in-progress rotation of the specified Kubernetes node pool.",
+        "summary": "Cancels an in-progress rotation of a Kubernetes node pool in the project.",
         "tags": [
           "Kubernetes Node Pools"
         ]
@@ -5117,6 +5153,7 @@
         "operationId": "getNodePoolRotateStatus",
         "parameters": [
           {
+            "description": "ID of the project that owns the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -5125,6 +5162,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "node_pool_id",
@@ -5150,7 +5188,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Get the rotate status of the specified Kubernetes ndoe pool.",
+        "summary": "Returns the rotation status of a Kubernetes node pool in the project.",
         "tags": [
           "Kubernetes Node Pools"
         ]
@@ -5160,6 +5198,7 @@
         "operationId": "rotateNodePool",
         "parameters": [
           {
+            "description": "ID of the project that owns the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -5168,6 +5207,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "node_pool_id",
@@ -5204,7 +5244,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Start a rotation of the specified Kubernetes node pool.",
+        "summary": "Starts a rotation of a Kubernetes node pool in the project and returns the async operation.",
         "tags": [
           "Kubernetes Node Pools"
         ]
@@ -5215,6 +5255,7 @@
         "operationId": "listKubernetesNodePoolVMs",
         "parameters": [
           {
+            "description": "ID of the project that owns the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -5223,6 +5264,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the node pool.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "node_pool_id",
@@ -5231,6 +5273,7 @@
             "x-go-name": "NodePoolID"
           },
           {
+            "description": "Maximum number of results to return per page.",
             "example": "20",
             "in": "query",
             "name": "limit",
@@ -5238,6 +5281,7 @@
             "x-go-name": "Limit"
           },
           {
+            "description": "Field to sort results by; prefix with '-' for descending order.",
             "example": "name",
             "in": "query",
             "name": "sort",
@@ -5245,6 +5289,7 @@
             "x-go-name": "Sort"
           },
           {
+            "description": "Base64-encoded token for the next page of results.",
             "example": "bXktZmlyc3Qtdm0",
             "in": "query",
             "name": "next_token",
@@ -5252,6 +5297,7 @@
             "x-go-name": "NextToken"
           },
           {
+            "description": "Base64-encoded token for the previous page of results.",
             "example": "bXktZmlyc3Qtdm0",
             "in": "query",
             "name": "prev_token",
@@ -5279,7 +5325,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve the VMs that belong to a particular Kubernetes node pool.",
+        "summary": "Lists all VMs in a Kubernetes node pool and returns their details.",
         "tags": [
           "Kubernetes Node Pools"
         ]
@@ -5290,6 +5336,7 @@
         "operationId": "listKubernetesVersions",
         "parameters": [
           {
+            "description": "ID of the project to list versions for.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -5298,6 +5345,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "Whether to include deprecated versions in the results.",
             "example": true,
             "in": "query",
             "name": "show_deprecated",
@@ -5305,6 +5353,7 @@
             "x-go-name": "ShowDeprecated"
           },
           {
+            "description": "Filters results to versions available for this VM product.",
             "example": "a100.2x",
             "in": "query",
             "name": "product_name",
@@ -5329,7 +5378,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve information about available Kubernetes versions.",
+        "summary": "Lists all available Kubernetes versions in the project and returns their details.",
         "tags": [
           "Kubernetes Versions"
         ]
@@ -13024,12 +13073,13 @@
     "InstanceDetails": {
       "properties": {
         "id": {
-          "description": "Unique identifier (UUID) of the instance.",
+          "description": "Unique identifier of the instance, assigned at creation.",
+          "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "ID"
         },
         "using_latest_config": {
-          "description": "Whether or not the instance was created with the current node pool configuration.",
+          "description": "Whether the instance was created with the current node pool configuration.",
           "example": true,
           "type": "boolean",
           "x-go-name": "UsingLatestConfig"
@@ -13978,37 +14028,37 @@
       "description": "It supports both the new kubeconfig-based and legacy certificate-based authentication.",
       "properties": {
         "cluster_address": {
-          "description": "Address of the Kubernetes cluster to authenticate to",
+          "description": "Address of the Kubernetes cluster to authenticate to.",
           "type": "string",
           "x-go-name": "ClusterAddress"
         },
         "cluster_ca_certificate": {
-          "description": "CA Certificate of the Kubernetes cluster to authenticate to",
+          "description": "CA certificate of the Kubernetes cluster to authenticate to.",
           "type": "string",
           "x-go-name": "ClusterCACert"
         },
         "cluster_name": {
-          "description": "Name of the Kubernetes cluster to authenticate to",
+          "description": "Name of the Kubernetes cluster to authenticate to.",
           "type": "string",
           "x-go-name": "ClusterName"
         },
         "kube_config": {
-          "description": "Kubeconfig of the Kubernetes cluster to authenticate to",
+          "description": "Kubeconfig for the Kubernetes cluster to authenticate to.",
           "type": "string",
           "x-go-name": "KubeConfig"
         },
         "user_client_certificate": {
-          "description": "User's Client certificate for authenticating to the cluster.",
+          "description": "Client certificate the user presents to authenticate to the cluster.",
           "type": "string",
           "x-go-name": "UserClientCert"
         },
         "user_client_key": {
-          "description": "The private key associated with the user's Client certificate.",
+          "description": "Private key associated with the user's client certificate.",
           "type": "string",
           "x-go-name": "UserClientKey"
         },
         "user_name": {
-          "description": "Name of the authenticating user",
+          "description": "Name of the authenticating user.",
           "type": "string",
           "x-go-name": "UserName"
         }
@@ -14028,7 +14078,7 @@
     "KubernetesCancelNodePoolRotateResponse": {
       "properties": {
         "no_rotate_in_progress": {
-          "description": "True if there is no rotate operation to cancel.",
+          "description": "Whether there was no rotation in progress to cancel.",
           "type": "boolean",
           "x-go-name": "NoRotateInProgress"
         }
@@ -14042,7 +14092,7 @@
     "KubernetesCluster": {
       "properties": {
         "add_ons": {
-          "description": "List of add-ons associated with the cluster.",
+          "description": "Add-ons associated with the cluster.",
           "example": [
             "crusoe_csi"
           ],
@@ -14067,7 +14117,7 @@
           "$ref": "#/definitions/KubernetesClusterAuthConfig"
         },
         "cluster_cidr": {
-          "description": "The range of IP Addresses allocated to pods scheduled on worker nodes",
+          "description": "Range of IP addresses allocated to pods scheduled on worker nodes, in CIDR notation.",
           "example": "10.233.0.0/18",
           "type": "string",
           "x-go-name": "ClusterCIDR"
@@ -14093,19 +14143,19 @@
           "x-go-name": "ControllerManagerExtraArgs"
         },
         "created_at": {
-          "description": "The time when the cluster was created",
+          "description": "Time when the cluster was created.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "dns_name": {
-          "description": "DNS name of the cluster",
+          "description": "DNS name of the cluster.",
           "example": "my-kubernetes-cluster.crusoecloudcompute.com",
           "type": "string",
           "x-go-name": "DNSName"
         },
         "id": {
-          "description": "ID of the Kubernetes cluster.",
+          "description": "Unique identifier of the Kubernetes cluster, assigned at creation.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "ID"
@@ -14114,7 +14164,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Arguments for kubectl oidc-login plugin.",
+          "description": "Arguments for the kubectl oidc-login plugin.",
           "example": {
             "force-refresh": "",
             "oidc-extra-scope": "email groups"
@@ -14134,14 +14184,14 @@
           "x-go-name": "Name"
         },
         "node_cidr_mask_size": {
-          "description": "The mask size for cluster cidr",
+          "description": "Mask size for the cluster CIDR.",
           "example": 24,
           "format": "int32",
           "type": "integer",
           "x-go-name": "NodeCIDRMask"
         },
         "node_pools": {
-          "description": "List of IDs of node pools within the Kubernetes cluster.",
+          "description": "IDs of the node pools within the Kubernetes cluster.",
           "example": [
             "1d2b3a4c-5e6f-7b9d-8c9a-0e1f2d3b4c5d"
           ],
@@ -14152,13 +14202,13 @@
           "x-go-name": "NodePools"
         },
         "private": {
-          "description": "Whether the cluster is private or not",
+          "description": "Whether the cluster is private (without a public IP).",
           "example": true,
           "type": "boolean",
           "x-go-name": "Private"
         },
         "project_id": {
-          "description": "The ID of the project this Kubernetes cluster belongs to.",
+          "description": "ID of the project that owns the Kubernetes cluster.",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f",
           "type": "string",
           "x-go-name": "ProjectID"
@@ -14175,31 +14225,31 @@
           "x-go-name": "SchedulerExtraArgs"
         },
         "service_cluster_ip_range": {
-          "description": "The range of IP Addresses allocated to K8s services",
+          "description": "Range of IP addresses allocated to Kubernetes services, in CIDR notation.",
           "example": "10.233.0.0/18",
           "type": "string",
           "x-go-name": "ServiceClusterCIDR"
         },
         "state": {
-          "description": "State of the cluster",
+          "description": "Current state of the cluster.",
           "example": "STATE_RUNNING",
           "type": "string",
           "x-go-name": "State"
         },
         "subnet_id": {
-          "description": "The ID of the subnet this Kubernetes cluster belongs to.",
+          "description": "ID of the subnet the Kubernetes cluster belongs to.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "SubnetID"
         },
         "updated_at": {
-          "description": "The time when the cluster was last updated",
+          "description": "Time when the cluster was last updated.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
         },
         "version": {
-          "description": "Version of the crusoe Kubernetes image of the Kubernetes cluster.",
+          "description": "Version of the Crusoe Kubernetes image the cluster runs.",
           "example": "1.29.5-crusoe.0",
           "type": "string",
           "x-go-name": "Version"
@@ -14242,7 +14292,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Extra arguments to pass to the kube-apiserver control plane component.\nIf absent, existing args are preserved. If present but empty, args are cleared.",
+          "description": "New extra arguments to pass to the kube-apiserver control plane component.\nIf absent, existing args are preserved. If present but empty, args are cleared.",
           "example": {
             "audit-log-maxage": "30"
           },
@@ -14262,7 +14312,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Extra arguments to pass to the kube-controller-manager control plane component.\nIf absent, existing args are preserved. If present but empty, args are cleared.",
+          "description": "New extra arguments to pass to the kube-controller-manager control plane component.\nIf absent, existing args are preserved. If present but empty, args are cleared.",
           "example": {
             "bind-address": "0.0.0.0"
           },
@@ -14273,7 +14323,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Arguments for kubectl oidc-login plugin.",
+          "description": "New arguments for the kubectl oidc-login plugin.",
           "example": {
             "force-refresh": "",
             "oidc-extra-scope": "email groups"
@@ -14286,7 +14336,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Extra arguments to pass to the kube-scheduler control plane component.\nIf absent, existing args are preserved. If present but empty, args are cleared.",
+          "description": "New extra arguments to pass to the kube-scheduler control plane component.\nIf absent, existing args are preserved. If present but empty, args are cleared.",
           "example": {
             "bind-address": "0.0.0.0"
           },
@@ -14304,7 +14354,7 @@
     "KubernetesClusterPostRequest": {
       "properties": {
         "add_ons": {
-          "description": "List of add-ons to be included to the cluster.",
+          "description": "List of add-ons to include in the new cluster.",
           "example": [
             "crusoe_csi",
             "nvidia_gpu_operator",
@@ -14331,7 +14381,7 @@
           "$ref": "#/definitions/KubernetesClusterAuthConfig"
         },
         "cluster_cidr": {
-          "description": "defines: the range of IP Addresses allocated to pods scheduled on worker nodes",
+          "description": "Range of IP addresses allocated to pods scheduled on worker nodes, in CIDR notation.",
           "example": "10.233.0.0/18",
           "type": "string",
           "x-go-name": "ClusterCIDR"
@@ -14381,14 +14431,14 @@
           "x-go-name": "Name"
         },
         "node_cidr_mask_size": {
-          "description": "defines: the mask size for cluster cidr",
+          "description": "Mask size for the cluster CIDR.",
           "example": 24,
           "format": "int32",
           "type": "integer",
           "x-go-name": "NodeCIDRMask"
         },
         "private": {
-          "description": "Whether the cluster should be private (without a public IP). Default is false.",
+          "description": "Whether the cluster is private (without a public IP). Defaults to false.",
           "example": true,
           "type": "boolean",
           "x-go-name": "Private"
@@ -14405,13 +14455,13 @@
           "x-go-name": "SchedulerExtraArgs"
         },
         "service_cluster_ip_range": {
-          "description": "defines: the range of IP Addresses allocated to K8s services",
+          "description": "Range of IP addresses allocated to Kubernetes services, in CIDR notation.",
           "example": "10.233.0.0/18",
           "type": "string",
           "x-go-name": "ServiceClusterCIDR"
         },
         "subnet_id": {
-          "description": "The ID of the subnet to create the cluster in. Must be in the location\nspecified. If not provided, the default subnet for the location will be\nused, if there is one.",
+          "description": "ID of the subnet to create the cluster in. Must be in the location\nspecified. If not provided, the default subnet for the location is\nused, if there is one.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "SubnetID"
@@ -14436,13 +14486,13 @@
       "description": "KubernetesClusterSupportSettingsRequest defines the request for updating\nsupport access settings for a Kubernetes cluster.",
       "properties": {
         "access_enabled": {
-          "description": "Support access enabled master toggle",
+          "description": "Master toggle for whether support access is enabled.",
           "example": true,
           "type": "boolean",
           "x-go-name": "AccessEnabled"
         },
         "enabled_roles": {
-          "description": "Enabled support access roles",
+          "description": "Support access roles to enable.",
           "example": [
             "operator",
             "readonly"
@@ -14464,13 +14514,13 @@
       "description": "KubernetesClusterSupportSettingsResponse defines the response for getting\nor setting support access settings for a Kubernetes cluster.",
       "properties": {
         "access_enabled": {
-          "description": "Support access enabled master toggle",
+          "description": "Master toggle for whether support access is enabled.",
           "example": true,
           "type": "boolean",
           "x-go-name": "AccessEnabled"
         },
         "active_requests": {
-          "description": "List of current active requests",
+          "description": "Currently active support access requests.",
           "items": {
             "$ref": "#/definitions/KubernetesSupportAccessRequest"
           },
@@ -14478,7 +14528,7 @@
           "x-go-name": "ActiveRequests"
         },
         "enabled_roles": {
-          "description": "Enabled support access roles",
+          "description": "Enabled support access roles.",
           "example": [
             "operator",
             "readonly"
@@ -14500,7 +14550,7 @@
     "KubernetesClustersVersionInfo": {
       "properties": {
         "cluster_version_name": {
-          "description": "The version name of Crusoe's Kubernetes clusters.",
+          "description": "Version name of the Crusoe Kubernetes cluster image.",
           "type": "string",
           "x-go-name": "ClusterVersionName"
         },
@@ -14513,7 +14563,7 @@
           "x-go-name": "SupportedFeatures"
         },
         "tags": {
-          "description": "A list of tags associated with the version.",
+          "description": "Tags associated with the version.",
           "items": {
             "type": "string"
           },
@@ -14536,7 +14586,7 @@
     "KubernetesGetNodePoolRotateStatusResponse": {
       "properties": {
         "out_of_sync_instances": {
-          "description": "List of out of sync instance ids.",
+          "description": "IDs of instances that are out of sync with the node pool configuration.",
           "items": {
             "type": "string"
           },
@@ -14544,7 +14594,7 @@
           "x-go-name": "OutOfSyncInstances"
         },
         "state": {
-          "description": "Current state of the node pool.",
+          "description": "Current rotation state of the node pool.",
           "type": "string",
           "x-go-name": "State"
         }
@@ -14559,44 +14609,44 @@
     "KubernetesNodePool": {
       "properties": {
         "cluster_id": {
-          "description": "The ID of the Kubernetes cluster this node pool belongs to.",
+          "description": "ID of the Kubernetes cluster the node pool belongs to.",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f",
           "type": "string",
           "x-go-name": "ClusterID"
         },
         "count": {
-          "description": "Number of nodes within the node pool.",
+          "description": "Number of nodes in the node pool.",
           "example": 4,
           "format": "int64",
           "type": "integer",
           "x-go-name": "Count"
         },
         "created_at": {
-          "description": "The time when the cluster was created",
+          "description": "Time when the node pool was created.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.",
+          "description": "Whether the first local ephemeral NVMe disk is used for containerd storage.",
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd"
         },
         "id": {
-          "description": "ID of the node pool.",
+          "description": "Unique identifier of the node pool, assigned at creation.",
           "example": "0a1b3c2d-5e6f-8b9c-4d7e-1a2b3c4d5e6f",
           "type": "string",
           "x-go-name": "ID"
         },
         "image_id": {
-          "description": "Image Unique identifier for the Kubernetes node pool.",
+          "description": "Unique identifier of the image used for the node pool.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "ImageID"
         },
         "instance_details": {
-          "description": "Details about instances within the Kubernetes node pool.",
+          "description": "Details about the instances within the node pool.",
           "items": {
             "$ref": "#/definitions/InstanceDetails"
           },
@@ -14604,7 +14654,7 @@
           "x-go-name": "InstanceDetails"
         },
         "instance_ids": {
-          "description": "List of IDs of instances within the node pool.",
+          "description": "IDs of the instances within the node pool.",
           "example": [
             "ca39e669-47ee-456b-968d-303234fbf99f"
           ],
@@ -14624,7 +14674,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels associated with the node pool.",
+          "description": "Labels assigned to nodes in the node pool.",
           "example": "\"nvidia.a100\"",
           "type": "object",
           "x-go-name": "NodeLabels"
@@ -14645,50 +14695,50 @@
           "x-go-name": "NodeTaints"
         },
         "nvlink_domain_id": {
-          "description": "NVLink domain ID assigned to this node pool",
+          "description": "NVLink domain ID assigned to the node pool.",
           "example": "550e8400-e29b-41d4-a716-446655440000",
           "type": "string",
           "x-go-name": "NvlinkDomainID"
         },
         "project_id": {
-          "description": "The ID of the project this Kubernetes node pool belongs to.",
+          "description": "ID of the project that owns the node pool.",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f",
           "type": "string",
           "x-go-name": "ProjectID"
         },
         "public_ip_type": {
           "default": "dynamic",
-          "description": "Public IP type for nodepool nodes. Possible values: dynamic, static, none",
+          "description": "Public IP type for the node pool's nodes: dynamic, static, or none.",
           "example": "dynamic",
           "type": "string",
           "x-go-name": "PublicIPType"
         },
         "reservation_id": {
-          "description": "The ID of the billing reservation associated with the node pool",
+          "description": "ID of the billing reservation associated with the node pool.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "ReservationID"
         },
         "state": {
-          "description": "State of the node pool",
+          "description": "Current state of the node pool.",
           "example": "STATE_RUNNING",
           "type": "string",
           "x-go-name": "State"
         },
         "subnet_id": {
-          "description": "The ID of the subnet this node pool belongs to.",
+          "description": "ID of the subnet the node pool belongs to.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "SubnetID"
         },
         "type": {
-          "description": "VM type of the node pool",
+          "description": "VM type of the node pool.",
           "example": "a100.2x",
           "type": "string",
           "x-go-name": "Type"
         },
         "updated_at": {
-          "description": "The time when the cluster was last updated",
+          "description": "Time when the node pool was last updated.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -14719,7 +14769,7 @@
       "properties": {
         "action": {
           "default": "UPDATE",
-          "description": "The action to perform on the NodePool. RESERVE and UNRESERVE operations are done synchronously,\nand so will have succeeded with a 200 response. Defaults to UPDATE if no action specified.",
+          "description": "Action to perform on the node pool: RESERVE, UNRESERVE, or UPDATE. RESERVE and UNRESERVE\noperations are done synchronously, and so will have succeeded with a 200 response.\nDefaults to UPDATE if no action is specified.",
           "enum": [
             "RESERVE",
             "UNRESERVE",
@@ -14731,7 +14781,7 @@
           "x-redocly-optional": true
         },
         "count": {
-          "description": "The desired number of nodes in the node pool.",
+          "description": "New number of nodes in the node pool.",
           "example": 4,
           "format": "int64",
           "type": "integer",
@@ -14739,7 +14789,7 @@
           "x-redocly-optional": true
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.",
+          "description": "Whether the first local ephemeral NVMe disk is used for containerd storage.",
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd",
@@ -14749,7 +14799,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels assigned to the node pool. Labels provided in the PATCH request will not modify existing nodes,\nbut will apply to any newly created nodes.",
+          "description": "New labels for the node pool. Labels provided in the PATCH request do not modify existing nodes,\nbut apply to any newly created nodes.",
           "example": {
             "label": "my_node"
           },
@@ -14758,14 +14808,14 @@
           "x-redocly-optional": true
         },
         "node_pool_version": {
-          "description": "Version of the Kubernetes node pool for newly created vms.",
+          "description": "New Kubernetes node pool version for newly created VMs.",
           "example": "1.30",
           "type": "string",
           "x-go-name": "NodePoolVersion",
           "x-redocly-optional": true
         },
         "node_taints": {
-          "description": "Taints to apply to nodes in this node pool. Taints provided in the PATCH request will not modify existing nodes,\nbut will apply to any newly created nodes.\nThis field has three behaviors:\nOmitted (null): existing taints are left unchanged.\nEmpty array ([]): all existing taints are cleared.\nNon-empty array: existing taints are fully replaced by the\nprovided list.\nEach (key, effect) pair in the list must be unique. Up to 50\ntaints are allowed. See KubernetesNodeTaint for per-field format rules.",
+          "description": "New taints for nodes in this node pool. Taints provided in the PATCH request do not modify existing nodes,\nbut apply to any newly created nodes.\nThis field has three behaviors:\nOmitted (null): existing taints are left unchanged.\nEmpty array ([]): all existing taints are cleared.\nNon-empty array: existing taints are fully replaced by the\nprovided list.\nEach (key, effect) pair in the list must be unique. Up to 50\ntaints are allowed. See KubernetesNodeTaint for per-field format rules.",
           "example": [
             {
               "effect": "NoSchedule",
@@ -14781,14 +14831,14 @@
           "x-redocly-optional": true
         },
         "reservation_id": {
-          "description": "The reservation ID of the node pool.",
+          "description": "New reservation ID for the node pool.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "ReservationID",
           "x-redocly-optional": true
         },
         "ssh_public_key": {
-          "description": "SSH public key to use for all VMs created from this node pool.",
+          "description": "New SSH public key to use for all VMs created from this node pool.",
           "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D",
           "type": "string",
           "x-go-name": "SSHPublicKey",
@@ -14811,20 +14861,20 @@
     "KubernetesNodePoolPostRequest": {
       "properties": {
         "cluster_id": {
-          "description": "Cluster ID of the cluster this node pool belongs to.",
+          "description": "ID of the cluster the new node pool belongs to.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "ClusterID"
         },
         "count": {
-          "description": "The number of nodes to be created.",
+          "description": "Number of nodes to create.",
           "example": 4,
           "format": "int64",
           "type": "integer",
           "x-go-name": "Count"
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.",
+          "description": "Whether the first local ephemeral NVMe disk is used for containerd storage.",
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd"
@@ -14844,7 +14894,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels assigned to the node pool",
+          "description": "Labels to assign to nodes in the new node pool.",
           "example": {
             "label": "my_node"
           },
@@ -14873,14 +14923,14 @@
           "x-go-name": "NodeTaints"
         },
         "nvlink_domain_id": {
-          "description": "Optional NVLink domain ID to assign to nodes in this node pool",
+          "description": "NVLink domain ID to assign to nodes in the new node pool.",
           "example": "550e8400-e29b-41d4-a716-446655440000",
           "type": "string",
           "x-go-name": "NvlinkDomainID"
         },
         "placement_policy": {
           "default": "unspecified",
-          "description": "Placement policy for VMs in the node pool. Possible values: spread, unspecified.\nIgnored for GPU node types (one VM per host is already enforced for GPUs).",
+          "description": "Placement policy for VMs in the node pool: spread or unspecified.\nIgnored for GPU node types (one VM per host is already enforced for GPUs).",
           "enum": [
             "spread",
             "unspecified"
@@ -14890,14 +14940,14 @@
           "x-go-name": "PlacementPolicy"
         },
         "product_name": {
-          "description": "Product name of the VM type to be created within this node pool.",
+          "description": "Product name of the VM type to create within the new node pool.",
           "example": "a100.2x",
           "type": "string",
           "x-go-name": "ProductName"
         },
         "public_ip_type": {
           "default": "dynamic",
-          "description": "Public IP type for nodepool nodes. Possible values: dynamic, static, none",
+          "description": "Public IP type for the node pool's nodes: dynamic, static, or none.",
           "example": "dynamic",
           "type": "string",
           "x-go-name": "PublicIPType"
@@ -14906,19 +14956,19 @@
           "$ref": "#/definitions/ReservationSpecification"
         },
         "ssh_public_key": {
-          "description": "SSH public key to use for all VMs created from this node pool.",
+          "description": "SSH public key to use for all VMs created from the new node pool.",
           "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8",
           "type": "string",
           "x-go-name": "SSHPublicKey"
         },
         "subnet_id": {
-          "description": "The ID of the subnet to create the node pool in. Must be in the location\nof the cluster if specified. If not provided, the default subnet for the\nlocation will be used, if there is one.",
+          "description": "ID of the subnet to create the node pool in. Must be in the location\nof the cluster if specified. If not provided, the default subnet for the\nlocation is used, if there is one.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "SubnetID"
         },
         "transport_partition_id": {
-          "description": "The ID of the Infiniband or RoCE partition to create node pool in. Must be in the location\nof the cluster if specified.",
+          "description": "ID of the InfiniBand or RoCE partition to create the node pool in. Must be in the\nlocation of the cluster if specified.",
           "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653",
           "type": "string",
           "x-go-name": "TransportPartitionID"
@@ -14951,21 +15001,21 @@
     "KubernetesNodePoolRotateStartRequest": {
       "properties": {
         "count": {
-          "description": "Number of nodes to replace at a time if the strategy is 'count'.",
+          "description": "Number of nodes to replace at a time when the strategy is 'count'.",
           "example": 2,
           "format": "int64",
           "type": "integer",
           "x-go-name": "Count"
         },
         "percentage": {
-          "description": "Percentage of nodes to replace at a time if the strategy is 'percentage'.",
+          "description": "Percentage of nodes to replace at a time when the strategy is 'percentage'.",
           "example": 20,
           "format": "int64",
           "type": "integer",
           "x-go-name": "Percentage"
         },
         "strategy": {
-          "description": "Strategy of the rotation to perform.",
+          "description": "Strategy for the rotation to perform: count or percentage.",
           "enum": [
             "count",
             "percentage"
@@ -14986,7 +15036,7 @@
     "KubernetesNodePoolsVersionInfo": {
       "properties": {
         "node_pool_version_name": {
-          "description": "The version name of Crusoe's Kubernetes node pools.",
+          "description": "Version name of the Crusoe Kubernetes node pool image.",
           "type": "string",
           "x-go-name": "NodePoolVersionName"
         },
@@ -14999,7 +15049,7 @@
           "x-go-name": "SupportedFeatures"
         },
         "tags": {
-          "description": "A list of tags associated with the version.",
+          "description": "Tags associated with the version.",
           "items": {
             "type": "string"
           },
@@ -15023,7 +15073,7 @@
       "description": "A taint allows a node to repel a set of pods unless those pods\ntolerate the taint. Taints follow standard Kubernetes semantics\n(see https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/).",
       "properties": {
         "effect": {
-          "description": "Effect is the taint effect, controlling how pods are treated on\nmatching nodes:\nNoSchedule: new pods are not scheduled unless they tolerate.\nPreferNoSchedule: new pods avoid the node if possible.\nNoExecute: new pods are not scheduled AND existing non-tolerating\npods are evicted.",
+          "description": "Taint effect, controlling how pods are treated on\nmatching nodes:\nNoSchedule: new pods are not scheduled unless they tolerate.\nPreferNoSchedule: new pods avoid the node if possible.\nNoExecute: new pods are not scheduled AND existing non-tolerating\npods are evicted.",
           "enum": [
             "NoSchedule",
             "PreferNoSchedule",
@@ -15034,13 +15084,13 @@
           "x-go-name": "Effect"
         },
         "key": {
-          "description": "Key is the taint key. Follows the Kubernetes qualified-name\nformat: an optional DNS subdomain prefix (up to 253 characters)\nfollowed by a '/', then a name segment (up to 63 characters).\nAllowed characters: alphanumerics, '-', '_', and '.'. Must start\nand end with an alphanumeric character.\nKeys beginning with \"crusoe.ai/\" are reserved for internal use.",
+          "description": "Taint key. Follows the Kubernetes qualified-name\nformat: an optional DNS subdomain prefix (up to 253 characters)\nfollowed by a '/', then a name segment (up to 63 characters).\nAllowed characters: alphanumerics, '-', '_', and '.'. Must start\nand end with an alphanumeric character.\nKeys beginning with \"crusoe.ai/\" are reserved for internal use.",
           "example": "gpu-type",
           "type": "string",
           "x-go-name": "Key"
         },
         "value": {
-          "description": "Value is the taint value. May be empty. Follows the same format\nrules as a Kubernetes label value: up to 63 characters, alphanumerics\nand '-', '_', '.'.",
+          "description": "Taint value. May be empty. Follows the same format\nrules as a Kubernetes label value: up to 63 characters, alphanumerics\nand '-', '_', '.'.",
           "example": "h100",
           "maxLength": 63,
           "type": "string",
@@ -15058,67 +15108,67 @@
     "KubernetesSupportAccessRequest": {
       "properties": {
         "access_role": {
-          "description": "Access role requested",
+          "description": "Requested support access role.",
           "example": "operator",
           "type": "string",
           "x-go-name": "AccessRole"
         },
         "cert_expires_at": {
-          "description": "Time when certificate expires (RFC3339)",
+          "description": "Time when the certificate expires.",
           "example": "2024-01-15T18:30:00Z",
           "type": "string",
           "x-go-name": "CertExpiresAt"
         },
         "cert_fingerprint": {
-          "description": "Certificate fingerprint",
+          "description": "Fingerprint of the certificate.",
           "example": "AA:BB:CC:DD:EE:FF",
           "type": "string",
           "x-go-name": "CertFingerprint"
         },
         "cert_issued_at": {
-          "description": "Time last certificate issued (RFC3339)",
+          "description": "Time when the most recent certificate was issued.",
           "example": "2024-01-15T10:30:00Z",
           "type": "string",
           "x-go-name": "CertIssuedAt"
         },
         "cert_serial": {
-          "description": "Certificate serial number",
+          "description": "Serial number of the certificate.",
           "example": "1234567890",
           "type": "string",
           "x-go-name": "CertSerial"
         },
         "expires_at": {
-          "description": "Time when access expires (RFC3339)",
+          "description": "Time when access expires.",
           "example": "2024-01-15T18:30:00Z",
           "type": "string",
           "x-go-name": "ExpiresAt"
         },
         "requested_at": {
-          "description": "Time requested (RFC3339)",
+          "description": "Time when access was requested.",
           "example": "2024-01-15T10:30:00Z",
           "type": "string",
           "x-go-name": "RequestedAt"
         },
         "requestor_id": {
-          "description": "User ID (UUID) of the user who requested access",
+          "description": "ID of the user who requested access.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "RequestorID"
         },
         "requestor_team": {
-          "description": "Name of team requesting support access",
+          "description": "Name of the team requesting support access.",
           "example": "SRE",
           "type": "string",
           "x-go-name": "RequestorTeam"
         },
         "support_reason": {
-          "description": "Reason for requesting support access",
+          "description": "Reason given for requesting support access.",
           "example": "Investigating cluster health issue",
           "type": "string",
           "x-go-name": "SupportReason"
         },
         "ticket_ref": {
-          "description": "Associated ticket for the support access request",
+          "description": "Ticket associated with the support access request.",
           "example": "TICKET-12345",
           "type": "string",
           "x-go-name": "TicketRef"
@@ -15543,7 +15593,7 @@
     "ListKubernetesVersionsResponse": {
       "properties": {
         "kubernetes_cluster_versions": {
-          "description": "The list of available Kubernetes cluster versions.",
+          "description": "Available Kubernetes cluster versions.",
           "items": {
             "$ref": "#/definitions/KubernetesClustersVersionInfo"
           },
@@ -15551,7 +15601,7 @@
           "x-go-name": "KubernetesClusterVersions"
         },
         "kubernetes_node_pool_versions": {
-          "description": "The list of available Kubernetes node pool versions.",
+          "description": "Available Kubernetes node pool versions.",
           "items": {
             "$ref": "#/definitions/KubernetesNodePoolsVersionInfo"
           },
@@ -16628,36 +16678,36 @@
       "description": "This allows the Kubernetes API server to authenticate users via an external OIDC provider.",
       "properties": {
         "ca_cert": {
-          "description": "PEM encoded Certificate Authority certificate to use when validating the OIDC server's certificate.",
+          "description": "PEM-encoded certificate authority certificate used to validate the OIDC server's certificate.",
           "type": "string",
           "x-go-name": "CACert"
         },
         "client_id": {
-          "description": "The client ID for the OpenID Connect client.",
+          "description": "Client ID for the OpenID Connect client.",
           "example": "kubernetes",
           "type": "string",
           "x-go-name": "ClientID"
         },
         "groups_claim": {
-          "description": "This is the claim that will be used to identify the groups.",
+          "description": "Claim used to identify the user's groups.",
           "example": "groups",
           "type": "string",
           "x-go-name": "GroupsClaim"
         },
         "issuer_url": {
-          "description": "The URL of the OpenID issuer",
+          "description": "URL of the OpenID Connect issuer.",
           "example": "https://oauth2.example.com",
           "type": "string",
           "x-go-name": "IssuerURL"
         },
         "username_claim": {
-          "description": "This is the claim that will be used to identify the user. Defaults to 'sub'.",
+          "description": "Claim used to identify the user. Defaults to 'sub'.",
           "example": "email",
           "type": "string",
           "x-go-name": "UsernameClaim"
         },
         "username_prefix": {
-          "description": "A prefix to add before the username to avoid name conflicts.",
+          "description": "Prefix added before the username to avoid name conflicts.",
           "example": "oidc:",
           "type": "string",
           "x-go-name": "UsernamePrefix"
@@ -16765,12 +16815,12 @@
     "OperationDetails": {
       "properties": {
         "error": {
-          "description": "Error associated to the operation\nPopulated if the operation was a partial success due to best effort",
+          "description": "Error associated with the operation. Populated if the operation was a\npartial success on a best-effort basis.",
           "type": "string",
           "x-go-name": "Error"
         },
         "num_vms_created": {
-          "description": "Number of VMs created as part of the operation",
+          "description": "Number of VMs created as part of the operation.",
           "format": "int32",
           "type": "integer",
           "x-go-name": "NumVMsCreated"
@@ -19798,12 +19848,15 @@
     "VersionDetails": {
       "properties": {
         "BuildVersion": {
+          "description": "Build version component.",
           "type": "string"
         },
         "MajorMinorVersion": {
+          "description": "Major and minor version components, for example \"1.30\".",
           "type": "string"
         },
         "PatchVersion": {
+          "description": "Patch version component.",
           "type": "string"
         }
       },

@@ -9,35 +9,35 @@
 package swagger
 
 type KubernetesNodePoolPostRequest struct {
-	// Cluster ID of the cluster this node pool belongs to.
+	// ID of the cluster the new node pool belongs to.
 	ClusterId string `json:"cluster_id"`
-	// The number of nodes to be created.
+	// Number of nodes to create.
 	Count int64 `json:"count"`
-	// Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.
+	// Whether the first local ephemeral NVMe disk is used for containerd storage.
 	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd,omitempty"`
 	// Deprecated: Use transport_partition_id instead.
 	IbPartitionId string `json:"ib_partition_id,omitempty"`
 	// Name of the Kubernetes node pool.
 	Name string `json:"name"`
-	// Labels assigned to the node pool
+	// Labels to assign to nodes in the new node pool.
 	NodeLabels map[string]string `json:"node_labels,omitempty"`
 	// Version of the Kubernetes node pool.
 	NodePoolVersion string `json:"node_pool_version,omitempty"`
 	// Taints applied to nodes in the node pool. Each (key, effect) pair must be unique within the list. The list may contain at most 50 taints.
 	NodeTaints []KubernetesNodeTaint `json:"node_taints,omitempty"`
-	// Optional NVLink domain ID to assign to nodes in this node pool
+	// NVLink domain ID to assign to nodes in the new node pool.
 	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
-	// Placement policy for VMs in the node pool. Possible values: spread, unspecified. Ignored for GPU node types (one VM per host is already enforced for GPUs).
+	// Placement policy for VMs in the node pool: spread or unspecified. Ignored for GPU node types (one VM per host is already enforced for GPUs).
 	PlacementPolicy string `json:"placement_policy,omitempty"`
-	// Product name of the VM type to be created within this node pool.
+	// Product name of the VM type to create within the new node pool.
 	ProductName string `json:"product_name"`
-	// Public IP type for nodepool nodes. Possible values: dynamic, static, none
+	// Public IP type for the node pool's nodes: dynamic, static, or none.
 	PublicIpType             string                    `json:"public_ip_type,omitempty"`
 	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
-	// SSH public key to use for all VMs created from this node pool.
+	// SSH public key to use for all VMs created from the new node pool.
 	SshPublicKey string `json:"ssh_public_key,omitempty"`
-	// The ID of the subnet to create the node pool in. Must be in the location of the cluster if specified. If not provided, the default subnet for the location will be used, if there is one.
+	// ID of the subnet to create the node pool in. Must be in the location of the cluster if specified. If not provided, the default subnet for the location is used, if there is one.
 	SubnetId string `json:"subnet_id,omitempty"`
-	// The ID of the Infiniband or RoCE partition to create node pool in. Must be in the location of the cluster if specified.
+	// ID of the InfiniBand or RoCE partition to create the node pool in. Must be in the location of the cluster if specified.
 	TransportPartitionId string `json:"transport_partition_id,omitempty"`
 }

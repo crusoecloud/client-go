@@ -9,11 +9,11 @@
 package swagger
 
 type KubernetesClustersVersionInfo struct {
-	// The version name of Crusoe's Kubernetes clusters.
+	// Version name of the Crusoe Kubernetes cluster image.
 	ClusterVersionName string `json:"cluster_version_name"`
 	// Features supported by this cluster version. Possible values today: \"oidc\", \"autoclusters\", \"active_health_checks\". New feature names may be added over time. API consumers should ignore unrecognized feature names.
 	SupportedFeatures []string `json:"supported_features"`
-	// A list of tags associated with the version.
+	// Tags associated with the version.
 	Tags           []string        `json:"tags"`
 	VersionDetails *VersionDetails `json:"version_details"`
 }

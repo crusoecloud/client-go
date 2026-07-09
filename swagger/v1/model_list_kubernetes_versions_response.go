@@ -9,8 +9,8 @@
 package swagger
 
 type ListKubernetesVersionsResponse struct {
-	// The list of available Kubernetes cluster versions.
+	// Available Kubernetes cluster versions.
 	KubernetesClusterVersions []KubernetesClustersVersionInfo `json:"kubernetes_cluster_versions"`
-	// The list of available Kubernetes node pool versions.
+	// Available Kubernetes node pool versions.
 	KubernetesNodePoolVersions []KubernetesNodePoolsVersionInfo `json:"kubernetes_node_pool_versions"`
 }

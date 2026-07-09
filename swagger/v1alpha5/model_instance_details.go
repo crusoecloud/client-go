@@ -9,8 +9,8 @@
 package swagger
 
 type InstanceDetails struct {
-	// Unique identifier (UUID) of the instance.
+	// Unique identifier of the instance, assigned at creation.
 	Id string `json:"id"`
-	// Whether or not the instance was created with the current node pool configuration.
+	// Whether the instance was created with the current node pool configuration.
 	UsingLatestConfig bool `json:"using_latest_config"`
 }

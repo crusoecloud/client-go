@@ -9,6 +9,6 @@
 package swagger
 
 type KubernetesCancelNodePoolRotateResponse struct {
-	// True if there is no rotate operation to cancel.
+	// Whether there was no rotation in progress to cancel.
 	NoRotateInProgress bool `json:"no_rotate_in_progress"`
 }

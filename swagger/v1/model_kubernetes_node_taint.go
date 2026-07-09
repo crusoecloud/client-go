@@ -10,10 +10,10 @@ package swagger
 
 // A taint allows a node to repel a set of pods unless those pods tolerate the taint. Taints follow standard Kubernetes semantics (see https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/).
 type KubernetesNodeTaint struct {
-	// Effect is the taint effect, controlling how pods are treated on matching nodes: NoSchedule: new pods are not scheduled unless they tolerate. PreferNoSchedule: new pods avoid the node if possible. NoExecute: new pods are not scheduled AND existing non-tolerating pods are evicted.
+	// Taint effect, controlling how pods are treated on matching nodes: NoSchedule: new pods are not scheduled unless they tolerate. PreferNoSchedule: new pods avoid the node if possible. NoExecute: new pods are not scheduled AND existing non-tolerating pods are evicted.
 	Effect string `json:"effect"`
-	// Key is the taint key. Follows the Kubernetes qualified-name format: an optional DNS subdomain prefix (up to 253 characters) followed by a '/', then a name segment (up to 63 characters). Allowed characters: alphanumerics, '-', '_', and '.'. Must start and end with an alphanumeric character. Keys beginning with \"crusoe.ai/\" are reserved for internal use.
+	// Taint key. Follows the Kubernetes qualified-name format: an optional DNS subdomain prefix (up to 253 characters) followed by a '/', then a name segment (up to 63 characters). Allowed characters: alphanumerics, '-', '_', and '.'. Must start and end with an alphanumeric character. Keys beginning with \"crusoe.ai/\" are reserved for internal use.
 	Key string `json:"key"`
-	// Value is the taint value. May be empty. Follows the same format rules as a Kubernetes label value: up to 63 characters, alphanumerics and '-', '_', '.'.
+	// Taint value. May be empty. Follows the same format rules as a Kubernetes label value: up to 63 characters, alphanumerics and '-', '_', '.'.
 	Value string `json:"value,omitempty"`
 }

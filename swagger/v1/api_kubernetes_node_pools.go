@@ -27,10 +27,10 @@ var (
 type KubernetesNodePoolsApiService service
 
 /*
-KubernetesNodePoolsApiService Cancel an in-progress rotation of the specified Kubernetes node pool.
+KubernetesNodePoolsApiService Cancels an in-progress rotation of a Kubernetes node pool in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return KubernetesCancelNodePoolRotateResponse
 */
@@ -165,11 +165,10 @@ func (a *KubernetesNodePoolsApiService) CancelNodePoolRotate(ctx context.Context
 }
 
 /*
-KubernetesNodePoolsApiService Create a new Kubernetes node pool owned by the logged in user.
-A successful response from this resource will contain the async operation.
+KubernetesNodePoolsApiService Creates a Kubernetes node pool in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
+  - @param projectId ID of the project to create the node pool in.
 
 @return AsyncOperationResponse
 */
@@ -295,10 +294,10 @@ func (a *KubernetesNodePoolsApiService) CreateNodePool(ctx context.Context, body
 }
 
 /*
-KubernetesNodePoolsApiService Delete a node pool that the logged in user owns.
+KubernetesNodePoolsApiService Deletes a Kubernetes node pool from the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return AsyncOperationResponse
 */
@@ -413,10 +412,10 @@ func (a *KubernetesNodePoolsApiService) DeleteNodePool(ctx context.Context, proj
 }
 
 /*
-KubernetesNodePoolsApiService Retrieve information about a particular Kubernetes node pool belonging to the project.
+KubernetesNodePoolsApiService Returns details for a single Kubernetes node pool in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return KubernetesNodePool
 */
@@ -521,10 +520,10 @@ func (a *KubernetesNodePoolsApiService) GetNodePool(ctx context.Context, project
 }
 
 /*
-KubernetesNodePoolsApiService Get the rotate status of the specified Kubernetes ndoe pool.
+KubernetesNodePoolsApiService Returns the rotation status of a Kubernetes node pool in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return KubernetesGetNodePoolRotateStatusResponse
 */
@@ -649,15 +648,15 @@ func (a *KubernetesNodePoolsApiService) GetNodePoolRotateStatus(ctx context.Cont
 }
 
 /*
-KubernetesNodePoolsApiService Retrieve the VMs that belong to a particular Kubernetes node pool.
+KubernetesNodePoolsApiService Lists all VMs in a Kubernetes node pool and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param nodePoolId
+ * @param projectId ID of the project that owns the node pool.
+ * @param nodePoolId ID of the node pool.
  * @param optional nil or *KubernetesNodePoolsApiListKubernetesNodePoolVMsOpts - Optional Parameters:
-     * @param "Limit" (optional.String) -
-     * @param "Sort" (optional.String) -
-     * @param "NextToken" (optional.String) -
-     * @param "PrevToken" (optional.String) -
+     * @param "Limit" (optional.String) -  Maximum number of results to return per page.
+     * @param "Sort" (optional.String) -  Field to sort results by; prefix with &#x27;-&#x27; for descending order.
+     * @param "NextToken" (optional.String) -  Base64-encoded token for the next page of results.
+     * @param "PrevToken" (optional.String) -  Base64-encoded token for the previous page of results.
 @return ListKubernetesNodePoolVmsResponse
 */
 
@@ -811,12 +810,13 @@ func (a *KubernetesNodePoolsApiService) ListKubernetesNodePoolVMs(ctx context.Co
 }
 
 /*
-KubernetesNodePoolsApiService Retrieve information about Kubernetes node pools belonging to a project or cluster.
+KubernetesNodePoolsApiService Lists all Kubernetes node pools in the project and returns their details.
+Results can be narrowed to a single cluster with the cluster_id query parameter.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project that owns the node pools.
  * @param optional nil or *KubernetesNodePoolsApiListNodePoolsOpts - Optional Parameters:
-     * @param "ClusterId" (optional.String) -
-     * @param "Sort" (optional.String) -
+     * @param "ClusterId" (optional.String) -  Filters results to node pools in this cluster.
+     * @param "Sort" (optional.String) -  Field to sort results by; prefix with &#x27;-&#x27; for descending order.
 @return ListKubernetesNodePoolsResponse
 */
 
@@ -931,12 +931,12 @@ func (a *KubernetesNodePoolsApiService) ListNodePools(ctx context.Context, proje
 }
 
 /*
-KubernetesNodePoolsApiService Start a rotation of the specified Kubernetes node pool.
+KubernetesNodePoolsApiService Starts a rotation of a Kubernetes node pool in the project and returns the async operation.
 A successful response returns an async operation you can poll.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return AsyncOperationResponse
 */
@@ -1073,11 +1073,11 @@ func (a *KubernetesNodePoolsApiService) RotateNodePool(ctx context.Context, body
 }
 
 /*
-KubernetesNodePoolsApiService Update a node pool that the logged in user owns.
+KubernetesNodePoolsApiService Updates a Kubernetes node pool in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return AsyncOperationResponse
 */

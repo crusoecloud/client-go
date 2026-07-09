@@ -9,42 +9,42 @@
 package swagger
 
 type KubernetesNodePool struct {
-	// The ID of the Kubernetes cluster this node pool belongs to.
+	// ID of the Kubernetes cluster the node pool belongs to.
 	ClusterId string `json:"cluster_id"`
-	// Number of nodes within the node pool.
+	// Number of nodes in the node pool.
 	Count int64 `json:"count"`
-	// The time when the cluster was created
+	// Time when the node pool was created.
 	CreatedAt string `json:"created_at"`
-	// Indicates whether the first local ephemeral NVMe disk should be used for containerd storage.
+	// Whether the first local ephemeral NVMe disk is used for containerd storage.
 	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd"`
-	// ID of the node pool.
+	// Unique identifier of the node pool, assigned at creation.
 	Id string `json:"id"`
-	// Image Unique identifier for the Kubernetes node pool.
+	// Unique identifier of the image used for the node pool.
 	ImageId string `json:"image_id"`
-	// Details about instances within the Kubernetes node pool.
+	// Details about the instances within the node pool.
 	InstanceDetails []InstanceDetails `json:"instance_details,omitempty"`
-	// List of IDs of instances within the node pool.
+	// IDs of the instances within the node pool.
 	InstanceIds []string `json:"instance_ids"`
 	// Name of the node pool.
 	Name string `json:"name"`
-	// Labels associated with the node pool.
+	// Labels assigned to nodes in the node pool.
 	NodeLabels map[string]string `json:"node_labels"`
 	// Taints applied to nodes in the node pool.
 	NodeTaints []KubernetesNodeTaint `json:"node_taints"`
-	// NVLink domain ID assigned to this node pool
+	// NVLink domain ID assigned to the node pool.
 	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
-	// The ID of the project this Kubernetes node pool belongs to.
+	// ID of the project that owns the node pool.
 	ProjectId string `json:"project_id"`
-	// Public IP type for nodepool nodes. Possible values: dynamic, static, none
+	// Public IP type for the node pool's nodes: dynamic, static, or none.
 	PublicIpType string `json:"public_ip_type,omitempty"`
-	// The ID of the billing reservation associated with the node pool
+	// ID of the billing reservation associated with the node pool.
 	ReservationId string `json:"reservation_id"`
-	// State of the node pool
+	// Current state of the node pool.
 	State string `json:"state"`
-	// The ID of the subnet this node pool belongs to.
+	// ID of the subnet the node pool belongs to.
 	SubnetId string `json:"subnet_id"`
-	// VM type of the node pool
+	// VM type of the node pool.
 	Type_ string `json:"type"`
-	// The time when the cluster was last updated
+	// Time when the node pool was last updated.
 	UpdatedAt string `json:"updated_at"`
 }

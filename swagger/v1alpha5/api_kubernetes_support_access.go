@@ -25,10 +25,10 @@ var (
 type KubernetesSupportAccessApiService service
 
 /*
-KubernetesSupportAccessApiService Retrieve support access settings for a Kubernetes cluster.
+KubernetesSupportAccessApiService Returns support access settings for a Kubernetes cluster in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param clusterId
+  - @param projectId ID of the project that owns the cluster.
+  - @param clusterId ID of the cluster.
 
 @return KubernetesClusterSupportSettingsResponse
 */
@@ -153,11 +153,11 @@ func (a *KubernetesSupportAccessApiService) GetSupportSettings(ctx context.Conte
 }
 
 /*
-KubernetesSupportAccessApiService Update support access settings for a Kubernetes cluster.
+KubernetesSupportAccessApiService Updates support access settings for a Kubernetes cluster in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param clusterId
+  - @param projectId ID of the project that owns the cluster.
+  - @param clusterId ID of the cluster.
 
 @return KubernetesClusterSupportSettingsResponse
 */

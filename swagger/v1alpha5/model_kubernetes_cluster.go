@@ -9,47 +9,47 @@
 package swagger
 
 type KubernetesCluster struct {
-	// List of add-ons associated with the cluster.
+	// Add-ons associated with the cluster.
 	AddOns []string `json:"add_ons"`
 	// Extra arguments passed to the kube-apiserver control plane component.
 	ApiserverExtraArgs map[string]string            `json:"apiserver_extra_args,omitempty"`
 	AuthConfig         *KubernetesClusterAuthConfig `json:"auth_config,omitempty"`
-	// The range of IP Addresses allocated to pods scheduled on worker nodes
+	// Range of IP addresses allocated to pods scheduled on worker nodes, in CIDR notation.
 	ClusterCidr string `json:"cluster_cidr,omitempty"`
 	// Configuration setting of the Kubernetes cluster.
 	Configuration string `json:"configuration"`
 	// Extra arguments passed to the kube-controller-manager control plane component.
 	ControllerManagerExtraArgs map[string]string `json:"controller_manager_extra_args,omitempty"`
-	// The time when the cluster was created
+	// Time when the cluster was created.
 	CreatedAt string `json:"created_at"`
-	// DNS name of the cluster
+	// DNS name of the cluster.
 	DnsName string `json:"dns_name"`
-	// ID of the Kubernetes cluster.
+	// Unique identifier of the Kubernetes cluster, assigned at creation.
 	Id string `json:"id"`
-	// Arguments for kubectl oidc-login plugin.
+	// Arguments for the kubectl oidc-login plugin.
 	KubeloginArgs map[string]string `json:"kubelogin_args"`
 	// Location of the Kubernetes cluster.
 	Location string `json:"location"`
 	// Name of the Kubernetes cluster.
 	Name string `json:"name"`
-	// The mask size for cluster cidr
+	// Mask size for the cluster CIDR.
 	NodeCidrMaskSize int32 `json:"node_cidr_mask_size,omitempty"`
-	// List of IDs of node pools within the Kubernetes cluster.
+	// IDs of the node pools within the Kubernetes cluster.
 	NodePools []string `json:"node_pools"`
-	// Whether the cluster is private or not
+	// Whether the cluster is private (without a public IP).
 	Private bool `json:"private,omitempty"`
-	// The ID of the project this Kubernetes cluster belongs to.
+	// ID of the project that owns the Kubernetes cluster.
 	ProjectId string `json:"project_id"`
 	// Extra arguments passed to the kube-scheduler control plane component.
 	SchedulerExtraArgs map[string]string `json:"scheduler_extra_args,omitempty"`
-	// The range of IP Addresses allocated to K8s services
+	// Range of IP addresses allocated to Kubernetes services, in CIDR notation.
 	ServiceClusterIpRange string `json:"service_cluster_ip_range,omitempty"`
-	// State of the cluster
+	// Current state of the cluster.
 	State string `json:"state"`
-	// The ID of the subnet this Kubernetes cluster belongs to.
+	// ID of the subnet the Kubernetes cluster belongs to.
 	SubnetId string `json:"subnet_id"`
-	// The time when the cluster was last updated
+	// Time when the cluster was last updated.
 	UpdatedAt string `json:"updated_at"`
-	// Version of the crusoe Kubernetes image of the Kubernetes cluster.
+	// Version of the Crusoe Kubernetes image the cluster runs.
 	Version string `json:"version"`
 }
