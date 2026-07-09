@@ -5786,7 +5786,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details for all Infiniband networks.",
+        "summary": "Lists all Infiniband networks and returns their details.",
         "tags": [
           "IB Networks"
         ]
@@ -5797,6 +5797,7 @@
         "operationId": "getIBNetwork",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -5805,6 +5806,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the Infiniband network.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "ib_network_id",
@@ -5827,7 +5829,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details for an Infiniband network.",
+        "summary": "Returns details for a single Infiniband network.",
         "tags": [
           "IB Networks"
         ]
@@ -12644,6 +12646,7 @@
     "IBNetwork": {
       "properties": {
         "capacities": {
+          "description": "Available capacity in the network, broken down by VM slice type.",
           "items": {
             "$ref": "#/definitions/IBNetworkCapacity"
           },
@@ -12651,16 +12654,19 @@
           "x-go-name": "Capacities"
         },
         "id": {
+          "description": "Unique identifier of the Infiniband network.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
         },
         "location": {
+          "description": "Location of the Infiniband network.",
           "example": "us-east",
           "type": "string",
           "x-go-name": "Location"
         },
         "name": {
+          "description": "Name of the Infiniband network.",
           "example": "ib-network-1",
           "type": "string",
           "x-go-name": "Name"
@@ -12678,12 +12684,14 @@
     "IBNetworkCapacity": {
       "properties": {
         "quantity": {
+          "description": "Number of slices of the given slice type.",
           "example": 8,
           "format": "uint32",
           "type": "integer",
           "x-go-name": "Quantity"
         },
         "slice_type": {
+          "description": "VM slice type the capacity applies to.",
           "example": "16 vCPUs \u0026 125GB RAM \u0026 1 A100 (40GB) GPU",
           "type": "string",
           "x-go-name": "SliceType"
