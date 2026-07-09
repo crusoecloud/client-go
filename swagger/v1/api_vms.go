@@ -27,7 +27,7 @@ var (
 type VMsApiService service
 
 /*
-VMsApiService Create new VM instances owned by the logged in user.
+VMsApiService Creates multiple VMs in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
@@ -156,7 +156,7 @@ func (a *VMsApiService) BulkCreateInstance(ctx context.Context, body BulkInstanc
 }
 
 /*
-VMsApiService Create a new VM instance owned by the logged in user.
+VMsApiService Creates a VM in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
@@ -285,10 +285,10 @@ func (a *VMsApiService) CreateInstance(ctx context.Context, body InstancesPostRe
 }
 
 /*
-VMsApiService Delete a VM that the logged in user owns.
+VMsApiService Deletes a VM from the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param vmId
+  - @param projectId ID of the project that owns the VM.
+  - @param vmId ID of the VM.
 
 @return AsyncOperationResponse
 */
@@ -403,10 +403,10 @@ func (a *VMsApiService) DeleteInstance(ctx context.Context, projectId string, vm
 }
 
 /*
-VMsApiService Retrieve details about a particular VM.
+VMsApiService Returns details for a single VM in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param vmId
+  - @param projectId ID of the project that owns the VM.
+  - @param vmId ID of the VM.
 
 @return InstanceV1
 */
@@ -531,7 +531,7 @@ func (a *VMsApiService) GetInstance(ctx context.Context, projectId string, vmId 
 }
 
 /*
-VMsApiService Retrieve information about the types of VMs that are available.
+VMsApiService Lists all available VM types and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
 
@@ -637,20 +637,20 @@ func (a *VMsApiService) GetVMTypes(ctx context.Context, projectId string) (ListT
 }
 
 /*
-VMsApiService Retrieve details about all VMs that the logged in user owns or has access to.
+VMsApiService Lists all VMs in the project and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId
  * @param optional nil or *VMsApiListInstancesOpts - Optional Parameters:
-     * @param "Ids" (optional.String) -
-     * @param "Names" (optional.String) -
-     * @param "Types" (optional.String) -
-     * @param "Locations" (optional.String) -
-     * @param "States" (optional.String) -
-     * @param "NvlinkDomainIds" (optional.String) -
-     * @param "Limit" (optional.String) -
-     * @param "Sort" (optional.String) -
-     * @param "NextToken" (optional.String) -
-     * @param "PrevToken" (optional.String) -
+     * @param "Ids" (optional.String) -  Filters results to VMs with these IDs.
+     * @param "Names" (optional.String) -  Filters results to VMs with these names.
+     * @param "Types" (optional.String) -  Filters results to VMs of these types.
+     * @param "Locations" (optional.String) -  Filters results to VMs in these locations.
+     * @param "States" (optional.String) -  Filters results to VMs in these states.
+     * @param "NvlinkDomainIds" (optional.String) -  Filters results to VMs in these NVLink domains.
+     * @param "Limit" (optional.String) -  Maximum number of VMs to return per page.
+     * @param "Sort" (optional.String) -  Field to sort the results by.
+     * @param "NextToken" (optional.String) -  Token identifying the next page of results to return.
+     * @param "PrevToken" (optional.String) -  Token identifying the previous page of results to return.
 @return ListInstancesResponseV1
 */
 
@@ -797,11 +797,11 @@ func (a *VMsApiService) ListInstances(ctx context.Context, projectId string, loc
 }
 
 /*
-VMsApiService Change the state of a VM the logged in user owns.
+VMsApiService Updates a VM in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param vmId
+  - @param projectId ID of the project that owns the VM.
+  - @param vmId ID of the VM.
 
 @return AsyncOperationResponse
 */
@@ -928,11 +928,11 @@ func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchR
 }
 
 /*
-VMsApiService Attach disks to a VM the logged in user owns.
+VMsApiService Attaches disks to a VM in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param vmId
+  - @param projectId ID of the project that owns the VM.
+  - @param vmId ID of the VM.
 
 @return AsyncOperationResponse
 */
@@ -1059,11 +1059,11 @@ func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body Inst
 }
 
 /*
-VMsApiService Detach disks from a VM the logged in user owns.
+VMsApiService Detaches disks from a VM in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param vmId
+  - @param projectId ID of the project that owns the VM.
+  - @param vmId ID of the VM.
 
 @return AsyncOperationResponse
 */

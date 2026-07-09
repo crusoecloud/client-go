@@ -9,22 +9,22 @@
 package swagger
 
 type BulkInstancePostRequestV1Alpha5 struct {
-	// The number of VMs to create. If multiple locations are specified, this will be the number of VMs created in each location.
+	// Number of VMs to create. If multiple locations are specified, this is the number of VMs created in each location.
 	Count int64 `json:"count"`
-	// optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")
+	// Installation mode for the Crusoe Watch Agent: docker or native. Defaults to docker.
 	CrusoeWatchAgentInstallMode string `json:"crusoe_watch_agent_install_mode,omitempty"`
-	// optional field to control whether the Crusoe Watch Agent is installed (defaults to true)
+	// Whether to install the Crusoe Watch Agent on the VMs. Defaults to true.
 	InstallCrusoeWatchAgent *bool `json:"install_crusoe_watch_agent,omitempty"`
-	// The ID of the instance group the VMs will be created in.
+	// Identifier of the instance group the VMs will be created in.
 	InstanceGroupId  string                               `json:"instance_group_id,omitempty"`
 	InstanceTemplate *InstanceTemplatePostRequestV1Alpha5 `json:"instance_template,omitempty"`
-	// The ID of the instance template to use for creating the VMs.
+	// Identifier of the instance template to use for creating the VMs.
 	InstanceTemplateId string `json:"instance_template_id,omitempty"`
-	// The locations to create the VMs in. This will override any location specified in the instance template.
+	// Locations to create the VMs in. This overrides any location specified in the instance template.
 	Locations []BulkCreateLocationInfo `json:"locations,omitempty"`
-	// The name prefix for the VMs to be created. E.g. \"my-vm\" will create VMs with names \"my-vm-1\",
+	// Name prefix for the VMs to be created, used to derive each VM's name (e.g. \"my-vm\" produces \"my-vm-1\", \"my-vm-2\", and so on).
 	NamePrefix string `json:"name_prefix"`
-	// optional field for specifying an NVLink domain ID
+	// Identifier of the NVLink domain to create the VMs in.
 	NvlinkDomainId           string                    `json:"nvlink_domain_id,omitempty"`
 	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
 }

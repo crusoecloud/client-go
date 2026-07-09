@@ -9,10 +9,14 @@
 package swagger
 
 type HostChannelAdapter struct {
-	Guid                 string `json:"guid"`
-	IbNetworkId          string `json:"ib_network_id"`
-	IbPartitionId        string `json:"ib_partition_id"`
-	TransportNetworkId   string `json:"transport_network_id"`
+	// Globally unique identifier (GUID) of the host channel adapter.
+	Guid          string `json:"guid"`
+	IbNetworkId   string `json:"ib_network_id"`
+	IbPartitionId string `json:"ib_partition_id"`
+	// Identifier of the transport network the host channel adapter is attached to.
+	TransportNetworkId string `json:"transport_network_id"`
+	// Identifier of the transport partition the host channel adapter is attached to.
 	TransportPartitionId string `json:"transport_partition_id"`
-	Type_                string `json:"type"`
+	// Transport type of the host channel adapter.
+	Type_ string `json:"type"`
 }

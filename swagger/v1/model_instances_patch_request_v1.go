@@ -9,14 +9,18 @@
 package swagger
 
 type InstancesPatchRequestV1 struct {
-	// The action to perform on the VM. RESERVE and UNRESERVE operations are done synchronously, and so will have succeeded with a 200 response.
+	// Action to perform on the VM: START, STOP, RESET, RESERVE, UNRESERVE, or UPDATE. RESERVE and UNRESERVE operations are done synchronously, and so will have succeeded with a 200 response.
 	Action string `json:"action"`
 	// CommitmentPeriod is deprecated, please use reservationID instead
-	CommitmentPeriod    int64                       `json:"commitment_period,omitempty"`
+	CommitmentPeriod int64 `json:"commitment_period,omitempty"`
+	// New set of host channel adapters for the VM.
 	HostChannelAdapters []PartialHostChannelAdapter `json:"host_channel_adapters,omitempty"`
-	// The host maintenance policy to use.
-	MaintenancePolicy string             `json:"maintenance_policy,omitempty"`
+	// New host maintenance policy for the VM: manual, stop-vm, or unspecified.
+	MaintenancePolicy string `json:"maintenance_policy,omitempty"`
+	// New set of network interfaces for the VM.
 	NetworkInterfaces []NetworkInterface `json:"network_interfaces,omitempty"`
-	ReservationId     string             `json:"reservation_id,omitempty"`
-	Type_             string             `json:"type,omitempty"`
+	// Identifier of the reservation to use for the VM.
+	ReservationId string `json:"reservation_id,omitempty"`
+	// New VM type to change the VM to.
+	Type_ string `json:"type,omitempty"`
 }

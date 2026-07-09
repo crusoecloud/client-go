@@ -10,5 +10,6 @@ package swagger
 
 // InstancesDetachDiskPostRequest is the request type for POST requests to the vms.instances.detach-disk endpoint.
 type InstancesDetachDiskPostRequest struct {
+	// Identifiers of the disks to detach from the VM.
 	DetachDisks []string `json:"detach_disks"`
 }

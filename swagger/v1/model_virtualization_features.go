@@ -9,5 +9,6 @@
 package swagger
 
 type VirtualizationFeatures struct {
+	// Whether nested virtualization is enabled, allowing a VM to run inside this VM.
 	NestedVirtualization bool `json:"nested_virtualization,omitempty"`
 }

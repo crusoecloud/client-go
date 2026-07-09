@@ -9,8 +9,8 @@
 package swagger
 
 type ReservationSpecification struct {
-	// Reservation ID to use for the VM. Incompatible with SelectionStrategy specification.
+	// Identifier of the reservation to use for the VM. Incompatible with selection_strategy.
 	Id string `json:"id,omitempty"`
-	// Strategy for automatically selecting a reservation. Defaults to lowest cost selection. On-demand may be specified opt out of reservation usages. Incompatible with ID specification.
+	// Strategy for automatically selecting a reservation: lowest_cost or on_demand. Use on_demand to opt out of reservation usage. Incompatible with id.
 	SelectionStrategy string `json:"selection_strategy,omitempty"`
 }

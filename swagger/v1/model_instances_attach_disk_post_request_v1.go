@@ -10,5 +10,6 @@ package swagger
 
 // InstancesAttachDiskPostRequestV1 is the request type for POST requests to the vms.instances.attach-disk endpoint.
 type InstancesAttachDiskPostRequestV1 struct {
+	// Disks to attach to the VM.
 	AttachDisks []DiskAttachment `json:"attach_disks"`
 }

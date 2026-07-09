@@ -9,15 +9,26 @@
 package swagger
 
 type AttachedDiskV1Alpha5 struct {
+	// How the disk is attached to the VM: os (boot disk) or data.
 	AttachmentType string `json:"attachment_type"`
-	BlockSize      int64  `json:"block_size"`
-	CreatedAt      string `json:"created_at"`
-	Id             string `json:"id"`
-	Location       string `json:"location"`
-	Mode           string `json:"mode"`
-	Name           string `json:"name"`
-	SerialNumber   string `json:"serial_number"`
-	Size           string `json:"size"`
-	Type_          string `json:"type"`
-	UpdatedAt      string `json:"updated_at"`
+	// Block size of the disk, in bytes.
+	BlockSize int64 `json:"block_size"`
+	// Time at which the disk was created.
+	CreatedAt string `json:"created_at"`
+	// Unique identifier of the disk, assigned at creation.
+	Id string `json:"id"`
+	// Location of the disk.
+	Location string `json:"location"`
+	// Access mode the disk is attached with: read-write or read-only.
+	Mode string `json:"mode"`
+	// Name of the disk.
+	Name string `json:"name"`
+	// Serial number of the disk.
+	SerialNumber string `json:"serial_number"`
+	// Size of the disk.
+	Size string `json:"size"`
+	// Storage type of the disk.
+	Type_ string `json:"type"`
+	// Time at which the disk was last updated.
+	UpdatedAt string `json:"updated_at"`
 }

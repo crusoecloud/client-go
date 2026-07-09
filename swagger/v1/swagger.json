@@ -3440,7 +3440,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create new VM instances owned by the logged in user.",
+        "summary": "Creates multiple VMs in the project and returns the async operation.",
         "tags": [
           "VMs"
         ]
@@ -3459,6 +3459,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "Filters results to VMs with these IDs.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "query",
             "name": "ids",
@@ -3466,6 +3467,7 @@
             "x-go-name": "IDs"
           },
           {
+            "description": "Filters results to VMs with these names.",
             "example": "my-first-vm",
             "in": "query",
             "name": "names",
@@ -3473,6 +3475,7 @@
             "x-go-name": "Names"
           },
           {
+            "description": "Filters results to VMs of these types.",
             "example": "a40.2x,a100.8x",
             "in": "query",
             "name": "types",
@@ -3480,6 +3483,7 @@
             "x-go-name": "Types"
           },
           {
+            "description": "Filters results to VMs in these locations.",
             "example": "us-east1,us-northcentral1",
             "in": "query",
             "name": "locations",
@@ -3487,6 +3491,7 @@
             "x-go-name": "Locations"
           },
           {
+            "description": "Filters results to VMs in these states.",
             "example": "STATE_RUNNING",
             "in": "query",
             "name": "states",
@@ -3494,6 +3499,7 @@
             "x-go-name": "States"
           },
           {
+            "description": "Filters results to VMs in these NVLink domains.",
             "example": "550e8400-e29b-41d4-a716-446655440000",
             "in": "query",
             "name": "nvlink_domain_ids",
@@ -3501,6 +3507,7 @@
             "x-go-name": "NvlinkDomainIds"
           },
           {
+            "description": "Maximum number of VMs to return per page.",
             "example": "20",
             "in": "query",
             "name": "limit",
@@ -3508,6 +3515,7 @@
             "x-go-name": "Limit"
           },
           {
+            "description": "Field to sort the results by.",
             "example": "name",
             "in": "query",
             "name": "sort",
@@ -3515,6 +3523,7 @@
             "x-go-name": "Sort"
           },
           {
+            "description": "Token identifying the next page of results to return.",
             "example": "bXktZmlyc3Qtdm0",
             "in": "query",
             "name": "next_token",
@@ -3522,6 +3531,7 @@
             "x-go-name": "NextToken"
           },
           {
+            "description": "Token identifying the previous page of results to return.",
             "example": "bXktZmlyc3Qtdm0",
             "in": "query",
             "name": "prev_token",
@@ -3540,7 +3550,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about all VMs that the logged in user owns or has access to.",
+        "summary": "Lists all VMs in the project and returns their details.",
         "tags": [
           "VMs"
         ]
@@ -3582,7 +3592,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new VM instance owned by the logged in user.",
+        "summary": "Creates a VM in the project and returns the async operation.",
         "tags": [
           "VMs"
         ]
@@ -3698,6 +3708,7 @@
         "operationId": "deleteInstance",
         "parameters": [
           {
+            "description": "ID of the project that owns the VM.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3706,6 +3717,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VM.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vm_id",
@@ -3728,7 +3740,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a VM that the logged in user owns.",
+        "summary": "Deletes a VM from the project and returns the async operation.",
         "tags": [
           "VMs"
         ]
@@ -3737,6 +3749,7 @@
         "operationId": "getInstance",
         "parameters": [
           {
+            "description": "ID of the project that owns the VM.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3745,6 +3758,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VM.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vm_id",
@@ -3770,7 +3784,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about a particular VM.",
+        "summary": "Returns details for a single VM in the project.",
         "tags": [
           "VMs"
         ]
@@ -3787,6 +3801,7 @@
             }
           },
           {
+            "description": "ID of the project that owns the VM.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3795,6 +3810,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VM.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vm_id",
@@ -3820,7 +3836,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Change the state of a VM the logged in user owns.",
+        "summary": "Updates a VM in the project and returns the async operation.",
         "tags": [
           "VMs"
         ]
@@ -3839,6 +3855,7 @@
             }
           },
           {
+            "description": "ID of the project that owns the VM.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3847,6 +3864,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VM.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vm_id",
@@ -3872,7 +3890,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Attach disks to a VM the logged in user owns.",
+        "summary": "Attaches disks to a VM in the project and returns the async operation.",
         "tags": [
           "VMs"
         ]
@@ -3891,6 +3909,7 @@
             }
           },
           {
+            "description": "ID of the project that owns the VM.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3899,6 +3918,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the VM.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "vm_id",
@@ -3924,7 +3944,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Detach disks from a VM the logged in user owns.",
+        "summary": "Detaches disks from a VM in the project and returns the async operation.",
         "tags": [
           "VMs"
         ]
@@ -3954,7 +3974,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve information about the types of VMs that are available.",
+        "summary": "Lists all available VM types and returns their details.",
         "tags": [
           "VMs"
         ]
@@ -9871,57 +9891,68 @@
     "AttachedDiskV1": {
       "properties": {
         "attachment_type": {
+          "description": "How the disk is attached to the VM: os (boot disk) or data.",
           "example": "os | data",
           "type": "string",
           "x-go-name": "AttachmentType"
         },
         "block_size": {
+          "description": "Block size of the disk, in bytes.",
           "example": 4096,
           "format": "int64",
           "type": "integer",
           "x-go-name": "BlockSize"
         },
         "created_at": {
+          "description": "Time at which the disk was created.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "id": {
+          "description": "Unique identifier of the disk, assigned at creation.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "ID"
         },
         "location": {
+          "description": "Location of the disk.",
           "example": "us-northcentral1-a",
           "type": "string",
           "x-go-name": "Location"
         },
         "mode": {
+          "description": "Access mode the disk is attached with: read-write or read-only.",
           "example": "read-write | read-only",
           "type": "string",
           "x-go-name": "Mode"
         },
         "name": {
+          "description": "Name of the disk.",
           "example": "my-disk",
           "type": "string",
           "x-go-name": "Name"
         },
         "serial_number": {
+          "description": "Serial number of the disk.",
           "example": "96FD14FDBCF7E21E8EC",
           "type": "string",
           "x-go-name": "SerialNumber"
         },
         "size": {
+          "description": "Size of the disk.",
           "example": "10GiB",
           "type": "string",
           "x-go-name": "Size"
         },
         "type": {
+          "description": "Storage type of the disk.",
           "example": "persistent-ssd",
           "type": "string",
           "x-go-name": "Type"
         },
         "updated_at": {
+          "description": "Time at which the disk was last updated.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -10781,19 +10812,19 @@
           "x-go-name": "IBPartitionID"
         },
         "location": {
-          "description": "The location to create the VMs in.",
+          "description": "Location to create the VMs in.",
           "example": "us-northcentral1-a",
           "type": "string",
           "x-go-name": "Location"
         },
         "subnet_id": {
-          "description": "The ID of the subnet to create the VMs in. Must be in the same location\nas the VMs. If not provided, the default subnet for the location will be\nused, if there is one.",
+          "description": "Identifier of the subnet to create the VMs in. Must be in the same location\nas the VMs. If not provided, the default subnet for the location will be\nused, if there is one.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "SubnetID"
         },
         "transport_partition_id": {
-          "description": "The ID of the Infiniband or RoCE partition to create the VMs in, if a transport type was specified.\nMust be in the same location as the VMs.",
+          "description": "Identifier of the Infiniband or RoCE partition to create the VMs in, if a transport type was\nspecified. Must be in the same location as the VMs.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "TransportPartitionID"
@@ -10808,14 +10839,14 @@
     "BulkInstancePostRequestV1": {
       "properties": {
         "count": {
-          "description": "The number of VMs to create. If multiple locations are specified, this will be the number of VMs\ncreated in each location.",
+          "description": "Number of VMs to create. If multiple locations are specified, this is the number of VMs\ncreated in each location.",
           "example": 6,
           "format": "int64",
           "type": "integer",
           "x-go-name": "Count"
         },
         "crusoe_watch_agent_install_mode": {
-          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
+          "description": "Installation mode for the Crusoe Watch Agent: docker or native. Defaults to docker.",
           "enum": [
             "docker",
             "native"
@@ -10824,13 +10855,13 @@
           "x-go-name": "CrusoeWatchAgentInstallMode"
         },
         "install_crusoe_watch_agent": {
-          "description": "optional field to control whether the Crusoe Watch Agent is installed (defaults to true)",
+          "description": "Whether to install the Crusoe Watch Agent on the VMs. Defaults to true.",
           "type": "boolean",
           "x-go-name": "InstallCrusoeWatchAgent",
           "x-nullable": true
         },
         "instance_group_id": {
-          "description": "The ID of the instance group the VMs will be created in.",
+          "description": "Identifier of the instance group the VMs will be created in.",
           "example": "cda562c4-6162-4565-95f3-ce06a8220c07",
           "type": "string",
           "x-go-name": "InstanceGroupID"
@@ -10839,13 +10870,13 @@
           "$ref": "#/definitions/InstanceTemplatePostRequestV1"
         },
         "instance_template_id": {
-          "description": "The ID of the instance template to use for creating the VMs.",
+          "description": "Identifier of the instance template to use for creating the VMs.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "InstanceTemplateID"
         },
         "locations": {
-          "description": "The locations to create the VMs in. This will override any location specified in the instance template.",
+          "description": "Locations to create the VMs in. This overrides any location specified in the instance template.",
           "items": {
             "$ref": "#/definitions/BulkCreateLocationInfo"
           },
@@ -10853,13 +10884,13 @@
           "x-go-name": "Locations"
         },
         "name_prefix": {
-          "description": "The name prefix for the VMs to be created. E.g. \"my-vm\" will create VMs with names \"my-vm-1\",",
+          "description": "Name prefix for the VMs to be created, used to derive each VM's name (e.g. \"my-vm\" produces\n\"my-vm-1\", \"my-vm-2\", and so on).",
           "example": "my-vm",
           "type": "string",
           "x-go-name": "NamePrefix"
         },
         "nvlink_domain_id": {
-          "description": "optional field for specifying an NVLink domain ID",
+          "description": "Identifier of the NVLink domain to create the VMs in.",
           "type": "string",
           "x-go-name": "NvlinkDomainID"
         },
@@ -12704,6 +12735,7 @@
     "HostChannelAdapter": {
       "properties": {
         "guid": {
+          "description": "Globally unique identifier (GUID) of the host channel adapter.",
           "example": "946d:ae03:0021:69aa",
           "type": "string",
           "x-go-name": "GUID"
@@ -12717,16 +12749,19 @@
           "x-go-name": "IBPartitionID"
         },
         "transport_network_id": {
+          "description": "Identifier of the transport network the host channel adapter is attached to.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "TransportNetworkID"
         },
         "transport_partition_id": {
+          "description": "Identifier of the transport partition the host channel adapter is attached to.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "TransportPartitionID"
         },
         "type": {
+          "description": "Transport type of the host channel adapter.",
           "example": "infiniband",
           "type": "string",
           "x-go-name": "Type"
@@ -13682,7 +13717,7 @@
       "description": "InstanceV1 contains identifying information about a vm instance for\nvms.instances endpoints.",
       "properties": {
         "billing_type": {
-          "description": "values: On-demand, Spot, PoC",
+          "description": "Billing type of the VM: On-demand, Spot, or PoC.\nvalues: On-demand, Spot, PoC",
           "type": "string",
           "x-go-name": "BillingType"
         },
@@ -13697,11 +13732,13 @@
           "x-go-name": "CommitmentPeriod"
         },
         "created_at": {
+          "description": "Time at which the VM was created.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "disks": {
+          "description": "Disks attached to the VM.",
           "items": {
             "$ref": "#/definitions/AttachedDiskV1"
           },
@@ -13709,6 +13746,7 @@
           "x-go-name": "Disks"
         },
         "host_channel_adapters": {
+          "description": "Host channel adapters attached to the VM.",
           "items": {
             "$ref": "#/definitions/HostChannelAdapter"
           },
@@ -13716,26 +13754,31 @@
           "x-go-name": "HostChannelAdapters"
         },
         "id": {
+          "description": "Unique identifier of the VM, assigned at creation.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "ID"
         },
         "instance_group_id": {
+          "description": "Identifier of the instance group the VM belongs to, if any.",
           "example": "707749bd-ecad-4de8-aa00-1ae2fdb99e19",
           "type": "string",
           "x-go-name": "InstanceGroupID"
         },
         "instance_template_id": {
+          "description": "Identifier of the instance template the VM was created from, if any.",
           "example": "75c6712a-8da8-463c-a72d-fc65cf922959",
           "type": "string",
           "x-go-name": "InstanceTemplateID"
         },
         "location": {
+          "description": "Location the VM runs in.",
           "example": "us-centralnorth1-a",
           "type": "string",
           "x-go-name": "Location"
         },
         "maintenance_policy": {
+          "description": "Host maintenance policy applied to the VM: manual, stop-vm, or unspecified.",
           "enum": [
             "manual",
             "stop-vm",
@@ -13745,11 +13788,13 @@
           "x-go-name": "MaintenancePolicy"
         },
         "name": {
+          "description": "Name of the VM.",
           "example": "my-first-vm",
           "type": "string",
           "x-go-name": "Name"
         },
         "network_interfaces": {
+          "description": "Network interfaces attached to the VM.",
           "items": {
             "$ref": "#/definitions/NetworkInterface"
           },
@@ -13757,36 +13802,42 @@
           "x-go-name": "NetworkInterfaces"
         },
         "nvlink_domain_id": {
-          "description": "optional field for specifying an NVLink domain ID",
+          "description": "Identifier of the NVLink domain the VM belongs to, if any.",
           "type": "string",
           "x-go-name": "NvlinkDomainID"
         },
         "pod_id": {
+          "description": "Identifier of the pod the VM belongs to, if any.",
           "example": "29d20dc4-90ad-4365-ab05-83f5f5e52d94",
           "type": "string",
           "x-go-name": "PodID"
         },
         "project_id": {
+          "description": "Identifier of the project that owns the VM.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "ProjectID"
         },
         "reservation_id": {
+          "description": "Identifier of the reservation the VM belongs to, if any.",
           "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
           "type": "string",
           "x-go-name": "ReservationID"
         },
         "state": {
+          "description": "Current lifecycle state of the VM.",
           "example": "RUNNING",
           "type": "string",
           "x-go-name": "State"
         },
         "type": {
+          "description": "Product name of the VM type.",
           "example": "a100.2x",
           "type": "string",
           "x-go-name": "Type"
         },
         "updated_at": {
+          "description": "Time at which the VM was last updated.",
           "example": "2023-08-14T09:00:35Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -13816,6 +13867,7 @@
       "description": "InstancesAttachDiskPostRequestV1 is the request type for POST requests to the\nvms.instances.attach-disk endpoint.",
       "properties": {
         "attach_disks": {
+          "description": "Disks to attach to the VM.",
           "example": "[{disk_id: \"09ae8411-0fbb-411c-898c-2b8f19622ae1\", mode: \"read-write\", attachment_type: \"data\"}, {disk_id: \"b1f86d1b-42d2-490d-adb0-cc1029abf653\", mode: \"read-only\", attachment_type: \"data\"}]",
           "items": {
             "$ref": "#/definitions/DiskAttachment"
@@ -13834,6 +13886,7 @@
       "description": "InstancesDetachDiskPostRequest is the request type for POST requests to the\nvms.instances.detach-disk endpoint.",
       "properties": {
         "detach_disks": {
+          "description": "Identifiers of the disks to detach from the VM.",
           "example": [
             "09ae8411-0fbb-411c-898c-2b8f19622ae1",
             "123e4567-e89b-12d3-a456-426614174000"
@@ -13854,7 +13907,7 @@
     "InstancesPatchRequestV1": {
       "properties": {
         "action": {
-          "description": "The action to perform on the VM. RESERVE and UNRESERVE operations are done synchronously,\nand so will have succeeded with a 200 response.",
+          "description": "Action to perform on the VM: START, STOP, RESET, RESERVE, UNRESERVE, or UPDATE. RESERVE and\nUNRESERVE operations are done synchronously, and so will have succeeded with a 200 response.",
           "enum": [
             "START",
             "STOP",
@@ -13874,6 +13927,7 @@
           "x-go-name": "CommitmentPeriod"
         },
         "host_channel_adapters": {
+          "description": "New set of host channel adapters for the VM.",
           "items": {
             "$ref": "#/definitions/PartialHostChannelAdapter"
           },
@@ -13881,12 +13935,13 @@
           "x-go-name": "HostChannelAdapters"
         },
         "maintenance_policy": {
-          "description": "The host maintenance policy to use.",
+          "description": "New host maintenance policy for the VM: manual, stop-vm, or unspecified.",
           "example": "manual,stop-vm,unspecified",
           "type": "string",
           "x-go-name": "MaintenancePolicy"
         },
         "network_interfaces": {
+          "description": "New set of network interfaces for the VM.",
           "items": {
             "$ref": "#/definitions/NetworkInterface"
           },
@@ -13894,11 +13949,13 @@
           "x-go-name": "NetworkInterfaces"
         },
         "reservation_id": {
+          "description": "Identifier of the reservation to use for the VM.",
           "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
           "type": "string",
           "x-go-name": "ReservationID"
         },
         "type": {
+          "description": "New VM type to change the VM to.",
           "example": "a100.2x",
           "type": "string",
           "x-go-name": "Type"
@@ -13921,7 +13978,7 @@
           "x-go-name": "CommitmentPeriod"
         },
         "crusoe_watch_agent_install_mode": {
-          "description": "optional field to specify the Crusoe Watch Agent installation mode (defaults to \"docker\")",
+          "description": "Installation mode for the Crusoe Watch Agent: docker or native. Defaults to docker.",
           "enum": [
             "docker",
             "native"
@@ -13930,11 +13987,12 @@
           "x-go-name": "CrusoeWatchAgentInstallMode"
         },
         "custom_image": {
-          "description": "either image or custom image should be supplied, not both.",
+          "description": "Identifier of a custom image to use for the new VM. Either image or custom_image should be supplied, not both.",
           "type": "string",
           "x-go-name": "CustomImage"
         },
         "disks": {
+          "description": "Disks to attach to the new VM.",
           "example": "[{disk_id: \"09ae8411-0fbb-411c-898c-2b8f19622ae1\", mode: \"read-write\", attach_type: \"data\"},",
           "items": {
             "$ref": "#/definitions/DiskAttachment"
@@ -13943,6 +14001,7 @@
           "x-go-name": "Disks"
         },
         "host_channel_adapters": {
+          "description": "Host channel adapters to attach to the new VM.",
           "items": {
             "$ref": "#/definitions/PartialHostChannelAdapter"
           },
@@ -13950,33 +14009,37 @@
           "x-go-name": "HostChannelAdapters"
         },
         "image": {
+          "description": "Name of the OS image to use for the new VM. Either image or custom_image should be supplied, not both.",
           "example": "ubuntu:20.04",
           "type": "string",
           "x-go-name": "Image"
         },
         "install_crusoe_watch_agent": {
-          "description": "optional field to control whether the Crusoe Watch Agent is installed (defaults to true)",
+          "description": "Whether to install the Crusoe Watch Agent on the VM. Defaults to true.",
           "type": "boolean",
           "x-go-name": "InstallCrusoeWatchAgent",
           "x-nullable": true
         },
         "location": {
+          "description": "Location to create the VM in.",
           "example": "us-northcentral1-a",
           "type": "string",
           "x-go-name": "Location"
         },
         "maintenance_policy": {
-          "description": "The Host Maintenance Policy to use.",
+          "description": "Host maintenance policy to apply to the new VM: manual, stop-vm, or unspecified.",
           "example": "manual,stop-vm,unspecified",
           "type": "string",
           "x-go-name": "MaintenancePolicy"
         },
         "name": {
+          "description": "Name for the new VM.",
           "example": "my-first-vm",
           "type": "string",
           "x-go-name": "Name"
         },
         "network_interfaces": {
+          "description": "Network interfaces to attach to the new VM.",
           "items": {
             "$ref": "#/definitions/NetworkInterface"
           },
@@ -13984,7 +14047,7 @@
           "x-go-name": "NetworkInterfaces"
         },
         "nvlink_domain_id": {
-          "description": "optional field for specifying an NVLink domain ID",
+          "description": "Identifier of the NVLink domain to create the VM in.",
           "type": "string",
           "x-go-name": "NvlinkDomainID"
         },
@@ -13992,21 +14055,25 @@
           "$ref": "#/definitions/ReservationSpecification"
         },
         "shutdown_script": {
+          "description": "Script to run when the VM shuts down.",
           "example": "#!/bin/bash\\necho'goodbye'",
           "type": "string",
           "x-go-name": "ShutdownScript"
         },
         "ssh_public_key": {
+          "description": "SSH public key to grant access to the new VM.",
           "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D",
           "type": "string",
           "x-go-name": "SSHPublicKey"
         },
         "startup_script": {
+          "description": "Script to run when the VM starts.",
           "example": "#!/bin/bash\\necho'hello'",
           "type": "string",
           "x-go-name": "StartupScript"
         },
         "type": {
+          "description": "Product name of the VM type to create.",
           "example": "a100.2x",
           "type": "string",
           "x-go-name": "Type"
@@ -16476,20 +16543,24 @@
     "NetworkInterface": {
       "properties": {
         "external_dns_name": {
+          "description": "External DNS name of the network interface.",
           "type": "string",
           "x-go-name": "ExternalDNSName"
         },
         "id": {
+          "description": "Unique identifier of the network interface, assigned at creation.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "ID"
         },
         "interface_type": {
+          "description": "Type of the network interface.",
           "example": "ethernet",
           "type": "string",
           "x-go-name": "InterfaceType"
         },
         "ips": {
+          "description": "IP addresses assigned to the network interface.",
           "items": {
             "$ref": "#/definitions/IPAddresses"
           },
@@ -16497,21 +16568,25 @@
           "x-go-name": "IPs"
         },
         "mac_address": {
+          "description": "MAC address of the network interface.",
           "example": "00:00:5e:00:53:af",
           "type": "string",
           "x-go-name": "MACAddress"
         },
         "name": {
+          "description": "Name of the network interface.",
           "example": "network-interface-1",
           "type": "string",
           "x-go-name": "Name"
         },
         "network": {
+          "description": "Identifier of the VPC network the interface is attached to.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "Network"
         },
         "subnet": {
+          "description": "Identifier of the VPC subnet the interface is attached to.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "Subnet"
@@ -16922,6 +16997,7 @@
           "x-go-name": "IBPartitionID"
         },
         "transport_partition_id": {
+          "description": "Identifier of the transport partition to assign the host channel adapter to.",
           "type": "string",
           "x-go-name": "TransportPartitionID"
         }
@@ -17676,14 +17752,14 @@
     "ReservationSpecification": {
       "properties": {
         "id": {
-          "description": "Reservation ID to use for the VM. Incompatible with\nSelectionStrategy specification.",
+          "description": "Identifier of the reservation to use for the VM. Incompatible with selection_strategy.",
           "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
           "type": "string",
           "x-go-name": "ID"
         },
         "selection_strategy": {
           "default": "lowest_cost",
-          "description": "Strategy for automatically selecting a reservation. Defaults to lowest cost selection.\nOn-demand may be specified opt out of reservation usages. Incompatible with ID specification.",
+          "description": "Strategy for automatically selecting a reservation: lowest_cost or on_demand. Use on_demand\nto opt out of reservation usage. Incompatible with id.",
           "enum": [
             "lowest_cost",
             "on_demand"
@@ -18742,55 +18818,65 @@
     "Type": {
       "properties": {
         "cpu_cores": {
+          "description": "Number of CPU cores provided by the VM type.",
           "example": 4,
           "format": "int64",
           "type": "integer",
           "x-go-name": "CPUCores"
         },
         "cpu_type": {
+          "description": "CPU manufacturer of the VM type.",
           "example": "intel",
           "type": "string",
           "x-go-name": "CPUType"
         },
         "description": {
+          "description": "Human-readable description of the VM type.",
           "example": "2x Nvidia A100",
           "type": "string",
           "x-go-name": "Description"
         },
         "disk_gb": {
+          "description": "Amount of disk storage provided by the VM type, in GB.",
           "example": 8,
           "format": "int64",
           "type": "integer",
           "x-go-name": "DiskGB"
         },
         "disk_type": {
+          "description": "Type of disk storage provided by the VM type.",
           "example": "SSD",
           "type": "string",
           "x-go-name": "DiskType"
         },
         "gpu_type": {
+          "description": "GPU model provided by the VM type.",
           "example": "A100",
           "type": "string",
           "x-go-name": "GPUType"
         },
         "memory_gb": {
+          "description": "Amount of memory provided by the VM type, in GB.",
           "example": 16,
           "format": "int64",
           "type": "integer",
           "x-go-name": "MemoryGB"
         },
         "memory_type": {
+          "description": "Type of memory provided by the VM type.",
           "example": "RAM",
           "type": "string",
           "x-go-name": "MemoryType"
         },
         "num_gpu": {
+          "description": "Number of GPUs provided by the VM type.",
           "example": 2,
           "format": "int64",
           "type": "integer",
           "x-go-name": "NumGPU"
         },
         "product_name": {
+          "description": "Product name of the VM type.",
           "example": "a100.2x",
           "type": "string",
           "x-go-name": "ProductName"
@@ -19866,6 +19952,7 @@
     "VirtualizationFeatures": {
       "properties": {
         "nested_virtualization": {
+          "description": "Whether nested virtualization is enabled, allowing a VM to run inside this VM.",
           "example": true,
           "type": "boolean",
           "x-go-name": "NestedVirtualization"
