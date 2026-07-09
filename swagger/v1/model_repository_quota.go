@@ -9,7 +9,10 @@
 package swagger
 
 type RepositoryQuota struct {
+	// Time at which the usage data was last computed.
 	LastRequestedTimestampUtc string `json:"last_requested_timestamp_utc,omitempty"`
-	MaxSizeBytes              string `json:"max_size_bytes,omitempty"`
-	UsedSizeBytes             string `json:"used_size_bytes,omitempty"`
+	// Maximum total size allowed for the repository, in bytes.
+	MaxSizeBytes string `json:"max_size_bytes,omitempty"`
+	// Total size currently used by the repository, in bytes.
+	UsedSizeBytes string `json:"used_size_bytes,omitempty"`
 }

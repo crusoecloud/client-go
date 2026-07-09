@@ -9,5 +9,6 @@
 package swagger
 
 type CcrTokenResponse struct {
+	// Token used to authenticate to the container registry.
 	Token string `json:"token,omitempty"`
 }

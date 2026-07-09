@@ -27,9 +27,9 @@ var (
 type ContainerRegistryApiService service
 
 /*
-ContainerRegistryApiService Create a container registry repository.
+ContainerRegistryApiService Creates a container registry repository in the project and returns the created repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project to create the repository in.
  * @param optional nil or *ContainerRegistryApiCreateCcrRepositoryOpts - Optional Parameters:
      * @param "Body" (optional.Interface of RepositoryRequest) -
 @return Repository
@@ -165,7 +165,7 @@ func (a *ContainerRegistryApiService) CreateCcrRepository(ctx context.Context, p
 }
 
 /*
-ContainerRegistryApiService Create a container registry specific limited scope token for a user.
+ContainerRegistryApiService Creates a limited-scope token for authenticating to the container registry and returns it.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *ContainerRegistryApiCreateCcrTokenOpts - Optional Parameters:
      * @param "Body" (optional.Interface of CcrTokenRequest) -
@@ -291,13 +291,13 @@ func (a *ContainerRegistryApiService) CreateCcrToken(ctx context.Context, localV
 }
 
 /*
-ContainerRegistryApiService Delete an image from a container registry repository.
+ContainerRegistryApiService Deletes an image from a container registry repository in the project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
- * @param imageId
+ * @param projectId ID of the project that owns the repository.
+ * @param repositoryId ID of the repository that contains the image.
+ * @param imageId ID of the image to delete.
  * @param optional nil or *ContainerRegistryApiDeleteCcrImageOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
+     * @param "Location" (optional.String) -  Location the repository is hosted in.
 
 */
 
@@ -411,15 +411,15 @@ func (a *ContainerRegistryApiService) DeleteCcrImage(ctx context.Context, projec
 }
 
 /*
-ContainerRegistryApiService Delete a manifest from an image in a container registry repository.
+ContainerRegistryApiService Deletes a manifest from an image in a container registry repository in the project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
- * @param imageId
+ * @param projectId ID of the project that owns the repository.
+ * @param repositoryId ID of the repository that contains the image.
+ * @param imageId ID of the image that contains the manifest.
  * @param optional nil or *ContainerRegistryApiDeleteCcrManifestOpts - Optional Parameters:
-     * @param "Tag" (optional.String) -
-     * @param "Digest" (optional.String) -
-     * @param "Location" (optional.String) -
+     * @param "Tag" (optional.String) -  Tag that points to the manifest to delete. Either tag or digest must be provided, but not both.
+     * @param "Digest" (optional.String) -  Digest of the manifest to delete. Either tag or digest must be provided, but not both.
+     * @param "Location" (optional.String) -  Location the repository is hosted in.
 
 */
 
@@ -541,12 +541,12 @@ func (a *ContainerRegistryApiService) DeleteCcrManifest(ctx context.Context, pro
 }
 
 /*
-ContainerRegistryApiService Delete a container registry repository.
+ContainerRegistryApiService Deletes a container registry repository from the project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
+ * @param projectId ID of the project that owns the repository.
+ * @param repositoryId ID of the repository.
  * @param optional nil or *ContainerRegistryApiDeleteCcrRepositoryOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
+     * @param "Location" (optional.String) -  Location the repository is hosted in.
 
 */
 
@@ -659,12 +659,12 @@ func (a *ContainerRegistryApiService) DeleteCcrRepository(ctx context.Context, p
 }
 
 /*
-ContainerRegistryApiService Get a specific CCR repository.
+ContainerRegistryApiService Returns details for a single container registry repository in the project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
+ * @param projectId ID of the project that owns the repository.
+ * @param repositoryId ID of the repository.
  * @param optional nil or *ContainerRegistryApiGetCcrRepositoryOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
+     * @param "Location" (optional.String) -  Location the repository is hosted in.
 @return Repository
 */
 
@@ -796,12 +796,12 @@ func (a *ContainerRegistryApiService) GetCcrRepository(ctx context.Context, proj
 }
 
 /*
-ContainerRegistryApiService Get usage data for a specific container registry repository.
+ContainerRegistryApiService Returns usage data for a single container registry repository in the project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
+ * @param projectId ID of the project that owns the repository.
+ * @param repositoryId ID of the repository.
  * @param optional nil or *ContainerRegistryApiGetCcrRepositoryUsageOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
+     * @param "Location" (optional.String) -  Location the repository is hosted in.
 @return RepositoryQuota
 */
 
@@ -933,16 +933,16 @@ func (a *ContainerRegistryApiService) GetCcrRepositoryUsage(ctx context.Context,
 }
 
 /*
-ContainerRegistryApiService List all images in a container registry repository.
+ContainerRegistryApiService Lists all images in a container registry repository in the project and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
+ * @param projectId ID of the project that owns the repository.
+ * @param repositoryId ID of the repository that contains the images.
  * @param optional nil or *ContainerRegistryApiListCcrImagesOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
-     * @param "Page" (optional.Int32) -
-     * @param "PageSize" (optional.Int32) -
-     * @param "SortBy" (optional.String) -
-     * @param "SortOrder" (optional.String) -
+     * @param "Location" (optional.String) -  Location the repository is hosted in.
+     * @param "Page" (optional.Int32) -  Page number of results to return.
+     * @param "PageSize" (optional.Int32) -  Number of results to return per page.
+     * @param "SortBy" (optional.String) -  Field to sort the results by.
+     * @param "SortOrder" (optional.String) -  Order to sort the results in.
 @return ListCcrImagesResponse
 */
 
@@ -1090,18 +1090,18 @@ func (a *ContainerRegistryApiService) ListCcrImages(ctx context.Context, project
 }
 
 /*
-ContainerRegistryApiService List all manifests for an image in a container registry repository.
+ContainerRegistryApiService Lists all manifests for an image in a container registry repository in the project and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
- * @param imageId
+ * @param projectId ID of the project that owns the repository.
+ * @param repositoryId ID of the repository that contains the image.
+ * @param imageId ID of the image whose manifests are listed.
  * @param optional nil or *ContainerRegistryApiListCcrManifestsOpts - Optional Parameters:
-     * @param "TagContains" (optional.String) -
-     * @param "Location" (optional.String) -
-     * @param "Page" (optional.Int32) -
-     * @param "PageSize" (optional.Int32) -
-     * @param "SortBy" (optional.String) -
-     * @param "SortOrder" (optional.String) -
+     * @param "TagContains" (optional.String) -  Filters results to manifests with a tag that contains this substring.
+     * @param "Location" (optional.String) -  Location the repository is hosted in.
+     * @param "Page" (optional.Int32) -  Page number of results to return.
+     * @param "PageSize" (optional.Int32) -  Number of results to return per page.
+     * @param "SortBy" (optional.String) -  Field to sort the results by.
+     * @param "SortOrder" (optional.String) -  Order to sort the results in.
 @return ListManifestsResponse
 */
 
@@ -1254,14 +1254,14 @@ func (a *ContainerRegistryApiService) ListCcrManifests(ctx context.Context, proj
 }
 
 /*
-ContainerRegistryApiService List all container registry repositories in a project.
+ContainerRegistryApiService Lists all container registry repositories in the project and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project that owns the repositories.
  * @param optional nil or *ContainerRegistryApiListCcrRepositoriesOpts - Optional Parameters:
-     * @param "Page" (optional.Int32) -
-     * @param "PageSize" (optional.Int32) -
-     * @param "SortBy" (optional.String) -
-     * @param "SortOrder" (optional.String) -
+     * @param "Page" (optional.Int32) -  Page number of results to return.
+     * @param "PageSize" (optional.Int32) -  Number of results to return per page.
+     * @param "SortBy" (optional.String) -  Field to sort the results by.
+     * @param "SortOrder" (optional.String) -  Order to sort the results in.
 @return ListRepositoriesResponse
 */
 
@@ -1404,7 +1404,7 @@ func (a *ContainerRegistryApiService) ListCcrRepositories(ctx context.Context, p
 }
 
 /*
-ContainerRegistryApiService List locations where the container registry is hosted in the Crusoe Cloud.
+ContainerRegistryApiService Lists the locations where container registry repositories can be hosted.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return ListSupportedLocationsResponse
@@ -1508,7 +1508,7 @@ func (a *ContainerRegistryApiService) ListSupportedLocations(ctx context.Context
 }
 
 /*
-ContainerRegistryApiService Returns the list of supported upstream registry providers for pull-through-caches.
+ContainerRegistryApiService Lists the upstream registry providers supported for pull-through-cache repositories.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return ListSupportedProvidersResponse
@@ -1612,11 +1612,11 @@ func (a *ContainerRegistryApiService) ListSupportedProviders(ctx context.Context
 }
 
 /*
-ContainerRegistryApiService Update upstream registry credentials for a repository.
+ContainerRegistryApiService Updates the upstream registry credentials for a repository in the project.
 Updates the username and password credentials for the upstream registry of a pull-through cache repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param repositoryId
+ * @param projectId ID of the project that owns the repository.
+ * @param repositoryId ID of the repository.
  * @param optional nil or *ContainerRegistryApiUpdateCcrRepositoryCredentialsOpts - Optional Parameters:
      * @param "Body" (optional.Interface of UpstreamRegistryCredentials) -
 

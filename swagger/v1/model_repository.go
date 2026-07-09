@@ -13,13 +13,21 @@ import (
 )
 
 type Repository struct {
-	CreatedAt        time.Time         `json:"created_at,omitempty"`
-	Id               string            `json:"id,omitempty"`
-	Location         string            `json:"location,omitempty"`
-	MaxSizeBytes     string            `json:"max_size_bytes,omitempty"`
-	Mode             string            `json:"mode,omitempty"`
-	Name             string            `json:"name,omitempty"`
+	// Time at which the repository was created.
+	CreatedAt time.Time `json:"created_at,omitempty"`
+	// Unique identifier of the repository, assigned at creation.
+	Id string `json:"id,omitempty"`
+	// Location the repository is hosted in.
+	Location string `json:"location,omitempty"`
+	// Maximum total size of the repository, in bytes.
+	MaxSizeBytes string `json:"max_size_bytes,omitempty"`
+	// Mode of the repository, which determines how images are stored and served.
+	Mode string `json:"mode,omitempty"`
+	// Name of the repository.
+	Name string `json:"name,omitempty"`
+	// State of the repository.
 	State            string            `json:"state,omitempty"`
 	UpstreamRegistry *UpstreamRegistry `json:"upstream_registry,omitempty"`
-	Url              string            `json:"url,omitempty"`
+	// URL at which the repository can be accessed.
+	Url string `json:"url,omitempty"`
 }

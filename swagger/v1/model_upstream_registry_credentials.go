@@ -9,6 +9,8 @@
 package swagger
 
 type UpstreamRegistryCredentials struct {
+	// Password used to authenticate to the upstream registry.
 	Password string `json:"password,omitempty"`
+	// Username used to authenticate to the upstream registry.
 	Username string `json:"username,omitempty"`
 }

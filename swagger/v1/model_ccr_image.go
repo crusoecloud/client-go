@@ -13,9 +13,14 @@ import (
 )
 
 type CcrImage struct {
-	ManifestCount int64     `json:"manifest_count,omitempty"`
-	Name          string    `json:"name,omitempty"`
-	PullCount     int64     `json:"pull_count,omitempty"`
-	UpdatedAt     time.Time `json:"updated_at,omitempty"`
-	Url           string    `json:"url,omitempty"`
+	// Number of manifests in the image.
+	ManifestCount int64 `json:"manifest_count,omitempty"`
+	// Name of the image.
+	Name string `json:"name,omitempty"`
+	// Number of times the image has been pulled.
+	PullCount int64 `json:"pull_count,omitempty"`
+	// Time at which the image was last updated.
+	UpdatedAt time.Time `json:"updated_at,omitempty"`
+	// URL at which the image can be accessed.
+	Url string `json:"url,omitempty"`
 }

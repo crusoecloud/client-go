@@ -79,7 +79,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "List locations where the container registry is hosted in the Crusoe Cloud.",
+        "summary": "Lists the locations where container registry repositories can be hosted.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -100,7 +100,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Returns the list of supported upstream registry providers for pull-through-caches.",
+        "summary": "Lists the upstream registry providers supported for pull-through-cache repositories.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -133,7 +133,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a container registry specific limited scope token for a user.",
+        "summary": "Creates a limited-scope token for authenticating to the container registry and returns it.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -2106,6 +2106,7 @@
         "operationId": "listCcrRepositories",
         "parameters": [
           {
+            "description": "ID of the project that owns the repositories.",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -2113,6 +2114,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "Page number of results to return.",
             "format": "int32",
             "in": "query",
             "name": "page",
@@ -2120,6 +2122,7 @@
             "x-go-name": "Page"
           },
           {
+            "description": "Number of results to return per page.",
             "format": "int32",
             "in": "query",
             "name": "page_size",
@@ -2127,12 +2130,14 @@
             "x-go-name": "PageSize"
           },
           {
+            "description": "Field to sort the results by.",
             "in": "query",
             "name": "sort_by",
             "type": "string",
             "x-go-name": "SortBy"
           },
           {
+            "description": "Order to sort the results in.",
             "in": "query",
             "name": "sort_order",
             "type": "string",
@@ -2156,7 +2161,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "List all container registry repositories in a project.",
+        "summary": "Lists all container registry repositories in the project and returns their details.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -2166,6 +2171,7 @@
         "operationId": "createCcrRepository",
         "parameters": [
           {
+            "description": "ID of the project to create the repository in.",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -2197,7 +2203,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a container registry repository.",
+        "summary": "Creates a container registry repository in the project and returns the created repository.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -2209,6 +2215,7 @@
         "operationId": "deleteCcrRepository",
         "parameters": [
           {
+            "description": "ID of the project that owns the repository.",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -2216,6 +2223,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the repository.",
             "in": "path",
             "name": "repository_id",
             "required": true,
@@ -2223,6 +2231,7 @@
             "x-go-name": "RepositoryID"
           },
           {
+            "description": "Location the repository is hosted in.",
             "in": "query",
             "name": "location",
             "type": "string",
@@ -2246,7 +2255,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a container registry repository.",
+        "summary": "Deletes a container registry repository from the project.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -2256,6 +2265,7 @@
         "operationId": "getCcrRepository",
         "parameters": [
           {
+            "description": "ID of the project that owns the repository.",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -2263,6 +2273,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the repository.",
             "in": "path",
             "name": "repository_id",
             "required": true,
@@ -2270,6 +2281,7 @@
             "x-go-name": "RepositoryID"
           },
           {
+            "description": "Location the repository is hosted in.",
             "in": "query",
             "name": "location",
             "type": "string",
@@ -2293,7 +2305,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Get a specific CCR repository.",
+        "summary": "Returns details for a single container registry repository in the project.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -2304,6 +2316,7 @@
         "operationId": "updateCcrRepositoryCredentials",
         "parameters": [
           {
+            "description": "ID of the project that owns the repository.",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -2311,6 +2324,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the repository.",
             "in": "path",
             "name": "repository_id",
             "required": true,
@@ -2342,7 +2356,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Update upstream registry credentials for a repository.",
+        "summary": "Updates the upstream registry credentials for a repository in the project.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -2354,6 +2368,7 @@
         "operationId": "deleteCcrImage",
         "parameters": [
           {
+            "description": "ID of the project that owns the repository.",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -2361,6 +2376,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the repository that contains the image.",
             "in": "path",
             "name": "repository_id",
             "required": true,
@@ -2368,6 +2384,7 @@
             "x-go-name": "RepositoryID"
           },
           {
+            "description": "ID of the image to delete.",
             "in": "query",
             "name": "image_id",
             "required": true,
@@ -2375,6 +2392,7 @@
             "x-go-name": "ImageID"
           },
           {
+            "description": "Location the repository is hosted in.",
             "in": "query",
             "name": "location",
             "type": "string",
@@ -2398,7 +2416,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete an image from a container registry repository.",
+        "summary": "Deletes an image from a container registry repository in the project.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -2408,6 +2426,7 @@
         "operationId": "listCcrImages",
         "parameters": [
           {
+            "description": "ID of the project that owns the repository.",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -2415,6 +2434,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the repository that contains the images.",
             "in": "path",
             "name": "repository_id",
             "required": true,
@@ -2422,12 +2442,14 @@
             "x-go-name": "RepositoryID"
           },
           {
+            "description": "Location the repository is hosted in.",
             "in": "query",
             "name": "location",
             "type": "string",
             "x-go-name": "Location"
           },
           {
+            "description": "Page number of results to return.",
             "format": "int32",
             "in": "query",
             "name": "page",
@@ -2435,6 +2457,7 @@
             "x-go-name": "Page"
           },
           {
+            "description": "Number of results to return per page.",
             "format": "int32",
             "in": "query",
             "name": "page_size",
@@ -2442,12 +2465,14 @@
             "x-go-name": "PageSize"
           },
           {
+            "description": "Field to sort the results by.",
             "in": "query",
             "name": "sort_by",
             "type": "string",
             "x-go-name": "SortBy"
           },
           {
+            "description": "Order to sort the results in.",
             "in": "query",
             "name": "sort_order",
             "type": "string",
@@ -2471,7 +2496,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "List all images in a container registry repository.",
+        "summary": "Lists all images in a container registry repository in the project and returns their details.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -2483,6 +2508,7 @@
         "operationId": "deleteCcrManifest",
         "parameters": [
           {
+            "description": "ID of the project that owns the repository.",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -2490,6 +2516,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the repository that contains the image.",
             "in": "path",
             "name": "repository_id",
             "required": true,
@@ -2497,6 +2524,7 @@
             "x-go-name": "RepositoryID"
           },
           {
+            "description": "ID of the image that contains the manifest.",
             "in": "query",
             "name": "image_id",
             "required": true,
@@ -2504,18 +2532,21 @@
             "x-go-name": "ImageID"
           },
           {
+            "description": "Tag that points to the manifest to delete. Either tag or digest must be provided, but not both.",
             "in": "query",
             "name": "tag",
             "type": "string",
             "x-go-name": "Tag"
           },
           {
+            "description": "Digest of the manifest to delete. Either tag or digest must be provided, but not both.",
             "in": "query",
             "name": "digest",
             "type": "string",
             "x-go-name": "Digest"
           },
           {
+            "description": "Location the repository is hosted in.",
             "in": "query",
             "name": "location",
             "type": "string",
@@ -2539,7 +2570,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a manifest from an image in a container registry repository.",
+        "summary": "Deletes a manifest from an image in a container registry repository in the project.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -2549,6 +2580,7 @@
         "operationId": "listCcrManifests",
         "parameters": [
           {
+            "description": "ID of the project that owns the repository.",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -2556,6 +2588,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the repository that contains the image.",
             "in": "path",
             "name": "repository_id",
             "required": true,
@@ -2563,6 +2596,7 @@
             "x-go-name": "RepositoryID"
           },
           {
+            "description": "ID of the image whose manifests are listed.",
             "in": "query",
             "name": "image_id",
             "required": true,
@@ -2570,18 +2604,21 @@
             "x-go-name": "ImageID"
           },
           {
+            "description": "Filters results to manifests with a tag that contains this substring.",
             "in": "query",
             "name": "tag_contains",
             "type": "string",
             "x-go-name": "TagContains"
           },
           {
+            "description": "Location the repository is hosted in.",
             "in": "query",
             "name": "location",
             "type": "string",
             "x-go-name": "Location"
           },
           {
+            "description": "Page number of results to return.",
             "format": "int32",
             "in": "query",
             "name": "page",
@@ -2589,6 +2626,7 @@
             "x-go-name": "Page"
           },
           {
+            "description": "Number of results to return per page.",
             "format": "int32",
             "in": "query",
             "name": "page_size",
@@ -2596,12 +2634,14 @@
             "x-go-name": "PageSize"
           },
           {
+            "description": "Field to sort the results by.",
             "in": "query",
             "name": "sort_by",
             "type": "string",
             "x-go-name": "SortBy"
           },
           {
+            "description": "Order to sort the results in.",
             "in": "query",
             "name": "sort_order",
             "type": "string",
@@ -2625,7 +2665,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "List all manifests for an image in a container registry repository.",
+        "summary": "Lists all manifests for an image in a container registry repository in the project and returns their details.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -2637,6 +2677,7 @@
         "operationId": "getCcrRepositoryUsage",
         "parameters": [
           {
+            "description": "ID of the project that owns the repository.",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -2644,6 +2685,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the repository.",
             "in": "path",
             "name": "repository_id",
             "required": true,
@@ -2651,6 +2693,7 @@
             "x-go-name": "RepositoryID"
           },
           {
+            "description": "Location the repository is hosted in.",
             "in": "query",
             "name": "location",
             "type": "string",
@@ -2674,7 +2717,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Get usage data for a specific container registry repository.",
+        "summary": "Returns usage data for a single container registry repository in the project.",
         "tags": [
           "Ccr",
           "Container Registry"
@@ -10908,10 +10951,12 @@
     "CCRTokenRequest": {
       "properties": {
         "alias": {
+          "description": "Alias for the new token, used to identify it.",
           "type": "string",
           "x-go-name": "Alias"
         },
         "expires_at": {
+          "description": "Time at which the token expires.",
           "type": "string",
           "x-go-name": "ExpiresAt"
         }
@@ -10922,6 +10967,7 @@
     "CCRTokenResponse": {
       "properties": {
         "token": {
+          "description": "Token used to authenticate to the container registry.",
           "type": "string",
           "x-go-name": "Token"
         }
@@ -11036,25 +11082,30 @@
     "CcrImage": {
       "properties": {
         "manifest_count": {
+          "description": "Number of manifests in the image.",
           "format": "int64",
           "type": "integer",
           "x-go-name": "ManifestCount"
         },
         "name": {
+          "description": "Name of the image.",
           "type": "string",
           "x-go-name": "Name"
         },
         "pull_count": {
+          "description": "Number of times the image has been pulled.",
           "format": "int64",
           "type": "integer",
           "x-go-name": "PullCount"
         },
         "updated_at": {
+          "description": "Time at which the image was last updated.",
           "format": "date-time",
           "type": "string",
           "x-go-name": "LastUpdatedTimestampUTC"
         },
         "url": {
+          "description": "URL at which the image can be accessed.",
           "type": "string",
           "x-go-name": "URL"
         }
@@ -16483,24 +16534,29 @@
     "Manifest": {
       "properties": {
         "digest": {
+          "description": "Content-addressable digest that uniquely identifies the manifest.",
           "type": "string",
           "x-go-name": "Digest"
         },
         "pulled_at": {
+          "description": "Time at which the manifest was last pulled.",
           "format": "date-time",
           "type": "string",
           "x-go-name": "PullTimestampUTC"
         },
         "pushed_at": {
+          "description": "Time at which the manifest was pushed.",
           "format": "date-time",
           "type": "string",
           "x-go-name": "PushTimestampUTC"
         },
         "size_bytes": {
+          "description": "Total size of the manifest, in bytes.",
           "type": "string",
           "x-go-name": "SizeBytes"
         },
         "tags": {
+          "description": "Tags that point to the manifest.",
           "items": {
             "type": "string"
           },
@@ -17561,31 +17617,38 @@
     "Repository": {
       "properties": {
         "created_at": {
+          "description": "Time at which the repository was created.",
           "format": "date-time",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "id": {
+          "description": "Unique identifier of the repository, assigned at creation.",
           "type": "string",
           "x-go-name": "ID"
         },
         "location": {
+          "description": "Location the repository is hosted in.",
           "type": "string",
           "x-go-name": "Location"
         },
         "max_size_bytes": {
+          "description": "Maximum total size of the repository, in bytes.",
           "type": "string",
           "x-go-name": "MaxSizeBytes"
         },
         "mode": {
+          "description": "Mode of the repository, which determines how images are stored and served.",
           "type": "string",
           "x-go-name": "Mode"
         },
         "name": {
+          "description": "Name of the repository.",
           "type": "string",
           "x-go-name": "Name"
         },
         "state": {
+          "description": "State of the repository.",
           "type": "string",
           "x-go-name": "State"
         },
@@ -17593,6 +17656,7 @@
           "$ref": "#/definitions/UpstreamRegistry"
         },
         "url": {
+          "description": "URL at which the repository can be accessed.",
           "type": "string",
           "x-go-name": "URL"
         }
@@ -17603,14 +17667,17 @@
     "RepositoryQuota": {
       "properties": {
         "last_requested_timestamp_utc": {
+          "description": "Time at which the usage data was last computed.",
           "type": "string",
           "x-go-name": "LastRequestedTimestampUTC"
         },
         "max_size_bytes": {
+          "description": "Maximum total size allowed for the repository, in bytes.",
           "type": "string",
           "x-go-name": "MaxSizeBytes"
         },
         "used_size_bytes": {
+          "description": "Total size currently used by the repository, in bytes.",
           "type": "string",
           "x-go-name": "UsedSizeBytes"
         }
@@ -17621,18 +17688,22 @@
     "RepositoryRequest": {
       "properties": {
         "location": {
+          "description": "Location to create the repository in.",
           "type": "string",
           "x-go-name": "Location"
         },
         "max_size_bytes": {
+          "description": "Maximum total size for the new repository, in bytes.",
           "type": "string",
           "x-go-name": "MaxSizeBytes"
         },
         "mode": {
+          "description": "Mode for the new repository, which determines how images are stored and served.",
           "type": "string",
           "x-go-name": "Mode"
         },
         "name": {
+          "description": "Name for the new repository.",
           "type": "string",
           "x-go-name": "Name"
         },
@@ -19043,6 +19114,7 @@
     "UpstreamRegistry": {
       "properties": {
         "provider": {
+          "description": "Provider of the upstream registry.",
           "type": "string",
           "x-go-name": "Provider"
         },
@@ -19050,6 +19122,7 @@
           "$ref": "#/definitions/UpstreamRegistryCredentials"
         },
         "url": {
+          "description": "Base URL of the upstream registry that the repository caches images from.",
           "type": "string",
           "x-go-name": "URL"
         }
@@ -19060,10 +19133,12 @@
     "UpstreamRegistryCredentials": {
       "properties": {
         "password": {
+          "description": "Password used to authenticate to the upstream registry.",
           "type": "string",
           "x-go-name": "Password"
         },
         "username": {
+          "description": "Username used to authenticate to the upstream registry.",
           "type": "string",
           "x-go-name": "Username"
         }
