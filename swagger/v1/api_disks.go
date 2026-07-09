@@ -27,7 +27,7 @@ var (
 type DisksApiService service
 
 /*
-DisksApiService Create a new disk owned by the logged in user.
+DisksApiService Creates a disk in the project and returns the async operation.
 Requires either a disk snapshot ID, or size and location, where size of disk should be in gibibytes (GiB) or tebibytes (TiB) in the format [Size][Unit]. E.g. 10GiB. Disk type must be one of: DISK_TYPE_PERSISTENT_SSD. A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
@@ -157,11 +157,11 @@ func (a *DisksApiService) CreateDisk(ctx context.Context, body DisksPostRequestV
 }
 
 /*
-DisksApiService Delete a disk owned by the logged in user.
+DisksApiService Deletes a disk from the project and returns the async operation.
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param diskId
+  - @param projectId ID of the project that owns the disk.
+  - @param diskId ID of the disk.
 
 @return AsyncOperationResponse
 */
@@ -276,11 +276,11 @@ func (a *DisksApiService) DeleteDisk(ctx context.Context, projectId string, disk
 }
 
 /*
-DisksApiService Retrieve details for a disk that belongs to the logged in user.
+DisksApiService Returns details for a single disk in the project.
 Size of disk will be in gibibytes (GiB)
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param diskId
+  - @param projectId ID of the project that owns the disk.
+  - @param diskId ID of the disk.
 
 @return DiskV1
 */
@@ -395,15 +395,15 @@ func (a *DisksApiService) GetDisk(ctx context.Context, projectId string, diskId 
 }
 
 /*
-DisksApiService Retrieve details about all disks that belong to the logged in user.
+DisksApiService Lists all disks in the project and returns their details.
 Size of disks will be in gibibytes (GiB)
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project that owns the disks.
  * @param optional nil or *DisksApiListDisksOpts - Optional Parameters:
-     * @param "DiskIds" (optional.Interface of []string) -
-     * @param "Location" (optional.String) -
-     * @param "DiskNames" (optional.Interface of []string) -
-     * @param "ExcludeOs" (optional.Bool) -
+     * @param "DiskIds" (optional.Interface of []string) -  Filters results to disks with these IDs.
+     * @param "Location" (optional.String) -  Filters results to disks in this location.
+     * @param "DiskNames" (optional.Interface of []string) -  Filters results to disks with these names.
+     * @param "ExcludeOs" (optional.Bool) -  Excludes OS disks from the results when true.
 @return ListDisksResponseV1
 */
 
@@ -536,12 +536,12 @@ func (a *DisksApiService) ListDisks(ctx context.Context, projectId string, local
 }
 
 /*
-DisksApiService Resize a disk that the logged in user owns.
+DisksApiService Resizes a disk in the project and returns the async operation.
 Size should be in gibibytes (GiB) or tebibytes (TiB) in the format [Size][Unit]. E.g. 10GiB A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param diskId
+  - @param projectId ID of the project that owns the disk.
+  - @param diskId ID of the disk.
 
 @return AsyncOperationResponse
 */

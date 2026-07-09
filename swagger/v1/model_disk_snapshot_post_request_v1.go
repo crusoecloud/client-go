@@ -9,6 +9,8 @@
 package swagger
 
 type DiskSnapshotPostRequestV1 struct {
+	// ID of the disk to snapshot.
 	DiskId string `json:"disk_id"`
-	Name   string `json:"name"`
+	// Name for the new disk snapshot.
+	Name string `json:"name"`
 }

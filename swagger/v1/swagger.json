@@ -8309,6 +8309,7 @@
         "operationId": "listDisks",
         "parameters": [
           {
+            "description": "ID of the project that owns the disks.",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -8316,6 +8317,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "Filters results to disks with these IDs.",
             "in": "query",
             "items": {
               "type": "string"
@@ -8325,12 +8327,14 @@
             "x-go-name": "DiskIds"
           },
           {
+            "description": "Filters results to disks in this location.",
             "in": "query",
             "name": "location",
             "type": "string",
             "x-go-name": "Location"
           },
           {
+            "description": "Filters results to disks with these names.",
             "in": "query",
             "items": {
               "type": "string"
@@ -8340,6 +8344,7 @@
             "x-go-name": "DiskNames"
           },
           {
+            "description": "Excludes OS disks from the results when true.",
             "in": "query",
             "name": "exclude_os",
             "type": "boolean",
@@ -8360,7 +8365,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about all disks that belong to the logged in user.",
+        "summary": "Lists all disks in the project and returns their details.",
         "tags": [
           "Disks"
         ]
@@ -8403,7 +8408,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new disk owned by the logged in user.",
+        "summary": "Creates a disk in the project and returns the async operation.",
         "tags": [
           "Disks"
         ]
@@ -8513,6 +8518,7 @@
         "operationId": "deleteDisk",
         "parameters": [
           {
+            "description": "ID of the project that owns the disk.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8521,6 +8527,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the disk.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "disk_id",
@@ -8543,7 +8550,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a disk owned by the logged in user.",
+        "summary": "Deletes a disk from the project and returns the async operation.",
         "tags": [
           "Disks"
         ]
@@ -8553,6 +8560,7 @@
         "operationId": "getDisk",
         "parameters": [
           {
+            "description": "ID of the project that owns the disk.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8561,6 +8569,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the disk.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "disk_id",
@@ -8583,7 +8592,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details for a disk that belongs to the logged in user.",
+        "summary": "Returns details for a single disk in the project.",
         "tags": [
           "Disks"
         ]
@@ -8593,6 +8602,7 @@
         "operationId": "resizeDisk",
         "parameters": [
           {
+            "description": "ID of the project that owns the disk.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8601,6 +8611,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the disk.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "disk_id",
@@ -8634,7 +8645,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Resize a disk that the logged in user owns.",
+        "summary": "Resizes a disk in the project and returns the async operation.",
         "tags": [
           "Disks"
         ]
@@ -9084,7 +9095,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about all disk snapshots that belong to the logged in user.",
+        "summary": "Lists all disk snapshots in the project and returns their details.",
         "tags": [
           "Snapshots"
         ]
@@ -9124,7 +9135,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new snapshot for a disk owned by the logged in user.",
+        "summary": "Creates a disk snapshot in the project and returns the async operation.",
         "tags": [
           "Snapshots"
         ]
@@ -9234,6 +9245,7 @@
         "operationId": "deleteDiskSnapshot",
         "parameters": [
           {
+            "description": "ID of the project that owns the disk snapshot.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9242,6 +9254,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the disk snapshot.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "snapshot_id",
@@ -9264,7 +9277,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a disk snapshot owned by the logged in user.",
+        "summary": "Deletes a disk snapshot from the project and returns the async operation.",
         "tags": [
           "Snapshots"
         ]
@@ -9274,6 +9287,7 @@
         "operationId": "getDiskSnapshot",
         "parameters": [
           {
+            "description": "ID of the project that owns the disk snapshot.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9282,6 +9296,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the disk snapshot.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "snapshot_id",
@@ -9307,7 +9322,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about a disk snapshot that belongs to the logged in user.",
+        "summary": "Returns details for a single disk snapshot in the project.",
         "tags": [
           "Snapshots"
         ]
@@ -9317,6 +9332,7 @@
         "operationId": "renameDiskSnapshot",
         "parameters": [
           {
+            "description": "ID of the project that owns the disk snapshot.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9325,6 +9341,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the disk snapshot.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "snapshot_id",
@@ -9358,7 +9375,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Rename a disk snapshot owned by the logged in user.",
+        "summary": "Renames a disk snapshot in the project and returns the updated snapshot.",
         "tags": [
           "Snapshots"
         ]
@@ -11447,6 +11464,7 @@
     "DiskAttachment": {
       "properties": {
         "attachment_type": {
+          "description": "Role the disk plays for the VM: os or data.",
           "enum": [
             "os",
             "data"
@@ -11456,11 +11474,13 @@
           "x-go-name": "AttachmentType"
         },
         "disk_id": {
+          "description": "Unique identifier of the disk to attach.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "DiskID"
         },
         "mode": {
+          "description": "Access mode to attach the disk with: read-only or read-write.",
           "enum": [
             "read-only",
             "read-write"
@@ -11485,37 +11505,44 @@
     "DiskSnapshot": {
       "properties": {
         "block_size": {
+          "description": "Block size of the disk snapshot, in bytes: 512 or 4096.",
           "example": 4096,
           "format": "int64",
           "type": "integer",
           "x-go-name": "BlockSize"
         },
         "created_at": {
+          "description": "Time the disk snapshot was created.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "created_from": {
+          "description": "Unique identifier of the disk the snapshot was created from.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "CreatedFrom"
         },
         "id": {
+          "description": "Unique identifier of the disk snapshot, assigned at creation.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "ID"
         },
         "name": {
+          "description": "Name of the disk snapshot.",
           "example": "my-snapshot",
           "type": "string",
           "x-go-name": "Name"
         },
         "size": {
+          "description": "Size of the disk snapshot, in bytes.",
           "example": "10457 bytes",
           "type": "string",
           "x-go-name": "Size"
         },
         "updated_at": {
+          "description": "Time the disk snapshot was last updated.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -11535,6 +11562,7 @@
     "DiskSnapshotPatchRequest": {
       "properties": {
         "name": {
+          "description": "New name for the disk snapshot.",
           "example": "my-snapshot",
           "type": "string",
           "x-go-name": "Name"
@@ -11549,11 +11577,13 @@
     "DiskSnapshotPostRequestV1": {
       "properties": {
         "disk_id": {
+          "description": "ID of the disk to snapshot.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "DiskID"
         },
         "name": {
+          "description": "Name for the new disk snapshot.",
           "example": "my-snapshot-1",
           "type": "string",
           "x-go-name": "Name"
@@ -11594,6 +11624,7 @@
     "DiskV1": {
       "properties": {
         "attached_to": {
+          "description": "VMs the disk is currently attached to.",
           "items": {
             "$ref": "#/definitions/VMAttachmentV1"
           },
@@ -11601,57 +11632,68 @@
           "x-go-name": "AttachedTo"
         },
         "block_size": {
+          "description": "Block size of the disk, in bytes: 512 or 4096.",
           "example": 4096,
           "format": "int64",
           "type": "integer",
           "x-go-name": "BlockSize"
         },
         "created_at": {
+          "description": "Time the disk was created.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "dns_name": {
+          "description": "DNS name used to mount the disk. Populated only for shared-volume disks.",
           "example": "nfs.crusoecloudcompute.com",
           "type": "string",
           "x-go-name": "DNSName"
         },
         "id": {
+          "description": "Unique identifier of the disk, assigned at creation.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "ID"
         },
         "location": {
+          "description": "Location where the disk is provisioned.",
           "example": "us-northcentral1-a",
           "type": "string",
           "x-go-name": "Location"
         },
         "name": {
+          "description": "Name of the disk.",
           "example": "my-disk",
           "type": "string",
           "x-go-name": "Name"
         },
         "serial_number": {
+          "description": "Serial number assigned to the disk.",
           "example": "96FD14FDBCF7E21E8EC",
           "type": "string",
           "x-go-name": "SerialNumber"
         },
         "size": {
+          "description": "Storage capacity of the disk, given as a size and unit in the format [Size][Unit], for example 100GiB or 1TiB.",
           "example": "10GiB",
           "type": "string",
           "x-go-name": "Size"
         },
         "type": {
+          "description": "Type of the disk: persistent-ssd or shared-volume.",
           "example": "persistent-ssd",
           "type": "string",
           "x-go-name": "Type"
         },
         "updated_at": {
+          "description": "Time the disk was last updated.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
         },
         "vips": {
+          "description": "Virtual IP addresses used to mount the disk. Populated only for shared-volume disks.",
           "example": [
             "1.2.3.4",
             "1.2.3.8"
@@ -11681,6 +11723,7 @@
     "DisksPatchRequest": {
       "properties": {
         "size": {
+          "description": "New storage capacity for the disk, given as a size and unit in the format [Size][Unit], for example 100GiB or 1TiB.",
           "example": "10GiB",
           "type": "string",
           "x-go-name": "Size"
@@ -11695,33 +11738,39 @@
     "DisksPostRequestV1": {
       "properties": {
         "block_size": {
+          "description": "Block size for the new disk, in bytes: 512 or 4096.",
           "example": 4096,
           "format": "int64",
           "type": "integer",
           "x-go-name": "BlockSize"
         },
         "location": {
+          "description": "Location to create the disk in.",
           "example": "us-northcentral1-a",
           "type": "string",
           "x-go-name": "Location"
         },
         "name": {
+          "description": "Name for the new disk.",
           "example": "my-disk",
           "type": "string",
           "x-go-name": "Name"
         },
         "size": {
+          "description": "Storage capacity for the new disk, given as a size and unit in the format [Size][Unit], for example 100GiB or 1TiB.",
           "example": "10GiB",
           "type": "string",
           "x-go-name": "Size"
         },
         "snapshot_id": {
+          "description": "ID of a disk snapshot to create the disk from.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "DiskSnapshotID"
         },
         "type": {
           "default": "persistent-ssd",
+          "description": "Type of disk to create: persistent-ssd or shared-volume. Defaults to persistent-ssd.",
           "enum": [
             "persistent-ssd",
             "shared-volume"
@@ -19024,6 +19073,7 @@
           "$ref": "#/definitions/DiskModeType"
         },
         "vm_id": {
+          "description": "Unique identifier of the VM the disk is attached to.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "VMID"

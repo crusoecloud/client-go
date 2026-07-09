@@ -9,5 +9,6 @@
 package swagger
 
 type DisksPatchRequest struct {
+	// New storage capacity for the disk, given as a size and unit in the format [Size][Unit], for example 100GiB or 1TiB.
 	Size string `json:"size"`
 }

@@ -11,5 +11,6 @@ package swagger
 type VmAttachmentV1Alpha5 struct {
 	AttachmentType string `json:"attachment_type"`
 	Mode           string `json:"mode,omitempty"`
-	VmId           string `json:"vm_id"`
+	// Unique identifier of the VM the disk is attached to.
+	VmId string `json:"vm_id"`
 }

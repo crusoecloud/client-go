@@ -9,16 +9,28 @@
 package swagger
 
 type DiskV1Alpha5 struct {
-	AttachedTo   []VmAttachmentV1Alpha5 `json:"attached_to"`
-	BlockSize    int64                  `json:"block_size"`
-	CreatedAt    string                 `json:"created_at"`
-	DnsName      string                 `json:"dns_name,omitempty"`
-	Id           string                 `json:"id"`
-	Location     string                 `json:"location"`
-	Name         string                 `json:"name"`
-	SerialNumber string                 `json:"serial_number"`
-	Size         string                 `json:"size"`
-	Type_        string                 `json:"type"`
-	UpdatedAt    string                 `json:"updated_at"`
-	Vips         []string               `json:"vips,omitempty"`
+	// VMs the disk is currently attached to.
+	AttachedTo []VmAttachmentV1Alpha5 `json:"attached_to"`
+	// Block size of the disk, in bytes: 512 or 4096.
+	BlockSize int64 `json:"block_size"`
+	// Time the disk was created.
+	CreatedAt string `json:"created_at"`
+	// DNS name used to mount the disk. Populated only for shared-volume disks.
+	DnsName string `json:"dns_name,omitempty"`
+	// Unique identifier of the disk, assigned at creation.
+	Id string `json:"id"`
+	// Location where the disk is provisioned.
+	Location string `json:"location"`
+	// Name of the disk.
+	Name string `json:"name"`
+	// Serial number assigned to the disk.
+	SerialNumber string `json:"serial_number"`
+	// Storage capacity of the disk, given as a size and unit in the format [Size][Unit], for example 100GiB or 1TiB.
+	Size string `json:"size"`
+	// Type of the disk: persistent-ssd or shared-volume.
+	Type_ string `json:"type"`
+	// Time the disk was last updated.
+	UpdatedAt string `json:"updated_at"`
+	// Virtual IP addresses used to mount the disk. Populated only for shared-volume disks.
+	Vips []string `json:"vips,omitempty"`
 }
