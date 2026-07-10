@@ -9,5 +9,6 @@
 package swagger
 
 type CustomImageEditTagsRequest struct {
+	// New set of tags to associate with the custom image.
 	Tags []string `json:"tags"`
 }

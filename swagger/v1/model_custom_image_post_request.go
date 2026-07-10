@@ -9,8 +9,12 @@
 package swagger
 
 type CustomImagePostRequest struct {
-	DiskID      string   `json:"DiskID"`
-	Description string   `json:"description,omitempty"`
-	Name        string   `json:"name"`
-	Tags        []string `json:"tags,omitempty"`
+	// ID of the disk to create the custom image from.
+	DiskID string `json:"DiskID"`
+	// Description for the new custom image.
+	Description string `json:"description,omitempty"`
+	// Name for the new custom image.
+	Name string `json:"name"`
+	// Tags to associate with the new custom image.
+	Tags []string `json:"tags,omitempty"`
 }

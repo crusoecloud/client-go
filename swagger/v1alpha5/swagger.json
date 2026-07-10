@@ -164,7 +164,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Lists all VM images available for use.",
+        "summary": "Lists all images and returns their details.",
         "tags": [
           "Images"
         ]
@@ -175,6 +175,7 @@
         "operationId": "getImage",
         "parameters": [
           {
+            "description": "ID of the image.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "image_id",
@@ -200,7 +201,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about a VM image.",
+        "summary": "Returns details for a single image.",
         "tags": [
           "Images"
         ]
@@ -2748,7 +2749,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "List all custom VM images available for use.",
+        "summary": "Lists all custom images in the project and returns their details.",
         "tags": [
           "CustomImages"
         ]
@@ -2757,6 +2758,7 @@
         "operationId": "customImagePost",
         "parameters": [
           {
+            "description": "ID of the project that owns the custom image.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -2793,7 +2795,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a custom image.",
+        "summary": "Creates a custom image in the project and returns the async operation.",
         "tags": [
           "CustomImages"
         ]
@@ -2902,6 +2904,8 @@
         "operationId": "customImageDelete",
         "parameters": [
           {
+            "description": "ID of the custom image.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "image_id",
             "required": true,
@@ -2909,6 +2913,8 @@
             "x-go-name": "ImageID"
           },
           {
+            "description": "ID of the project that owns the custom image.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -2936,7 +2942,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Delete a custom image.",
+        "summary": "Deletes a custom image from the project and returns the async operation.",
         "tags": [
           "CustomImages"
         ]
@@ -2945,6 +2951,7 @@
         "operationId": "getCustomImage",
         "parameters": [
           {
+            "description": "ID of the image.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "image_id",
@@ -2978,7 +2985,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about a VM image.",
+        "summary": "Returns details for a single custom image in the project.",
         "tags": [
           "CustomImages"
         ]
@@ -2987,6 +2994,8 @@
         "operationId": "customImagePatch",
         "parameters": [
           {
+            "description": "ID of the custom image.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "image_id",
             "required": true,
@@ -2994,6 +3003,8 @@
             "x-go-name": "ImageID"
           },
           {
+            "description": "ID of the project that owns the custom image.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -3029,7 +3040,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Update a custom image.",
+        "summary": "Updates a custom image in the project and returns the async operation.",
         "tags": [
           "CustomImages"
         ]
@@ -3040,6 +3051,8 @@
         "operationId": "customImageEditTags",
         "parameters": [
           {
+            "description": "ID of the custom image.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "image_id",
             "required": true,
@@ -3047,6 +3060,8 @@
             "x-go-name": "ImageID"
           },
           {
+            "description": "ID of the project that owns the custom image.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
             "required": true,
@@ -3082,7 +3097,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Update a custom image.",
+        "summary": "Updates the tags of a custom image in the project and returns the async operation.",
         "tags": [
           "CustomImages"
         ]
@@ -11600,6 +11615,7 @@
     "CustomImageEditTagsRequest": {
       "properties": {
         "tags": {
+          "description": "New set of tags to associate with the custom image.",
           "example": "[latest]",
           "items": {
             "type": "string"
@@ -11618,6 +11634,7 @@
     "CustomImagePatchRequest": {
       "properties": {
         "description": {
+          "description": "New description for the custom image.",
           "example": "\"Ubuntu is the modern, open source operating system on Linux for ...\"",
           "type": "string",
           "x-go-name": "Description"
@@ -11633,20 +11650,24 @@
     "CustomImagePostRequest": {
       "properties": {
         "DiskID": {
+          "description": "ID of the disk to create the custom image from.",
           "example": "182d01c7-d3fe-424b-af13-8775aeead194",
           "type": "string"
         },
         "description": {
+          "description": "Description for the new custom image.",
           "example": "Ubuntu is the modern, open source operating system on Linux for ...",
           "type": "string",
           "x-go-name": "Description"
         },
         "name": {
+          "description": "Name for the new custom image.",
           "example": "ubuntu",
           "type": "string",
           "x-go-name": "Name"
         },
         "tags": {
+          "description": "Tags to associate with the new custom image.",
           "example": "22.04,latest",
           "items": {
             "type": "string"
@@ -13312,21 +13333,25 @@
     "Image": {
       "properties": {
         "created_at": {
+          "description": "Time at which the image was created.",
           "example": "2023-06-29T20:03:26Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "description": {
+          "description": "Description of the image.",
           "example": "base Ubuntu 20.04 image",
           "type": "string",
           "x-go-name": "Description"
         },
         "id": {
+          "description": "Unique identifier of the image, assigned at creation.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "ID"
         },
         "locations": {
+          "description": "Locations where the image is available.",
           "example": "[us-east1, us-northcentral1]",
           "items": {
             "type": "string"
@@ -13335,11 +13360,13 @@
           "x-go-name": "Locations"
         },
         "name": {
+          "description": "Name of the image.",
           "example": "ubuntu",
           "type": "string",
           "x-go-name": "Name"
         },
         "tags": {
+          "description": "Tags associated with the image.",
           "example": "[20.4, latest]",
           "items": {
             "type": "string"
