@@ -9,6 +9,6 @@
 package swagger
 
 type UpdateS3BucketTagsRequest struct {
-	// List of tags for this bucket. This will replace all existing tags.
+	// New set of tags for the bucket, as key-value pairs. Replaces all existing tags.
 	Tags map[string]string `json:"tags"`
 }

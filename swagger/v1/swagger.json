@@ -8797,6 +8797,7 @@
         "operationId": "listS3Buckets",
         "parameters": [
           {
+            "description": "ID of the project that owns the buckets.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8805,6 +8806,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "Token that returns the next page of results.",
             "example": "bXktZmlyc3Qtdm0",
             "in": "query",
             "name": "next_page_token",
@@ -8812,6 +8814,7 @@
             "x-go-name": "NextPageToken"
           },
           {
+            "description": "Token that returns the previous page of results.",
             "example": "bXktZmlyc3Qtdm0",
             "in": "query",
             "name": "prev_page_token",
@@ -8820,6 +8823,7 @@
           },
           {
             "default": 20,
+            "description": "Maximum number of buckets to return per page.",
             "example": 10,
             "format": "int32",
             "in": "query",
@@ -8842,7 +8846,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details about all S3 buckets that belong to the project.",
+        "summary": "Lists all S3 buckets in the project and returns their details.",
         "tags": [
           "S3Buckets"
         ]
@@ -8851,6 +8855,7 @@
         "operationId": "createS3Bucket",
         "parameters": [
           {
+            "description": "ID of the project to create the bucket in.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8885,7 +8890,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Create a new S3 bucket for a customer.",
+        "summary": "Creates an S3 bucket in the project and returns the created bucket.",
         "tags": [
           "S3Buckets"
         ]
@@ -8896,6 +8901,7 @@
         "operationId": "getS3BucketsCount",
         "parameters": [
           {
+            "description": "ID of the project that owns the buckets.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8918,7 +8924,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve the count of S3 buckets that belong to the project.",
+        "summary": "Returns the number of S3 buckets in the project.",
         "tags": [
           "S3Buckets"
         ]
@@ -8929,6 +8935,7 @@
         "operationId": "getS3BucketsQuotaRequest",
         "parameters": [
           {
+            "description": "ID of the project that owns the buckets.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8951,7 +8958,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve the quota information for S3 buckets that belong to the project.",
+        "summary": "Returns the S3 bucket quota information for the project.",
         "tags": [
           "S3Buckets"
         ]
@@ -8962,6 +8969,7 @@
         "operationId": "deleteS3Bucket",
         "parameters": [
           {
+            "description": "ID of the project that owns the bucket.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8970,7 +8978,7 @@
             "x-go-name": "ProjectID"
           },
           {
-            "description": "The name of the S3 bucket",
+            "description": "Name of the bucket.",
             "example": "my-awesome-bucket",
             "in": "path",
             "name": "bucket_name",
@@ -8996,7 +9004,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Deletes an S3 bucket for a customer.",
+        "summary": "Deletes an S3 bucket from the project.",
         "tags": [
           "S3Buckets"
         ]
@@ -9005,6 +9013,7 @@
         "operationId": "getS3Bucket",
         "parameters": [
           {
+            "description": "ID of the project that owns the bucket.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9013,7 +9022,7 @@
             "x-go-name": "ProjectID"
           },
           {
-            "description": "The name of the S3 bucket",
+            "description": "Name of the bucket.",
             "example": "my-awesome-bucket",
             "in": "path",
             "name": "bucket_name",
@@ -9039,7 +9048,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Retrieve details for a specific S3 bucket.",
+        "summary": "Returns details for a single S3 bucket in the project.",
         "tags": [
           "S3Buckets"
         ]
@@ -9048,6 +9057,7 @@
         "operationId": "updateS3BucketTags",
         "parameters": [
           {
+            "description": "ID of the project that owns the bucket.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9056,7 +9066,7 @@
             "x-go-name": "ProjectID"
           },
           {
-            "description": "The name of the S3 bucket",
+            "description": "Name of the bucket.",
             "example": "my-awesome-bucket",
             "in": "path",
             "name": "bucket_name",
@@ -9094,7 +9104,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Sets the list of tags for a particular bucket.",
+        "summary": "Replaces the tags on an S3 bucket and returns the updated bucket.",
         "tags": [
           "S3Buckets"
         ]
@@ -9105,6 +9115,7 @@
         "operationId": "enableS3BucketObjectLock",
         "parameters": [
           {
+            "description": "ID of the project that owns the bucket.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9113,7 +9124,7 @@
             "x-go-name": "ProjectID"
           },
           {
-            "description": "The name of the S3 bucket",
+            "description": "Name of the bucket.",
             "example": "my-awesome-bucket",
             "in": "path",
             "name": "bucket_name",
@@ -9150,7 +9161,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Irreversible operation to enable object lock for a bucket.",
+        "summary": "Enables object lock on an S3 bucket and returns the updated bucket. Requires versioning to be enabled and cannot be disabled once enabled.",
         "tags": [
           "S3Buckets"
         ]
@@ -9161,6 +9172,7 @@
         "operationId": "enableS3BucketVersioning",
         "parameters": [
           {
+            "description": "ID of the project that owns the bucket.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9169,7 +9181,7 @@
             "x-go-name": "ProjectID"
           },
           {
-            "description": "The name of the S3 bucket",
+            "description": "Name of the bucket.",
             "example": "my-awesome-bucket",
             "in": "path",
             "name": "bucket_name",
@@ -9199,7 +9211,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Irreversible operation to enable versioning for a bucket.",
+        "summary": "Enables versioning on an S3 bucket and returns the updated bucket. Versioning cannot be disabled once enabled.",
         "tags": [
           "S3Buckets"
         ]
@@ -9536,7 +9548,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "List locations where object storage (S3) is enabled.",
+        "summary": "Lists all locations where object storage (S3) is available.",
         "tags": [
           "S3Buckets"
         ]
@@ -11205,25 +11217,25 @@
     "CreateS3BucketRequest": {
       "properties": {
         "location": {
-          "description": "Location of the bucket.",
+          "description": "Location to create the bucket in.",
           "example": "us-eaststaging1-a",
           "type": "string",
           "x-go-name": "Location"
         },
         "name": {
-          "description": "Name of the bucket.",
+          "description": "Name for the new bucket. Must be DNS-compliant: 3-63 characters, using lowercase letters, numbers, and hyphens.",
           "example": "my-new-bucket",
           "type": "string",
           "x-go-name": "Name"
         },
         "object_lock_enabled": {
-          "description": "Whether object lock is enabled or not.",
+          "description": "Whether to enable object lock on the new bucket. Requires versioning to be\nenabled and cannot be disabled once enabled.",
           "example": false,
           "type": "boolean",
           "x-go-name": "ObjectLockEnabled"
         },
         "retention_period": {
-          "description": "How long objects are retained.",
+          "description": "Length of the object lock retention period, in the unit given by retention_period_unit.",
           "example": 30,
           "format": "int32",
           "type": "integer",
@@ -11236,7 +11248,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "List of tags for this bucket.",
+          "description": "Tags to apply to the new bucket as key-value pairs.",
           "type": "object",
           "x-go-name": "Tags"
         },
@@ -12099,7 +12111,7 @@
     "EnableS3BucketObjectLockRequest": {
       "properties": {
         "retention_period": {
-          "description": "How long objects are retained.",
+          "description": "Length of the object lock retention period, in the unit given by retention_period_unit.",
           "example": 30,
           "format": "int32",
           "type": "integer",
@@ -16235,7 +16247,7 @@
     "ListS3SupportedLocationsResponse": {
       "properties": {
         "items": {
-          "description": "List of locations where object storage (S3) is enabled.",
+          "description": "Locations where object storage (S3) is available.",
           "example": [
             "us-east1-a",
             "us-northcentral1-a"
@@ -18010,16 +18022,16 @@
     "QuotaValidationResult": {
       "properties": {
         "ActualUsed": {
-          "description": "ActualUsed is the amount of quota consumed based on actual resource usage",
+          "description": "Amount of quota consumed by current usage.",
           "format": "int64",
           "type": "integer"
         },
         "LimitReached": {
-          "description": "LimitReached will be true if the actual used is at or above the quota limit, false otherwise",
+          "description": "Whether usage is at or above the quota limit.",
           "type": "boolean"
         },
         "QuotaLimit": {
-          "description": "QuotaLimit is the amount of quota allocated for the resource",
+          "description": "Amount of quota allocated for the resource.",
           "format": "int64",
           "type": "integer"
         }
@@ -18458,26 +18470,26 @@
       "description": "This is the REST-friendly model for the `BucketInfo` proto.",
       "properties": {
         "archived_at": {
-          "description": "Archived date in RFC3339 format.",
+          "description": "Timestamp when the bucket was archived, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ArchivedAt"
         },
         "bucket_size": {
-          "description": "Size of the bucket in GiB.",
+          "description": "Size of the bucket, in GiB.",
           "example": 2.42,
           "format": "float",
           "type": "number",
           "x-go-name": "BucketSize"
         },
         "created_at": {
-          "description": "Creation date in RFC3339 format.",
+          "description": "Timestamp when the bucket was created, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "location": {
-          "description": "Location of the bucket.",
+          "description": "Location where the bucket is hosted.",
           "example": "us-eaststaging1-a",
           "type": "string",
           "x-go-name": "Location"
@@ -18489,13 +18501,13 @@
           "x-go-name": "Name"
         },
         "object_lock_enabled": {
-          "description": "Whether object lock is enabled or not.",
+          "description": "Whether object lock is enabled on the bucket.",
           "example": false,
           "type": "boolean",
           "x-go-name": "ObjectLockEnabled"
         },
         "project_id": {
-          "description": "Project of the bucket.",
+          "description": "ID of the project that owns the bucket.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "ProjectID"
@@ -18504,7 +18516,7 @@
           "$ref": "#/definitions/S3RetentionMode"
         },
         "retention_period": {
-          "description": "How long objects are retained.",
+          "description": "Length of the object lock retention period, in the unit given by retention_period_unit.",
           "example": 30,
           "format": "int32",
           "type": "integer",
@@ -18514,7 +18526,7 @@
           "$ref": "#/definitions/S3RetentionPeriodUnit"
         },
         "s3_url": {
-          "description": "URL of the bucket.",
+          "description": "Endpoint URL for accessing the bucket.",
           "example": "https://object.us-eaststaging7-b.crusoecloudcompute.com/my-first-bucket",
           "type": "string",
           "x-go-name": "S3URL"
@@ -18523,18 +18535,18 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "List of tags for this bucket.",
+          "description": "Tags applied to the bucket as key-value pairs.",
           "type": "object",
           "x-go-name": "Tags"
         },
         "updated_at": {
-          "description": "Updated date in RFC3339 format.",
+          "description": "Timestamp when the bucket was last updated, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
         },
         "user_id": {
-          "description": "User managing the bucket.",
+          "description": "Identifier of the S3 user that owns the bucket.",
           "example": "S3U_...",
           "type": "string",
           "x-go-name": "UserID"
@@ -18618,19 +18630,19 @@
     },
     "S3RetentionMode": {
       "description": "enum: governance,compliance",
-      "title": "S3RetentionMode defines the possible retention modes for S3 Object Lock.",
+      "title": "Object lock retention mode for an S3 bucket: governance or compliance.",
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3RetentionPeriodUnit": {
       "description": "enum: days,years",
-      "title": "S3RetentionPeriodUnit defines the unit of measurement for retention periods.",
+      "title": "Unit of measurement for an object lock retention period: days or years.",
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3VersioningState": {
       "description": "enum: disabled,enabled,suspended",
-      "title": "S3VersioningState defines the possible versioning states for an S3 bucket.",
+      "title": "Versioning state of an S3 bucket: disabled, enabled, or suspended.",
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -19548,7 +19560,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "List of tags for this bucket. This will replace all existing tags.",
+          "description": "New set of tags for the bucket, as key-value pairs. Replaces all existing tags.",
           "type": "object",
           "x-go-name": "Tags"
         }

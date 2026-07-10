@@ -27,10 +27,10 @@ var (
 type S3BucketsApiService service
 
 /*
-S3BucketsApiService Create a new S3 bucket for a customer.
+S3BucketsApiService Creates an S3 bucket in the project and returns the created bucket.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
+  - @param projectId ID of the project to create the bucket in.
 
 @return S3Bucket
 */
@@ -156,10 +156,10 @@ func (a *S3BucketsApiService) CreateS3Bucket(ctx context.Context, body CreateS3B
 }
 
 /*
-S3BucketsApiService Deletes an S3 bucket for a customer.
+S3BucketsApiService Deletes an S3 bucket from the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param bucketName The name of the S3 bucket
+  - @param projectId ID of the project that owns the bucket.
+  - @param bucketName Name of the bucket.
 */
 func (a *S3BucketsApiService) DeleteS3Bucket(ctx context.Context, projectId string, bucketName string) (*http.Response, error) {
 	var (
@@ -263,10 +263,10 @@ func (a *S3BucketsApiService) DeleteS3Bucket(ctx context.Context, projectId stri
 }
 
 /*
-S3BucketsApiService Irreversible operation to enable object lock for a bucket.
+S3BucketsApiService Enables object lock on an S3 bucket and returns the updated bucket. Requires versioning to be enabled and cannot be disabled once enabled.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param bucketName The name of the S3 bucket
+ * @param projectId ID of the project that owns the bucket.
+ * @param bucketName Name of the bucket.
  * @param optional nil or *S3BucketsApiEnableS3BucketObjectLockOpts - Optional Parameters:
      * @param "Body" (optional.Interface of EnableS3BucketObjectLockRequest) -
 @return S3Bucket
@@ -413,10 +413,10 @@ func (a *S3BucketsApiService) EnableS3BucketObjectLock(ctx context.Context, proj
 }
 
 /*
-S3BucketsApiService Irreversible operation to enable versioning for a bucket.
+S3BucketsApiService Enables versioning on an S3 bucket and returns the updated bucket. Versioning cannot be disabled once enabled.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param bucketName The name of the S3 bucket
+  - @param projectId ID of the project that owns the bucket.
+  - @param bucketName Name of the bucket.
 
 @return S3Bucket
 */
@@ -551,10 +551,10 @@ func (a *S3BucketsApiService) EnableS3BucketVersioning(ctx context.Context, proj
 }
 
 /*
-S3BucketsApiService Retrieve details for a specific S3 bucket.
+S3BucketsApiService Returns details for a single S3 bucket in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param bucketName The name of the S3 bucket
+  - @param projectId ID of the project that owns the bucket.
+  - @param bucketName Name of the bucket.
 
 @return S3Bucket
 */
@@ -679,9 +679,9 @@ func (a *S3BucketsApiService) GetS3Bucket(ctx context.Context, projectId string,
 }
 
 /*
-S3BucketsApiService Retrieve the count of S3 buckets that belong to the project.
+S3BucketsApiService Returns the number of S3 buckets in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project that owns the buckets.
 */
 func (a *S3BucketsApiService) GetS3BucketsCount(ctx context.Context, projectId string) (*http.Response, error) {
 	var (
@@ -774,9 +774,9 @@ func (a *S3BucketsApiService) GetS3BucketsCount(ctx context.Context, projectId s
 }
 
 /*
-S3BucketsApiService Retrieve the quota information for S3 buckets that belong to the project.
+S3BucketsApiService Returns the S3 bucket quota information for the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project that owns the buckets.
 
 @return QuotaValidationResult
 */
@@ -890,13 +890,13 @@ func (a *S3BucketsApiService) GetS3BucketsQuotaRequest(ctx context.Context, proj
 }
 
 /*
-S3BucketsApiService Retrieve details about all S3 buckets that belong to the project.
+S3BucketsApiService Lists all S3 buckets in the project and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project that owns the buckets.
  * @param optional nil or *S3BucketsApiListS3BucketsOpts - Optional Parameters:
-     * @param "NextPageToken" (optional.String) -
-     * @param "PrevPageToken" (optional.String) -
-     * @param "PageSize" (optional.Int32) -
+     * @param "NextPageToken" (optional.String) -  Token that returns the next page of results.
+     * @param "PrevPageToken" (optional.String) -  Token that returns the previous page of results.
+     * @param "PageSize" (optional.Int32) -  Maximum number of buckets to return per page.
 @return ListS3BucketsResponse
 */
 
@@ -1025,7 +1025,7 @@ func (a *S3BucketsApiService) ListS3Buckets(ctx context.Context, projectId strin
 }
 
 /*
-S3BucketsApiService List locations where object storage (S3) is enabled.
+S3BucketsApiService Lists all locations where object storage (S3) is available.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return ListS3SupportedLocationsResponse
@@ -1129,11 +1129,11 @@ func (a *S3BucketsApiService) ListS3SupportedLocations(ctx context.Context) (Lis
 }
 
 /*
-S3BucketsApiService Sets the list of tags for a particular bucket.
+S3BucketsApiService Replaces the tags on an S3 bucket and returns the updated bucket.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param bucketName The name of the S3 bucket
+  - @param projectId ID of the project that owns the bucket.
+  - @param bucketName Name of the bucket.
 
 @return S3Bucket
 */

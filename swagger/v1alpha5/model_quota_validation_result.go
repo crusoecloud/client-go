@@ -9,10 +9,10 @@
 package swagger
 
 type QuotaValidationResult struct {
-	// ActualUsed is the amount of quota consumed based on actual resource usage
+	// Amount of quota consumed by current usage.
 	ActualUsed int64 `json:"ActualUsed,omitempty"`
-	// LimitReached will be true if the actual used is at or above the quota limit, false otherwise
+	// Whether usage is at or above the quota limit.
 	LimitReached bool `json:"LimitReached,omitempty"`
-	// QuotaLimit is the amount of quota allocated for the resource
+	// Amount of quota allocated for the resource.
 	QuotaLimit int64 `json:"QuotaLimit,omitempty"`
 }

@@ -9,7 +9,7 @@
 package swagger
 
 type EnableS3BucketObjectLockRequest struct {
-	// How long objects are retained.
+	// Length of the object lock retention period, in the unit given by retention_period_unit.
 	RetentionPeriod     int32  `json:"retention_period,omitempty"`
 	RetentionPeriodUnit string `json:"retention_period_unit,omitempty"`
 }
