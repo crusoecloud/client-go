@@ -12780,6 +12780,24 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "GetNotificationPreferencesResponse": {
+      "properties": {
+        "items": {
+          "description": "Notification preferences grouped by category.",
+          "items": {
+            "$ref": "#/definitions/NotificationCategoryPreferences"
+          },
+          "type": "array",
+          "x-go-name": "Items"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "title": "GetNotificationPreferencesResponse is the response for GET user notification preferences.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "GetOrgMFAResponse": {
       "properties": {
         "mfa_methods": {
@@ -12794,6 +12812,24 @@
         "mfa_methods"
       ],
       "title": "GetOrgMFAResponse is the response type for GET requests to the org mfa endpoint.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "GetOrgNotificationEndpointsResponse": {
+      "properties": {
+        "items": {
+          "description": "Svix webhook endpoints configured for the organization.",
+          "items": {
+            "$ref": "#/definitions/NotificationEndpointItem"
+          },
+          "type": "array",
+          "x-go-name": "Items"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "title": "GetOrgNotificationEndpointsResponse is the response for GET org notification endpoints.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -16975,6 +17011,185 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "NotificationCategoryPreferences": {
+      "properties": {
+        "category": {
+          "description": "The category key (e.g. BILLING_AND_COST_ALERTS).",
+          "example": "BILLING_AND_COST_ALERTS",
+          "type": "string",
+          "x-go-name": "Category"
+        },
+        "notifications": {
+          "description": "Notification types within this category.",
+          "items": {
+            "$ref": "#/definitions/NotificationPreferenceItem"
+          },
+          "type": "array",
+          "x-go-name": "Notifications"
+        }
+      },
+      "required": [
+        "category",
+        "notifications"
+      ],
+      "title": "NotificationCategoryPreferences groups notification preferences by category.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "NotificationChannelPreference": {
+      "properties": {
+        "channel": {
+          "description": "The delivery channel (e.g. email).",
+          "example": "email",
+          "type": "string",
+          "x-go-name": "Channel"
+        },
+        "default_preference": {
+          "description": "The catalog default for this channel.",
+          "enum": [
+            "enabled",
+            "disabled",
+            "required"
+          ],
+          "type": "string",
+          "x-go-name": "DefaultPreference"
+        },
+        "status": {
+          "description": "Whether the user has enabled, disabled, or is required to receive this notification.",
+          "enum": [
+            "enabled",
+            "disabled",
+            "required"
+          ],
+          "type": "string",
+          "x-go-name": "Status"
+        }
+      },
+      "required": [
+        "channel",
+        "status",
+        "default_preference"
+      ],
+      "title": "NotificationChannelPreference is the per-channel subscription status for a notification type.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "NotificationEndpointItem": {
+      "properties": {
+        "description": {
+          "description": "Optional description of the endpoint.",
+          "example": "Infra alerts Slack channel",
+          "type": "string",
+          "x-go-name": "Description"
+        },
+        "disabled": {
+          "description": "Whether the endpoint is currently disabled.",
+          "example": false,
+          "type": "boolean",
+          "x-go-name": "Disabled"
+        },
+        "filter_types": {
+          "description": "Event types this endpoint is subscribed to. Null or empty means all event types.",
+          "example": [
+            "billing.alert.triggered"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "FilterTypes"
+        },
+        "id": {
+          "description": "The Svix endpoint ID.",
+          "example": "ep_2RtrGoUuNiifK2LP5UiTf7D3Xid",
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "url": {
+          "description": "The URL that webhook events are delivered to.",
+          "example": "https://hooks.example.com/crusoe",
+          "type": "string",
+          "x-go-name": "URL"
+        }
+      },
+      "required": [
+        "id",
+        "url",
+        "disabled"
+      ],
+      "title": "NotificationEndpointItem is a single Svix webhook endpoint for an organization.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "NotificationPreferenceItem": {
+      "properties": {
+        "channel_preferences": {
+          "description": "Per-channel preference status for this notification type.",
+          "items": {
+            "$ref": "#/definitions/NotificationChannelPreference"
+          },
+          "type": "array",
+          "x-go-name": "ChannelPreferences"
+        },
+        "description": {
+          "description": "Description of when this notification is triggered.",
+          "example": "Alert at 80%, 90%, and 100% of monthly budget",
+          "type": "string",
+          "x-go-name": "Description"
+        },
+        "display_name": {
+          "description": "Human-readable name for the notification type.",
+          "example": "Budget threshold reached",
+          "type": "string",
+          "x-go-name": "DisplayName"
+        },
+        "notification_type": {
+          "description": "The unique identifier for the notification type.",
+          "example": "billing_threshold_reached",
+          "type": "string",
+          "x-go-name": "NotificationType"
+        }
+      },
+      "required": [
+        "notification_type",
+        "display_name",
+        "description",
+        "channel_preferences"
+      ],
+      "title": "NotificationPreferenceItem is a single notification type with its channel preferences.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "NotificationPreferenceUpdate": {
+      "properties": {
+        "channel": {
+          "description": "The delivery channel to update.",
+          "example": "email",
+          "type": "string",
+          "x-go-name": "Channel"
+        },
+        "enabled": {
+          "description": "Whether to enable or disable the notification.",
+          "example": true,
+          "type": "boolean",
+          "x-go-name": "Enabled"
+        },
+        "notification_type": {
+          "description": "The notification type to update.",
+          "example": "billing_threshold_reached",
+          "type": "string",
+          "x-go-name": "NotificationType"
+        }
+      },
+      "required": [
+        "notification_type",
+        "channel",
+        "enabled"
+      ],
+      "title": "NotificationPreferenceUpdate is a single preference update in a PATCH request.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "NvlinkDomainSummaryResponse": {
       "properties": {
         "available_nodes": {
@@ -17283,6 +17498,24 @@
         }
       },
       "title": "PartialHostChannelAdapter is used when POSTing and PATCHing VMs to assign IB Partitions.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "PatchNotificationPreferencesRequest": {
+      "properties": {
+        "updates": {
+          "description": "List of notification preference updates to apply.",
+          "items": {
+            "$ref": "#/definitions/NotificationPreferenceUpdate"
+          },
+          "type": "array",
+          "x-go-name": "Updates"
+        }
+      },
+      "required": [
+        "updates"
+      ],
+      "title": "PatchNotificationPreferencesRequest is the request body for PATCH user notification preferences.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -21092,6 +21325,12 @@
         "$ref": "#/definitions/Operation"
       }
     },
+    "getOrgNotificationEndpointsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetOrgNotificationEndpointsResponse"
+      }
+    },
     "getProjectOverviewResponse": {
       "description": "",
       "schema": {
@@ -21159,6 +21398,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/GetTopologyResponse"
+      }
+    },
+    "getUserNotificationPreferencesResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetNotificationPreferencesResponse"
       }
     },
     "getVMHealthResponse": {
@@ -21448,6 +21693,9 @@
       "schema": {
         "$ref": "#/definitions/GetOrgMFAResponse"
       }
+    },
+    "noContent": {
+      "description": ""
     },
     "notFoundError": {
       "description": "Error Not Found",
@@ -21929,6 +22177,12 @@
       "name": "Container Registry",
       "tags": [
         "Container Registry"
+      ]
+    },
+    {
+      "name": "Notifications",
+      "tags": [
+        "Notifications"
       ]
     }
   ]
