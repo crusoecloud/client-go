@@ -25,7 +25,7 @@ var (
 type IBPartitionsApiService service
 
 /*
-IBPartitionsApiService Creates an Infiniband partition in the project and returns the created Infiniband partition.
+IBPartitionsApiService Creates an InfiniBand partition in the project and returns the created InfiniBand partition.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
@@ -154,10 +154,10 @@ func (a *IBPartitionsApiService) CreateIBPartition(ctx context.Context, body IbP
 }
 
 /*
-IBPartitionsApiService Deletes an Infiniband partition from the project and returns an empty response.
+IBPartitionsApiService Deletes an InfiniBand partition from the project and returns an empty response.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId ID of the project that owns the Infiniband partition.
-  - @param ibPartitionId ID of the Infiniband partition.
+  - @param projectId ID of the project that owns the InfiniBand partition.
+  - @param ibPartitionId ID of the InfiniBand partition.
 */
 func (a *IBPartitionsApiService) DeleteIBPartition(ctx context.Context, projectId string, ibPartitionId string) (*http.Response, error) {
 	var (
@@ -261,10 +261,10 @@ func (a *IBPartitionsApiService) DeleteIBPartition(ctx context.Context, projectI
 }
 
 /*
-IBPartitionsApiService Returns details for a single Infiniband partition in the project.
+IBPartitionsApiService Returns details for a single InfiniBand partition in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId ID of the project that owns the Infiniband partition.
-  - @param ibPartitionId ID of the Infiniband partition.
+  - @param projectId ID of the project that owns the InfiniBand partition.
+  - @param ibPartitionId ID of the InfiniBand partition.
 
 @return IbPartition
 */
@@ -389,7 +389,7 @@ func (a *IBPartitionsApiService) GetIBPartition(ctx context.Context, projectId s
 }
 
 /*
-IBPartitionsApiService Lists all Infiniband partitions in the project and returns their details.
+IBPartitionsApiService Lists all InfiniBand partitions in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
 

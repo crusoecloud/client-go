@@ -20,7 +20,7 @@ type S3Bucket struct {
 	Location string `json:"location"`
 	// Name of the bucket.
 	Name string `json:"name"`
-	// Whether object lock is enabled on the bucket.
+	// Whether object lock is enabled.
 	ObjectLockEnabled bool `json:"object_lock_enabled"`
 	// ID of the project that owns the bucket.
 	ProjectId     string `json:"project_id"`

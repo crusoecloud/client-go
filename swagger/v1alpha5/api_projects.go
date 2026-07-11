@@ -28,7 +28,7 @@ type ProjectsApiService service
 
 /*
 ProjectsApiService Creates a project and returns the created project.
-The logged in user must have the permission to create projects within the organization. A successful response from this resource contains details of the created project.
+The logged-in user must have the permission to create projects within the organization. A successful response from this resource contains details of the created project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
 
@@ -357,8 +357,8 @@ func (a *ProjectsApiService) GetProject(ctx context.Context, projectId string) (
 }
 
 /*
-ProjectsApiService Lists all projects the logged in user belongs to or owns and returns their details.
-If querying for projects within an organization, the logged in user must be the owner of the organization.
+ProjectsApiService Lists all projects the logged-in user belongs to or owns and returns their details.
+If querying for projects within an organization, the logged-in user must be the owner of the organization.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *ProjectsApiListProjectsOpts - Optional Parameters:
      * @param "OrgId" (optional.String) -  Filters results to projects in this organization.

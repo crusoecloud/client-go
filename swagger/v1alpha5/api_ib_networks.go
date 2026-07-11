@@ -25,10 +25,10 @@ var (
 type IBNetworksApiService service
 
 /*
-IBNetworksApiService Returns details for a single Infiniband network.
+IBNetworksApiService Returns details for a single InfiniBand network.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId ID of the project.
-  - @param ibNetworkId ID of the Infiniband network.
+  - @param ibNetworkId ID of the InfiniBand network.
 
 @return IbNetwork
 */
@@ -143,7 +143,7 @@ func (a *IBNetworksApiService) GetIBNetwork(ctx context.Context, projectId strin
 }
 
 /*
-IBNetworksApiService Lists all Infiniband networks and returns their details.
+IBNetworksApiService Lists all InfiniBand networks and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
 

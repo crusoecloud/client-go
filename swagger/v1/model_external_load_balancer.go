@@ -24,6 +24,6 @@ type ExternalLoadBalancer struct {
 	Protocol string `json:"protocol"`
 	// Virtual IP (VIP) of the External Load Balancer.
 	Vip string `json:"vip"`
-	// The ID of the vpc network this External Load Balancer belongs to.
+	// The ID of the VPC network this External Load Balancer belongs to.
 	VpcId string `json:"vpc_id"`
 }

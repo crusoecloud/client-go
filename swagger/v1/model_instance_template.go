@@ -11,7 +11,7 @@ package swagger
 type InstanceTemplate struct {
 	// Time the instance template was created.
 	CreatedAt string `json:"created_at"`
-	// OS Image to use for all VMs created from this instance template.
+	// Custom image to use for all VMs created from this instance template.
 	CustomImageName string `json:"custom_image_name,omitempty"`
 	// Disks attached to all VMs created from this instance template.
 	Disks         []DiskTemplate `json:"disks,omitempty"`
@@ -30,7 +30,7 @@ type InstanceTemplate struct {
 	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
 	// Placement policy controlling how VMs created from this instance template are distributed across hosts: spread or unspecified.
 	PlacementPolicy string `json:"placement_policy"`
-	// Project ID of the project this instance template belongs to.
+	// ID of the project this instance template belongs to.
 	ProjectId string `json:"project_id"`
 	// Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".
 	PublicIpAddressType string `json:"public_ip_address_type"`

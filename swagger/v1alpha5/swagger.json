@@ -448,7 +448,7 @@
     },
     "/organizations/projects": {
       "get": {
-        "description": "If querying for projects within an organization, the logged in user must be the owner of the organization.",
+        "description": "If querying for projects within an organization, the logged-in user must be the owner of the organization.",
         "operationId": "listProjects",
         "parameters": [
           {
@@ -487,13 +487,13 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Lists all projects the logged in user belongs to or owns and returns their details.",
+        "summary": "Lists all projects the logged-in user belongs to or owns and returns their details.",
         "tags": [
           "Projects"
         ]
       },
       "post": {
-        "description": "The logged in user must have the permission to create projects within the organization.\nA successful response from this resource contains details of the created project.",
+        "description": "The logged-in user must have the permission to create projects within the organization.\nA successful response from this resource contains details of the created project.",
         "operationId": "createProject",
         "parameters": [
           {
@@ -5917,7 +5917,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Lists all Infiniband networks and returns their details.",
+        "summary": "Lists all InfiniBand networks and returns their details.",
         "tags": [
           "IB Networks"
         ]
@@ -5937,7 +5937,7 @@
             "x-go-name": "ProjectID"
           },
           {
-            "description": "ID of the Infiniband network.",
+            "description": "ID of the InfiniBand network.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "ib_network_id",
@@ -5960,7 +5960,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Returns details for a single Infiniband network.",
+        "summary": "Returns details for a single InfiniBand network.",
         "tags": [
           "IB Networks"
         ]
@@ -5993,7 +5993,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Lists all Infiniband partitions in the project and returns their details.",
+        "summary": "Lists all InfiniBand partitions in the project and returns their details.",
         "tags": [
           "IB Partitions"
         ]
@@ -6035,7 +6035,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Creates an Infiniband partition in the project and returns the created Infiniband partition.",
+        "summary": "Creates an InfiniBand partition in the project and returns the created InfiniBand partition.",
         "tags": [
           "IB Partitions"
         ]
@@ -6046,7 +6046,7 @@
         "operationId": "deleteIBPartition",
         "parameters": [
           {
-            "description": "ID of the project that owns the Infiniband partition.",
+            "description": "ID of the project that owns the InfiniBand partition.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6055,7 +6055,7 @@
             "x-go-name": "ProjectID"
           },
           {
-            "description": "ID of the Infiniband partition.",
+            "description": "ID of the InfiniBand partition.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "ib_partition_id",
@@ -6081,7 +6081,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Deletes an Infiniband partition from the project and returns an empty response.",
+        "summary": "Deletes an InfiniBand partition from the project and returns an empty response.",
         "tags": [
           "IB Partitions"
         ]
@@ -6090,7 +6090,7 @@
         "operationId": "getIBPartition",
         "parameters": [
           {
-            "description": "ID of the project that owns the Infiniband partition.",
+            "description": "ID of the project that owns the InfiniBand partition.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6099,7 +6099,7 @@
             "x-go-name": "ProjectID"
           },
           {
-            "description": "ID of the Infiniband partition.",
+            "description": "ID of the InfiniBand partition.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "ib_partition_id",
@@ -6125,7 +6125,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Returns details for a single Infiniband partition in the project.",
+        "summary": "Returns details for a single InfiniBand partition in the project.",
         "tags": [
           "IB Partitions"
         ]
@@ -11788,7 +11788,7 @@
             "read-only",
             "read-write"
           ],
-          "example": "read-only, read-write",
+          "example": "read-write",
           "type": "string",
           "x-go-name": "Mode"
         }
@@ -12347,7 +12347,7 @@
           "x-go-name": "VIP"
         },
         "vpc_id": {
-          "description": "The ID of the vpc network this External Load Balancer belongs to.",
+          "description": "The ID of the VPC network this External Load Balancer belongs to.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "VPCID"
@@ -12478,7 +12478,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "FirewallRuleObject": {
-      "description": "It has two fields: CIDR and ResourceID. The CIDR field may either be a\nCIDR or an IP address. If an IP, it will be converted to a CIDR. Resource ids\nof VPC networks, Subnets, and VMs are the only allowed. Only one of the two\nfields can be non empty.",
+      "description": "It has two fields: CIDR and ResourceID. The CIDR field may either be a\nCIDR or an IP address. If an IP, it will be converted to a CIDR. Resource IDs\nof VPC networks, Subnets, and VMs are the only ones allowed. Only one of the two\nfields can be non-empty.",
       "properties": {
         "cidr": {
           "description": "CIDR block, or an IP address that is converted to a CIDR. Mutually exclusive with resource_id.",
@@ -12956,7 +12956,7 @@
         "success_count",
         "timeout"
       ],
-      "title": "HealthCheckOptions defines the health check configuration.",
+      "title": "HealthCheckOptionsExternalLB defines the health check configuration.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -13076,19 +13076,19 @@
           "x-go-name": "Capacities"
         },
         "id": {
-          "description": "Unique identifier of the Infiniband network.",
+          "description": "Unique identifier of the InfiniBand network.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
         },
         "location": {
-          "description": "Location of the Infiniband network.",
+          "description": "Location of the InfiniBand network.",
           "example": "us-east",
           "type": "string",
           "x-go-name": "Location"
         },
         "name": {
-          "description": "Name of the Infiniband network.",
+          "description": "Name of the InfiniBand network.",
           "example": "ib-network-1",
           "type": "string",
           "x-go-name": "Name"
@@ -13129,19 +13129,19 @@
     "IBPartition": {
       "properties": {
         "ib_network_id": {
-          "description": "Identifier of the Infiniband network the partition belongs to.",
+          "description": "Identifier of the InfiniBand network the partition belongs to.",
           "example": "36c0b0d9-8b68-4869-addb-227b06b64ee0",
           "type": "string",
           "x-go-name": "IBNetworkID"
         },
         "id": {
-          "description": "Unique identifier of the Infiniband partition, assigned at creation.",
+          "description": "Unique identifier of the InfiniBand partition, assigned at creation.",
           "example": "44701f9e-845c-4005-9240-adee6401b8d3",
           "type": "string",
           "x-go-name": "ID"
         },
         "name": {
-          "description": "Name of the Infiniband partition.",
+          "description": "Name of the InfiniBand partition.",
           "example": "my-ib-partition",
           "type": "string",
           "x-go-name": "Name"
@@ -13158,13 +13158,13 @@
     "IBPartitionsPostRequestV1Alpha5": {
       "properties": {
         "ib_network_id": {
-          "description": "Identifier of the Infiniband network to create the partition in.",
+          "description": "Identifier of the InfiniBand network to create the partition in.",
           "example": "36c0b0d9-8b68-4869-addb-227b06b64ee0",
           "type": "string",
           "x-go-name": "IBNetworkID"
         },
         "name": {
-          "description": "Name for the new Infiniband partition.",
+          "description": "Name for the new InfiniBand partition.",
           "example": "my-ib-partition",
           "type": "string",
           "x-go-name": "Name"
@@ -13593,7 +13593,7 @@
           "x-go-name": "CreatedAt"
         },
         "custom_image_name": {
-          "description": "OS Image to use for all VMs created from this instance template.",
+          "description": "Custom image to use for all VMs created from this instance template.",
           "example": "ubuntu:20.04",
           "type": "string",
           "x-go-name": "CustomImage"
@@ -13660,7 +13660,7 @@
           "x-go-name": "PlacementPolicy"
         },
         "project_id": {
-          "description": "Project ID of the project this instance template belongs to.",
+          "description": "ID of the project this instance template belongs to.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "ProjectID"
@@ -13679,7 +13679,7 @@
         },
         "shutdown_script": {
           "description": "Shutdown script to use for all VMs created from this instance template.",
-          "example": "#!/bin/bash\\necho'goodbye'",
+          "example": "#!/bin/bash\\necho 'goodbye'",
           "type": "string",
           "x-go-name": "ShutdownScript"
         },
@@ -13691,7 +13691,7 @@
         },
         "startup_script": {
           "description": "Startup script to use for all VMs created from this instance template.",
-          "example": "#!/bin/bash\\necho'hello'",
+          "example": "#!/bin/bash\\necho 'hello'",
           "type": "string",
           "x-go-name": "StartupScript"
         },
@@ -13774,7 +13774,7 @@
         },
         "maintenance_policy": {
           "description": "Host maintenance policy controlling how VMs created from this instance template behave during host maintenance.",
-          "example": "manual,auto-stop,stop-vm,unspecified",
+          "example": "manual,stop-vm,unspecified",
           "type": "string",
           "x-go-name": "MaintenancePolicy"
         },
@@ -13804,7 +13804,7 @@
         },
         "shutdown_script": {
           "description": "Shutdown script to use for all VMs created from this instance template.",
-          "example": "\"#!/bin/bash\\necho'goodbye'\"",
+          "example": "\"#!/bin/bash\\necho 'goodbye'\"",
           "type": "string",
           "x-go-name": "ShutdownScript"
         },
@@ -13816,7 +13816,7 @@
         },
         "startup_script": {
           "description": "Startup script to use for all VMs created from this instance template.",
-          "example": "\"#!/bin/bash\\necho'hello'\"",
+          "example": "\"#!/bin/bash\\necho 'hello'\"",
           "type": "string",
           "x-go-name": "StartupScript"
         },
@@ -13853,7 +13853,7 @@
         "type",
         "ssh_public_key"
       ],
-      "title": "InstanceTemplate defines the specifications of VMs to be created during bulk VM creation.",
+      "title": "InstanceTemplatePostRequestV1Alpha5 defines the specifications of VMs to be created during bulk VM creation.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -14288,7 +14288,7 @@
         },
         "disks": {
           "description": "Disks to attach to the new VM.",
-          "example": "[{disk_id: \"09ae8411-0fbb-411c-898c-2b8f19622ae1\", mode: \"read-write\", attach_type: \"data\"},",
+          "example": "[{disk_id: \"09ae8411-0fbb-411c-898c-2b8f19622ae1\", mode: \"read-write\", attachment_type: \"data\"},",
           "items": {
             "$ref": "#/definitions/DiskAttachment"
           },
@@ -14351,7 +14351,7 @@
         },
         "shutdown_script": {
           "description": "Script to run when the VM shuts down.",
-          "example": "#!/bin/bash\\necho'goodbye'",
+          "example": "#!/bin/bash\\necho 'goodbye'",
           "type": "string",
           "x-go-name": "ShutdownScript"
         },
@@ -14363,7 +14363,7 @@
         },
         "startup_script": {
           "description": "Script to run when the VM starts.",
-          "example": "#!/bin/bash\\necho'hello'",
+          "example": "#!/bin/bash\\necho 'hello'",
           "type": "string",
           "x-go-name": "StartupScript"
         },
@@ -14773,7 +14773,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Arguments for kubectl oidc-login plugin.",
+          "description": "Arguments for the kubectl oidc-login plugin.",
           "example": {
             "force-refresh": "",
             "oidc-extra-scope": "email groups"
@@ -15038,7 +15038,9 @@
             "type": "string"
           },
           "description": "Labels assigned to nodes in the node pool.",
-          "example": "\"nvidia.a100\"",
+          "example": {
+            "label": "my_node"
+          },
           "type": "object",
           "x-go-name": "NodeLabels"
         },
@@ -15383,7 +15385,7 @@
             "count",
             "percentage"
           ],
-          "example": "'count'",
+          "example": "count",
           "type": "string",
           "x-go-name": "Strategy"
         }
@@ -16150,7 +16152,7 @@
       "required": [
         "items"
       ],
-      "title": "ListProjectsResponseV1Alpha5 is the response type for GET requests to the roles endpoint.",
+      "title": "ListProjectsResponseV1Alpha5 is the response type for GET requests to the projects endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -16202,7 +16204,7 @@
     "ListS3BucketsResponse": {
       "properties": {
         "items": {
-          "description": "List of buckets",
+          "description": "List of buckets.",
           "items": {
             "$ref": "#/definitions/S3Bucket"
           },
@@ -16210,12 +16212,12 @@
           "x-go-name": "Items"
         },
         "next_page_token": {
-          "description": "Next page token",
+          "description": "Next page token.",
           "type": "string",
           "x-go-name": "NextPageToken"
         },
         "prev_page_token": {
-          "description": "Previous page token",
+          "description": "Previous page token.",
           "type": "string",
           "x-go-name": "PrevPageToken"
         }
@@ -17673,7 +17675,7 @@
           "x-go-name": "OrganizationID"
         },
         "relation": {
-          "description": "Relation of the logged in user to the project. Deprecated.",
+          "description": "Relation of the logged-in user to the project. Deprecated.",
           "example": "owner",
           "type": "string",
           "x-go-name": "Relation"
@@ -18501,7 +18503,7 @@
           "x-go-name": "Name"
         },
         "object_lock_enabled": {
-          "description": "Whether object lock is enabled on the bucket.",
+          "description": "Whether object lock is enabled.",
           "example": false,
           "type": "boolean",
           "x-go-name": "ObjectLockEnabled"
@@ -19465,7 +19467,7 @@
         "num_gpu",
         "gpu_type"
       ],
-      "title": "Types an instance of a Crusoe cloud offering, used in the GET vms.types endpoint response.",
+      "title": "Type describes an instance type of a Crusoe cloud offering, used in the GET vms.types endpoint response.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -20178,7 +20180,7 @@
           "x-go-name": "Sources"
         }
       },
-      "title": "VPCFirewallRulesPatchRequest is the request type for PATCH requests to the VPC networks endpoint.",
+      "title": "VPCFirewallRulesPatchRequest is the request type for PATCH requests to the VPC Firewall Rules endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -20269,7 +20271,7 @@
         "protocols",
         "vpc_network_id"
       ],
-      "title": "VPCFirewallRulesPostRequest is the request type for POST requests to the VPC networks endpoint.",
+      "title": "VPCFirewallRulesPostRequestV1Alpha5 is the request type for POST requests to the VPC Firewall Rules endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },

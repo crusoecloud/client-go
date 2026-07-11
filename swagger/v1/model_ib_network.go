@@ -11,10 +11,10 @@ package swagger
 type IbNetwork struct {
 	// Available capacity in the network, broken down by VM slice type.
 	Capacities []IbNetworkCapacity `json:"capacities"`
-	// Unique identifier of the Infiniband network.
+	// Unique identifier of the InfiniBand network.
 	Id string `json:"id"`
-	// Location of the Infiniband network.
+	// Location of the InfiniBand network.
 	Location string `json:"location"`
-	// Name of the Infiniband network.
+	// Name of the InfiniBand network.
 	Name string `json:"name"`
 }
