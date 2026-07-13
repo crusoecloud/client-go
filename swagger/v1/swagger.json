@@ -2313,7 +2313,7 @@
         ]
       },
       "patch": {
-        "description": "Updates the username and password credentials for the upstream registry\nof a pull-through cache repository.",
+        "description": "Updates the username and password credentials for the upstream registry\nof a pull-through-cache repository.",
         "operationId": "updateCcrRepositoryCredentials",
         "parameters": [
           {
@@ -10991,11 +10991,13 @@
       "properties": {
         "alias": {
           "description": "Alias for the new token, used to identify it.",
+          "example": "my-token",
           "type": "string",
           "x-go-name": "Alias"
         },
         "expires_at": {
-          "description": "Time at which the token expires.",
+          "description": "Expiration timestamp of the token, in RFC3339 format.",
+          "example": "2026-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpiresAt"
         }
@@ -11122,23 +11124,27 @@
       "properties": {
         "manifest_count": {
           "description": "Number of manifests in the image.",
+          "example": 3,
           "format": "int64",
           "type": "integer",
           "x-go-name": "ManifestCount"
         },
         "name": {
           "description": "Name of the image.",
+          "example": "my-image",
           "type": "string",
           "x-go-name": "Name"
         },
         "pull_count": {
           "description": "Number of times the image has been pulled.",
+          "example": 100,
           "format": "int64",
           "type": "integer",
           "x-go-name": "PullCount"
         },
         "updated_at": {
-          "description": "Time at which the image was last updated.",
+          "description": "Last update timestamp of the image, in RFC3339 format.",
+          "example": "2021-12-03T19:58:34Z",
           "format": "date-time",
           "type": "string",
           "x-go-name": "LastUpdatedTimestampUTC"
@@ -15704,6 +15710,7 @@
     "ListCcrImagesResponse": {
       "properties": {
         "items": {
+          "description": "List of images.",
           "items": {
             "$ref": "#/definitions/CcrImage"
           },
@@ -16067,6 +16074,7 @@
     "ListManifestsResponse": {
       "properties": {
         "items": {
+          "description": "List of manifests.",
           "items": {
             "$ref": "#/definitions/Manifest"
           },
@@ -16159,6 +16167,7 @@
     "ListRepositoriesResponse": {
       "properties": {
         "items": {
+          "description": "List of repositories.",
           "items": {
             "$ref": "#/definitions/Repository"
           },
@@ -16369,6 +16378,11 @@
     "ListSupportedLocationsResponse": {
       "properties": {
         "items": {
+          "description": "List of locations where the container registry is available.",
+          "example": [
+            "us-east1",
+            "us-northcentral1"
+          ],
           "items": {
             "type": "string"
           },
@@ -16382,6 +16396,7 @@
     "ListSupportedProvidersResponse": {
       "properties": {
         "items": {
+          "description": "List of supported upstream registry providers.",
           "items": {
             "type": "string"
           },
@@ -16834,28 +16849,36 @@
       "properties": {
         "digest": {
           "description": "Content-addressable digest that uniquely identifies the manifest.",
+          "example": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
           "type": "string",
           "x-go-name": "Digest"
         },
         "pulled_at": {
-          "description": "Time at which the manifest was last pulled.",
+          "description": "Last pull timestamp of the manifest, in RFC3339 format.",
+          "example": "2021-12-03T19:58:34Z",
           "format": "date-time",
           "type": "string",
           "x-go-name": "PullTimestampUTC"
         },
         "pushed_at": {
-          "description": "Time at which the manifest was pushed.",
+          "description": "Push timestamp of the manifest, in RFC3339 format.",
+          "example": "2021-12-03T19:58:34Z",
           "format": "date-time",
           "type": "string",
           "x-go-name": "PushTimestampUTC"
         },
         "size_bytes": {
           "description": "Total size of the manifest, in bytes.",
+          "example": "10485760",
           "type": "string",
           "x-go-name": "SizeBytes"
         },
         "tags": {
           "description": "Tags that point to the manifest.",
+          "example": [
+            "latest",
+            "v1.0"
+          ],
           "items": {
             "type": "string"
           },
@@ -18119,23 +18142,27 @@
     "Repository": {
       "properties": {
         "created_at": {
-          "description": "Time at which the repository was created.",
+          "description": "Creation timestamp of the repository, in RFC3339 format.",
+          "example": "2021-12-03T19:58:34Z",
           "format": "date-time",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "id": {
-          "description": "Unique identifier of the repository, assigned at creation.",
+          "description": "ID of the repository.",
+          "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "ID"
         },
         "location": {
           "description": "Location the repository is hosted in.",
+          "example": "us-east1",
           "type": "string",
           "x-go-name": "Location"
         },
         "max_size_bytes": {
           "description": "Maximum total size of the repository, in bytes.",
+          "example": "10737418240",
           "type": "string",
           "x-go-name": "MaxSizeBytes"
         },
@@ -18146,6 +18173,7 @@
         },
         "name": {
           "description": "Name of the repository.",
+          "example": "my-repository",
           "type": "string",
           "x-go-name": "Name"
         },
@@ -18169,17 +18197,20 @@
     "RepositoryQuota": {
       "properties": {
         "last_requested_timestamp_utc": {
-          "description": "Time at which the usage data was last computed.",
+          "description": "Timestamp at which the usage data was last computed, in RFC3339 format.",
+          "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "LastRequestedTimestampUTC"
         },
         "max_size_bytes": {
           "description": "Maximum total size allowed for the repository, in bytes.",
+          "example": "10737418240",
           "type": "string",
           "x-go-name": "MaxSizeBytes"
         },
         "used_size_bytes": {
           "description": "Total size currently used by the repository, in bytes.",
+          "example": "5368709120",
           "type": "string",
           "x-go-name": "UsedSizeBytes"
         }
@@ -18191,11 +18222,13 @@
       "properties": {
         "location": {
           "description": "Location to create the repository in.",
+          "example": "us-east1",
           "type": "string",
           "x-go-name": "Location"
         },
         "max_size_bytes": {
           "description": "Maximum total size for the new repository, in bytes.",
+          "example": "10737418240",
           "type": "string",
           "x-go-name": "MaxSizeBytes"
         },
@@ -18206,6 +18239,7 @@
         },
         "name": {
           "description": "Name for the new repository.",
+          "example": "my-repository",
           "type": "string",
           "x-go-name": "Name"
         },
@@ -19625,6 +19659,7 @@
         },
         "url": {
           "description": "Base URL of the upstream registry that the repository caches images from.",
+          "example": "https://registry-1.docker.io",
           "type": "string",
           "x-go-name": "URL"
         }
@@ -19641,6 +19676,7 @@
         },
         "username": {
           "description": "Username used to authenticate to the upstream registry.",
+          "example": "my-registry-user",
           "type": "string",
           "x-go-name": "Username"
         }

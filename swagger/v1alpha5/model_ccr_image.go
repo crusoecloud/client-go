@@ -19,7 +19,7 @@ type CcrImage struct {
 	Name string `json:"name,omitempty"`
 	// Number of times the image has been pulled.
 	PullCount int64 `json:"pull_count,omitempty"`
-	// Time at which the image was last updated.
+	// Last update timestamp of the image, in RFC3339 format.
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 	// URL at which the image can be accessed.
 	Url string `json:"url,omitempty"`

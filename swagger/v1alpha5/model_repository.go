@@ -13,9 +13,9 @@ import (
 )
 
 type Repository struct {
-	// Time at which the repository was created.
+	// Creation timestamp of the repository, in RFC3339 format.
 	CreatedAt time.Time `json:"created_at,omitempty"`
-	// Unique identifier of the repository, assigned at creation.
+	// ID of the repository.
 	Id string `json:"id,omitempty"`
 	// Location the repository is hosted in.
 	Location string `json:"location,omitempty"`

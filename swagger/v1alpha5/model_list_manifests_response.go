@@ -9,5 +9,6 @@
 package swagger
 
 type ListManifestsResponse struct {
+	// List of manifests.
 	Items []Manifest `json:"items,omitempty"`
 }

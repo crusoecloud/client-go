@@ -11,6 +11,6 @@ package swagger
 type CcrTokenRequest struct {
 	// Alias for the new token, used to identify it.
 	Alias string `json:"alias,omitempty"`
-	// Time at which the token expires.
+	// Expiration timestamp of the token, in RFC3339 format.
 	ExpiresAt string `json:"expires_at,omitempty"`
 }

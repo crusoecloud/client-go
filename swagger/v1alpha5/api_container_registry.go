@@ -1613,7 +1613,7 @@ func (a *ContainerRegistryApiService) ListSupportedProviders(ctx context.Context
 
 /*
 ContainerRegistryApiService Updates the upstream registry credentials for a repository in the project.
-Updates the username and password credentials for the upstream registry of a pull-through cache repository.
+Updates the username and password credentials for the upstream registry of a pull-through-cache repository.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId ID of the project that owns the repository.
  * @param repositoryId ID of the repository.
