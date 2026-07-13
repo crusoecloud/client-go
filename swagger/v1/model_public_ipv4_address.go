@@ -11,7 +11,7 @@ package swagger
 type PublicIpv4Address struct {
 	// Public IPv4 address.
 	Address string `json:"address"`
-	// Unique identifier of the public IPv4 address.
+	// ID of the public IPv4 address.
 	Id string `json:"id"`
 	// Allocation type of the public IPv4 address (for example, dynamic).
 	Type_ string `json:"type"`

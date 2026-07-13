@@ -12,6 +12,6 @@ package swagger
 type FirewallRuleObject struct {
 	// CIDR block, or an IP address that is converted to a CIDR. Mutually exclusive with resource_id.
 	Cidr string `json:"cidr,omitempty"`
-	// Unique identifier of a VPC network, subnet, or VM. Mutually exclusive with cidr.
+	// ID of a VPC network, subnet, or VM. Mutually exclusive with cidr.
 	ResourceId string `json:"resource_id,omitempty"`
 }

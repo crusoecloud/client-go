@@ -13,9 +13,9 @@ type HostChannelAdapter struct {
 	Guid          string `json:"guid"`
 	IbNetworkId   string `json:"ib_network_id"`
 	IbPartitionId string `json:"ib_partition_id"`
-	// Identifier of the transport network the host channel adapter is attached to.
+	// ID of the transport network the host channel adapter is attached to.
 	TransportNetworkId string `json:"transport_network_id"`
-	// Identifier of the transport partition the host channel adapter is attached to.
+	// ID of the transport partition the host channel adapter is attached to.
 	TransportPartitionId string `json:"transport_partition_id"`
 	// Transport type of the host channel adapter.
 	Type_ string `json:"type"`

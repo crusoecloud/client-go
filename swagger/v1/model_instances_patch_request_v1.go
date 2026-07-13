@@ -19,7 +19,7 @@ type InstancesPatchRequestV1 struct {
 	MaintenancePolicy string `json:"maintenance_policy,omitempty"`
 	// New set of network interfaces for the VM.
 	NetworkInterfaces []NetworkInterface `json:"network_interfaces,omitempty"`
-	// Identifier of the reservation to use for the VM.
+	// ID of the reservation to use for the VM.
 	ReservationId string `json:"reservation_id,omitempty"`
 	// New VM type to change the VM to.
 	Type_ string `json:"type,omitempty"`

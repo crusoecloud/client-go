@@ -13,9 +13,9 @@ type AttachedDiskV1Alpha5 struct {
 	AttachmentType string `json:"attachment_type"`
 	// Block size of the disk, in bytes.
 	BlockSize int64 `json:"block_size"`
-	// Time at which the disk was created.
+	// Creation timestamp of the disk, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
-	// Unique identifier of the disk, assigned at creation.
+	// ID of the disk.
 	Id string `json:"id"`
 	// Location of the disk.
 	Location string `json:"location"`
@@ -29,6 +29,6 @@ type AttachedDiskV1Alpha5 struct {
 	Size string `json:"size"`
 	// Storage type of the disk.
 	Type_ string `json:"type"`
-	// Time at which the disk was last updated.
+	// Last update timestamp of the disk, in RFC3339 format.
 	UpdatedAt string `json:"updated_at"`
 }

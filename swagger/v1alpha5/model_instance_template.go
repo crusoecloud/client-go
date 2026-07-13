@@ -9,7 +9,7 @@
 package swagger
 
 type InstanceTemplate struct {
-	// Time the instance template was created.
+	// Creation timestamp of the instance template, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
 	// Custom image to use for all VMs created from this instance template.
 	CustomImageName string `json:"custom_image_name,omitempty"`

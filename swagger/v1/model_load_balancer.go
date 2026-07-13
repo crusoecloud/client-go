@@ -14,7 +14,7 @@ type LoadBalancer struct {
 	// Backend targets the load balancer forwards traffic to, given as CIDR blocks or resource IDs.
 	Destinations []NetworkTarget     `json:"destinations"`
 	HealthCheck  *HealthCheckOptions `json:"health_check,omitempty"`
-	// Unique identifier of the load balancer, assigned at creation.
+	// ID of the load balancer.
 	Id string `json:"id"`
 	// IP addresses assigned to the load balancer.
 	Ips []IpAddresses `json:"ips"`

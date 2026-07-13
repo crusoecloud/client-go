@@ -17,6 +17,6 @@ type VpcSubnetPostRequest struct {
 	Name string `json:"name"`
 	// Whether to create a NAT gateway for the subnet.
 	NatGatewayEnabled bool `json:"nat_gateway_enabled"`
-	// Unique identifier of the VPC network to create the subnet in.
+	// ID of the VPC network to create the subnet in.
 	VpcNetworkId string `json:"vpc_network_id"`
 }

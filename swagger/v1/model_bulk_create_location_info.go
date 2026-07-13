@@ -13,8 +13,8 @@ type BulkCreateLocationInfo struct {
 	IbPartitionId string `json:"ib_partition_id,omitempty"`
 	// Location to create the VMs in.
 	Location string `json:"location"`
-	// Identifier of the subnet to create the VMs in. Must be in the same location as the VMs. If not provided, the default subnet for the location will be used, if there is one.
+	// ID of the subnet to create the VMs in. Must be in the same location as the VMs. If not provided, the default subnet for the location will be used, if there is one.
 	SubnetId string `json:"subnet_id,omitempty"`
-	// Identifier of the Infiniband or RoCE partition to create the VMs in, if a transport type was specified. Must be in the same location as the VMs.
+	// ID of the Infiniband or RoCE partition to create the VMs in, if a transport type was specified. Must be in the same location as the VMs.
 	TransportPartitionId string `json:"transport_partition_id,omitempty"`
 }

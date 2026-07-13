@@ -9,11 +9,11 @@
 package swagger
 
 type Image struct {
-	// Time at which the image was created.
+	// Creation timestamp of the image, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
 	// Description of the image.
 	Description string `json:"description"`
-	// Unique identifier of the image, assigned at creation.
+	// ID of the image.
 	Id string `json:"id"`
 	// Locations where the image is available.
 	Locations []string `json:"locations"`

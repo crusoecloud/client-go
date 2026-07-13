@@ -11,7 +11,7 @@ package swagger
 type NvlinkDomainSummaryResponse struct {
 	// Number of nodes currently available in the NVLink domain
 	AvailableNodes int32 `json:"available_nodes,omitempty"`
-	// Unique identifier for the NVLink domain
+	// ID of the NVLink domain
 	Id string `json:"id,omitempty"`
 	// Geographic location of the NVLink domain
 	Location string `json:"location,omitempty"`

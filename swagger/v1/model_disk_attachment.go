@@ -11,7 +11,7 @@ package swagger
 type DiskAttachment struct {
 	// Role the disk plays for the VM: os or data.
 	AttachmentType string `json:"attachment_type"`
-	// Unique identifier of the disk to attach.
+	// ID of the disk to attach.
 	DiskId string `json:"disk_id"`
 	// Access mode to attach the disk with: read-only or read-write.
 	Mode string `json:"mode"`

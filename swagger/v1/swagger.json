@@ -9986,13 +9986,13 @@
           "x-go-name": "BlockSize"
         },
         "created_at": {
-          "description": "Time at which the disk was created.",
+          "description": "Creation timestamp of the disk, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "id": {
-          "description": "Unique identifier of the disk, assigned at creation.",
+          "description": "ID of the disk.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "ID"
@@ -10034,7 +10034,7 @@
           "x-go-name": "Type"
         },
         "updated_at": {
-          "description": "Time at which the disk was last updated.",
+          "description": "Last update timestamp of the disk, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -10900,13 +10900,13 @@
           "x-go-name": "Location"
         },
         "subnet_id": {
-          "description": "Identifier of the subnet to create the VMs in. Must be in the same location\nas the VMs. If not provided, the default subnet for the location will be\nused, if there is one.",
+          "description": "ID of the subnet to create the VMs in. Must be in the same location\nas the VMs. If not provided, the default subnet for the location will be\nused, if there is one.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "SubnetID"
         },
         "transport_partition_id": {
-          "description": "Identifier of the Infiniband or RoCE partition to create the VMs in, if a transport type was\nspecified. Must be in the same location as the VMs.",
+          "description": "ID of the Infiniband or RoCE partition to create the VMs in, if a transport type was\nspecified. Must be in the same location as the VMs.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "TransportPartitionID"
@@ -10943,7 +10943,7 @@
           "x-nullable": true
         },
         "instance_group_id": {
-          "description": "Identifier of the instance group the VMs will be created in.",
+          "description": "ID of the instance group the VMs will be created in.",
           "example": "cda562c4-6162-4565-95f3-ce06a8220c07",
           "type": "string",
           "x-go-name": "InstanceGroupID"
@@ -10952,7 +10952,7 @@
           "$ref": "#/definitions/InstanceTemplatePostRequestV1"
         },
         "instance_template_id": {
-          "description": "Identifier of the instance template to use for creating the VMs.",
+          "description": "ID of the instance template to use for creating the VMs.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "InstanceTemplateID"
@@ -10972,7 +10972,7 @@
           "x-go-name": "NamePrefix"
         },
         "nvlink_domain_id": {
-          "description": "Identifier of the NVLink domain to create the VMs in.",
+          "description": "ID of the NVLink domain to create the VMs in.",
           "type": "string",
           "x-go-name": "NvlinkDomainID"
         },
@@ -11783,7 +11783,7 @@
           "x-go-name": "AttachmentType"
         },
         "disk_id": {
-          "description": "Unique identifier of the disk to attach.",
+          "description": "ID of the disk to attach.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "DiskID"
@@ -11821,19 +11821,19 @@
           "x-go-name": "BlockSize"
         },
         "created_at": {
-          "description": "Time the disk snapshot was created.",
+          "description": "Creation timestamp of the disk snapshot, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "created_from": {
-          "description": "Unique identifier of the disk the snapshot was created from.",
+          "description": "ID of the disk the snapshot was created from.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "CreatedFrom"
         },
         "id": {
-          "description": "Unique identifier of the disk snapshot, assigned at creation.",
+          "description": "ID of the disk snapshot.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "ID"
@@ -11851,7 +11851,7 @@
           "x-go-name": "Size"
         },
         "updated_at": {
-          "description": "Time the disk snapshot was last updated.",
+          "description": "Last update timestamp of the disk snapshot, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -11950,7 +11950,7 @@
           "x-go-name": "BlockSize"
         },
         "created_at": {
-          "description": "Time the disk was created.",
+          "description": "Creation timestamp of the disk, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
@@ -11962,7 +11962,7 @@
           "x-go-name": "DNSName"
         },
         "id": {
-          "description": "Unique identifier of the disk, assigned at creation.",
+          "description": "ID of the disk.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "ID"
@@ -11998,7 +11998,7 @@
           "x-go-name": "Type"
         },
         "updated_at": {
-          "description": "Time the disk was last updated.",
+          "description": "Last update timestamp of the disk, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -12335,7 +12335,7 @@
           "x-go-name": "Name"
         },
         "project_id": {
-          "description": "The ID of the project this External Load Balancer belongs to.",
+          "description": "ID of the project this External Load Balancer belongs to.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "ProjectID"
@@ -12353,7 +12353,7 @@
           "x-go-name": "VIP"
         },
         "vpc_id": {
-          "description": "The ID of the VPC network this External Load Balancer belongs to.",
+          "description": "ID of the VPC network this External Load Balancer belongs to.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "VPCID"
@@ -12427,7 +12427,7 @@
           "x-go-name": "Protocol"
         },
         "vpc_id": {
-          "description": "The ID of the VPC network this External Load Balancer belongs to.",
+          "description": "ID of the VPC network this External Load Balancer belongs to.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "VPCID"
@@ -12493,7 +12493,7 @@
           "x-go-name": "CIDR"
         },
         "resource_id": {
-          "description": "Unique identifier of a VPC network, subnet, or VM. Mutually exclusive with cidr.",
+          "description": "ID of a VPC network, subnet, or VM. Mutually exclusive with cidr.",
           "example": "306aa10d-5570-4e47-88c9-46bf11bd8737",
           "type": "string",
           "x-go-name": "ResourceID"
@@ -13042,13 +13042,13 @@
           "x-go-name": "IBPartitionID"
         },
         "transport_network_id": {
-          "description": "Identifier of the transport network the host channel adapter is attached to.",
+          "description": "ID of the transport network the host channel adapter is attached to.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "TransportNetworkID"
         },
         "transport_partition_id": {
-          "description": "Identifier of the transport partition the host channel adapter is attached to.",
+          "description": "ID of the transport partition the host channel adapter is attached to.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "TransportPartitionID"
@@ -13082,7 +13082,7 @@
           "x-go-name": "Capacities"
         },
         "id": {
-          "description": "Unique identifier of the InfiniBand network.",
+          "description": "ID of the InfiniBand network.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
@@ -13135,13 +13135,13 @@
     "IBPartition": {
       "properties": {
         "ib_network_id": {
-          "description": "Identifier of the InfiniBand network the partition belongs to.",
+          "description": "ID of the InfiniBand network the partition belongs to.",
           "example": "36c0b0d9-8b68-4869-addb-227b06b64ee0",
           "type": "string",
           "x-go-name": "IBNetworkID"
         },
         "id": {
-          "description": "Unique identifier of the InfiniBand partition, assigned at creation.",
+          "description": "ID of the InfiniBand partition.",
           "example": "44701f9e-845c-4005-9240-adee6401b8d3",
           "type": "string",
           "x-go-name": "ID"
@@ -13164,7 +13164,7 @@
     "IBPartitionsPostRequestV1": {
       "properties": {
         "ib_network_id": {
-          "description": "Identifier of the InfiniBand network to create the partition in.",
+          "description": "ID of the InfiniBand network to create the partition in.",
           "example": "36c0b0d9-8b68-4869-addb-227b06b64ee0",
           "type": "string",
           "x-go-name": "IBNetworkID"
@@ -13351,7 +13351,7 @@
     "Image": {
       "properties": {
         "created_at": {
-          "description": "Time at which the image was created.",
+          "description": "Creation timestamp of the image, in RFC3339 format.",
           "example": "2023-06-29T20:03:26Z",
           "type": "string",
           "x-go-name": "CreatedAt"
@@ -13363,7 +13363,7 @@
           "x-go-name": "Description"
         },
         "id": {
-          "description": "Unique identifier of the image, assigned at creation.",
+          "description": "ID of the image.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "ID"
@@ -13407,7 +13407,7 @@
     "InstanceDetails": {
       "properties": {
         "id": {
-          "description": "Unique identifier of the instance, assigned at creation.",
+          "description": "ID of the instance.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "ID"
@@ -13440,7 +13440,7 @@
           "x-go-name": "ActiveInstances"
         },
         "created_at": {
-          "description": "Time the instance group was created.",
+          "description": "Creation timestamp of the instance group, in RFC3339 format.",
           "example": "2024-01-01T00:00:00Z",
           "type": "string",
           "x-go-name": "CreatedAt"
@@ -13453,7 +13453,7 @@
           "x-go-name": "DesiredCount"
         },
         "id": {
-          "description": "Unique identifier of the instance group, assigned at creation.",
+          "description": "ID of the instance group.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "ID"
@@ -13512,7 +13512,7 @@
           "x-go-name": "TemplateID"
         },
         "updated_at": {
-          "description": "Most recent time the instance group was updated.",
+          "description": "Last update timestamp of the instance group, in RFC3339 format.",
           "example": "2024-01-01T00:00:00Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -13593,7 +13593,7 @@
     "InstanceTemplate": {
       "properties": {
         "created_at": {
-          "description": "Time the instance template was created.",
+          "description": "Creation timestamp of the instance template, in RFC3339 format.",
           "example": "2024-01-01T00:00:00Z",
           "type": "string",
           "x-go-name": "CreatedAt"
@@ -14033,7 +14033,7 @@
           "x-go-name": "CommitmentPeriod"
         },
         "created_at": {
-          "description": "Time at which the VM was created.",
+          "description": "Creation timestamp of the VM, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
@@ -14055,19 +14055,19 @@
           "x-go-name": "HostChannelAdapters"
         },
         "id": {
-          "description": "Unique identifier of the VM, assigned at creation.",
+          "description": "ID of the VM.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "ID"
         },
         "instance_group_id": {
-          "description": "Identifier of the instance group the VM belongs to, if any.",
+          "description": "ID of the instance group the VM belongs to, if any.",
           "example": "707749bd-ecad-4de8-aa00-1ae2fdb99e19",
           "type": "string",
           "x-go-name": "InstanceGroupID"
         },
         "instance_template_id": {
-          "description": "Identifier of the instance template the VM was created from, if any.",
+          "description": "ID of the instance template the VM was created from, if any.",
           "example": "75c6712a-8da8-463c-a72d-fc65cf922959",
           "type": "string",
           "x-go-name": "InstanceTemplateID"
@@ -14103,24 +14103,24 @@
           "x-go-name": "NetworkInterfaces"
         },
         "nvlink_domain_id": {
-          "description": "Identifier of the NVLink domain the VM belongs to, if any.",
+          "description": "ID of the NVLink domain the VM belongs to, if any.",
           "type": "string",
           "x-go-name": "NvlinkDomainID"
         },
         "pod_id": {
-          "description": "Identifier of the pod the VM belongs to, if any.",
+          "description": "ID of the pod the VM belongs to, if any.",
           "example": "29d20dc4-90ad-4365-ab05-83f5f5e52d94",
           "type": "string",
           "x-go-name": "PodID"
         },
         "project_id": {
-          "description": "Identifier of the project that owns the VM.",
+          "description": "ID of the project that owns the VM.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "ProjectID"
         },
         "reservation_id": {
-          "description": "Identifier of the reservation the VM belongs to, if any.",
+          "description": "ID of the reservation the VM belongs to, if any.",
           "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
           "type": "string",
           "x-go-name": "ReservationID"
@@ -14138,7 +14138,7 @@
           "x-go-name": "Type"
         },
         "updated_at": {
-          "description": "Time at which the VM was last updated.",
+          "description": "Last update timestamp of the VM, in RFC3339 format.",
           "example": "2023-08-14T09:00:35Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -14250,7 +14250,7 @@
           "x-go-name": "NetworkInterfaces"
         },
         "reservation_id": {
-          "description": "Identifier of the reservation to use for the VM.",
+          "description": "ID of the reservation to use for the VM.",
           "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
           "type": "string",
           "x-go-name": "ReservationID"
@@ -14288,7 +14288,7 @@
           "x-go-name": "CrusoeWatchAgentInstallMode"
         },
         "custom_image": {
-          "description": "Identifier of a custom image to use for the new VM. Either image or custom_image should be supplied, not both.",
+          "description": "ID of a custom image to use for the new VM. Either image or custom_image should be supplied, not both.",
           "type": "string",
           "x-go-name": "CustomImage"
         },
@@ -14348,7 +14348,7 @@
           "x-go-name": "NetworkInterfaces"
         },
         "nvlink_domain_id": {
-          "description": "Identifier of the NVLink domain to create the VM in.",
+          "description": "ID of the NVLink domain to create the VM in.",
           "type": "string",
           "x-go-name": "NvlinkDomainID"
         },
@@ -14511,7 +14511,7 @@
           "x-go-name": "ControllerManagerExtraArgs"
         },
         "created_at": {
-          "description": "Time when the cluster was created.",
+          "description": "Creation timestamp of the cluster, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
@@ -14523,7 +14523,7 @@
           "x-go-name": "DNSName"
         },
         "id": {
-          "description": "Unique identifier of the Kubernetes cluster, assigned at creation.",
+          "description": "ID of the Kubernetes cluster.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "ID"
@@ -14612,7 +14612,7 @@
           "x-go-name": "SubnetID"
         },
         "updated_at": {
-          "description": "Time when the cluster was last updated.",
+          "description": "Last update timestamp of the cluster, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -14991,7 +14991,7 @@
           "x-go-name": "Count"
         },
         "created_at": {
-          "description": "Time when the node pool was created.",
+          "description": "Creation timestamp of the node pool, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
@@ -15003,13 +15003,13 @@
           "x-go-name": "EphemeralStorageForContainerd"
         },
         "id": {
-          "description": "Unique identifier of the node pool, assigned at creation.",
+          "description": "ID of the node pool.",
           "example": "0a1b3c2d-5e6f-8b9c-4d7e-1a2b3c4d5e6f",
           "type": "string",
           "x-go-name": "ID"
         },
         "image_id": {
-          "description": "Unique identifier of the image used for the node pool.",
+          "description": "ID of the image used for the node pool.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "ImageID"
@@ -15109,7 +15109,7 @@
           "x-go-name": "Type"
         },
         "updated_at": {
-          "description": "Time when the node pool was last updated.",
+          "description": "Last update timestamp of the node pool, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -16536,7 +16536,7 @@
           "$ref": "#/definitions/HealthCheckOptions"
         },
         "id": {
-          "description": "Unique identifier of the load balancer, assigned at creation.",
+          "description": "ID of the load balancer.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
@@ -16601,13 +16601,13 @@
     "LoadBalancerNetworkInterface": {
       "properties": {
         "network": {
-          "description": "Unique identifier of the VPC network for the interface.",
+          "description": "ID of the VPC network for the interface.",
           "example": "dbaafd53-96ea-4754-9cce-78e7f08ac151",
           "type": "string",
           "x-go-name": "Network"
         },
         "subnet": {
-          "description": "Unique identifier of the subnet for the interface.",
+          "description": "ID of the subnet for the interface.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "Subnet"
@@ -16892,7 +16892,7 @@
     "NATGateway": {
       "properties": {
         "id": {
-          "description": "Unique identifier of the NAT gateway.",
+          "description": "ID of the NAT gateway.",
           "example": "8f3c4b7d-3c3b-4a63-8e1a-6cd14c1dfe91",
           "type": "string",
           "x-go-name": "ID"
@@ -16904,7 +16904,7 @@
           "x-go-name": "PublicIPV4Address"
         },
         "public_ipv4_id": {
-          "description": "Unique identifier of the public IPv4 address assigned to the NAT gateway.",
+          "description": "ID of the public IPv4 address assigned to the NAT gateway.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "PublicIPV4ID"
@@ -16926,7 +16926,7 @@
           "x-go-name": "ExternalDNSName"
         },
         "id": {
-          "description": "Unique identifier of the network interface, assigned at creation.",
+          "description": "ID of the network interface.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "ID"
@@ -16958,13 +16958,13 @@
           "x-go-name": "Name"
         },
         "network": {
-          "description": "Identifier of the VPC network the interface is attached to.",
+          "description": "ID of the VPC network the interface is attached to.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "Network"
         },
         "subnet": {
-          "description": "Identifier of the VPC subnet the interface is attached to.",
+          "description": "ID of the VPC subnet the interface is attached to.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "Subnet"
@@ -16992,7 +16992,7 @@
           "x-go-name": "CIDR"
         },
         "resource_id": {
-          "description": "Unique identifier of a backend resource. Mutually exclusive with cidr.",
+          "description": "ID of a backend resource. Mutually exclusive with cidr.",
           "example": "306aa10d-5570-4e47-88c9-46bf11bd8737",
           "type": "string",
           "x-go-name": "ResourceID"
@@ -17264,7 +17264,7 @@
           "x-go-name": "AvailableNodes"
         },
         "id": {
-          "description": "Unique identifier for the NVLink domain",
+          "description": "ID of the NVLink domain",
           "example": "550e8400-e29b-41d4-a716-446655440000",
           "type": "string",
           "x-go-name": "ID"
@@ -17556,7 +17556,7 @@
           "x-go-name": "IBPartitionID"
         },
         "transport_partition_id": {
-          "description": "Identifier of the transport partition to assign the host channel adapter to.",
+          "description": "ID of the transport partition to assign the host channel adapter to.",
           "type": "string",
           "x-go-name": "TransportPartitionID"
         }
@@ -17680,7 +17680,7 @@
     "Project": {
       "properties": {
         "id": {
-          "description": "Unique identifier of the project, assigned at creation.",
+          "description": "ID of the project.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "ID"
@@ -18024,7 +18024,7 @@
           "x-go-name": "Address"
         },
         "id": {
-          "description": "Unique identifier of the public IPv4 address.",
+          "description": "ID of the public IPv4 address.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
@@ -18359,7 +18359,7 @@
     "ReservationSpecification": {
       "properties": {
         "id": {
-          "description": "Identifier of the reservation to use for the VM. Incompatible with selection_strategy.",
+          "description": "ID of the reservation to use for the VM. Incompatible with selection_strategy.",
           "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
           "type": "string",
           "x-go-name": "ID"
@@ -18506,7 +18506,7 @@
       "description": "This is the REST-friendly model for the `BucketInfo` proto.",
       "properties": {
         "archived_at": {
-          "description": "Timestamp when the bucket was archived, in RFC3339 format.",
+          "description": "Archive timestamp of the bucket, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ArchivedAt"
@@ -18519,7 +18519,7 @@
           "x-go-name": "BucketSize"
         },
         "created_at": {
-          "description": "Timestamp when the bucket was created, in RFC3339 format.",
+          "description": "Creation timestamp of the bucket, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
@@ -18576,13 +18576,13 @@
           "x-go-name": "Tags"
         },
         "updated_at": {
-          "description": "Timestamp when the bucket was last updated, in RFC3339 format.",
+          "description": "Last update timestamp of the bucket, in RFC3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
         },
         "user_id": {
-          "description": "Identifier of the S3 user that owns the bucket.",
+          "description": "ID of the S3 user that owns the bucket.",
           "example": "S3U_...",
           "type": "string",
           "x-go-name": "UserID"
@@ -18632,7 +18632,7 @@
           "x-go-name": "ExpireAt"
         },
         "key_uuid": {
-          "description": "Unique identifier of the S3 access key, assigned at creation.",
+          "description": "ID of the S3 access key.",
           "example": "f5705300-79f8-4686-9b9f-02496a053bc0",
           "type": "string",
           "x-go-name": "KeyUUID"
@@ -18647,7 +18647,7 @@
           "x-go-name": "Status"
         },
         "user_id": {
-          "description": "Unique identifier of the user that owns the S3 access key.",
+          "description": "ID of the user that owns the S3 access key.",
           "example": "e7bed65d-e918-4fab-921c-03b8db94aa7b",
           "type": "string",
           "x-go-name": "UserID"
@@ -19824,7 +19824,7 @@
           "$ref": "#/definitions/DiskModeType"
         },
         "vm_id": {
-          "description": "Unique identifier of the VM the disk is attached to.",
+          "description": "ID of the VM the disk is attached to.",
           "example": "123e4567-e89b-12d3-a456-426614174000",
           "type": "string",
           "x-go-name": "VMID"
@@ -20094,7 +20094,7 @@
           "x-go-name": "Direction"
         },
         "id": {
-          "description": "Unique identifier of the firewall rule, assigned at creation.",
+          "description": "ID of the firewall rule.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
@@ -20142,7 +20142,7 @@
           "x-go-name": "State"
         },
         "vpc_network_id": {
-          "description": "Unique identifier of the VPC network the rule belongs to.",
+          "description": "ID of the VPC network the rule belongs to.",
           "example": "74927f69-f6f6-43f4-bc0d-7bb2e864250e",
           "type": "string",
           "x-go-name": "VPCNetworkID"
@@ -20292,7 +20292,7 @@
           "x-go-name": "Sources"
         },
         "vpc_network_id": {
-          "description": "Unique identifier of the VPC network to create the rule in.",
+          "description": "ID of the VPC network to create the rule in.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "VPCNetworkID"
@@ -20320,13 +20320,13 @@
           "x-go-name": "CIDR"
         },
         "gateway": {
-          "description": "Unique identifier of the VPC network's gateway.",
+          "description": "ID of the VPC network's gateway.",
           "example": "11bf5b4c-e0e5-4017-bdb8-3861f3acedc1",
           "type": "string",
           "x-go-name": "Gateway"
         },
         "id": {
-          "description": "Unique identifier of the VPC network, assigned at creation.",
+          "description": "ID of the VPC network.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
@@ -20418,7 +20418,7 @@
           "x-go-name": "CIDR"
         },
         "id": {
-          "description": "Unique identifier of the VPC subnet, assigned at creation.",
+          "description": "ID of the VPC subnet.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "ID"
@@ -20444,7 +20444,7 @@
           "x-go-name": "NATGateways"
         },
         "vpc_network_id": {
-          "description": "Unique identifier of the VPC network that the subnet belongs to.",
+          "description": "ID of the VPC network that the subnet belongs to.",
           "example": "1ce839b7-3fab-46f9-8e54-7a6bb4ac1ffc",
           "type": "string",
           "x-go-name": "VPCNetworkID"
@@ -20514,7 +20514,7 @@
           "x-go-name": "NATGatewayEnabled"
         },
         "vpc_network_id": {
-          "description": "Unique identifier of the VPC network to create the subnet in.",
+          "description": "ID of the VPC network to create the subnet in.",
           "example": "36c0b0d9-8b68-4869-addb-227b06b64ee0",
           "type": "string",
           "x-go-name": "VPCNetworkID"

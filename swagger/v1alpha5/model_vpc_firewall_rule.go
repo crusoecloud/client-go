@@ -17,7 +17,7 @@ type VpcFirewallRule struct {
 	Destinations []FirewallRuleObject `json:"destinations"`
 	// Direction of traffic the rule applies to: ingress (inbound) or egress (outbound).
 	Direction string `json:"direction"`
-	// Unique identifier of the firewall rule, assigned at creation.
+	// ID of the firewall rule.
 	Id string `json:"id"`
 	// Name of the firewall rule.
 	Name string `json:"name"`
@@ -29,6 +29,6 @@ type VpcFirewallRule struct {
 	Sources []FirewallRuleObject `json:"sources"`
 	// State of the firewall rule: active or inactive.
 	State string `json:"state"`
-	// Unique identifier of the VPC network the rule belongs to.
+	// ID of the VPC network the rule belongs to.
 	VpcNetworkId string `json:"vpc_network_id"`
 }

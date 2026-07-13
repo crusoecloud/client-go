@@ -14,7 +14,7 @@ type InstancesPostRequestV1Alpha5 struct {
 	CommitmentPeriod int64 `json:"commitment_period,omitempty"`
 	// Installation mode for the Crusoe Watch Agent: docker or native. Defaults to docker.
 	CrusoeWatchAgentInstallMode string `json:"crusoe_watch_agent_install_mode,omitempty"`
-	// Identifier of a custom image to use for the new VM. Either image or custom_image should be supplied, not both.
+	// ID of a custom image to use for the new VM. Either image or custom_image should be supplied, not both.
 	CustomImage string `json:"custom_image,omitempty"`
 	// Disks to attach to the new VM.
 	Disks []DiskAttachment `json:"disks,omitempty"`
@@ -32,7 +32,7 @@ type InstancesPostRequestV1Alpha5 struct {
 	Name string `json:"name"`
 	// Network interfaces to attach to the new VM.
 	NetworkInterfaces []NetworkInterface `json:"network_interfaces,omitempty"`
-	// Identifier of the NVLink domain to create the VM in.
+	// ID of the NVLink domain to create the VM in.
 	NvlinkDomainId           string                    `json:"nvlink_domain_id,omitempty"`
 	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
 	// Script to run when the VM shuts down.

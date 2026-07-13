@@ -9,10 +9,10 @@
 package swagger
 
 type NatGateway struct {
-	// Unique identifier of the NAT gateway.
+	// ID of the NAT gateway.
 	Id string `json:"id"`
 	// Public IPv4 address assigned to the NAT gateway.
 	PublicIpv4Address string `json:"public_ipv4_address"`
-	// Unique identifier of the public IPv4 address assigned to the NAT gateway.
+	// ID of the public IPv4 address assigned to the NAT gateway.
 	PublicIpv4Id string `json:"public_ipv4_id"`
 }

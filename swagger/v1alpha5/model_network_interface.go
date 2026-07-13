@@ -11,7 +11,7 @@ package swagger
 type NetworkInterface struct {
 	// External DNS name of the network interface.
 	ExternalDnsName string `json:"external_dns_name"`
-	// Unique identifier of the network interface, assigned at creation.
+	// ID of the network interface.
 	Id string `json:"id"`
 	// Type of the network interface.
 	InterfaceType string `json:"interface_type"`
@@ -21,8 +21,8 @@ type NetworkInterface struct {
 	MacAddress string `json:"mac_address"`
 	// Name of the network interface.
 	Name string `json:"name"`
-	// Identifier of the VPC network the interface is attached to.
+	// ID of the VPC network the interface is attached to.
 	Network string `json:"network"`
-	// Identifier of the VPC subnet the interface is attached to.
+	// ID of the VPC subnet the interface is attached to.
 	Subnet string `json:"subnet"`
 }

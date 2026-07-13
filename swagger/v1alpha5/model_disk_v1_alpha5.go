@@ -13,11 +13,11 @@ type DiskV1Alpha5 struct {
 	AttachedTo []VmAttachmentV1Alpha5 `json:"attached_to"`
 	// Block size of the disk, in bytes: 512 or 4096.
 	BlockSize int64 `json:"block_size"`
-	// Time the disk was created.
+	// Creation timestamp of the disk, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
 	// DNS name used to mount the disk. Populated only for shared-volume disks.
 	DnsName string `json:"dns_name,omitempty"`
-	// Unique identifier of the disk, assigned at creation.
+	// ID of the disk.
 	Id string `json:"id"`
 	// Location where the disk is provisioned.
 	Location string `json:"location"`
@@ -29,7 +29,7 @@ type DiskV1Alpha5 struct {
 	Size string `json:"size"`
 	// Type of the disk: persistent-ssd or shared-volume.
 	Type_ string `json:"type"`
-	// Time the disk was last updated.
+	// Last update timestamp of the disk, in RFC3339 format.
 	UpdatedAt string `json:"updated_at"`
 	// Virtual IP addresses used to mount the disk. Populated only for shared-volume disks.
 	Vips []string `json:"vips,omitempty"`

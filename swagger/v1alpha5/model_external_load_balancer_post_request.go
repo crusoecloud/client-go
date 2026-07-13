@@ -18,6 +18,6 @@ type ExternalLoadBalancerPostRequest struct {
 	Name string `json:"name"`
 	// The protocol of the External Load Balancer.
 	Protocol string `json:"protocol"`
-	// The ID of the VPC network this External Load Balancer belongs to.
+	// ID of the VPC network this External Load Balancer belongs to.
 	VpcId string `json:"vpc_id"`
 }

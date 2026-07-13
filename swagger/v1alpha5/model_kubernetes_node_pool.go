@@ -13,13 +13,13 @@ type KubernetesNodePool struct {
 	ClusterId string `json:"cluster_id"`
 	// Number of nodes in the node pool.
 	Count int64 `json:"count"`
-	// Time when the node pool was created.
+	// Creation timestamp of the node pool, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
 	// Whether the first local ephemeral NVMe disk is used for containerd storage.
 	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd"`
-	// Unique identifier of the node pool, assigned at creation.
+	// ID of the node pool.
 	Id string `json:"id"`
-	// Unique identifier of the image used for the node pool.
+	// ID of the image used for the node pool.
 	ImageId string `json:"image_id"`
 	// Details about the instances within the node pool.
 	InstanceDetails []InstanceDetails `json:"instance_details,omitempty"`
@@ -45,6 +45,6 @@ type KubernetesNodePool struct {
 	SubnetId string `json:"subnet_id"`
 	// VM type of the node pool.
 	Type_ string `json:"type"`
-	// Time when the node pool was last updated.
+	// Last update timestamp of the node pool, in RFC3339 format.
 	UpdatedAt string `json:"updated_at"`
 }

@@ -11,11 +11,11 @@ package swagger
 type InstanceGroup struct {
 	// List of IDs of running instances in the instance group.
 	ActiveInstances []string `json:"active_instances"`
-	// Time the instance group was created.
+	// Creation timestamp of the instance group, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
 	// Desired number of instances for the instance group.
 	DesiredCount int64 `json:"desired_count"`
-	// Unique identifier of the instance group, assigned at creation.
+	// ID of the instance group.
 	Id string `json:"id"`
 	// List of IDs of non-running instances in the instance group.
 	InactiveInstances []string `json:"inactive_instances"`
@@ -31,6 +31,6 @@ type InstanceGroup struct {
 	State string `json:"state"`
 	// ID of the instance template currently associated with the instance group.
 	TemplateId string `json:"template_id"`
-	// Most recent time the instance group was updated.
+	// Last update timestamp of the instance group, in RFC3339 format.
 	UpdatedAt string `json:"updated_at"`
 }

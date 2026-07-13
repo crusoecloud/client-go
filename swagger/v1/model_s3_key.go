@@ -17,10 +17,10 @@ type S3Key struct {
 	CreatedAt string `json:"created_at"`
 	// Expiration timestamp of the S3 access key, in RFC3339 format.
 	ExpireAt string `json:"expire_at,omitempty"`
-	// Unique identifier of the S3 access key, assigned at creation.
+	// ID of the S3 access key.
 	KeyUuid string `json:"key_uuid"`
 	// Status of the S3 access key: enabled or disabled.
 	Status string `json:"status"`
-	// Unique identifier of the user that owns the S3 access key.
+	// ID of the user that owns the S3 access key.
 	UserId string `json:"user_id"`
 }

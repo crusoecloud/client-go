@@ -15,16 +15,16 @@ type BulkInstancePostRequestV1 struct {
 	CrusoeWatchAgentInstallMode string `json:"crusoe_watch_agent_install_mode,omitempty"`
 	// Whether to install the Crusoe Watch Agent on the VMs. Defaults to true.
 	InstallCrusoeWatchAgent *bool `json:"install_crusoe_watch_agent,omitempty"`
-	// Identifier of the instance group the VMs will be created in.
+	// ID of the instance group the VMs will be created in.
 	InstanceGroupId  string                         `json:"instance_group_id,omitempty"`
 	InstanceTemplate *InstanceTemplatePostRequestV1 `json:"instance_template,omitempty"`
-	// Identifier of the instance template to use for creating the VMs.
+	// ID of the instance template to use for creating the VMs.
 	InstanceTemplateId string `json:"instance_template_id,omitempty"`
 	// Locations to create the VMs in. This overrides any location specified in the instance template.
 	Locations []BulkCreateLocationInfo `json:"locations,omitempty"`
 	// Name prefix for the VMs to be created, used to derive each VM's name (e.g. \"my-vm\" produces \"my-vm-1\", \"my-vm-2\", and so on).
 	NamePrefix string `json:"name_prefix"`
-	// Identifier of the NVLink domain to create the VMs in.
+	// ID of the NVLink domain to create the VMs in.
 	NvlinkDomainId           string                    `json:"nvlink_domain_id,omitempty"`
 	ReservationSpecification *ReservationSpecification `json:"reservation_specification,omitempty"`
 }

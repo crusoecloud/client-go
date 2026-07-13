@@ -11,16 +11,16 @@ package swagger
 type DiskSnapshot struct {
 	// Block size of the disk snapshot, in bytes: 512 or 4096.
 	BlockSize int64 `json:"block_size"`
-	// Time the disk snapshot was created.
+	// Creation timestamp of the disk snapshot, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
-	// Unique identifier of the disk the snapshot was created from.
+	// ID of the disk the snapshot was created from.
 	CreatedFrom string `json:"created_from"`
-	// Unique identifier of the disk snapshot, assigned at creation.
+	// ID of the disk snapshot.
 	Id string `json:"id"`
 	// Name of the disk snapshot.
 	Name string `json:"name,omitempty"`
 	// Size of the disk snapshot, in bytes.
 	Size string `json:"size"`
-	// Time the disk snapshot was last updated.
+	// Last update timestamp of the disk snapshot, in RFC3339 format.
 	UpdatedAt string `json:"updated_at"`
 }

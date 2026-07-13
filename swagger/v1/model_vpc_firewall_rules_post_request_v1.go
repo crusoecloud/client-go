@@ -25,6 +25,6 @@ type VpcFirewallRulesPostRequestV1 struct {
 	SourcePorts []string `json:"source_ports,omitempty"`
 	// Sources the rule matches, given as CIDR blocks or resource IDs.
 	Sources []FirewallRuleObject `json:"sources"`
-	// Unique identifier of the VPC network to create the rule in.
+	// ID of the VPC network to create the rule in.
 	VpcNetworkId string `json:"vpc_network_id"`
 }

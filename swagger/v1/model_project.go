@@ -9,7 +9,7 @@
 package swagger
 
 type Project struct {
-	// Unique identifier of the project, assigned at creation.
+	// ID of the project.
 	Id string `json:"id"`
 	// Name of the project.
 	Name string `json:"name"`

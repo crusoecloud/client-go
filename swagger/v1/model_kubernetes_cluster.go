@@ -20,11 +20,11 @@ type KubernetesCluster struct {
 	Configuration string `json:"configuration"`
 	// Extra arguments passed to the kube-controller-manager control plane component.
 	ControllerManagerExtraArgs map[string]string `json:"controller_manager_extra_args,omitempty"`
-	// Time when the cluster was created.
+	// Creation timestamp of the cluster, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
 	// DNS name of the cluster.
 	DnsName string `json:"dns_name"`
-	// Unique identifier of the Kubernetes cluster, assigned at creation.
+	// ID of the Kubernetes cluster.
 	Id string `json:"id"`
 	// Arguments for the kubectl oidc-login plugin.
 	KubeloginArgs map[string]string `json:"kubelogin_args"`
@@ -48,7 +48,7 @@ type KubernetesCluster struct {
 	State string `json:"state"`
 	// ID of the subnet the Kubernetes cluster belongs to.
 	SubnetId string `json:"subnet_id"`
-	// Time when the cluster was last updated.
+	// Last update timestamp of the cluster, in RFC3339 format.
 	UpdatedAt string `json:"updated_at"`
 	// Version of the Crusoe Kubernetes image the cluster runs.
 	Version string `json:"version"`

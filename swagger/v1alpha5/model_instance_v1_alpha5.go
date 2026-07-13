@@ -15,17 +15,17 @@ type InstanceV1Alpha5 struct {
 	CommitmentEnd string `json:"commitment_end,omitempty"`
 	// commitment is no longer supported
 	CommitmentPeriod int64 `json:"commitment_period,omitempty"`
-	// Time at which the VM was created.
+	// Creation timestamp of the VM, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
 	// Disks attached to the VM.
 	Disks []AttachedDiskV1Alpha5 `json:"disks"`
 	// Host channel adapters attached to the VM.
 	HostChannelAdapters []HostChannelAdapter `json:"host_channel_adapters"`
-	// Unique identifier of the VM, assigned at creation.
+	// ID of the VM.
 	Id string `json:"id"`
-	// Identifier of the instance group the VM belongs to, if any.
+	// ID of the instance group the VM belongs to, if any.
 	InstanceGroupId string `json:"instance_group_id,omitempty"`
-	// Identifier of the instance template the VM was created from, if any.
+	// ID of the instance template the VM was created from, if any.
 	InstanceTemplateId string `json:"instance_template_id,omitempty"`
 	// Location the VM runs in.
 	Location string `json:"location"`
@@ -35,19 +35,19 @@ type InstanceV1Alpha5 struct {
 	Name string `json:"name"`
 	// Network interfaces attached to the VM.
 	NetworkInterfaces []NetworkInterface `json:"network_interfaces"`
-	// Identifier of the NVLink domain the VM belongs to, if any.
+	// ID of the NVLink domain the VM belongs to, if any.
 	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
-	// Identifier of the pod the VM belongs to, if any.
+	// ID of the pod the VM belongs to, if any.
 	PodId string `json:"pod_id,omitempty"`
-	// Identifier of the project that owns the VM.
+	// ID of the project that owns the VM.
 	ProjectId string `json:"project_id"`
-	// Identifier of the reservation the VM belongs to, if any.
+	// ID of the reservation the VM belongs to, if any.
 	ReservationId string `json:"reservation_id,omitempty"`
 	// Current lifecycle state of the VM.
 	State string `json:"state"`
 	// Product name of the VM type.
 	Type_ string `json:"type"`
-	// Time at which the VM was last updated.
+	// Last update timestamp of the VM, in RFC3339 format.
 	UpdatedAt              string                  `json:"updated_at"`
 	VirtualizationFeatures *VirtualizationFeatures `json:"virtualization_features,omitempty"`
 }

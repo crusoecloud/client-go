@@ -11,6 +11,6 @@ package swagger
 type NetworkTarget struct {
 	// CIDR block, or an IP address that is converted to a CIDR. Mutually exclusive with resource_id.
 	Cidr string `json:"cidr,omitempty"`
-	// Unique identifier of a backend resource. Mutually exclusive with cidr.
+	// ID of a backend resource. Mutually exclusive with cidr.
 	ResourceId string `json:"resource_id,omitempty"`
 }

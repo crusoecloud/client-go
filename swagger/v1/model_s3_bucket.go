@@ -10,11 +10,11 @@ package swagger
 
 // This is the REST-friendly model for the `BucketInfo` proto.
 type S3Bucket struct {
-	// Timestamp when the bucket was archived, in RFC3339 format.
+	// Archive timestamp of the bucket, in RFC3339 format.
 	ArchivedAt string `json:"archived_at,omitempty"`
 	// Size of the bucket, in GiB.
 	BucketSize float32 `json:"bucket_size,omitempty"`
-	// Timestamp when the bucket was created, in RFC3339 format.
+	// Creation timestamp of the bucket, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
 	// Location where the bucket is hosted.
 	Location string `json:"location"`
@@ -32,9 +32,9 @@ type S3Bucket struct {
 	S3Url string `json:"s3_url,omitempty"`
 	// Tags applied to the bucket as key-value pairs.
 	Tags map[string]string `json:"tags,omitempty"`
-	// Timestamp when the bucket was last updated, in RFC3339 format.
+	// Last update timestamp of the bucket, in RFC3339 format.
 	UpdatedAt string `json:"updated_at"`
-	// Identifier of the S3 user that owns the bucket.
+	// ID of the S3 user that owns the bucket.
 	UserId          string `json:"user_id"`
 	VersioningState string `json:"versioning_state"`
 }

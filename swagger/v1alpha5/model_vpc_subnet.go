@@ -11,7 +11,7 @@ package swagger
 type VpcSubnet struct {
 	// Address range of the VPC subnet, in CIDR notation.
 	Cidr string `json:"cidr"`
-	// Unique identifier of the VPC subnet, assigned at creation.
+	// ID of the VPC subnet.
 	Id string `json:"id"`
 	// Location of the VPC subnet.
 	Location string `json:"location"`
@@ -19,6 +19,6 @@ type VpcSubnet struct {
 	Name string `json:"name"`
 	// NAT gateways attached to the subnet. Empty unless a NAT gateway is enabled for the subnet.
 	NatGateways []NatGateway `json:"nat_gateways,omitempty"`
-	// Unique identifier of the VPC network that the subnet belongs to.
+	// ID of the VPC network that the subnet belongs to.
 	VpcNetworkId string `json:"vpc_network_id"`
 }
