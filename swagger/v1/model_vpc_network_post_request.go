@@ -9,6 +9,8 @@
 package swagger
 
 type VpcNetworkPostRequest struct {
+	// Address range for the VPC network, in CIDR notation (for example, 172.27.0.0/16).
 	Cidr string `json:"cidr"`
+	// Name for the new VPC network.
 	Name string `json:"name"`
 }

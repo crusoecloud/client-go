@@ -9,14 +9,24 @@
 package swagger
 
 type ModelType struct {
-	CpuCores    int64  `json:"cpu_cores"`
-	CpuType     string `json:"cpu_type"`
+	// Number of CPU cores provided by the VM type.
+	CpuCores int64 `json:"cpu_cores"`
+	// CPU manufacturer of the VM type.
+	CpuType string `json:"cpu_type"`
+	// Human-readable description of the VM type.
 	Description string `json:"description"`
-	DiskGb      int64  `json:"disk_gb"`
-	DiskType    string `json:"disk_type"`
-	GpuType     string `json:"gpu_type"`
-	MemoryGb    int64  `json:"memory_gb"`
-	MemoryType  string `json:"memory_type"`
-	NumGpu      int64  `json:"num_gpu"`
+	// Amount of disk storage provided by the VM type, in GB.
+	DiskGb int64 `json:"disk_gb"`
+	// Type of disk storage provided by the VM type.
+	DiskType string `json:"disk_type"`
+	// GPU model provided by the VM type.
+	GpuType string `json:"gpu_type"`
+	// Amount of memory provided by the VM type, in GB.
+	MemoryGb int64 `json:"memory_gb"`
+	// Type of memory provided by the VM type.
+	MemoryType string `json:"memory_type"`
+	// Number of GPUs provided by the VM type.
+	NumGpu int64 `json:"num_gpu"`
+	// Product name of the VM type.
 	ProductName string `json:"product_name"`
 }

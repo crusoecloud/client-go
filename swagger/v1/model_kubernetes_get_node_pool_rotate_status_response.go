@@ -9,8 +9,8 @@
 package swagger
 
 type KubernetesGetNodePoolRotateStatusResponse struct {
-	// List of out of sync instance ids.
+	// IDs of instances that are out of sync with the node pool configuration.
 	OutOfSyncInstances []string `json:"out_of_sync_instances"`
-	// Current state of the node pool.
+	// Current rotation state of the node pool.
 	State string `json:"state"`
 }

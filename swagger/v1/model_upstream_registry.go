@@ -9,7 +9,9 @@
 package swagger
 
 type UpstreamRegistry struct {
+	// Provider of the upstream registry.
 	Provider                    string                       `json:"provider,omitempty"`
 	UpstreamRegistryCredentials *UpstreamRegistryCredentials `json:"upstream_registry_credentials,omitempty"`
-	Url                         string                       `json:"url,omitempty"`
+	// Base URL of the upstream registry that the repository caches images from.
+	Url string `json:"url,omitempty"`
 }

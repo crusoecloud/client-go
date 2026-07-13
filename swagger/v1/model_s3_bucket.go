@@ -10,31 +10,31 @@ package swagger
 
 // This is the REST-friendly model for the `BucketInfo` proto.
 type S3Bucket struct {
-	// Archived date in RFC3339 format.
+	// Archive timestamp of the bucket, in RFC3339 format.
 	ArchivedAt string `json:"archived_at,omitempty"`
-	// Size of the bucket in GiB.
+	// Size of the bucket, in GiB.
 	BucketSize float32 `json:"bucket_size,omitempty"`
-	// Creation date in RFC3339 format.
+	// Creation timestamp of the bucket, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
-	// Location of the bucket.
+	// Location where the bucket is hosted.
 	Location string `json:"location"`
 	// Name of the bucket.
 	Name string `json:"name"`
-	// Whether object lock is enabled or not.
+	// Whether object lock is enabled.
 	ObjectLockEnabled bool `json:"object_lock_enabled"`
-	// Project of the bucket.
+	// ID of the project that owns the bucket.
 	ProjectId     string `json:"project_id"`
 	RetentionMode string `json:"retention_mode,omitempty"`
-	// How long objects are retained.
+	// Length of the object lock retention period, in the unit given by retention_period_unit.
 	RetentionPeriod     int32  `json:"retention_period,omitempty"`
 	RetentionPeriodUnit string `json:"retention_period_unit,omitempty"`
-	// URL of the bucket.
+	// Endpoint URL for accessing the bucket.
 	S3Url string `json:"s3_url,omitempty"`
-	// List of tags for this bucket.
+	// Tags applied to the bucket as key-value pairs.
 	Tags map[string]string `json:"tags,omitempty"`
-	// Updated date in RFC3339 format.
+	// Last update timestamp of the bucket, in RFC3339 format.
 	UpdatedAt string `json:"updated_at"`
-	// User managing the bucket.
+	// ID of the S3 user that owns the bucket.
 	UserId          string `json:"user_id"`
 	VersioningState string `json:"versioning_state"`
 }

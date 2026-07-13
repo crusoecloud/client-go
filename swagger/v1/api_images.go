@@ -27,9 +27,9 @@ var (
 type ImagesApiService service
 
 /*
-ImagesApiService Retrieve details about a VM image.
+ImagesApiService Returns details for a single image.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param imageId
+  - @param imageId ID of the image.
 
 @return Image
 */
@@ -153,7 +153,7 @@ func (a *ImagesApiService) GetImage(ctx context.Context, imageId string) (Image,
 }
 
 /*
-ImagesApiService Lists all VM images available for use.
+ImagesApiService Lists all images and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *ImagesApiListImagesOpts - Optional Parameters:
      * @param "ProductGroup" (optional.String) -  Optional filter to return only images compatible with the specified product group (e.g. \&quot;a100\&quot;, \&quot;h100\&quot;).

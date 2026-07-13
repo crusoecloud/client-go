@@ -9,10 +9,10 @@
 package swagger
 
 type InstanceGroupPostRequest struct {
-	// Desired VM Count for the instance group.
+	// Desired number of instances for the new instance group.
 	DesiredCount int64 `json:"desired_count"`
-	// Name of the instance group.
+	// Name for the new instance group.
 	Name string `json:"name"`
-	// Instance Template ID to be associated with the instance group.
+	// ID of the instance template to create the group's instances from.
 	TemplateId string `json:"template_id"`
 }

@@ -9,16 +9,16 @@
 package swagger
 
 type CreateS3BucketRequest struct {
-	// Location of the bucket.
+	// Location to create the bucket in.
 	Location string `json:"location"`
-	// Name of the bucket.
+	// Name for the new bucket. Must be DNS-compliant: 3-63 characters, using lowercase letters, numbers, and hyphens.
 	Name string `json:"name"`
-	// Whether object lock is enabled or not.
+	// Whether to enable object lock on the new bucket. Requires versioning to be enabled and cannot be disabled once enabled.
 	ObjectLockEnabled bool `json:"object_lock_enabled,omitempty"`
-	// How long objects are retained.
+	// Length of the object lock retention period, in the unit given by retention_period_unit.
 	RetentionPeriod     int32  `json:"retention_period,omitempty"`
 	RetentionPeriodUnit string `json:"retention_period_unit,omitempty"`
-	// List of tags for this bucket.
+	// Tags to apply to the new bucket as key-value pairs.
 	Tags            map[string]string `json:"tags,omitempty"`
 	VersioningState string            `json:"versioning_state,omitempty"`
 }

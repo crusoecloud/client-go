@@ -10,16 +10,16 @@ package swagger
 
 // This allows the Kubernetes API server to authenticate users via an external OIDC provider.
 type OidcAuthConfig struct {
-	// PEM encoded Certificate Authority certificate to use when validating the OIDC server's certificate.
+	// PEM-encoded certificate authority certificate used to validate the OIDC server's certificate.
 	CaCert string `json:"ca_cert,omitempty"`
-	// The client ID for the OpenID Connect client.
+	// Client ID for the OpenID Connect client.
 	ClientId string `json:"client_id,omitempty"`
-	// This is the claim that will be used to identify the groups.
+	// Claim used to identify the user's groups.
 	GroupsClaim string `json:"groups_claim,omitempty"`
-	// The URL of the OpenID issuer
+	// URL of the OpenID Connect issuer.
 	IssuerUrl string `json:"issuer_url,omitempty"`
-	// This is the claim that will be used to identify the user. Defaults to 'sub'.
+	// Claim used to identify the user. Defaults to 'sub'.
 	UsernameClaim string `json:"username_claim,omitempty"`
-	// A prefix to add before the username to avoid name conflicts.
+	// Prefix added before the username to avoid name conflicts.
 	UsernamePrefix string `json:"username_prefix,omitempty"`
 }

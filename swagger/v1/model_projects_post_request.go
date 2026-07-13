@@ -9,6 +9,8 @@
 package swagger
 
 type ProjectsPostRequest struct {
-	Name           string `json:"name"`
+	// Name for the new project.
+	Name string `json:"name"`
+	// ID of the organization that will own the new project.
 	OrganizationId string `json:"organization_id"`
 }

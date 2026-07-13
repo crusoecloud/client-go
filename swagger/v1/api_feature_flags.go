@@ -28,15 +28,15 @@ FeatureFlagsApiService Get feature flags for the currently logged in user.
 A successful response from this resource will contain a map of all feature flags and the value assigned to each of them for the user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
-@return FeatureFlagsGetResponse
+@return CustomerListFeatureFlagsResponse
 */
-func (a *FeatureFlagsApiService) GetFeatureFlags(ctx context.Context) (FeatureFlagsGetResponse, *http.Response, error) {
+func (a *FeatureFlagsApiService) GetFeatureFlags(ctx context.Context) (CustomerListFeatureFlagsResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue FeatureFlagsGetResponse
+		localVarReturnValue CustomerListFeatureFlagsResponse
 	)
 
 	// create path and map variables
@@ -93,7 +93,7 @@ func (a *FeatureFlagsApiService) GetFeatureFlags(ctx context.Context) (FeatureFl
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v FeatureFlagsGetResponse
+			var v CustomerListFeatureFlagsResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -103,7 +103,7 @@ func (a *FeatureFlagsApiService) GetFeatureFlags(ctx context.Context) (FeatureFl
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 401 {
-			var v InlineResponse401
+			var v interface{}
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -113,7 +113,17 @@ func (a *FeatureFlagsApiService) GetFeatureFlags(ctx context.Context) (FeatureFl
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
 		if localVarHttpResponse.StatusCode == 500 {
-			var v InlineResponse500
+			var v interface{}
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 0 {
+			var v RpcStatus
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

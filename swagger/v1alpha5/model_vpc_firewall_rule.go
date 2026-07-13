@@ -9,15 +9,26 @@
 package swagger
 
 type VpcFirewallRule struct {
-	Action           string               `json:"action"`
-	DestinationPorts []string             `json:"destination_ports"`
-	Destinations     []FirewallRuleObject `json:"destinations"`
-	Direction        string               `json:"direction"`
-	Id               string               `json:"id"`
-	Name             string               `json:"name"`
-	Protocols        []string             `json:"protocols"`
-	SourcePorts      []string             `json:"source_ports"`
-	Sources          []FirewallRuleObject `json:"sources"`
-	State            string               `json:"state"`
-	VpcNetworkId     string               `json:"vpc_network_id"`
+	// Action applied to traffic that matches the rule: allow or deny.
+	Action string `json:"action"`
+	// Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).
+	DestinationPorts []string `json:"destination_ports"`
+	// Destinations the rule matches, given as CIDR blocks or resource IDs.
+	Destinations []FirewallRuleObject `json:"destinations"`
+	// Direction of traffic the rule applies to: ingress (inbound) or egress (outbound).
+	Direction string `json:"direction"`
+	// ID of the firewall rule.
+	Id string `json:"id"`
+	// Name of the firewall rule.
+	Name string `json:"name"`
+	// Network protocols the rule matches (for example, tcp, udp).
+	Protocols []string `json:"protocols"`
+	// Source ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).
+	SourcePorts []string `json:"source_ports"`
+	// Sources the rule matches, given as CIDR blocks or resource IDs.
+	Sources []FirewallRuleObject `json:"sources"`
+	// State of the firewall rule: active or inactive.
+	State string `json:"state"`
+	// ID of the VPC network the rule belongs to.
+	VpcNetworkId string `json:"vpc_network_id"`
 }

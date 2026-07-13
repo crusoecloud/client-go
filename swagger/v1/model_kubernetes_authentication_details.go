@@ -10,18 +10,18 @@ package swagger
 
 // It supports both the new kubeconfig-based and legacy certificate-based authentication.
 type KubernetesAuthenticationDetails struct {
-	// Address of the Kubernetes cluster to authenticate to
+	// Address of the Kubernetes cluster to authenticate to.
 	ClusterAddress string `json:"cluster_address"`
-	// CA Certificate of the Kubernetes cluster to authenticate to
+	// CA certificate of the Kubernetes cluster to authenticate to.
 	ClusterCaCertificate string `json:"cluster_ca_certificate"`
-	// Name of the Kubernetes cluster to authenticate to
+	// Name of the Kubernetes cluster to authenticate to.
 	ClusterName string `json:"cluster_name"`
-	// Kubeconfig of the Kubernetes cluster to authenticate to
+	// Kubeconfig for the Kubernetes cluster to authenticate to.
 	KubeConfig string `json:"kube_config,omitempty"`
-	// User's Client certificate for authenticating to the cluster.
+	// Client certificate the user presents to authenticate to the cluster.
 	UserClientCertificate string `json:"user_client_certificate"`
-	// The private key associated with the user's Client certificate.
+	// Private key associated with the user's client certificate.
 	UserClientKey string `json:"user_client_key"`
-	// Name of the authenticating user
+	// Name of the authenticating user.
 	UserName string `json:"user_name"`
 }

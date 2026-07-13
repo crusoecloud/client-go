@@ -9,8 +9,8 @@
 package swagger
 
 type CreateS3KeyRequest struct {
-	// Alias for the access key.
+	// Human-readable alias for the new S3 access key.
 	Alias string `json:"alias,omitempty"`
-	// Formatted timestamp for when the access keys expire.
+	// Expiration timestamp for the new S3 access key, in RFC3339 format.
 	ExpireAt string `json:"expire_at,omitempty"`
 }

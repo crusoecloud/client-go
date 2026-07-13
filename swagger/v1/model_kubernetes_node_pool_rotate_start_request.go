@@ -9,10 +9,10 @@
 package swagger
 
 type KubernetesNodePoolRotateStartRequest struct {
-	// Number of nodes to replace at a time if the strategy is 'count'.
+	// Number of nodes to replace at a time when the strategy is 'count'.
 	Count int64 `json:"count"`
-	// Percentage of nodes to replace at a time if the strategy is 'percentage'.
+	// Percentage of nodes to replace at a time when the strategy is 'percentage'.
 	Percentage int64 `json:"percentage"`
-	// Strategy of the rotation to perform.
+	// Strategy for the rotation to perform: count or percentage.
 	Strategy string `json:"strategy"`
 }

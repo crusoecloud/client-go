@@ -25,8 +25,7 @@ var (
 type VPCSubnetsApiService service
 
 /*
-VPCSubnetsApiService Create a new VPC subnet owned by the logged in user.
-A successful response from this resource will contain information regarding the created subnet.
+VPCSubnetsApiService Creates a VPC subnet in the project and returns the created subnet.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
@@ -155,11 +154,10 @@ func (a *VPCSubnetsApiService) CreateVPCSubnet(ctx context.Context, body VpcSubn
 }
 
 /*
-VPCSubnetsApiService Delete a VPC subnet owned by the logged in user.
-A successful response from this resource will contain the async operation.
+VPCSubnetsApiService Deletes a VPC subnet from the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param vpcSubnetId
+  - @param projectId ID of the project that owns the VPC subnet.
+  - @param vpcSubnetId ID of the VPC subnet.
 
 @return AsyncOperationResponse
 */
@@ -294,10 +292,10 @@ func (a *VPCSubnetsApiService) DeleteVPCSubnet(ctx context.Context, projectId st
 }
 
 /*
-VPCSubnetsApiService Retrieve details for a VPC subnet that belongs to the logged in user.
+VPCSubnetsApiService Returns details for a single VPC subnet in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param vpcSubnetId
+  - @param projectId ID of the project that owns the VPC subnet.
+  - @param vpcSubnetId ID of the VPC subnet.
 
 @return VpcSubnet
 */
@@ -412,7 +410,7 @@ func (a *VPCSubnetsApiService) GetVPCSubnet(ctx context.Context, projectId strin
 }
 
 /*
-VPCSubnetsApiService Retrieve details about all VPC subnets that belong to the logged in user.
+VPCSubnetsApiService Lists all VPC subnets in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
 
@@ -528,12 +526,11 @@ func (a *VPCSubnetsApiService) ListVPCSubnets(ctx context.Context, projectId str
 }
 
 /*
-VPCSubnetsApiService Patch (update) a VPC subnet owned by the logged in user.
-A successful response from this resource will contain the async operation.
+VPCSubnetsApiService Updates a VPC subnet in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param vpcSubnetId
+  - @param projectId ID of the project that owns the VPC subnet.
+  - @param vpcSubnetId ID of the VPC subnet.
 
 @return AsyncOperationResponse
 */

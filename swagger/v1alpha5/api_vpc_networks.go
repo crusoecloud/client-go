@@ -25,8 +25,7 @@ var (
 type VPCNetworksApiService service
 
 /*
-VPCNetworksApiService Create a new VPC network owned by the logged in user.
-A successful response from this resource will contain information regarding the created VPC network.
+VPCNetworksApiService Creates a VPC network in the project and returns the created network.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
@@ -155,11 +154,10 @@ func (a *VPCNetworksApiService) CreateVPCNetwork(ctx context.Context, body VpcNe
 }
 
 /*
-VPCNetworksApiService Delete a VPC network owned by the logged in user.
-A successful response from this resource will contain the async operation.
+VPCNetworksApiService Deletes a VPC network from the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param vpcNetworkId
+  - @param projectId ID of the project that owns the VPC network.
+  - @param vpcNetworkId ID of the VPC network.
 
 @return AsyncOperationResponse
 */
@@ -294,10 +292,10 @@ func (a *VPCNetworksApiService) DeleteVPCNetwork(ctx context.Context, projectId 
 }
 
 /*
-VPCNetworksApiService Retrieve details for a VPC network that belongs to the logged in user.
+VPCNetworksApiService Returns details for a single VPC network in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param vpcNetworkId
+  - @param projectId ID of the project that owns the VPC network.
+  - @param vpcNetworkId ID of the VPC network.
 
 @return VpcNetwork
 */
@@ -412,7 +410,7 @@ func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, projectId str
 }
 
 /*
-VPCNetworksApiService Retrieve details about all VPC networks that belong to the logged in user.
+VPCNetworksApiService Lists all VPC networks in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
 
@@ -528,12 +526,11 @@ func (a *VPCNetworksApiService) ListVPCNetworks(ctx context.Context, projectId s
 }
 
 /*
-VPCNetworksApiService Patch (update) a VPC network owned by the logged in user.
-A successful response from this resource will contain the async operation.
+VPCNetworksApiService Updates a VPC network in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param vpcNetworkId
+  - @param projectId ID of the project that owns the VPC network.
+  - @param vpcNetworkId ID of the VPC network.
 
 @return AsyncOperationResponse
 */

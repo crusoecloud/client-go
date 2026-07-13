@@ -9,6 +9,6 @@
 package swagger
 
 type ListS3SupportedLocationsResponse struct {
-	// List of locations where object storage (S3) is enabled.
+	// Locations where object storage (S3) is available.
 	Items []string `json:"items"`
 }

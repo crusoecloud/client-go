@@ -9,14 +9,23 @@
 package swagger
 
 type LoadBalancer struct {
-	Algorithm         string                         `json:"algorithm"`
-	Destinations      []NetworkTarget                `json:"destinations"`
-	HealthCheck       *HealthCheckOptions            `json:"health_check,omitempty"`
-	Id                string                         `json:"id"`
-	Ips               []IpAddresses                  `json:"ips"`
-	Location          string                         `json:"location"`
-	Name              string                         `json:"name"`
+	// Load balancing algorithm used to distribute traffic across destinations (for example, random).
+	Algorithm string `json:"algorithm"`
+	// Backend targets the load balancer forwards traffic to, given as CIDR blocks or resource IDs.
+	Destinations []NetworkTarget     `json:"destinations"`
+	HealthCheck  *HealthCheckOptions `json:"health_check,omitempty"`
+	// ID of the load balancer.
+	Id string `json:"id"`
+	// IP addresses assigned to the load balancer.
+	Ips []IpAddresses `json:"ips"`
+	// Location of the load balancer.
+	Location string `json:"location"`
+	// Name of the load balancer.
+	Name string `json:"name"`
+	// Network interfaces the load balancer is attached to.
 	NetworkInterfaces []LoadBalancerNetworkInterface `json:"network_interfaces"`
-	Protocols         []string                       `json:"protocols"`
-	Type_             string                         `json:"type,omitempty"`
+	// Network protocols the load balancer handles. One of: tcp, udp.
+	Protocols []string `json:"protocols"`
+	// Type of the load balancer (for example, internal_ipv4).
+	Type_ string `json:"type,omitempty"`
 }

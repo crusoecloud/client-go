@@ -8,6 +8,6 @@
  */
 package swagger
 
-type UsageByProjectGetResponse struct {
-	Items []ProjectUsageResponse `json:"items"`
+type CustomerListFeatureFlagsResponse struct {
+	FeatureFlags map[string]interface{} `json:"feature_flags,omitempty"`
 }

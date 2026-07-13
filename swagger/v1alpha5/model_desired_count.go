@@ -9,5 +9,6 @@
 package swagger
 
 type DesiredCount struct {
+	// New desired number of instances for the instance group.
 	Value int64 `json:"value,omitempty"`
 }

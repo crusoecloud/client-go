@@ -9,8 +9,8 @@
 package swagger
 
 type OperationDetails struct {
-	// Error associated to the operation Populated if the operation was a partial success due to best effort
+	// Error associated with the operation. Populated if the operation was a partial success on a best-effort basis.
 	Error_ string `json:"error,omitempty"`
-	// Number of VMs created as part of the operation
+	// Number of VMs created as part of the operation.
 	NumVmsCreated int32 `json:"num_vms_created,omitempty"`
 }

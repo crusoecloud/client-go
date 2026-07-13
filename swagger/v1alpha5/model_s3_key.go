@@ -9,18 +9,18 @@
 package swagger
 
 type S3Key struct {
-	// The Access Key ID for S3 operations.
+	// Access key ID used to authenticate S3 requests.
 	AccessKeyId string `json:"access_key_id"`
-	// Alias for the access key.
+	// Human-readable alias for the S3 access key.
 	Alias string `json:"alias,omitempty"`
-	// Creation date of S3 key in RFC3339 format.
+	// Creation timestamp of the S3 access key, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
-	// Expiration date of S3 key in RFC3339 format.
+	// Expiration timestamp of the S3 access key, in RFC3339 format.
 	ExpireAt string `json:"expire_at,omitempty"`
-	// The Key UUID for the S3 access key.
+	// ID of the S3 access key.
 	KeyUuid string `json:"key_uuid"`
-	// The current status of the user's key.
+	// Status of the S3 access key: enabled or disabled.
 	Status string `json:"status"`
-	// The user ID for the S3 user.
+	// ID of the user that owns the S3 access key.
 	UserId string `json:"user_id"`
 }

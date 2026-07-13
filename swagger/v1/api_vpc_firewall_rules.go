@@ -25,8 +25,7 @@ var (
 type VPCFirewallRulesApiService service
 
 /*
-VPCFirewallRulesApiService Create a new VPC firewall rule owned by the logged in user.
-A successful response from this resource will contain the async operation.
+VPCFirewallRulesApiService Creates a VPC firewall rule in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
   - @param projectId
@@ -155,11 +154,10 @@ func (a *VPCFirewallRulesApiService) CreateVPCFirewallRule(ctx context.Context, 
 }
 
 /*
-VPCFirewallRulesApiService Delete a VPC firewall rule owned by the logged in user.
-A successful response from this resource will contain the async operation.
+VPCFirewallRulesApiService Deletes a VPC firewall rule from the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param vpcFirewallRuleId
+  - @param projectId ID of the project that owns the VPC firewall rule.
+  - @param vpcFirewallRuleId ID of the VPC firewall rule.
 
 @return AsyncOperationResponse
 */
@@ -274,10 +272,10 @@ func (a *VPCFirewallRulesApiService) DeleteVPCFirewallRule(ctx context.Context, 
 }
 
 /*
-VPCFirewallRulesApiService Retrieve details for a VPC firewall rule that belongs to the logged in user.
+VPCFirewallRulesApiService Returns details for a single VPC firewall rule in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param vpcFirewallRuleId
+  - @param projectId ID of the project that owns the VPC firewall rule.
+  - @param vpcFirewallRuleId ID of the VPC firewall rule.
 
 @return VpcFirewallRule
 */
@@ -392,7 +390,7 @@ func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, pro
 }
 
 /*
-VPCFirewallRulesApiService Retrieve details about all VPC firewall rules that belong to the logged in user.
+VPCFirewallRulesApiService Lists all VPC firewall rules in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
 
@@ -508,12 +506,11 @@ func (a *VPCFirewallRulesApiService) ListVPCFirewallRules(ctx context.Context, p
 }
 
 /*
-VPCFirewallRulesApiService Patch (update) a VPC firewall rule owned by the logged in user.
-A successful response from this resource will contain the async operation.
+VPCFirewallRulesApiService Updates a VPC firewall rule in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param vpcFirewallRuleId
+  - @param projectId ID of the project that owns the VPC firewall rule.
+  - @param vpcFirewallRuleId ID of the VPC firewall rule.
 
 @return AsyncOperationResponse
 */

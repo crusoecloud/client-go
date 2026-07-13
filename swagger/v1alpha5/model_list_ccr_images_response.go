@@ -9,5 +9,6 @@
 package swagger
 
 type ListCcrImagesResponse struct {
+	// List of images.
 	Items []CcrImage `json:"items,omitempty"`
 }

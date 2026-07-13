@@ -9,5 +9,6 @@
 package swagger
 
 type VpcNetworkPatchRequest struct {
+	// New name for the VPC network.
 	Name string `json:"name"`
 }

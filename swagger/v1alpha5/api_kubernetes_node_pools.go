@@ -27,10 +27,10 @@ var (
 type KubernetesNodePoolsApiService service
 
 /*
-KubernetesNodePoolsApiService Cancel an in-progress rotation of the specified Kubernetes node pool.
+KubernetesNodePoolsApiService Cancels an in-progress rotation of a Kubernetes node pool in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return KubernetesCancelNodePoolRotateResponse
 */
@@ -165,11 +165,10 @@ func (a *KubernetesNodePoolsApiService) CancelNodePoolRotate(ctx context.Context
 }
 
 /*
-KubernetesNodePoolsApiService Create a new Kubernetes node pool owned by the logged in user.
-A successful response from this resource will contain the async operation.
+KubernetesNodePoolsApiService Creates a Kubernetes node pool in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
+  - @param projectId ID of the project to create the node pool in.
 
 @return AsyncOperationResponse
 */
@@ -295,10 +294,10 @@ func (a *KubernetesNodePoolsApiService) CreateNodePool(ctx context.Context, body
 }
 
 /*
-KubernetesNodePoolsApiService Delete a node pool that the logged in user owns.
+KubernetesNodePoolsApiService Deletes a Kubernetes node pool from the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return AsyncOperationResponse
 */
@@ -413,10 +412,10 @@ func (a *KubernetesNodePoolsApiService) DeleteNodePool(ctx context.Context, proj
 }
 
 /*
-KubernetesNodePoolsApiService Retrieve information about a particular Kubernetes node pool belonging to the project.
+KubernetesNodePoolsApiService Returns details for a single Kubernetes node pool in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return KubernetesNodePool
 */
@@ -521,10 +520,10 @@ func (a *KubernetesNodePoolsApiService) GetNodePool(ctx context.Context, project
 }
 
 /*
-KubernetesNodePoolsApiService Get the rotate status of the specified Kubernetes ndoe pool.
+KubernetesNodePoolsApiService Returns the rotation status of a Kubernetes node pool in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return KubernetesGetNodePoolRotateStatusResponse
 */
@@ -649,12 +648,175 @@ func (a *KubernetesNodePoolsApiService) GetNodePoolRotateStatus(ctx context.Cont
 }
 
 /*
-KubernetesNodePoolsApiService Retrieve information about Kubernetes node pools belonging to a project or cluster.
+KubernetesNodePoolsApiService Lists all VMs in a Kubernetes node pool and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project that owns the node pool.
+ * @param nodePoolId ID of the node pool.
+ * @param optional nil or *KubernetesNodePoolsApiListKubernetesNodePoolVMsOpts - Optional Parameters:
+     * @param "Limit" (optional.String) -  Maximum number of results to return per page.
+     * @param "Sort" (optional.String) -  Field to sort results by; prefix with &#x27;-&#x27; for descending order.
+     * @param "NextToken" (optional.String) -  Base64-encoded token for the next page of results.
+     * @param "PrevToken" (optional.String) -  Base64-encoded token for the previous page of results.
+@return ListKubernetesNodePoolVmsResponse
+*/
+
+type KubernetesNodePoolsApiListKubernetesNodePoolVMsOpts struct {
+	Limit     optional.String
+	Sort      optional.String
+	NextToken optional.String
+	PrevToken optional.String
+}
+
+func (a *KubernetesNodePoolsApiService) ListKubernetesNodePoolVMs(ctx context.Context, projectId string, nodePoolId string, localVarOptionals *KubernetesNodePoolsApiListKubernetesNodePoolVMsOpts) (ListKubernetesNodePoolVmsResponse, *http.Response, error) {
+	var (
+		localVarHttpMethod  = strings.ToUpper("Get")
+		localVarPostBody    interface{}
+		localVarFileName    string
+		localVarFileBytes   []byte
+		localVarReturnValue ListKubernetesNodePoolVmsResponse
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/vms"
+	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"node_pool_id"+"}", fmt.Sprintf("%v", nodePoolId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if localVarOptionals != nil && localVarOptionals.Limit.IsSet() {
+		localVarQueryParams.Add("limit", parameterToString(localVarOptionals.Limit.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Sort.IsSet() {
+		localVarQueryParams.Add("sort", parameterToString(localVarOptionals.Sort.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.NextToken.IsSet() {
+		localVarQueryParams.Add("next_token", parameterToString(localVarOptionals.NextToken.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PrevToken.IsSet() {
+		localVarQueryParams.Add("prev_token", parameterToString(localVarOptionals.PrevToken.Value(), ""))
+	}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+		if err == nil {
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body:  localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v ListKubernetesNodePoolVmsResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 400 {
+			var v InlineResponse400
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 401 {
+			var v InlineResponse401
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 403 {
+			var v InlineResponse403
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 404 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 500 {
+			var v InlineResponse500
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}
+
+/*
+KubernetesNodePoolsApiService Lists all Kubernetes node pools in the project and returns their details.
+Results can be narrowed to a single cluster with the cluster_id query parameter.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param projectId ID of the project that owns the node pools.
  * @param optional nil or *KubernetesNodePoolsApiListNodePoolsOpts - Optional Parameters:
-     * @param "ClusterId" (optional.String) -
-     * @param "Sort" (optional.String) -
+     * @param "ClusterId" (optional.String) -  Filters results to node pools in this cluster.
+     * @param "Sort" (optional.String) -  Field to sort results by; prefix with &#x27;-&#x27; for descending order.
 @return ListKubernetesNodePoolsResponse
 */
 
@@ -769,12 +931,12 @@ func (a *KubernetesNodePoolsApiService) ListNodePools(ctx context.Context, proje
 }
 
 /*
-KubernetesNodePoolsApiService Start a rotation of the specified Kubernetes node pool.
+KubernetesNodePoolsApiService Starts a rotation of a Kubernetes node pool in the project and returns the async operation.
 A successful response returns an async operation you can poll.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return AsyncOperationResponse
 */
@@ -911,11 +1073,11 @@ func (a *KubernetesNodePoolsApiService) RotateNodePool(ctx context.Context, body
 }
 
 /*
-KubernetesNodePoolsApiService Update a node pool that the logged in user owns.
+KubernetesNodePoolsApiService Updates a Kubernetes node pool in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param nodePoolId
+  - @param projectId ID of the project that owns the node pool.
+  - @param nodePoolId ID of the node pool.
 
 @return AsyncOperationResponse
 */

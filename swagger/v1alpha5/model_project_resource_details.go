@@ -9,5 +9,6 @@
 package swagger
 
 type ProjectResourceDetails struct {
+	// Number of resources of this type in the project.
 	Count int64 `json:"count"`
 }

@@ -9,10 +9,16 @@
 package swagger
 
 type DisksPostRequestV1 struct {
-	BlockSize  int64  `json:"block_size,omitempty"`
-	Location   string `json:"location,omitempty"`
-	Name       string `json:"name"`
-	Size       string `json:"size,omitempty"`
+	// Block size for the new disk, in bytes: 512 or 4096.
+	BlockSize int64 `json:"block_size,omitempty"`
+	// Location to create the disk in.
+	Location string `json:"location,omitempty"`
+	// Name for the new disk.
+	Name string `json:"name"`
+	// Storage capacity for the new disk, given as a size and unit in the format [Size][Unit], for example 100GiB or 1TiB.
+	Size string `json:"size,omitempty"`
+	// ID of a disk snapshot to create the disk from.
 	SnapshotId string `json:"snapshot_id,omitempty"`
-	Type_      string `json:"type,omitempty"`
+	// Type of disk to create: persistent-ssd or shared-volume. Defaults to persistent-ssd.
+	Type_ string `json:"type,omitempty"`
 }

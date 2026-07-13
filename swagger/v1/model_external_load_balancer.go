@@ -18,12 +18,12 @@ type ExternalLoadBalancer struct {
 	Location string `json:"location"`
 	// Name of the External Load Balancer.
 	Name string `json:"name"`
-	// The ID of the project this External Load Balancer belongs to.
+	// ID of the project this External Load Balancer belongs to.
 	ProjectId string `json:"project_id"`
 	// The protocol of the External Load Balancer.
 	Protocol string `json:"protocol"`
 	// Virtual IP (VIP) of the External Load Balancer.
 	Vip string `json:"vip"`
-	// The ID of the vpc network this External Load Balancer belongs to.
+	// ID of the VPC network this External Load Balancer belongs to.
 	VpcId string `json:"vpc_id"`
 }

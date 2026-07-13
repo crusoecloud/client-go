@@ -9,11 +9,11 @@
 package swagger
 
 type InstanceTemplate struct {
-	// Time the instance template was created.
+	// Creation timestamp of the instance template, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
-	// OS Image to use for all VMs created from this instance template.
+	// Custom image to use for all VMs created from this instance template.
 	CustomImageName string `json:"custom_image_name,omitempty"`
-	// Disks to create for all VMs created from this instance template.
+	// Disks attached to all VMs created from this instance template.
 	Disks         []DiskTemplate `json:"disks,omitempty"`
 	IbPartitionId string         `json:"ib_partition_id"`
 	// ID of the instance template.
@@ -22,19 +22,20 @@ type InstanceTemplate struct {
 	ImageName string `json:"image_name"`
 	// Location to use for all VMs created from this instance template. May be empty if we do not want to bind this template to a location.
 	Location string `json:"location"`
-	// The VM Host Maintenance Policy
+	// Host maintenance policy controlling how VMs created from this instance template behave during host maintenance: manual, stop-vm, or unspecified.
 	MaintenancePolicy string `json:"maintenance_policy"`
 	// Name of the instance template. (This is not the name of the VMs created from this instance template.)
 	Name string `json:"name"`
-	// NVLink domain ID assigned to this instance template
+	// NVLink domain assigned to all VMs created from this instance template.
 	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
-	// The VM Placement Policy
+	// Placement policy controlling how VMs created from this instance template are distributed across hosts: spread or unspecified.
 	PlacementPolicy string `json:"placement_policy"`
-	// Project ID of the project this instance template belongs to.
+	// ID of the project this instance template belongs to.
 	ProjectId string `json:"project_id"`
 	// Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".
 	PublicIpAddressType string `json:"public_ip_address_type"`
-	ReservationId       string `json:"reservation_id,omitempty"`
+	// Reservation used for all VMs created from this instance template.
+	ReservationId string `json:"reservation_id,omitempty"`
 	// Shutdown script to use for all VMs created from this instance template.
 	ShutdownScript string `json:"shutdown_script"`
 	// SSH public key to use for all VMs created from this instance template.

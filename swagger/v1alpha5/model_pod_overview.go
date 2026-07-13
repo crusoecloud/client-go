@@ -11,7 +11,7 @@ package swagger
 type PodOverview struct {
 	// Clusters within this pod.
 	Clusters []ClusterOverview `json:"clusters"`
-	Metrics  *AggregateMetrics `json:"metrics"`
+	Metrics  *AggregateMetrics `json:"metrics,omitempty"`
 	// Pod UUID.
 	PodId string `json:"pod_id"`
 }

@@ -25,7 +25,7 @@ var (
 type SnapshotsApiService service
 
 /*
-SnapshotsApiService Create a new snapshot for a disk owned by the logged in user.
+SnapshotsApiService Creates a disk snapshot in the project and returns the async operation.
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
@@ -145,11 +145,11 @@ func (a *SnapshotsApiService) CreateDiskSnapshot(ctx context.Context, body DiskS
 }
 
 /*
-SnapshotsApiService Delete a disk snapshot owned by the logged in user.
+SnapshotsApiService Deletes a disk snapshot from the project and returns the async operation.
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param snapshotId
+  - @param projectId ID of the project that owns the disk snapshot.
+  - @param snapshotId ID of the disk snapshot.
 
 @return AsyncOperationResponse
 */
@@ -264,11 +264,11 @@ func (a *SnapshotsApiService) DeleteDiskSnapshot(ctx context.Context, projectId 
 }
 
 /*
-SnapshotsApiService Retrieve details about a disk snapshot that belongs to the logged in user.
+SnapshotsApiService Returns details for a single disk snapshot in the project.
 Size of snapshot will be in bytes.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param snapshotId
+  - @param projectId ID of the project that owns the disk snapshot.
+  - @param snapshotId ID of the disk snapshot.
 
 @return DiskSnapshot
 */
@@ -393,7 +393,7 @@ func (a *SnapshotsApiService) GetDiskSnapshot(ctx context.Context, projectId str
 }
 
 /*
-SnapshotsApiService Retrieve details about all disk snapshots that belong to the logged in user.
+SnapshotsApiService Lists all disk snapshots in the project and returns their details.
 Size of snapshots will be in bytes.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId
@@ -520,12 +520,12 @@ func (a *SnapshotsApiService) ListDiskSnapshots(ctx context.Context, projectId s
 }
 
 /*
-SnapshotsApiService Rename a disk snapshot owned by the logged in user.
+SnapshotsApiService Renames a disk snapshot in the project and returns the updated snapshot.
 A successful response from this resource will contain the updated snapshot.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param snapshotId
+  - @param projectId ID of the project that owns the disk snapshot.
+  - @param snapshotId ID of the disk snapshot.
 
 @return SyncOperationResponse
 */

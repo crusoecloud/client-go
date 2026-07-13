@@ -9,32 +9,32 @@
 package swagger
 
 type KubernetesClusterPostRequest struct {
-	// List of add-ons to be included to the cluster.
+	// List of add-ons to include in the new cluster.
 	AddOns []string `json:"add_ons,omitempty"`
 	// Extra arguments to pass to the kube-apiserver control plane component.
 	ApiserverExtraArgs map[string]string            `json:"apiserver_extra_args,omitempty"`
 	AuthConfig         *KubernetesClusterAuthConfig `json:"auth_config,omitempty"`
-	// defines: the range of IP Addresses allocated to pods scheduled on worker nodes
+	// Range of IP addresses allocated to pods scheduled on worker nodes, in CIDR notation.
 	ClusterCidr string `json:"cluster_cidr,omitempty"`
 	// Configuration setting is deprecated, defaults to HA configuration.
 	Configuration string `json:"configuration,omitempty"`
 	// Extra arguments to pass to the kube-controller-manager control plane component.
 	ControllerManagerExtraArgs map[string]string `json:"controller_manager_extra_args,omitempty"`
-	// Arguments for kubectl oidc-login plugin.
+	// Arguments for the kubectl oidc-login plugin.
 	KubeloginArgs map[string]string `json:"kubelogin_args,omitempty"`
 	// Location to create the Kubernetes cluster in.
 	Location string `json:"location"`
 	// Name of the Kubernetes cluster.
 	Name string `json:"name"`
-	// defines: the mask size for cluster cidr
+	// Mask size for the cluster CIDR.
 	NodeCidrMaskSize int32 `json:"node_cidr_mask_size,omitempty"`
-	// Whether the cluster should be private (without a public IP). Default is false.
+	// Whether the cluster is private (without a public IP). Defaults to false.
 	Private bool `json:"private,omitempty"`
 	// Extra arguments to pass to the kube-scheduler control plane component.
 	SchedulerExtraArgs map[string]string `json:"scheduler_extra_args,omitempty"`
-	// defines: the range of IP Addresses allocated to K8s services
+	// Range of IP addresses allocated to Kubernetes services, in CIDR notation.
 	ServiceClusterIpRange string `json:"service_cluster_ip_range,omitempty"`
-	// The ID of the subnet to create the cluster in. Must be in the location specified. If not provided, the default subnet for the location will be used, if there is one.
+	// ID of the subnet to create the cluster in. Must be in the location specified. If not provided, the default subnet for the location is used, if there is one.
 	SubnetId string `json:"subnet_id,omitempty"`
 	// Version of the Crusoe Kubernetes image to create the cluster with.
 	Version string `json:"version"`

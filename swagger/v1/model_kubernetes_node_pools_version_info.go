@@ -9,11 +9,11 @@
 package swagger
 
 type KubernetesNodePoolsVersionInfo struct {
-	// The version name of Crusoe's Kubernetes node pools.
+	// Version name of the Crusoe Kubernetes node pool image.
 	NodePoolVersionName string `json:"node_pool_version_name"`
 	// Features supported by this node pool version. Possible values today: \"node_taints\", \"ephemeral_storage_for_containerd\". New feature names may be added over time. API consumers should ignore unrecognized feature names.
 	SupportedFeatures []string `json:"supported_features"`
-	// A list of tags associated with the version.
+	// Tags associated with the version.
 	Tags           []string        `json:"tags"`
 	VersionDetails *VersionDetails `json:"version_details"`
 }

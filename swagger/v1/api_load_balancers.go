@@ -27,7 +27,7 @@ var (
 type LoadBalancersApiService service
 
 /*
-LoadBalancersApiService Create a new external load balancer.
+LoadBalancersApiService Creates an external load balancer in the project and returns the async operation.
 This endpoint creates a new external load balancer in the specified project. The request must include the VPC ID, name, location, and at least one listen port with its associated backends.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body Request body for creating the external load balancer.
@@ -147,7 +147,7 @@ func (a *LoadBalancersApiService) CreateExternalLoadBalancer(ctx context.Context
 }
 
 /*
-LoadBalancersApiService Delete an external load balancer.
+LoadBalancersApiService Deletes an external load balancer from the project and returns the async operation.
 This endpoint deletes an external load balancer identified by its ID within the specified project. No request body or query parameters are required.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId The project ID to which the external load balancer belongs.
@@ -266,10 +266,10 @@ func (a *LoadBalancersApiService) DeleteExternalLoadBalancer(ctx context.Context
 }
 
 /*
-LoadBalancersApiService Retrieve information about a particular external load balancer belonging to the project.
+LoadBalancersApiService Returns details for a single external load balancer in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param loadBalancerId
+  - @param projectId ID of the project that owns the external load balancer.
+  - @param loadBalancerId ID of the external load balancer.
 
 @return ExternalLoadBalancer
 */
@@ -374,13 +374,13 @@ func (a *LoadBalancersApiService) GetExternalLoadBalancer(ctx context.Context, p
 }
 
 /*
-LoadBalancersApiService Retrieve information about external load balancers belonging to the project.
+LoadBalancersApiService Lists all external load balancers in the project and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project that owns the external load balancers.
  * @param optional nil or *LoadBalancersApiListExternalLoadBalancersOpts - Optional Parameters:
-     * @param "Location" (optional.String) -
-     * @param "VpcNetworkId" (optional.String) -
-     * @param "Name" (optional.String) -
+     * @param "Location" (optional.String) -  Filters results to external load balancers in this location.
+     * @param "VpcNetworkId" (optional.String) -  Filters results to external load balancers in this VPC network.
+     * @param "Name" (optional.String) -  Filters results to external load balancers with this name.
 @return ListExternalLoadBalancersResponse
 */
 
@@ -499,7 +499,7 @@ func (a *LoadBalancersApiService) ListExternalLoadBalancers(ctx context.Context,
 }
 
 /*
-LoadBalancersApiService Update an existing external load balancer.
+LoadBalancersApiService Updates an external load balancer in the project and returns the async operation.
 This endpoint updates the configuration of an existing external load balancer. The request must include the load balancer ID and optionally the health check options and/or listen ports and associated backends.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body Request body for updating the external load balancer.

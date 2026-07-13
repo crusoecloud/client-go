@@ -9,6 +9,8 @@
 package swagger
 
 type IbPartitionsPostRequestV1 struct {
+	// ID of the InfiniBand network to create the partition in.
 	IbNetworkId string `json:"ib_network_id"`
-	Name        string `json:"name"`
+	// Name for the new InfiniBand partition.
+	Name string `json:"name"`
 }

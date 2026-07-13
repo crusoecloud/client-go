@@ -9,6 +9,8 @@
 package swagger
 
 type IbNetworkCapacity struct {
-	Quantity  int32  `json:"quantity"`
+	// Number of slices of the given slice type.
+	Quantity int32 `json:"quantity"`
+	// VM slice type the capacity applies to.
 	SliceType string `json:"slice_type"`
 }

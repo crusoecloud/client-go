@@ -9,26 +9,26 @@
 package swagger
 
 type KubernetesSupportAccessRequest struct {
-	// Access role requested
+	// Requested support access role.
 	AccessRole string `json:"access_role"`
-	// Time when certificate expires (RFC3339)
+	// Time when the certificate expires.
 	CertExpiresAt string `json:"cert_expires_at,omitempty"`
-	// Certificate fingerprint
+	// Fingerprint of the certificate.
 	CertFingerprint string `json:"cert_fingerprint,omitempty"`
-	// Time last certificate issued (RFC3339)
+	// Time when the most recent certificate was issued.
 	CertIssuedAt string `json:"cert_issued_at,omitempty"`
-	// Certificate serial number
+	// Serial number of the certificate.
 	CertSerial string `json:"cert_serial,omitempty"`
-	// Time when access expires (RFC3339)
+	// Time when access expires.
 	ExpiresAt string `json:"expires_at,omitempty"`
-	// Time requested (RFC3339)
+	// Time when access was requested.
 	RequestedAt string `json:"requested_at,omitempty"`
-	// User ID (UUID) of the user who requested access
+	// ID of the user who requested access.
 	RequestorId string `json:"requestor_id,omitempty"`
-	// Name of team requesting support access
+	// Name of the team requesting support access.
 	RequestorTeam string `json:"requestor_team,omitempty"`
-	// Reason for requesting support access
+	// Reason given for requesting support access.
 	SupportReason string `json:"support_reason,omitempty"`
-	// Associated ticket for the support access request
+	// Ticket associated with the support access request.
 	TicketRef string `json:"ticket_ref,omitempty"`
 }

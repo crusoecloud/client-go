@@ -9,5 +9,6 @@
 package swagger
 
 type PrivateIpv4Address struct {
+	// Private IPv4 address.
 	Address string `json:"address"`
 }

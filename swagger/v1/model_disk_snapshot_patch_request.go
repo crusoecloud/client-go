@@ -9,5 +9,6 @@
 package swagger
 
 type DiskSnapshotPatchRequest struct {
+	// New name for the disk snapshot.
 	Name string `json:"name"`
 }

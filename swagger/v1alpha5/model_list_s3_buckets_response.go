@@ -9,10 +9,10 @@
 package swagger
 
 type ListS3BucketsResponse struct {
-	// List of buckets
+	// List of buckets.
 	Items []S3Bucket `json:"items"`
-	// Next page token
+	// Next page token.
 	NextPageToken string `json:"next_page_token,omitempty"`
-	// Previous page token
+	// Previous page token.
 	PrevPageToken string `json:"prev_page_token,omitempty"`
 }

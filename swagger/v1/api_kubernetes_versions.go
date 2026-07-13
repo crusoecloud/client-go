@@ -27,12 +27,12 @@ var (
 type KubernetesVersionsApiService service
 
 /*
-KubernetesVersionsApiService Retrieve information about available Kubernetes versions.
+KubernetesVersionsApiService Lists all available Kubernetes versions in the project and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project to list versions for.
  * @param optional nil or *KubernetesVersionsApiListKubernetesVersionsOpts - Optional Parameters:
-     * @param "ShowDeprecated" (optional.Bool) -
-     * @param "ProductName" (optional.String) -
+     * @param "ShowDeprecated" (optional.Bool) -  Whether to include deprecated versions in the results.
+     * @param "ProductName" (optional.String) -  Filters results to versions available for this VM product.
 @return ListKubernetesVersionsResponse
 */
 

@@ -9,5 +9,6 @@
 package swagger
 
 type ListSupportedLocationsResponse struct {
+	// List of locations where the container registry is available.
 	Items []string `json:"items,omitempty"`
 }

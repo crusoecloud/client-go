@@ -13,9 +13,14 @@ import (
 )
 
 type Manifest struct {
-	Digest    string    `json:"digest,omitempty"`
-	PulledAt  time.Time `json:"pulled_at,omitempty"`
-	PushedAt  time.Time `json:"pushed_at,omitempty"`
-	SizeBytes string    `json:"size_bytes,omitempty"`
-	Tags      []string  `json:"tags,omitempty"`
+	// Content-addressable digest that uniquely identifies the manifest.
+	Digest string `json:"digest,omitempty"`
+	// Last pull timestamp of the manifest, in RFC3339 format.
+	PulledAt time.Time `json:"pulled_at,omitempty"`
+	// Push timestamp of the manifest, in RFC3339 format.
+	PushedAt time.Time `json:"pushed_at,omitempty"`
+	// Total size of the manifest, in bytes.
+	SizeBytes string `json:"size_bytes,omitempty"`
+	// Tags that point to the manifest.
+	Tags []string `json:"tags,omitempty"`
 }

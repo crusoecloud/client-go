@@ -9,5 +9,6 @@
 package swagger
 
 type CustomImagePatchRequest struct {
+	// New description for the custom image.
 	Description string `json:"description"`
 }

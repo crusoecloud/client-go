@@ -9,5 +9,6 @@
 package swagger
 
 type ListRepositoriesResponse struct {
+	// List of repositories.
 	Items []Repository `json:"items,omitempty"`
 }

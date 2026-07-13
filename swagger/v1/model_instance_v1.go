@@ -10,28 +10,44 @@ package swagger
 
 // InstanceV1 contains identifying information about a vm instance for vms.instances endpoints.
 type InstanceV1 struct {
-	// values: On-demand, Spot, PoC
+	// Billing type of the VM: On-demand, Spot, or PoC. values: On-demand, Spot, PoC
 	BillingType   string `json:"billing_type,omitempty"`
 	CommitmentEnd string `json:"commitment_end,omitempty"`
 	// commitment is no longer supported
-	CommitmentPeriod    int64                `json:"commitment_period,omitempty"`
-	CreatedAt           string               `json:"created_at"`
-	Disks               []AttachedDiskV1     `json:"disks"`
+	CommitmentPeriod int64 `json:"commitment_period,omitempty"`
+	// Creation timestamp of the VM, in RFC3339 format.
+	CreatedAt string `json:"created_at"`
+	// Disks attached to the VM.
+	Disks []AttachedDiskV1 `json:"disks"`
+	// Host channel adapters attached to the VM.
 	HostChannelAdapters []HostChannelAdapter `json:"host_channel_adapters"`
-	Id                  string               `json:"id"`
-	InstanceGroupId     string               `json:"instance_group_id,omitempty"`
-	InstanceTemplateId  string               `json:"instance_template_id,omitempty"`
-	Location            string               `json:"location"`
-	MaintenancePolicy   string               `json:"maintenance_policy"`
-	Name                string               `json:"name"`
-	NetworkInterfaces   []NetworkInterface   `json:"network_interfaces"`
-	// optional field for specifying an NVLink domain ID
-	NvlinkDomainId         string                  `json:"nvlink_domain_id,omitempty"`
-	PodId                  string                  `json:"pod_id,omitempty"`
-	ProjectId              string                  `json:"project_id"`
-	ReservationId          string                  `json:"reservation_id,omitempty"`
-	State                  string                  `json:"state"`
-	Type_                  string                  `json:"type"`
+	// ID of the VM.
+	Id string `json:"id"`
+	// ID of the instance group the VM belongs to, if any.
+	InstanceGroupId string `json:"instance_group_id,omitempty"`
+	// ID of the instance template the VM was created from, if any.
+	InstanceTemplateId string `json:"instance_template_id,omitempty"`
+	// Location the VM runs in.
+	Location string `json:"location"`
+	// Host maintenance policy applied to the VM: manual, stop-vm, or unspecified.
+	MaintenancePolicy string `json:"maintenance_policy"`
+	// Name of the VM.
+	Name string `json:"name"`
+	// Network interfaces attached to the VM.
+	NetworkInterfaces []NetworkInterface `json:"network_interfaces"`
+	// ID of the NVLink domain the VM belongs to, if any.
+	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
+	// ID of the pod the VM belongs to, if any.
+	PodId string `json:"pod_id,omitempty"`
+	// ID of the project that owns the VM.
+	ProjectId string `json:"project_id"`
+	// ID of the reservation the VM belongs to, if any.
+	ReservationId string `json:"reservation_id,omitempty"`
+	// Current lifecycle state of the VM.
+	State string `json:"state"`
+	// Product name of the VM type.
+	Type_ string `json:"type"`
+	// Last update timestamp of the VM, in RFC3339 format.
 	UpdatedAt              string                  `json:"updated_at"`
 	VirtualizationFeatures *VirtualizationFeatures `json:"virtualization_features,omitempty"`
 }

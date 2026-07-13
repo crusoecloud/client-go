@@ -9,10 +9,16 @@
 package swagger
 
 type Image struct {
-	CreatedAt   string   `json:"created_at"`
-	Description string   `json:"description"`
-	Id          string   `json:"id"`
-	Locations   []string `json:"locations"`
-	Name        string   `json:"name"`
-	Tags        []string `json:"tags"`
+	// Creation timestamp of the image, in RFC3339 format.
+	CreatedAt string `json:"created_at"`
+	// Description of the image.
+	Description string `json:"description"`
+	// ID of the image.
+	Id string `json:"id"`
+	// Locations where the image is available.
+	Locations []string `json:"locations"`
+	// Name of the image.
+	Name string `json:"name"`
+	// Tags associated with the image.
+	Tags []string `json:"tags"`
 }

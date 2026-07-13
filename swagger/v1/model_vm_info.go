@@ -9,9 +9,13 @@
 package swagger
 
 type VmInfo struct {
+	// VM health status: healthy, degraded, unhealthy, or not_evaluated. Empty string if health could not be determined.
+	Health         string `json:"health,omitempty"`
 	NvlinkDomainId string `json:"nvlink_domain_id,omitempty"`
 	PodId          string `json:"pod_id,omitempty"`
-	VmId           string `json:"vm_id,omitempty"`
-	VmName         string `json:"vm_name,omitempty"`
-	VmState        string `json:"vm_state,omitempty"`
+	// List of health reasons for this VM. Empty array if healthy or health could not be determined.
+	Reasons []VmHealthReason `json:"reasons,omitempty"`
+	VmId    string           `json:"vm_id,omitempty"`
+	VmName  string           `json:"vm_name,omitempty"`
+	VmState string           `json:"vm_state,omitempty"`
 }

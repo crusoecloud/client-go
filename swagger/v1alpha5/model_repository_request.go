@@ -9,9 +9,13 @@
 package swagger
 
 type RepositoryRequest struct {
-	Location         string            `json:"location,omitempty"`
-	MaxSizeBytes     string            `json:"max_size_bytes,omitempty"`
-	Mode             string            `json:"mode,omitempty"`
+	// Location to create the repository in.
+	Location string `json:"location,omitempty"`
+	// Maximum total size for the new repository, in bytes.
+	MaxSizeBytes string `json:"max_size_bytes,omitempty"`
+	// Mode for the new repository, which determines how images are stored and served.
+	Mode string `json:"mode,omitempty"`
+	// Name for the new repository.
 	Name             string            `json:"name,omitempty"`
 	UpstreamRegistry *UpstreamRegistry `json:"upstream_registry,omitempty"`
 }

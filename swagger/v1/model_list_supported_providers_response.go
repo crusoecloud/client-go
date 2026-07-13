@@ -9,5 +9,6 @@
 package swagger
 
 type ListSupportedProvidersResponse struct {
+	// List of supported upstream registry providers.
 	Items []string `json:"items,omitempty"`
 }

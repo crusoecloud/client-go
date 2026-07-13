@@ -9,5 +9,6 @@
 package swagger
 
 type ProjectIsUsingNfsForSharedDisksResponse struct {
+	// Whether the project has migrated to NFS for shared volumes.
 	Status bool `json:"status"`
 }

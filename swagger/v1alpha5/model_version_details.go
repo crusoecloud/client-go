@@ -9,7 +9,10 @@
 package swagger
 
 type VersionDetails struct {
-	BuildVersion      string `json:"BuildVersion,omitempty"`
+	// Build version component.
+	BuildVersion string `json:"BuildVersion,omitempty"`
+	// Major and minor version components, for example \"1.30\".
 	MajorMinorVersion string `json:"MajorMinorVersion,omitempty"`
-	PatchVersion      string `json:"PatchVersion,omitempty"`
+	// Patch version component.
+	PatchVersion string `json:"PatchVersion,omitempty"`
 }
