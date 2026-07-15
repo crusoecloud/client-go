@@ -9,6 +9,8 @@
 package swagger
 
 type NotificationPreferenceItem struct {
+	// The Svix (Slack/Webhook) event name this notification type emits. Matches the filter_types values on notification endpoints. Absent when the type has no Slack/Webhook delivery path.
+	AppPortalEventName string `json:"app_portal_event_name,omitempty"`
 	// Per-channel preference status for this notification type.
 	ChannelPreferences []NotificationChannelPreference `json:"channel_preferences"`
 	// Description of when this notification is triggered.

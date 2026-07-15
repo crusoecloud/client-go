@@ -18528,10 +18528,22 @@
     "NotificationCategoryPreferences": {
       "properties": {
         "category": {
-          "description": "The category key (e.g. BILLING_AND_COST_ALERTS).",
-          "example": "BILLING_AND_COST_ALERTS",
+          "description": "The category key.",
+          "enum": [
+            "USER_ACCOUNT_AND_ORGANIZATION_MANAGEMENT",
+            "IDENTITY_AND_SECURITY",
+            "BUDGET_AND_COST_ALERTS",
+            "RESOURCE_HEALTH_ALERTS"
+          ],
+          "example": "BUDGET_AND_COST_ALERTS",
           "type": "string",
           "x-go-name": "Category"
+        },
+        "category_display_name": {
+          "description": "Human-readable label for the category.",
+          "example": "Budget \u0026 Cost Alerts",
+          "type": "string",
+          "x-go-name": "CategoryDisplayName"
         },
         "notifications": {
           "description": "Notification types within this category.",
@@ -18544,6 +18556,7 @@
       },
       "required": [
         "category",
+        "category_display_name",
         "notifications"
       ],
       "title": "NotificationCategoryPreferences groups notification preferences by category.",
@@ -18603,9 +18616,9 @@
           "x-go-name": "Disabled"
         },
         "filter_types": {
-          "description": "Event types this endpoint is subscribed to. Null or empty means all event types.",
+          "description": "Event types this endpoint is subscribed to. Null or empty means all event types.\nValues match the app_portal_event_name on notification preference items.",
           "example": [
-            "billing.alert.triggered"
+            "budget.threshold.reached"
           ],
           "items": {
             "type": "string"
@@ -18637,6 +18650,12 @@
     },
     "NotificationPreferenceItem": {
       "properties": {
+        "app_portal_event_name": {
+          "description": "The Svix (Slack/Webhook) event name this notification type emits. Matches the\nfilter_types values on notification endpoints. Absent when the type has no\nSlack/Webhook delivery path.",
+          "example": "budget.threshold.reached",
+          "type": "string",
+          "x-go-name": "AppPortalEventName"
+        },
         "channel_preferences": {
           "description": "Per-channel preference status for this notification type.",
           "items": {
@@ -18659,7 +18678,7 @@
         },
         "notification_type": {
           "description": "The unique identifier for the notification type.",
-          "example": "billing_threshold_reached",
+          "example": "budget_threshold_reached",
           "type": "string",
           "x-go-name": "NotificationType"
         }
@@ -18690,7 +18709,7 @@
         },
         "notification_type": {
           "description": "The notification type to update.",
-          "example": "billing_threshold_reached",
+          "example": "budget_threshold_reached",
           "type": "string",
           "x-go-name": "NotificationType"
         }

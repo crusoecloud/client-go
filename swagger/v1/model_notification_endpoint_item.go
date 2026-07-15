@@ -13,7 +13,7 @@ type NotificationEndpointItem struct {
 	Description string `json:"description,omitempty"`
 	// Whether the endpoint is currently disabled.
 	Disabled bool `json:"disabled"`
-	// Event types this endpoint is subscribed to. Null or empty means all event types.
+	// Event types this endpoint is subscribed to. Null or empty means all event types. Values match the app_portal_event_name on notification preference items.
 	FilterTypes []string `json:"filter_types,omitempty"`
 	// The Svix endpoint ID.
 	Id string `json:"id"`

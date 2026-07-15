@@ -9,8 +9,10 @@
 package swagger
 
 type NotificationCategoryPreferences struct {
-	// The category key (e.g. BILLING_AND_COST_ALERTS).
+	// The category key.
 	Category string `json:"category"`
+	// Human-readable label for the category.
+	CategoryDisplayName string `json:"category_display_name"`
 	// Notification types within this category.
 	Notifications []NotificationPreferenceItem `json:"notifications"`
 }
