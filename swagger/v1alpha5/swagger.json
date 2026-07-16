@@ -6576,7 +6576,7 @@
           },
           {
             "description": "Start timestamp, inclusive.",
-            "example": "\u003crfc3339 | unix_timestamp\u003e",
+            "example": "<rfc3339 | unix_timestamp>",
             "in": "query",
             "name": "start",
             "required": true,
@@ -6585,7 +6585,7 @@
           },
           {
             "description": "End timestamp, inclusive.",
-            "example": "\u003crfc3339 | unix_timestamp\u003e",
+            "example": "<rfc3339 | unix_timestamp>",
             "in": "query",
             "name": "end",
             "required": true,
@@ -6648,7 +6648,7 @@
           },
           {
             "description": "Evaluation timestamp.",
-            "example": "\u003crfc3339 | unix_timestamp\u003e",
+            "example": "<rfc3339 | unix_timestamp>",
             "in": "query",
             "name": "time",
             "type": "string",
@@ -6717,7 +6717,7 @@
           },
           {
             "description": "Start timestamp, inclusive.",
-            "example": "\u003crfc3339 | unix_timestamp\u003e",
+            "example": "<rfc3339 | unix_timestamp>",
             "in": "query",
             "name": "start",
             "required": true,
@@ -6726,7 +6726,7 @@
           },
           {
             "description": "End timestamp, inclusive.",
-            "example": "\u003crfc3339 | unix_timestamp\u003e",
+            "example": "<rfc3339 | unix_timestamp>",
             "in": "query",
             "name": "end",
             "required": true,
@@ -14392,7 +14392,7 @@
         },
         "slice_type": {
           "description": "VM slice type the capacity applies to.",
-          "example": "16 vCPUs \u0026 125GB RAM \u0026 1 A100 (40GB) GPU",
+          "example": "16 vCPUs & 125GB RAM & 1 A100 (40GB) GPU",
           "type": "string",
           "x-go-name": "SliceType"
         }
@@ -18541,7 +18541,7 @@
         },
         "category_display_name": {
           "description": "Human-readable label for the category.",
-          "example": "Budget \u0026 Cost Alerts",
+          "example": "Budget & Cost Alerts",
           "type": "string",
           "x-go-name": "CategoryDisplayName"
         },
@@ -19420,12 +19420,12 @@
         },
         "expected_capacity": {
           "enum": [
-            "\u003c64 GPUs",
+            "<64 GPUs",
             "64-128 GPUs",
             "128-256 GPUs",
             "256+ GPUs"
           ],
-          "example": "\u003c64 GPUs",
+          "example": "<64 GPUs",
           "type": "string",
           "x-go-name": "ExpectedCapacity"
         },
