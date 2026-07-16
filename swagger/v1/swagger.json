@@ -20362,6 +20362,26 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "SSHKeysServiceCreateSSHKeyBody": {
+      "description": "CreateSSHKeyRequest is the request for registering a new SSH key to a user.",
+      "properties": {
+        "name": {
+          "example": "John Doe",
+          "title": "name is the display name of the SSH key",
+          "type": "string"
+        },
+        "public_key": {
+          "example": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpuH/fqCFLbAConChyVH6rZzSaxlnHSwQk6qvtPsf5E",
+          "title": "public_key is the SSH public key material",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "public_key"
+      ],
+      "type": "object"
+    },
     "SSOProvider": {
       "properties": {
         "client_id": {
@@ -22460,6 +22480,10 @@
       "description": "DeleteProjectResponse is the response for deleting an existing project.\n\nSuccessful delete calls should be empty",
       "type": "object"
     },
+    "customerDeleteSSHKeyResponse": {
+      "description": "DeleteSSHKeyResponse is the response for deleting an SSH key.\n\nSuccessful delete calls should be empty",
+      "type": "object"
+    },
     "customerGenerateNameResponse": {
       "description": "GenerateNameResponse is the response containing a suggested project name.",
       "properties": {
@@ -22533,6 +22557,21 @@
         }
       },
       "title": "ListPublicFeatureFlagsResponse is the list public feature flags response",
+      "type": "object"
+    },
+    "customerListSSHKeysResponse": {
+      "description": "ListSSHKeysResponse is the response for listing the SSH keys registered to a user.",
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/definitions/customerSSHKey",
+            "type": "object"
+          },
+          "readOnly": true,
+          "title": "items is the list of SSH keys",
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "customerOrganizationUsage": {
@@ -22690,6 +22729,55 @@
         "scope_type": {
           "example": "org",
           "title": "scope_type is the type of resource the binding applies to (e.g. org, project)",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerSSHKey": {
+      "description": "SSHKey is an SSH public key registered to a user.",
+      "properties": {
+        "created_at": {
+          "example": "2022-01-24T20:13:35.328Z",
+          "readOnly": true,
+          "title": "created_at is when the SSH key was registered",
+          "type": "string"
+        },
+        "fingerprints": {
+          "$ref": "#/definitions/customerSSHKeyFingerprints",
+          "readOnly": true,
+          "title": "fingerprints is the fingerprints of the SSH public key"
+        },
+        "id": {
+          "example": "0b880f48-6a97-408f-8351-3cc30871e010",
+          "readOnly": true,
+          "title": "id is the ID of the SSH key",
+          "type": "string"
+        },
+        "name": {
+          "example": "public key 1",
+          "title": "name is the display name of the SSH key",
+          "type": "string"
+        },
+        "public_key": {
+          "example": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpuH/fqCFLbAConChyVH6rZzSaxlnHSwQk6qvtPsf5E",
+          "title": "public_key is the SSH public key material",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerSSHKeyFingerprints": {
+      "description": "SSHKeyFingerprints is the fingerprints of an SSH public key.",
+      "properties": {
+        "md5": {
+          "example": "bf:60:fa:cc:9f:42:1f:5e:23:9e:ed:d2:69:d8:76:93",
+          "title": "md5 is the MD5 fingerprint of the SSH public key",
+          "type": "string"
+        },
+        "sha256": {
+          "example": "tARFxQkVHeqm6TzqpI897QsHVdgZlxgL2/YhVltmEUk",
+          "title": "sha256 is the SHA256 fingerprint of the SSH public key",
           "type": "string"
         }
       },
@@ -24130,6 +24218,9 @@
     },
     {
       "name": "ProjectsService"
+    },
+    {
+      "name": "SSHKeysService"
     },
     {
       "name": "UsageService"
