@@ -70,6 +70,8 @@ type APIClient struct {
 
 	FeatureFlagsApi *FeatureFlagsApiService
 
+	FoundryApi *FoundryApiService
+
 	IBNetworksApi *IBNetworksApiService
 
 	IBPartitionsApi *IBPartitionsApiService
@@ -192,6 +194,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.DisksApi = (*DisksApiService)(&c.common)
 	c.EntitiesApi = (*EntitiesApiService)(&c.common)
 	c.FeatureFlagsApi = (*FeatureFlagsApiService)(&c.common)
+	c.FoundryApi = (*FoundryApiService)(&c.common)
 	c.IBNetworksApi = (*IBNetworksApiService)(&c.common)
 	c.IBPartitionsApi = (*IBPartitionsApiService)(&c.common)
 	c.IdentitiesApi = (*IdentitiesApiService)(&c.common)

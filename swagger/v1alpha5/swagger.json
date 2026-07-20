@@ -4040,6 +4040,250 @@
         ]
       }
     },
+    "/projects/{project_id}/foundry/deployed-models": {
+      "get": {
+        "operationId": "listFoundryDeployedModels",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryDeployedModelsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the models deployed and available for inference in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/deployed-models/update": {
+      "post": {
+        "operationId": "updateFoundryDeployedModel",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "schema": {
+              "$ref": "#/definitions/UpdateModelRequest"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "$ref": "#/responses/foundryUpdateModelResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Updates the HuggingFace source behind a deployed model's alias.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/loras": {
+      "get": {
+        "operationId": "listFoundryLoras",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the deployments.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryLoraListResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the LoRA adapter deployments in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      },
+      "post": {
+        "description": "The deployment is asynchronous: the response returns the deployment record in a\npending state, which is reconciled to ready once the adapter is loaded.",
+        "operationId": "createFoundryLora",
+        "parameters": [
+          {
+            "description": "ID of the project to deploy the adapter in.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "schema": {
+              "$ref": "#/definitions/LoadLoraRequest"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "$ref": "#/responses/foundryLoraResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Deploys a LoRA adapter (a fine-tuned model) onto its parent base model in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/loras/{id}": {
+      "delete": {
+        "description": "The teardown is asynchronous: the adapter is unloaded from the serving cluster in the background.",
+        "operationId": "deleteFoundryLora",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the deployment.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the LoRA adapter deployment.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ID"
+          }
+        ],
+        "responses": {
+          "202": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Removes a LoRA adapter deployment from the project.",
+        "tags": [
+          "Foundry"
+        ]
+      },
+      "get": {
+        "operationId": "getFoundryLora",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the deployment.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the LoRA adapter deployment.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryLoraResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns a single LoRA adapter deployment in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
     "/projects/{project_id}/kubernetes/autocluster-operations": {
       "get": {
         "operationId": "listAutoClusterOperations",
@@ -11702,6 +11946,109 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "DeployedModelEntry": {
+      "properties": {
+        "architecture": {
+          "$ref": "#/definitions/FoundryArchitecture"
+        },
+        "context_length": {
+          "description": "Maximum context length supported by the model.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "ContextLength"
+        },
+        "created": {
+          "description": "Unix timestamp when the model was created.",
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "Created"
+        },
+        "deployed": {
+          "description": "Whether the model is currently deployed and serving.",
+          "type": "boolean",
+          "x-go-name": "Deployed"
+        },
+        "description": {
+          "description": "Human-readable description of the model.",
+          "type": "string",
+          "x-go-name": "Description"
+        },
+        "icon": {
+          "description": "URL of the model icon.",
+          "type": "string",
+          "x-go-name": "Icon"
+        },
+        "id": {
+          "description": "Model endpoint ID.",
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "is_available_to_rolling_deployment": {
+          "description": "Whether the model can be used with rolling deployments.",
+          "type": "boolean",
+          "x-go-name": "IsAvailableToRollingDeployment"
+        },
+        "is_billed_by_token": {
+          "description": "Whether usage of the model is billed by token.",
+          "type": "boolean",
+          "x-go-name": "IsBilledByToken"
+        },
+        "model_name": {
+          "description": "Underlying (served) model name.",
+          "type": "string",
+          "x-go-name": "ModelName"
+        },
+        "name": {
+          "description": "Display name of the model.",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "owned_by": {
+          "description": "Owner of the model.",
+          "type": "string",
+          "x-go-name": "OwnedBy"
+        },
+        "quantization": {
+          "description": "Quantization applied to the model, if any.",
+          "type": "string",
+          "x-go-name": "Quantization"
+        },
+        "region": {
+          "description": "Region the model is served in.",
+          "type": "string",
+          "x-go-name": "Region"
+        },
+        "status": {
+          "description": "Serving status of the model.",
+          "type": "string",
+          "x-go-name": "Status"
+        },
+        "supported_parameters": {
+          "description": "Inference parameters supported by the model.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "SupportedParameters"
+        },
+        "tags": {
+          "description": "Tags associated with the model.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "Tags"
+        },
+        "type": {
+          "description": "Model type (e.g. \"base_model\", \"adapter\").",
+          "type": "string",
+          "x-go-name": "Type"
+        }
+      },
+      "title": "DeployedModelEntry describes a single model available for inference in the project.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
+    },
     "DesiredCount": {
       "properties": {
         "value": {
@@ -12502,6 +12849,34 @@
       "title": "FirewallRuleObject specifies the source or destination of a firewall rule.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "FoundryArchitecture": {
+      "properties": {
+        "instruct_type": {
+          "description": "Instruction tuning type (e.g. \"chat\").",
+          "type": "string",
+          "x-go-name": "InstructType"
+        },
+        "modality": {
+          "description": "Model modality (e.g. \"text\").",
+          "type": "string",
+          "x-go-name": "Modality"
+        },
+        "parameter_count": {
+          "description": "Number of model parameters.",
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "ParameterCount"
+        },
+        "tokenizer": {
+          "description": "Tokenizer identifier.",
+          "type": "string",
+          "x-go-name": "Tokenizer"
+        }
+      },
+      "title": "FoundryArchitecture describes the architecture of a deployed model.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
     },
     "GPUTrackingDatum": {
       "properties": {
@@ -16085,6 +16460,21 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ListModelsResponse": {
+      "properties": {
+        "deployments": {
+          "description": "The models deployed and available to the project.",
+          "items": {
+            "$ref": "#/definitions/DeployedModelEntry"
+          },
+          "type": "array",
+          "x-go-name": "Deployments"
+        }
+      },
+      "title": "ListModelsResponse is the response body for listing deployed models.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
+    },
     "ListOperationsResponseV1Alpha5": {
       "properties": {
         "items": {
@@ -16516,6 +16906,64 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "LoRAAdapterDeployment": {
+      "description": "LoRAAdapterDeployment describes a deployed LoRA adapter — a self-serve fine-tune\nriding on an already-running base model.",
+      "properties": {
+        "cluster_name": {
+          "description": "Name of the cluster the adapter is deployed to.",
+          "type": "string",
+          "x-go-name": "ClusterName"
+        },
+        "created_at": {
+          "description": "RFC 3339 timestamp when the deployment was created.",
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "evolution_uri": {
+          "description": "Evolution artifact URI the adapter weights were fetched from.",
+          "type": "string",
+          "x-go-name": "EvolutionURI"
+        },
+        "id": {
+          "description": "Unique identifier of the LoRA adapter deployment.",
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "last_error": {
+          "description": "Most recent error message, if the deployment failed.",
+          "type": "string",
+          "x-go-name": "LastError"
+        },
+        "parent_model_name": {
+          "description": "Name of the parent base model the adapter is loaded onto.",
+          "type": "string",
+          "x-go-name": "ParentModelName"
+        },
+        "project_id": {
+          "description": "ID of the project that owns the deployment.",
+          "type": "string",
+          "x-go-name": "ProjectID"
+        },
+        "rank": {
+          "description": "LoRA rank of the adapter.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "Rank"
+        },
+        "status": {
+          "description": "Current lifecycle status of the adapter deployment.\nOne of: pending, downloading, ready, failed, deleting.",
+          "type": "string",
+          "x-go-name": "Status"
+        },
+        "updated_at": {
+          "description": "RFC 3339 timestamp when the deployment was last updated.",
+          "type": "string",
+          "x-go-name": "UpdatedAt"
+        }
+      },
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
+    },
     "LoadBalancer": {
       "properties": {
         "algorithm": {
@@ -16704,6 +17152,21 @@
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "LoadLoraRequest": {
+      "properties": {
+        "model_id": {
+          "description": "ID of the fine-tuned model (LoRA adapter) to deploy, as registered in the model registry.",
+          "type": "string",
+          "x-go-name": "ModelID"
+        }
+      },
+      "required": [
+        "model_id"
+      ],
+      "title": "LoadLoraRequest is the body for deploying a LoRA adapter.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
     },
     "LogEntry": {
       "properties": {
@@ -19548,6 +20011,52 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "UpdateModelRequest": {
+      "properties": {
+        "model_alias": {
+          "description": "Customer-facing alias of the model to update.",
+          "type": "string",
+          "x-go-name": "ModelAlias"
+        },
+        "new_hugging_face_model": {
+          "description": "New HuggingFace model to point the alias at.",
+          "type": "string",
+          "x-go-name": "NewHuggingFaceModel"
+        },
+        "region": {
+          "description": "Region in which to perform the update. If omitted, all regions are updated.",
+          "type": "string",
+          "x-go-name": "Region"
+        },
+        "run_candidate_test": {
+          "description": "Whether to run a candidate health-check before switching the source.",
+          "type": "boolean",
+          "x-go-name": "RunCandidateTest"
+        }
+      },
+      "required": [
+        "model_alias",
+        "new_hugging_face_model"
+      ],
+      "title": "UpdateModelRequest is the body for updating a deployed model's HuggingFace source.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
+    },
+    "UpdateModelResponse": {
+      "properties": {
+        "workflows": {
+          "description": "The per-cluster update workflows that were triggered.",
+          "items": {
+            "$ref": "#/definitions/UpdateResponseEntry"
+          },
+          "type": "array",
+          "x-go-name": "Workflows"
+        }
+      },
+      "title": "UpdateModelResponse is the response body for a model source update.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
+    },
     "UpdatePaymentMethodRequest": {
       "description": "Omitted fields are left unchanged.",
       "properties": {
@@ -19589,6 +20098,43 @@
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "UpdateResponseEntry": {
+      "properties": {
+        "cluster_name": {
+          "description": "Name of the cluster the workflow runs on.",
+          "type": "string",
+          "x-go-name": "ClusterName"
+        },
+        "error": {
+          "description": "Error message, if the workflow could not be started.",
+          "type": "string",
+          "x-go-name": "Error"
+        },
+        "region": {
+          "description": "Region of the cluster.",
+          "type": "string",
+          "x-go-name": "Region"
+        },
+        "run_id": {
+          "description": "Temporal run ID.",
+          "type": "string",
+          "x-go-name": "RunID"
+        },
+        "status": {
+          "description": "Status of the triggered workflow.",
+          "type": "string",
+          "x-go-name": "Status"
+        },
+        "workflow_id": {
+          "description": "Temporal workflow ID.",
+          "type": "string",
+          "x-go-name": "WorkflowID"
+        }
+      },
+      "title": "UpdateResponseEntry describes the workflow triggered for a single cluster by an update.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
     },
     "UpdateS3BucketTagsRequest": {
       "properties": {
@@ -21218,6 +21764,33 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/FeatureFlagsGetResponse"
+      }
+    },
+    "foundryDeployedModelsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListModelsResponse"
+      }
+    },
+    "foundryLoraListResponse": {
+      "description": "",
+      "schema": {
+        "items": {
+          "$ref": "#/definitions/LoRAAdapterDeployment"
+        },
+        "type": "array"
+      }
+    },
+    "foundryLoraResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/LoRAAdapterDeployment"
+      }
+    },
+    "foundryUpdateModelResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/UpdateModelResponse"
       }
     },
     "getAutoClusterOperationResponse": {
