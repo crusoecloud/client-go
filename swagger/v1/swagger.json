@@ -18533,7 +18533,8 @@
             "USER_ACCOUNT_AND_ORGANIZATION_MANAGEMENT",
             "IDENTITY_AND_SECURITY",
             "BUDGET_AND_COST_ALERTS",
-            "RESOURCE_HEALTH_ALERTS"
+            "RESOURCE_HEALTH_ALERTS",
+            "MANAGED_INTELLIGENCE"
           ],
           "example": "BUDGET_AND_COST_ALERTS",
           "type": "string",
