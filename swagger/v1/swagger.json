@@ -4040,6 +4040,225 @@
         ]
       }
     },
+    "/projects/{project_id}/foundry/credentials": {
+      "get": {
+        "operationId": "listFoundryCredentials",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryCredentialListResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the credentials in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      },
+      "post": {
+        "operationId": "createFoundryCredential",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "schema": {
+              "$ref": "#/definitions/CreateCredentialRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/foundryCredentialResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Creates a credential in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/credentials/{id}": {
+      "delete": {
+        "operationId": "deleteFoundryCredential",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the credential.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Deletes a credential from the project.",
+        "tags": [
+          "Foundry"
+        ]
+      },
+      "get": {
+        "operationId": "getFoundryCredential",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the credential.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ID"
+          },
+          {
+            "description": "When true, include the secret material in the response.",
+            "in": "query",
+            "name": "reveal",
+            "type": "boolean",
+            "x-go-name": "Reveal"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryCredentialResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns a single credential in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      },
+      "patch": {
+        "operationId": "updateFoundryCredential",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the credential.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ID"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "schema": {
+              "$ref": "#/definitions/UpdateCredentialRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryCredentialResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Updates a credential's description in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
     "/projects/{project_id}/foundry/deployed-models": {
       "get": {
         "operationId": "listFoundryDeployedModels",
@@ -4068,6 +4287,152 @@
           }
         },
         "summary": "Lists the models deployed and available for inference in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/deployed-models/activity": {
+      "get": {
+        "operationId": "getFoundryDeployedModelsActivity",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryActivityResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns the activity feed for the project's deployed models.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/deployed-models/progress": {
+      "get": {
+        "operationId": "getFoundryDeployedModelsProgress",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryProgressResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns deployment progress for the project's deployed models.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/deployed-models/progress/stream": {
+      "get": {
+        "description": "The response is a text/event-stream of progress updates.",
+        "operationId": "streamFoundryDeployedModelsProgress",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryProgressStreamResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Streams deployment progress for the project's deployed models as server-sent events.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/deployed-models/rename": {
+      "post": {
+        "operationId": "renameFoundryDeployedModel",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "schema": {
+              "$ref": "#/definitions/RenameModelRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryRenameModelResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Renames a deployed model's alias.",
         "tags": [
           "Foundry"
         ]
@@ -4279,6 +4644,385 @@
           }
         },
         "summary": "Returns a single LoRA adapter deployment in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/selfserve/deployments": {
+      "get": {
+        "operationId": "listFoundryDeployments",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryDeploymentListResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the self-serve deployments in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      },
+      "post": {
+        "description": "Asynchronous: returns the accepted deployment ID and status.",
+        "operationId": "createFoundryDeployment",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "schema": {
+              "$ref": "#/definitions/CreateDeploymentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "$ref": "#/responses/foundryDeploymentAcceptedResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Creates a self-serve deployment in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/selfserve/deployments/{id}": {
+      "delete": {
+        "operationId": "deleteFoundryDeployment",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the deployment.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ID"
+          }
+        ],
+        "responses": {
+          "202": {
+            "$ref": "#/responses/foundryDeploymentAcceptedResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Deletes a self-serve deployment from the project.",
+        "tags": [
+          "Foundry"
+        ]
+      },
+      "get": {
+        "operationId": "getFoundryDeployment",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the deployment.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryDeploymentDetailResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns a single self-serve deployment in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      },
+      "patch": {
+        "operationId": "updateFoundryDeployment",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the deployment.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ID"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "schema": {
+              "$ref": "#/definitions/UpdateDeploymentRequest"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "$ref": "#/responses/foundryDeploymentAcceptedResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Updates a self-serve deployment (name and/or replica count) in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/selfserve/deployments/{id}/activity": {
+      "get": {
+        "operationId": "getFoundryDeploymentActivity",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the deployment.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryActivityResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns the activity feed for a self-serve deployment.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/selfserve/deployments/{id}/progress": {
+      "get": {
+        "operationId": "getFoundryDeploymentProgress",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the deployment.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryProgressResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns deployment progress for a self-serve deployment.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/selfserve/deployments/{id}/progress/stream": {
+      "get": {
+        "description": "The response is a text/event-stream of progress updates.",
+        "operationId": "streamFoundryDeploymentProgress",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the deployment.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryProgressStreamResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Streams progress for a self-serve deployment as server-sent events.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/selfserve/flavors": {
+      "get": {
+        "operationId": "listFoundryFlavors",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/foundryFlavorsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the self-serve deployment flavors available to the project.",
         "tags": [
           "Foundry"
         ]
@@ -11439,6 +12183,63 @@
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "CreateCredentialRequest": {
+      "properties": {
+        "credentials": {
+          "$ref": "#/definitions/CredentialSecrets"
+        },
+        "description": {
+          "description": "Optional human-readable description.",
+          "type": "string",
+          "x-go-name": "Description"
+        },
+        "name": {
+          "description": "Name of the credential.",
+          "type": "string",
+          "x-go-name": "Name"
+        }
+      },
+      "required": [
+        "name",
+        "credentials"
+      ],
+      "title": "CreateCredentialRequest is the body for creating a credential.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
+    "CreateDeploymentRequest": {
+      "properties": {
+        "deployment_name": {
+          "description": "User-chosen deployment name.",
+          "type": "string",
+          "x-go-name": "DeploymentName"
+        },
+        "fine_tuned_model": {
+          "description": "The fine-tuned model to deploy.",
+          "type": "string",
+          "x-go-name": "FineTunedModel"
+        },
+        "flavor_id": {
+          "description": "ID of the flavor (hardware/model shape) to deploy on.",
+          "type": "string",
+          "x-go-name": "FlavorID"
+        },
+        "replicas": {
+          "description": "Number of replicas to run.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "Replicas"
+        }
+      },
+      "required": [
+        "deployment_name",
+        "fine_tuned_model",
+        "flavor_id"
+      ],
+      "title": "CreateDeploymentRequest is the body for creating a self-serve deployment.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
     "CreateLimitedUsageAPIKeyRequest": {
       "properties": {
         "alias": {
@@ -11702,6 +12503,68 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "CredentialResponse": {
+      "properties": {
+        "created_at": {
+          "description": "RFC 3339 creation timestamp.",
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "credentials": {
+          "$ref": "#/definitions/CredentialSecrets"
+        },
+        "description": {
+          "description": "Human-readable description.",
+          "type": "string",
+          "x-go-name": "Description"
+        },
+        "id": {
+          "description": "Credential ID.",
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "description": "Name of the credential.",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "org_id": {
+          "description": "Owning organization ID.",
+          "type": "string",
+          "x-go-name": "OrgID"
+        },
+        "project_id": {
+          "description": "Owning project ID.",
+          "type": "string",
+          "x-go-name": "ProjectID"
+        },
+        "updated_at": {
+          "description": "RFC 3339 last-update timestamp.",
+          "type": "string",
+          "x-go-name": "UpdatedAt"
+        },
+        "vendor": {
+          "description": "Vendor the credential is for (e.g. \"huggingface\").",
+          "type": "string",
+          "x-go-name": "Vendor"
+        }
+      },
+      "title": "CredentialResponse describes a stored credential.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
+    "CredentialSecrets": {
+      "properties": {
+        "token": {
+          "description": "Access token (e.g. a HuggingFace token). Write-only; omitted unless explicitly revealed.",
+          "type": "string",
+          "x-go-name": "Token"
+        }
+      },
+      "title": "CredentialSecrets holds the secret material for a credential.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
     "CredentialsResponse": {
       "properties": {
         "credentials": {
@@ -11957,17 +12820,6 @@
           "type": "integer",
           "x-go-name": "ContextLength"
         },
-        "created": {
-          "description": "Unix timestamp when the model was created.",
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "Created"
-        },
-        "deployed": {
-          "description": "Whether the model is currently deployed and serving.",
-          "type": "boolean",
-          "x-go-name": "Deployed"
-        },
         "description": {
           "description": "Human-readable description of the model.",
           "type": "string",
@@ -11992,6 +12844,11 @@
           "description": "Whether usage of the model is billed by token.",
           "type": "boolean",
           "x-go-name": "IsBilledByToken"
+        },
+        "is_single_replica": {
+          "description": "Whether the model runs as a single replica.",
+          "type": "boolean",
+          "x-go-name": "IsSingleReplica"
         },
         "model_name": {
           "description": "Underlying (served) model name.",
@@ -12045,7 +12902,47 @@
           "x-go-name": "Type"
         }
       },
-      "title": "DeployedModelEntry describes a single model available for inference in the project.",
+      "title": "DeployedModelEntry describes a model available for inference in the project.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
+    "DeploymentAcceptedResponse": {
+      "description": "DeploymentAcceptedResponse is returned when a self-serve deployment\ncreate/update/delete is accepted for asynchronous processing.",
+      "properties": {
+        "id": {
+          "description": "ID of the affected deployment.",
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "status": {
+          "description": "Resulting status.",
+          "type": "string",
+          "x-go-name": "Status"
+        }
+      },
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
+    "DeploymentProgress": {
+      "properties": {
+        "message": {
+          "description": "Human-readable progress message.",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "percent": {
+          "description": "Completion percentage (0-100).",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "Percent"
+        },
+        "updated_at": {
+          "description": "RFC 3339 timestamp of the last progress update.",
+          "type": "string",
+          "x-go-name": "UpdatedAt"
+        }
+      },
+      "title": "DeploymentProgress describes the progress of a deployment operation.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
@@ -16044,6 +16941,26 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ListActivityResponse": {
+      "properties": {
+        "events": {
+          "description": "Activity events, most recent first.",
+          "items": {
+            "$ref": "#/definitions/SelfServeActivityEvent"
+          },
+          "type": "array",
+          "x-go-name": "Events"
+        },
+        "next_cursor": {
+          "description": "Cursor for the next page of events, if any.",
+          "type": "string",
+          "x-go-name": "NextCursor"
+        }
+      },
+      "title": "ListActivityResponse is the response body for a deployment activity feed.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
     "ListCapacitiesResponseV1": {
       "properties": {
         "items": {
@@ -16096,6 +17013,21 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ListCredentialsResponse": {
+      "properties": {
+        "credentials": {
+          "description": "The credentials in the project.",
+          "items": {
+            "$ref": "#/definitions/CredentialResponse"
+          },
+          "type": "array",
+          "x-go-name": "Credentials"
+        }
+      },
+      "title": "ListCredentialsResponse is the response body for listing credentials.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
     "ListCreditBurnEventsResponse": {
       "properties": {
         "burn_events": {
@@ -16127,6 +17059,21 @@
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "ListDeploymentsResponse": {
+      "properties": {
+        "deployments": {
+          "description": "The self-serve deployments in the project.",
+          "items": {
+            "$ref": "#/definitions/SelfServeDeploymentSummary"
+          },
+          "type": "array",
+          "x-go-name": "Deployments"
+        }
+      },
+      "title": "ListDeploymentsResponse is the response body for listing self-serve deployments.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "ListDiskSnapshotsResponseV1": {
       "properties": {
@@ -16193,6 +17140,21 @@
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "ListFlavorsResponse": {
+      "properties": {
+        "flavors": {
+          "description": "The available self-serve flavors.",
+          "items": {
+            "$ref": "#/definitions/SelfServeFlavor"
+          },
+          "type": "array",
+          "x-go-name": "Flavors"
+        }
+      },
+      "title": "ListFlavorsResponse is the response body for listing self-serve flavors.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "ListIBNetworksResponseV1": {
       "properties": {
@@ -16907,7 +17869,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LoRAAdapterDeployment": {
-      "description": "LoRAAdapterDeployment describes a deployed LoRA adapter — a self-serve fine-tune\nriding on an already-running base model.",
+      "description": "LoRAAdapterDeployment describes a deployed LoRA adapter — a self-serve\nfine-tune riding on an already-running base model.",
       "properties": {
         "cluster_name": {
           "description": "Name of the cluster the adapter is deployed to.",
@@ -16919,10 +17881,20 @@
           "type": "string",
           "x-go-name": "CreatedAt"
         },
+        "endpoint_alias": {
+          "description": "Serving alias for the adapter endpoint.",
+          "type": "string",
+          "x-go-name": "EndpointAlias"
+        },
         "evolution_uri": {
           "description": "Evolution artifact URI the adapter weights were fetched from.",
           "type": "string",
           "x-go-name": "EvolutionURI"
+        },
+        "finetuning_job_id": {
+          "description": "ID of the fine-tuning job that produced the adapter, if any.",
+          "type": "string",
+          "x-go-name": "FinetuningJobID"
         },
         "id": {
           "description": "Unique identifier of the LoRA adapter deployment.",
@@ -16933,6 +17905,16 @@
           "description": "Most recent error message, if the deployment failed.",
           "type": "string",
           "x-go-name": "LastError"
+        },
+        "loader_service": {
+          "description": "The loader service handling the adapter fetch/load.",
+          "type": "string",
+          "x-go-name": "LoaderService"
+        },
+        "model_id": {
+          "description": "The registry model ID of the adapter.",
+          "type": "string",
+          "x-go-name": "ModelID"
         },
         "parent_model_name": {
           "description": "Name of the parent base model the adapter is loaded onto.",
@@ -16950,8 +17932,13 @@
           "type": "integer",
           "x-go-name": "Rank"
         },
+        "serving_endpoint_name": {
+          "description": "Internal serving endpoint name.",
+          "type": "string",
+          "x-go-name": "ServingEndpointName"
+        },
         "status": {
-          "description": "Current lifecycle status of the adapter deployment.\nOne of: pending, downloading, ready, failed, deleting.",
+          "description": "Current lifecycle status of the adapter deployment.\nOne of: pending, downloading, ready, failed, deleting, expired.",
           "type": "string",
           "x-go-name": "Status"
         },
@@ -18602,6 +19589,44 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "RenameModelRequest": {
+      "properties": {
+        "model_alias": {
+          "description": "Current alias of the model.",
+          "type": "string",
+          "x-go-name": "ModelAlias"
+        },
+        "new_alias": {
+          "description": "New alias for the model.",
+          "type": "string",
+          "x-go-name": "NewAlias"
+        }
+      },
+      "required": [
+        "model_alias",
+        "new_alias"
+      ],
+      "title": "RenameModelRequest is the body for renaming a deployed model's alias.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
+    "RenameModelResponse": {
+      "properties": {
+        "endpoint_id": {
+          "description": "The endpoint ID that was renamed.",
+          "type": "string",
+          "x-go-name": "EndpointID"
+        },
+        "model_alias": {
+          "description": "The resulting model alias.",
+          "type": "string",
+          "x-go-name": "ModelAlias"
+        }
+      },
+      "title": "RenameModelResponse is the response body for a model rename.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
     "Repository": {
       "properties": {
         "created_at": {
@@ -19359,6 +20384,258 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "SelfServeActivityEvent": {
+      "properties": {
+        "event_type": {
+          "description": "Event type identifier.",
+          "type": "string",
+          "x-go-name": "EventType"
+        },
+        "message": {
+          "description": "Human-readable event message.",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "timestamp": {
+          "description": "RFC 3339 timestamp of the event.",
+          "type": "string",
+          "x-go-name": "Timestamp"
+        },
+        "title": {
+          "description": "Short event title.",
+          "type": "string",
+          "x-go-name": "Title"
+        },
+        "updated_by": {
+          "description": "Identity that triggered the event.",
+          "type": "string",
+          "x-go-name": "UpdatedBy"
+        }
+      },
+      "title": "SelfServeActivityEvent is a single activity/audit event for a deployment.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
+    "SelfServeDeploymentDetail": {
+      "properties": {
+        "available_replicas": {
+          "description": "Currently available replicas.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "AvailableReplicas"
+        },
+        "context_length": {
+          "description": "Context length of the model.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "ContextLength"
+        },
+        "created_at": {
+          "description": "RFC 3339 creation timestamp.",
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "created_by": {
+          "description": "Identity that created the deployment.",
+          "type": "string",
+          "x-go-name": "CreatedBy"
+        },
+        "deployment_name": {
+          "description": "User-chosen deployment name.",
+          "type": "string",
+          "x-go-name": "DeploymentName"
+        },
+        "fine_tuned_model": {
+          "description": "The fine-tuned model being served.",
+          "type": "string",
+          "x-go-name": "FineTunedModel"
+        },
+        "flavor_type": {
+          "description": "Flavor type in use.",
+          "type": "string",
+          "x-go-name": "FlavorType"
+        },
+        "gpu_type": {
+          "description": "GPU type in use.",
+          "type": "string",
+          "x-go-name": "GpuType"
+        },
+        "gpus_per_replica": {
+          "description": "GPUs per replica.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "GpusPerReplica"
+        },
+        "hourly_cost": {
+          "description": "Hourly cost, as a decimal string.",
+          "type": "string",
+          "x-go-name": "HourlyCost"
+        },
+        "id": {
+          "description": "Deployment ID.",
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "model": {
+          "description": "The underlying model.",
+          "type": "string",
+          "x-go-name": "Model"
+        },
+        "provider": {
+          "description": "Serving provider.",
+          "type": "string",
+          "x-go-name": "Provider"
+        },
+        "quantization": {
+          "description": "Quantization applied, if any.",
+          "type": "string",
+          "x-go-name": "Quantization"
+        },
+        "status": {
+          "description": "Deployment status.",
+          "type": "string",
+          "x-go-name": "Status"
+        },
+        "target_replicas": {
+          "description": "Target replica count.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "TargetReplicas"
+        }
+      },
+      "title": "SelfServeDeploymentDetail is the detailed view of a self-serve deployment.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
+    "SelfServeDeploymentSummary": {
+      "properties": {
+        "available_replicas": {
+          "description": "Currently available replicas.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "AvailableReplicas"
+        },
+        "context_length": {
+          "description": "Context length of the model.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "ContextLength"
+        },
+        "created_at": {
+          "description": "RFC 3339 creation timestamp.",
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "created_by": {
+          "description": "Identity that created the deployment.",
+          "type": "string",
+          "x-go-name": "CreatedBy"
+        },
+        "deployment_name": {
+          "description": "User-chosen deployment name.",
+          "type": "string",
+          "x-go-name": "DeploymentName"
+        },
+        "fine_tuned_model": {
+          "description": "The fine-tuned model being served.",
+          "type": "string",
+          "x-go-name": "FineTunedModel"
+        },
+        "gpu_type": {
+          "description": "GPU type in use.",
+          "type": "string",
+          "x-go-name": "GpuType"
+        },
+        "gpus_per_replica": {
+          "description": "GPUs per replica.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "GpusPerReplica"
+        },
+        "id": {
+          "description": "Deployment ID.",
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "model": {
+          "description": "The underlying model.",
+          "type": "string",
+          "x-go-name": "Model"
+        },
+        "quantization": {
+          "description": "Quantization applied, if any.",
+          "type": "string",
+          "x-go-name": "Quantization"
+        },
+        "status": {
+          "description": "Deployment status.",
+          "type": "string",
+          "x-go-name": "Status"
+        },
+        "target_replicas": {
+          "description": "Target replica count.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "TargetReplicas"
+        }
+      },
+      "title": "SelfServeDeploymentSummary is a summary view of a self-serve deployment.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
+    "SelfServeFlavor": {
+      "properties": {
+        "flavor_type": {
+          "description": "Flavor type identifier.",
+          "type": "string",
+          "x-go-name": "FlavorType"
+        },
+        "gpu_type": {
+          "description": "GPU type used by this flavor.",
+          "type": "string",
+          "x-go-name": "GpuType"
+        },
+        "gpus_per_instance": {
+          "description": "GPUs per instance.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "GpusPerInstance"
+        },
+        "id": {
+          "description": "Flavor ID.",
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "lora_suitable": {
+          "description": "Whether the flavor is suitable for LoRA adapters.",
+          "type": "boolean",
+          "x-go-name": "LoraSuitable"
+        },
+        "model_name": {
+          "description": "Model this flavor serves.",
+          "type": "string",
+          "x-go-name": "ModelName"
+        },
+        "price_per_hour": {
+          "description": "Hourly price, as a decimal string.",
+          "type": "string",
+          "x-go-name": "PricePerHour"
+        },
+        "provider": {
+          "description": "Provider serving this flavor.",
+          "type": "string",
+          "x-go-name": "Provider"
+        },
+        "quantization": {
+          "description": "Quantization applied, if any.",
+          "type": "string",
+          "x-go-name": "Quantization"
+        }
+      },
+      "title": "SelfServeFlavor describes a hardware/model flavor available for self-serve deployment.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
     "SlurmCluster": {
       "allOf": [
         {
@@ -20010,6 +21287,36 @@
       "title": "UpdateAutoClustersConfigRequest represents the request body for updating cluster config.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "UpdateCredentialRequest": {
+      "properties": {
+        "description": {
+          "description": "Updated description.",
+          "type": "string",
+          "x-go-name": "Description"
+        }
+      },
+      "title": "UpdateCredentialRequest is the body for updating a credential.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
+    },
+    "UpdateDeploymentRequest": {
+      "properties": {
+        "deployment_name": {
+          "description": "Updated deployment name.",
+          "type": "string",
+          "x-go-name": "DeploymentName"
+        },
+        "replicas": {
+          "description": "Updated replica count.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "Replicas"
+        }
+      },
+      "title": "UpdateDeploymentRequest is the body for updating a self-serve deployment.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "UpdateModelRequest": {
       "properties": {
@@ -21766,10 +23073,52 @@
         "$ref": "#/definitions/FeatureFlagsGetResponse"
       }
     },
+    "foundryActivityResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListActivityResponse"
+      }
+    },
+    "foundryCredentialListResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListCredentialsResponse"
+      }
+    },
+    "foundryCredentialResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/CredentialResponse"
+      }
+    },
     "foundryDeployedModelsResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListModelsResponse"
+      }
+    },
+    "foundryDeploymentAcceptedResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/DeploymentAcceptedResponse"
+      }
+    },
+    "foundryDeploymentDetailResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/SelfServeDeploymentDetail"
+      }
+    },
+    "foundryDeploymentListResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListDeploymentsResponse"
+      }
+    },
+    "foundryFlavorsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListFlavorsResponse"
       }
     },
     "foundryLoraListResponse": {
@@ -21785,6 +23134,21 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/LoRAAdapterDeployment"
+      }
+    },
+    "foundryProgressResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/DeploymentProgress"
+      }
+    },
+    "foundryProgressStreamResponse": {
+      "description": ""
+    },
+    "foundryRenameModelResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/RenameModelResponse"
       }
     },
     "foundryUpdateModelResponse": {

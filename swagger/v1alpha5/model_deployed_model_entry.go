@@ -12,10 +12,6 @@ type DeployedModelEntry struct {
 	Architecture *FoundryArchitecture `json:"architecture,omitempty"`
 	// Maximum context length supported by the model.
 	ContextLength int32 `json:"context_length,omitempty"`
-	// Unix timestamp when the model was created.
-	Created int64 `json:"created,omitempty"`
-	// Whether the model is currently deployed and serving.
-	Deployed bool `json:"deployed,omitempty"`
 	// Human-readable description of the model.
 	Description string `json:"description,omitempty"`
 	// URL of the model icon.
@@ -26,6 +22,8 @@ type DeployedModelEntry struct {
 	IsAvailableToRollingDeployment bool `json:"is_available_to_rolling_deployment,omitempty"`
 	// Whether usage of the model is billed by token.
 	IsBilledByToken bool `json:"is_billed_by_token,omitempty"`
+	// Whether the model runs as a single replica.
+	IsSingleReplica bool `json:"is_single_replica,omitempty"`
 	// Underlying (served) model name.
 	ModelName string `json:"model_name,omitempty"`
 	// Display name of the model.

@@ -14,19 +14,29 @@ type LoRaAdapterDeployment struct {
 	ClusterName string `json:"cluster_name,omitempty"`
 	// RFC 3339 timestamp when the deployment was created.
 	CreatedAt string `json:"created_at,omitempty"`
+	// Serving alias for the adapter endpoint.
+	EndpointAlias string `json:"endpoint_alias,omitempty"`
 	// Evolution artifact URI the adapter weights were fetched from.
 	EvolutionUri string `json:"evolution_uri,omitempty"`
+	// ID of the fine-tuning job that produced the adapter, if any.
+	FinetuningJobId string `json:"finetuning_job_id,omitempty"`
 	// Unique identifier of the LoRA adapter deployment.
 	Id string `json:"id,omitempty"`
 	// Most recent error message, if the deployment failed.
 	LastError string `json:"last_error,omitempty"`
+	// The loader service handling the adapter fetch/load.
+	LoaderService string `json:"loader_service,omitempty"`
+	// The registry model ID of the adapter.
+	ModelId string `json:"model_id,omitempty"`
 	// Name of the parent base model the adapter is loaded onto.
 	ParentModelName string `json:"parent_model_name,omitempty"`
 	// ID of the project that owns the deployment.
 	ProjectId string `json:"project_id,omitempty"`
 	// LoRA rank of the adapter.
 	Rank int32 `json:"rank,omitempty"`
-	// Current lifecycle status of the adapter deployment. One of: pending, downloading, ready, failed, deleting.
+	// Internal serving endpoint name.
+	ServingEndpointName string `json:"serving_endpoint_name,omitempty"`
+	// Current lifecycle status of the adapter deployment. One of: pending, downloading, ready, failed, deleting, expired.
 	Status string `json:"status,omitempty"`
 	// RFC 3339 timestamp when the deployment was last updated.
 	UpdatedAt string `json:"updated_at,omitempty"`
