@@ -22485,6 +22485,20 @@
       "description": "DeleteSSHKeyResponse is the response for deleting an SSH key.\n\nSuccessful delete calls should be empty",
       "type": "object"
     },
+    "customerDeleteUserCredentialResponse": {
+      "description": "DeleteUserCredentialResponse is the response containing the user's remaining identity credentials.",
+      "properties": {
+        "credentials_map": {
+          "additionalProperties": {
+            "$ref": "#/definitions/customerIdentityCredential"
+          },
+          "readOnly": true,
+          "title": "credentials_map is the user's remaining credentials keyed by credential type",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "customerGenerateNameResponse": {
       "description": "GenerateNameResponse is the response containing a suggested project name.",
       "properties": {
@@ -22571,6 +22585,28 @@
           "readOnly": true,
           "title": "items is the list of SSH keys",
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "customerListUserCredentialsResponse": {
+      "description": "ListUserCredentialsResponse is the response containing a user's identity credentials.",
+      "properties": {
+        "credentials": {
+          "description": "credentials is the user's credential types. Deprecated: use credentials_map instead.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "credentials_map": {
+          "additionalProperties": {
+            "$ref": "#/definitions/customerIdentityCredential"
+          },
+          "readOnly": true,
+          "title": "credentials_map is the user's credentials keyed by credential type",
+          "type": "object"
         }
       },
       "type": "object"
