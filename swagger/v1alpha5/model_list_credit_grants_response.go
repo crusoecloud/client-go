@@ -10,4 +10,8 @@ package swagger
 
 type ListCreditGrantsResponse struct {
 	CreditGrants []CreditGrant `json:"credit_grants"`
+	// Base64 encoded token representing the next page. Empty if on the last page.
+	NextPageToken string `json:"next_page_token,omitempty"`
+	// Base64 encoded token representing the previous page. Empty if on the first page.
+	PrevPageToken string `json:"prev_page_token,omitempty"`
 }

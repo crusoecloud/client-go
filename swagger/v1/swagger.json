@@ -17036,6 +17036,18 @@
           },
           "type": "array",
           "x-go-name": "BurnEvents"
+        },
+        "next_page_token": {
+          "description": "Base64 encoded token representing the next page. Empty if on the last page.",
+          "example": "bXktbGFzdC1ub2Rl",
+          "type": "string",
+          "x-go-name": "NextPageToken"
+        },
+        "prev_page_token": {
+          "description": "Base64 encoded token representing the previous page. Empty if on the first page.",
+          "example": "bXktZmlyc3Qtbm9kZQ",
+          "type": "string",
+          "x-go-name": "PrevPageToken"
         }
       },
       "required": [
@@ -17052,6 +17064,18 @@
           },
           "type": "array",
           "x-go-name": "CreditGrants"
+        },
+        "next_page_token": {
+          "description": "Base64 encoded token representing the next page. Empty if on the last page.",
+          "example": "bXktbGFzdC1ub2Rl",
+          "type": "string",
+          "x-go-name": "NextPageToken"
+        },
+        "prev_page_token": {
+          "description": "Base64 encoded token representing the previous page. Empty if on the first page.",
+          "example": "bXktZmlyc3Qtbm9kZQ",
+          "type": "string",
+          "x-go-name": "PrevPageToken"
         }
       },
       "required": [
