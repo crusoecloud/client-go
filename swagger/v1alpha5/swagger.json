@@ -211,6 +211,15 @@
       "get": {
         "description": "A successful response from this resource will contain a map of\nall feature flags and the value assigned to each of them for the user.",
         "operationId": "getFeatureFlags",
+        "parameters": [
+          {
+            "description": "project_id optionally scopes flag evaluation to the given project. The\ncaller must be a member of the project. When set, flags are evaluated with\nthe project in the targeting context in addition to the user and org.",
+            "in": "query",
+            "name": "project_id",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Feature flags retrieved successfully",
@@ -1588,6 +1597,110 @@
         "summary": "Retrieve data about an organizations recent Non-Reservation costs.",
         "tags": [
           "Billing"
+        ]
+      }
+    },
+    "/organizations/{organization_id}/mfa": {
+      "get": {
+        "operationId": "getMFA",
+        "parameters": [
+          {
+            "description": "organization_id is the ID of the organization",
+            "in": "path",
+            "name": "organization_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MFA methods retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerGetOrganizationMFAResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {}
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Get enabled MFA methods for the specified organization.",
+        "tags": [
+          "MFA"
+        ]
+      },
+      "patch": {
+        "operationId": "updateMFA",
+        "parameters": [
+          {
+            "description": "organization_id is the ID of the organization",
+            "in": "path",
+            "name": "organization_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/OrganizationsMFAServiceUpdateOrganizationMFABody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MFA methods updated successfully",
+            "schema": {
+              "$ref": "#/definitions/customerUpdateOrganizationMFAResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {}
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Update required MFA methods for the specified organization.",
+        "tags": [
+          "MFA"
         ]
       }
     },
@@ -19042,6 +19155,23 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "OrganizationsMFAServiceUpdateOrganizationMFABody": {
+      "description": "UpdateOrganizationMFARequest is the request for setting an organization's required MFA methods.",
+      "properties": {
+        "intended_methods": {
+          "example": [
+            "totp",
+            "webauthn"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "title": "intended_methods is the full set of MFA methods the organization should require (one of: totp, webauthn)",
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "PartialHostChannelAdapter": {
       "properties": {
         "ib_partition_id": {
@@ -22534,6 +22664,20 @@
       },
       "type": "object"
     },
+    "customerGetOrganizationMFAResponse": {
+      "description": "GetOrganizationMFAResponse is the response containing an organization's required MFA methods.",
+      "properties": {
+        "mfa_methods": {
+          "items": {
+            "$ref": "#/definitions/customerOrganizationMFA",
+            "type": "object"
+          },
+          "title": "mfa_methods is the set of MFA methods currently required by the organization",
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "customerIdentityCredential": {
       "description": "IdentityCredential describes a single credential registered for a user.",
       "properties": {
@@ -22631,6 +22775,24 @@
           "readOnly": true,
           "title": "credentials_map is the user's credentials keyed by credential type",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "customerOrganizationMFA": {
+      "description": "OrganizationMFA describes a single MFA method required by an organization.",
+      "properties": {
+        "created_at": {
+          "format": "date-time",
+          "readOnly": true,
+          "title": "created_at is when this MFA method was required by the organization",
+          "type": "string"
+        },
+        "method": {
+          "example": "totp",
+          "readOnly": true,
+          "title": "method is the required MFA method (one of: totp, webauthn)",
+          "type": "string"
         }
       },
       "type": "object"
@@ -22842,6 +23004,10 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "customerUpdateOrganizationMFAResponse": {
+      "description": "UpdateOrganizationMFAResponse is the response for setting an organization's required MFA methods.\n\nSuccessful update calls return an empty body",
       "type": "object"
     },
     "customerUser": {
@@ -24276,6 +24442,9 @@
   "tags": [
     {
       "name": "FeatureFlagsService"
+    },
+    {
+      "name": "OrganizationsMFAService"
     },
     {
       "name": "ProjectsService"

@@ -108,6 +108,8 @@ type APIClient struct {
 
 	LocationsApi *LocationsApiService
 
+	MFAApi *MFAApiService
+
 	NVLinkDomainsApi *NVLinkDomainsApiService
 
 	ObservabilityApi *ObservabilityApiService
@@ -213,6 +215,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LoadBalancerOperationsApi = (*LoadBalancerOperationsApiService)(&c.common)
 	c.LoadBalancersApi = (*LoadBalancersApiService)(&c.common)
 	c.LocationsApi = (*LocationsApiService)(&c.common)
+	c.MFAApi = (*MFAApiService)(&c.common)
 	c.NVLinkDomainsApi = (*NVLinkDomainsApiService)(&c.common)
 	c.ObservabilityApi = (*ObservabilityApiService)(&c.common)
 	c.ProjectsApi = (*ProjectsApiService)(&c.common)

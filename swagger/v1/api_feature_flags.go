@@ -14,6 +14,8 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -26,11 +28,17 @@ type FeatureFlagsApiService service
 /*
 FeatureFlagsApiService Get feature flags for the currently logged in user.
 A successful response from this resource will contain a map of all feature flags and the value assigned to each of them for the user.
-  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param optional nil or *FeatureFlagsApiGetFeatureFlagsOpts - Optional Parameters:
+     * @param "ProjectId" (optional.String) -  project_id optionally scopes flag evaluation to the given project. The caller must be a member of the project. When set, flags are evaluated with the project in the targeting context in addition to the user and org.
 @return CustomerListFeatureFlagsResponse
 */
-func (a *FeatureFlagsApiService) GetFeatureFlags(ctx context.Context) (CustomerListFeatureFlagsResponse, *http.Response, error) {
+
+type FeatureFlagsApiGetFeatureFlagsOpts struct {
+	ProjectId optional.String
+}
+
+func (a *FeatureFlagsApiService) GetFeatureFlags(ctx context.Context, localVarOptionals *FeatureFlagsApiGetFeatureFlagsOpts) (CustomerListFeatureFlagsResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Get")
 		localVarPostBody    interface{}
@@ -46,6 +54,9 @@ func (a *FeatureFlagsApiService) GetFeatureFlags(ctx context.Context) (CustomerL
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.ProjectId.IsSet() {
+		localVarQueryParams.Add("project_id", parameterToString(localVarOptionals.ProjectId.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
