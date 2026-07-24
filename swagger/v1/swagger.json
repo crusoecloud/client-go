@@ -13070,6 +13070,21 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "GetS3BucketsCountResponse": {
+      "description": "This is the REST-friendly model for the `GetS3BucketCountResponse` proto.",
+      "properties": {
+        "bucket_count": {
+          "description": "Number of S3 buckets in the project. May be absent when the count is\nzero (proto3 marshalling omits zero-valued scalars), so consumers\nshould treat a missing field as 0.",
+          "example": 3,
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "BucketCount"
+        }
+      },
+      "title": "GetS3BucketsCountResponse is the response type for GET requests to the S3 buckets count endpoint.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "HealthCheckOptions": {
       "properties": {
         "failure_count": {
@@ -21191,7 +21206,10 @@
       }
     },
     "getS3BucketsCountResponse": {
-      "description": ""
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetS3BucketsCountResponse"
+      }
     },
     "getS3BucketsQuotaResponse": {
       "description": "",
