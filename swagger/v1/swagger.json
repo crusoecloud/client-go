@@ -19681,6 +19681,31 @@
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/auth-gateway/pkg/authmodels"
     },
+    "UsersSSOServiceSetUsersSSOEnforcementBody": {
+      "description": "SetUsersSSOEnforcementRequest is the request for setting the SSO enforcement level of a set of users.",
+      "properties": {
+        "enforcement": {
+          "description": "SSO enforcement level to apply to the users. One of: required, none.",
+          "example": "required",
+          "type": "string"
+        },
+        "user_ids": {
+          "example": [
+            "d1e3a8c1-7d2e-4c5b-9f9a-2f5b3e9c1a44"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "title": "user_ids is the set of IDs of the users to update",
+          "type": "array"
+        }
+      },
+      "required": [
+        "user_ids",
+        "enforcement"
+      ],
+      "type": "object"
+    },
     "UsersServiceUpdateUserBody": {
       "description": "UpdateUserRequest is the request for updating an existing user.",
       "properties": {
@@ -20626,6 +20651,10 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "customerSetUsersSSOEnforcementResponse": {
+      "description": "SetUsersSSOEnforcementResponse is the response for setting the SSO enforcement level of a set of users.\n\nSuccessful update calls return an empty body",
       "type": "object"
     },
     "customerUpdateOrganizationMFAResponse": {
@@ -21757,6 +21786,9 @@
     },
     {
       "name": "UsageService"
+    },
+    {
+      "name": "UsersSSOService"
     },
     {
       "name": "UsersService"
