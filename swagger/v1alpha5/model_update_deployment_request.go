@@ -11,6 +11,10 @@ package swagger
 type UpdateDeploymentRequest struct {
 	// Updated deployment name.
 	DeploymentName string `json:"deployment_name,omitempty"`
+	// Fine-tuned model (checkpoint) to switch the deployment to. Rolls the deployment onto the new checkpoint of the same base model.
+	FineTunedModel string `json:"fine_tuned_model,omitempty"`
 	// Updated replica count.
 	Replicas int32 `json:"replicas,omitempty"`
+	// Whether to roll out the change without downtime (rolling update) instead of recreating the deployment.
+	RollingUpdate bool `json:"rolling_update,omitempty"`
 }

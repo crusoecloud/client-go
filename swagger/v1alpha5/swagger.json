@@ -21307,11 +21307,21 @@
           "type": "string",
           "x-go-name": "DeploymentName"
         },
+        "fine_tuned_model": {
+          "description": "Fine-tuned model (checkpoint) to switch the deployment to. Rolls the\ndeployment onto the new checkpoint of the same base model.",
+          "type": "string",
+          "x-go-name": "FineTunedModel"
+        },
         "replicas": {
           "description": "Updated replica count.",
           "format": "int32",
           "type": "integer",
           "x-go-name": "Replicas"
+        },
+        "rolling_update": {
+          "description": "Whether to roll out the change without downtime (rolling update) instead\nof recreating the deployment.",
+          "type": "boolean",
+          "x-go-name": "RollingUpdate"
         }
       },
       "title": "UpdateDeploymentRequest is the body for updating a self-serve deployment.",
