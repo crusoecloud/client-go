@@ -3481,23 +3481,42 @@
         "operationId": "listInstanceTemplates",
         "parameters": [
           {
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "description": "project_id is the ID of the project to list instance templates in",
             "in": "path",
             "name": "project_id",
+            "pattern": "[^/]+",
             "required": true,
-            "type": "string",
-            "x-go-name": "ProjectID"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/listInstanceTemplatesResponse"
+            "description": "Instance templates retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerListInstanceTemplatesResponse"
+            }
           },
           "401": {
-            "$ref": "#/responses/authError"
+            "description": "Error Authentication Failed",
+            "schema": {}
+          },
+          "403": {
+            "description": "Error Permissions",
+            "schema": {}
+          },
+          "404": {
+            "description": "Error Not Found",
+            "schema": {}
           },
           "500": {
-            "$ref": "#/responses/serverError"
+            "description": "Error Internal Server",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
           }
         },
         "summary": "Lists all instance templates in the project and returns their details.",
@@ -3509,34 +3528,54 @@
         "operationId": "createInstanceTemplate",
         "parameters": [
           {
-            "in": "body",
-            "name": "Body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/InstanceTemplatePostRequestV1Alpha5"
-            }
-          },
-          {
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "description": "project_id is the ID of the project to create the instance template in",
             "in": "path",
             "name": "project_id",
+            "pattern": "[^/]+",
             "required": true,
-            "type": "string",
-            "x-go-name": "ProjectID"
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/InstanceTemplatesServiceCreateInstanceTemplateBody"
+            }
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/createInstanceTemplateResponse"
+            "description": "Instance template created successfully",
+            "schema": {
+              "$ref": "#/definitions/customerInstanceTemplate"
+            }
           },
           "400": {
-            "$ref": "#/responses/badReqError"
+            "description": "Error Bad Request",
+            "schema": {}
           },
           "401": {
-            "$ref": "#/responses/authError"
+            "description": "Error Authentication Failed",
+            "schema": {}
+          },
+          "402": {
+            "description": "Error Payment Required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Error Permissions",
+            "schema": {}
           },
           "500": {
-            "$ref": "#/responses/serverError"
+            "description": "Error Internal Server",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
           }
         },
         "summary": "Creates an instance template in the project and returns the created instance template.",
@@ -3550,38 +3589,54 @@
         "operationId": "deleteInstanceTemplate",
         "parameters": [
           {
-            "description": "ID of the instance template.",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "in": "path",
-            "name": "instance_template_id",
-            "required": true,
-            "type": "string",
-            "x-go-name": "InstanceTemplateID"
-          },
-          {
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "description": "project_id is the ID of the project the instance template belongs to",
             "in": "path",
             "name": "project_id",
+            "pattern": "[^/]+",
             "required": true,
-            "type": "string",
-            "x-go-name": "ProjectID"
+            "type": "string"
+          },
+          {
+            "description": "instance_template_id is the ID of the instance template to delete",
+            "in": "path",
+            "name": "instance_template_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/emptyResponse"
+            "description": "Empty Response",
+            "schema": {
+              "$ref": "#/definitions/customerDeleteInstanceTemplateResponse"
+            }
           },
           "400": {
-            "$ref": "#/responses/badReqError"
+            "description": "Error Bad Request",
+            "schema": {}
           },
           "401": {
-            "$ref": "#/responses/authError"
+            "description": "Error Authentication Failed",
+            "schema": {}
           },
           "403": {
-            "$ref": "#/responses/permissionsError"
+            "description": "Error Permissions",
+            "schema": {}
+          },
+          "404": {
+            "description": "Error Not Found",
+            "schema": {}
           },
           "500": {
-            "$ref": "#/responses/serverError"
+            "description": "Error Internal Server",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
           }
         },
         "summary": "Deletes an instance template from the project.",
@@ -3593,38 +3648,54 @@
         "operationId": "getInstanceTemplate",
         "parameters": [
           {
-            "description": "ID of the instance template.",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "in": "path",
-            "name": "instance_template_id",
-            "required": true,
-            "type": "string",
-            "x-go-name": "InstanceTemplateID"
-          },
-          {
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "description": "project_id is the ID of the project the instance template belongs to",
             "in": "path",
             "name": "project_id",
+            "pattern": "[^/]+",
             "required": true,
-            "type": "string",
-            "x-go-name": "ProjectID"
+            "type": "string"
+          },
+          {
+            "description": "instance_template_id is the ID of the instance template to fetch",
+            "in": "path",
+            "name": "instance_template_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/getInstanceTemplateResponse"
+            "description": "Instance template retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerInstanceTemplate"
+            }
           },
           "400": {
-            "$ref": "#/responses/badReqError"
+            "description": "Error Bad Request",
+            "schema": {}
           },
           "401": {
-            "$ref": "#/responses/authError"
+            "description": "Error Authentication Failed",
+            "schema": {}
+          },
+          "403": {
+            "description": "Error Permissions",
+            "schema": {}
           },
           "404": {
-            "$ref": "#/responses/notFoundError"
+            "description": "Error Not Found",
+            "schema": {}
           },
           "500": {
-            "$ref": "#/responses/serverError"
+            "description": "Error Internal Server",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
           }
         },
         "summary": "Returns details for a single instance template in the project.",
@@ -14039,6 +14110,105 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "InstanceTemplatesServiceCreateInstanceTemplateBody": {
+      "description": "CreateInstanceTemplateRequest is the request for creating an instance template.",
+      "properties": {
+        "custom_image_name": {
+          "description": "custom_image_name is the custom OS image to use. Supply either image_name or custom_image_name.",
+          "example": "my-image:latest",
+          "type": "string"
+        },
+        "disks": {
+          "items": {
+            "$ref": "#/definitions/customerDiskTemplate",
+            "type": "object"
+          },
+          "title": "disks are the disks to create for every VM created from this instance template",
+          "type": "array"
+        },
+        "ib_partition_id": {
+          "description": "ib_partition_id is the transport partition to give to every VM created from this instance template.\n\nDeprecated: use transport_partition_id.",
+          "type": "string"
+        },
+        "image_name": {
+          "description": "image_name is the curated OS image to use. Supply either image_name or custom_image_name.",
+          "example": "ubuntu:20.04",
+          "type": "string"
+        },
+        "location": {
+          "description": "location is the location to bind the instance template to. When set, every location-specific\nfield must also be set.",
+          "example": "us-northcentral1-a",
+          "type": "string"
+        },
+        "maintenance_policy": {
+          "description": "maintenance_policy is the host maintenance policy. One of \"manual\", \"auto-stop\", \"stop-vm\" or\n\"unspecified\". \"auto-stop\" is an alias for \"stop-vm\".",
+          "example": "stop-vm",
+          "type": "string"
+        },
+        "nvlink_domain_id": {
+          "example": "550e8400-e29b-41d4-a716-446655440000",
+          "title": "nvlink_domain_id is the NVLink domain to assign to the instance template",
+          "type": "string"
+        },
+        "placement_policy": {
+          "description": "placement_policy is the VM placement policy. One of \"spread\" or \"unspecified\".",
+          "example": "spread",
+          "type": "string"
+        },
+        "public_ip_address_type": {
+          "description": "public_ip_address_type is the public IP address type to give to every VM created from this\ninstance template. One of \"static\" or \"dynamic\".",
+          "example": "static",
+          "type": "string"
+        },
+        "reservation_id": {
+          "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
+          "title": "reservation_id is the billing reservation the instance template draws from",
+          "type": "string"
+        },
+        "shutdown_script": {
+          "title": "shutdown_script is the shutdown script to give to every VM created from this instance template",
+          "type": "string"
+        },
+        "ssh_public_key": {
+          "title": "ssh_public_key is the SSH public key to give to every VM created from this instance template",
+          "type": "string"
+        },
+        "startup_script": {
+          "title": "startup_script is the startup script to give to every VM created from this instance template",
+          "type": "string"
+        },
+        "subnet_id": {
+          "description": "subnet_id is the subnet to give to every VM created from this instance template.\nThis field is location-specific.",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
+          "type": "string"
+        },
+        "template_name": {
+          "description": "template_name is the name of the instance template. This is not the name of the VMs created from it.",
+          "example": "my-instance-template",
+          "type": "string"
+        },
+        "transport_partition_id": {
+          "description": "transport_partition_id is the IB or RoCE partition to give to every VM created from this\ninstance template. Supply it only for transport-enabled VM types. This field is location-specific.",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
+          "type": "string"
+        },
+        "type": {
+          "example": "a100.2x",
+          "title": "type is the product name of the VM type to create from this instance template",
+          "type": "string"
+        },
+        "virtualization_features": {
+          "$ref": "#/definitions/customerVirtualizationFeatures",
+          "title": "virtualization_features are the virtualization features to give to every VM created from this\ninstance template"
+        }
+      },
+      "required": [
+        "template_name",
+        "type",
+        "ssh_public_key"
+      ],
+      "type": "object"
+    },
     "InstanceV1Alpha5": {
       "description": "InstanceV1Alpha5 contains identifying information about a vm instance for\nvms.instances endpoints.",
       "properties": {
@@ -20357,6 +20527,10 @@
       },
       "type": "object"
     },
+    "customerDeleteInstanceTemplateResponse": {
+      "description": "DeleteInstanceTemplateResponse is the response for deleting an existing instance template.\n\nSuccessful delete calls should be empty",
+      "type": "object"
+    },
     "customerDeleteProjectResponse": {
       "description": "DeleteProjectResponse is the response for deleting an existing project.\n\nSuccessful delete calls should be empty",
       "type": "object"
@@ -20375,6 +20549,22 @@
           "readOnly": true,
           "title": "credentials_map is the user's remaining credentials keyed by credential type",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "customerDiskTemplate": {
+      "description": "DiskTemplate describes a disk created for every VM created from an instance template.",
+      "properties": {
+        "size": {
+          "example": "10GiB",
+          "title": "size is the size of the disk",
+          "type": "string"
+        },
+        "type": {
+          "description": "type is the kind of disk. One of \"persistent-ssd\" or \"shared-volume\".",
+          "example": "persistent-ssd",
+          "type": "string"
         }
       },
       "type": "object"
@@ -20424,6 +20614,118 @@
       },
       "type": "object"
     },
+    "customerInstanceTemplate": {
+      "description": "InstanceTemplate represents a Crusoe instance template resource. An instance template\ndefines the specification of the VMs that an instance group creates.",
+      "properties": {
+        "created_at": {
+          "format": "date-time",
+          "readOnly": true,
+          "title": "created_at is the time the instance template was created",
+          "type": "string"
+        },
+        "custom_image_name": {
+          "example": "my-image:latest",
+          "title": "custom_image_name is the custom OS image used by every VM created from this instance template",
+          "type": "string"
+        },
+        "disks": {
+          "items": {
+            "$ref": "#/definitions/customerDiskTemplate",
+            "type": "object"
+          },
+          "title": "disks are the disks created for every VM created from this instance template",
+          "type": "array"
+        },
+        "ib_partition_id": {
+          "description": "ib_partition_id is the transport partition given to every VM created from this instance template.\n\nDeprecated: use transport_partition_id.",
+          "type": "string"
+        },
+        "id": {
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+          "readOnly": true,
+          "title": "id is the ID of the instance template",
+          "type": "string"
+        },
+        "image_name": {
+          "description": "image_name is the curated OS image used by every VM created from this instance template.\nAn instance template carries either a curated image or a custom image, never both.",
+          "example": "ubuntu:20.04",
+          "type": "string"
+        },
+        "location": {
+          "description": "location is the location the instance template is bound to. Empty when the template has no location.",
+          "example": "us-northcentral1-a",
+          "type": "string"
+        },
+        "maintenance_policy": {
+          "description": "maintenance_policy is the host maintenance policy. One of \"manual\", \"stop-vm\" or \"unspecified\".",
+          "example": "stop-vm",
+          "type": "string"
+        },
+        "name": {
+          "description": "name is the name of the instance template. This is not the name of the VMs created from it.",
+          "example": "my-instance-template",
+          "type": "string"
+        },
+        "nvlink_domain_id": {
+          "example": "550e8400-e29b-41d4-a716-446655440000",
+          "title": "nvlink_domain_id is the NVLink domain assigned to the instance template",
+          "type": "string"
+        },
+        "placement_policy": {
+          "description": "placement_policy is the VM placement policy. One of \"spread\" or \"unspecified\".",
+          "example": "spread",
+          "type": "string"
+        },
+        "project_id": {
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
+          "readOnly": true,
+          "title": "project_id is the ID of the project the instance template belongs to",
+          "type": "string"
+        },
+        "public_ip_address_type": {
+          "description": "public_ip_address_type is the public IP address type given to every VM created from this\ninstance template. One of \"static\" or \"dynamic\".",
+          "example": "static",
+          "type": "string"
+        },
+        "reservation_id": {
+          "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
+          "title": "reservation_id is the billing reservation the instance template draws from",
+          "type": "string"
+        },
+        "shutdown_script": {
+          "title": "shutdown_script is the shutdown script given to every VM created from this instance template",
+          "type": "string"
+        },
+        "ssh_public_key": {
+          "title": "ssh_public_key is the SSH public key given to every VM created from this instance template",
+          "type": "string"
+        },
+        "startup_script": {
+          "title": "startup_script is the startup script given to every VM created from this instance template",
+          "type": "string"
+        },
+        "subnet_id": {
+          "description": "subnet_id is the subnet given to every VM created from this instance template.\nOnly used when the template has a location.",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
+          "type": "string"
+        },
+        "transport_partition_id": {
+          "description": "transport_partition_id is the IB or RoCE partition given to every VM created from this instance\ntemplate. Only used for transport-enabled VM types.",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
+          "type": "string"
+        },
+        "type": {
+          "example": "a100.2x",
+          "title": "type is the product name of the VM type created from this instance template",
+          "type": "string"
+        },
+        "virtualization_features": {
+          "$ref": "#/definitions/customerVirtualizationFeatures",
+          "title": "virtualization_features are the virtualization features given to every VM created from this\ninstance template"
+        }
+      },
+      "type": "object"
+    },
     "customerListCreditsResponse": {
       "description": "ListCreditsResponse is the response for CreditsService.ListCredits.",
       "properties": {
@@ -20456,6 +20758,20 @@
         }
       },
       "title": "ListFeatureFlagsResponse is the list feature flags response",
+      "type": "object"
+    },
+    "customerListInstanceTemplatesResponse": {
+      "description": "ListInstanceTemplatesResponse is the response for listing the instance templates in a project.",
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/definitions/customerInstanceTemplate",
+            "type": "object"
+          },
+          "title": "items are the instance templates in the project",
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "customerListProjectsResponse": {
@@ -20863,6 +21179,16 @@
           "readOnly": true,
           "title": "user_state is the user's lifecycle state",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerVirtualizationFeatures": {
+      "description": "VirtualizationFeatures describes the virtualization features given to every VM created from an\ninstance template.",
+      "properties": {
+        "nested_virtualization": {
+          "title": "nested_virtualization is whether a VM can run a VM inside itself",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -21875,6 +22201,9 @@
     },
     {
       "name": "FeatureFlagsService"
+    },
+    {
+      "name": "InstanceTemplatesService"
     },
     {
       "name": "OrganizationsMFAService"
