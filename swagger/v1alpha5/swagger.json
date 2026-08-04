@@ -644,6 +644,64 @@
         ]
       }
     },
+    "/organizations/{org_id}/credits": {
+      "get": {
+        "description": "Returns the organization's credit transactions, ordered newest-first, along with the balance remaining after each one.",
+        "operationId": "listCredits",
+        "parameters": [
+          {
+            "description": "org_id is the ID of the organization whose credit history to list",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "limit is the maximum number of transactions to return. Must be positive if set.",
+            "format": "int32",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Credit history retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerListCreditsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {}
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Retrieve an organization's credit balance history.",
+        "tags": [
+          "Credits"
+        ]
+      }
+    },
     "/organizations/{org_id}/scim/integrations": {
       "get": {
         "operationId": "listSCIMIntegrations",
@@ -20278,6 +20336,27 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "customerCredit": {
+      "description": "Credit is a single credit balance transaction for an organization.",
+      "properties": {
+        "amount": {
+          "example": "12.34",
+          "title": "amount is the amount of credit added or subtracted in this transaction, formatted as a\ndecimal string",
+          "type": "string"
+        },
+        "balance": {
+          "example": "45.67",
+          "title": "balance is the remaining credit balance after this transaction, formatted as a decimal\nstring",
+          "type": "string"
+        },
+        "date": {
+          "example": "2025-02-14T12:00:00Z",
+          "title": "date is when the transaction occurred, in RFC3339 format",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "customerDeleteProjectResponse": {
       "description": "DeleteProjectResponse is the response for deleting an existing project.\n\nSuccessful delete calls should be empty",
       "type": "object"
@@ -20340,6 +20419,25 @@
         "updated_at": {
           "format": "date-time",
           "title": "updated_at is when the credential was last modified",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerListCreditsResponse": {
+      "description": "ListCreditsResponse is the response for CreditsService.ListCredits.",
+      "properties": {
+        "credits": {
+          "items": {
+            "$ref": "#/definitions/customerCredit",
+            "type": "object"
+          },
+          "title": "credits is the list of credit transactions, ordered newest-first",
+          "type": "array"
+        },
+        "currency": {
+          "example": "usd",
+          "title": "currency is the currency code (e.g. \"usd\") the amounts are denominated in",
           "type": "string"
         }
       },
@@ -21772,6 +21870,9 @@
     }
   },
   "tags": [
+    {
+      "name": "CreditsService"
+    },
     {
       "name": "FeatureFlagsService"
     },
