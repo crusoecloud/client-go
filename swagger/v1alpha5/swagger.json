@@ -13837,161 +13837,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "InstanceTemplate": {
-      "properties": {
-        "created_at": {
-          "description": "Creation timestamp of the instance template, in RFC3339 format.",
-          "example": "2024-01-01T00:00:00Z",
-          "type": "string",
-          "x-go-name": "CreatedAt"
-        },
-        "custom_image_name": {
-          "description": "Custom image to use for all VMs created from this instance template.",
-          "example": "ubuntu:20.04",
-          "type": "string",
-          "x-go-name": "CustomImage"
-        },
-        "disks": {
-          "description": "Disks attached to all VMs created from this instance template.",
-          "items": {
-            "$ref": "#/definitions/DiskTemplate"
-          },
-          "type": "array",
-          "x-go-name": "Disks"
-        },
-        "ib_partition_id": {
-          "type": "string",
-          "x-go-name": "IBPartition"
-        },
-        "id": {
-          "description": "ID of the instance template.",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-          "type": "string",
-          "x-go-name": "ID"
-        },
-        "image_name": {
-          "description": "OS Image to use for all VMs created from this instance template.",
-          "example": "ubuntu:20.04",
-          "type": "string",
-          "x-go-name": "Image"
-        },
-        "location": {
-          "description": "Location to use for all VMs created from this instance template.\nMay be empty if we do not want to bind this template to a location.",
-          "example": "us-northcentral1-a",
-          "type": "string",
-          "x-go-name": "Location"
-        },
-        "maintenance_policy": {
-          "description": "Host maintenance policy controlling how VMs created from this instance template behave during\nhost maintenance: manual, stop-vm, or unspecified.",
-          "enum": [
-            "manual",
-            "stop-vm",
-            "unspecified"
-          ],
-          "type": "string",
-          "x-go-name": "MaintenancePolicy"
-        },
-        "name": {
-          "description": "Name of the instance template. (This is not the name of the VMs created from this instance template.)",
-          "example": "my-instance-template",
-          "type": "string",
-          "x-go-name": "Name"
-        },
-        "nvlink_domain_id": {
-          "description": "NVLink domain assigned to all VMs created from this instance template.",
-          "example": "550e8400-e29b-41d4-a716-446655440000",
-          "type": "string",
-          "x-go-name": "NvlinkDomainID"
-        },
-        "placement_policy": {
-          "description": "Placement policy controlling how VMs created from this instance template are\ndistributed across hosts: spread or unspecified.",
-          "enum": [
-            "spread",
-            "unspecified"
-          ],
-          "type": "string",
-          "x-go-name": "PlacementPolicy"
-        },
-        "project_id": {
-          "description": "ID of the project this instance template belongs to.",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
-          "type": "string",
-          "x-go-name": "ProjectID"
-        },
-        "public_ip_address_type": {
-          "description": "Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".",
-          "example": "static",
-          "type": "string",
-          "x-go-name": "PublicIPAddressType"
-        },
-        "reservation_id": {
-          "description": "Reservation used for all VMs created from this instance template.",
-          "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
-          "type": "string",
-          "x-go-name": "ReservationID"
-        },
-        "shutdown_script": {
-          "description": "Shutdown script to use for all VMs created from this instance template.",
-          "example": "#!/bin/bash\\necho 'goodbye'",
-          "type": "string",
-          "x-go-name": "ShutdownScript"
-        },
-        "ssh_public_key": {
-          "description": "SSH public key to use for all VMs created from this instance template.",
-          "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D",
-          "type": "string",
-          "x-go-name": "SSHPubKey"
-        },
-        "startup_script": {
-          "description": "Startup script to use for all VMs created from this instance template.",
-          "example": "#!/bin/bash\\necho 'hello'",
-          "type": "string",
-          "x-go-name": "StartupScript"
-        },
-        "subnet_id": {
-          "description": "SubnetID to use for all VMs created from this instance template.\nOnly used if template has a location.",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
-          "type": "string",
-          "x-go-name": "SubnetID"
-        },
-        "transport_partition_id": {
-          "description": "IB or RoCE partition to use for all VMs created from this instance template.\nOnly used for transport-enabled VM types. Empty if template has no location.",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
-          "type": "string",
-          "x-go-name": "TransportPartitionID"
-        },
-        "type": {
-          "description": "Product name of the VM type we want to create from this instance template.",
-          "example": "a100.2x",
-          "type": "string",
-          "x-go-name": "Type"
-        },
-        "virtualization_features": {
-          "$ref": "#/definitions/VirtualizationFeatures"
-        }
-      },
-      "required": [
-        "name",
-        "id",
-        "type",
-        "ssh_public_key",
-        "startup_script",
-        "shutdown_script",
-        "image_name",
-        "ib_partition_id",
-        "transport_partition_id",
-        "subnet_id",
-        "location",
-        "project_id",
-        "created_at",
-        "public_ip_address_type",
-        "placement_policy",
-        "maintenance_policy"
-      ],
-      "title": "InstanceTemplate defines the specifications of VMs to be created during bulk VM creation.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "InstanceTemplatePostRequestV1Alpha5": {
       "properties": {
         "custom_image_name": {
@@ -16037,23 +15882,6 @@
         "items": {
           "items": {
             "$ref": "#/definitions/InstanceGroup"
-          },
-          "type": "array",
-          "x-go-name": "Items"
-        }
-      },
-      "required": [
-        "items"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "ListInstanceTemplatesResponseV1Alpha5": {
-      "description": "ListInstanceTemplatesResponseV1Alpha5 is the resource response type for GET\nrequests to the InstanceTemplates endpoint.",
-      "properties": {
-        "items": {
-          "items": {
-            "$ref": "#/definitions/InstanceTemplate"
           },
           "type": "array",
           "x-go-name": "Items"
@@ -21365,12 +21193,6 @@
         "$ref": "#/definitions/InstanceGroup"
       }
     },
-    "createInstanceTemplateResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/InstanceTemplate"
-      }
-    },
     "createS3KeyResponse": {
       "description": "",
       "schema": {
@@ -21604,12 +21426,6 @@
         "$ref": "#/definitions/InstanceV1Alpha5"
       }
     },
-    "getInstanceTemplateResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/InstanceTemplate"
-      }
-    },
     "getKubernetesClusterCredentialsResponse": {
       "description": "",
       "schema": {
@@ -21794,12 +21610,6 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListInstanceGroupsResponse"
-      }
-    },
-    "listInstanceTemplatesResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ListInstanceTemplatesResponseV1Alpha5"
       }
     },
     "listInstancesResponse": {
