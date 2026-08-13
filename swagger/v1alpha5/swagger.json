@@ -6458,6 +6458,113 @@
         ]
       }
     },
+    "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes": {
+      "get": {
+        "description": "Complements the node pool GET, which returns pool-level state, by exposing\nthe individual Nodes that back the pool, including the operation currently\nacting on each node. Results are paginated; next_page_token is absent on\nthe last page.",
+        "operationId": "listNodePoolNodes",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the node pool.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the node pool.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "node_pool_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "NodePoolID"
+          },
+          {
+            "description": "Maximum number of nodes to return per page.",
+            "example": 50,
+            "format": "int64",
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "x-go-name": "Limit"
+          },
+          {
+            "description": "Opaque token for fetching the next page, from a previous response's next_page_token.",
+            "in": "query",
+            "name": "next_page_token",
+            "type": "string",
+            "x-go-name": "NextPageToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listKubernetesNodePoolNodesResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the Kubernetes Nodes backing a node pool and returns their details.",
+        "tags": [
+          "Kubernetes Node Pools"
+        ]
+      }
+    },
+    "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes/{node_id}": {
+      "get": {
+        "description": "A current snapshot of the Node as the cluster reports it, including the\nNode's conditions. Conditions are only populated here, not in the list\nresponse.",
+        "operationId": "getNodePoolNode",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the node pool.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the node pool.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "node_pool_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "NodePoolID"
+          },
+          {
+            "description": "ID of the node. Node IDs are the IDs of the VMs backing the nodes.",
+            "example": "1e490fee-1624-4cab-a535-061ae6fdf863",
+            "in": "path",
+            "name": "node_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "NodeID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getKubernetesNodePoolNodeResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns details for a single Kubernetes Node backing a node pool.",
+        "tags": [
+          "Kubernetes Node Pools"
+        ]
+      }
+    },
     "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/rotate": {
       "get": {
         "operationId": "getNodePoolRotateStatus",
@@ -15015,6 +15122,47 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "KubernetesNodeCondition": {
+      "description": "KubernetesNodeCondition is a Kubernetes Node condition, passed through from\nthe cluster's current view of the Node object.",
+      "properties": {
+        "last_transition_time": {
+          "description": "Time of the condition's last transition, in RFC3339 format.",
+          "example": "2026-05-21T18:35:25Z",
+          "type": "string",
+          "x-go-name": "LastTransitionTime"
+        },
+        "message": {
+          "description": "Human-readable message describing the condition.",
+          "example": "kubelet is posting ready status",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "reason": {
+          "description": "Machine-readable reason for the condition's last transition.",
+          "example": "KubeletReady",
+          "type": "string",
+          "x-go-name": "Reason"
+        },
+        "status": {
+          "description": "Status of the condition: True, False, or Unknown.",
+          "example": "True",
+          "type": "string",
+          "x-go-name": "Status"
+        },
+        "type": {
+          "description": "Type of the condition, e.g. Ready, MemoryPressure, DiskPressure,\nPIDPressure, or NetworkUnavailable.",
+          "example": "Ready",
+          "type": "string",
+          "x-go-name": "Type"
+        }
+      },
+      "required": [
+        "type",
+        "status"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "KubernetesNodePool": {
       "properties": {
         "cluster_id": {
@@ -15024,7 +15172,7 @@
           "x-go-name": "ClusterID"
         },
         "count": {
-          "description": "Number of nodes in the node pool.",
+          "description": "Desired number of nodes in the node pool. The number of running nodes\nmay temporarily differ while the pool is scaling or repairing.",
           "example": 4,
           "format": "int64",
           "type": "integer",
@@ -15041,6 +15189,9 @@
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd"
+        },
+        "health": {
+          "$ref": "#/definitions/KubernetesNodePoolHealth"
         },
         "id": {
           "description": "ID of the node pool.",
@@ -15131,7 +15282,20 @@
           "x-go-name": "ReservationID"
         },
         "state": {
-          "description": "Current state of the node pool.",
+          "description": "Current state of the node pool. One of STATE_UNSPECIFIED,\nSTATE_PROVISIONING, STATE_RUNNING, STATE_RECONCILING, STATE_DEGRADED,\nSTATE_UPDATING, STATE_UPGRADING, STATE_ROTATING, STATE_DELETING,\nSTATE_DELETED, or STATE_UNHEALTHY; new states may be added over time,\nso treat unknown values as display-only. STATE_RECONCILING indicates\nthe pool is actively converging back to its desired ready node count\nafter losing capacity; STATE_DEGRADED indicates the pool exhausted\nretries without reaching its desired ready node count. Both reflect\npool-level convergence, not the health of individual nodes; see\nhealth.issues for the reason.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "STATE_PROVISIONING",
+            "STATE_RUNNING",
+            "STATE_RECONCILING",
+            "STATE_DEGRADED",
+            "STATE_UPDATING",
+            "STATE_UPGRADING",
+            "STATE_ROTATING",
+            "STATE_DELETING",
+            "STATE_DELETED",
+            "STATE_UNHEALTHY"
+          ],
           "example": "STATE_RUNNING",
           "type": "string",
           "x-go-name": "State"
@@ -15176,6 +15340,139 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "KubernetesNodePoolHealth": {
+      "properties": {
+        "issues": {
+          "description": "Current issues detected on the node pool.",
+          "items": {
+            "$ref": "#/definitions/KubernetesNodePoolHealthIssue"
+          },
+          "type": "array",
+          "x-go-name": "Issues"
+        }
+      },
+      "required": [
+        "issues"
+      ],
+      "title": "KubernetesNodePoolHealth reports current issues on a node pool.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesNodePoolHealthIssue": {
+      "properties": {
+        "affected_count": {
+          "description": "Number of nodes affected by the issue.",
+          "example": 2,
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "AffectedCount"
+        },
+        "affected_node_ids": {
+          "description": "IDs of the affected nodes, when known. Node IDs are the IDs of the VMs\nbacking the nodes.",
+          "example": [
+            "1e490fee-1624-4cab-a535-061ae6fdf863"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "AffectedNodeIDs"
+        },
+        "code": {
+          "description": "Machine-readable code for the issue, e.g. INSUFFICIENT_CAPACITY or\nNODE_NOT_READY. New codes may be added; treat unknown values as\ndisplay-only.",
+          "example": "INSUFFICIENT_CAPACITY",
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "message": {
+          "description": "Human-readable description of the issue.",
+          "example": "Could not provision 2 of 3 nodes: no c1a.2x capacity available",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "since": {
+          "description": "Time the issue started, in RFC3339 format.",
+          "example": "2026-08-09T13:10:00Z",
+          "type": "string",
+          "x-go-name": "Since"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "KubernetesNodePoolHealthIssue is one current issue on a node pool.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesNodePoolNode": {
+      "properties": {
+        "conditions": {
+          "description": "Kubernetes Node conditions as reported by the cluster, a current\nsnapshot of the Node object. Populated only on the per-node GET;\nomitted in the list response.",
+          "items": {
+            "$ref": "#/definitions/KubernetesNodeCondition"
+          },
+          "type": "array",
+          "x-go-name": "Conditions"
+        },
+        "created_at": {
+          "description": "Creation timestamp of the node, in RFC3339 format.",
+          "example": "2026-05-21T18:35:25Z",
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "instance_id": {
+          "description": "ID of the Crusoe VM that backs the node.",
+          "example": "1e490fee-1624-4cab-a535-061ae6fdf863",
+          "type": "string",
+          "x-go-name": "InstanceID"
+        },
+        "ip": {
+          "description": "Internal cluster IP of the node.",
+          "example": "10.0.1.23",
+          "type": "string",
+          "x-go-name": "IP"
+        },
+        "name": {
+          "description": "Kubernetes Node name as registered in the cluster.",
+          "example": "node-1e490fee.cmk.crusoe.ai",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "operation": {
+          "$ref": "#/definitions/Operation"
+        },
+        "status": {
+          "description": "Status of the node. PROVISIONING and DELETING are lifecycle states;\nREADY, NOT_READY, and UNKNOWN reflect kubelet readiness once the node\nis in service.",
+          "enum": [
+            "PROVISIONING",
+            "READY",
+            "NOT_READY",
+            "DELETING",
+            "UNKNOWN"
+          ],
+          "example": "READY",
+          "type": "string",
+          "x-go-name": "Status"
+        },
+        "version": {
+          "description": "Node software version of the node, e.g. the Kubernetes version with\nthe CMK build suffix.",
+          "example": "1.33.4-cmk.20",
+          "type": "string",
+          "x-go-name": "Version"
+        }
+      },
+      "required": [
+        "name",
+        "instance_id",
+        "status",
+        "version",
+        "created_at"
+      ],
+      "title": "KubernetesNodePoolNode is a Kubernetes Node backing a node pool.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "KubernetesNodePoolPatchRequest": {
       "properties": {
         "action": {
@@ -15192,7 +15489,7 @@
           "x-redocly-optional": true
         },
         "count": {
-          "description": "New number of nodes in the node pool.",
+          "description": "New desired number of nodes in the node pool.",
           "example": 4,
           "format": "int64",
           "type": "integer",
@@ -15278,7 +15575,7 @@
           "x-go-name": "ClusterID"
         },
         "count": {
-          "description": "Number of nodes to create.",
+          "description": "Desired number of nodes in the node pool.",
           "example": 4,
           "format": "int64",
           "type": "integer",
@@ -15934,6 +16231,28 @@
       },
       "required": [
         "items"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "ListKubernetesNodePoolNodesResponse": {
+      "properties": {
+        "next_page_token": {
+          "description": "Token to retrieve the next page of results. Absent on the last page.",
+          "type": "string",
+          "x-go-name": "NextPageToken"
+        },
+        "nodes": {
+          "description": "List of Kubernetes Nodes backing the node pool.",
+          "items": {
+            "$ref": "#/definitions/KubernetesNodePoolNode"
+          },
+          "type": "array",
+          "x-go-name": "Nodes"
+        }
+      },
+      "required": [
+        "nodes"
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -21438,6 +21757,12 @@
         "$ref": "#/definitions/KubernetesCluster"
       }
     },
+    "getKubernetesNodePoolNodeResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesNodePoolNode"
+      }
+    },
     "getKubernetesNodePoolResponse": {
       "description": "",
       "schema": {
@@ -21622,6 +21947,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListKubernetesClustersResponse"
+      }
+    },
+    "listKubernetesNodePoolNodesResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListKubernetesNodePoolNodesResponse"
       }
     },
     "listKubernetesNodePoolVMsResponse": {
