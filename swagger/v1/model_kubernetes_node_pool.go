@@ -41,7 +41,7 @@ type KubernetesNodePool struct {
 	PublicIpType string `json:"public_ip_type,omitempty"`
 	// ID of the billing reservation associated with the node pool.
 	ReservationId string `json:"reservation_id"`
-	// Current state of the node pool. One of STATE_UNSPECIFIED, STATE_PROVISIONING, STATE_RUNNING, STATE_RECONCILING, STATE_DEGRADED, STATE_UPDATING, STATE_UPGRADING, STATE_ROTATING, STATE_DELETING, STATE_DELETED, or STATE_UNHEALTHY; new states may be added over time, so treat unknown values as display-only. STATE_RECONCILING indicates the pool is actively converging back to its desired ready node count after losing capacity; STATE_DEGRADED indicates the pool exhausted retries without reaching its desired ready node count. Both reflect pool-level convergence, not the health of individual nodes; see health.issues for the reason.
+	// Current state of the node pool. One of STATE_UNSPECIFIED, STATE_PROVISIONING, STATE_RUNNING, STATE_DEGRADED, STATE_UPDATING, STATE_UPGRADING, STATE_ROTATING, STATE_DELETING, STATE_DELETED, or STATE_UNHEALTHY; new states may be added over time, so treat unknown values as display-only. STATE_DEGRADED indicates the pool failed to reach its desired ready node count for a non-capacity reason after exhausting retries, and persists until the pool recovers. A pool that is below its desired count but still converging stays STATE_RUNNING; capacity shortfalls never degrade the pool and are reported in health.issues instead.
 	State string `json:"state"`
 	// ID of the subnet the node pool belongs to.
 	SubnetId string `json:"subnet_id"`
