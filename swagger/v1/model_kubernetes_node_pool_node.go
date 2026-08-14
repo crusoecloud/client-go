@@ -9,17 +9,12 @@
 package swagger
 
 type KubernetesNodePoolNode struct {
-	// Kubernetes Node conditions as reported by the cluster, a current snapshot of the Node object. Populated only on the per-node GET; omitted in the list response.
-	Conditions []KubernetesNodeCondition `json:"conditions,omitempty"`
 	// Creation timestamp of the node, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
 	// ID of the Crusoe VM that backs the node.
 	InstanceId string `json:"instance_id"`
-	// Internal cluster IP of the node.
-	Ip string `json:"ip,omitempty"`
 	// Kubernetes Node name as registered in the cluster.
-	Name      string     `json:"name"`
-	Operation *Operation `json:"operation,omitempty"`
+	Name string `json:"name"`
 	// Status of the node. PROVISIONING and DELETING are lifecycle states; READY, NOT_READY, and UNKNOWN reflect kubelet readiness once the node is in service.
 	Status string `json:"status"`
 	// Node software version of the node, e.g. the Kubernetes version with the CMK build suffix.

@@ -6517,7 +6517,7 @@
     },
     "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes/{node_id}": {
       "get": {
-        "description": "A current snapshot of the Node as the cluster reports it, including the\nNode's conditions. Conditions are only populated here, not in the list\nresponse.",
+        "description": "A current snapshot of the Node as the cluster reports it.",
         "operationId": "getNodePoolNode",
         "parameters": [
           {
@@ -15122,47 +15122,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "KubernetesNodeCondition": {
-      "description": "KubernetesNodeCondition is a Kubernetes Node condition, passed through from\nthe cluster's current view of the Node object.",
-      "properties": {
-        "last_transition_time": {
-          "description": "Time of the condition's last transition, in RFC3339 format.",
-          "example": "2026-05-21T18:35:25Z",
-          "type": "string",
-          "x-go-name": "LastTransitionTime"
-        },
-        "message": {
-          "description": "Human-readable message describing the condition.",
-          "example": "kubelet is posting ready status",
-          "type": "string",
-          "x-go-name": "Message"
-        },
-        "reason": {
-          "description": "Machine-readable reason for the condition's last transition.",
-          "example": "KubeletReady",
-          "type": "string",
-          "x-go-name": "Reason"
-        },
-        "status": {
-          "description": "Status of the condition: True, False, or Unknown.",
-          "example": "True",
-          "type": "string",
-          "x-go-name": "Status"
-        },
-        "type": {
-          "description": "Type of the condition, e.g. Ready, MemoryPressure, DiskPressure,\nPIDPressure, or NetworkUnavailable.",
-          "example": "Ready",
-          "type": "string",
-          "x-go-name": "Type"
-        }
-      },
-      "required": [
-        "type",
-        "status"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "KubernetesNodePool": {
       "properties": {
         "autoscaling_config": {
@@ -15441,14 +15400,6 @@
     },
     "KubernetesNodePoolNode": {
       "properties": {
-        "conditions": {
-          "description": "Kubernetes Node conditions as reported by the cluster, a current\nsnapshot of the Node object. Populated only on the per-node GET;\nomitted in the list response.",
-          "items": {
-            "$ref": "#/definitions/KubernetesNodeCondition"
-          },
-          "type": "array",
-          "x-go-name": "Conditions"
-        },
         "created_at": {
           "description": "Creation timestamp of the node, in RFC3339 format.",
           "example": "2026-05-21T18:35:25Z",
@@ -15461,20 +15412,11 @@
           "type": "string",
           "x-go-name": "InstanceID"
         },
-        "ip": {
-          "description": "Internal cluster IP of the node.",
-          "example": "10.0.1.23",
-          "type": "string",
-          "x-go-name": "IP"
-        },
         "name": {
           "description": "Kubernetes Node name as registered in the cluster.",
           "example": "node-1e490fee.cmk.crusoe.ai",
           "type": "string",
           "x-go-name": "Name"
-        },
-        "operation": {
-          "$ref": "#/definitions/Operation"
         },
         "status": {
           "description": "Status of the node. PROVISIONING and DELETING are lifecycle states;\nREADY, NOT_READY, and UNKNOWN reflect kubelet readiness once the node\nis in service.",

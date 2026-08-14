@@ -521,7 +521,7 @@ func (a *KubernetesNodePoolsApiService) GetNodePool(ctx context.Context, project
 
 /*
 KubernetesNodePoolsApiService Returns details for a single Kubernetes Node backing a node pool.
-A current snapshot of the Node as the cluster reports it, including the Node&#x27;s conditions. Conditions are only populated here, not in the list response.
+A current snapshot of the Node as the cluster reports it.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param projectId ID of the project that owns the node pool.
   - @param nodePoolId ID of the node pool.
