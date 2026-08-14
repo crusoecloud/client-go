@@ -9,6 +9,7 @@
 package swagger
 
 type KubernetesNodePool struct {
+	AutoscalingConfig *KubernetesNodePoolAutoscalingConfig `json:"autoscaling_config,omitempty"`
 	// ID of the Kubernetes cluster the node pool belongs to.
 	ClusterId string `json:"cluster_id"`
 	// Desired number of nodes in the node pool. The number of running nodes may temporarily differ while the pool is scaling or repairing.

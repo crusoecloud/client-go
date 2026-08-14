@@ -15165,6 +15165,9 @@
     },
     "KubernetesNodePool": {
       "properties": {
+        "autoscaling_config": {
+          "$ref": "#/definitions/KubernetesNodePoolAutoscalingConfig"
+        },
         "cluster_id": {
           "description": "ID of the Kubernetes cluster the node pool belongs to.",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f",
@@ -15340,6 +15343,38 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "KubernetesNodePoolAutoscalingConfig": {
+      "properties": {
+        "enabled": {
+          "description": "Whether the Cluster Autoscaler manages this node pool's size.",
+          "example": true,
+          "type": "boolean",
+          "x-go-name": "Enabled"
+        },
+        "max_node_size": {
+          "description": "Maximum number of nodes the autoscaler may scale up to. Must be\n>= min_node_size; [0, 0] pins the pool at zero nodes. Required alongside\nmin_node_size when enabled is true; ignored when enabled is false.",
+          "example": 10,
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "MaxNodeSize"
+        },
+        "min_node_size": {
+          "description": "Minimum number of nodes the autoscaler may scale down to. 0 permits\nscale-to-zero. Required alongside max_node_size when enabled is true;\nignored when enabled is false.",
+          "example": 1,
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "MinNodeSize"
+        }
+      },
+      "required": [
+        "enabled",
+        "min_node_size",
+        "max_node_size"
+      ],
+      "title": "KubernetesNodePoolAutoscalingConfig defines the Cluster Autoscaler policy for a node pool.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "KubernetesNodePoolHealth": {
       "properties": {
         "issues": {
@@ -15488,6 +15523,9 @@
           "x-go-name": "Action",
           "x-redocly-optional": true
         },
+        "autoscaling_config": {
+          "$ref": "#/definitions/KubernetesNodePoolAutoscalingConfig"
+        },
         "count": {
           "description": "New desired number of nodes in the node pool.",
           "example": 4,
@@ -15568,6 +15606,9 @@
     },
     "KubernetesNodePoolPostRequest": {
       "properties": {
+        "autoscaling_config": {
+          "$ref": "#/definitions/KubernetesNodePoolAutoscalingConfig"
+        },
         "cluster_id": {
           "description": "ID of the cluster the new node pool belongs to.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
