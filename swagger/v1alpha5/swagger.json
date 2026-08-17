@@ -4282,6 +4282,218 @@
         ]
       }
     },
+    "/projects/{project_id}/diagnostics/vms/{vm_id}": {
+      "post": {
+        "description": "Initiates an NVIDIA bug report collection for the specified VM. Returns\nthe diagnostic ID which can be used to poll for status. If a diagnostic\nis already pending for this VM, returns the existing diagnostic ID.",
+        "operationId": "createDiagnostic",
+        "parameters": [
+          {
+            "description": "The project ID",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "The VM ID to create diagnostic for",
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "in": "path",
+            "name": "vm_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "VMID"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/createDiagnosticResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Create a diagnostic report request for a VM.",
+        "tags": [
+          "Diagnostics"
+        ]
+      }
+    },
+    "/projects/{project_id}/diagnostics/vms/{vm_id}/latest": {
+      "get": {
+        "description": "Returns the download URL for the most recently completed diagnostic report\nfor the specified VM. If no completed diagnostic exists, has_diagnostic\nwill be false.",
+        "operationId": "getLatestCompletedDiagnostic",
+        "parameters": [
+          {
+            "description": "The project ID",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "The VM ID to get latest completed diagnostic for",
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "in": "path",
+            "name": "vm_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "VMID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getLatestCompletedDiagnosticResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Get the latest completed diagnostic report for a VM.",
+        "tags": [
+          "Diagnostics"
+        ]
+      }
+    },
+    "/projects/{project_id}/diagnostics/vms/{vm_id}/{diagnostic_id}": {
+      "get": {
+        "description": "Returns the current status of a diagnostic report including type, status\n(pending/running/completed/failed), download URL (if completed), and timestamps.",
+        "operationId": "getDiagnosticStatus",
+        "parameters": [
+          {
+            "description": "The project ID",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "The VM ID",
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "in": "path",
+            "name": "vm_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "VMID"
+          },
+          {
+            "description": "The diagnostic ID to get status for",
+            "example": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+            "in": "path",
+            "name": "diagnostic_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "DiagnosticID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getDiagnosticStatusResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Get the status of a diagnostic report.",
+        "tags": [
+          "Diagnostics"
+        ]
+      }
+    },
+    "/projects/{project_id}/diagnostics/vms/{vm_id}/{diagnostic_id}/download": {
+      "get": {
+        "description": "Downloads the diagnostic report file for the specified diagnostic ID.\nThe diagnostic must be in completed status to download.",
+        "operationId": "downloadDiagnostic",
+        "parameters": [
+          {
+            "description": "The project ID",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "The VM ID",
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "in": "path",
+            "name": "vm_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "VMID"
+          },
+          {
+            "description": "The diagnostic ID to download",
+            "example": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+            "in": "path",
+            "name": "diagnostic_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "DiagnosticID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/downloadDiagnosticResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Download a diagnostic report file.",
+        "tags": [
+          "Diagnostics"
+        ]
+      }
+    },
     "/projects/{project_id}/foundry/credentials": {
       "get": {
         "operationId": "listFoundryCredentials",
@@ -12420,6 +12632,60 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "DiagnosticResponse": {
+      "properties": {
+        "already_pending": {
+          "example": false,
+          "type": "boolean",
+          "x-go-name": "AlreadyPending"
+        },
+        "id": {
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "type": "string",
+          "x-go-name": "ID"
+        }
+      },
+      "required": [
+        "id",
+        "already_pending"
+      ],
+      "title": "DiagnosticResponse is the REST response for creating a diagnostic.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "DiagnosticStatusResponse": {
+      "properties": {
+        "created_at": {
+          "example": "2024-01-15T10:30:00Z",
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "status": {
+          "example": "completed",
+          "type": "string",
+          "x-go-name": "Status"
+        },
+        "type": {
+          "example": "nvidia_bug_report",
+          "type": "string",
+          "x-go-name": "Type"
+        },
+        "updated_at": {
+          "example": "2024-01-15T10:35:00Z",
+          "type": "string",
+          "x-go-name": "UpdatedAt"
+        }
+      },
+      "required": [
+        "type",
+        "status",
+        "created_at",
+        "updated_at"
+      ],
+      "title": "DiagnosticStatusResponse is the REST response for diagnostic status.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "DiskAttachment": {
       "properties": {
         "attachment_type": {
@@ -15853,6 +16119,36 @@
         "access_role"
       ],
       "title": "KubernetesSupportAccessRequest defines the information about a support access request.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "LatestDiagnosticResponse": {
+      "properties": {
+        "created_at": {
+          "example": "2024-01-15T10:30:00Z",
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "has_diagnostic": {
+          "example": true,
+          "type": "boolean",
+          "x-go-name": "HasDiagnostic"
+        },
+        "id": {
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "updated_at": {
+          "example": "2024-01-15T10:35:00Z",
+          "type": "string",
+          "x-go-name": "UpdatedAt"
+        }
+      },
+      "required": [
+        "has_diagnostic"
+      ],
+      "title": "LatestDiagnosticResponse is the REST response for latest diagnostic.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -21488,6 +21784,12 @@
         "$ref": "#/definitions/CCRTokenResponse"
       }
     },
+    "createDiagnosticResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/DiagnosticResponse"
+      }
+    },
     "createInstanceGroupResponse": {
       "description": "",
       "schema": {
@@ -21528,6 +21830,16 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/SSOProvider"
+      }
+    },
+    "downloadDiagnosticResponse": {
+      "description": "",
+      "schema": {
+        "items": {
+          "format": "uint8",
+          "type": "integer"
+        },
+        "type": "array"
       }
     },
     "emptyResponse": {
@@ -21685,6 +21997,12 @@
         }
       }
     },
+    "getDiagnosticStatusResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/DiagnosticStatusResponse"
+      }
+    },
     "getDiskResponse": {
       "description": "",
       "schema": {
@@ -21749,6 +22067,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/KubernetesNodePool"
+      }
+    },
+    "getLatestCompletedDiagnosticResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/LatestDiagnosticResponse"
       }
     },
     "getLoadBalancerResponse": {
