@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
@@ -11,6 +12,8 @@ import (
 	"sort"
 	"strings"
 	"time"
+
+	"golang.org/x/oauth2/clientcredentials"
 
 	swagger "github.com/crusoecloud/client-go/swagger/v1"
 )
@@ -195,6 +198,28 @@ func NewAuthenticatedConfig(accessKey, secret string) *swagger.Configuration {
 	}
 
 	cfg.HTTPClient.Transport = NewAuthenticatingTransport(cfg.HTTPClient.Transport, accessKey, secret)
+
+	return cfg
+}
+
+// NewServiceAccountAPIClient initializes a new Crusoe API client authenticated as a service
+// account via the OAuth2 client credentials grant.
+func NewServiceAccountAPIClient(clientID, clientSecret, tokenURL string) *swagger.APIClient {
+	return swagger.NewAPIClient(NewServiceAccountConfig(clientID, clientSecret, tokenURL))
+}
+
+// NewServiceAccountConfig initializes a new Crusoe API configuration authenticated as a service
+// account via the OAuth2 client credentials grant (clientID/clientSecret against tokenURL). The
+// returned Configuration's HTTPClient fetches an access token on first use and refreshes it
+// automatically as it nears expiry, for every subsequent request.
+func NewServiceAccountConfig(clientID, clientSecret, tokenURL string) *swagger.Configuration {
+	cfg := swagger.NewConfiguration()
+
+	cfg.HTTPClient = (&clientcredentials.Config{
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		TokenURL:     tokenURL,
+	}).Client(context.Background())
 
 	return cfg
 }
