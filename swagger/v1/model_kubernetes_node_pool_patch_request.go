@@ -10,8 +10,9 @@ package swagger
 
 type KubernetesNodePoolPatchRequest struct {
 	// Action to perform on the node pool: RESERVE, UNRESERVE, or UPDATE. RESERVE and UNRESERVE operations are done synchronously, and so will have succeeded with a 200 response. Defaults to UPDATE if no action is specified.
-	Action string `json:"action"`
-	// New number of nodes in the node pool.
+	Action            string                               `json:"action"`
+	AutoscalingConfig *KubernetesNodePoolAutoscalingConfig `json:"autoscaling_config,omitempty"`
+	// New desired number of nodes in the node pool.
 	Count int64 `json:"count"`
 	// Whether the first local ephemeral NVMe disk is used for containerd storage.
 	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd"`

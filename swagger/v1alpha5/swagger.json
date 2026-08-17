@@ -211,6 +211,15 @@
       "get": {
         "description": "A successful response from this resource will contain a map of\nall feature flags and the value assigned to each of them for the user.",
         "operationId": "getFeatureFlags",
+        "parameters": [
+          {
+            "description": "project_id optionally scopes flag evaluation to the given project. The\ncaller must be a member of the project. When set, flags are evaluated with\nthe project in the targeting context in addition to the user and org.",
+            "in": "query",
+            "name": "project_id",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Feature flags retrieved successfully",
@@ -632,6 +641,64 @@
         "summary": "Returns details for a single project.",
         "tags": [
           "Projects"
+        ]
+      }
+    },
+    "/organizations/{org_id}/credits": {
+      "get": {
+        "description": "Returns the organization's credit transactions, ordered newest-first, along with the balance remaining after each one.",
+        "operationId": "listCredits",
+        "parameters": [
+          {
+            "description": "org_id is the ID of the organization whose credit history to list",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "limit is the maximum number of transactions to return. Must be positive if set.",
+            "format": "int32",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Credit history retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerListCreditsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {}
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Retrieve an organization's credit balance history.",
+        "tags": [
+          "Credits"
         ]
       }
     },
@@ -1588,6 +1655,110 @@
         "summary": "Retrieve data about an organizations recent Non-Reservation costs.",
         "tags": [
           "Billing"
+        ]
+      }
+    },
+    "/organizations/{organization_id}/mfa": {
+      "get": {
+        "operationId": "getMFA",
+        "parameters": [
+          {
+            "description": "organization_id is the ID of the organization",
+            "in": "path",
+            "name": "organization_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MFA methods retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerGetOrganizationMFAResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {}
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Get enabled MFA methods for the specified organization.",
+        "tags": [
+          "MFA"
+        ]
+      },
+      "patch": {
+        "operationId": "updateMFA",
+        "parameters": [
+          {
+            "description": "organization_id is the ID of the organization",
+            "in": "path",
+            "name": "organization_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/OrganizationsMFAServiceUpdateOrganizationMFABody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MFA methods updated successfully",
+            "schema": {
+              "$ref": "#/definitions/customerUpdateOrganizationMFAResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {}
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Update required MFA methods for the specified organization.",
+        "tags": [
+          "MFA"
         ]
       }
     },
@@ -3310,23 +3481,42 @@
         "operationId": "listInstanceTemplates",
         "parameters": [
           {
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "description": "project_id is the ID of the project to list instance templates in",
             "in": "path",
             "name": "project_id",
+            "pattern": "[^/]+",
             "required": true,
-            "type": "string",
-            "x-go-name": "ProjectID"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/listInstanceTemplatesResponse"
+            "description": "Instance templates retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerListInstanceTemplatesResponse"
+            }
           },
           "401": {
-            "$ref": "#/responses/authError"
+            "description": "Error Authentication Failed",
+            "schema": {}
+          },
+          "403": {
+            "description": "Error Permissions",
+            "schema": {}
+          },
+          "404": {
+            "description": "Error Not Found",
+            "schema": {}
           },
           "500": {
-            "$ref": "#/responses/serverError"
+            "description": "Error Internal Server",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
           }
         },
         "summary": "Lists all instance templates in the project and returns their details.",
@@ -3338,34 +3528,54 @@
         "operationId": "createInstanceTemplate",
         "parameters": [
           {
-            "in": "body",
-            "name": "Body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/InstanceTemplatePostRequestV1Alpha5"
-            }
-          },
-          {
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "description": "project_id is the ID of the project to create the instance template in",
             "in": "path",
             "name": "project_id",
+            "pattern": "[^/]+",
             "required": true,
-            "type": "string",
-            "x-go-name": "ProjectID"
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/InstanceTemplatesServiceCreateInstanceTemplateBody"
+            }
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/createInstanceTemplateResponse"
+            "description": "Instance template created successfully",
+            "schema": {
+              "$ref": "#/definitions/customerInstanceTemplate"
+            }
           },
           "400": {
-            "$ref": "#/responses/badReqError"
+            "description": "Error Bad Request",
+            "schema": {}
           },
           "401": {
-            "$ref": "#/responses/authError"
+            "description": "Error Authentication Failed",
+            "schema": {}
+          },
+          "402": {
+            "description": "Error Payment Required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Error Permissions",
+            "schema": {}
           },
           "500": {
-            "$ref": "#/responses/serverError"
+            "description": "Error Internal Server",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
           }
         },
         "summary": "Creates an instance template in the project and returns the created instance template.",
@@ -3379,38 +3589,54 @@
         "operationId": "deleteInstanceTemplate",
         "parameters": [
           {
-            "description": "ID of the instance template.",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "in": "path",
-            "name": "instance_template_id",
-            "required": true,
-            "type": "string",
-            "x-go-name": "InstanceTemplateID"
-          },
-          {
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "description": "project_id is the ID of the project the instance template belongs to",
             "in": "path",
             "name": "project_id",
+            "pattern": "[^/]+",
             "required": true,
-            "type": "string",
-            "x-go-name": "ProjectID"
+            "type": "string"
+          },
+          {
+            "description": "instance_template_id is the ID of the instance template to delete",
+            "in": "path",
+            "name": "instance_template_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/emptyResponse"
+            "description": "Empty Response",
+            "schema": {
+              "$ref": "#/definitions/customerDeleteInstanceTemplateResponse"
+            }
           },
           "400": {
-            "$ref": "#/responses/badReqError"
+            "description": "Error Bad Request",
+            "schema": {}
           },
           "401": {
-            "$ref": "#/responses/authError"
+            "description": "Error Authentication Failed",
+            "schema": {}
           },
           "403": {
-            "$ref": "#/responses/permissionsError"
+            "description": "Error Permissions",
+            "schema": {}
+          },
+          "404": {
+            "description": "Error Not Found",
+            "schema": {}
           },
           "500": {
-            "$ref": "#/responses/serverError"
+            "description": "Error Internal Server",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
           }
         },
         "summary": "Deletes an instance template from the project.",
@@ -3422,38 +3648,54 @@
         "operationId": "getInstanceTemplate",
         "parameters": [
           {
-            "description": "ID of the instance template.",
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-            "in": "path",
-            "name": "instance_template_id",
-            "required": true,
-            "type": "string",
-            "x-go-name": "InstanceTemplateID"
-          },
-          {
-            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "description": "project_id is the ID of the project the instance template belongs to",
             "in": "path",
             "name": "project_id",
+            "pattern": "[^/]+",
             "required": true,
-            "type": "string",
-            "x-go-name": "ProjectID"
+            "type": "string"
+          },
+          {
+            "description": "instance_template_id is the ID of the instance template to fetch",
+            "in": "path",
+            "name": "instance_template_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/getInstanceTemplateResponse"
+            "description": "Instance template retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerInstanceTemplate"
+            }
           },
           "400": {
-            "$ref": "#/responses/badReqError"
+            "description": "Error Bad Request",
+            "schema": {}
           },
           "401": {
-            "$ref": "#/responses/authError"
+            "description": "Error Authentication Failed",
+            "schema": {}
+          },
+          "403": {
+            "description": "Error Permissions",
+            "schema": {}
           },
           "404": {
-            "$ref": "#/responses/notFoundError"
+            "description": "Error Not Found",
+            "schema": {}
           },
           "500": {
-            "$ref": "#/responses/serverError"
+            "description": "Error Internal Server",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
           }
         },
         "summary": "Returns details for a single instance template in the project.",
@@ -4037,6 +4279,218 @@
         "summary": "Lists all available VM types and returns their details.",
         "tags": [
           "VMs"
+        ]
+      }
+    },
+    "/projects/{project_id}/diagnostics/vms/{vm_id}": {
+      "post": {
+        "description": "Initiates an NVIDIA bug report collection for the specified VM. Returns\nthe diagnostic ID which can be used to poll for status. If a diagnostic\nis already pending for this VM, returns the existing diagnostic ID.",
+        "operationId": "createDiagnostic",
+        "parameters": [
+          {
+            "description": "The project ID",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "The VM ID to create diagnostic for",
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "in": "path",
+            "name": "vm_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "VMID"
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/createDiagnosticResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Create a diagnostic report request for a VM.",
+        "tags": [
+          "Diagnostics"
+        ]
+      }
+    },
+    "/projects/{project_id}/diagnostics/vms/{vm_id}/latest": {
+      "get": {
+        "description": "Returns the download URL for the most recently completed diagnostic report\nfor the specified VM. If no completed diagnostic exists, has_diagnostic\nwill be false.",
+        "operationId": "getLatestCompletedDiagnostic",
+        "parameters": [
+          {
+            "description": "The project ID",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "The VM ID to get latest completed diagnostic for",
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "in": "path",
+            "name": "vm_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "VMID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getLatestCompletedDiagnosticResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Get the latest completed diagnostic report for a VM.",
+        "tags": [
+          "Diagnostics"
+        ]
+      }
+    },
+    "/projects/{project_id}/diagnostics/vms/{vm_id}/{diagnostic_id}": {
+      "get": {
+        "description": "Returns the current status of a diagnostic report including type, status\n(pending/running/completed/failed), download URL (if completed), and timestamps.",
+        "operationId": "getDiagnosticStatus",
+        "parameters": [
+          {
+            "description": "The project ID",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "The VM ID",
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "in": "path",
+            "name": "vm_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "VMID"
+          },
+          {
+            "description": "The diagnostic ID to get status for",
+            "example": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+            "in": "path",
+            "name": "diagnostic_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "DiagnosticID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getDiagnosticStatusResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Get the status of a diagnostic report.",
+        "tags": [
+          "Diagnostics"
+        ]
+      }
+    },
+    "/projects/{project_id}/diagnostics/vms/{vm_id}/{diagnostic_id}/download": {
+      "get": {
+        "description": "Downloads the diagnostic report file for the specified diagnostic ID.\nThe diagnostic must be in completed status to download.",
+        "operationId": "downloadDiagnostic",
+        "parameters": [
+          {
+            "description": "The project ID",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "The VM ID",
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "in": "path",
+            "name": "vm_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "VMID"
+          },
+          {
+            "description": "The diagnostic ID to download",
+            "example": "a1b2c3d4-5678-90ab-cdef-1234567890ab",
+            "in": "path",
+            "name": "diagnostic_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "DiagnosticID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/downloadDiagnosticResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Download a diagnostic report file.",
+        "tags": [
+          "Diagnostics"
         ]
       }
     },
@@ -6216,6 +6670,113 @@
         ]
       }
     },
+    "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes": {
+      "get": {
+        "description": "Complements the node pool GET, which returns pool-level state, by exposing\nthe individual Nodes that back the pool, including the operation currently\nacting on each node. Results are paginated; next_page_token is absent on\nthe last page.",
+        "operationId": "listNodePoolNodes",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the node pool.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the node pool.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "node_pool_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "NodePoolID"
+          },
+          {
+            "description": "Maximum number of nodes to return per page.",
+            "example": 50,
+            "format": "int64",
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "x-go-name": "Limit"
+          },
+          {
+            "description": "Opaque token for fetching the next page, from a previous response's next_page_token.",
+            "in": "query",
+            "name": "next_page_token",
+            "type": "string",
+            "x-go-name": "NextPageToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listKubernetesNodePoolNodesResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the Kubernetes Nodes backing a node pool and returns their details.",
+        "tags": [
+          "Kubernetes Node Pools"
+        ]
+      }
+    },
+    "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes/{node_id}": {
+      "get": {
+        "description": "A current snapshot of the Node as the cluster reports it.",
+        "operationId": "getNodePoolNode",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the node pool.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the node pool.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "node_pool_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "NodePoolID"
+          },
+          {
+            "description": "ID of the node. Node IDs are the IDs of the VMs backing the nodes.",
+            "example": "1e490fee-1624-4cab-a535-061ae6fdf863",
+            "in": "path",
+            "name": "node_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "NodeID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getKubernetesNodePoolNodeResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns details for a single Kubernetes Node backing a node pool.",
+        "tags": [
+          "Kubernetes Node Pools"
+        ]
+      }
+    },
     "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/rotate": {
       "get": {
         "operationId": "getNodePoolRotateStatus",
@@ -6576,7 +7137,7 @@
           },
           {
             "description": "Start timestamp, inclusive.",
-            "example": "\u003crfc3339 | unix_timestamp\u003e",
+            "example": "<rfc3339 | unix_timestamp>",
             "in": "query",
             "name": "start",
             "required": true,
@@ -6585,7 +7146,7 @@
           },
           {
             "description": "End timestamp, inclusive.",
-            "example": "\u003crfc3339 | unix_timestamp\u003e",
+            "example": "<rfc3339 | unix_timestamp>",
             "in": "query",
             "name": "end",
             "required": true,
@@ -6648,7 +7209,7 @@
           },
           {
             "description": "Evaluation timestamp.",
-            "example": "\u003crfc3339 | unix_timestamp\u003e",
+            "example": "<rfc3339 | unix_timestamp>",
             "in": "query",
             "name": "time",
             "type": "string",
@@ -6717,7 +7278,7 @@
           },
           {
             "description": "Start timestamp, inclusive.",
-            "example": "\u003crfc3339 | unix_timestamp\u003e",
+            "example": "<rfc3339 | unix_timestamp>",
             "in": "query",
             "name": "start",
             "required": true,
@@ -6726,7 +7287,7 @@
           },
           {
             "description": "End timestamp, inclusive.",
-            "example": "\u003crfc3339 | unix_timestamp\u003e",
+            "example": "<rfc3339 | unix_timestamp>",
             "in": "query",
             "name": "end",
             "required": true,
@@ -10886,41 +11447,6 @@
     }
   },
   "definitions": {
-    "AggregateMetrics": {
-      "properties": {
-        "cpu_utilization_avg": {
-          "description": "Average CPU utilization (%) across VMs in this group.",
-          "example": 0,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "CPUUtilizationAvg"
-        },
-        "gpu_utilization_avg": {
-          "description": "Average GPU utilization (%) across VMs in this group.",
-          "example": 82,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "GPUUtilizationAvg"
-        },
-        "p95_power_watts": {
-          "description": "P95 GPU power draw in watts across VMs in this group.",
-          "example": 425,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "P95PowerWatts"
-        },
-        "p95_temperature_celsius": {
-          "description": "P95 GPU temperature in Celsius across VMs in this group.",
-          "example": 81,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "P95TemperatureCelsius"
-        }
-      },
-      "title": "AggregateMetrics contains pre-computed metric aggregates for a pod or cluster.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "ApplyRoleBindingRequest": {
       "properties": {
         "bindings_to_create": {
@@ -11072,48 +11598,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "AuthCheckGetResponse": {
-      "properties": {
-        "continue_to": {
-          "$ref": "#/definitions/ContinueToEnum"
-        },
-        "providers": {
-          "items": {
-            "$ref": "#/definitions/AuthCheckProvider"
-          },
-          "type": "array",
-          "x-go-name": "Providers"
-        }
-      },
-      "required": [
-        "continue_to"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "AuthCheckProvider": {
-      "properties": {
-        "id": {
-          "type": "string",
-          "x-go-name": "ID"
-        },
-        "issuer_uri": {
-          "type": "string",
-          "x-go-name": "IssuerURI"
-        },
-        "org_name": {
-          "type": "string",
-          "x-go-name": "OrgName"
-        }
-      },
-      "required": [
-        "id",
-        "issuer_uri",
-        "org_name"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "AutoClustersConfigResponse": {
       "properties": {
         "fallback_to_project_reservations": {
@@ -11258,441 +11742,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "BillingAlert": {
-      "properties": {
-        "active": {
-          "description": "Whether the billing alert is active or paused.",
-          "example": true,
-          "type": "boolean",
-          "x-go-name": "Active"
-        },
-        "created_at": {
-          "description": "The date at which the billing alert was created.",
-          "example": "2024-08-14T09:00:35Z",
-          "type": "string",
-          "x-go-name": "CreatedAt"
-        },
-        "custom_interval_days": {
-          "description": "Custom interval in days when frequency is custom.",
-          "example": 14,
-          "format": "int32",
-          "type": "integer",
-          "x-go-name": "CustomIntervalDays"
-        },
-        "customer_ids": {
-          "description": "The custom recipients belonging to the billing alert.",
-          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479, 1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6",
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "x-go-name": "CustomerIDs"
-        },
-        "expiration_date": {
-          "description": "The date at which the billing alert expires for a billing alert with custom date range.",
-          "example": "2025-08-14T09:00:35Z",
-          "type": "string",
-          "x-go-name": "ExpirationDate"
-        },
-        "frequency": {
-          "description": "The frequency at which the billing alert is triggered.",
-          "enum": [
-            "daily",
-            "weekly",
-            "monthly",
-            "quarterly",
-            "yearly",
-            "custom"
-          ],
-          "type": "string",
-          "x-go-name": "Frequency"
-        },
-        "id": {
-          "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb",
-          "type": "string",
-          "x-go-name": "ID"
-        },
-        "name": {
-          "description": "The name of the billing alert.",
-          "example": "billing alert 1",
-          "type": "string",
-          "x-go-name": "Name"
-        },
-        "object_id": {
-          "description": "The object ID associated with the scope of the billing alert if the scope is product line or project.",
-          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-          "type": "string",
-          "x-go-name": "ObjectID"
-        },
-        "percentage": {
-          "description": "The percentage of the threshold at which the user is alerted.",
-          "example": 50,
-          "format": "int32",
-          "type": "integer",
-          "x-go-name": "Percentage"
-        },
-        "percentage_at": {
-          "description": "The percentage of the threshold that has been billed during the current billing time period.",
-          "example": 50,
-          "format": "int32",
-          "type": "integer",
-          "x-go-name": "PercentageAt"
-        },
-        "recipients": {
-          "description": "The recipient group of the billing alert (e.g. admins, editors, viewers).",
-          "items": {
-            "enum": [
-              "admins",
-              "editors",
-              "viewers"
-            ],
-            "type": "string"
-          },
-          "type": "array",
-          "x-go-name": "Recipients"
-        },
-        "repeating": {
-          "description": "Whether the billing alert repeats every frequency period.",
-          "example": true,
-          "type": "boolean",
-          "x-go-name": "Repeating"
-        },
-        "scope": {
-          "description": "The scope of the billing alert (e.g. organization, project, product line).",
-          "enum": [
-            "organization",
-            "product_line",
-            "project"
-          ],
-          "type": "string",
-          "x-go-name": "Scope"
-        },
-        "start_date": {
-          "description": "The date at which the billing alert starts for a billing alert with custom date range.",
-          "example": "2024-08-14T09:00:35Z",
-          "type": "string",
-          "x-go-name": "StartDate"
-        },
-        "threshold": {
-          "description": "The quantity of resources that can be used before the alert is triggered, along with the currency.",
-          "example": 105050.5,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "Threshold"
-        }
-      },
-      "required": [
-        "id",
-        "frequency",
-        "threshold",
-        "repeating",
-        "scope",
-        "percentage",
-        "name",
-        "percentage_at",
-        "active",
-        "created_at"
-      ],
-      "title": "Billing Alert contains information about a customer billing alert.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "BillingAlertGetResponse": {
-      "properties": {
-        "item": {
-          "$ref": "#/definitions/BillingAlert"
-        }
-      },
-      "required": [
-        "item"
-      ],
-      "title": "BillingAlertGetResponse is a response type for GET requests to the billing alert endpoint.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "BillingAlertListResponse": {
-      "properties": {
-        "items": {
-          "items": {
-            "$ref": "#/definitions/BillingAlert"
-          },
-          "type": "array",
-          "x-go-name": "Items"
-        },
-        "next_page_token": {
-          "description": "Base64 encoded token representing the next page of billing alerts.\nEmpty if currently on the last page.",
-          "example": "bXktbGFzdC1ub2Rl",
-          "type": "string",
-          "x-go-name": "NextPageToken"
-        },
-        "prev_page_token": {
-          "description": "Base64 encoded token representing the previous page of billing alerts.\nEmpty if currently on the first page.",
-          "example": "bXktZmlyc3Qtbm9kZQ",
-          "type": "string",
-          "x-go-name": "PrevPageToken"
-        }
-      },
-      "required": [
-        "items"
-      ],
-      "title": "BillingAlertListResponse is a response type for GET requests to the billing alert endpoint.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "BillingAlertPostRequest": {
-      "properties": {
-        "custom_interval_days": {
-          "description": "Custom interval in days when frequency is custom.",
-          "example": 14,
-          "format": "int32",
-          "type": "integer",
-          "x-go-name": "CustomIntervalDays"
-        },
-        "customer_ids": {
-          "description": "The custom recipients belonging to the billing alert.",
-          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479, 1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6",
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "x-go-name": "CustomerIDs"
-        },
-        "expiration_date": {
-          "description": "The date at which the billing alert expires.",
-          "example": "2025-08-14T09:00:35Z",
-          "type": "string",
-          "x-go-name": "ExpirationDate"
-        },
-        "frequency": {
-          "description": "The frequency at which the billing alert is triggered.",
-          "enum": [
-            "daily",
-            "weekly",
-            "monthly",
-            "quarterly",
-            "yearly",
-            "custom"
-          ],
-          "type": "string",
-          "x-go-name": "Frequency"
-        },
-        "name": {
-          "description": "The name of the billing alert.",
-          "example": "billing alert 1",
-          "type": "string",
-          "x-go-name": "Name"
-        },
-        "object_id": {
-          "description": "The object ID associated with the scope of the billing alert if the scope is product line or project.",
-          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-          "type": "string",
-          "x-go-name": "ObjectID"
-        },
-        "percentage": {
-          "description": "The percentage of the threshold at which the user is alerted.",
-          "example": 80,
-          "format": "int32",
-          "type": "integer",
-          "x-go-name": "Percentage"
-        },
-        "recipients": {
-          "description": "The recipient group of the billing alert (e.g. admins, editors, viewers).",
-          "items": {
-            "enum": [
-              "admins",
-              "editors",
-              "viewers"
-            ],
-            "type": "string"
-          },
-          "type": "array",
-          "x-go-name": "Recipients"
-        },
-        "repeating": {
-          "description": "Whether the billing alert repeats every frequency period.",
-          "example": true,
-          "type": "boolean",
-          "x-go-name": "Repeating"
-        },
-        "scope": {
-          "description": "The scope of the billing alert (e.g., organization, project, product line).",
-          "enum": [
-            "organization",
-            "product_line",
-            "project"
-          ],
-          "type": "string",
-          "x-go-name": "Scope"
-        },
-        "start_date": {
-          "description": "The date at which the billing alert starts for a billing alert with custom date range.",
-          "example": "2024-08-14T09:00:35Z",
-          "type": "string",
-          "x-go-name": "StartDate"
-        },
-        "threshold": {
-          "description": "The quantity of resources that can be used before the alert is triggered, along with the currency.",
-          "example": 105050.5,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "Threshold"
-        }
-      },
-      "required": [
-        "frequency",
-        "threshold",
-        "repeating",
-        "scope",
-        "percentage",
-        "name"
-      ],
-      "title": "BillingAlertPostRequest defines the specifications of the billing alert to be created.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "BillingAlertPostResponse": {
-      "properties": {
-        "item": {
-          "$ref": "#/definitions/BillingAlert"
-        }
-      },
-      "required": [
-        "item"
-      ],
-      "title": "BillingAlertPostResponse is the response type for PUT requests to the billing alert endpoint.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "BillingAlertPutRequest": {
-      "properties": {
-        "active": {
-          "description": "Whether the billing alert is active or paused.",
-          "example": true,
-          "type": "boolean",
-          "x-go-name": "Active"
-        },
-        "custom_interval_days": {
-          "description": "Custom interval in days when frequency is custom.",
-          "example": 14,
-          "format": "int32",
-          "type": "integer",
-          "x-go-name": "CustomIntervalDays"
-        },
-        "customer_ids": {
-          "description": "The custom recipients belonging to the billing alert.",
-          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479, 1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6",
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "x-go-name": "CustomerIDs"
-        },
-        "expiration_date": {
-          "description": "The date at which the billing alert expires for a billing alert with custom date range.",
-          "example": "2025-08-14T09:00:35Z",
-          "type": "string",
-          "x-go-name": "ExpirationDate"
-        },
-        "frequency": {
-          "description": "The frequency at which the billing alert is triggered.",
-          "enum": [
-            "daily",
-            "weekly",
-            "monthly",
-            "quarterly",
-            "yearly",
-            "custom"
-          ],
-          "type": "string",
-          "x-go-name": "Frequency"
-        },
-        "name": {
-          "description": "The name of the billing alert.",
-          "example": "'billing alert 1'",
-          "type": "string",
-          "x-go-name": "Name"
-        },
-        "object_id": {
-          "description": "The object ID associated with the scope of the billing alert if the scope is product line or project.",
-          "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-          "type": "string",
-          "x-go-name": "ObjectID"
-        },
-        "percentage": {
-          "description": "The percentage of the threshold at which the user is alerted.",
-          "example": 80,
-          "format": "int32",
-          "type": "integer",
-          "x-go-name": "Percentage"
-        },
-        "recipients": {
-          "description": "The recipient group of the billing alert (e.g. admins, editors, viewers).",
-          "items": {
-            "enum": [
-              "admins",
-              "editors",
-              "viewers"
-            ],
-            "type": "string"
-          },
-          "type": "array",
-          "x-go-name": "Recipients"
-        },
-        "repeating": {
-          "description": "Whether the billing alert repeats every frequency period.",
-          "example": true,
-          "type": "boolean",
-          "x-go-name": "Repeating"
-        },
-        "scope": {
-          "description": "The scope of the billing alert (e.g. organization, project, product line).",
-          "enum": [
-            "organization",
-            "product_line",
-            "project"
-          ],
-          "type": "string",
-          "x-go-name": "Scope"
-        },
-        "start_date": {
-          "description": "The date at which the billing alert starts for a billing alert with custom date range.",
-          "example": "2024-08-14T09:00:35Z",
-          "type": "string",
-          "x-go-name": "StartDate"
-        },
-        "threshold": {
-          "description": "The quantity of resources that can be used before the alert is triggered, along with the currency.",
-          "example": 105050.5,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "Threshold"
-        }
-      },
-      "required": [
-        "frequency",
-        "threshold",
-        "repeating",
-        "scope",
-        "percentage",
-        "name"
-      ],
-      "title": "BillingAlertPutRequest defines the specifications of the billing alert to be created.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "BillingAlertPutResponse": {
-      "properties": {
-        "item": {
-          "$ref": "#/definitions/BillingAlert"
-        }
-      },
-      "required": [
-        "item"
-      ],
-      "title": "BillingAlertPutResponse is the response type for PUT requests to the billing alert endpoint.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "BillingCostData": {
       "properties": {
         "data": {
@@ -11767,109 +11816,6 @@
         "date",
         "quantity",
         "billable_metric"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "BillingIntentGetResponse": {
-      "properties": {
-        "intent": {
-          "example": "https://billing.stripe.com/session/{SESSION_SECRET}",
-          "type": "string",
-          "x-go-name": "Intent"
-        }
-      },
-      "required": [
-        "intent"
-      ],
-      "title": "BillingIntentGetResponse is the response type for Get requests to the entities/billing/intent endpoint.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "BillingResourceDatum": {
-      "properties": {
-        "billable_metric": {
-          "example": "\"instance-hours\"",
-          "type": "string",
-          "x-go-name": "BillableMetric"
-        },
-        "date": {
-          "example": "\"2025-07-04\"",
-          "type": "string",
-          "x-go-name": "Date"
-        },
-        "project_id": {
-          "example": "\"d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb\"",
-          "type": "string",
-          "x-go-name": "ProjectID"
-        },
-        "project_name": {
-          "example": "\"Apollo 11\"",
-          "type": "string",
-          "x-go-name": "ProjectName"
-        },
-        "quantity": {
-          "example": "\"2.123\"",
-          "type": "string",
-          "x-go-name": "Quantity"
-        },
-        "region": {
-          "example": "\"us-northcentral1\"",
-          "type": "string",
-          "x-go-name": "Region"
-        },
-        "resource_id": {
-          "example": "\"d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb\"",
-          "type": "string",
-          "x-go-name": "ResourceID"
-        },
-        "resource_name": {
-          "example": "\"My H200\"",
-          "type": "string",
-          "x-go-name": "ResourceName"
-        },
-        "resource_type": {
-          "example": "\"h200-141gb-sxm-ib.8x\"",
-          "type": "string",
-          "x-go-name": "ResourceType"
-        },
-        "total_price": {
-          "example": "\"12.34\"",
-          "type": "string",
-          "x-go-name": "TotalPrice"
-        },
-        "unit_price": {
-          "example": "\"1.23\"",
-          "type": "string",
-          "x-go-name": "UnitPrice"
-        }
-      },
-      "required": [
-        "date",
-        "project_name",
-        "project_id",
-        "resource_name",
-        "resource_id",
-        "resource_type",
-        "region",
-        "quantity",
-        "billable_metric"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "BillingResourcesResponse": {
-      "properties": {
-        "data": {
-          "items": {
-            "$ref": "#/definitions/BillingResourceDatum"
-          },
-          "type": "array",
-          "x-go-name": "Data"
-        }
-      },
-      "required": [
-        "data"
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -12043,71 +11989,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "CardTransaction": {
-      "properties": {
-        "amount": {
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "Amount"
-        },
-        "created": {
-          "type": "string",
-          "x-go-name": "Created"
-        },
-        "currency": {
-          "type": "string",
-          "x-go-name": "Currency"
-        },
-        "failure_message": {
-          "type": "string",
-          "x-go-name": "FailureMessage"
-        },
-        "id": {
-          "type": "string",
-          "x-go-name": "ID"
-        },
-        "invoice_url": {
-          "type": "string",
-          "x-go-name": "InvoiceURL"
-        },
-        "payment_method": {
-          "$ref": "#/definitions/CardTransactionPaymentMethod"
-        },
-        "receipt_url": {
-          "type": "string",
-          "x-go-name": "ReceiptURL"
-        },
-        "resources": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "x-go-name": "Resources"
-        },
-        "status": {
-          "type": "string",
-          "x-go-name": "Status"
-        }
-      },
-      "title": "CardTransaction represents a single Stripe charge for an org.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "CardTransactionPaymentMethod": {
-      "properties": {
-        "brand": {
-          "type": "string",
-          "x-go-name": "Brand"
-        },
-        "last4": {
-          "type": "string",
-          "x-go-name": "Last4"
-        }
-      },
-      "title": "CardTransactionPaymentMethod holds card details for a charge.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "CcrImage": {
       "properties": {
         "manifest_count": {
@@ -12144,43 +12025,6 @@
         }
       },
       "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "ClusterOverview": {
-      "properties": {
-        "cluster_id": {
-          "description": "Cluster UUID. Empty string for standalone VMs.",
-          "example": "f2d6f4ed-5dd3-4bc7-8765-22f1d7a05877",
-          "type": "string",
-          "x-go-name": "ClusterID"
-        },
-        "cluster_name": {
-          "description": "Cluster display name. Empty string for standalone VMs.",
-          "example": "cmk-training-a",
-          "type": "string",
-          "x-go-name": "ClusterName"
-        },
-        "metrics": {
-          "$ref": "#/definitions/AggregateMetrics"
-        },
-        "vms": {
-          "description": "VMs in this cluster.",
-          "items": {
-            "$ref": "#/definitions/VMDetail"
-          },
-          "type": "array",
-          "x-go-name": "VMs"
-        }
-      },
-      "required": [
-        "vms"
-      ],
-      "title": "ClusterOverview contains the data for a single cluster within a pod (IB) or at the top level (non-IB).",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "ContinueToEnum": {
-      "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateCredentialRequest": {
@@ -12564,178 +12408,6 @@
       "title": "CredentialSecrets holds the secret material for a credential.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
-    },
-    "CredentialsResponse": {
-      "properties": {
-        "credentials": {
-          "description": "Credentials will be deprecated",
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "x-go-name": "Credentials"
-        },
-        "credentials_map": {
-          "additionalProperties": {
-            "$ref": "#/definitions/IdentityCredential"
-          },
-          "type": "object",
-          "x-go-name": "CredentialsMap"
-        }
-      },
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "Credit": {
-      "properties": {
-        "amount": {
-          "example": "\"12.34\"",
-          "type": "string",
-          "x-go-name": "Amount"
-        },
-        "balance": {
-          "example": "\"12.34\"",
-          "type": "string",
-          "x-go-name": "Balance"
-        },
-        "date": {
-          "example": "\"2025-02-14T12:00:00Z\"",
-          "type": "string",
-          "x-go-name": "Date"
-        }
-      },
-      "required": [
-        "amount",
-        "balance",
-        "date"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "CreditBurnEvent": {
-      "properties": {
-        "amount_burned": {
-          "example": "\"25.00\"",
-          "type": "string",
-          "x-go-name": "AmountBurned"
-        },
-        "created_at": {
-          "example": "\"2026-07-01T12:00:00Z\"",
-          "type": "string",
-          "x-go-name": "CreatedAt"
-        },
-        "credit_grant_id": {
-          "example": "\"a1b2c3d4-5678-90ab-cdef-1234567890ab\"",
-          "type": "string",
-          "x-go-name": "CreditGrantID"
-        },
-        "id": {
-          "example": "\"b2c3d4e5-6789-01ab-cdef-2345678901ab\"",
-          "type": "string",
-          "x-go-name": "ID"
-        },
-        "product": {
-          "example": "\"a40.1x\"",
-          "type": "string",
-          "x-go-name": "Product"
-        },
-        "product_family": {
-          "enum": [
-            "vm",
-            "disk",
-            "disk_snapshot",
-            "managed_ai",
-            "kubernetes",
-            "container_registry"
-          ],
-          "example": "\"vm\"",
-          "type": "string",
-          "x-go-name": "ProductFamily"
-        },
-        "product_line": {
-          "example": "\"compute\"",
-          "type": "string",
-          "x-go-name": "ProductLine"
-        },
-        "usage_cost": {
-          "example": "\"25.00\"",
-          "type": "string",
-          "x-go-name": "UsageCost"
-        }
-      },
-      "required": [
-        "id",
-        "credit_grant_id",
-        "product_family",
-        "product_line",
-        "product",
-        "usage_cost",
-        "amount_burned",
-        "created_at"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "CreditGrant": {
-      "properties": {
-        "amount": {
-          "example": "\"500.00\"",
-          "type": "string",
-          "x-go-name": "Amount"
-        },
-        "created_at": {
-          "example": "\"2026-01-01T00:00:00Z\"",
-          "type": "string",
-          "x-go-name": "CreatedAt"
-        },
-        "credit_type": {
-          "enum": [
-            "onboarding",
-            "promotional",
-            "poc",
-            "sla",
-            "billing_correction"
-          ],
-          "example": "\"onboarding\"",
-          "type": "string",
-          "x-go-name": "CreditType"
-        },
-        "expires_at": {
-          "example": "\"2026-12-31T00:00:00Z\"",
-          "type": "string",
-          "x-go-name": "ExpiresAt"
-        },
-        "id": {
-          "example": "\"a1b2c3d4-5678-90ab-cdef-1234567890ab\"",
-          "type": "string",
-          "x-go-name": "ID"
-        },
-        "remaining_balance": {
-          "example": "\"350.00\"",
-          "type": "string",
-          "x-go-name": "RemainingBalance"
-        },
-        "revoked_at": {
-          "example": "\"2026-06-15T10:30:00Z\"",
-          "type": "string",
-          "x-go-name": "RevokedAt"
-        },
-        "updated_at": {
-          "example": "\"2026-07-01T12:00:00Z\"",
-          "type": "string",
-          "x-go-name": "UpdatedAt"
-        }
-      },
-      "required": [
-        "id",
-        "amount",
-        "remaining_balance",
-        "credit_type",
-        "created_at",
-        "updated_at"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CustomImageEditTagsRequest": {
       "properties": {
@@ -13341,23 +13013,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "EditOrgMFARequest": {
-      "properties": {
-        "intended_methods": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "x-go-name": "IntendedMethods"
-        }
-      },
-      "required": [
-        "intended_methods"
-      ],
-      "title": "EditOrgMFARequest is the request type for PATCH requests to the org mfa endpoint.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "EnableS3BucketObjectLockRequest": {
       "properties": {
         "retention_period": {
@@ -13372,21 +13027,6 @@
         }
       },
       "title": "EnableS3BucketObjectLockRequest defines the body for enabling object lock.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "EntitiesInvitesPatchRequest": {
-      "properties": {
-        "customer_id": {
-          "example": "465a1fb5-f37e-4483-ad36-bf994efcb170",
-          "type": "string",
-          "x-go-name": "CustomerID"
-        }
-      },
-      "required": [
-        "customer_id"
-      ],
-      "title": "EntitiesInvitesPatchRequest is the request type for PATCH requests to the entities.customers endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -13524,28 +13164,6 @@
       "title": "Entity contains identifying information for an organization.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "ErrorBody": {
-      "properties": {
-        "code": {
-          "type": "string",
-          "x-go-name": "Code"
-        },
-        "error_id": {
-          "type": "string",
-          "x-go-name": "ErrorID"
-        },
-        "message": {
-          "type": "string",
-          "x-go-name": "Message"
-        },
-        "reason": {
-          "type": "string",
-          "x-go-name": "Reason"
-        }
-      },
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/rpc/httperror"
     },
     "ExternalLoadBalancer": {
       "properties": {
@@ -13685,25 +13303,6 @@
         "listen_ports_and_backends"
       ],
       "title": "ExternalLoadBalancerPostRequest defines the structure of the request body for creating an external load balancer.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "FeatureFlagsGetResponse": {
-      "properties": {
-        "feature_flags": {
-          "additionalProperties": {},
-          "example": {
-            "curated-images": true,
-            "infiniband": false
-          },
-          "type": "object",
-          "x-go-name": "FeatureFlags"
-        }
-      },
-      "required": [
-        "feature_flags"
-      ],
-      "title": "FeatureFlagsGetResponse is the response type for GET requests to the feature flags endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -13973,188 +13572,18 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "GetBillingMonthlySummaryResponseV1Alpha5": {
+    "GetS3BucketsCountResponse": {
+      "description": "This is the REST-friendly model for the `GetS3BucketCountResponse` proto.",
       "properties": {
-        "credits_balance": {
-          "description": "Amount of credits the customer has",
-          "example": "\"12.34\"",
-          "type": "string",
-          "x-go-name": "CreditsBalance"
-        },
-        "currency": {
-          "description": "Currency used by all the fields above",
-          "example": "\"usd\"",
-          "type": "string",
-          "x-go-name": "Currency"
-        },
-        "current_month_charges": {
-          "description": "Total Non-Reservation charges for the current month (so far)",
-          "example": "\"12.34\"",
-          "type": "string",
-          "x-go-name": "CurrentMonthCharges"
-        },
-        "current_month_credits_used": {
-          "description": "Amount of credits used this month",
-          "example": "\"12.34\"",
-          "type": "string",
-          "x-go-name": "CurrentMonthCreditsUsed"
-        },
-        "forecasted_credits_used": {
-          "description": "Predicted number of credits used this month",
-          "example": "\"12.34\"",
-          "type": "string",
-          "x-go-name": "ForecastedCreditsUsed"
-        },
-        "forecasted_monthly_charges": {
-          "description": "Predicted Non-Reservation charges by the end of the month",
-          "example": "\"12.34\"",
-          "type": "string",
-          "x-go-name": "ForecastedMonthlyCharges"
-        },
-        "pct_diff_forecasted_month": {
-          "description": "Predicted change in costs between forecasted month and previous month",
-          "example": 8.5,
-          "format": "float",
-          "type": "number",
-          "x-go-name": "PctDiffForecastedMonth"
-        },
-        "pct_diff_prev_month": {
-          "description": "Percentage change in costs between current month and previous month",
-          "example": 8.5,
-          "format": "float",
-          "type": "number",
-          "x-go-name": "PctDiffPrevMonth"
-        },
-        "prior_month_charges": {
-          "description": "Total Non-Reservation charges for last month",
-          "example": "\"12.34\"",
-          "type": "string",
-          "x-go-name": "PriorMonthCharges"
-        },
-        "prior_month_credits_used": {
-          "description": "Amount of credits used last month",
-          "example": "\"12.34\"",
-          "type": "string",
-          "x-go-name": "PriorMonthCreditsUsed"
-        },
-        "total_credits_used": {
-          "description": "Amount of credits used ever",
-          "example": "\"12.34\"",
-          "type": "string",
-          "x-go-name": "TotalCreditsUsed"
-        }
-      },
-      "title": "This API is internal use and won't be exposed to customers.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "GetCreditBalanceResponse": {
-      "properties": {
-        "grants_count": {
+        "bucket_count": {
+          "description": "Number of S3 buckets in the project. May be absent when the count is\nzero (proto3 marshalling omits zero-valued scalars), so consumers\nshould treat a missing field as 0.",
           "example": 3,
-          "format": "int32",
+          "format": "int64",
           "type": "integer",
-          "x-go-name": "GrantsCount"
-        },
-        "total_balance": {
-          "example": "\"1250.00\"",
-          "type": "string",
-          "x-go-name": "TotalBalance"
+          "x-go-name": "BucketCount"
         }
       },
-      "required": [
-        "total_balance",
-        "grants_count"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "GetCreditsResponseV1Alpha5": {
-      "properties": {
-        "credits": {
-          "items": {
-            "$ref": "#/definitions/Credit"
-          },
-          "type": "array",
-          "x-go-name": "Credits"
-        },
-        "currency": {
-          "example": "\"usd\"",
-          "type": "string",
-          "x-go-name": "Currency"
-        }
-      },
-      "required": [
-        "credits",
-        "currency"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "GetNotificationPreferencesResponse": {
-      "properties": {
-        "items": {
-          "description": "Notification preferences grouped by category.",
-          "items": {
-            "$ref": "#/definitions/NotificationCategoryPreferences"
-          },
-          "type": "array",
-          "x-go-name": "Items"
-        }
-      },
-      "required": [
-        "items"
-      ],
-      "title": "GetNotificationPreferencesResponse is the response for GET user notification preferences.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "GetOrgMFAResponse": {
-      "properties": {
-        "mfa_methods": {
-          "items": {
-            "$ref": "#/definitions/OrganizationMFA"
-          },
-          "type": "array",
-          "x-go-name": "MFAMethods"
-        }
-      },
-      "required": [
-        "mfa_methods"
-      ],
-      "title": "GetOrgMFAResponse is the response type for GET requests to the org mfa endpoint.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "GetOrgNotificationEndpointsResponse": {
-      "properties": {
-        "items": {
-          "description": "Svix webhook endpoints configured for the organization.",
-          "items": {
-            "$ref": "#/definitions/NotificationEndpointItem"
-          },
-          "type": "array",
-          "x-go-name": "Items"
-        }
-      },
-      "required": [
-        "items"
-      ],
-      "title": "GetOrgNotificationEndpointsResponse is the response for GET org notification endpoints.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "GetTopologyResponse": {
-      "properties": {
-        "ib_networks": {
-          "items": {
-            "$ref": "#/definitions/IbNetworkInfo"
-          },
-          "type": "array",
-          "x-go-name": "IbNetworks"
-        }
-      },
-      "title": "GetTopologyResponse is the gateway response for cluster topology.",
+      "title": "GetS3BucketsCountResponse is the response type for GET requests to the S3 buckets count endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -14235,65 +13664,6 @@
         "timeout"
       ],
       "title": "HealthCheckOptionsExternalLB defines the health check configuration.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "HealthCounts": {
-      "properties": {
-        "degraded": {
-          "description": "Number of degraded VMs.",
-          "example": 1,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "Degraded"
-        },
-        "healthy": {
-          "description": "Number of healthy VMs.",
-          "example": 5,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "Healthy"
-        },
-        "non_healthy_vms": {
-          "description": "VMs that are degraded or unhealthy, with reason details.",
-          "items": {
-            "$ref": "#/definitions/NonHealthyVM"
-          },
-          "type": "array",
-          "x-go-name": "NonHealthyVMs"
-        },
-        "not_evaluated": {
-          "description": "Number of VMs whose health could not be evaluated.",
-          "example": 2,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "NotEvaluated"
-        },
-        "not_evaluated_vms": {
-          "description": "VMs whose health could not be evaluated, with reason details.",
-          "items": {
-            "$ref": "#/definitions/NonHealthyVM"
-          },
-          "type": "array",
-          "x-go-name": "NotEvaluatedVMs"
-        },
-        "unhealthy": {
-          "description": "Number of unhealthy VMs.",
-          "example": 0,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "Unhealthy"
-        }
-      },
-      "required": [
-        "healthy",
-        "degraded",
-        "unhealthy",
-        "not_evaluated",
-        "non_healthy_vms",
-        "not_evaluated_vms"
-      ],
-      "title": "HealthCounts contains the count of VMs by health status.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -14392,7 +13762,7 @@
         },
         "slice_type": {
           "description": "VM slice type the capacity applies to.",
-          "example": "16 vCPUs \u0026 125GB RAM \u0026 1 A100 (40GB) GPU",
+          "example": "16 vCPUs & 125GB RAM & 1 A100 (40GB) GPU",
           "type": "string",
           "x-go-name": "SliceType"
         }
@@ -14469,28 +13839,6 @@
         "private_ipv4",
         "public_ipv4"
       ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "IbNetworkInfo": {
-      "properties": {
-        "ib_network_id": {
-          "type": "string",
-          "x-go-name": "IbNetworkID"
-        },
-        "ib_network_name": {
-          "type": "string",
-          "x-go-name": "IbNetworkName"
-        },
-        "nodepool_infos": {
-          "items": {
-            "$ref": "#/definitions/NodepoolInfo"
-          },
-          "type": "array",
-          "x-go-name": "NodepoolInfos"
-        }
-      },
-      "title": "IbNetworkInfo contains information about an InfiniBand network.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -14862,161 +14210,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "InstanceTemplate": {
-      "properties": {
-        "created_at": {
-          "description": "Creation timestamp of the instance template, in RFC3339 format.",
-          "example": "2024-01-01T00:00:00Z",
-          "type": "string",
-          "x-go-name": "CreatedAt"
-        },
-        "custom_image_name": {
-          "description": "Custom image to use for all VMs created from this instance template.",
-          "example": "ubuntu:20.04",
-          "type": "string",
-          "x-go-name": "CustomImage"
-        },
-        "disks": {
-          "description": "Disks attached to all VMs created from this instance template.",
-          "items": {
-            "$ref": "#/definitions/DiskTemplate"
-          },
-          "type": "array",
-          "x-go-name": "Disks"
-        },
-        "ib_partition_id": {
-          "type": "string",
-          "x-go-name": "IBPartition"
-        },
-        "id": {
-          "description": "ID of the instance template.",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-          "type": "string",
-          "x-go-name": "ID"
-        },
-        "image_name": {
-          "description": "OS Image to use for all VMs created from this instance template.",
-          "example": "ubuntu:20.04",
-          "type": "string",
-          "x-go-name": "Image"
-        },
-        "location": {
-          "description": "Location to use for all VMs created from this instance template.\nMay be empty if we do not want to bind this template to a location.",
-          "example": "us-northcentral1-a",
-          "type": "string",
-          "x-go-name": "Location"
-        },
-        "maintenance_policy": {
-          "description": "Host maintenance policy controlling how VMs created from this instance template behave during\nhost maintenance: manual, stop-vm, or unspecified.",
-          "enum": [
-            "manual",
-            "stop-vm",
-            "unspecified"
-          ],
-          "type": "string",
-          "x-go-name": "MaintenancePolicy"
-        },
-        "name": {
-          "description": "Name of the instance template. (This is not the name of the VMs created from this instance template.)",
-          "example": "my-instance-template",
-          "type": "string",
-          "x-go-name": "Name"
-        },
-        "nvlink_domain_id": {
-          "description": "NVLink domain assigned to all VMs created from this instance template.",
-          "example": "550e8400-e29b-41d4-a716-446655440000",
-          "type": "string",
-          "x-go-name": "NvlinkDomainID"
-        },
-        "placement_policy": {
-          "description": "Placement policy controlling how VMs created from this instance template are\ndistributed across hosts: spread or unspecified.",
-          "enum": [
-            "spread",
-            "unspecified"
-          ],
-          "type": "string",
-          "x-go-name": "PlacementPolicy"
-        },
-        "project_id": {
-          "description": "ID of the project this instance template belongs to.",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
-          "type": "string",
-          "x-go-name": "ProjectID"
-        },
-        "public_ip_address_type": {
-          "description": "Public IP address type to use for all VMs created from this instance template. Must either be \"static\" or \"dynamic\".",
-          "example": "static",
-          "type": "string",
-          "x-go-name": "PublicIPAddressType"
-        },
-        "reservation_id": {
-          "description": "Reservation used for all VMs created from this instance template.",
-          "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
-          "type": "string",
-          "x-go-name": "ReservationID"
-        },
-        "shutdown_script": {
-          "description": "Shutdown script to use for all VMs created from this instance template.",
-          "example": "#!/bin/bash\\necho 'goodbye'",
-          "type": "string",
-          "x-go-name": "ShutdownScript"
-        },
-        "ssh_public_key": {
-          "description": "SSH public key to use for all VMs created from this instance template.",
-          "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D",
-          "type": "string",
-          "x-go-name": "SSHPubKey"
-        },
-        "startup_script": {
-          "description": "Startup script to use for all VMs created from this instance template.",
-          "example": "#!/bin/bash\\necho 'hello'",
-          "type": "string",
-          "x-go-name": "StartupScript"
-        },
-        "subnet_id": {
-          "description": "SubnetID to use for all VMs created from this instance template.\nOnly used if template has a location.",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
-          "type": "string",
-          "x-go-name": "SubnetID"
-        },
-        "transport_partition_id": {
-          "description": "IB or RoCE partition to use for all VMs created from this instance template.\nOnly used for transport-enabled VM types. Empty if template has no location.",
-          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
-          "type": "string",
-          "x-go-name": "TransportPartitionID"
-        },
-        "type": {
-          "description": "Product name of the VM type we want to create from this instance template.",
-          "example": "a100.2x",
-          "type": "string",
-          "x-go-name": "Type"
-        },
-        "virtualization_features": {
-          "$ref": "#/definitions/VirtualizationFeatures"
-        }
-      },
-      "required": [
-        "name",
-        "id",
-        "type",
-        "ssh_public_key",
-        "startup_script",
-        "shutdown_script",
-        "image_name",
-        "ib_partition_id",
-        "transport_partition_id",
-        "subnet_id",
-        "location",
-        "project_id",
-        "created_at",
-        "public_ip_address_type",
-        "placement_policy",
-        "maintenance_policy"
-      ],
-      "title": "InstanceTemplate defines the specifications of VMs to be created during bulk VM creation.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "InstanceTemplatePostRequestV1Alpha5": {
       "properties": {
         "custom_image_name": {
@@ -15135,156 +14328,104 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "InstanceTypeDetailResponse": {
-      "description": "The layout field determines which section is populated: network_topology (IB) or clusters (non-IB).",
+    "InstanceTemplatesServiceCreateInstanceTemplateBody": {
+      "description": "CreateInstanceTemplateRequest is the request for creating an instance template.",
       "properties": {
-        "clusters": {
-          "description": "Clusters with VMs. Populated for non-IB layouts only.",
+        "custom_image_name": {
+          "description": "custom_image_name is the custom OS image to use. Supply either image_name or custom_image_name.",
+          "example": "my-image:latest",
+          "type": "string"
+        },
+        "disks": {
           "items": {
-            "$ref": "#/definitions/ClusterOverview"
+            "$ref": "#/definitions/customerDiskTemplate",
+            "type": "object"
           },
-          "type": "array",
-          "x-go-name": "Clusters"
+          "title": "disks are the disks to create for every VM created from this instance template",
+          "type": "array"
         },
-        "instance_type": {
-          "description": "The instance type name.",
-          "example": "gb200-186gb-nvl-ib.4x",
-          "type": "string",
-          "x-go-name": "InstanceType"
+        "ib_partition_id": {
+          "description": "ib_partition_id is the transport partition to give to every VM created from this instance template.\n\nDeprecated: use transport_partition_id.",
+          "type": "string"
         },
-        "layout": {
-          "description": "The layout type: \"ib-instances\" or \"non-ib-instances\".",
-          "example": "ib-instances",
-          "type": "string",
-          "x-go-name": "Layout"
+        "image_name": {
+          "description": "image_name is the curated OS image to use. Supply either image_name or custom_image_name.",
+          "example": "ubuntu:20.04",
+          "type": "string"
         },
-        "network_topology": {
-          "description": "Network topology with pods and clusters. Populated for IB layouts only.",
-          "items": {
-            "$ref": "#/definitions/PodOverview"
-          },
-          "type": "array",
-          "x-go-name": "NetworkTopology"
+        "location": {
+          "description": "location is the location to bind the instance template to. When set, every location-specific\nfield must also be set.",
+          "example": "us-northcentral1-a",
+          "type": "string"
         },
-        "summary": {
-          "$ref": "#/definitions/InstanceTypeSummary"
+        "maintenance_policy": {
+          "description": "maintenance_policy is the host maintenance policy. One of \"manual\", \"auto-stop\", \"stop-vm\" or\n\"unspecified\". \"auto-stop\" is an alias for \"stop-vm\".",
+          "example": "stop-vm",
+          "type": "string"
+        },
+        "nvlink_domain_id": {
+          "example": "550e8400-e29b-41d4-a716-446655440000",
+          "title": "nvlink_domain_id is the NVLink domain to assign to the instance template",
+          "type": "string"
+        },
+        "placement_policy": {
+          "description": "placement_policy is the VM placement policy. One of \"spread\" or \"unspecified\".",
+          "example": "spread",
+          "type": "string"
+        },
+        "public_ip_address_type": {
+          "description": "public_ip_address_type is the public IP address type to give to every VM created from this\ninstance template. One of \"static\" or \"dynamic\".",
+          "example": "static",
+          "type": "string"
+        },
+        "reservation_id": {
+          "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
+          "title": "reservation_id is the billing reservation the instance template draws from",
+          "type": "string"
+        },
+        "shutdown_script": {
+          "title": "shutdown_script is the shutdown script to give to every VM created from this instance template",
+          "type": "string"
+        },
+        "ssh_public_key": {
+          "title": "ssh_public_key is the SSH public key to give to every VM created from this instance template",
+          "type": "string"
+        },
+        "startup_script": {
+          "title": "startup_script is the startup script to give to every VM created from this instance template",
+          "type": "string"
+        },
+        "subnet_id": {
+          "description": "subnet_id is the subnet to give to every VM created from this instance template.\nThis field is location-specific.",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
+          "type": "string"
+        },
+        "template_name": {
+          "description": "template_name is the name of the instance template. This is not the name of the VMs created from it.",
+          "example": "my-instance-template",
+          "type": "string"
+        },
+        "transport_partition_id": {
+          "description": "transport_partition_id is the IB or RoCE partition to give to every VM created from this\ninstance template. Supply it only for transport-enabled VM types. This field is location-specific.",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
+          "type": "string"
+        },
+        "type": {
+          "example": "a100.2x",
+          "title": "type is the product name of the VM type to create from this instance template",
+          "type": "string"
+        },
+        "virtualization_features": {
+          "$ref": "#/definitions/customerVirtualizationFeatures",
+          "title": "virtualization_features are the virtualization features to give to every VM created from this\ninstance template"
         }
       },
       "required": [
-        "layout",
-        "instance_type",
-        "summary"
+        "template_name",
+        "type",
+        "ssh_public_key"
       ],
-      "title": "InstanceTypeDetailResponse is the gateway response for the instance type detail view.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "InstanceTypeMetrics": {
-      "properties": {
-        "cpu_utilization_avg": {
-          "description": "Average CPU utilization across all VMs of this instance type (0-100).",
-          "example": 45.2,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "CPUUtilizationAvg"
-        },
-        "gpu_utilization_avg": {
-          "description": "Average GPU utilization across all VMs of this instance type (0-100).",
-          "example": 72.5,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "GPUUtilizationAvg"
-        },
-        "health": {
-          "$ref": "#/definitions/HealthCounts"
-        },
-        "p95_power_watts": {
-          "description": "P95 GPU power draw in watts across all VMs of this instance type.",
-          "example": 320,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "P95PowerWatts"
-        },
-        "p95_temperature_celsius": {
-          "description": "P95 GPU temperature in Celsius across all VMs of this instance type.",
-          "example": 68,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "P95TemperatureCelsius"
-        }
-      },
-      "required": [
-        "health"
-      ],
-      "title": "InstanceTypeMetrics contains the metric values for an instance type.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "InstanceTypeOverview": {
-      "properties": {
-        "instance_count": {
-          "description": "The number of VMs of this instance type.",
-          "example": 8,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "InstanceCount"
-        },
-        "instance_type": {
-          "description": "The instance type name.",
-          "example": "h100-80gb-sxm-ib.8x",
-          "type": "string",
-          "x-go-name": "InstanceType"
-        },
-        "metrics": {
-          "$ref": "#/definitions/InstanceTypeMetrics"
-        },
-        "remediation": {
-          "$ref": "#/definitions/RemediationCounts"
-        }
-      },
-      "required": [
-        "instance_type",
-        "instance_count",
-        "metrics"
-      ],
-      "title": "InstanceTypeOverview contains summary metrics for a single instance type.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "InstanceTypeSummary": {
-      "properties": {
-        "cpu_utilization_avg": {
-          "description": "Average CPU utilization (%) across all VMs of this instance type.",
-          "example": 45,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "CPUUtilizationAvg"
-        },
-        "gpu_utilization_avg": {
-          "description": "Average GPU utilization (%) across all VMs of this instance type.",
-          "example": 84.2,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "GPUUtilizationAvg"
-        },
-        "p95_power_watts": {
-          "description": "P95 GPU power draw in watts across all VMs of this instance type.",
-          "example": 425,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "P95PowerWatts"
-        },
-        "p95_temperature_celsius": {
-          "description": "P95 GPU temperature in Celsius across all VMs of this instance type.",
-          "example": 81,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "P95TemperatureCelsius"
-        }
-      },
-      "title": "InstanceTypeSummary contains the top-level summary metrics for an instance type.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+      "type": "object"
     },
     "InstanceV1Alpha5": {
       "description": "InstanceV1Alpha5 contains identifying information about a vm instance for\nvms.instances endpoints.",
@@ -16249,6 +15390,9 @@
     },
     "KubernetesNodePool": {
       "properties": {
+        "autoscaling_config": {
+          "$ref": "#/definitions/KubernetesNodePoolAutoscalingConfig"
+        },
         "cluster_id": {
           "description": "ID of the Kubernetes cluster the node pool belongs to.",
           "example": "9c8b7d6e-5f4a-3b2c-1e0f-2a3b4c5d6e7f",
@@ -16256,7 +15400,7 @@
           "x-go-name": "ClusterID"
         },
         "count": {
-          "description": "Number of nodes in the node pool.",
+          "description": "Desired number of nodes in the node pool. The number of running nodes\nmay temporarily differ while the pool is scaling or repairing.",
           "example": 4,
           "format": "int64",
           "type": "integer",
@@ -16273,6 +15417,9 @@
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd"
+        },
+        "health": {
+          "$ref": "#/definitions/KubernetesNodePoolHealth"
         },
         "id": {
           "description": "ID of the node pool.",
@@ -16363,7 +15510,19 @@
           "x-go-name": "ReservationID"
         },
         "state": {
-          "description": "Current state of the node pool.",
+          "description": "Current state of the node pool. One of STATE_UNSPECIFIED,\nSTATE_PROVISIONING, STATE_RUNNING, STATE_DEGRADED, STATE_UPDATING,\nSTATE_UPGRADING, STATE_ROTATING, STATE_DELETING, STATE_DELETED, or\nSTATE_UNHEALTHY; new states may be added over time, so treat unknown\nvalues as display-only. STATE_DEGRADED indicates the pool failed to\nreach its desired ready node count for a non-capacity reason after\nexhausting retries, and persists until the pool recovers. A pool that\nis below its desired count but still converging stays STATE_RUNNING;\ncapacity shortfalls never degrade the pool and are reported in\nhealth.issues instead.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "STATE_PROVISIONING",
+            "STATE_RUNNING",
+            "STATE_DEGRADED",
+            "STATE_UPDATING",
+            "STATE_UPGRADING",
+            "STATE_ROTATING",
+            "STATE_DELETING",
+            "STATE_DELETED",
+            "STATE_UNHEALTHY"
+          ],
           "example": "STATE_RUNNING",
           "type": "string",
           "x-go-name": "State"
@@ -16408,6 +15567,154 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "KubernetesNodePoolAutoscalingConfig": {
+      "properties": {
+        "enabled": {
+          "description": "Whether the Cluster Autoscaler manages this node pool's size.",
+          "example": true,
+          "type": "boolean",
+          "x-go-name": "Enabled"
+        },
+        "max_node_size": {
+          "description": "Maximum number of nodes the autoscaler may scale up to. Must be\n>= min_node_size; [0, 0] pins the pool at zero nodes. Required alongside\nmin_node_size when enabled is true; ignored when enabled is false.",
+          "example": 10,
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "MaxNodeSize"
+        },
+        "min_node_size": {
+          "description": "Minimum number of nodes the autoscaler may scale down to. 0 permits\nscale-to-zero. Required alongside max_node_size when enabled is true;\nignored when enabled is false.",
+          "example": 1,
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "MinNodeSize"
+        }
+      },
+      "required": [
+        "enabled",
+        "min_node_size",
+        "max_node_size"
+      ],
+      "title": "KubernetesNodePoolAutoscalingConfig defines the Cluster Autoscaler policy for a node pool.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesNodePoolHealth": {
+      "properties": {
+        "issues": {
+          "description": "Current issues detected on the node pool.",
+          "items": {
+            "$ref": "#/definitions/KubernetesNodePoolHealthIssue"
+          },
+          "type": "array",
+          "x-go-name": "Issues"
+        }
+      },
+      "required": [
+        "issues"
+      ],
+      "title": "KubernetesNodePoolHealth reports current issues on a node pool.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesNodePoolHealthIssue": {
+      "properties": {
+        "affected_count": {
+          "description": "Number of nodes affected by the issue.",
+          "example": 2,
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "AffectedCount"
+        },
+        "affected_node_ids": {
+          "description": "IDs of the affected nodes, when known. Node IDs are the IDs of the VMs\nbacking the nodes.",
+          "example": [
+            "1e490fee-1624-4cab-a535-061ae6fdf863"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "AffectedNodeIDs"
+        },
+        "code": {
+          "description": "Machine-readable code for the issue, e.g. INSUFFICIENT_CAPACITY or\nNODE_NOT_READY. New codes may be added; treat unknown values as\ndisplay-only. INSUFFICIENT_CAPACITY appears as soon as a provisioning\nattempt fails for capacity and persists until the node deficit is\nresolved; it never changes the pool state.",
+          "example": "INSUFFICIENT_CAPACITY",
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "message": {
+          "description": "Human-readable description of the issue.",
+          "example": "Could not provision 2 of 3 nodes: no c1a.2x capacity available",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "since": {
+          "description": "Time the issue started, in RFC3339 format.",
+          "example": "2026-08-09T13:10:00Z",
+          "type": "string",
+          "x-go-name": "Since"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "KubernetesNodePoolHealthIssue is one current issue on a node pool.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesNodePoolNode": {
+      "properties": {
+        "created_at": {
+          "description": "Creation timestamp of the node, in RFC3339 format.",
+          "example": "2026-05-21T18:35:25Z",
+          "type": "string",
+          "x-go-name": "CreatedAt"
+        },
+        "instance_id": {
+          "description": "ID of the Crusoe VM that backs the node.",
+          "example": "1e490fee-1624-4cab-a535-061ae6fdf863",
+          "type": "string",
+          "x-go-name": "InstanceID"
+        },
+        "name": {
+          "description": "Kubernetes Node name as registered in the cluster.",
+          "example": "node-1e490fee.cmk.crusoe.ai",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "status": {
+          "description": "Status of the node. PROVISIONING and DELETING are lifecycle states;\nREADY, NOT_READY, and UNKNOWN reflect kubelet readiness once the node\nis in service.",
+          "enum": [
+            "PROVISIONING",
+            "READY",
+            "NOT_READY",
+            "DELETING",
+            "UNKNOWN"
+          ],
+          "example": "READY",
+          "type": "string",
+          "x-go-name": "Status"
+        },
+        "version": {
+          "description": "Node software version of the node, e.g. the Kubernetes version with\nthe CMK build suffix.",
+          "example": "1.33.4-cmk.20",
+          "type": "string",
+          "x-go-name": "Version"
+        }
+      },
+      "required": [
+        "name",
+        "instance_id",
+        "status",
+        "version",
+        "created_at"
+      ],
+      "title": "KubernetesNodePoolNode is a Kubernetes Node backing a node pool.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "KubernetesNodePoolPatchRequest": {
       "properties": {
         "action": {
@@ -16423,8 +15730,11 @@
           "x-go-name": "Action",
           "x-redocly-optional": true
         },
+        "autoscaling_config": {
+          "$ref": "#/definitions/KubernetesNodePoolAutoscalingConfig"
+        },
         "count": {
-          "description": "New number of nodes in the node pool.",
+          "description": "New desired number of nodes in the node pool.",
           "example": 4,
           "format": "int64",
           "type": "integer",
@@ -16503,6 +15813,9 @@
     },
     "KubernetesNodePoolPostRequest": {
       "properties": {
+        "autoscaling_config": {
+          "$ref": "#/definitions/KubernetesNodePoolAutoscalingConfig"
+        },
         "cluster_id": {
           "description": "ID of the cluster the new node pool belongs to.",
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
@@ -16510,7 +15823,7 @@
           "x-go-name": "ClusterID"
         },
         "count": {
-          "description": "Number of nodes to create.",
+          "description": "Desired number of nodes in the node pool.",
           "example": 4,
           "format": "int64",
           "type": "integer",
@@ -16622,21 +15935,6 @@
         "product_name",
         "count",
         "cluster_id"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "KubernetesNodePoolResponse": {
-      "properties": {
-        "details": {
-          "$ref": "#/definitions/OperationDetails"
-        },
-        "node_pool": {
-          "$ref": "#/definitions/KubernetesNodePool"
-        }
-      },
-      "required": [
-        "node_pool"
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -16977,28 +16275,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "ListCardTransactionsResponse": {
-      "properties": {
-        "has_more": {
-          "type": "boolean",
-          "x-go-name": "HasMore"
-        },
-        "items": {
-          "items": {
-            "$ref": "#/definitions/CardTransaction"
-          },
-          "type": "array",
-          "x-go-name": "Items"
-        },
-        "next_cursor": {
-          "type": "string",
-          "x-go-name": "NextCursor"
-        }
-      },
-      "title": "ListCardTransactionsResponse holds the response payload for listing card transactions.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "ListCcrImagesResponse": {
       "properties": {
         "items": {
@@ -17027,38 +16303,6 @@
       "title": "ListCredentialsResponse is the response body for listing credentials.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
-    },
-    "ListCreditBurnEventsResponse": {
-      "properties": {
-        "burn_events": {
-          "items": {
-            "$ref": "#/definitions/CreditBurnEvent"
-          },
-          "type": "array",
-          "x-go-name": "BurnEvents"
-        }
-      },
-      "required": [
-        "burn_events"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "ListCreditGrantsResponse": {
-      "properties": {
-        "credit_grants": {
-          "items": {
-            "$ref": "#/definitions/CreditGrant"
-          },
-          "type": "array",
-          "x-go-name": "CreditGrants"
-        }
-      },
-      "required": [
-        "credit_grants"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListDeploymentsResponse": {
       "properties": {
@@ -17224,23 +16468,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "ListInstanceTemplatesResponseV1Alpha5": {
-      "description": "ListInstanceTemplatesResponseV1Alpha5 is the resource response type for GET\nrequests to the InstanceTemplates endpoint.",
-      "properties": {
-        "items": {
-          "items": {
-            "$ref": "#/definitions/InstanceTemplate"
-          },
-          "type": "array",
-          "x-go-name": "Items"
-        }
-      },
-      "required": [
-        "items"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "ListInstancesResponseV1Alpha5": {
       "properties": {
         "items": {
@@ -17282,6 +16509,28 @@
       },
       "required": [
         "items"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "ListKubernetesNodePoolNodesResponse": {
+      "properties": {
+        "next_page_token": {
+          "description": "Token to retrieve the next page of results. Absent on the last page.",
+          "type": "string",
+          "x-go-name": "NextPageToken"
+        },
+        "nodes": {
+          "description": "List of Kubernetes Nodes backing the node pool.",
+          "items": {
+            "$ref": "#/definitions/KubernetesNodePoolNode"
+          },
+          "type": "array",
+          "x-go-name": "Nodes"
+        }
+      },
+      "required": [
+        "nodes"
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -17465,22 +16714,6 @@
         }
       },
       "title": "ListOrgQuotasResponse is the response for listing a org's quotas.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "ListPaymentMethodsResponse": {
-      "properties": {
-        "items": {
-          "items": {
-            "$ref": "#/definitions/PaymentMethodCard"
-          },
-          "type": "array",
-          "x-go-name": "Items"
-        }
-      },
-      "required": [
-        "items"
-      ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -18451,259 +17684,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "NodepoolInfo": {
-      "properties": {
-        "instance_type": {
-          "type": "string",
-          "x-go-name": "InstanceType"
-        },
-        "nodepool_id": {
-          "type": "string",
-          "x-go-name": "NodepoolID"
-        },
-        "nodepool_name": {
-          "type": "string",
-          "x-go-name": "NodepoolName"
-        },
-        "nodepool_state": {
-          "type": "string",
-          "x-go-name": "NodepoolState"
-        },
-        "vms": {
-          "items": {
-            "$ref": "#/definitions/VMInfo"
-          },
-          "type": "array",
-          "x-go-name": "Vms"
-        }
-      },
-      "title": "NodepoolInfo contains information about a nodepool.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "NonHealthyVM": {
-      "properties": {
-        "detail": {
-          "description": "Human-readable detail about the health status.",
-          "example": "MemoryPressure",
-          "type": "string",
-          "x-go-name": "Detail"
-        },
-        "reason": {
-          "description": "The reason code for the health status.",
-          "example": "node_condition",
-          "type": "string",
-          "x-go-name": "Reason"
-        },
-        "status": {
-          "description": "The health status (degraded, unhealthy, or not_evaluated).",
-          "example": "degraded",
-          "type": "string",
-          "x-go-name": "Status"
-        },
-        "vm_id": {
-          "description": "The VM ID.",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-          "type": "string",
-          "x-go-name": "VMID"
-        },
-        "vm_name": {
-          "description": "The VM name.",
-          "example": "my-gpu-node-1",
-          "type": "string",
-          "x-go-name": "VMName"
-        }
-      },
-      "required": [
-        "vm_id",
-        "vm_name",
-        "status",
-        "reason",
-        "detail"
-      ],
-      "title": "NonHealthyVM describes a single non-healthy or not-evaluated VM and the reason for its status.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "NotificationCategoryPreferences": {
-      "properties": {
-        "category": {
-          "description": "The category key (e.g. BILLING_AND_COST_ALERTS).",
-          "example": "BILLING_AND_COST_ALERTS",
-          "type": "string",
-          "x-go-name": "Category"
-        },
-        "notifications": {
-          "description": "Notification types within this category.",
-          "items": {
-            "$ref": "#/definitions/NotificationPreferenceItem"
-          },
-          "type": "array",
-          "x-go-name": "Notifications"
-        }
-      },
-      "required": [
-        "category",
-        "notifications"
-      ],
-      "title": "NotificationCategoryPreferences groups notification preferences by category.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "NotificationChannelPreference": {
-      "properties": {
-        "channel": {
-          "description": "The delivery channel (e.g. email).",
-          "example": "email",
-          "type": "string",
-          "x-go-name": "Channel"
-        },
-        "default_preference": {
-          "description": "The catalog default for this channel.",
-          "enum": [
-            "enabled",
-            "disabled",
-            "required"
-          ],
-          "type": "string",
-          "x-go-name": "DefaultPreference"
-        },
-        "status": {
-          "description": "Whether the user has enabled, disabled, or is required to receive this notification.",
-          "enum": [
-            "enabled",
-            "disabled",
-            "required"
-          ],
-          "type": "string",
-          "x-go-name": "Status"
-        }
-      },
-      "required": [
-        "channel",
-        "status",
-        "default_preference"
-      ],
-      "title": "NotificationChannelPreference is the per-channel subscription status for a notification type.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "NotificationEndpointItem": {
-      "properties": {
-        "description": {
-          "description": "Optional description of the endpoint.",
-          "example": "Infra alerts Slack channel",
-          "type": "string",
-          "x-go-name": "Description"
-        },
-        "disabled": {
-          "description": "Whether the endpoint is currently disabled.",
-          "example": false,
-          "type": "boolean",
-          "x-go-name": "Disabled"
-        },
-        "filter_types": {
-          "description": "Event types this endpoint is subscribed to. Null or empty means all event types.",
-          "example": [
-            "billing.alert.triggered"
-          ],
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "x-go-name": "FilterTypes"
-        },
-        "id": {
-          "description": "The Svix endpoint ID.",
-          "example": "ep_2RtrGoUuNiifK2LP5UiTf7D3Xid",
-          "type": "string",
-          "x-go-name": "ID"
-        },
-        "url": {
-          "description": "The URL that webhook events are delivered to.",
-          "example": "https://hooks.example.com/crusoe",
-          "type": "string",
-          "x-go-name": "URL"
-        }
-      },
-      "required": [
-        "id",
-        "url",
-        "disabled"
-      ],
-      "title": "NotificationEndpointItem is a single Svix webhook endpoint for an organization.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "NotificationPreferenceItem": {
-      "properties": {
-        "channel_preferences": {
-          "description": "Per-channel preference status for this notification type.",
-          "items": {
-            "$ref": "#/definitions/NotificationChannelPreference"
-          },
-          "type": "array",
-          "x-go-name": "ChannelPreferences"
-        },
-        "description": {
-          "description": "Description of when this notification is triggered.",
-          "example": "Alert at 80%, 90%, and 100% of monthly budget",
-          "type": "string",
-          "x-go-name": "Description"
-        },
-        "display_name": {
-          "description": "Human-readable name for the notification type.",
-          "example": "Budget threshold reached",
-          "type": "string",
-          "x-go-name": "DisplayName"
-        },
-        "notification_type": {
-          "description": "The unique identifier for the notification type.",
-          "example": "billing_threshold_reached",
-          "type": "string",
-          "x-go-name": "NotificationType"
-        }
-      },
-      "required": [
-        "notification_type",
-        "display_name",
-        "description",
-        "channel_preferences"
-      ],
-      "title": "NotificationPreferenceItem is a single notification type with its channel preferences.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "NotificationPreferenceUpdate": {
-      "properties": {
-        "channel": {
-          "description": "The delivery channel to update.",
-          "example": "email",
-          "type": "string",
-          "x-go-name": "Channel"
-        },
-        "enabled": {
-          "description": "Whether to enable or disable the notification.",
-          "example": true,
-          "type": "boolean",
-          "x-go-name": "Enabled"
-        },
-        "notification_type": {
-          "description": "The notification type to update.",
-          "example": "billing_threshold_reached",
-          "type": "string",
-          "x-go-name": "NotificationType"
-        }
-      },
-      "required": [
-        "notification_type",
-        "channel",
-        "enabled"
-      ],
-      "title": "NotificationPreferenceUpdate is a single preference update in a PATCH request.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "NvlinkDomainSummaryResponse": {
       "properties": {
         "available_nodes": {
@@ -18896,23 +17876,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/fetch"
     },
-    "OperationDetails": {
-      "properties": {
-        "error": {
-          "description": "Error associated with the operation. Populated if the operation was a\npartial success on a best-effort basis.",
-          "type": "string",
-          "x-go-name": "Error"
-        },
-        "num_vms_created": {
-          "description": "Number of VMs created as part of the operation.",
-          "format": "int32",
-          "type": "integer",
-          "x-go-name": "NumVMsCreated"
-        }
-      },
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "OrgQuota": {
       "properties": {
         "available": {
@@ -18958,22 +17921,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
-    "OrgUserCredentialsResponse": {
-      "properties": {
-        "user_credentials": {
-          "additionalProperties": {
-            "$ref": "#/definitions/CredentialsResponse"
-          },
-          "type": "object",
-          "x-go-name": "UserCredentials"
-        }
-      },
-      "required": [
-        "user_credentials"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "OrganizationMFA": {
       "properties": {
         "created_at": {
@@ -18998,6 +17945,23 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "OrganizationsMFAServiceUpdateOrganizationMFABody": {
+      "description": "UpdateOrganizationMFARequest is the request for setting an organization's required MFA methods.",
+      "properties": {
+        "intended_methods": {
+          "example": [
+            "totp",
+            "webauthn"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "title": "intended_methods is the full set of MFA methods the organization should require (one of: totp, webauthn)",
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "PartialHostChannelAdapter": {
       "properties": {
         "ib_partition_id": {
@@ -19012,103 +17976,6 @@
         }
       },
       "title": "PartialHostChannelAdapter is used when POSTing and PATCHing VMs to assign IB Partitions.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "PatchNotificationPreferencesRequest": {
-      "properties": {
-        "updates": {
-          "description": "List of notification preference updates to apply.",
-          "items": {
-            "$ref": "#/definitions/NotificationPreferenceUpdate"
-          },
-          "type": "array",
-          "x-go-name": "Updates"
-        }
-      },
-      "required": [
-        "updates"
-      ],
-      "title": "PatchNotificationPreferencesRequest is the request body for PATCH user notification preferences.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "PaymentMethodCard": {
-      "properties": {
-        "brand": {
-          "example": "visa",
-          "type": "string",
-          "x-go-name": "Brand"
-        },
-        "cardholder_name": {
-          "example": "John Doe",
-          "type": "string",
-          "x-go-name": "CardholderName"
-        },
-        "exp_month": {
-          "example": 12,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "ExpMonth"
-        },
-        "exp_year": {
-          "example": 2027,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "ExpYear"
-        },
-        "id": {
-          "example": "pm_1OqJzX2eZvKYlo2C0000000",
-          "type": "string",
-          "x-go-name": "ID"
-        },
-        "is_default": {
-          "example": true,
-          "type": "boolean",
-          "x-go-name": "IsDefault"
-        },
-        "last4": {
-          "example": "\"4242\"",
-          "type": "string",
-          "x-go-name": "Last4"
-        }
-      },
-      "required": [
-        "id",
-        "brand",
-        "last4",
-        "exp_month",
-        "exp_year",
-        "is_default"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "PodOverview": {
-      "properties": {
-        "clusters": {
-          "description": "Clusters within this pod.",
-          "items": {
-            "$ref": "#/definitions/ClusterOverview"
-          },
-          "type": "array",
-          "x-go-name": "Clusters"
-        },
-        "metrics": {
-          "$ref": "#/definitions/AggregateMetrics"
-        },
-        "pod_id": {
-          "description": "Pod UUID.",
-          "example": "68e33474-cff1-a5cd-dcc2-a269863e019e",
-          "type": "string",
-          "x-go-name": "PodID"
-        }
-      },
-      "required": [
-        "pod_id",
-        "clusters"
-      ],
-      "title": "PodOverview contains the data for a single IB network pod.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -19165,54 +18032,6 @@
         "resources"
       ],
       "title": "Project contains identifying information for a project.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "ProjectIsUsingNFSForSharedDisksResponse": {
-      "properties": {
-        "status": {
-          "description": "Whether the project has migrated to NFS for shared volumes.",
-          "example": false,
-          "type": "boolean",
-          "x-go-name": "Status"
-        }
-      },
-      "required": [
-        "status"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "ProjectIsUsingSecondaryVASTClusterResponse": {
-      "properties": {
-        "enabled": {
-          "description": "Whether the project is enabled for the secondary VAST cluster.",
-          "example": false,
-          "type": "boolean",
-          "x-go-name": "Enabled"
-        }
-      },
-      "required": [
-        "enabled"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "ProjectOverviewResponse": {
-      "properties": {
-        "instance_types": {
-          "description": "List of instance type summaries for the project.",
-          "items": {
-            "$ref": "#/definitions/InstanceTypeOverview"
-          },
-          "type": "array",
-          "x-go-name": "InstanceTypes"
-        }
-      },
-      "required": [
-        "instance_types"
-      ],
-      "title": "ProjectOverviewResponse is the gateway response for the project-level infrastructure overview.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -19387,84 +18206,6 @@
       "title": "UpdateProjectRequest is the request for updating an existing project",
       "type": "object"
     },
-    "ProspectPostRequest": {
-      "properties": {
-        "company": {
-          "example": "crusoe",
-          "type": "string",
-          "x-go-name": "Company"
-        },
-        "email": {
-          "example": "john@crusoeenergy.com",
-          "type": "string",
-          "x-go-name": "Email"
-        },
-        "expected_capacity": {
-          "enum": [
-            "\u003c64 GPUs",
-            "64-128 GPUs",
-            "128-256 GPUs",
-            "256+ GPUs"
-          ],
-          "example": "\u003c64 GPUs",
-          "type": "string",
-          "x-go-name": "ExpectedCapacity"
-        },
-        "expected_commitment": {
-          "enum": [
-            "On-demand",
-            "1 year",
-            "2 year",
-            "3 year"
-          ],
-          "example": "1 year",
-          "type": "string",
-          "x-go-name": "ExpectedCommitment"
-        },
-        "expected_service": {
-          "example": "[Nvidia H100, Nvidia L40S]",
-          "items": {
-            "type": "string"
-          },
-          "type": "array",
-          "x-go-name": "ExpectedService"
-        },
-        "name": {
-          "example": "john",
-          "type": "string",
-          "x-go-name": "Name"
-        },
-        "referral": {
-          "example": "marketing event",
-          "type": "string",
-          "x-go-name": "Referral"
-        },
-        "source": {
-          "example": "portal",
-          "type": "string",
-          "x-go-name": "Source"
-        },
-        "use_case": {
-          "example": "training model to minimize energy usage",
-          "type": "string",
-          "x-go-name": "UseCase"
-        }
-      },
-      "required": [
-        "email",
-        "name",
-        "company",
-        "source"
-      ],
-      "title": "ProspectPostRequest is the request type for POST requests to the prospects endpoint.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "ProspectPostResponse": {
-      "title": "ProspectPostResponse is the response type for POST requests to the prospects endpoint.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "PublicIPv4Address": {
       "properties": {
         "address": {
@@ -19533,39 +18274,6 @@
         }
       },
       "title": "RemediationConfig represents a single remediation configuration in the API response.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "RemediationCounts": {
-      "properties": {
-        "failed": {
-          "description": "Number of remediation operations that failed.",
-          "example": 0,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "Failed"
-        },
-        "in_progress": {
-          "description": "Number of remediation operations currently in progress.",
-          "example": 1,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "InProgress"
-        },
-        "succeeded": {
-          "description": "Number of remediation operations that succeeded.",
-          "example": 3,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "Succeeded"
-        }
-      },
-      "required": [
-        "in_progress",
-        "succeeded",
-        "failed"
-      ],
-      "title": "RemediationCounts contains counts of auto-remediation operations by state.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -20342,6 +19050,26 @@
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "SSHKeysServiceCreateSSHKeyBody": {
+      "description": "CreateSSHKeyRequest is the request for registering a new SSH key to a user.",
+      "properties": {
+        "name": {
+          "example": "John Doe",
+          "title": "name is the display name of the SSH key",
+          "type": "string"
+        },
+        "public_key": {
+          "example": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpuH/fqCFLbAConChyVH6rZzSaxlnHSwQk6qvtPsf5E",
+          "title": "public_key is the SSH public key material",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "public_key"
+      ],
+      "type": "object"
     },
     "SSOProvider": {
       "properties": {
@@ -21374,48 +20102,6 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
     },
-    "UpdatePaymentMethodRequest": {
-      "description": "Omitted fields are left unchanged.",
-      "properties": {
-        "cardholder_name": {
-          "example": "Jane Doe",
-          "type": "string",
-          "x-go-name": "CardholderName"
-        },
-        "exp_month": {
-          "example": 12,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "ExpMonth"
-        },
-        "exp_year": {
-          "example": 2030,
-          "format": "int64",
-          "type": "integer",
-          "x-go-name": "ExpYear"
-        },
-        "is_default": {
-          "example": true,
-          "type": "boolean",
-          "x-go-name": "IsDefault"
-        }
-      },
-      "title": "UpdatePaymentMethodRequest defines the optional fields that can be patched on a payment method.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "UpdatePaymentMethodResponse": {
-      "properties": {
-        "item": {
-          "$ref": "#/definitions/PaymentMethodCard"
-        }
-      },
-      "required": [
-        "item"
-      ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
     "UpdateResponseEntry": {
       "properties": {
         "cluster_name": {
@@ -21648,6 +20334,31 @@
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/auth-gateway/pkg/authmodels"
     },
+    "UsersSSOServiceSetUsersSSOEnforcementBody": {
+      "description": "SetUsersSSOEnforcementRequest is the request for setting the SSO enforcement level of a set of users.",
+      "properties": {
+        "enforcement": {
+          "description": "SSO enforcement level to apply to the users. One of: required, none.",
+          "example": "required",
+          "type": "string"
+        },
+        "user_ids": {
+          "example": [
+            "d1e3a8c1-7d2e-4c5b-9f9a-2f5b3e9c1a44"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "title": "user_ids is the set of IDs of the users to update",
+          "type": "array"
+        }
+      },
+      "required": [
+        "user_ids",
+        "enforcement"
+      ],
+      "type": "object"
+    },
     "UsersServiceUpdateUserBody": {
       "description": "UpdateUserRequest is the request for updating an existing user.",
       "properties": {
@@ -21697,223 +20408,6 @@
         "vm_id",
         "attachment_type"
       ],
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "VMDetail": {
-      "properties": {
-        "cpu_utilization": {
-          "description": "CPU utilization (%) for this VM. 0 when no data.",
-          "example": 45,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "CPUUtilization"
-        },
-        "gpu_utilization": {
-          "description": "GPU utilization (%) for this VM. 0 when no data.",
-          "example": 84,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "GPUUtilization"
-        },
-        "health": {
-          "description": "VM health status: healthy, degraded, unhealthy, or not_evaluated.",
-          "example": "healthy",
-          "type": "string",
-          "x-go-name": "Health"
-        },
-        "ib_max_gbps": {
-          "description": "Max IB line rate in Gbps for this VM. 0 when no data or non-IB.",
-          "example": 400,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "IBMaxGbps"
-        },
-        "ib_rx_gbps": {
-          "description": "IB receive throughput in Gbps for this VM. 0 when no data or non-IB.",
-          "example": 320,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "IBRxGbps"
-        },
-        "ib_tx_gbps": {
-          "description": "IB transmit throughput in Gbps for this VM. 0 when no data or non-IB.",
-          "example": 340,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "IBTxGbps"
-        },
-        "p95_power_watts": {
-          "description": "P95 GPU power draw in watts for this VM. 0 when no data.",
-          "example": 420,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "P95PowerWatts"
-        },
-        "p95_temperature_celsius": {
-          "description": "P95 GPU temperature in Celsius for this VM. 0 when no data.",
-          "example": 81,
-          "format": "double",
-          "type": "number",
-          "x-go-name": "P95TemperatureCelsius"
-        },
-        "reasons": {
-          "description": "List of health reasons for this VM. Empty array if healthy.",
-          "items": {
-            "$ref": "#/definitions/VMHealthReason"
-          },
-          "type": "array",
-          "x-go-name": "Reasons"
-        },
-        "remediation": {
-          "$ref": "#/definitions/VMRemediation"
-        },
-        "vm_id": {
-          "description": "VM UUID.",
-          "example": "e41b19c2-e44b-44ce-8dd4-6053923fe50c",
-          "type": "string",
-          "x-go-name": "VMID"
-        },
-        "vm_name": {
-          "description": "VM display name.",
-          "example": "vm-gb200-01",
-          "type": "string",
-          "x-go-name": "VMName"
-        }
-      },
-      "required": [
-        "vm_id",
-        "vm_name",
-        "health",
-        "reasons"
-      ],
-      "title": "VMDetail contains all per-VM data for the instance type detail view.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "VMHealthReason": {
-      "properties": {
-        "detail": {
-          "description": "Specific detail within the reason.",
-          "example": "MemoryPressure",
-          "type": "string",
-          "x-go-name": "Detail"
-        },
-        "reason": {
-          "description": "Reason category.",
-          "example": "node_condition",
-          "type": "string",
-          "x-go-name": "Reason"
-        }
-      },
-      "required": [
-        "reason",
-        "detail"
-      ],
-      "title": "VMHealthReason describes a single health reason for a VM.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "VMHealthResponse": {
-      "properties": {
-        "health": {
-          "description": "The computed health status of the VM.\nPossible values: healthy, degraded, unhealthy, not_evaluated.",
-          "example": "healthy",
-          "type": "string",
-          "x-go-name": "Health"
-        },
-        "project_id": {
-          "description": "The project ID that owns the VM.",
-          "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
-          "type": "string",
-          "x-go-name": "ProjectID"
-        },
-        "reasons": {
-          "description": "Health reasons for this VM. Empty array if healthy.",
-          "items": {
-            "$ref": "#/definitions/VMHealthReason"
-          },
-          "type": "array",
-          "x-go-name": "Reasons"
-        },
-        "vm_id": {
-          "description": "The VM ID.",
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-          "type": "string",
-          "x-go-name": "VMID"
-        }
-      },
-      "required": [
-        "vm_id",
-        "project_id",
-        "health",
-        "reasons"
-      ],
-      "title": "VMHealthResponse is the gateway response for VM-level health status.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "VMInfo": {
-      "properties": {
-        "health": {
-          "description": "VM health status: healthy, degraded, unhealthy, or not_evaluated. Empty string if health could not be determined.",
-          "example": "healthy",
-          "type": "string",
-          "x-go-name": "Health"
-        },
-        "nvlink_domain_id": {
-          "type": "string",
-          "x-go-name": "NvlinkDomainID"
-        },
-        "pod_id": {
-          "type": "string",
-          "x-go-name": "PodID"
-        },
-        "reasons": {
-          "description": "List of health reasons for this VM. Empty array if healthy or health could not be determined.",
-          "items": {
-            "$ref": "#/definitions/VMHealthReason"
-          },
-          "type": "array",
-          "x-go-name": "Reasons"
-        },
-        "vm_id": {
-          "type": "string",
-          "x-go-name": "VMID"
-        },
-        "vm_name": {
-          "type": "string",
-          "x-go-name": "VMName"
-        },
-        "vm_state": {
-          "type": "string",
-          "x-go-name": "VMState"
-        }
-      },
-      "title": "VMInfo contains information about a virtual machine.",
-      "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
-    },
-    "VMRemediation": {
-      "properties": {
-        "state": {
-          "description": "Operation state: in_progress, succeeded, or failed.",
-          "example": "in_progress",
-          "type": "string",
-          "x-go-name": "State"
-        },
-        "type": {
-          "description": "Operation type: replace_node, reset_vm, or detect_only.",
-          "example": "replace_node",
-          "type": "string",
-          "x-go-name": "Type"
-        }
-      },
-      "required": [
-        "state",
-        "type"
-      ],
-      "title": "VMRemediation describes an active remediation operation for a VM.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -22437,8 +20931,67 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "customerCredit": {
+      "description": "Credit is a single credit balance transaction for an organization.",
+      "properties": {
+        "amount": {
+          "example": "12.34",
+          "title": "amount is the amount of credit added or subtracted in this transaction, formatted as a\ndecimal string",
+          "type": "string"
+        },
+        "balance": {
+          "example": "45.67",
+          "title": "balance is the remaining credit balance after this transaction, formatted as a decimal\nstring",
+          "type": "string"
+        },
+        "date": {
+          "example": "2025-02-14T12:00:00Z",
+          "title": "date is when the transaction occurred, in RFC3339 format",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerDeleteInstanceTemplateResponse": {
+      "description": "DeleteInstanceTemplateResponse is the response for deleting an existing instance template.\n\nSuccessful delete calls should be empty",
+      "type": "object"
+    },
     "customerDeleteProjectResponse": {
       "description": "DeleteProjectResponse is the response for deleting an existing project.\n\nSuccessful delete calls should be empty",
+      "type": "object"
+    },
+    "customerDeleteSSHKeyResponse": {
+      "description": "DeleteSSHKeyResponse is the response for deleting an SSH key.\n\nSuccessful delete calls should be empty",
+      "type": "object"
+    },
+    "customerDeleteUserCredentialResponse": {
+      "description": "DeleteUserCredentialResponse is the response containing the user's remaining identity credentials.",
+      "properties": {
+        "credentials_map": {
+          "additionalProperties": {
+            "$ref": "#/definitions/customerIdentityCredential"
+          },
+          "readOnly": true,
+          "title": "credentials_map is the user's remaining credentials keyed by credential type",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "customerDiskTemplate": {
+      "description": "DiskTemplate describes a disk created for every VM created from an instance template.",
+      "properties": {
+        "size": {
+          "example": "10GiB",
+          "title": "size is the size of the disk",
+          "type": "string"
+        },
+        "type": {
+          "description": "type is the kind of disk. One of \"persistent-ssd\" or \"shared-volume\".",
+          "example": "persistent-ssd",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "customerGenerateNameResponse": {
@@ -22448,6 +21001,20 @@
           "example": "fresh-earth-782",
           "title": "name is an available project name that does not collide with an existing project in the organization",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerGetOrganizationMFAResponse": {
+      "description": "GetOrganizationMFAResponse is the response containing an organization's required MFA methods.",
+      "properties": {
+        "mfa_methods": {
+          "items": {
+            "$ref": "#/definitions/customerOrganizationMFA",
+            "type": "object"
+          },
+          "title": "mfa_methods is the set of MFA methods currently required by the organization",
+          "type": "array"
         }
       },
       "type": "object"
@@ -22472,6 +21039,137 @@
       },
       "type": "object"
     },
+    "customerInstanceTemplate": {
+      "description": "InstanceTemplate represents a Crusoe instance template resource. An instance template\ndefines the specification of the VMs that an instance group creates.",
+      "properties": {
+        "created_at": {
+          "format": "date-time",
+          "readOnly": true,
+          "title": "created_at is the time the instance template was created",
+          "type": "string"
+        },
+        "custom_image_name": {
+          "example": "my-image:latest",
+          "title": "custom_image_name is the custom OS image used by every VM created from this instance template",
+          "type": "string"
+        },
+        "disks": {
+          "items": {
+            "$ref": "#/definitions/customerDiskTemplate",
+            "type": "object"
+          },
+          "title": "disks are the disks created for every VM created from this instance template",
+          "type": "array"
+        },
+        "ib_partition_id": {
+          "description": "ib_partition_id is the transport partition given to every VM created from this instance template.\n\nDeprecated: use transport_partition_id.",
+          "type": "string"
+        },
+        "id": {
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+          "readOnly": true,
+          "title": "id is the ID of the instance template",
+          "type": "string"
+        },
+        "image_name": {
+          "description": "image_name is the curated OS image used by every VM created from this instance template.\nAn instance template carries either a curated image or a custom image, never both.",
+          "example": "ubuntu:20.04",
+          "type": "string"
+        },
+        "location": {
+          "description": "location is the location the instance template is bound to. Empty when the template has no location.",
+          "example": "us-northcentral1-a",
+          "type": "string"
+        },
+        "maintenance_policy": {
+          "description": "maintenance_policy is the host maintenance policy. One of \"manual\", \"stop-vm\" or \"unspecified\".",
+          "example": "stop-vm",
+          "type": "string"
+        },
+        "name": {
+          "description": "name is the name of the instance template. This is not the name of the VMs created from it.",
+          "example": "my-instance-template",
+          "type": "string"
+        },
+        "nvlink_domain_id": {
+          "example": "550e8400-e29b-41d4-a716-446655440000",
+          "title": "nvlink_domain_id is the NVLink domain assigned to the instance template",
+          "type": "string"
+        },
+        "placement_policy": {
+          "description": "placement_policy is the VM placement policy. One of \"spread\" or \"unspecified\".",
+          "example": "spread",
+          "type": "string"
+        },
+        "project_id": {
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
+          "readOnly": true,
+          "title": "project_id is the ID of the project the instance template belongs to",
+          "type": "string"
+        },
+        "public_ip_address_type": {
+          "description": "public_ip_address_type is the public IP address type given to every VM created from this\ninstance template. One of \"static\" or \"dynamic\".",
+          "example": "static",
+          "type": "string"
+        },
+        "reservation_id": {
+          "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
+          "title": "reservation_id is the billing reservation the instance template draws from",
+          "type": "string"
+        },
+        "shutdown_script": {
+          "title": "shutdown_script is the shutdown script given to every VM created from this instance template",
+          "type": "string"
+        },
+        "ssh_public_key": {
+          "title": "ssh_public_key is the SSH public key given to every VM created from this instance template",
+          "type": "string"
+        },
+        "startup_script": {
+          "title": "startup_script is the startup script given to every VM created from this instance template",
+          "type": "string"
+        },
+        "subnet_id": {
+          "description": "subnet_id is the subnet given to every VM created from this instance template.\nOnly used when the template has a location.",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
+          "type": "string"
+        },
+        "transport_partition_id": {
+          "description": "transport_partition_id is the IB or RoCE partition given to every VM created from this instance\ntemplate. Only used for transport-enabled VM types.",
+          "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
+          "type": "string"
+        },
+        "type": {
+          "example": "a100.2x",
+          "title": "type is the product name of the VM type created from this instance template",
+          "type": "string"
+        },
+        "virtualization_features": {
+          "$ref": "#/definitions/customerVirtualizationFeatures",
+          "title": "virtualization_features are the virtualization features given to every VM created from this\ninstance template"
+        }
+      },
+      "type": "object"
+    },
+    "customerListCreditsResponse": {
+      "description": "ListCreditsResponse is the response for CreditsService.ListCredits.",
+      "properties": {
+        "credits": {
+          "items": {
+            "$ref": "#/definitions/customerCredit",
+            "type": "object"
+          },
+          "title": "credits is the list of credit transactions, ordered newest-first",
+          "type": "array"
+        },
+        "currency": {
+          "example": "usd",
+          "title": "currency is the currency code (e.g. \"usd\") the amounts are denominated in",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "customerListFeatureFlagsResponse": {
       "properties": {
         "feature_flags": {
@@ -22485,6 +21183,20 @@
         }
       },
       "title": "ListFeatureFlagsResponse is the list feature flags response",
+      "type": "object"
+    },
+    "customerListInstanceTemplatesResponse": {
+      "description": "ListInstanceTemplatesResponse is the response for listing the instance templates in a project.",
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/definitions/customerInstanceTemplate",
+            "type": "object"
+          },
+          "title": "items are the instance templates in the project",
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "customerListProjectsResponse": {
@@ -22514,6 +21226,61 @@
         }
       },
       "title": "ListPublicFeatureFlagsResponse is the list public feature flags response",
+      "type": "object"
+    },
+    "customerListSSHKeysResponse": {
+      "description": "ListSSHKeysResponse is the response for listing the SSH keys registered to a user.",
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "#/definitions/customerSSHKey",
+            "type": "object"
+          },
+          "readOnly": true,
+          "title": "items is the list of SSH keys",
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "customerListUserCredentialsResponse": {
+      "description": "ListUserCredentialsResponse is the response containing a user's identity credentials.",
+      "properties": {
+        "credentials": {
+          "description": "credentials is the user's credential types. Deprecated: use credentials_map instead.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "credentials_map": {
+          "additionalProperties": {
+            "$ref": "#/definitions/customerIdentityCredential"
+          },
+          "readOnly": true,
+          "title": "credentials_map is the user's credentials keyed by credential type",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "customerOrganizationMFA": {
+      "description": "OrganizationMFA describes a single MFA method required by an organization.",
+      "properties": {
+        "created_at": {
+          "format": "date-time",
+          "readOnly": true,
+          "title": "created_at is when this MFA method was required by the organization",
+          "type": "string"
+        },
+        "method": {
+          "example": "totp",
+          "readOnly": true,
+          "title": "method is the required MFA method (one of: totp, webauthn)",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "customerOrganizationUsage": {
@@ -22676,6 +21443,63 @@
       },
       "type": "object"
     },
+    "customerSSHKey": {
+      "description": "SSHKey is an SSH public key registered to a user.",
+      "properties": {
+        "created_at": {
+          "example": "2022-01-24T20:13:35.328Z",
+          "readOnly": true,
+          "title": "created_at is when the SSH key was registered",
+          "type": "string"
+        },
+        "fingerprints": {
+          "$ref": "#/definitions/customerSSHKeyFingerprints",
+          "readOnly": true,
+          "title": "fingerprints is the fingerprints of the SSH public key"
+        },
+        "id": {
+          "example": "0b880f48-6a97-408f-8351-3cc30871e010",
+          "readOnly": true,
+          "title": "id is the ID of the SSH key",
+          "type": "string"
+        },
+        "name": {
+          "example": "public key 1",
+          "title": "name is the display name of the SSH key",
+          "type": "string"
+        },
+        "public_key": {
+          "example": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpuH/fqCFLbAConChyVH6rZzSaxlnHSwQk6qvtPsf5E",
+          "title": "public_key is the SSH public key material",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerSSHKeyFingerprints": {
+      "description": "SSHKeyFingerprints is the fingerprints of an SSH public key.",
+      "properties": {
+        "md5": {
+          "example": "bf:60:fa:cc:9f:42:1f:5e:23:9e:ed:d2:69:d8:76:93",
+          "title": "md5 is the MD5 fingerprint of the SSH public key",
+          "type": "string"
+        },
+        "sha256": {
+          "example": "tARFxQkVHeqm6TzqpI897QsHVdgZlxgL2/YhVltmEUk",
+          "title": "sha256 is the SHA256 fingerprint of the SSH public key",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerSetUsersSSOEnforcementResponse": {
+      "description": "SetUsersSSOEnforcementResponse is the response for setting the SSO enforcement level of a set of users.\n\nSuccessful update calls return an empty body",
+      "type": "object"
+    },
+    "customerUpdateOrganizationMFAResponse": {
+      "description": "UpdateOrganizationMFAResponse is the response for setting an organization's required MFA methods.\n\nSuccessful update calls return an empty body",
+      "type": "object"
+    },
     "customerUser": {
       "description": "User is the user resource.",
       "properties": {
@@ -22784,6 +21608,16 @@
       },
       "type": "object"
     },
+    "customerVirtualizationFeatures": {
+      "description": "VirtualizationFeatures describes the virtualization features given to every VM created from an\ninstance template.",
+      "properties": {
+        "nested_virtualization": {
+          "title": "nested_virtualization is whether a VM can run a VM inside itself",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "protobufAny": {
       "additionalProperties": {},
       "properties": {
@@ -22822,15 +21656,6 @@
     }
   },
   "responses": {
-    "WrappedErrorBody": {
-      "description": "WrappedErrorBody is a baseline Error Response Object\nThe body of every error response type must have the same structure as handlers.ErrorBody",
-      "headers": {
-        "Body": {}
-      },
-      "schema": {
-        "$ref": "#/definitions/ErrorBody"
-      }
-    },
     "asyncOperationResponse": {
       "description": "",
       "schema": {
@@ -22841,12 +21666,6 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/AuditLogsGetResponse"
-      }
-    },
-    "authCheckGetResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/AuthCheckGetResponse"
       }
     },
     "authError": {
@@ -22893,37 +21712,10 @@
         "type": "object"
       }
     },
-    "billingCheckLastUsageGetResponse": {
-      "description": "",
-      "headers": {
-        "last_run_time": {
-          "example": "\"2025-05-20T12:34:56Z\"",
-          "type": "string"
-        }
-      }
-    },
     "billingCostsGetResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/BillingCostData"
-      }
-    },
-    "billingExportGetResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/BillingResourcesResponse"
-      }
-    },
-    "billingIntentGetResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/BillingIntentGetResponse"
-      }
-    },
-    "billingMonthlySummaryGetResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/GetBillingMonthlySummaryResponseV1Alpha5"
       }
     },
     "billingOptionsGetResponse": {
@@ -22992,12 +21784,6 @@
         "$ref": "#/definitions/CCRTokenResponse"
       }
     },
-    "createBillingAlertResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/BillingAlertPostResponse"
-      }
-    },
     "createDiagnosticResponse": {
       "description": "",
       "schema": {
@@ -23008,12 +21794,6 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/InstanceGroup"
-      }
-    },
-    "createInstanceTemplateResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/InstanceTemplate"
       }
     },
     "createS3KeyResponse": {
@@ -23046,18 +21826,6 @@
         "$ref": "#/definitions/SSOProvider"
       }
     },
-    "credentialsResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/CredentialsResponse"
-      }
-    },
-    "deleteExternalLoadBalancerResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ExternalLoadBalancer"
-      }
-    },
     "deleteSSOProviderResponse": {
       "description": "",
       "schema": {
@@ -23076,12 +21844,6 @@
     },
     "emptyResponse": {
       "description": "Empty Response"
-    },
-    "featureFlagsGetResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/FeatureFlagsGetResponse"
-      }
     },
     "foundryActivityResponse": {
       "description": "",
@@ -23179,12 +21941,6 @@
         "$ref": "#/definitions/AutoClustersConfigResponse"
       }
     },
-    "getBillingAlertResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/BillingAlertGetResponse"
-      }
-    },
     "getBillingExportProductlineResponse": {
       "description": "",
       "headers": {
@@ -23241,12 +21997,6 @@
         }
       }
     },
-    "getCreditBalanceResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/GetCreditBalanceResponse"
-      }
-    },
     "getDiagnosticStatusResponse": {
       "description": "",
       "schema": {
@@ -23295,18 +22045,6 @@
         "$ref": "#/definitions/InstanceV1Alpha5"
       }
     },
-    "getInstanceTemplateResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/InstanceTemplate"
-      }
-    },
-    "getInstanceTypeDetailResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/InstanceTypeDetailResponse"
-      }
-    },
     "getKubernetesClusterCredentialsResponse": {
       "description": "",
       "schema": {
@@ -23317,6 +22055,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/KubernetesCluster"
+      }
+    },
+    "getKubernetesNodePoolNodeResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesNodePoolNode"
       }
     },
     "getKubernetesNodePoolResponse": {
@@ -23349,18 +22093,6 @@
         "$ref": "#/definitions/Operation"
       }
     },
-    "getOrgNotificationEndpointsResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/GetOrgNotificationEndpointsResponse"
-      }
-    },
-    "getProjectOverviewResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ProjectOverviewResponse"
-      }
-    },
     "getProjectResponse": {
       "description": "",
       "schema": {
@@ -23374,7 +22106,10 @@
       }
     },
     "getS3BucketsCountResponse": {
-      "description": ""
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetS3BucketsCountResponse"
+      }
     },
     "getS3BucketsQuotaResponse": {
       "description": "",
@@ -23416,24 +22151,6 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/KubernetesClusterSupportSettingsResponse"
-      }
-    },
-    "getTopologyResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/GetTopologyResponse"
-      }
-    },
-    "getUserNotificationPreferencesResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/GetNotificationPreferencesResponse"
-      }
-    },
-    "getVMHealthResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/VMHealthResponse"
       }
     },
     "getVPCNetworkResponse": {
@@ -23484,30 +22201,6 @@
         "$ref": "#/definitions/ListOperationsResponseV1Alpha5"
       }
     },
-    "listBillingAlertsResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/BillingAlertListResponse"
-      }
-    },
-    "listCardTransactionsResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ListCardTransactionsResponse"
-      }
-    },
-    "listCreditBurnEventsResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ListCreditBurnEventsResponse"
-      }
-    },
-    "listCreditGrantsResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ListCreditGrantsResponse"
-      }
-    },
     "listDiskSnapshotsResponse": {
       "description": "",
       "schema": {
@@ -23550,12 +22243,6 @@
         "$ref": "#/definitions/ListInstanceGroupsResponse"
       }
     },
-    "listInstanceTemplatesResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ListInstanceTemplatesResponseV1Alpha5"
-      }
-    },
     "listInstancesResponse": {
       "description": "",
       "schema": {
@@ -23566,6 +22253,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListKubernetesClustersResponse"
+      }
+    },
+    "listKubernetesNodePoolNodesResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/ListKubernetesNodePoolNodesResponse"
       }
     },
     "listKubernetesNodePoolVMsResponse": {
@@ -23608,12 +22301,6 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListOrgQuotasResponse"
-      }
-    },
-    "listPaymentMethodsResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ListPaymentMethodsResponse"
       }
     },
     "listProjectQuotasResponse": {
@@ -23712,15 +22399,6 @@
         "$ref": "#/definitions/ListLocationsResponseV1Alpha5"
       }
     },
-    "mfaGetResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/GetOrgMFAResponse"
-      }
-    },
-    "noContent": {
-      "description": ""
-    },
     "notFoundError": {
       "description": "Error Not Found",
       "schema": {
@@ -23745,18 +22423,6 @@
     },
     "okEmpty": {
       "description": ""
-    },
-    "orgCreditsGetResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/GetCreditsResponseV1Alpha5"
-      }
-    },
-    "orgUserCredentialsResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/OrgUserCredentialsResponse"
-      }
     },
     "organizationsGetResponse": {
       "description": "",
@@ -23798,72 +22464,10 @@
         "type": "object"
       }
     },
-    "productlineUsageExportGetResponse": {
-      "description": "",
-      "headers": {
-        "cost": {
-          "example": "32.23",
-          "format": "double",
-          "type": "number"
-        },
-        "metric": {
-          "example": "instance-hours",
-          "type": "string"
-        },
-        "product_line": {
-          "example": "a40",
-          "type": "string"
-        },
-        "project_id": {
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-          "type": "string"
-        },
-        "project_name": {
-          "example": "project-name-template",
-          "type": "string"
-        },
-        "quantity": {
-          "example": "261.271111",
-          "format": "double",
-          "type": "number"
-        },
-        "region": {
-          "example": "us-east1",
-          "type": "string"
-        },
-        "unit_price": {
-          "example": "32.23",
-          "format": "double",
-          "type": "number"
-        },
-        "usage_date": {
-          "example": "2000-01-01",
-          "type": "string"
-        }
-      }
-    },
-    "projectIsUsingNFSForSharedDisksResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ProjectIsUsingNFSForSharedDisksResponse"
-      }
-    },
-    "projectIsUsingSecondaryVASTClusterResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ProjectIsUsingSecondaryVASTClusterResponse"
-      }
-    },
     "projectsPutPostResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/ProjectsPutPostResponseV1Alpha5"
-      }
-    },
-    "prospectPostResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/ProspectPostResponse"
       }
     },
     "rateLimitError": {
@@ -23884,61 +22488,6 @@
         "required": [
           "code",
           "message"
-        ],
-        "type": "object"
-      }
-    },
-    "redirectSeeOther": {
-      "description": "Redirect See Other",
-      "schema": {
-        "properties": {
-          "error": {
-            "properties": {
-              "code": {
-                "example": "422",
-                "type": "string",
-                "x-go-name": "Code"
-              },
-              "id": {
-                "example": "browser_location_change_required",
-                "type": "string",
-                "x-go-name": "Id"
-              },
-              "message": {
-                "example": "browser location change required",
-                "type": "string",
-                "x-go-name": "Message"
-              },
-              "reason": {
-                "example": "In order to complete this flow please redirect the browser to...",
-                "type": "string",
-                "x-go-name": "Reason"
-              },
-              "status": {
-                "example": "Unprocessable Entity",
-                "type": "string",
-                "x-go-name": "Status"
-              }
-            },
-            "required": [
-              "code",
-              "message",
-              "id",
-              "status",
-              "reason"
-            ],
-            "type": "object",
-            "x-go-name": "Error"
-          },
-          "redirect_browser_to": {
-            "example": "https://dev-70243141.okta.com/oauth2/v1/authorize/...",
-            "type": "string",
-            "x-go-name": "RedirectBrowserTo"
-          }
-        },
-        "required": [
-          "error",
-          "redirect_browser_to"
         ],
         "type": "object"
       }
@@ -24014,18 +22563,6 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/AutoClustersConfigResponse"
-      }
-    },
-    "updateBillingAlertResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/BillingAlertPutResponse"
-      }
-    },
-    "updatePaymentMethodResponse": {
-      "description": "",
-      "schema": {
-        "$ref": "#/definitions/UpdatePaymentMethodResponse"
       }
     },
     "updateSCIMIntegrationResponse": {
@@ -24107,13 +22644,28 @@
   },
   "tags": [
     {
+      "name": "CreditsService"
+    },
+    {
       "name": "FeatureFlagsService"
+    },
+    {
+      "name": "InstanceTemplatesService"
+    },
+    {
+      "name": "OrganizationsMFAService"
     },
     {
       "name": "ProjectsService"
     },
     {
+      "name": "SSHKeysService"
+    },
+    {
       "name": "UsageService"
+    },
+    {
+      "name": "UsersSSOService"
     },
     {
       "name": "UsersService"
@@ -24204,9 +22756,9 @@
       ]
     },
     {
-      "name": "Notifications",
+      "name": "Foundry",
       "tags": [
-        "Notifications"
+        "Foundry"
       ]
     }
   ]

@@ -58,9 +58,13 @@ type APIClient struct {
 
 	ContainerRegistryApi *ContainerRegistryApiService
 
+	CreditsApi *CreditsApiService
+
 	CustomImageOperationsApi *CustomImageOperationsApiService
 
 	CustomImagesApi *CustomImagesApiService
+
+	DiagnosticsApi *DiagnosticsApiService
 
 	DiskOperationsApi *DiskOperationsApiService
 
@@ -107,6 +111,8 @@ type APIClient struct {
 	LoadBalancersApi *LoadBalancersApiService
 
 	LocationsApi *LocationsApiService
+
+	MFAApi *MFAApiService
 
 	NVLinkDomainsApi *NVLinkDomainsApiService
 
@@ -188,8 +194,10 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.CapacitiesApi = (*CapacitiesApiService)(&c.common)
 	c.CcrApi = (*CcrApiService)(&c.common)
 	c.ContainerRegistryApi = (*ContainerRegistryApiService)(&c.common)
+	c.CreditsApi = (*CreditsApiService)(&c.common)
 	c.CustomImageOperationsApi = (*CustomImageOperationsApiService)(&c.common)
 	c.CustomImagesApi = (*CustomImagesApiService)(&c.common)
+	c.DiagnosticsApi = (*DiagnosticsApiService)(&c.common)
 	c.DiskOperationsApi = (*DiskOperationsApiService)(&c.common)
 	c.DisksApi = (*DisksApiService)(&c.common)
 	c.EntitiesApi = (*EntitiesApiService)(&c.common)
@@ -213,6 +221,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.LoadBalancerOperationsApi = (*LoadBalancerOperationsApiService)(&c.common)
 	c.LoadBalancersApi = (*LoadBalancersApiService)(&c.common)
 	c.LocationsApi = (*LocationsApiService)(&c.common)
+	c.MFAApi = (*MFAApiService)(&c.common)
 	c.NVLinkDomainsApi = (*NVLinkDomainsApiService)(&c.common)
 	c.ObservabilityApi = (*ObservabilityApiService)(&c.common)
 	c.ProjectsApi = (*ProjectsApiService)(&c.common)

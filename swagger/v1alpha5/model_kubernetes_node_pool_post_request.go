@@ -9,9 +9,10 @@
 package swagger
 
 type KubernetesNodePoolPostRequest struct {
+	AutoscalingConfig *KubernetesNodePoolAutoscalingConfig `json:"autoscaling_config,omitempty"`
 	// ID of the cluster the new node pool belongs to.
 	ClusterId string `json:"cluster_id"`
-	// Number of nodes to create.
+	// Desired number of nodes in the node pool.
 	Count int64 `json:"count"`
 	// Whether the first local ephemeral NVMe disk is used for containerd storage.
 	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd,omitempty"`
