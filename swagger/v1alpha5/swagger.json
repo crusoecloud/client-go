@@ -13947,7 +13947,7 @@
       ],
       "title": "IdentityCredential represents a specific Kratos credential type, sanitized to expose to customers.",
       "type": "object",
-      "x-go-package": "gitlab.com/crusoeenergy/island/auth-gateway/pkg/authmodels"
+      "x-go-package": "gitlab.com/crusoeenergy/devx/go-utils/gatewayx/authn"
     },
     "IdentityPutRequest": {
       "properties": {
@@ -20331,8 +20331,9 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UserStateEnum": {
+      "title": "UserStateEnum describes high-level state for an authenticated user.",
       "type": "string",
-      "x-go-package": "gitlab.com/crusoeenergy/island/auth-gateway/pkg/authmodels"
+      "x-go-package": "gitlab.com/crusoeenergy/devx/go-utils/gatewayx/authn"
     },
     "UsersSSOServiceSetUsersSSOEnforcementBody": {
       "description": "SetUsersSSOEnforcementRequest is the request for setting the SSO enforcement level of a set of users.",
