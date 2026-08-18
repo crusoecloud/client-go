@@ -54,6 +54,8 @@ type APIClient struct {
 
 	CapacitiesApi *CapacitiesApiService
 
+	CatalogApi *CatalogApiService
+
 	CcrApi *CcrApiService
 
 	ContainerRegistryApi *ContainerRegistryApiService
@@ -192,6 +194,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AutoClustersApi = (*AutoClustersApiService)(&c.common)
 	c.BillingApi = (*BillingApiService)(&c.common)
 	c.CapacitiesApi = (*CapacitiesApiService)(&c.common)
+	c.CatalogApi = (*CatalogApiService)(&c.common)
 	c.CcrApi = (*CcrApiService)(&c.common)
 	c.ContainerRegistryApi = (*ContainerRegistryApiService)(&c.common)
 	c.CreditsApi = (*CreditsApiService)(&c.common)
