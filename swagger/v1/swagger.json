@@ -6776,7 +6776,7 @@
     },
     "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes": {
       "get": {
-        "description": "Complements the node pool GET, which returns pool-level state, by exposing\nthe individual Nodes that back the pool, including the operation currently\nacting on each node. Results are paginated; next_page_token is absent on\nthe last page.",
+        "description": "Complements the node pool GET, which returns pool-level state, by exposing\nthe individual Nodes that back the pool, including the operation currently\nacting on each node. Results are paginated: next_token is empty on the last\npage and prev_token is empty on the first.",
         "operationId": "listNodePoolNodes",
         "parameters": [
           {
@@ -6807,19 +6807,37 @@
             "x-go-name": "Limit"
           },
           {
-            "description": "Opaque token for fetching the next page, from a previous response's next_page_token.",
+            "description": "Base64-encoded token for the next page of results, from a previous\nresponse's next_token.",
+            "example": "bXktbGFzdC1ub2Rl",
             "in": "query",
-            "name": "next_page_token",
+            "name": "next_token",
             "type": "string",
-            "x-go-name": "NextPageToken"
+            "x-go-name": "NextToken"
+          },
+          {
+            "description": "Base64-encoded token for the previous page of results, from a previous\nresponse's prev_token.",
+            "example": "bXktZmlyc3Qtbm9kZQ",
+            "in": "query",
+            "name": "prev_token",
+            "type": "string",
+            "x-go-name": "PrevToken"
           }
         ],
         "responses": {
           "200": {
             "$ref": "#/responses/listKubernetesNodePoolNodesResponse"
           },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
           "401": {
             "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
           },
           "500": {
             "$ref": "#/responses/serverError"
@@ -16691,11 +16709,13 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListKubernetesNodePoolNodesResponse": {
+      "description": "ListKubernetesNodePoolNodesResponse is the response type for\nGET /projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes. Like the\nsibling /vms endpoint it uses the canonical short-form `next_token` /\n`prev_token` field names that match `fetch`'s request params, rather than the\nlegacy `*_page_token` naming used by /compute/vms/instances.",
       "properties": {
-        "next_page_token": {
-          "description": "Token to retrieve the next page of results. Absent on the last page.",
+        "next_token": {
+          "description": "Base64 encoded token representing the next page of nodes. Empty if\ncurrently on the last page.",
+          "example": "bXktbGFzdC1ub2Rl",
           "type": "string",
-          "x-go-name": "NextPageToken"
+          "x-go-name": "NextToken"
         },
         "nodes": {
           "description": "List of Kubernetes Nodes backing the node pool.",
@@ -16704,6 +16724,12 @@
           },
           "type": "array",
           "x-go-name": "Nodes"
+        },
+        "prev_token": {
+          "description": "Base64 encoded token representing the previous page of nodes. Empty if\ncurrently on the first page.",
+          "example": "bXktZmlyc3Qtbm9kZQ",
+          "type": "string",
+          "x-go-name": "PrevToken"
         }
       },
       "required": [
