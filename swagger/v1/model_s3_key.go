@@ -17,9 +17,11 @@ type S3Key struct {
 	CreatedAt string `json:"created_at"`
 	// Expiration timestamp of the S3 access key, in RFC3339 format.
 	ExpireAt string `json:"expire_at,omitempty"`
+	// External location names where key delivery FAILED. Present only for DEGRADED/FAILED.
+	FailedLocations []string `json:"failed_locations,omitempty"`
 	// ID of the S3 access key.
 	KeyUuid string `json:"key_uuid"`
-	// Status of the S3 access key: enabled or disabled.
+	// The current status of the user's key.
 	Status string `json:"status"`
 	// ID of the user that owns the S3 access key.
 	UserId string `json:"user_id"`

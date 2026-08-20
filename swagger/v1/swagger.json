@@ -19008,6 +19008,17 @@
           "type": "string",
           "x-go-name": "ExpireAt"
         },
+        "failed_locations": {
+          "description": "External location names where key delivery FAILED. Present only for DEGRADED/FAILED.",
+          "example": [
+            "us-east1"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "FailedLocations"
+        },
         "key_uuid": {
           "description": "ID of the S3 access key.",
           "example": "f5705300-79f8-4686-9b9f-02496a053bc0",
@@ -19015,10 +19026,14 @@
           "x-go-name": "KeyUUID"
         },
         "status": {
-          "description": "Status of the S3 access key: enabled or disabled.",
+          "description": "The current status of the user's key.",
           "enum": [
-            "enabled",
-            "disabled"
+            "KEY_STATE_ACTIVE",
+            "KEY_STATE_PENDING",
+            "KEY_STATE_DEGRADED",
+            "KEY_STATE_FAILED",
+            "KEY_STATE_INACTIVE",
+            "KEY_STATE_EXPIRED"
           ],
           "type": "string",
           "x-go-name": "Status"
