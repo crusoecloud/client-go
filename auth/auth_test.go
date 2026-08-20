@@ -1,18 +1,29 @@
 package auth
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"sync/atomic"
 	"testing"
+
+	"golang.org/x/oauth2"
 )
+
+// tokenServerContext returns a context whose oauth2.HTTPClient trusts tokenServer's
+// self-signed certificate, so the OAuth2 client-credentials flow can talk to an
+// httptest.NewTLSServer over https without a real, publicly-trusted certificate.
+func tokenServerContext(tokenServer *httptest.Server) context.Context {
+	return context.WithValue(context.Background(), oauth2.HTTPClient, tokenServer.Client())
+}
 
 func TestNewServiceAccountConfig(t *testing.T) {
 	var tokenRequests int32
 
-	tokenServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		atomic.AddInt32(&tokenRequests, 1)
 
 		if err := r.ParseForm(); err != nil {
@@ -45,7 +56,10 @@ func TestNewServiceAccountConfig(t *testing.T) {
 	}))
 	defer apiServer.Close()
 
-	cfg := NewServiceAccountConfig("test-client-id", "test-client-secret", tokenServer.URL)
+	cfg, err := NewServiceAccountConfig(tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL)
+	if err != nil {
+		t.Fatalf("NewServiceAccountConfig failed: %v", err)
+	}
 
 	resp, err := cfg.HTTPClient.Get(apiServer.URL)
 	if err != nil {
@@ -76,7 +90,7 @@ func TestNewServiceAccountConfig(t *testing.T) {
 func TestNewServiceAccountConfig_RefreshesExpiredToken(t *testing.T) {
 	var tokenRequests int32
 
-	tokenServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		n := atomic.AddInt32(&tokenRequests, 1)
 
 		w.Header().Set("Content-Type", "application/json")
@@ -97,7 +111,10 @@ func TestNewServiceAccountConfig_RefreshesExpiredToken(t *testing.T) {
 	}))
 	defer apiServer.Close()
 
-	cfg := NewServiceAccountConfig("test-client-id", "test-client-secret", tokenServer.URL)
+	cfg, err := NewServiceAccountConfig(tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL)
+	if err != nil {
+		t.Fatalf("NewServiceAccountConfig failed: %v", err)
+	}
 
 	const numRequests = 3
 	for i := 0; i < numRequests; i++ {
@@ -115,7 +132,7 @@ func TestNewServiceAccountConfig_RefreshesExpiredToken(t *testing.T) {
 }
 
 func TestNewServiceAccountAPIClient(t *testing.T) {
-	tokenServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(map[string]interface{}{
 			"access_token": "test-access-token",
@@ -125,8 +142,40 @@ func TestNewServiceAccountAPIClient(t *testing.T) {
 	}))
 	defer tokenServer.Close()
 
-	client := NewServiceAccountAPIClient("test-client-id", "test-client-secret", tokenServer.URL)
+	client, err := NewServiceAccountAPIClient(tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL)
+	if err != nil {
+		t.Fatalf("NewServiceAccountAPIClient failed: %v", err)
+	}
 	if client == nil {
 		t.Fatal("expected a non-nil APIClient")
 	}
+}
+
+func TestNewServiceAccountConfig_TokenURLValidation(t *testing.T) {
+	t.Run("empty tokenURL defaults instead of erroring", func(t *testing.T) {
+		cfg, err := NewServiceAccountConfig(context.Background(), "id", "secret", "")
+		if err != nil {
+			t.Fatalf("expected an empty tokenURL to default rather than error, got: %v", err)
+		}
+		if cfg == nil {
+			t.Fatal("expected a non-nil Configuration")
+		}
+	})
+
+	t.Run("non-https tokenURL is rejected", func(t *testing.T) {
+		_, err := NewServiceAccountConfig(context.Background(), "id", "secret", "http://example.com/oauth2/token")
+		if err == nil {
+			t.Fatal("expected a non-https tokenURL to be rejected")
+		}
+		if !strings.Contains(err.Error(), "https") {
+			t.Fatalf("expected the error to mention the https requirement, got: %v", err)
+		}
+	})
+
+	t.Run("https tokenURL is accepted", func(t *testing.T) {
+		_, err := NewServiceAccountConfig(context.Background(), "id", "secret", "https://example.com/oauth2/token")
+		if err != nil {
+			t.Fatalf("expected an https tokenURL to be accepted, got: %v", err)
+		}
+	})
 }

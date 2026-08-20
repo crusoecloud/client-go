@@ -202,24 +202,48 @@ func NewAuthenticatedConfig(accessKey, secret string) *swagger.Configuration {
 	return cfg
 }
 
+// defaultServiceAccountTokenURL is used when NewServiceAccountConfig is called with an empty
+// tokenURL.
+const defaultServiceAccountTokenURL = "https://auth.crusoe.ai/oauth2/token"
+
+// errInsecureTokenURL is returned when a non-empty tokenURL isn't https - sending it would mean
+// a client secret goes out over the wire in the clear.
+var errInsecureTokenURL = errors.New("tokenURL must be an https:// URL")
+
 // NewServiceAccountAPIClient initializes a new Crusoe API client authenticated as a service
-// account via the OAuth2 client credentials grant.
-func NewServiceAccountAPIClient(clientID, clientSecret, tokenURL string) *swagger.APIClient {
-	return swagger.NewAPIClient(NewServiceAccountConfig(clientID, clientSecret, tokenURL))
+// account via the OAuth2 client credentials grant. ctx bounds the token-fetching HTTP client's
+// requests, so a caller's timeout or cancellation reaches them.
+func NewServiceAccountAPIClient(ctx context.Context, clientID, clientSecret, tokenURL string) (*swagger.APIClient, error) {
+	cfg, err := NewServiceAccountConfig(ctx, clientID, clientSecret, tokenURL)
+	if err != nil {
+		return nil, err
+	}
+
+	return swagger.NewAPIClient(cfg), nil
 }
 
 // NewServiceAccountConfig initializes a new Crusoe API configuration authenticated as a service
 // account via the OAuth2 client credentials grant (clientID/clientSecret against tokenURL). The
 // returned Configuration's HTTPClient fetches an access token on first use and refreshes it
 // automatically as it nears expiry, for every subsequent request.
-func NewServiceAccountConfig(clientID, clientSecret, tokenURL string) *swagger.Configuration {
+//
+// tokenURL defaults to defaultServiceAccountTokenURL when empty. A non-empty tokenURL that isn't
+// https is rejected, rather than sending the client secret over the wire in the clear.
+func NewServiceAccountConfig(ctx context.Context, clientID, clientSecret, tokenURL string) (*swagger.Configuration, error) {
+	switch {
+	case tokenURL == "":
+		tokenURL = defaultServiceAccountTokenURL
+	case !strings.HasPrefix(tokenURL, "https://"):
+		return nil, fmt.Errorf("%w: got %q", errInsecureTokenURL, tokenURL)
+	}
+
 	cfg := swagger.NewConfiguration()
 
 	cfg.HTTPClient = (&clientcredentials.Config{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		TokenURL:     tokenURL,
-	}).Client(context.Background())
+	}).Client(ctx)
 
-	return cfg
+	return cfg, nil
 }
