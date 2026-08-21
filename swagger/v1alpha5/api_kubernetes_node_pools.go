@@ -922,19 +922,21 @@ func (a *KubernetesNodePoolsApiService) ListKubernetesNodePoolVMs(ctx context.Co
 
 /*
 KubernetesNodePoolsApiService Lists the Kubernetes Nodes backing a node pool and returns their details.
-Complements the node pool GET, which returns pool-level state, by exposing the individual Nodes that back the pool, including the operation currently acting on each node. Results are paginated; next_page_token is absent on the last page.
+Complements the node pool GET, which returns pool-level state, by exposing the individual Nodes that back the pool, including the operation currently acting on each node. Results are paginated: next_token is empty on the last page and prev_token is empty on the first.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId ID of the project that owns the node pool.
  * @param nodePoolId ID of the node pool.
  * @param optional nil or *KubernetesNodePoolsApiListNodePoolNodesOpts - Optional Parameters:
      * @param "Limit" (optional.Int64) -  Maximum number of nodes to return per page.
-     * @param "NextPageToken" (optional.String) -  Opaque token for fetching the next page, from a previous response&#x27;s next_page_token.
+     * @param "NextToken" (optional.String) -  Base64-encoded token for the next page of results, from a previous response&#x27;s next_token.
+     * @param "PrevToken" (optional.String) -  Base64-encoded token for the previous page of results, from a previous response&#x27;s prev_token.
 @return ListKubernetesNodePoolNodesResponse
 */
 
 type KubernetesNodePoolsApiListNodePoolNodesOpts struct {
-	Limit         optional.Int64
-	NextPageToken optional.String
+	Limit     optional.Int64
+	NextToken optional.String
+	PrevToken optional.String
 }
 
 func (a *KubernetesNodePoolsApiService) ListNodePoolNodes(ctx context.Context, projectId string, nodePoolId string, localVarOptionals *KubernetesNodePoolsApiListNodePoolNodesOpts) (ListKubernetesNodePoolNodesResponse, *http.Response, error) {
@@ -958,8 +960,11 @@ func (a *KubernetesNodePoolsApiService) ListNodePoolNodes(ctx context.Context, p
 	if localVarOptionals != nil && localVarOptionals.Limit.IsSet() {
 		localVarQueryParams.Add("limit", parameterToString(localVarOptionals.Limit.Value(), ""))
 	}
-	if localVarOptionals != nil && localVarOptionals.NextPageToken.IsSet() {
-		localVarQueryParams.Add("next_page_token", parameterToString(localVarOptionals.NextPageToken.Value(), ""))
+	if localVarOptionals != nil && localVarOptionals.NextToken.IsSet() {
+		localVarQueryParams.Add("next_token", parameterToString(localVarOptionals.NextToken.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PrevToken.IsSet() {
+		localVarQueryParams.Add("prev_token", parameterToString(localVarOptionals.PrevToken.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
@@ -1017,8 +1022,38 @@ func (a *KubernetesNodePoolsApiService) ListNodePoolNodes(ctx context.Context, p
 			newErr.model = v
 			return localVarReturnValue, localVarHttpResponse, newErr
 		}
+		if localVarHttpResponse.StatusCode == 400 {
+			var v InlineResponse400
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
 		if localVarHttpResponse.StatusCode == 401 {
 			var v InlineResponse401
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 403 {
+			var v InlineResponse403
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 404 {
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

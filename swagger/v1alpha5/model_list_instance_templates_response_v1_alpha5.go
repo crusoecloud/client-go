@@ -8,5 +8,7 @@
  */
 package swagger
 
-// SetUsersSSOEnforcementResponse is the response for setting the SSO enforcement level of a set of users.  Successful update calls return an empty body
-type CustomerSetUsersSsoEnforcementResponse struct{}
+// ListInstanceTemplatesResponseV1Alpha5 is the resource response type for GET requests to the InstanceTemplates endpoint.
+type ListInstanceTemplatesResponseV1Alpha5 struct {
+	Items []InstanceTemplate `json:"items"`
+}

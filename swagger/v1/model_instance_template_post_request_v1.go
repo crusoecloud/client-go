@@ -29,6 +29,8 @@ type InstanceTemplatePostRequestV1 struct {
 	PublicIpAddressType string `json:"public_ip_address_type,omitempty"`
 	// Reservation to use for all VMs created from this instance template.
 	ReservationId string `json:"reservation_id,omitempty"`
+	// IDs of existing shared volumes to attach to all VMs created from this instance template. Shared volumes are always attached in read-write mode.
+	SharedVolumeAttachments []string `json:"shared_volume_attachments,omitempty"`
 	// Shutdown script to use for all VMs created from this instance template.
 	ShutdownScript string `json:"shutdown_script,omitempty"`
 	// SSH public key to use for all VMs created from this instance template.
