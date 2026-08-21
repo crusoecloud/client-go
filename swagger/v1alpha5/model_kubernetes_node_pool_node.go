@@ -11,6 +11,8 @@ package swagger
 type KubernetesNodePoolNode struct {
 	// Creation timestamp of the node, in RFC3339 format.
 	CreatedAt string `json:"created_at"`
+	// Current health issues on the node. Omitted when the node has nothing to report. Informational only; status is authoritative for lifecycle and readiness.
+	HealthIssues []KubernetesNodePoolNodeHealthIssue `json:"health_issues,omitempty"`
 	// ID of the Crusoe VM that backs the node.
 	InstanceId string `json:"instance_id"`
 	// Kubernetes Node name as registered in the cluster.

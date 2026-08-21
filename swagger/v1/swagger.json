@@ -15437,6 +15437,13 @@
           "type": "string",
           "x-go-name": "CreatedAt"
         },
+        "current": {
+          "description": "Number of the pool's nodes that have joined the cluster and passed\nreadiness: registered with the API server and ready to take workloads.\nOmitted when the serving backend does not compute it; zero means the\npool genuinely has no ready nodes.",
+          "example": 3,
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "Current"
+        },
         "ephemeral_storage_for_containerd": {
           "description": "Whether the first local ephemeral NVMe disk is used for containerd storage.",
           "example": true,
@@ -15697,6 +15704,14 @@
           "type": "string",
           "x-go-name": "CreatedAt"
         },
+        "health_issues": {
+          "description": "Current health issues on the node. Omitted when the node has nothing to\nreport. Informational only; status is authoritative for lifecycle and\nreadiness.",
+          "items": {
+            "$ref": "#/definitions/KubernetesNodePoolNodeHealthIssue"
+          },
+          "type": "array",
+          "x-go-name": "HealthIssues"
+        },
         "instance_id": {
           "description": "ID of the Crusoe VM that backs the node.",
           "example": "1e490fee-1624-4cab-a535-061ae6fdf863",
@@ -15737,6 +15752,35 @@
         "created_at"
       ],
       "title": "KubernetesNodePoolNode is a Kubernetes Node backing a node pool.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesNodePoolNodeHealthIssue": {
+      "description": "KubernetesNodePoolNodeHealthIssue is one current health issue on a single\nnode. Deliberately a different shape from the pool's health issue: node-level\nconditions are their own set, and there is no affected count or node-id list —\nthe node it applies to is the node carrying it.",
+      "properties": {
+        "code": {
+          "description": "Machine-readable code for the issue, e.g. NOT_READY. New codes may be\nadded; treat unknown values as display-only.",
+          "example": "NOT_READY",
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "message": {
+          "description": "Human-readable description of the issue.",
+          "example": "Node has been NotReady for more than 10 minutes (KubeletNotReady)",
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "since": {
+          "description": "Time the issue started, in RFC3339 format.",
+          "example": "2026-05-21T18:35:25Z",
+          "type": "string",
+          "x-go-name": "Since"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
