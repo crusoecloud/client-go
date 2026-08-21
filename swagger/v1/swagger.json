@@ -14250,6 +14250,17 @@
           "type": "string",
           "x-go-name": "ReservationID"
         },
+        "shared_volume_attachments": {
+          "description": "IDs of existing shared volumes attached to all VMs created from this instance template.",
+          "example": [
+            "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "SharedVolumeAttachments"
+        },
         "shutdown_script": {
           "description": "Shutdown script to use for all VMs created from this instance template.",
           "example": "#!/bin/bash\\necho 'goodbye'",
@@ -14374,6 +14385,17 @@
           "example": "804bf3a2-81f2-4d78-9a9e-dc6a55ed33d8",
           "type": "string",
           "x-go-name": "ReservationID"
+        },
+        "shared_volume_attachments": {
+          "description": "IDs of existing shared volumes to attach to all VMs created from this instance template.\nShared volumes are always attached in read-write mode.",
+          "example": [
+            "09ae8411-0fbb-411c-898c-2b8f19622ae1"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "SharedVolumeAttachments"
         },
         "shutdown_script": {
           "description": "Shutdown script to use for all VMs created from this instance template.",
