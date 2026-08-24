@@ -6601,7 +6601,7 @@
     },
     "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes": {
       "get": {
-        "description": "Complements the node pool GET, which returns pool-level state, by exposing\nthe individual Nodes that back the pool, including the operation currently\nacting on each node. Results are paginated: next_token is empty on the last\npage and prev_token is empty on the first.",
+        "description": "Complements the node pool GET, which returns pool-level state, by exposing\nthe individual Nodes that back the pool, including the operation currently\nacting on each node. Results are paginated: next_token is empty on the last\npage and prev_token is empty on the first.\n\nThe status and health-code filters narrow the list, each with an exclude\ncounterpart. A filtered response also carries total_count, the number of\nmatching nodes across every page, which is what lets a caller show a section\nheading without walking the pages.",
         "operationId": "listNodePoolNodes",
         "parameters": [
           {
@@ -6646,6 +6646,38 @@
             "name": "prev_token",
             "type": "string",
             "x-go-name": "PrevToken"
+          },
+          {
+            "description": "Comma-separated node statuses to include. Values are the ones the\nresponse serves, e.g. PROVISIONING. Omit to include every status. An\nunrecognized value is rejected rather than ignored.",
+            "example": "PROVISIONING",
+            "in": "query",
+            "name": "status",
+            "type": "string",
+            "x-go-name": "Status"
+          },
+          {
+            "description": "Comma-separated node statuses to exclude, applied after status. Use this\nto ask for everything-else, which keeps working when a new status is\nadded.",
+            "example": "PROVISIONING",
+            "in": "query",
+            "name": "exclude_status",
+            "type": "string",
+            "x-go-name": "ExcludeStatus"
+          },
+          {
+            "description": "Comma-separated node health issue codes to include: a node matches when\nit carries at least one of them, e.g. VM_STOPPED.",
+            "example": "VM_STOPPED",
+            "in": "query",
+            "name": "health_code",
+            "type": "string",
+            "x-go-name": "HealthCode"
+          },
+          {
+            "description": "Comma-separated node health issue codes to exclude: a node is dropped\nwhen it carries any of them.",
+            "example": "VM_STOPPED",
+            "in": "query",
+            "name": "exclude_health_code",
+            "type": "string",
+            "x-go-name": "ExcludeHealthCode"
           }
         ],
         "responses": {
@@ -15670,7 +15702,7 @@
           "x-go-name": "AffectedNodeIDs"
         },
         "code": {
-          "description": "Machine-readable code for the issue, e.g. INSUFFICIENT_CAPACITY or\nNODE_NOT_READY. New codes may be added; treat unknown values as\ndisplay-only. INSUFFICIENT_CAPACITY appears as soon as a provisioning\nattempt fails for capacity and persists until the node deficit is\nresolved; it never changes the pool state.",
+          "description": "Machine-readable code for the issue, e.g. INSUFFICIENT_CAPACITY,\nINSUFFICIENT_QUOTA, NODE_NOT_READY or INTERNAL_ERROR. New codes may be\nadded; treat unknown values as display-only.\n\nA code persists until the node deficit behind it is resolved. Which\ncodes move the pool to STATE_DEGRADED is a platform decision and not\npart of this contract: capacity and quota shortfalls leave the pool\nRUNNING, since the pool is waiting for room rather than failing.",
           "example": "INSUFFICIENT_CAPACITY",
           "type": "string",
           "x-go-name": "Code"
@@ -15766,7 +15798,7 @@
         },
         "message": {
           "description": "Human-readable description of the issue.",
-          "example": "Node has been NotReady for more than 10 minutes (KubeletNotReady)",
+          "example": "Node has been observed to be NotReady (KubeletNotReady)",
           "type": "string",
           "x-go-name": "Message"
         },
@@ -16621,6 +16653,13 @@
           "example": "bXktZmlyc3Qtbm9kZQ",
           "type": "string",
           "x-go-name": "PrevToken"
+        },
+        "total_count": {
+          "description": "Number of nodes matching the filters, across every page. Present only\nwhen the request carried a filter: unfiltered, the total is the pool's\nown node count, which the pool already reports. Zero is a real answer —\na filter matching nothing — so the field is absent rather than zero when\nit does not apply.",
+          "example": 3,
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "TotalCount"
         }
       },
       "required": [

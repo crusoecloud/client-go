@@ -13,7 +13,7 @@ type KubernetesNodePoolHealthIssue struct {
 	AffectedCount int64 `json:"affected_count,omitempty"`
 	// IDs of the affected nodes, when known. Node IDs are the IDs of the VMs backing the nodes.
 	AffectedNodeIds []string `json:"affected_node_ids,omitempty"`
-	// Machine-readable code for the issue, e.g. INSUFFICIENT_CAPACITY or NODE_NOT_READY. New codes may be added; treat unknown values as display-only. INSUFFICIENT_CAPACITY appears as soon as a provisioning attempt fails for capacity and persists until the node deficit is resolved; it never changes the pool state.
+	// Machine-readable code for the issue, e.g. INSUFFICIENT_CAPACITY, INSUFFICIENT_QUOTA, NODE_NOT_READY or INTERNAL_ERROR. New codes may be added; treat unknown values as display-only.  A code persists until the node deficit behind it is resolved. Which codes move the pool to STATE_DEGRADED is a platform decision and not part of this contract: capacity and quota shortfalls leave the pool RUNNING, since the pool is waiting for room rather than failing.
 	Code string `json:"code"`
 	// Human-readable description of the issue.
 	Message string `json:"message"`

@@ -922,7 +922,7 @@ func (a *KubernetesNodePoolsApiService) ListKubernetesNodePoolVMs(ctx context.Co
 
 /*
 KubernetesNodePoolsApiService Lists the Kubernetes Nodes backing a node pool and returns their details.
-Complements the node pool GET, which returns pool-level state, by exposing the individual Nodes that back the pool, including the operation currently acting on each node. Results are paginated: next_token is empty on the last page and prev_token is empty on the first.
+Complements the node pool GET, which returns pool-level state, by exposing the individual Nodes that back the pool, including the operation currently acting on each node. Results are paginated: next_token is empty on the last page and prev_token is empty on the first.  The status and health-code filters narrow the list, each with an exclude counterpart. A filtered response also carries total_count, the number of matching nodes across every page, which is what lets a caller show a section heading without walking the pages.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId ID of the project that owns the node pool.
  * @param nodePoolId ID of the node pool.
@@ -930,13 +930,21 @@ Complements the node pool GET, which returns pool-level state, by exposing the i
      * @param "Limit" (optional.Int64) -  Maximum number of nodes to return per page.
      * @param "NextToken" (optional.String) -  Base64-encoded token for the next page of results, from a previous response&#x27;s next_token.
      * @param "PrevToken" (optional.String) -  Base64-encoded token for the previous page of results, from a previous response&#x27;s prev_token.
+     * @param "Status" (optional.String) -  Comma-separated node statuses to include. Values are the ones the response serves, e.g. PROVISIONING. Omit to include every status. An unrecognized value is rejected rather than ignored.
+     * @param "ExcludeStatus" (optional.String) -  Comma-separated node statuses to exclude, applied after status. Use this to ask for everything-else, which keeps working when a new status is added.
+     * @param "HealthCode" (optional.String) -  Comma-separated node health issue codes to include: a node matches when it carries at least one of them, e.g. VM_STOPPED.
+     * @param "ExcludeHealthCode" (optional.String) -  Comma-separated node health issue codes to exclude: a node is dropped when it carries any of them.
 @return ListKubernetesNodePoolNodesResponse
 */
 
 type KubernetesNodePoolsApiListNodePoolNodesOpts struct {
-	Limit     optional.Int64
-	NextToken optional.String
-	PrevToken optional.String
+	Limit             optional.Int64
+	NextToken         optional.String
+	PrevToken         optional.String
+	Status            optional.String
+	ExcludeStatus     optional.String
+	HealthCode        optional.String
+	ExcludeHealthCode optional.String
 }
 
 func (a *KubernetesNodePoolsApiService) ListNodePoolNodes(ctx context.Context, projectId string, nodePoolId string, localVarOptionals *KubernetesNodePoolsApiListNodePoolNodesOpts) (ListKubernetesNodePoolNodesResponse, *http.Response, error) {
@@ -965,6 +973,18 @@ func (a *KubernetesNodePoolsApiService) ListNodePoolNodes(ctx context.Context, p
 	}
 	if localVarOptionals != nil && localVarOptionals.PrevToken.IsSet() {
 		localVarQueryParams.Add("prev_token", parameterToString(localVarOptionals.PrevToken.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Status.IsSet() {
+		localVarQueryParams.Add("status", parameterToString(localVarOptionals.Status.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ExcludeStatus.IsSet() {
+		localVarQueryParams.Add("exclude_status", parameterToString(localVarOptionals.ExcludeStatus.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.HealthCode.IsSet() {
+		localVarQueryParams.Add("health_code", parameterToString(localVarOptionals.HealthCode.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ExcludeHealthCode.IsSet() {
+		localVarQueryParams.Add("exclude_health_code", parameterToString(localVarOptionals.ExcludeHealthCode.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
