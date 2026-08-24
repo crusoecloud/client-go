@@ -16,4 +16,6 @@ type ListKubernetesNodePoolNodesResponse struct {
 	Nodes []KubernetesNodePoolNode `json:"nodes"`
 	// Base64 encoded token representing the previous page of nodes. Empty if currently on the first page.
 	PrevToken string `json:"prev_token,omitempty"`
+	// Number of nodes matching the filters, across every page. Present only when the request carried a filter: unfiltered, the total is the pool's own node count, which the pool already reports. Zero is a real answer — a filter matching nothing — so the field is absent rather than zero when it does not apply.
+	TotalCount int64 `json:"total_count,omitempty"`
 }
