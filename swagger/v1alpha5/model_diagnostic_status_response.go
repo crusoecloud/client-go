@@ -10,7 +10,9 @@ package swagger
 
 type DiagnosticStatusResponse struct {
 	CreatedAt string `json:"created_at"`
-	Status    string `json:"status"`
-	Type_     string `json:"type"`
-	UpdatedAt string `json:"updated_at"`
+	// Failure detail, populated when status is \"failed\" or \"timeout\".
+	ErrorMessage string `json:"error_message,omitempty"`
+	Status       string `json:"status"`
+	Type_        string `json:"type"`
+	UpdatedAt    string `json:"updated_at"`
 }
