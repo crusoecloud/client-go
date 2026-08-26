@@ -12639,6 +12639,12 @@
           "type": "string",
           "x-go-name": "CreatedAt"
         },
+        "error_message": {
+          "description": "Failure detail, populated when status is \"failed\" or \"timeout\".",
+          "example": "nvidia-smi timed out waiting for GPU response",
+          "type": "string",
+          "x-go-name": "ErrorMessage"
+        },
         "status": {
           "example": "completed",
           "type": "string",
