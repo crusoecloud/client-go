@@ -7116,7 +7116,7 @@
           },
           {
             "description": "Start timestamp, inclusive.",
-            "example": "<rfc3339 | unix_timestamp>",
+            "example": "\u003crfc3339 | unix_timestamp\u003e",
             "in": "query",
             "name": "start",
             "required": true,
@@ -7125,7 +7125,7 @@
           },
           {
             "description": "End timestamp, inclusive.",
-            "example": "<rfc3339 | unix_timestamp>",
+            "example": "\u003crfc3339 | unix_timestamp\u003e",
             "in": "query",
             "name": "end",
             "required": true,
@@ -7188,7 +7188,7 @@
           },
           {
             "description": "Evaluation timestamp.",
-            "example": "<rfc3339 | unix_timestamp>",
+            "example": "\u003crfc3339 | unix_timestamp\u003e",
             "in": "query",
             "name": "time",
             "type": "string",
@@ -7257,7 +7257,7 @@
           },
           {
             "description": "Start timestamp, inclusive.",
-            "example": "<rfc3339 | unix_timestamp>",
+            "example": "\u003crfc3339 | unix_timestamp\u003e",
             "in": "query",
             "name": "start",
             "required": true,
@@ -7266,7 +7266,7 @@
           },
           {
             "description": "End timestamp, inclusive.",
-            "example": "<rfc3339 | unix_timestamp>",
+            "example": "\u003crfc3339 | unix_timestamp\u003e",
             "in": "query",
             "name": "end",
             "required": true,
@@ -13747,7 +13747,7 @@
         },
         "slice_type": {
           "description": "VM slice type the capacity applies to.",
-          "example": "16 vCPUs & 125GB RAM & 1 A100 (40GB) GPU",
+          "example": "16 vCPUs \u0026 125GB RAM \u0026 1 A100 (40GB) GPU",
           "type": "string",
           "x-go-name": "SliceType"
         }
@@ -15646,7 +15646,7 @@
           "x-go-name": "Enabled"
         },
         "max_node_size": {
-          "description": "Maximum number of nodes the autoscaler may scale up to. Must be\n>= min_node_size; [0, 0] pins the pool at zero nodes. Required alongside\nmin_node_size when enabled is true; ignored when enabled is false.",
+          "description": "Maximum number of nodes the autoscaler may scale up to. Must be\n\u003e= min_node_size; [0, 0] pins the pool at zero nodes. Required alongside\nmin_node_size when enabled is true; ignored when enabled is false.",
           "example": 10,
           "format": "int64",
           "type": "integer",
