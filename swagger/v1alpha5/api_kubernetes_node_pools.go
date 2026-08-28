@@ -922,7 +922,7 @@ func (a *KubernetesNodePoolsApiService) ListKubernetesNodePoolVMs(ctx context.Co
 
 /*
 KubernetesNodePoolsApiService Lists the Kubernetes Nodes backing a node pool and returns their details.
-Complements the node pool GET, which returns pool-level state, by exposing the individual Nodes that back the pool, including the operation currently acting on each node. Results are paginated: next_token is empty on the last page and prev_token is empty on the first.  The status and health-code filters narrow the list, each with an exclude counterpart. A filtered response also carries total_count, the number of matching nodes across every page, which is what lets a caller show a section heading without walking the pages.
+Complements the node pool GET, which returns pool-level state, by exposing the individual Nodes that back the pool, including the operation currently acting on each node. Results are paginated: next_token is empty on the last page and prev_token is empty on the first.  The status and health-code filters narrow the list, each with an exclude counterpart. A filtered response also carries total_count, the number of matching nodes across every page, which is what lets a caller show a section heading without walking the pages.  sort takes the same field-and-direction form as the other list endpoints. Beyond the node&#x27;s own columns it accepts health_issues, which orders on whether a node carries any health issue at all: sort&#x3D;-health_issues puts the nodes needing attention on the first page, and sort&#x3D;health_issues puts the healthy ones there. Health is a live attribute, so a node whose health changes between page fetches can shift across a page boundary mid-walk.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId ID of the project that owns the node pool.
  * @param nodePoolId ID of the node pool.
@@ -934,6 +934,7 @@ Complements the node pool GET, which returns pool-level state, by exposing the i
      * @param "ExcludeStatus" (optional.String) -  Comma-separated node statuses to exclude, applied after status. Use this to ask for everything-else, which keeps working when a new status is added.
      * @param "HealthCode" (optional.String) -  Comma-separated node health issue codes to include: a node matches when it carries at least one of them, e.g. VM_STOPPED.
      * @param "ExcludeHealthCode" (optional.String) -  Comma-separated node health issue codes to exclude: a node is dropped when it carries any of them.
+     * @param "Sort" (optional.String) -  Field to sort results by; prefix with &#x27;-&#x27; for descending order. Beyond the node&#x27;s own columns, health_issues sorts on whether a node carries any health issue at all, so sorting it descending puts the nodes needing attention first. Omitted, the list keeps its default order. An unrecognized field is rejected rather than ignored.
 @return ListKubernetesNodePoolNodesResponse
 */
 
@@ -945,6 +946,7 @@ type KubernetesNodePoolsApiListNodePoolNodesOpts struct {
 	ExcludeStatus     optional.String
 	HealthCode        optional.String
 	ExcludeHealthCode optional.String
+	Sort              optional.String
 }
 
 func (a *KubernetesNodePoolsApiService) ListNodePoolNodes(ctx context.Context, projectId string, nodePoolId string, localVarOptionals *KubernetesNodePoolsApiListNodePoolNodesOpts) (ListKubernetesNodePoolNodesResponse, *http.Response, error) {
@@ -985,6 +987,9 @@ func (a *KubernetesNodePoolsApiService) ListNodePoolNodes(ctx context.Context, p
 	}
 	if localVarOptionals != nil && localVarOptionals.ExcludeHealthCode.IsSet() {
 		localVarQueryParams.Add("exclude_health_code", parameterToString(localVarOptionals.ExcludeHealthCode.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Sort.IsSet() {
+		localVarQueryParams.Add("sort", parameterToString(localVarOptionals.Sort.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}

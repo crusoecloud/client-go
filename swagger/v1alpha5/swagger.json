@@ -6601,7 +6601,7 @@
     },
     "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes": {
       "get": {
-        "description": "Complements the node pool GET, which returns pool-level state, by exposing\nthe individual Nodes that back the pool, including the operation currently\nacting on each node. Results are paginated: next_token is empty on the last\npage and prev_token is empty on the first.\n\nThe status and health-code filters narrow the list, each with an exclude\ncounterpart. A filtered response also carries total_count, the number of\nmatching nodes across every page, which is what lets a caller show a section\nheading without walking the pages.",
+        "description": "Complements the node pool GET, which returns pool-level state, by exposing\nthe individual Nodes that back the pool, including the operation currently\nacting on each node. Results are paginated: next_token is empty on the last\npage and prev_token is empty on the first.\n\nThe status and health-code filters narrow the list, each with an exclude\ncounterpart. A filtered response also carries total_count, the number of\nmatching nodes across every page, which is what lets a caller show a section\nheading without walking the pages.\n\nsort takes the same field-and-direction form as the other list endpoints.\nBeyond the node's own columns it accepts health_issues, which orders on\nwhether a node carries any health issue at all: sort=-health_issues puts the\nnodes needing attention on the first page, and sort=health_issues puts the\nhealthy ones there. Health is a live attribute, so a node whose health\nchanges between page fetches can shift across a page boundary mid-walk.",
         "operationId": "listNodePoolNodes",
         "parameters": [
           {
@@ -6678,6 +6678,14 @@
             "name": "exclude_health_code",
             "type": "string",
             "x-go-name": "ExcludeHealthCode"
+          },
+          {
+            "description": "Field to sort results by; prefix with '-' for descending order. Beyond\nthe node's own columns, health_issues sorts on whether a node carries any\nhealth issue at all, so sorting it descending puts the nodes needing\nattention first. Omitted, the list keeps its default order. An\nunrecognized field is rejected rather than ignored.",
+            "example": "-health_issues, name, -created_at",
+            "in": "query",
+            "name": "sort",
+            "type": "string",
+            "x-go-name": "SortBy"
           }
         ],
         "responses": {
@@ -7116,7 +7124,7 @@
           },
           {
             "description": "Start timestamp, inclusive.",
-            "example": "<rfc3339 | unix_timestamp>",
+            "example": "\u003crfc3339 | unix_timestamp\u003e",
             "in": "query",
             "name": "start",
             "required": true,
@@ -7125,7 +7133,7 @@
           },
           {
             "description": "End timestamp, inclusive.",
-            "example": "<rfc3339 | unix_timestamp>",
+            "example": "\u003crfc3339 | unix_timestamp\u003e",
             "in": "query",
             "name": "end",
             "required": true,
@@ -7188,7 +7196,7 @@
           },
           {
             "description": "Evaluation timestamp.",
-            "example": "<rfc3339 | unix_timestamp>",
+            "example": "\u003crfc3339 | unix_timestamp\u003e",
             "in": "query",
             "name": "time",
             "type": "string",
@@ -7257,7 +7265,7 @@
           },
           {
             "description": "Start timestamp, inclusive.",
-            "example": "<rfc3339 | unix_timestamp>",
+            "example": "\u003crfc3339 | unix_timestamp\u003e",
             "in": "query",
             "name": "start",
             "required": true,
@@ -7266,7 +7274,7 @@
           },
           {
             "description": "End timestamp, inclusive.",
-            "example": "<rfc3339 | unix_timestamp>",
+            "example": "\u003crfc3339 | unix_timestamp\u003e",
             "in": "query",
             "name": "end",
             "required": true,
@@ -13747,7 +13755,7 @@
         },
         "slice_type": {
           "description": "VM slice type the capacity applies to.",
-          "example": "16 vCPUs & 125GB RAM & 1 A100 (40GB) GPU",
+          "example": "16 vCPUs \u0026 125GB RAM \u0026 1 A100 (40GB) GPU",
           "type": "string",
           "x-go-name": "SliceType"
         }
@@ -15646,7 +15654,7 @@
           "x-go-name": "Enabled"
         },
         "max_node_size": {
-          "description": "Maximum number of nodes the autoscaler may scale up to. Must be\n>= min_node_size; [0, 0] pins the pool at zero nodes. Required alongside\nmin_node_size when enabled is true; ignored when enabled is false.",
+          "description": "Maximum number of nodes the autoscaler may scale up to. Must be\n\u003e= min_node_size; [0, 0] pins the pool at zero nodes. Required alongside\nmin_node_size when enabled is true; ignored when enabled is false.",
           "example": 10,
           "format": "int64",
           "type": "integer",
