@@ -22075,38 +22075,6 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "CreditsService"
-    },
-    {
-      "name": "FeatureFlagsService"
-    },
-    {
-      "name": "InstanceTemplatesService"
-    },
-    {
-      "name": "OrganizationsMFAService"
-    },
-    {
-      "name": "ProjectsService"
-    },
-    {
-      "name": "SSHKeysService"
-    },
-    {
-      "name": "ServiceAccountsService"
-    },
-    {
-      "name": "UsageService"
-    },
-    {
-      "name": "UsersSSOService"
-    },
-    {
-      "name": "UsersService"
-    }
-  ],
   "x-tagGroups": [
     {
       "name": "Compute",
@@ -22123,7 +22091,6 @@
         "Projects",
         "Billing",
         "Entities",
-        "Prospects",
         "Usage",
         "Quotas",
         "Audit Logs",
@@ -22145,8 +22112,7 @@
         "Disk Operations",
         "Snapshots",
         "Snapshot Operations",
-        "S3Buckets",
-        "S3Users"
+        "S3Buckets"
       ]
     },
     {
