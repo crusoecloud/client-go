@@ -15447,7 +15447,20 @@
           "x-go-name": "OutOfSyncInstances"
         },
         "state": {
-          "description": "Current rotation state of the node pool.",
+          "description": "Current state of the node pool. This is the pool's own lifecycle state,\nnot a rotation-specific one, so a rotation in progress reads as\nSTATE_ROTATING. The same value, spelled the same way, that the node pool\nresource serves as its state.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "STATE_PROVISIONING",
+            "STATE_RUNNING",
+            "STATE_DEGRADED",
+            "STATE_UPDATING",
+            "STATE_UPGRADING",
+            "STATE_ROTATING",
+            "STATE_DELETING",
+            "STATE_DELETED",
+            "STATE_UNHEALTHY"
+          ],
+          "example": "STATE_ROTATING",
           "type": "string",
           "x-go-name": "State"
         }
@@ -15577,6 +15590,11 @@
         "public_ip_type": {
           "default": "dynamic",
           "description": "Public IP type for the node pool's nodes: dynamic, static, or none.",
+          "enum": [
+            "dynamic",
+            "static",
+            "none"
+          ],
           "example": "dynamic",
           "type": "string",
           "x-go-name": "PublicIPType"
@@ -15717,6 +15735,12 @@
         },
         "code": {
           "description": "Machine-readable code for the issue, e.g. INSUFFICIENT_CAPACITY,\nINSUFFICIENT_QUOTA, NODE_NOT_READY or INTERNAL_ERROR. New codes may be\nadded; treat unknown values as display-only.\n\nA code persists until the node deficit behind it is resolved. Which\ncodes move the pool to STATE_DEGRADED is a platform decision and not\npart of this contract: capacity and quota shortfalls leave the pool\nRUNNING, since the pool is waiting for room rather than failing.",
+          "enum": [
+            "INSUFFICIENT_CAPACITY",
+            "INSUFFICIENT_QUOTA",
+            "NODE_NOT_READY",
+            "INTERNAL_ERROR"
+          ],
           "example": "INSUFFICIENT_CAPACITY",
           "type": "string",
           "x-go-name": "Code"
@@ -15805,7 +15829,12 @@
       "description": "KubernetesNodePoolNodeHealthIssue is one current health issue on a single\nnode. Deliberately a different shape from the pool's health issue: node-level\nconditions are their own set, and there is no affected count or node-id list —\nthe node it applies to is the node carrying it.",
       "properties": {
         "code": {
-          "description": "Machine-readable code for the issue, e.g. NOT_READY. New codes may be\nadded; treat unknown values as display-only.",
+          "description": "Machine-readable code for the issue, e.g. NOT_READY. New codes may be\nadded; treat unknown values as display-only.\n\nNode-level codes are their own set, so a code here never matches a\npool-level one: a node reports NOT_READY where the pool reports\nNODE_NOT_READY.",
+          "enum": [
+            "NOT_READY",
+            "KUBELET_NOT_REGISTERED",
+            "VM_STOPPED"
+          ],
           "example": "NOT_READY",
           "type": "string",
           "x-go-name": "Code"
@@ -16019,6 +16048,11 @@
         "public_ip_type": {
           "default": "dynamic",
           "description": "Public IP type for the node pool's nodes: dynamic, static, or none.",
+          "enum": [
+            "dynamic",
+            "static",
+            "none"
+          ],
           "example": "dynamic",
           "type": "string",
           "x-go-name": "PublicIPType"

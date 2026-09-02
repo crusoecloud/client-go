@@ -11,6 +11,6 @@ package swagger
 type KubernetesGetNodePoolRotateStatusResponse struct {
 	// IDs of instances that are out of sync with the node pool configuration.
 	OutOfSyncInstances []string `json:"out_of_sync_instances"`
-	// Current rotation state of the node pool.
+	// Current state of the node pool. This is the pool's own lifecycle state, not a rotation-specific one, so a rotation in progress reads as STATE_ROTATING. The same value, spelled the same way, that the node pool resource serves as its state.
 	State string `json:"state"`
 }

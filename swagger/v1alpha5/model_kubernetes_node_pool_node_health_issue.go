@@ -10,7 +10,7 @@ package swagger
 
 // KubernetesNodePoolNodeHealthIssue is one current health issue on a single node. Deliberately a different shape from the pool's health issue: node-level conditions are their own set, and there is no affected count or node-id list — the node it applies to is the node carrying it.
 type KubernetesNodePoolNodeHealthIssue struct {
-	// Machine-readable code for the issue, e.g. NOT_READY. New codes may be added; treat unknown values as display-only.
+	// Machine-readable code for the issue, e.g. NOT_READY. New codes may be added; treat unknown values as display-only.  Node-level codes are their own set, so a code here never matches a pool-level one: a node reports NOT_READY where the pool reports NODE_NOT_READY.
 	Code string `json:"code"`
 	// Human-readable description of the issue.
 	Message string `json:"message"`
