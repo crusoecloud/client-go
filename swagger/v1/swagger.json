@@ -6601,7 +6601,7 @@
     },
     "/projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes": {
       "get": {
-        "description": "Complements the node pool GET, which returns pool-level state, by exposing\nthe individual Nodes that back the pool, including the operation currently\nacting on each node. Results are paginated: next_token is empty on the last\npage and prev_token is empty on the first.\n\nThe status and health-code filters narrow the list, each with an exclude\ncounterpart. A filtered response also carries total_count, the number of\nmatching nodes across every page, which is what lets a caller show a section\nheading without walking the pages.\n\nsort takes the same field-and-direction form as the other list endpoints.\nBeyond the node's own columns it accepts health_issues, which orders on\nwhether a node carries any health issue at all: sort=-health_issues puts the\nnodes needing attention on the first page, and sort=health_issues puts the\nhealthy ones there. Health is a live attribute, so a node whose health\nchanges between page fetches can shift across a page boundary mid-walk.",
+        "description": "Complements the node pool GET, which returns pool-level state, by exposing\nthe individual Nodes that back the pool, including the operation currently\nacting on each node. Results are paginated: next_token is empty on the last\npage and prev_token is empty on the first.\n\nThe status and health-code filters narrow the list, each with an exclude\ncounterpart. A filtered response also carries total_count, the number of\nmatching nodes across every page, which is what lets a caller show a section\nheading without walking the pages.\n\nA request that admits provisioning nodes also carries upcoming_count: the\nnumber of nodes an in-progress operation is attempting to provision that\nhave no entry in the list yet. It is measured by the same read as the nodes\nthemselves, so the count and the list always agree.\n\nsort takes the same field-and-direction form as the other list endpoints.\nBeyond the node's own columns it accepts health_issues, which orders on\nwhether a node carries any health issue at all: sort=-health_issues puts the\nnodes needing attention on the first page, and sort=health_issues puts the\nhealthy ones there. Health is a live attribute, so a node whose health\nchanges between page fetches can shift across a page boundary mid-walk.",
         "operationId": "listNodePoolNodes",
         "parameters": [
           {
@@ -16708,6 +16708,13 @@
           "format": "int64",
           "type": "integer",
           "x-go-name": "TotalCount"
+        },
+        "upcoming_count": {
+          "description": "Number of nodes an in-progress operation is attempting to provision for\nthis node pool that are not listed in `nodes` yet. Each drops out of\nthis count once its entry appears in `nodes`. Counts only nodes with no\nentry, so it never overlaps `total_count`.\n\nZero when no operation is provisioning nodes, and zero when the request\nexcludes provisioning nodes. Absent if the count is temporarily\nunavailable.",
+          "example": 2,
+          "format": "int64",
+          "type": "integer",
+          "x-go-name": "UpcomingCount"
         }
       },
       "required": [

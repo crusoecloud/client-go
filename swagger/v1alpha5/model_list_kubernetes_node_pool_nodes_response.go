@@ -18,4 +18,6 @@ type ListKubernetesNodePoolNodesResponse struct {
 	PrevToken string `json:"prev_token,omitempty"`
 	// Number of nodes matching the filters, across every page. Present only when the request carried a filter: unfiltered, the total is the pool's own node count, which the pool already reports. Zero is a real answer — a filter matching nothing — so the field is absent rather than zero when it does not apply.
 	TotalCount int64 `json:"total_count,omitempty"`
+	// Number of nodes an in-progress operation is attempting to provision for this node pool that are not listed in `nodes` yet. Each drops out of this count once its entry appears in `nodes`. Counts only nodes with no entry, so it never overlaps `total_count`.  Zero when no operation is provisioning nodes, and zero when the request excludes provisioning nodes. Absent if the count is temporarily unavailable.
+	UpcomingCount int64 `json:"upcoming_count,omitempty"`
 }
