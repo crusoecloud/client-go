@@ -5411,6 +5411,69 @@
         ]
       }
     },
+    "/projects/{project_id}/kubernetes/addons/available": {
+      "get": {
+        "operationId": "listAvailableAddons",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "Kubernetes version (major.minor) to list available add-ons for.",
+            "example": "1.34",
+            "in": "query",
+            "name": "kubernetes_version",
+            "required": true,
+            "type": "string",
+            "x-go-name": "KubernetesVersion"
+          },
+          {
+            "description": "Maximum number of results per page (default 20, max 500).",
+            "example": 50,
+            "format": "int64",
+            "in": "query",
+            "name": "page_size",
+            "type": "integer",
+            "x-go-name": "PageSize"
+          },
+          {
+            "description": "Base64-encoded token for the next page of results.",
+            "example": "bXktZmlyc3Qtdm0",
+            "in": "query",
+            "name": "page_token",
+            "type": "string",
+            "x-go-name": "PageToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listAvailableAddonsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the add-ons available to install for a given Kubernetes version.",
+        "tags": [
+          "Kubernetes Addons"
+        ]
+      }
+    },
     "/projects/{project_id}/kubernetes/autocluster-operations": {
       "get": {
         "operationId": "listAutoClusterOperations",
@@ -5932,6 +5995,228 @@
         "summary": "Updates a Kubernetes cluster in the project and returns the async operation.",
         "tags": [
           "Kubernetes Clusters"
+        ]
+      }
+    },
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/addons": {
+      "get": {
+        "operationId": "listAddons",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the cluster.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the cluster.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "cluster_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ClusterID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listAddonsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the add-ons installed on a Kubernetes cluster, including each add-on's reconciled status.",
+        "tags": [
+          "Kubernetes Addons"
+        ]
+      },
+      "post": {
+        "operationId": "createAddons",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the cluster.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the cluster to install the add-ons on.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "cluster_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ClusterID"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/KubernetesAddonsPostRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/createAddonsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Installs one or more add-ons on a Kubernetes cluster.",
+        "tags": [
+          "Kubernetes Addons"
+        ]
+      }
+    },
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/addons/available": {
+      "get": {
+        "operationId": "listClusterAvailableAddons",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the cluster.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the cluster.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "cluster_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ClusterID"
+          },
+          {
+            "description": "Maximum number of results per page (default 20, max 500).",
+            "example": 50,
+            "format": "int64",
+            "in": "query",
+            "name": "page_size",
+            "type": "integer",
+            "x-go-name": "PageSize"
+          },
+          {
+            "description": "Base64-encoded token for the next page of results.",
+            "example": "bXktZmlyc3Qtdm0",
+            "in": "query",
+            "name": "page_token",
+            "type": "string",
+            "x-go-name": "PageToken"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listAvailableAddonsResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the add-ons available to install on a cluster, using the cluster's own Kubernetes version.",
+        "tags": [
+          "Kubernetes Addons"
+        ]
+      }
+    },
+    "/projects/{project_id}/kubernetes/clusters/{cluster_id}/addons/{addon_type}": {
+      "delete": {
+        "operationId": "deleteAddon",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the cluster.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the cluster.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "cluster_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ClusterID"
+          },
+          {
+            "description": "Catalog identifier of the add-on to remove.",
+            "example": "cert-manager",
+            "in": "path",
+            "name": "addon_type",
+            "required": true,
+            "type": "string",
+            "x-go-name": "AddonType"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/deleteAddonResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Removes an add-on from a Kubernetes cluster.",
+        "tags": [
+          "Kubernetes Addons"
         ]
       }
     },
@@ -14876,6 +15161,46 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "KubernetesAddonSpec": {
+      "properties": {
+        "addon_type": {
+          "description": "Catalog identifier of the add-on.",
+          "example": "cert-manager",
+          "type": "string",
+          "x-go-name": "AddonType"
+        },
+        "version": {
+          "description": "Version to install. If omitted, the catalog default for the cluster's\nKubernetes version is used.",
+          "example": "v1alpha5.19.1",
+          "type": "string",
+          "x-go-name": "Version"
+        }
+      },
+      "required": [
+        "addon_type"
+      ],
+      "title": "KubernetesAddonSpec identifies one add-on to install on a cluster.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesAddonsPostRequest": {
+      "properties": {
+        "addons": {
+          "description": "Add-ons to install.",
+          "items": {
+            "$ref": "#/definitions/KubernetesAddonSpec"
+          },
+          "type": "array",
+          "x-go-name": "Addons"
+        }
+      },
+      "required": [
+        "addons"
+      ],
+      "title": "KubernetesAddonsPostRequest is the request body for installing add-ons on a cluster.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "KubernetesAuthenticationDetails": {
       "description": "It supports both the new kubeconfig-based and legacy certificate-based authentication.",
       "properties": {
@@ -14924,6 +15249,52 @@
         "user_client_key"
       ],
       "title": "KubernetesAuthenticationDetails contains credentials to authenticate to a Kubernetes cluster.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesAvailableAddon": {
+      "properties": {
+        "addon_type": {
+          "description": "Catalog identifier of the add-on.",
+          "example": "cert-manager",
+          "type": "string",
+          "x-go-name": "AddonType"
+        },
+        "description": {
+          "description": "Human-readable description of the add-on.",
+          "example": "Automates issuance and renewal of TLS certificates.",
+          "type": "string",
+          "x-go-name": "Description"
+        },
+        "versions": {
+          "description": "Installable versions for the requested Kubernetes version.",
+          "items": {
+            "$ref": "#/definitions/KubernetesAvailableAddonVersion"
+          },
+          "type": "array",
+          "x-go-name": "Versions"
+        }
+      },
+      "required": [
+        "versions"
+      ],
+      "title": "KubernetesAvailableAddon is one add-on available to install, from the catalog.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesAvailableAddonVersion": {
+      "properties": {
+        "version": {
+          "description": "Installable version string for the add-on.",
+          "example": "v1alpha5.19.1",
+          "type": "string",
+          "x-go-name": "Version"
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "title": "KubernetesAvailableAddonVersion is one installable version of an available add-on.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -15436,6 +15807,67 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "KubernetesCreateAddonsResponse": {
+      "properties": {
+        "addons": {
+          "items": {
+            "$ref": "#/definitions/KubernetesCreatedAddon"
+          },
+          "type": "array",
+          "x-go-name": "Addons"
+        },
+        "operation_id": {
+          "description": "Correlation ID for the install operation.",
+          "example": "20a1e053-d9fa-4c70-bef1-95cf6c7741f8",
+          "type": "string",
+          "x-go-name": "OperationID"
+        }
+      },
+      "required": [
+        "addons"
+      ],
+      "title": "KubernetesCreateAddonsResponse is the response to installing add-ons.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesCreatedAddon": {
+      "properties": {
+        "addon_type": {
+          "description": "Catalog identifier of the add-on.",
+          "example": "cert-manager",
+          "type": "string",
+          "x-go-name": "AddonType"
+        },
+        "already_exists": {
+          "description": "True when an add-on of this type was already installed; the existing\ninstall is left untouched.",
+          "example": false,
+          "type": "boolean",
+          "x-go-name": "AlreadyExists"
+        },
+        "version": {
+          "description": "Version the add-on was installed with (or the existing install's version\nwhen already_exists is true).",
+          "example": "v1alpha5.19.1",
+          "type": "string",
+          "x-go-name": "Version"
+        }
+      },
+      "title": "KubernetesCreatedAddon reports the outcome of installing one add-on.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesDeleteAddonResponse": {
+      "properties": {
+        "operation_id": {
+          "description": "Correlation ID for the delete operation.",
+          "example": "d7a3be31-5295-4889-94df-4747a86a078d",
+          "type": "string",
+          "x-go-name": "OperationID"
+        }
+      },
+      "title": "KubernetesDeleteAddonResponse is the response to removing an add-on.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "KubernetesGetNodePoolRotateStatusResponse": {
       "properties": {
         "out_of_sync_instances": {
@@ -15469,6 +15901,97 @@
         "state",
         "out_of_sync_instances"
       ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesInstalledAddon": {
+      "description": "KubernetesInstalledAddon is one add-on installed on a cluster, including the\ncontroller's reconciled status.",
+      "properties": {
+        "addon_type": {
+          "description": "Catalog identifier of the add-on.",
+          "example": "cert-manager",
+          "type": "string",
+          "x-go-name": "AddonType"
+        },
+        "category": {
+          "description": "Catalog category: core or optional (unknown when the add-on is present on\nthe cluster but absent from the catalog).",
+          "example": "optional",
+          "type": "string",
+          "x-go-name": "Category"
+        },
+        "installed_version": {
+          "description": "Version actually applied on the cluster. Empty before the first install\ncompletes; differs from version while an upgrade is in flight.",
+          "example": "v1alpha5.19.1",
+          "type": "string",
+          "x-go-name": "InstalledVersion"
+        },
+        "ready": {
+          "description": "Whether the add-on's Ready condition is currently true.",
+          "example": true,
+          "type": "boolean",
+          "x-go-name": "Ready"
+        },
+        "status": {
+          "description": "Reconciliation phase. Empty until the controller first reconciles.",
+          "enum": [
+            "Pending",
+            "Installing",
+            "Running",
+            "Upgrading",
+            "Deleting",
+            "Failed"
+          ],
+          "example": "Running",
+          "type": "string",
+          "x-go-name": "Status"
+        },
+        "version": {
+          "description": "Requested (target) version.",
+          "example": "v1alpha5.19.1",
+          "type": "string",
+          "x-go-name": "Version"
+        }
+      },
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesListAddonsResponse": {
+      "properties": {
+        "addons": {
+          "items": {
+            "$ref": "#/definitions/KubernetesInstalledAddon"
+          },
+          "type": "array",
+          "x-go-name": "Addons"
+        }
+      },
+      "required": [
+        "addons"
+      ],
+      "title": "KubernetesListAddonsResponse lists the add-ons installed on a cluster.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesListAvailableAddonsResponse": {
+      "properties": {
+        "addons": {
+          "items": {
+            "$ref": "#/definitions/KubernetesAvailableAddon"
+          },
+          "type": "array",
+          "x-go-name": "Addons"
+        },
+        "next_page_token": {
+          "description": "Token for the next page of results; empty when there are no more.",
+          "example": "bXktZmlyc3Qtdm0",
+          "type": "string",
+          "x-go-name": "NextPageToken"
+        }
+      },
+      "required": [
+        "addons"
+      ],
+      "title": "KubernetesListAvailableAddonsResponse is one page of the available add-ons catalog.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -21240,6 +21763,12 @@
         "$ref": "#/definitions/CCRTokenResponse"
       }
     },
+    "createAddonsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesCreateAddonsResponse"
+      }
+    },
     "createDiagnosticResponse": {
       "description": "",
       "schema": {
@@ -21286,6 +21815,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/SSOProvider"
+      }
+    },
+    "deleteAddonResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesDeleteAddonResponse"
       }
     },
     "deleteSSOProviderResponse": {
@@ -21663,10 +22198,22 @@
         "$ref": "#/definitions/LimitedUsageAPIKeyPostResponse"
       }
     },
+    "listAddonsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesListAddonsResponse"
+      }
+    },
     "listAutoClusterOperationsResponse": {
       "description": "",
       "schema": {
         "$ref": "#/definitions/ListOperationsResponseV1Alpha5"
+      }
+    },
+    "listAvailableAddonsResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesListAvailableAddonsResponse"
       }
     },
     "listDiskSnapshotsResponse": {

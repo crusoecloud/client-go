@@ -92,6 +92,8 @@ type APIClient struct {
 
 	InternalLoadBalancersApi *InternalLoadBalancersApiService
 
+	KubernetesAddonsApi *KubernetesAddonsApiService
+
 	KubernetesClusterOperationsApi *KubernetesClusterOperationsApiService
 
 	KubernetesClustersApi *KubernetesClustersApiService
@@ -211,6 +213,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.InstanceTemplatesApi = (*InstanceTemplatesApiService)(&c.common)
 	c.InternalLoadBalancerOperationsApi = (*InternalLoadBalancerOperationsApiService)(&c.common)
 	c.InternalLoadBalancersApi = (*InternalLoadBalancersApiService)(&c.common)
+	c.KubernetesAddonsApi = (*KubernetesAddonsApiService)(&c.common)
 	c.KubernetesClusterOperationsApi = (*KubernetesClusterOperationsApiService)(&c.common)
 	c.KubernetesClustersApi = (*KubernetesClustersApiService)(&c.common)
 	c.KubernetesNodePoolOperationsApi = (*KubernetesNodePoolOperationsApiService)(&c.common)
