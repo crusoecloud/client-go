@@ -15437,6 +15437,17 @@
           "type": "string",
           "x-go-name": "ProjectID"
         },
+        "routing_mode": {
+          "default": "overlay",
+          "description": "How pod traffic is routed for the cluster. An unset value is treated as\noverlay. In native mode, cluster_cidr is the VPC prefix reservation's\nrange.",
+          "enum": [
+            "overlay",
+            "native"
+          ],
+          "example": "native",
+          "type": "string",
+          "x-go-name": "RoutingMode"
+        },
         "scheduler_extra_args": {
           "additionalProperties": {
             "type": "string"
@@ -15666,6 +15677,17 @@
           "example": true,
           "type": "boolean",
           "x-go-name": "Private"
+        },
+        "routing_mode": {
+          "default": "overlay",
+          "description": "How pod traffic is routed for the cluster. Defaults to overlay when\nunspecified. In native mode, cluster_cidr is the pod range reserved from\nthe cluster's VPC as a prefix reservation on your behalf: it must lie\ninside the VPC's CIDR and overlap no subnet and no other reservation,\nvalidated at create time. Immutable after create.",
+          "enum": [
+            "overlay",
+            "native"
+          ],
+          "example": "native",
+          "type": "string",
+          "x-go-name": "RoutingMode"
         },
         "scheduler_extra_args": {
           "additionalProperties": {
