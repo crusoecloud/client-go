@@ -30,6 +30,8 @@ type KubernetesClusterPostRequest struct {
 	NodeCidrMaskSize int32 `json:"node_cidr_mask_size,omitempty"`
 	// Whether the cluster is private (without a public IP). Defaults to false.
 	Private bool `json:"private,omitempty"`
+	// How pod traffic is routed for the cluster. Defaults to overlay when unspecified. In native mode, cluster_cidr is the pod range reserved from the cluster's VPC as a prefix reservation on your behalf: it must lie inside the VPC's CIDR and overlap no subnet and no other reservation, validated at create time. Immutable after create.
+	RoutingMode string `json:"routing_mode,omitempty"`
 	// Extra arguments to pass to the kube-scheduler control plane component.
 	SchedulerExtraArgs map[string]string `json:"scheduler_extra_args,omitempty"`
 	// Range of IP addresses allocated to Kubernetes services, in CIDR notation.

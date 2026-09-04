@@ -40,6 +40,8 @@ type KubernetesCluster struct {
 	Private bool `json:"private,omitempty"`
 	// ID of the project that owns the Kubernetes cluster.
 	ProjectId string `json:"project_id"`
+	// How pod traffic is routed for the cluster. An unset value is treated as overlay. In native mode, cluster_cidr is the VPC prefix reservation's range.
+	RoutingMode string `json:"routing_mode,omitempty"`
 	// Extra arguments passed to the kube-scheduler control plane component.
 	SchedulerExtraArgs map[string]string `json:"scheduler_extra_args,omitempty"`
 	// Range of IP addresses allocated to Kubernetes services, in CIDR notation.
