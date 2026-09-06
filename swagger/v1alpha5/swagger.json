@@ -16028,6 +16028,18 @@
           "type": "string",
           "x-go-name": "ClusterID"
         },
+        "consent_mode": {
+          "description": "Remediation consent posture for the node pool: auto, propose,\ndetect_only, or off. Always present for node pools served by the v2\nbackend; absent otherwise.",
+          "enum": [
+            "auto",
+            "propose",
+            "detect_only",
+            "off"
+          ],
+          "example": "propose",
+          "type": "string",
+          "x-go-name": "ConsentMode"
+        },
         "count": {
           "description": "Desired number of nodes in the node pool. The number of running nodes\nmay temporarily differ while the pool is scaling or repairing.",
           "example": 4,
@@ -16179,6 +16191,9 @@
           "example": "a100.2x",
           "type": "string",
           "x-go-name": "Type"
+        },
+        "update_settings": {
+          "$ref": "#/definitions/KubernetesNodePoolUpdateSettings"
         },
         "updated_at": {
           "description": "Last update timestamp of the node pool, in RFC3339 format.",
@@ -16422,6 +16437,18 @@
         "autoscaling_config": {
           "$ref": "#/definitions/KubernetesNodePoolAutoscalingConfig"
         },
+        "consent_mode": {
+          "description": "New remediation consent posture for the node pool: auto, propose, or\noff. Omitted or null leaves the stored mode unchanged. detect_only is\nnot yet available.",
+          "enum": [
+            "auto",
+            "propose",
+            "detect_only",
+            "off"
+          ],
+          "example": "off",
+          "type": "string",
+          "x-go-name": "ConsentMode"
+        },
         "count": {
           "description": "New desired number of nodes in the node pool.",
           "example": 4,
@@ -16485,6 +16512,9 @@
           "type": "string",
           "x-go-name": "SSHPublicKey",
           "x-redocly-optional": true
+        },
+        "update_settings": {
+          "$ref": "#/definitions/KubernetesNodePoolUpdateSettings"
         }
       },
       "required": [
@@ -16510,6 +16540,18 @@
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "ClusterID"
+        },
+        "consent_mode": {
+          "description": "Remediation consent posture for the node pool: auto, propose, or off.\nOmitted means propose. detect_only is not yet available.",
+          "enum": [
+            "auto",
+            "propose",
+            "detect_only",
+            "off"
+          ],
+          "example": "propose",
+          "type": "string",
+          "x-go-name": "ConsentMode"
         },
         "count": {
           "description": "Desired number of nodes in the node pool.",
@@ -16622,6 +16664,9 @@
           "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653",
           "type": "string",
           "x-go-name": "TransportPartitionID"
+        },
+        "update_settings": {
+          "$ref": "#/definitions/KubernetesNodePoolUpdateSettings"
         }
       },
       "required": [
@@ -16665,6 +16710,19 @@
         "count",
         "percentage"
       ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesNodePoolUpdateSettings": {
+      "description": "KubernetesNodePoolUpdateSettings configures how update operations may act on\na node pool's existing nodes.",
+      "properties": {
+        "allow_scale_down": {
+          "description": "Whether an update may scale the node pool below its current node count,\ndraining and deleting existing nodes. When false (the default), an\nupdate that lowers the count only records the new target and reports a\nhealth issue; no nodes are removed. Only supported on CMK v2 clusters.",
+          "example": true,
+          "type": "boolean",
+          "x-go-name": "AllowScaleDown"
+        }
+      },
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },

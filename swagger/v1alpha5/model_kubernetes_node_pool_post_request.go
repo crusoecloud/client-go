@@ -12,6 +12,8 @@ type KubernetesNodePoolPostRequest struct {
 	AutoscalingConfig *KubernetesNodePoolAutoscalingConfig `json:"autoscaling_config,omitempty"`
 	// ID of the cluster the new node pool belongs to.
 	ClusterId string `json:"cluster_id"`
+	// Remediation consent posture for the node pool: auto, propose, or off. Omitted means propose. detect_only is not yet available.
+	ConsentMode string `json:"consent_mode,omitempty"`
 	// Desired number of nodes in the node pool.
 	Count int64 `json:"count"`
 	// Whether the first local ephemeral NVMe disk is used for containerd storage.
@@ -40,5 +42,6 @@ type KubernetesNodePoolPostRequest struct {
 	// ID of the subnet to create the node pool in. Must be in the location of the cluster if specified. If not provided, the default subnet for the location is used, if there is one.
 	SubnetId string `json:"subnet_id,omitempty"`
 	// ID of the InfiniBand or RoCE partition to create the node pool in. Must be in the location of the cluster if specified.
-	TransportPartitionId string `json:"transport_partition_id,omitempty"`
+	TransportPartitionId string                            `json:"transport_partition_id,omitempty"`
+	UpdateSettings       *KubernetesNodePoolUpdateSettings `json:"update_settings,omitempty"`
 }
