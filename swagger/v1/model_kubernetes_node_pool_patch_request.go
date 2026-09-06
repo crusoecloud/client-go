@@ -12,6 +12,8 @@ type KubernetesNodePoolPatchRequest struct {
 	// Action to perform on the node pool: RESERVE, UNRESERVE, or UPDATE. RESERVE and UNRESERVE operations are done synchronously, and so will have succeeded with a 200 response. Defaults to UPDATE if no action is specified.
 	Action            string                               `json:"action"`
 	AutoscalingConfig *KubernetesNodePoolAutoscalingConfig `json:"autoscaling_config,omitempty"`
+	// New remediation consent posture for the node pool: auto, propose, or off. Omitted or null leaves the stored mode unchanged. detect_only is not yet available.
+	ConsentMode string `json:"consent_mode,omitempty"`
 	// New desired number of nodes in the node pool.
 	Count int64 `json:"count"`
 	// Whether the first local ephemeral NVMe disk is used for containerd storage.
@@ -25,5 +27,6 @@ type KubernetesNodePoolPatchRequest struct {
 	// New reservation ID for the node pool.
 	ReservationId string `json:"reservation_id"`
 	// New SSH public key to use for all VMs created from this node pool.
-	SshPublicKey string `json:"ssh_public_key"`
+	SshPublicKey   string                            `json:"ssh_public_key"`
+	UpdateSettings *KubernetesNodePoolUpdateSettings `json:"update_settings,omitempty"`
 }
