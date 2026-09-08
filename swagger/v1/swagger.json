@@ -151,6 +151,14 @@
             "name": "product_group",
             "type": "string",
             "x-go-name": "ProductGroup"
+          },
+          {
+            "description": "Optional filter to return only images compatible with the specified product line — an\ninstance type without its size suffix (e.g. \"h100-80gb-sxm-ib\" for h100-80gb-sxm-ib.8x\ninstances). Mutually exclusive with product_group.",
+            "example": "h100-80gb-sxm-ib",
+            "in": "query",
+            "name": "product_line",
+            "type": "string",
+            "x-go-name": "ProductLine"
           }
         ],
         "responses": {
@@ -5865,6 +5873,55 @@
         "summary": "Get status of a single asynchronous operation",
         "tags": [
           "Kubernetes Cluster Operations"
+        ]
+      }
+    },
+    "/projects/{project_id}/kubernetes/clusters/preflight": {
+      "get": {
+        "description": "For each location, reports whether the control plane would be hosted by Crusoe or\nrun on VMs in the project, and where it runs on VMs, which VM types are eligible.\nCreates nothing. Use it to decide where a control-plane capacity check applies\nbefore offering cluster creation, and which VM types to check.",
+        "operationId": "getClusterPreflight",
+        "parameters": [
+          {
+            "description": "ID of the project the cluster would be created in.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "Locations to report on, comma-separated. Omit to report on every location.",
+            "example": "us-east1-a,us-northcentral1-a",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "locations",
+            "type": "array",
+            "x-go-name": "Locations"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getKubernetesClusterPreflightResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Reports where a cluster's control plane would run, per location.",
+        "tags": [
+          "Kubernetes Clusters"
         ]
       }
     },
@@ -14281,6 +14338,15 @@
           "type": "string",
           "x-go-name": "Name"
         },
+        "supported_product_lines": {
+          "description": "Product lines this image supports — instance types without their size suffix\n(e.g. \"h100-80gb-sxm-ib\" covers all h100-80gb-sxm-ib.Nx sizes). The values match\nthe product_line query filter. Omitted when no mapping is known (e.g. custom images).",
+          "example": "[h100-80gb-sxm, h100-80gb-sxm-ib]",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "SupportedProductLines"
+        },
         "tags": {
           "description": "Tags associated with the image.",
           "example": "[20.4, latest]",
@@ -14906,6 +14972,12 @@
           "type": "string",
           "x-go-name": "Type"
         },
+        "unit_id": {
+          "description": "ID of the rack unit the VM's node belongs to. Empty if not available.",
+          "example": "3f2504e0-4f89-11d3-9a0c-0305e82c3301",
+          "type": "string",
+          "x-go-name": "UnitID"
+        },
         "updated_at": {
           "description": "Last update timestamp of the VM, in RFC3339 format.",
           "example": "2023-08-14T09:00:35Z",
@@ -14914,6 +14986,17 @@
         },
         "virtualization_features": {
           "$ref": "#/definitions/VirtualizationFeatures"
+        },
+        "waypoint_ids": {
+          "description": "IDs of the leaf switches (waypoints) the VM's node is connected to. Empty if not available.",
+          "example": [
+            "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "WaypointIDs"
         }
       },
       "required": [
@@ -15521,6 +15604,42 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "KubernetesClusterLocationPreflight": {
+      "properties": {
+        "control_plane_type": {
+          "description": "How the cluster's control plane would be hosted. \"pod\" means Crusoe hosts it and\nit consumes none of the project's VM capacity; \"vm\" means it runs on VMs in the\nproject's location.",
+          "example": "vm",
+          "type": "string",
+          "x-go-name": "ControlPlaneType"
+        },
+        "control_plane_vm_types": {
+          "description": "VM types the control plane could use, in descending order of preference. Check\navailability of any one, in order: the cluster is created on the first with\ncapacity. Empty when control_plane_type is \"pod\", because no VM is allocated —\ncheck capacity only when this list is non-empty.",
+          "example": [
+            "s2a.2x",
+            "c1a.2x"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "ControlPlaneVMTypes"
+        },
+        "location": {
+          "description": "The location.",
+          "example": "us-east1-a",
+          "type": "string",
+          "x-go-name": "Location"
+        }
+      },
+      "required": [
+        "location",
+        "control_plane_type",
+        "control_plane_vm_types"
+      ],
+      "title": "KubernetesClusterLocationPreflight is the preflight result for one location.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "KubernetesClusterPatchRequest": {
       "properties": {
         "apiserver_extra_args": {
@@ -15725,6 +15844,24 @@
         "version"
       ],
       "title": "KubernetesClusterPostRequest defines the specifications of the cluster to be created.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesClusterPreflightResponse": {
+      "description": "KubernetesClusterPreflightResponse describes, per location, how a cluster created\nnow in a project would be hosted.",
+      "properties": {
+        "locations": {
+          "description": "Preflight result for each location.",
+          "items": {
+            "$ref": "#/definitions/KubernetesClusterLocationPreflight"
+          },
+          "type": "array",
+          "x-go-name": "Locations"
+        }
+      },
+      "required": [
+        "locations"
+      ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -22132,6 +22269,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/KubernetesAuthenticationDetails"
+      }
+    },
+    "getKubernetesClusterPreflightResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/KubernetesClusterPreflightResponse"
       }
     },
     "getKubernetesClusterResponse": {

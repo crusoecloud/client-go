@@ -157,11 +157,13 @@ ImagesApiService Lists all images and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *ImagesApiListImagesOpts - Optional Parameters:
      * @param "ProductGroup" (optional.String) -  Optional filter to return only images compatible with the specified product group (e.g. \&quot;a100\&quot;, \&quot;h100\&quot;).
+     * @param "ProductLine" (optional.String) -  Optional filter to return only images compatible with the specified product line — an instance type without its size suffix (e.g. \&quot;h100-80gb-sxm-ib\&quot; for h100-80gb-sxm-ib.8x instances). Mutually exclusive with product_group.
 @return ListImagesResponseV1
 */
 
 type ImagesApiListImagesOpts struct {
 	ProductGroup optional.String
+	ProductLine  optional.String
 }
 
 func (a *ImagesApiService) ListImages(ctx context.Context, localVarOptionals *ImagesApiListImagesOpts) (ListImagesResponseV1, *http.Response, error) {
@@ -182,6 +184,9 @@ func (a *ImagesApiService) ListImages(ctx context.Context, localVarOptionals *Im
 
 	if localVarOptionals != nil && localVarOptionals.ProductGroup.IsSet() {
 		localVarQueryParams.Add("product_group", parameterToString(localVarOptionals.ProductGroup.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ProductLine.IsSet() {
+		localVarQueryParams.Add("product_line", parameterToString(localVarOptionals.ProductLine.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}

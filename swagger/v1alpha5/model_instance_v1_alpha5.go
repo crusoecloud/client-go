@@ -47,7 +47,11 @@ type InstanceV1Alpha5 struct {
 	State string `json:"state"`
 	// Product name of the VM type.
 	Type_ string `json:"type"`
+	// ID of the rack unit the VM's node belongs to. Empty if not available.
+	UnitId string `json:"unit_id,omitempty"`
 	// Last update timestamp of the VM, in RFC3339 format.
 	UpdatedAt              string                  `json:"updated_at"`
 	VirtualizationFeatures *VirtualizationFeatures `json:"virtualization_features,omitempty"`
+	// IDs of the leaf switches (waypoints) the VM's node is connected to. Empty if not available.
+	WaypointIds []string `json:"waypoint_ids,omitempty"`
 }
