@@ -14906,6 +14906,12 @@
           "type": "string",
           "x-go-name": "Type"
         },
+        "unit_id": {
+          "description": "ID of the rack unit the VM's node belongs to. Empty if not available.",
+          "example": "3f2504e0-4f89-11d3-9a0c-0305e82c3301",
+          "type": "string",
+          "x-go-name": "UnitID"
+        },
         "updated_at": {
           "description": "Last update timestamp of the VM, in RFC3339 format.",
           "example": "2023-08-14T09:00:35Z",
@@ -14914,6 +14920,17 @@
         },
         "virtualization_features": {
           "$ref": "#/definitions/VirtualizationFeatures"
+        },
+        "waypoint_ids": {
+          "description": "IDs of the leaf switches (waypoints) the VM's node is connected to. Empty if not available.",
+          "example": [
+            "6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "WaypointIDs"
         }
       },
       "required": [
