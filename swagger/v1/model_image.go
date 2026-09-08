@@ -19,6 +19,8 @@ type Image struct {
 	Locations []string `json:"locations"`
 	// Name of the image.
 	Name string `json:"name"`
+	// Product lines this image supports — instance types without their size suffix (e.g. \"h100-80gb-sxm-ib\" covers all h100-80gb-sxm-ib.Nx sizes). The values match the product_line query filter. Omitted when no mapping is known (e.g. custom images).
+	SupportedProductLines []string `json:"supported_product_lines,omitempty"`
 	// Tags associated with the image.
 	Tags []string `json:"tags"`
 }

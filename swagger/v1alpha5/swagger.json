@@ -151,6 +151,14 @@
             "name": "product_group",
             "type": "string",
             "x-go-name": "ProductGroup"
+          },
+          {
+            "description": "Optional filter to return only images compatible with the specified product line — an\ninstance type without its size suffix (e.g. \"h100-80gb-sxm-ib\" for h100-80gb-sxm-ib.8x\ninstances). Mutually exclusive with product_group.",
+            "example": "h100-80gb-sxm-ib",
+            "in": "query",
+            "name": "product_line",
+            "type": "string",
+            "x-go-name": "ProductLine"
           }
         ],
         "responses": {
@@ -14280,6 +14288,15 @@
           "example": "ubuntu",
           "type": "string",
           "x-go-name": "Name"
+        },
+        "supported_product_lines": {
+          "description": "Product lines this image supports — instance types without their size suffix\n(e.g. \"h100-80gb-sxm-ib\" covers all h100-80gb-sxm-ib.Nx sizes). The values match\nthe product_line query filter. Omitted when no mapping is known (e.g. custom images).",
+          "example": "[h100-80gb-sxm, h100-80gb-sxm-ib]",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "SupportedProductLines"
         },
         "tags": {
           "description": "Tags associated with the image.",
