@@ -11,8 +11,12 @@ package swagger
 type KubernetesAvailableAddon struct {
 	// Catalog identifier of the add-on.
 	AddonType string `json:"addon_type,omitempty"`
+	// Whether the add-on is preinstalled (installed at cluster creation) or optional (installed on demand).
+	Category string `json:"category,omitempty"`
 	// Human-readable description of the add-on.
 	Description string `json:"description,omitempty"`
+	// Whether the customer may remove the add-on once installed. Optional add-ons are removable; preinstalled ones are not, unless explicitly marked removable.
+	Removable bool `json:"removable,omitempty"`
 	// Installable versions for the requested Kubernetes version.
 	Versions []KubernetesAvailableAddonVersion `json:"versions"`
 }

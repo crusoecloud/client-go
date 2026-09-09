@@ -15343,11 +15343,23 @@
           "type": "string",
           "x-go-name": "AddonType"
         },
+        "category": {
+          "description": "Whether the add-on is preinstalled (installed at cluster creation) or\noptional (installed on demand).",
+          "example": "optional",
+          "type": "string",
+          "x-go-name": "Category"
+        },
         "description": {
           "description": "Human-readable description of the add-on.",
           "example": "Automates issuance and renewal of TLS certificates.",
           "type": "string",
           "x-go-name": "Description"
+        },
+        "removable": {
+          "description": "Whether the customer may remove the add-on once installed. Optional\nadd-ons are removable; preinstalled ones are not, unless explicitly\nmarked removable.",
+          "example": true,
+          "type": "boolean",
+          "x-go-name": "Removable"
         },
         "versions": {
           "description": "Installable versions for the requested Kubernetes version.",
