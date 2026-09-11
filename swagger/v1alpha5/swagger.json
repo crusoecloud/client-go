@@ -710,55 +710,6 @@
         ]
       }
     },
-    "/organizations/{org_id}/quotas": {
-      "get": {
-        "operationId": "listOrgQuotas",
-        "parameters": [
-          {
-            "description": "org_id is the ID of the organization to list quotas for.",
-            "in": "path",
-            "name": "org_id",
-            "pattern": "[^/]+",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Quotas retrieved successfully",
-            "schema": {
-              "$ref": "#/definitions/customerListOrgQuotasResponse"
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {}
-          },
-          "401": {
-            "description": "Authentication required",
-            "schema": {}
-          },
-          "403": {
-            "description": "Permission denied",
-            "schema": {}
-          },
-          "500": {
-            "description": "Internal server error",
-            "schema": {}
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "summary": "List max and currently used organization quotas.",
-        "tags": [
-          "Quotas"
-        ]
-      }
-    },
     "/organizations/{org_id}/scim/integrations": {
       "get": {
         "operationId": "listSCIMIntegrations",
@@ -21802,59 +21753,6 @@
         }
       },
       "title": "ListFeatureFlagsResponse is the list feature flags response",
-      "type": "object"
-    },
-    "customerListOrgQuotasResponse": {
-      "description": "ListOrgQuotasResponse is the response for listing organization quotas.",
-      "properties": {
-        "quotas": {
-          "description": "quotas are all returned org quotas.",
-          "items": {
-            "$ref": "#/definitions/customerOrgQuota",
-            "type": "object"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "customerOrgQuota": {
-      "description": "OrgQuota represents an organization quota resource.",
-      "properties": {
-        "available": {
-          "description": "available is the remaining quota available to the org.",
-          "example": 6,
-          "format": "int64",
-          "type": "string"
-        },
-        "description": {
-          "description": "description is the customer-facing description of the quota.",
-          "example": "Users",
-          "type": "string"
-        },
-        "max": {
-          "description": "max is the maximum quota allowed for the resource in the org.",
-          "example": 10,
-          "format": "int64",
-          "type": "string"
-        },
-        "programmatic_name": {
-          "description": "programmatic_name is the external, human-friendly identifier for the quota.",
-          "example": "users",
-          "type": "string"
-        },
-        "type": {
-          "description": "type is the internal enum quota type.",
-          "example": "ORG_QUOTAS_MAXIMUM_USERS",
-          "type": "string"
-        },
-        "used": {
-          "description": "used is the current quota consumed by the org.",
-          "example": 4,
-          "format": "int64",
-          "type": "string"
-        }
-      },
       "type": "object"
     },
     "customerOrganizationMFA": {
