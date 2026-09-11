@@ -1526,6 +1526,45 @@
         ]
       }
     },
+    "/organizations/{organization_id}/billing/credit-balance": {
+      "get": {
+        "operationId": "getCreditBalance",
+        "parameters": [
+          {
+            "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
+            "in": "path",
+            "name": "organization_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "OrganizationID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getCreditBalanceResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Get the aggregate credit balance for the specified organization. By default only active grants are counted.",
+        "tags": [
+          "Credits"
+        ]
+      }
+    },
     "/organizations/{organization_id}/billing/export-productline": {
       "get": {
         "operationId": "getBillingExportProductline",
@@ -13907,6 +13946,27 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "GetCreditBalanceResponse": {
+      "properties": {
+        "grants_count": {
+          "example": 3,
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "GrantsCount"
+        },
+        "total_balance": {
+          "example": "\"1250.00\"",
+          "type": "string",
+          "x-go-name": "TotalBalance"
+        }
+      },
+      "required": [
+        "total_balance",
+        "grants_count"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "GetS3BucketsCountResponse": {
       "description": "This is the REST-friendly model for the `GetS3BucketCountResponse` proto.",
       "properties": {
@@ -22235,6 +22295,12 @@
           "example": "\"2025-02-14\"",
           "type": "string"
         }
+      }
+    },
+    "getCreditBalanceResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetCreditBalanceResponse"
       }
     },
     "getDiagnosticStatusResponse": {
