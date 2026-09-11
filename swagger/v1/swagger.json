@@ -14962,7 +14962,21 @@
         },
         "state": {
           "description": "Current lifecycle state of the VM.",
-          "example": "RUNNING",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "STATE_RUNNING",
+            "STATE_BLOCKED",
+            "STATE_PAUSED",
+            "STATE_SHUTDOWN",
+            "STATE_SHUTOFF",
+            "STATE_CRASHED",
+            "STATE_PMSUSPENDED",
+            "STATE_DEFINING",
+            "STATE_RESOURCING_LOCATION",
+            "STATE_RESOURCING_AGENT",
+            "STATE_RUNNING_DEGRADED"
+          ],
+          "example": "STATE_RUNNING",
           "type": "string",
           "x-go-name": "State"
         },
