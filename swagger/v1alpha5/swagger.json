@@ -16129,7 +16129,7 @@
             "STATE_UNSPECIFIED",
             "STATE_PROVISIONING",
             "STATE_RUNNING",
-            "STATE_DEGRADED",
+            "STATE_RUNNING_WITH_ERROR",
             "STATE_UPDATING",
             "STATE_UPGRADING",
             "STATE_ROTATING",
@@ -16386,12 +16386,12 @@
           "x-go-name": "ReservationID"
         },
         "state": {
-          "description": "Current state of the node pool. One of STATE_UNSPECIFIED,\nSTATE_PROVISIONING, STATE_RUNNING, STATE_DEGRADED, STATE_UPDATING,\nSTATE_UPGRADING, STATE_ROTATING, STATE_DELETING, STATE_DELETED, or\nSTATE_UNHEALTHY; new states may be added over time, so treat unknown\nvalues as display-only. STATE_DEGRADED indicates the pool failed to\nreach its desired ready node count for a non-capacity reason after\nexhausting retries, and persists until the pool recovers. A pool that\nis below its desired count but still converging stays STATE_RUNNING;\ncapacity shortfalls never degrade the pool and are reported in\nhealth.issues instead.",
+          "description": "Current state of the node pool. One of STATE_UNSPECIFIED,\nSTATE_PROVISIONING, STATE_RUNNING, STATE_RUNNING_WITH_ERROR,\nSTATE_UPDATING, STATE_UPGRADING, STATE_ROTATING, STATE_DELETING,\nSTATE_DELETED, or STATE_UNHEALTHY; new states may be added over time, so\ntreat unknown values as display-only. STATE_RUNNING_WITH_ERROR means the\npool is serving but could not reach its desired ready node count: a\nprovisioning attempt failed and the shortfall is still outstanding,\nwhether for capacity, quota, or a platform failure. Provisioning keeps\nretrying and health.issues says what is wrong; the pool returns to\nSTATE_RUNNING once it reaches its desired count again. A pool below its\ndesired count with no failed attempt behind it stays STATE_RUNNING.",
           "enum": [
             "STATE_UNSPECIFIED",
             "STATE_PROVISIONING",
             "STATE_RUNNING",
-            "STATE_DEGRADED",
+            "STATE_RUNNING_WITH_ERROR",
             "STATE_UPDATING",
             "STATE_UPGRADING",
             "STATE_ROTATING",
@@ -16517,7 +16517,7 @@
           "x-go-name": "AffectedNodeIDs"
         },
         "code": {
-          "description": "Machine-readable code for the issue, e.g. INSUFFICIENT_CAPACITY,\nINSUFFICIENT_QUOTA, NODE_NOT_READY or INTERNAL_ERROR. New codes may be\nadded; treat unknown values as display-only.\n\nA code persists until the node deficit behind it is resolved. Which\ncodes move the pool to STATE_DEGRADED is a platform decision and not\npart of this contract: capacity and quota shortfalls leave the pool\nRUNNING, since the pool is waiting for room rather than failing.",
+          "description": "Machine-readable code for the issue, e.g. INSUFFICIENT_CAPACITY,\nINSUFFICIENT_QUOTA, NODE_NOT_READY or INTERNAL_ERROR. New codes may be\nadded; treat unknown values as display-only.\n\nA code persists until the node deficit behind it is resolved.\nINSUFFICIENT_CAPACITY, INSUFFICIENT_QUOTA and INTERNAL_ERROR each report\na provisioning attempt that came up short, so any of them puts the pool\nin STATE_RUNNING_WITH_ERROR while it is outstanding. NODE_NOT_READY\ndescribes a node that already exists rather than a failure to provision,\nand so does not change the pool state.",
           "enum": [
             "INSUFFICIENT_CAPACITY",
             "INSUFFICIENT_QUOTA",

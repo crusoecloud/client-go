@@ -45,7 +45,7 @@ type KubernetesNodePool struct {
 	PublicIpType string `json:"public_ip_type,omitempty"`
 	// ID of the billing reservation associated with the node pool.
 	ReservationId string `json:"reservation_id"`
-	// Current state of the node pool. One of STATE_UNSPECIFIED, STATE_PROVISIONING, STATE_RUNNING, STATE_DEGRADED, STATE_UPDATING, STATE_UPGRADING, STATE_ROTATING, STATE_DELETING, STATE_DELETED, or STATE_UNHEALTHY; new states may be added over time, so treat unknown values as display-only. STATE_DEGRADED indicates the pool failed to reach its desired ready node count for a non-capacity reason after exhausting retries, and persists until the pool recovers. A pool that is below its desired count but still converging stays STATE_RUNNING; capacity shortfalls never degrade the pool and are reported in health.issues instead.
+	// Current state of the node pool. One of STATE_UNSPECIFIED, STATE_PROVISIONING, STATE_RUNNING, STATE_RUNNING_WITH_ERROR, STATE_UPDATING, STATE_UPGRADING, STATE_ROTATING, STATE_DELETING, STATE_DELETED, or STATE_UNHEALTHY; new states may be added over time, so treat unknown values as display-only. STATE_RUNNING_WITH_ERROR means the pool is serving but could not reach its desired ready node count: a provisioning attempt failed and the shortfall is still outstanding, whether for capacity, quota, or a platform failure. Provisioning keeps retrying and health.issues says what is wrong; the pool returns to STATE_RUNNING once it reaches its desired count again. A pool below its desired count with no failed attempt behind it stays STATE_RUNNING.
 	State string `json:"state"`
 	// ID of the subnet the node pool belongs to.
 	SubnetId string `json:"subnet_id"`
