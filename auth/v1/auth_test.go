@@ -56,7 +56,8 @@ func TestNewServiceAccountConfig(t *testing.T) {
 	}))
 	defer apiServer.Close()
 
-	cfg, err := NewServiceAccountConfig(tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL)
+	cfg, err := NewServiceAccountConfig(
+		tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "")
 	if err != nil {
 		t.Fatalf("NewServiceAccountConfig failed: %v", err)
 	}
@@ -111,7 +112,8 @@ func TestNewServiceAccountConfig_RefreshesExpiredToken(t *testing.T) {
 	}))
 	defer apiServer.Close()
 
-	cfg, err := NewServiceAccountConfig(tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL)
+	cfg, err := NewServiceAccountConfig(
+		tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "")
 	if err != nil {
 		t.Fatalf("NewServiceAccountConfig failed: %v", err)
 	}
@@ -142,7 +144,8 @@ func TestNewServiceAccountAPIClient(t *testing.T) {
 	}))
 	defer tokenServer.Close()
 
-	client, err := NewServiceAccountAPIClient(tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL)
+	client, err := NewServiceAccountAPIClient(
+		tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "")
 	if err != nil {
 		t.Fatalf("NewServiceAccountAPIClient failed: %v", err)
 	}
@@ -153,7 +156,7 @@ func TestNewServiceAccountAPIClient(t *testing.T) {
 
 func TestNewServiceAccountConfig_TokenURLValidation(t *testing.T) {
 	t.Run("empty tokenURL defaults instead of erroring", func(t *testing.T) {
-		cfg, err := NewServiceAccountConfig(context.Background(), "id", "secret", "")
+		cfg, err := NewServiceAccountConfig(context.Background(), "id", "secret", "", "")
 		if err != nil {
 			t.Fatalf("expected an empty tokenURL to default rather than error, got: %v", err)
 		}
@@ -163,7 +166,7 @@ func TestNewServiceAccountConfig_TokenURLValidation(t *testing.T) {
 	})
 
 	t.Run("non-https tokenURL is rejected", func(t *testing.T) {
-		_, err := NewServiceAccountConfig(context.Background(), "id", "secret", "http://example.com/oauth2/token")
+		_, err := NewServiceAccountConfig(context.Background(), "id", "secret", "http://example.com/oauth2/token", "")
 		if err == nil {
 			t.Fatal("expected a non-https tokenURL to be rejected")
 		}
@@ -173,9 +176,114 @@ func TestNewServiceAccountConfig_TokenURLValidation(t *testing.T) {
 	})
 
 	t.Run("https tokenURL is accepted", func(t *testing.T) {
-		_, err := NewServiceAccountConfig(context.Background(), "id", "secret", "https://example.com/oauth2/token")
+		_, err := NewServiceAccountConfig(context.Background(), "id", "secret", "https://example.com/oauth2/token", "")
 		if err != nil {
 			t.Fatalf("expected an https tokenURL to be accepted, got: %v", err)
+		}
+	})
+}
+
+// TestNewServiceAccountConfig_Audience guards against CCX-6069: Hydra only treats a client's
+// registered audience as an allowlist, not something it stamps onto every issued token, so the
+// token request itself must carry an explicit "audience" form value or the resulting access
+// token's aud claim comes back empty and auth-gateway rejects it.
+func TestNewServiceAccountConfig_Audience(t *testing.T) {
+	// audienceCapturingTokenServer returns a token server that records the "audience" form
+	// value it was sent with on each request, in the sawAudiences slice.
+	audienceCapturingTokenServer := func(sawAudiences *[]string) *httptest.Server {
+		return httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if err := r.ParseForm(); err != nil {
+				t.Fatalf("failed to parse token request form: %v", err)
+			}
+			*sawAudiences = append(*sawAudiences, r.PostFormValue("audience"))
+
+			w.Header().Set("Content-Type", "application/json")
+			_ = json.NewEncoder(w).Encode(map[string]interface{}{
+				"access_token": "test-access-token",
+				"token_type":   "Bearer",
+				"expires_in":   3600,
+			})
+		}))
+	}
+
+	t.Run("empty audience defaults to defaultServiceAccountAudience", func(t *testing.T) {
+		var sawAudiences []string
+		tokenServer := audienceCapturingTokenServer(&sawAudiences)
+		defer tokenServer.Close()
+
+		apiServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+		}))
+		defer apiServer.Close()
+
+		cfg, err := NewServiceAccountConfig(
+			tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "")
+		if err != nil {
+			t.Fatalf("NewServiceAccountConfig failed: %v", err)
+		}
+
+		resp, err := cfg.HTTPClient.Get(apiServer.URL)
+		if err != nil {
+			t.Fatalf("request via service-account-authenticated client failed: %v", err)
+		}
+		resp.Body.Close()
+
+		if len(sawAudiences) != 1 || sawAudiences[0] != defaultServiceAccountAudience {
+			t.Fatalf("expected token request audience=%q, got %v", defaultServiceAccountAudience, sawAudiences)
+		}
+	})
+
+	t.Run("explicit audience overrides the default", func(t *testing.T) {
+		const wantAudience = "https://api.crusoe.xyz"
+
+		var sawAudiences []string
+		tokenServer := audienceCapturingTokenServer(&sawAudiences)
+		defer tokenServer.Close()
+
+		apiServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+		}))
+		defer apiServer.Close()
+
+		cfg, err := NewServiceAccountConfig(
+			tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, wantAudience)
+		if err != nil {
+			t.Fatalf("NewServiceAccountConfig failed: %v", err)
+		}
+
+		resp, err := cfg.HTTPClient.Get(apiServer.URL)
+		if err != nil {
+			t.Fatalf("request via service-account-authenticated client failed: %v", err)
+		}
+		resp.Body.Close()
+
+		if len(sawAudiences) != 1 || sawAudiences[0] != wantAudience {
+			t.Fatalf("expected token request audience=%q, got %v", wantAudience, sawAudiences)
+		}
+	})
+
+	t.Run("NewServiceAccountAPIClient accepts an explicit audience", func(t *testing.T) {
+		// NewServiceAccountAPIClient is a thin passthrough to NewServiceAccountConfig (whose
+		// audience-forwarding is fully exercised by the subtests above); swagger.APIClient
+		// doesn't expose its wrapped Configuration, so this only confirms the audience is
+		// accepted and construction succeeds, mirroring TestNewServiceAccountAPIClient.
+		tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Content-Type", "application/json")
+			_ = json.NewEncoder(w).Encode(map[string]interface{}{
+				"access_token": "test-access-token",
+				"token_type":   "Bearer",
+				"expires_in":   3600,
+			})
+		}))
+		defer tokenServer.Close()
+
+		client, err := NewServiceAccountAPIClient(
+			tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "https://api.crusoe.tech")
+		if err != nil {
+			t.Fatalf("NewServiceAccountAPIClient failed: %v", err)
+		}
+		if client == nil {
+			t.Fatal("expected a non-nil APIClient")
 		}
 	})
 }
