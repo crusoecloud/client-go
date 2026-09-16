@@ -249,8 +249,8 @@ func ctxWithDefaultHTTPClient(ctx context.Context) context.Context {
 }
 
 // NewServiceAccountAPIClient initializes a new Crusoe API client authenticated as a service
-// account via the OAuth2 client credentials grant. ctx bounds the token-fetching HTTP client's
-// requests, so a caller's timeout or cancellation reaches them.
+// account via the OAuth2 client credentials grant. See NewServiceAccountConfig for how ctx
+// bounds the token fetch (including its default timeout when ctx carries no oauth2.HTTPClient).
 func NewServiceAccountAPIClient(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
 	*swagger.APIClient, error,
 ) {

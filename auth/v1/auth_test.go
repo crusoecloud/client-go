@@ -354,6 +354,9 @@ func TestNewServiceAccountConfig_DefaultHTTPClientTimesOutOnAWedgedConnection(t 
 		t.Fatalf("NewServiceAccountConfig failed: %v", err)
 	}
 
+	// The target URL doesn't matter - tokenServer.URL is reused only because it's a real,
+	// reachable address. The oauth2 Transport always fetches a token before proxying the actual
+	// request, so this call fails during that token fetch and never reaches the target at all.
 	start := time.Now()
 	_, err = cfg.HTTPClient.Get(tokenServer.URL)
 	elapsed := time.Since(start)
