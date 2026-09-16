@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"context"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
@@ -11,6 +12,8 @@ import (
 	"sort"
 	"strings"
 	"time"
+
+	"golang.org/x/oauth2/clientcredentials"
 
 	swagger "github.com/crusoecloud/client-go/swagger/v1alpha5"
 )
@@ -197,4 +200,71 @@ func NewAuthenticatedConfig(accessKey, secret string) *swagger.Configuration {
 	cfg.HTTPClient.Transport = NewAuthenticatingTransport(cfg.HTTPClient.Transport, accessKey, secret)
 
 	return cfg
+}
+
+// defaultServiceAccountTokenURL is used when NewServiceAccountConfig is called with an empty
+// tokenURL.
+const defaultServiceAccountTokenURL = "https://auth.crusoe.ai/oauth2/token"
+
+// defaultServiceAccountAudience is used when NewServiceAccountConfig is called with an empty
+// audience. It matches the audience prod's auth-gateway validates against, i.e. the environment
+// defaultServiceAccountTokenURL itself points at.
+const defaultServiceAccountAudience = "https://api.crusoe.ai"
+
+// errInsecureTokenURL is returned when a non-empty tokenURL isn't https - sending it would mean
+// a client secret goes out over the wire in the clear.
+var errInsecureTokenURL = errors.New("tokenURL must be an https:// URL")
+
+// NewServiceAccountAPIClient initializes a new Crusoe API client authenticated as a service
+// account via the OAuth2 client credentials grant. ctx bounds the token-fetching HTTP client's
+// requests, so a caller's timeout or cancellation reaches them.
+func NewServiceAccountAPIClient(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
+	*swagger.APIClient, error,
+) {
+	cfg, err := NewServiceAccountConfig(ctx, clientID, clientSecret, tokenURL, audience)
+	if err != nil {
+		return nil, err
+	}
+
+	return swagger.NewAPIClient(cfg), nil
+}
+
+// NewServiceAccountConfig initializes a new Crusoe API configuration authenticated as a service
+// account via the OAuth2 client credentials grant (clientID/clientSecret against tokenURL). The
+// returned Configuration's HTTPClient fetches an access token on first use and refreshes it
+// automatically as it nears expiry, for every subsequent request.
+//
+// tokenURL defaults to defaultServiceAccountTokenURL when empty. A non-empty tokenURL that isn't
+// https is rejected, rather than sending the client secret over the wire in the clear.
+//
+// audience defaults to defaultServiceAccountAudience when empty, and is sent as the token
+// request's "audience" form parameter (RFC 8707 resource indicator). Ory Hydra only treats a
+// client's registered audience list as an allowlist - it does not stamp it onto every issued
+// token - so a request that omits "audience" gets back a token with an empty aud claim, which
+// auth-gateway then rejects (CCX-6069). Callers targeting a non-prod environment must pass the
+// audience matching that environment's auth-gateway config alongside its tokenURL.
+func NewServiceAccountConfig(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
+	*swagger.Configuration, error,
+) {
+	switch {
+	case tokenURL == "":
+		tokenURL = defaultServiceAccountTokenURL
+	case !strings.HasPrefix(tokenURL, "https://"):
+		return nil, fmt.Errorf("%w: got %q", errInsecureTokenURL, tokenURL)
+	}
+
+	if audience == "" {
+		audience = defaultServiceAccountAudience
+	}
+
+	cfg := swagger.NewConfiguration()
+
+	cfg.HTTPClient = (&clientcredentials.Config{
+		ClientID:       clientID,
+		ClientSecret:   clientSecret,
+		TokenURL:       tokenURL,
+		EndpointParams: url.Values{"audience": {audience}},
+	}).Client(ctx)
+
+	return cfg, nil
 }
