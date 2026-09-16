@@ -9,6 +9,7 @@ import (
 	"strings"
 	"sync/atomic"
 	"testing"
+	"time"
 
 	"golang.org/x/oauth2"
 )
@@ -286,4 +287,81 @@ func TestNewServiceAccountConfig_Audience(t *testing.T) {
 			t.Fatal("expected a non-nil APIClient")
 		}
 	})
+}
+
+// TestCtxWithDefaultHTTPClient guards against a wedged connection hanging a token fetch forever:
+// a caller that builds this client once at startup with context.Background() (true of both
+// Terraform and the CLI) has no other way to bound it, since ctx is captured once and a later,
+// unrelated per-request context's cancellation never reaches it.
+func TestCtxWithDefaultHTTPClient(t *testing.T) {
+	t.Run("injects a bounded client when the caller supplied none", func(t *testing.T) {
+		got := ctxWithDefaultHTTPClient(context.Background())
+
+		client, ok := got.Value(oauth2.HTTPClient).(*http.Client)
+		if !ok {
+			t.Fatalf("expected an *http.Client under oauth2.HTTPClient, got %T", got.Value(oauth2.HTTPClient))
+		}
+		if client.Timeout != defaultServiceAccountHTTPTimeout {
+			t.Fatalf("expected Timeout %v, got %v", defaultServiceAccountHTTPTimeout, client.Timeout)
+		}
+	})
+
+	t.Run("preserves the caller's client instead of overwriting it", func(t *testing.T) {
+		want := &http.Client{Timeout: 5 * time.Second}
+		ctx := context.WithValue(context.Background(), oauth2.HTTPClient, want)
+
+		got := ctxWithDefaultHTTPClient(ctx)
+
+		if got.Value(oauth2.HTTPClient).(*http.Client) != want {
+			t.Fatal("expected the caller's client to be preserved unchanged, got a different one")
+		}
+	})
+}
+
+// TestNewServiceAccountConfig_DefaultHTTPClientTimesOutOnAWedgedConnection is an end-to-end
+// regression test for the bug this fix addresses: with no oauth2.HTTPClient supplied and a
+// context that never itself expires (context.Background(), exactly what Terraform/the CLI use),
+// a token server that never responds must still cause the token fetch to give up on its own,
+// rather than hang forever.
+//
+// newDefaultServiceAccountHTTPClient is substituted (rather than just shrinking
+// defaultServiceAccountHTTPTimeout) so the swapped-in client can also trust the test TLS
+// certificate - ctxWithDefaultHTTPClient's own "caller supplied none" branch is still exactly
+// what runs; only what it injects is swapped for a faster, trusting equivalent.
+func TestNewServiceAccountConfig_DefaultHTTPClientTimesOutOnAWedgedConnection(t *testing.T) {
+	block := make(chan struct{})
+
+	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		<-block // never respond until the test cleans up
+	}))
+	// Cleanups run LIFO: close(block) must unblock the handler(s) BEFORE Close() waits for their
+	// connections to finish, or Close() hangs forever. Registering Close() first, then close(block),
+	// gets that order.
+	t.Cleanup(tokenServer.Close)
+	t.Cleanup(func() { close(block) })
+
+	origNewClient := newDefaultServiceAccountHTTPClient
+	newDefaultServiceAccountHTTPClient = func() *http.Client {
+		client := *tokenServer.Client() // clone: trusts the test cert, without mutating the shared one
+		client.Timeout = 50 * time.Millisecond
+
+		return &client
+	}
+	t.Cleanup(func() { newDefaultServiceAccountHTTPClient = origNewClient })
+
+	cfg, err := NewServiceAccountConfig(context.Background(), "id", "secret", tokenServer.URL, "")
+	if err != nil {
+		t.Fatalf("NewServiceAccountConfig failed: %v", err)
+	}
+
+	start := time.Now()
+	_, err = cfg.HTTPClient.Get(tokenServer.URL)
+	elapsed := time.Since(start)
+
+	if err == nil {
+		t.Fatal("expected the token fetch to fail once the wedged connection outlasts the timeout")
+	}
+	if elapsed > 2*time.Second {
+		t.Fatalf("token fetch took %v to fail; expected it to give up near the 50ms timeout, not hang", elapsed)
+	}
 }
