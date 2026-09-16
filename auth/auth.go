@@ -13,9 +13,8 @@ import (
 	"strings"
 	"time"
 
-	"golang.org/x/oauth2/clientcredentials"
-
 	swagger "github.com/crusoecloud/client-go/swagger/v1alpha5"
+	"golang.org/x/oauth2/clientcredentials"
 )
 
 // AuthenticatingTransport is a struct implementing http.Roundtripper
@@ -204,6 +203,8 @@ func NewAuthenticatedConfig(accessKey, secret string) *swagger.Configuration {
 
 // defaultServiceAccountTokenURL is used when NewServiceAccountConfig is called with an empty
 // tokenURL.
+//
+//nolint:gosec // G101: URL constant, not a credential
 const defaultServiceAccountTokenURL = "https://auth.crusoe.ai/oauth2/token"
 
 // defaultServiceAccountAudience is used when NewServiceAccountConfig is called with an empty
@@ -221,6 +222,7 @@ var errInsecureTokenURL = errors.New("tokenURL must be an https:// URL")
 func NewServiceAccountAPIClient(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
 	*swagger.APIClient, error,
 ) {
+	// Delegate to NewServiceAccountConfig for tokenURL/audience validation and defaulting.
 	cfg, err := NewServiceAccountConfig(ctx, clientID, clientSecret, tokenURL, audience)
 	if err != nil {
 		return nil, err
@@ -246,6 +248,7 @@ func NewServiceAccountAPIClient(ctx context.Context, clientID, clientSecret, tok
 func NewServiceAccountConfig(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
 	*swagger.Configuration, error,
 ) {
+	// tokenURL defaulting/validation.
 	switch {
 	case tokenURL == "":
 		tokenURL = defaultServiceAccountTokenURL
