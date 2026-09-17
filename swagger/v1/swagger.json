@@ -24007,6 +24007,13 @@
       "tags": [
         "Foundry"
       ]
+    },
+    {
+      "name": "IAM",
+      "tags": [
+        "Roles",
+        "RoleBindings"
+      ]
     }
   ]
 }
