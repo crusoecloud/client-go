@@ -14,6 +14,8 @@ type CustomerServiceAccount struct {
 	CreatedAt string `json:"created_at,omitempty"`
 	// created_by is the id of the customer who created the account. Unset for crusoe-managed accounts or when the creator has been deleted.
 	CreatedBy string `json:"created_by,omitempty"`
+	// credential_summary is a per-credential-type rollup of the account's credentials, populated on get and list so a caller can show counts without a separate call per account. One entry per credential type the account holds; an account with no credentials has an empty list.
+	CredentialSummary []CustomerCredentialSummary `json:"credential_summary,omitempty"`
 	// description is an optional human-readable description.
 	Description string `json:"description,omitempty"`
 	// disabled reports whether the account is disabled. Disabled accounts cannot obtain tokens. Change it with DisableServiceAccount / EnableServiceAccount, not via UpdateServiceAccount.
@@ -26,6 +28,8 @@ type CustomerServiceAccount struct {
 	Name string `json:"name,omitempty"`
 	// org_id is the organization the service account belongs to.
 	OrgId string `json:"org_id,omitempty"`
+	// role_bindings is the set of role bindings granted to the service account, populated on get and list. Each binding carries principal_type \"service_account\". Manage bindings via the role bindings API, not here.
+	RoleBindings []CustomerRoleBinding `json:"role_bindings,omitempty"`
 	// updated_at is when the account was last updated.
 	UpdatedAt string `json:"updated_at,omitempty"`
 }

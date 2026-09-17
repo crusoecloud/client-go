@@ -22459,6 +22459,25 @@
       },
       "type": "object"
     },
+    "customerCredentialSummary": {
+      "description": "CredentialSummary rolls up how many credentials of one type a service account holds. An account\ncan hold credentials of multiple types, so a get/list response carries one CredentialSummary per\ntype present.",
+      "properties": {
+        "count": {
+          "description": "count is the number of credentials of this type the account holds.",
+          "example": 2,
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "credential_type": {
+          "description": "credential_type is the kind of credential this entry summarizes, e.g. \"oauth2_client\".",
+          "example": "oauth2_client",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "customerCredit": {
       "description": "Credit is a single credit balance transaction for an organization.",
       "properties": {
@@ -22696,6 +22715,57 @@
       },
       "type": "object"
     },
+    "customerRoleBinding": {
+      "description": "RoleBinding grants a role to a principal (a user or a service account) within a specific scope\n(e.g. an organization or a project).",
+      "properties": {
+        "customer_id": {
+          "description": "customer_id is the ID of the user the role is bound to. Deprecated: use principal_id with\nprincipal_type instead. For a user binding it mirrors principal_id; for a service account\nbinding it is unset. Retained until principal_id/principal_type fully replace it.",
+          "example": "d1e3a8c1-7d2e-4c5b-9f9a-2f5b3e9c1a44",
+          "readOnly": true,
+          "type": "string"
+        },
+        "id": {
+          "example": "7b6e8d2c-9a4f-4d3b-8c1e-5f2a9b8c7d6e",
+          "readOnly": true,
+          "title": "id is the ID of the role binding",
+          "type": "string"
+        },
+        "principal_id": {
+          "description": "principal_id is the ID of the principal (user or service account) the role is bound to.",
+          "example": "178c38e1-4a2f-4b91-9c3d-8f21b3a4c76d",
+          "readOnly": true,
+          "type": "string"
+        },
+        "principal_type": {
+          "description": "principal_type is the kind of principal identified by principal_id, \"user\" or \"service_account\".",
+          "example": "service_account",
+          "readOnly": true,
+          "type": "string"
+        },
+        "role_id": {
+          "example": "3a2b1c0d-4e5f-6789-abcd-ef0123456789",
+          "title": "role_id is the ID of the role granted by this binding",
+          "type": "string"
+        },
+        "role_name": {
+          "example": "org-admin",
+          "readOnly": true,
+          "title": "role_name is the human-readable name of the role granted by this binding",
+          "type": "string"
+        },
+        "scope_object_id": {
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+          "title": "scope_object_id is the ID of the resource the binding applies to",
+          "type": "string"
+        },
+        "scope_type": {
+          "example": "org",
+          "title": "scope_type is the type of resource the binding applies to (e.g. org, project)",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "customerServiceAccount": {
       "description": "ServiceAccount is a non-human identity scoped to an organization.",
       "properties": {
@@ -22709,6 +22779,15 @@
           "description": "created_by is the id of the customer who created the account. Unset for crusoe-managed\naccounts or when the creator has been deleted.",
           "readOnly": true,
           "type": "string"
+        },
+        "credential_summary": {
+          "description": "credential_summary is a per-credential-type rollup of the account's credentials, populated on\nget and list so a caller can show counts without a separate call per account. One entry per\ncredential type the account holds; an account with no credentials has an empty list.",
+          "items": {
+            "$ref": "#/definitions/customerCredentialSummary",
+            "type": "object"
+          },
+          "readOnly": true,
+          "type": "array"
         },
         "description": {
           "description": "description is an optional human-readable description.",
@@ -22743,6 +22822,15 @@
           "example": "5b5b0f48-6a97-408f-8351-3cc30871e010",
           "readOnly": true,
           "type": "string"
+        },
+        "role_bindings": {
+          "description": "role_bindings is the set of role bindings granted to the service account, populated on get and\nlist. Each binding carries principal_type \"service_account\". Manage bindings via the role\nbindings API, not here.",
+          "items": {
+            "$ref": "#/definitions/customerRoleBinding",
+            "type": "object"
+          },
+          "readOnly": true,
+          "type": "array"
         },
         "updated_at": {
           "description": "updated_at is when the account was last updated.",
