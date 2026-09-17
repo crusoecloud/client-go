@@ -330,8 +330,10 @@ func TestCtxWithDefaultHTTPClient(t *testing.T) {
 // what runs; only what it injects is swapped for a faster, trusting equivalent.
 func TestNewServiceAccountConfig_DefaultHTTPClientTimesOutOnAWedgedConnection(t *testing.T) {
 	block := make(chan struct{})
+	var tokenRequests int32
 
 	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt32(&tokenRequests, 1)
 		<-block // never respond until the test cleans up
 	}))
 	// Cleanups run LIFO: close(block) must unblock the handler(s) BEFORE Close() waits for their
@@ -366,5 +368,10 @@ func TestNewServiceAccountConfig_DefaultHTTPClientTimesOutOnAWedgedConnection(t 
 	}
 	if elapsed > 2*time.Second {
 		t.Fatalf("token fetch took %v to fail; expected it to give up near the 50ms timeout, not hang", elapsed)
+	}
+
+	if got := atomic.LoadInt32(&tokenRequests); got != 1 {
+		t.Fatalf("expected exactly 1 token request (AuthStyle set explicitly), got %d - "+
+			"did AuthStyle regress to auto-detecting on every call?", got)
 	}
 }

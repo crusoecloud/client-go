@@ -305,6 +305,7 @@ func NewServiceAccountConfig(ctx context.Context, clientID, clientSecret, tokenU
 		ClientSecret:   clientSecret,
 		TokenURL:       tokenURL,
 		EndpointParams: url.Values{"audience": {audience}},
+		AuthStyle:      oauth2.AuthStyleInHeader,
 	}).Client(ctxWithDefaultHTTPClient(ctx))
 
 	return cfg, nil
