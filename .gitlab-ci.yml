@@ -2,9 +2,13 @@ include:
   - project: 'crusoeenergy/tools'
     file: '/templates/go.gitlab-ci.yml'
 
-variables: 
+variables:
   MAJOR_VERSION: "1"
   MINOR_VERSION: "0"
+  # Comment-only touch to this file (see tag_semver's .version-changes rule below) to force a new
+  # patch tag for CCX-6069's service-account audience fix (merged in 6e3c41f), which otherwise
+  # wouldn't get one: tag_semver only fires on swagger/** changes or edits to this file, and that
+  # merge touched neither.
   CI_IMAGE: registry.gitlab.com/crusoeenergy/tools/go-ci-1.18
 
 analyze:

@@ -13,9 +13,9 @@ import (
 	"strings"
 	"time"
 
-	"golang.org/x/oauth2/clientcredentials"
-
 	swagger "github.com/crusoecloud/client-go/swagger/v1alpha5"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/clientcredentials"
 )
 
 // AuthenticatingTransport is a struct implementing http.Roundtripper
@@ -204,6 +204,8 @@ func NewAuthenticatedConfig(accessKey, secret string) *swagger.Configuration {
 
 // defaultServiceAccountTokenURL is used when NewServiceAccountConfig is called with an empty
 // tokenURL.
+//
+//nolint:gosec // G101: URL constant, not a credential
 const defaultServiceAccountTokenURL = "https://auth.crusoe.ai/oauth2/token"
 
 // defaultServiceAccountAudience is used when NewServiceAccountConfig is called with an empty
@@ -215,12 +217,44 @@ const defaultServiceAccountAudience = "https://api.crusoe.ai"
 // a client secret goes out over the wire in the clear.
 var errInsecureTokenURL = errors.New("tokenURL must be an https:// URL")
 
+// defaultServiceAccountHTTPTimeout bounds a token fetch when the caller hasn't already supplied
+// an http.Client via ctx (see ctxWithDefaultHTTPClient).
+const defaultServiceAccountHTTPTimeout = 30 * time.Second
+
+// newDefaultServiceAccountHTTPClient builds the client ctxWithDefaultHTTPClient injects when the
+// caller hasn't supplied one. A var, not a plain call, so tests can substitute a client that also
+// trusts a test TLS certificate instead of waiting out the real timeout.
+//
+//nolint:gochecknoglobals // deliberate test-injection seam, not shared mutable state
+var newDefaultServiceAccountHTTPClient = func() *http.Client {
+	return &http.Client{Timeout: defaultServiceAccountHTTPTimeout}
+}
+
+// ctxWithDefaultHTTPClient returns ctx unchanged if the caller already set an oauth2.HTTPClient
+// value (e.g. a test's TLS-trusting client), otherwise returns ctx with a bounded client injected.
+//
+// Without this, oauth2.NewClient falls back to http.DefaultClient - which has no timeout - for
+// fetching the token. A caller that builds this client once at startup with context.Background()
+// (true of both Terraform and the CLI) would then have no way to bound a hang on a wedged
+// connection: ctx is captured once at construction time, so cancelling some later, unrelated
+// per-request context never reaches it. Per oauth2.NewClient's own doc comment, a context-supplied
+// client is used only for token acquisition, so this has no effect on the returned
+// *swagger.Configuration's own request timeouts.
+func ctxWithDefaultHTTPClient(ctx context.Context) context.Context {
+	if ctx.Value(oauth2.HTTPClient) != nil {
+		return ctx
+	}
+
+	return context.WithValue(ctx, oauth2.HTTPClient, newDefaultServiceAccountHTTPClient())
+}
+
 // NewServiceAccountAPIClient initializes a new Crusoe API client authenticated as a service
-// account via the OAuth2 client credentials grant. ctx bounds the token-fetching HTTP client's
-// requests, so a caller's timeout or cancellation reaches them.
+// account via the OAuth2 client credentials grant. See NewServiceAccountConfig for how ctx
+// bounds the token fetch (including its default timeout when ctx carries no oauth2.HTTPClient).
 func NewServiceAccountAPIClient(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
 	*swagger.APIClient, error,
 ) {
+	// Delegate to NewServiceAccountConfig for tokenURL/audience validation and defaulting.
 	cfg, err := NewServiceAccountConfig(ctx, clientID, clientSecret, tokenURL, audience)
 	if err != nil {
 		return nil, err
@@ -243,9 +277,16 @@ func NewServiceAccountAPIClient(ctx context.Context, clientID, clientSecret, tok
 // token - so a request that omits "audience" gets back a token with an empty aud claim, which
 // auth-gateway then rejects (CCX-6069). Callers targeting a non-prod environment must pass the
 // audience matching that environment's auth-gateway config alongside its tokenURL.
+//
+// The token fetch itself is bounded by defaultServiceAccountHTTPTimeout unless ctx already
+// carries its own oauth2.HTTPClient - see ctxWithDefaultHTTPClient. That same injection point
+// would also be the place to add retry/backoff (the parity gap documented where
+// terraform-provider-crusoe wraps this client) if that's ever needed; not done here since it's a
+// separate, larger design decision.
 func NewServiceAccountConfig(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
 	*swagger.Configuration, error,
 ) {
+	// tokenURL defaulting/validation.
 	switch {
 	case tokenURL == "":
 		tokenURL = defaultServiceAccountTokenURL
@@ -264,7 +305,8 @@ func NewServiceAccountConfig(ctx context.Context, clientID, clientSecret, tokenU
 		ClientSecret:   clientSecret,
 		TokenURL:       tokenURL,
 		EndpointParams: url.Values{"audience": {audience}},
-	}).Client(ctx)
+		AuthStyle:      oauth2.AuthStyleInHeader,
+	}).Client(ctxWithDefaultHTTPClient(ctx))
 
 	return cfg, nil
 }
