@@ -287,6 +287,22 @@
             "name": "scope_object_id",
             "type": "string",
             "x-go-name": "ScopeObjectID"
+          },
+          {
+            "in": "query",
+            "name": "principal_id",
+            "type": "string",
+            "x-go-name": "PrincipalID"
+          },
+          {
+            "enum": [
+              "user",
+              "service_account"
+            ],
+            "in": "query",
+            "name": "principal_type",
+            "type": "string",
+            "x-go-name": "PrincipalType"
           }
         ],
         "responses": {
@@ -332,6 +348,51 @@
         "summary": "Lists role associated with the caller's organization.",
         "tags": [
           "Roles"
+        ]
+      }
+    },
+    "/iam/service-accounts/{service_account_id}/role-bindings": {
+      "post": {
+        "description": "If any creation or deletion fails, no changes are applied.",
+        "operationId": "applyServiceAccountRoleBindings",
+        "parameters": [
+          {
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "service_account_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ServiceAccountID"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ApplyServiceAccountRoleBindingRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Creates and deletes role bindings for a service account in a single atomic operation.",
+        "tags": [
+          "RoleBindings"
         ]
       }
     },
@@ -12471,6 +12532,30 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ApplyServiceAccountRoleBindingRequest": {
+      "properties": {
+        "bindings_to_create": {
+          "items": {
+            "$ref": "#/definitions/ServiceAccountRoleBindingInput"
+          },
+          "type": "array",
+          "x-go-name": "BindingsToCreate"
+        },
+        "bindings_to_delete": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "BindingsToDelete"
+        }
+      },
+      "required": [
+        "bindings_to_create",
+        "bindings_to_delete"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "AsyncOperationResponse": {
       "properties": {
         "operation": {
@@ -20262,6 +20347,18 @@
           "type": "string",
           "x-go-name": "ID"
         },
+        "principal_id": {
+          "type": "string",
+          "x-go-name": "PrincipalID"
+        },
+        "principal_type": {
+          "enum": [
+            "user",
+            "service_account"
+          ],
+          "type": "string",
+          "x-go-name": "PrincipalType"
+        },
         "role_id": {
           "type": "string",
           "x-go-name": "RoleID"
@@ -20285,7 +20382,9 @@
         "role_id",
         "scope_type",
         "scope_object_id",
-        "role_name"
+        "role_name",
+        "principal_id",
+        "principal_type"
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -20982,6 +21081,34 @@
       "title": "SelfServeFlavor describes a hardware/model flavor available for self-serve deployment.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
+    },
+    "ServiceAccountRoleBindingInput": {
+      "description": "ServiceAccountRoleBindingInput is a role binding to create for a service account. Unlike\nRoleBindingInput, it carries no customer_id -- the principal is the service_account_id in the\nURL path, not a field on the binding.",
+      "properties": {
+        "role_id": {
+          "type": "string",
+          "x-go-name": "RoleID"
+        },
+        "scope_object_id": {
+          "type": "string",
+          "x-go-name": "ScopeObjectID"
+        },
+        "scope_type": {
+          "enum": [
+            "org",
+            "project"
+          ],
+          "type": "string",
+          "x-go-name": "ScopeType"
+        }
+      },
+      "required": [
+        "role_id",
+        "scope_type",
+        "scope_object_id"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ServiceAccountsServiceCreateServiceAccountBody": {
       "description": "CreateServiceAccountRequest is the request to create a service account.",

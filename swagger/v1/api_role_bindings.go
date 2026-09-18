@@ -136,6 +136,115 @@ func (a *RoleBindingsApiService) ApplyRoleBindings(ctx context.Context, body App
 }
 
 /*
+RoleBindingsApiService Creates and deletes role bindings for a service account in a single atomic operation.
+If any creation or deletion fails, no changes are applied.
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param body
+  - @param serviceAccountId
+*/
+func (a *RoleBindingsApiService) ApplyServiceAccountRoleBindings(ctx context.Context, body ApplyServiceAccountRoleBindingRequest, serviceAccountId string) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/iam/service-accounts/{service_account_id}/role-bindings"
+	localVarPath = strings.Replace(localVarPath, "{"+"service_account_id"+"}", fmt.Sprintf("%v", serviceAccountId), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	localVarPostBody = &body
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body:  localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 400 {
+			var v InlineResponse400
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 403 {
+			var v InlineResponse403
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 404 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+		if localVarHttpResponse.StatusCode == 500 {
+			var v InlineResponse500
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHttpResponse, newErr
+			}
+			newErr.model = v
+			return localVarHttpResponse, newErr
+		}
+		return localVarHttpResponse, newErr
+	}
+
+	return localVarHttpResponse, nil
+}
+
+/*
 RoleBindingsApiService Lists role bindings visible to the caller.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *RoleBindingsApiListRoleBindingsOpts - Optional Parameters:
@@ -143,6 +252,8 @@ RoleBindingsApiService Lists role bindings visible to the caller.
      * @param "RoleId" (optional.String) -
      * @param "ScopeType" (optional.String) -
      * @param "ScopeObjectId" (optional.String) -
+     * @param "PrincipalId" (optional.String) -
+     * @param "PrincipalType" (optional.String) -
 @return ListRoleBindingsResponse
 */
 
@@ -151,6 +262,8 @@ type RoleBindingsApiListRoleBindingsOpts struct {
 	RoleId        optional.String
 	ScopeType     optional.String
 	ScopeObjectId optional.String
+	PrincipalId   optional.String
+	PrincipalType optional.String
 }
 
 func (a *RoleBindingsApiService) ListRoleBindings(ctx context.Context, localVarOptionals *RoleBindingsApiListRoleBindingsOpts) (ListRoleBindingsResponse, *http.Response, error) {
@@ -180,6 +293,12 @@ func (a *RoleBindingsApiService) ListRoleBindings(ctx context.Context, localVarO
 	}
 	if localVarOptionals != nil && localVarOptionals.ScopeObjectId.IsSet() {
 		localVarQueryParams.Add("scope_object_id", parameterToString(localVarOptionals.ScopeObjectId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PrincipalId.IsSet() {
+		localVarQueryParams.Add("principal_id", parameterToString(localVarOptionals.PrincipalId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PrincipalType.IsSet() {
+		localVarQueryParams.Add("principal_type", parameterToString(localVarOptionals.PrincipalType.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
