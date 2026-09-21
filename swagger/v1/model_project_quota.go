@@ -9,7 +9,7 @@
 package swagger
 
 type ProjectQuota struct {
-	// Used is the remaining quota available
+	// Available is the remaining quota available
 	Available int64 `json:"available,omitempty"`
 	// Category is the quota category
 	Category string `json:"category,omitempty"`
@@ -21,6 +21,8 @@ type ProjectQuota struct {
 	ProgrammaticName string `json:"programmatic_name,omitempty"`
 	// Type is the enum quota type. This is meant to be used internally
 	Type_ string `json:"type,omitempty"`
+	// UsageTracking represents how quota usage is tracked
+	UsageTracking string `json:"usage_tracking,omitempty"`
 	// Used is the current quota consumed by the project
 	Used int64 `json:"used,omitempty"`
 }

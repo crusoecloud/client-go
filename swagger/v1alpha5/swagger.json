@@ -19769,7 +19769,7 @@
     "ProjectQuota": {
       "properties": {
         "available": {
-          "description": "Used is the remaining quota available",
+          "description": "Available is the remaining quota available",
           "example": 6,
           "format": "int64",
           "type": "integer",
@@ -19805,6 +19805,12 @@
           "example": "PROJECT_QUOTA_TYPE_MAXIMUM_VM_SLICES_VCPU_6_MEM_60_A40_PCIE_48GB_1",
           "type": "string",
           "x-go-name": "Type"
+        },
+        "usage_tracking": {
+          "description": "UsageTracking represents how quota usage is tracked",
+          "example": "QUOTA_USAGE_TRACKING_CENTRAL",
+          "type": "string",
+          "x-go-name": "UsageTracking"
         },
         "used": {
           "description": "Used is the current quota consumed by the project",
