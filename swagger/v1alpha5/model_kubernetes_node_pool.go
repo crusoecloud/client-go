@@ -20,7 +20,7 @@ type KubernetesNodePool struct {
 	CreatedAt string `json:"created_at"`
 	// Number of the pool's nodes that have joined the cluster and passed readiness: registered with the API server and ready to take workloads. Omitted when the serving backend does not compute it; zero means the pool genuinely has no ready nodes.
 	Current int64 `json:"current,omitempty"`
-	// Whether the first local ephemeral NVMe disk is used for containerd storage.
+	// Whether the first local ephemeral NVMe disk is used for containerd and kubelet ephemeral storage. On supported node pool versions the node advertises that disk's capacity as its ephemeral-storage.
 	EphemeralStorageForContainerd bool                      `json:"ephemeral_storage_for_containerd"`
 	Health                        *KubernetesNodePoolHealth `json:"health,omitempty"`
 	// ID of the node pool.

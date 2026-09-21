@@ -17001,7 +17001,7 @@
           "x-go-name": "Current"
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Whether the first local ephemeral NVMe disk is used for containerd storage.",
+          "description": "Whether the first local ephemeral NVMe disk is used for containerd and kubelet\nephemeral storage. On supported node pool versions the node advertises that\ndisk's capacity as its ephemeral-storage.",
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd"
@@ -17398,7 +17398,7 @@
           "x-redocly-optional": true
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Whether the first local ephemeral NVMe disk is used for containerd storage.",
+          "description": "Whether the first local ephemeral NVMe disk is used for containerd and kubelet\nephemeral storage. On supported node pool versions the node advertises that\ndisk's capacity as its ephemeral-storage.",
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd",
@@ -17501,7 +17501,7 @@
           "x-go-name": "Count"
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Whether the first local ephemeral NVMe disk is used for containerd storage.",
+          "description": "Whether the first local ephemeral NVMe disk is used for containerd and kubelet\nephemeral storage. On supported node pool versions the node advertises that\ndisk's capacity as its ephemeral-storage.",
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd"
