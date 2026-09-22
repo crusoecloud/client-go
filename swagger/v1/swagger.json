@@ -1163,6 +1163,24 @@
             "name": "page_token",
             "required": false,
             "type": "string"
+          },
+          {
+            "description": "disabled filters by status: set true to return only disabled accounts, false for only enabled;\nomit to return both.",
+            "in": "query",
+            "name": "disabled",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "managed_by filters by type: \"customer\" or \"crusoe\"; omit to return both.",
+            "enum": [
+              "customer",
+              "crusoe"
+            ],
+            "in": "query",
+            "name": "managed_by",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {

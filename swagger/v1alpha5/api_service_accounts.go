@@ -1183,12 +1183,16 @@ ServiceAccountsApiService List the service accounts in the organization.
  * @param optional nil or *ServiceAccountsApiListServiceAccountsOpts - Optional Parameters:
      * @param "PageSize" (optional.Int32) -  page_size is the maximum number of results to return; the server may return fewer. When 0 the server chooses a default.
      * @param "PageToken" (optional.String) -  page_token is the next_page_token from a previous response; empty requests the first page.
+     * @param "Disabled" (optional.Bool) -  disabled filters by status: set true to return only disabled accounts, false for only enabled; omit to return both.
+     * @param "ManagedBy" (optional.String) -  managed_by filters by type: \&quot;customer\&quot; or \&quot;crusoe\&quot;; omit to return both.
 @return CustomerListServiceAccountsResponse
 */
 
 type ServiceAccountsApiListServiceAccountsOpts struct {
 	PageSize  optional.Int32
 	PageToken optional.String
+	Disabled  optional.Bool
+	ManagedBy optional.String
 }
 
 func (a *ServiceAccountsApiService) ListServiceAccounts(ctx context.Context, orgId string, localVarOptionals *ServiceAccountsApiListServiceAccountsOpts) (CustomerListServiceAccountsResponse, *http.Response, error) {
@@ -1213,6 +1217,12 @@ func (a *ServiceAccountsApiService) ListServiceAccounts(ctx context.Context, org
 	}
 	if localVarOptionals != nil && localVarOptionals.PageToken.IsSet() {
 		localVarQueryParams.Add("page_token", parameterToString(localVarOptionals.PageToken.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Disabled.IsSet() {
+		localVarQueryParams.Add("disabled", parameterToString(localVarOptionals.Disabled.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ManagedBy.IsSet() {
+		localVarQueryParams.Add("managed_by", parameterToString(localVarOptionals.ManagedBy.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
