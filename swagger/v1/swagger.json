@@ -13390,10 +13390,12 @@
     "CreateSSOProviderRequest": {
       "properties": {
         "client_id": {
+          "description": "Client ID of the SSO provider. Required for okta and other providers.",
           "type": "string",
           "x-go-name": "ClientID"
         },
         "email_domains": {
+          "description": "The email domains which should use this SSO provider. Required for okta and other providers.",
           "items": {
             "type": "string"
           },
@@ -13401,15 +13403,20 @@
           "x-go-name": "EmailDomains"
         },
         "issuer_uri": {
+          "description": "The URI of the SSO provider. Required for okta and other providers.",
           "type": "string",
           "x-go-name": "IssuerURI"
+        },
+        "provider_type": {
+          "enum": [
+            "okta",
+            "google",
+            "other"
+          ],
+          "type": "string",
+          "x-go-name": "ProviderType"
         }
       },
-      "required": [
-        "client_id",
-        "issuer_uri",
-        "email_domains"
-      ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -20823,6 +20830,15 @@
         "org_id": {
           "type": "string",
           "x-go-name": "OrganizationID"
+        },
+        "provider_type": {
+          "enum": [
+            "okta",
+            "google",
+            "other"
+          ],
+          "type": "string",
+          "x-go-name": "ProviderType"
         }
       },
       "required": [
@@ -20831,7 +20847,8 @@
         "client_id",
         "issuer_uri",
         "created_at",
-        "email_domains"
+        "email_domains",
+        "provider_type"
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"

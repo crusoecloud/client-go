@@ -15,4 +15,5 @@ type SsoProvider struct {
 	Id           string   `json:"id"`
 	IssuerUri    string   `json:"issuer_uri"`
 	OrgId        string   `json:"org_id"`
+	ProviderType string   `json:"provider_type"`
 }
