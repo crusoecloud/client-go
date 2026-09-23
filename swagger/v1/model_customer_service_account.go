@@ -11,7 +11,7 @@ package swagger
 // ServiceAccount is a non-human identity scoped to an organization.
 type CustomerServiceAccount struct {
 	// created_at is when the account was created.
-	CreatedAt string `json:"created_at,omitempty"`
+	CreatedAt string `json:"created_at"`
 	// created_by is the id of the customer who created the account. Unset for crusoe-managed accounts or when the creator has been deleted.
 	CreatedBy string `json:"created_by,omitempty"`
 	// credential_summary is a per-credential-type rollup of the account's credentials, populated on get and list so a caller can show counts without a separate call per account. One entry per credential type the account holds; an account with no credentials has an empty list.
@@ -19,17 +19,17 @@ type CustomerServiceAccount struct {
 	// description is an optional human-readable description.
 	Description string `json:"description,omitempty"`
 	// disabled reports whether the account is disabled. Disabled accounts cannot obtain tokens. Change it with DisableServiceAccount / EnableServiceAccount, not via UpdateServiceAccount.
-	Disabled bool `json:"disabled,omitempty"`
+	Disabled bool `json:"disabled"`
 	// id is the unique identifier of the service account.
-	Id string `json:"id,omitempty"`
+	Id string `json:"id"`
 	// managed_by indicates who owns the service account: \"customer\" or \"crusoe\". Customer-created accounts are always \"customer\"; \"crusoe\" accounts are read-only over this API.
-	ManagedBy string `json:"managed_by,omitempty"`
+	ManagedBy string `json:"managed_by"`
 	// name is the user-assigned display name; immutable after creation.
-	Name string `json:"name,omitempty"`
+	Name string `json:"name"`
 	// org_id is the organization the service account belongs to.
-	OrgId string `json:"org_id,omitempty"`
+	OrgId string `json:"org_id"`
 	// role_bindings is the set of role bindings granted to the service account, populated on get and list. Each binding carries principal_type \"service_account\". Manage bindings via the role bindings API, not here.
 	RoleBindings []CustomerRoleBinding `json:"role_bindings,omitempty"`
 	// updated_at is when the account was last updated.
-	UpdatedAt string `json:"updated_at,omitempty"`
+	UpdatedAt string `json:"updated_at"`
 }

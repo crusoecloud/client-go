@@ -23006,6 +23006,15 @@
           "type": "string"
         }
       },
+      "required": [
+        "id",
+        "org_id",
+        "name",
+        "managed_by",
+        "disabled",
+        "created_at",
+        "updated_at"
+      ],
       "type": "object"
     },
     "customerServiceAccountCredential": {
