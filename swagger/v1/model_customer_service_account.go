@@ -8,7 +8,7 @@
  */
 package swagger
 
-// ServiceAccount is a non-human identity scoped to an organization.
+// ServiceAccount is a non-human identity scoped to an organization. It is the get/list representation; the write RPCs (create/update/disable/enable) return ServiceAccountWriteResponse.  Lockstep: fields 1-9 are mirrored by ServiceAccountWriteResponse; any field added to or changed in 1-9 must be made in both messages. Fields 10-11 (role_bindings, credential_summary) are read enrichments unique to this message and are intentionally absent from the write response.
 type CustomerServiceAccount struct {
 	// created_at is when the account was created.
 	CreatedAt string `json:"created_at"`

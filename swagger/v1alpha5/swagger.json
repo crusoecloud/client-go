@@ -1238,7 +1238,7 @@
           "200": {
             "description": "Service account created successfully",
             "schema": {
-              "$ref": "#/definitions/customerServiceAccount"
+              "$ref": "#/definitions/ServiceAccountWriteResponse"
             }
           },
           "400": {
@@ -1417,7 +1417,7 @@
           "200": {
             "description": "Service account updated successfully",
             "schema": {
-              "$ref": "#/definitions/customerServiceAccount"
+              "$ref": "#/definitions/ServiceAccountWriteResponse"
             }
           },
           "400": {
@@ -1690,7 +1690,7 @@
           "200": {
             "description": "Service account disabled successfully",
             "schema": {
-              "$ref": "#/definitions/customerServiceAccount"
+              "$ref": "#/definitions/ServiceAccountWriteResponse"
             }
           },
           "401": {
@@ -1755,7 +1755,7 @@
           "200": {
             "description": "Service account enabled successfully",
             "schema": {
-              "$ref": "#/definitions/customerServiceAccount"
+              "$ref": "#/definitions/ServiceAccountWriteResponse"
             }
           },
           "401": {
@@ -21151,6 +21151,71 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ServiceAccountWriteResponse": {
+      "description": "ServiceAccountWriteResponse is the representation of a service account returned by the write RPCs\n(Create, Update, Disable, Enable). It carries the account's own fields only. The read enrichments\nrole_bindings and credential_summary are populated solely on Get and List, so they are omitted\nhere rather than serialized as misleading empty arrays on a write response.\n\nLockstep: fields 1-9 here must mirror ServiceAccount fields 1-9 exactly. Any field added or\nchanged on those must be mirrored here. The two messages diverge only in that ServiceAccount adds\nthe role_bindings (10) and credential_summary (11) read enrichments.",
+      "properties": {
+        "created_at": {
+          "description": "created_at is when the account was created.",
+          "example": "2026-03-25T10:00:00Z",
+          "readOnly": true,
+          "type": "string"
+        },
+        "created_by": {
+          "description": "created_by is the id of the customer who created the account. Unset for crusoe-managed\naccounts or when the creator has been deleted.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "description": "description is an optional human-readable description.",
+          "example": "CI/CD pipeline for deployments",
+          "type": "string"
+        },
+        "disabled": {
+          "description": "disabled reports whether the account is disabled. Disabled accounts cannot obtain tokens. Change\nit with DisableServiceAccount / EnableServiceAccount, not via UpdateServiceAccount.",
+          "example": false,
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "id": {
+          "description": "id is the unique identifier of the service account.",
+          "example": "178c38e1-4a2f-4b91-9c3d-8f21b3a4c76d",
+          "readOnly": true,
+          "type": "string"
+        },
+        "managed_by": {
+          "description": "managed_by indicates who owns the service account: \"customer\" or \"crusoe\". Customer-created\naccounts are always \"customer\"; \"crusoe\" accounts are read-only over this API.",
+          "example": "customer",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "name is the user-assigned display name; immutable after creation.",
+          "example": "ci-pipeline",
+          "type": "string"
+        },
+        "org_id": {
+          "description": "org_id is the organization the service account belongs to.",
+          "example": "5b5b0f48-6a97-408f-8351-3cc30871e010",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "updated_at is when the account was last updated.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "org_id",
+        "name",
+        "managed_by",
+        "disabled",
+        "created_at",
+        "updated_at"
+      ],
+      "type": "object"
+    },
     "ServiceAccountsServiceCreateServiceAccountBody": {
       "description": "CreateServiceAccountRequest is the request to create a service account.",
       "properties": {
@@ -22935,7 +23000,7 @@
       "type": "object"
     },
     "customerServiceAccount": {
-      "description": "ServiceAccount is a non-human identity scoped to an organization.",
+      "description": "ServiceAccount is a non-human identity scoped to an organization. It is the get/list\nrepresentation; the write RPCs (create/update/disable/enable) return ServiceAccountWriteResponse.\n\nLockstep: fields 1-9 are mirrored by ServiceAccountWriteResponse; any field added to or changed in\n1-9 must be made in both messages. Fields 10-11 (role_bindings, credential_summary) are read\nenrichments unique to this message and are intentionally absent from the write response.",
       "properties": {
         "created_at": {
           "description": "created_at is when the account was created.",

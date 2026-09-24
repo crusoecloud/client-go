@@ -32,15 +32,15 @@ ServiceAccountsApiService Create a service account in the organization.
   - @param body
   - @param orgId org_id is the organization that will own the service account.
 
-@return CustomerServiceAccount
+@return ServiceAccountWriteResponse
 */
-func (a *ServiceAccountsApiService) CreateServiceAccount(ctx context.Context, body ServiceAccountsServiceCreateServiceAccountBody, orgId string) (CustomerServiceAccount, *http.Response, error) {
+func (a *ServiceAccountsApiService) CreateServiceAccount(ctx context.Context, body ServiceAccountsServiceCreateServiceAccountBody, orgId string) (ServiceAccountWriteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue CustomerServiceAccount
+		localVarReturnValue ServiceAccountWriteResponse
 	)
 
 	// create path and map variables
@@ -100,7 +100,7 @@ func (a *ServiceAccountsApiService) CreateServiceAccount(ctx context.Context, bo
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CustomerServiceAccount
+			var v ServiceAccountWriteResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -611,15 +611,15 @@ ServiceAccountsApiService Disable a service account so it can no longer obtain t
   - @param orgId org_id is the organization the service account belongs to.
   - @param serviceAccountId service_account_id is the id of the service account to disable.
 
-@return CustomerServiceAccount
+@return ServiceAccountWriteResponse
 */
-func (a *ServiceAccountsApiService) DisableServiceAccount(ctx context.Context, body ServiceAccountsServiceDisableServiceAccountBody, orgId string, serviceAccountId string) (CustomerServiceAccount, *http.Response, error) {
+func (a *ServiceAccountsApiService) DisableServiceAccount(ctx context.Context, body ServiceAccountsServiceDisableServiceAccountBody, orgId string, serviceAccountId string) (ServiceAccountWriteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue CustomerServiceAccount
+		localVarReturnValue ServiceAccountWriteResponse
 	)
 
 	// create path and map variables
@@ -680,7 +680,7 @@ func (a *ServiceAccountsApiService) DisableServiceAccount(ctx context.Context, b
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CustomerServiceAccount
+			var v ServiceAccountWriteResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -752,15 +752,15 @@ ServiceAccountsApiService Enable a previously disabled service account.
   - @param orgId org_id is the organization the service account belongs to.
   - @param serviceAccountId service_account_id is the id of the service account to enable.
 
-@return CustomerServiceAccount
+@return ServiceAccountWriteResponse
 */
-func (a *ServiceAccountsApiService) EnableServiceAccount(ctx context.Context, body ServiceAccountsServiceEnableServiceAccountBody, orgId string, serviceAccountId string) (CustomerServiceAccount, *http.Response, error) {
+func (a *ServiceAccountsApiService) EnableServiceAccount(ctx context.Context, body ServiceAccountsServiceEnableServiceAccountBody, orgId string, serviceAccountId string) (ServiceAccountWriteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Post")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue CustomerServiceAccount
+		localVarReturnValue ServiceAccountWriteResponse
 	)
 
 	// create path and map variables
@@ -821,7 +821,7 @@ func (a *ServiceAccountsApiService) EnableServiceAccount(ctx context.Context, bo
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CustomerServiceAccount
+			var v ServiceAccountWriteResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1333,15 +1333,15 @@ ServiceAccountsApiService Update a service account&#x27;s description or disable
   - @param orgId org_id is the organization the service account belongs to.
   - @param serviceAccountId service_account_id is the id of the service account to update.
 
-@return CustomerServiceAccount
+@return ServiceAccountWriteResponse
 */
-func (a *ServiceAccountsApiService) UpdateServiceAccount(ctx context.Context, body ServiceAccountsServiceUpdateServiceAccountBody, orgId string, serviceAccountId string) (CustomerServiceAccount, *http.Response, error) {
+func (a *ServiceAccountsApiService) UpdateServiceAccount(ctx context.Context, body ServiceAccountsServiceUpdateServiceAccountBody, orgId string, serviceAccountId string) (ServiceAccountWriteResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod  = strings.ToUpper("Patch")
 		localVarPostBody    interface{}
 		localVarFileName    string
 		localVarFileBytes   []byte
-		localVarReturnValue CustomerServiceAccount
+		localVarReturnValue ServiceAccountWriteResponse
 	)
 
 	// create path and map variables
@@ -1402,7 +1402,7 @@ func (a *ServiceAccountsApiService) UpdateServiceAccount(ctx context.Context, bo
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CustomerServiceAccount
+			var v ServiceAccountWriteResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
