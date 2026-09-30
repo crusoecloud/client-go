@@ -10,6 +10,8 @@ package swagger
 
 // KubernetesClusterPreflightResponse describes, per location, how a cluster created now in a project would be hosted.
 type KubernetesClusterPreflightResponse struct {
+	// Kubernetes versions a cluster can be created at in the locations whose control_plane_type is \"pod\", newest first; the first entry is the default. Listed once because the set is the same for every such location. Empty when no location is pod-hosted; \"vm\" locations take their versions from the kubernetes versions endpoint instead.
+	KubernetesVersions []KubernetesClusterPreflightVersion `json:"kubernetes_versions"`
 	// Preflight result for each location.
 	Locations []KubernetesClusterLocationPreflight `json:"locations"`
 }

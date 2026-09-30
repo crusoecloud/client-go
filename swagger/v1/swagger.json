@@ -16678,6 +16678,14 @@
     "KubernetesClusterPreflightResponse": {
       "description": "KubernetesClusterPreflightResponse describes, per location, how a cluster created\nnow in a project would be hosted.",
       "properties": {
+        "kubernetes_versions": {
+          "description": "Kubernetes versions a cluster can be created at in the locations whose\ncontrol_plane_type is \"pod\", newest first; the first entry is the default. Listed\nonce because the set is the same for every such location. Empty when no location\nis pod-hosted; \"vm\" locations take their versions from the kubernetes versions\nendpoint instead.",
+          "items": {
+            "$ref": "#/definitions/KubernetesClusterPreflightVersion"
+          },
+          "type": "array",
+          "x-go-name": "KubernetesVersions"
+        },
         "locations": {
           "description": "Preflight result for each location.",
           "items": {
@@ -16688,8 +16696,32 @@
         }
       },
       "required": [
-        "locations"
+        "locations",
+        "kubernetes_versions"
       ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesClusterPreflightVersion": {
+      "properties": {
+        "major_minor_version": {
+          "description": "The version to pass when creating a cluster, as major.minor.",
+          "example": "1.35",
+          "type": "string",
+          "x-go-name": "MajorMinorVersion"
+        },
+        "resolved_version": {
+          "description": "The full version a cluster created at major_minor_version runs now.\nInformational; it moves as new patches are qualified.",
+          "example": "1.35.8",
+          "type": "string",
+          "x-go-name": "ResolvedVersion"
+        }
+      },
+      "required": [
+        "major_minor_version",
+        "resolved_version"
+      ],
+      "title": "KubernetesClusterPreflightVersion is one version a cluster can be created at and what it runs today.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
