@@ -11,6 +11,8 @@ package swagger
 type RoleBinding struct {
 	CustomerId    string `json:"customer_id"`
 	Id            string `json:"id"`
+	PrincipalId   string `json:"principal_id"`
+	PrincipalType string `json:"principal_type"`
 	RoleId        string `json:"role_id"`
 	RoleName      string `json:"role_name"`
 	ScopeObjectId string `json:"scope_object_id"`

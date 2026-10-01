@@ -9,7 +9,11 @@
 package swagger
 
 type CreateSsoProviderRequest struct {
-	ClientId     string   `json:"client_id"`
-	EmailDomains []string `json:"email_domains"`
-	IssuerUri    string   `json:"issuer_uri"`
+	// Client ID of the SSO provider. Required for okta and other providers.
+	ClientId string `json:"client_id,omitempty"`
+	// The email domains which should use this SSO provider. Required for okta and other providers.
+	EmailDomains []string `json:"email_domains,omitempty"`
+	// The URI of the SSO provider. Required for okta and other providers.
+	IssuerUri    string `json:"issuer_uri,omitempty"`
+	ProviderType string `json:"provider_type,omitempty"`
 }

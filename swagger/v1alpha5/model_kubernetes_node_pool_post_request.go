@@ -16,7 +16,7 @@ type KubernetesNodePoolPostRequest struct {
 	ConsentMode string `json:"consent_mode,omitempty"`
 	// Desired number of nodes in the node pool.
 	Count int64 `json:"count"`
-	// Whether the first local ephemeral NVMe disk is used for containerd storage.
+	// Whether the first local ephemeral NVMe disk is used for containerd and kubelet ephemeral storage. On supported node pool versions the node advertises that disk's capacity as its ephemeral-storage.
 	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd,omitempty"`
 	// Deprecated: Use transport_partition_id instead.
 	IbPartitionId string `json:"ib_partition_id,omitempty"`

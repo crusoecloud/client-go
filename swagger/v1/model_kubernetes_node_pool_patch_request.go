@@ -16,7 +16,7 @@ type KubernetesNodePoolPatchRequest struct {
 	ConsentMode string `json:"consent_mode,omitempty"`
 	// New desired number of nodes in the node pool.
 	Count int64 `json:"count"`
-	// Whether the first local ephemeral NVMe disk is used for containerd storage.
+	// Whether the first local ephemeral NVMe disk is used for containerd and kubelet ephemeral storage. On supported node pool versions the node advertises that disk's capacity as its ephemeral-storage.
 	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd"`
 	// New labels for the node pool. Labels provided in the PATCH request do not modify existing nodes, but apply to any newly created nodes.
 	NodeLabels map[string]string `json:"node_labels"`

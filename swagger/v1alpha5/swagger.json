@@ -287,6 +287,22 @@
             "name": "scope_object_id",
             "type": "string",
             "x-go-name": "ScopeObjectID"
+          },
+          {
+            "in": "query",
+            "name": "principal_id",
+            "type": "string",
+            "x-go-name": "PrincipalID"
+          },
+          {
+            "enum": [
+              "user",
+              "service_account"
+            ],
+            "in": "query",
+            "name": "principal_type",
+            "type": "string",
+            "x-go-name": "PrincipalType"
           }
         ],
         "responses": {
@@ -332,6 +348,51 @@
         "summary": "Lists role associated with the caller's organization.",
         "tags": [
           "Roles"
+        ]
+      }
+    },
+    "/iam/service-accounts/{service_account_id}/role-bindings": {
+      "post": {
+        "description": "If any creation or deletion fails, no changes are applied.",
+        "operationId": "applyServiceAccountRoleBindings",
+        "parameters": [
+          {
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "service_account_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ServiceAccountID"
+          },
+          {
+            "in": "body",
+            "name": "Body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ApplyServiceAccountRoleBindingRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/emptyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Creates and deletes role bindings for a service account in a single atomic operation.",
+        "tags": [
+          "RoleBindings"
         ]
       }
     },
@@ -1076,6 +1137,656 @@
         ]
       }
     },
+    "/organizations/{org_id}/service-accounts": {
+      "get": {
+        "operationId": "listServiceAccounts",
+        "parameters": [
+          {
+            "description": "org_id is the organization whose service accounts are listed.",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "page_size is the maximum number of results to return; the server may return fewer. When 0 the\nserver chooses a default.",
+            "format": "int32",
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "page_token is the next_page_token from a previous response; empty requests the first page.",
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "disabled filters by status: set true to return only disabled accounts, false for only enabled;\nomit to return both.",
+            "in": "query",
+            "name": "disabled",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "description": "managed_by filters by type: \"customer\" or \"crusoe\"; omit to return both.",
+            "enum": [
+              "customer",
+              "crusoe"
+            ],
+            "in": "query",
+            "name": "managed_by",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service accounts retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerListServiceAccountsResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "List the service accounts in the organization.",
+        "tags": [
+          "Service Accounts"
+        ]
+      },
+      "post": {
+        "operationId": "createServiceAccount",
+        "parameters": [
+          {
+            "description": "org_id is the organization that will own the service account.",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceAccountsServiceCreateServiceAccountBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service account created successfully",
+            "schema": {
+              "$ref": "#/definitions/ServiceAccountWriteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {}
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "409": {
+            "description": "A service account with that name already exists",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Create a service account in the organization.",
+        "tags": [
+          "Service Accounts"
+        ]
+      }
+    },
+    "/organizations/{org_id}/service-accounts/{service_account_id}": {
+      "delete": {
+        "operationId": "deleteServiceAccount",
+        "parameters": [
+          {
+            "description": "org_id is the organization the service account belongs to.",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "service_account_id is the id of the service account to delete.",
+            "in": "path",
+            "name": "service_account_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service account deleted successfully",
+            "schema": {
+              "$ref": "#/definitions/customerDeleteServiceAccountResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Delete a service account and revoke its credentials.",
+        "tags": [
+          "Service Accounts"
+        ]
+      },
+      "get": {
+        "operationId": "getServiceAccount",
+        "parameters": [
+          {
+            "description": "org_id is the organization the service account belongs to.",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "service_account_id is the id of the service account to retrieve.",
+            "in": "path",
+            "name": "service_account_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service account retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerServiceAccount"
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Retrieve a service account by id.",
+        "tags": [
+          "Service Accounts"
+        ]
+      },
+      "patch": {
+        "operationId": "updateServiceAccount",
+        "parameters": [
+          {
+            "description": "org_id is the organization the service account belongs to.",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "service_account_id is the id of the service account to update.",
+            "in": "path",
+            "name": "service_account_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceAccountsServiceUpdateServiceAccountBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service account updated successfully",
+            "schema": {
+              "$ref": "#/definitions/ServiceAccountWriteResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {}
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Update a service account's description or disabled state.",
+        "tags": [
+          "Service Accounts"
+        ]
+      }
+    },
+    "/organizations/{org_id}/service-accounts/{service_account_id}/credentials": {
+      "get": {
+        "operationId": "listServiceAccountCredentials",
+        "parameters": [
+          {
+            "description": "org_id is the organization the service account belongs to.",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "service_account_id is the service account whose credentials are listed.",
+            "in": "path",
+            "name": "service_account_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "page_size is the maximum number of results to return; the server may return fewer. When 0 the\nserver chooses a default.",
+            "format": "int32",
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "page_token is the next_page_token from a previous response; empty requests the first page.",
+            "in": "query",
+            "name": "page_token",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Credentials retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/customerListServiceAccountCredentialsResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "404": {
+            "description": "Service account not found",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "List a service account's credentials.",
+        "tags": [
+          "Service Accounts"
+        ]
+      },
+      "post": {
+        "operationId": "createServiceAccountCredential",
+        "parameters": [
+          {
+            "description": "org_id is the organization the service account belongs to.",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "service_account_id is the service account to mint the credential for.",
+            "in": "path",
+            "name": "service_account_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceAccountsServiceCreateServiceAccountCredentialBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Credential created successfully",
+            "schema": {
+              "$ref": "#/definitions/customerCreateServiceAccountCredentialResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {}
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "404": {
+            "description": "Service account not found",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Create a credential for a service account. The secret is returned once.",
+        "tags": [
+          "Service Accounts"
+        ]
+      }
+    },
+    "/organizations/{org_id}/service-accounts/{service_account_id}/credentials/{credential_id}": {
+      "delete": {
+        "operationId": "deleteServiceAccountCredential",
+        "parameters": [
+          {
+            "description": "org_id is the organization the service account belongs to.",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "service_account_id is the service account that owns the credential.",
+            "in": "path",
+            "name": "service_account_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "credential_id is the id of the credential to revoke.",
+            "in": "path",
+            "name": "credential_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Credential deleted successfully",
+            "schema": {
+              "$ref": "#/definitions/customerDeleteServiceAccountCredentialResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Revoke a single service account credential.",
+        "tags": [
+          "Service Accounts"
+        ]
+      }
+    },
+    "/organizations/{org_id}/service-accounts/{service_account_id}:disable": {
+      "post": {
+        "operationId": "disableServiceAccount",
+        "parameters": [
+          {
+            "description": "org_id is the organization the service account belongs to.",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "service_account_id is the id of the service account to disable.",
+            "in": "path",
+            "name": "service_account_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceAccountsServiceDisableServiceAccountBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service account disabled successfully",
+            "schema": {
+              "$ref": "#/definitions/ServiceAccountWriteResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Disable a service account so it can no longer obtain tokens.",
+        "tags": [
+          "Service Accounts"
+        ]
+      }
+    },
+    "/organizations/{org_id}/service-accounts/{service_account_id}:enable": {
+      "post": {
+        "operationId": "enableServiceAccount",
+        "parameters": [
+          {
+            "description": "org_id is the organization the service account belongs to.",
+            "in": "path",
+            "name": "org_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "service_account_id is the id of the service account to enable.",
+            "in": "path",
+            "name": "service_account_id",
+            "pattern": "[^/]+",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceAccountsServiceEnableServiceAccountBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service account enabled successfully",
+            "schema": {
+              "$ref": "#/definitions/ServiceAccountWriteResponse"
+            }
+          },
+          "401": {
+            "description": "Authentication required",
+            "schema": {}
+          },
+          "403": {
+            "description": "Permission denied",
+            "schema": {}
+          },
+          "404": {
+            "description": "Not found",
+            "schema": {}
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {}
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "summary": "Enable a previously disabled service account.",
+        "tags": [
+          "Service Accounts"
+        ]
+      }
+    },
     "/organizations/{org_id}/storage/s3/keys": {
       "get": {
         "operationId": "listS3Keys",
@@ -1520,7 +2231,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Get the daily spend for a specified organization by project.",
+        "summary": "Get the daily spend for a specified organization by project. Returns real-time data for Intelligence Billing (Serverless Inference + Serverless Fine Tuning).",
         "tags": [
           "Billing"
         ]
@@ -11839,6 +12550,30 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ApplyServiceAccountRoleBindingRequest": {
+      "properties": {
+        "bindings_to_create": {
+          "items": {
+            "$ref": "#/definitions/ServiceAccountRoleBindingInput"
+          },
+          "type": "array",
+          "x-go-name": "BindingsToCreate"
+        },
+        "bindings_to_delete": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "BindingsToDelete"
+        }
+      },
+      "required": [
+        "bindings_to_create",
+        "bindings_to_delete"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "AsyncOperationResponse": {
       "properties": {
         "operation": {
@@ -12673,10 +13408,12 @@
     "CreateSSOProviderRequest": {
       "properties": {
         "client_id": {
+          "description": "Client ID of the SSO provider. Required for okta and other providers.",
           "type": "string",
           "x-go-name": "ClientID"
         },
         "email_domains": {
+          "description": "The email domains which should use this SSO provider. Required for okta and other providers.",
           "items": {
             "type": "string"
           },
@@ -12684,15 +13421,20 @@
           "x-go-name": "EmailDomains"
         },
         "issuer_uri": {
+          "description": "The URI of the SSO provider. Required for okta and other providers.",
           "type": "string",
           "x-go-name": "IssuerURI"
+        },
+        "provider_type": {
+          "enum": [
+            "okta",
+            "google",
+            "other"
+          ],
+          "type": "string",
+          "x-go-name": "ProviderType"
         }
       },
-      "required": [
-        "client_id",
-        "issuer_uri",
-        "email_domains"
-      ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -15936,6 +16678,14 @@
     "KubernetesClusterPreflightResponse": {
       "description": "KubernetesClusterPreflightResponse describes, per location, how a cluster created\nnow in a project would be hosted.",
       "properties": {
+        "kubernetes_versions": {
+          "description": "Kubernetes versions a cluster can be created at in the locations whose\ncontrol_plane_type is \"pod\", newest first; the first entry is the default. Listed\nonce because the set is the same for every such location. Empty when no location\nis pod-hosted; \"vm\" locations take their versions from the kubernetes versions\nendpoint instead.",
+          "items": {
+            "$ref": "#/definitions/KubernetesClusterPreflightVersion"
+          },
+          "type": "array",
+          "x-go-name": "KubernetesVersions"
+        },
         "locations": {
           "description": "Preflight result for each location.",
           "items": {
@@ -15946,8 +16696,32 @@
         }
       },
       "required": [
-        "locations"
+        "locations",
+        "kubernetes_versions"
       ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "KubernetesClusterPreflightVersion": {
+      "properties": {
+        "major_minor_version": {
+          "description": "The version to pass when creating a cluster, as major.minor.",
+          "example": "1.35",
+          "type": "string",
+          "x-go-name": "MajorMinorVersion"
+        },
+        "resolved_version": {
+          "description": "The full version a cluster created at major_minor_version runs now.\nInformational; it moves as new patches are qualified.",
+          "example": "1.35.8",
+          "type": "string",
+          "x-go-name": "ResolvedVersion"
+        }
+      },
+      "required": [
+        "major_minor_version",
+        "resolved_version"
+      ],
+      "title": "KubernetesClusterPreflightVersion is one version a cluster can be created at and what it runs today.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -16284,7 +17058,7 @@
           "x-go-name": "Current"
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Whether the first local ephemeral NVMe disk is used for containerd storage.",
+          "description": "Whether the first local ephemeral NVMe disk is used for containerd and kubelet\nephemeral storage. On supported node pool versions the node advertises that\ndisk's capacity as its ephemeral-storage.",
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd"
@@ -16681,7 +17455,7 @@
           "x-redocly-optional": true
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Whether the first local ephemeral NVMe disk is used for containerd storage.",
+          "description": "Whether the first local ephemeral NVMe disk is used for containerd and kubelet\nephemeral storage. On supported node pool versions the node advertises that\ndisk's capacity as its ephemeral-storage.",
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd",
@@ -16784,7 +17558,7 @@
           "x-go-name": "Count"
         },
         "ephemeral_storage_for_containerd": {
-          "description": "Whether the first local ephemeral NVMe disk is used for containerd storage.",
+          "description": "Whether the first local ephemeral NVMe disk is used for containerd and kubelet\nephemeral storage. On supported node pool versions the node advertises that\ndisk's capacity as its ephemeral-storage.",
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd"
@@ -19052,7 +19826,7 @@
     "ProjectQuota": {
       "properties": {
         "available": {
-          "description": "Used is the remaining quota available",
+          "description": "Available is the remaining quota available",
           "example": 6,
           "format": "int64",
           "type": "integer",
@@ -19088,6 +19862,12 @@
           "example": "PROJECT_QUOTA_TYPE_MAXIMUM_VM_SLICES_VCPU_6_MEM_60_A40_PCIE_48GB_1",
           "type": "string",
           "x-go-name": "Type"
+        },
+        "usage_tracking": {
+          "description": "UsageTracking represents how quota usage is tracked",
+          "example": "QUOTA_USAGE_TRACKING_CENTRAL",
+          "type": "string",
+          "x-go-name": "UsageTracking"
         },
         "used": {
           "description": "Used is the current quota consumed by the project",
@@ -19630,6 +20410,18 @@
           "type": "string",
           "x-go-name": "ID"
         },
+        "principal_id": {
+          "type": "string",
+          "x-go-name": "PrincipalID"
+        },
+        "principal_type": {
+          "enum": [
+            "user",
+            "service_account"
+          ],
+          "type": "string",
+          "x-go-name": "PrincipalType"
+        },
         "role_id": {
           "type": "string",
           "x-go-name": "RoleID"
@@ -19653,7 +20445,9 @@
         "role_id",
         "scope_type",
         "scope_object_id",
-        "role_name"
+        "role_name",
+        "principal_id",
+        "principal_type"
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -20086,6 +20880,15 @@
         "org_id": {
           "type": "string",
           "x-go-name": "OrganizationID"
+        },
+        "provider_type": {
+          "enum": [
+            "okta",
+            "google",
+            "other"
+          ],
+          "type": "string",
+          "x-go-name": "ProviderType"
         }
       },
       "required": [
@@ -20094,7 +20897,8 @@
         "client_id",
         "issuer_uri",
         "created_at",
-        "email_domains"
+        "email_domains",
+        "provider_type"
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -20350,6 +21154,155 @@
       "title": "SelfServeFlavor describes a hardware/model flavor available for self-serve deployment.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
+    },
+    "ServiceAccountRoleBindingInput": {
+      "description": "ServiceAccountRoleBindingInput is a role binding to create for a service account. Unlike\nRoleBindingInput, it carries no customer_id -- the principal is the service_account_id in the\nURL path, not a field on the binding.",
+      "properties": {
+        "role_id": {
+          "type": "string",
+          "x-go-name": "RoleID"
+        },
+        "scope_object_id": {
+          "type": "string",
+          "x-go-name": "ScopeObjectID"
+        },
+        "scope_type": {
+          "enum": [
+            "org",
+            "project"
+          ],
+          "type": "string",
+          "x-go-name": "ScopeType"
+        }
+      },
+      "required": [
+        "role_id",
+        "scope_type",
+        "scope_object_id"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "ServiceAccountWriteResponse": {
+      "description": "ServiceAccountWriteResponse is the representation of a service account returned by the write RPCs\n(Create, Update, Disable, Enable). It carries the account's own fields only. The read enrichments\nrole_bindings and credential_summary are populated solely on Get and List, so they are omitted\nhere rather than serialized as misleading empty arrays on a write response.\n\nLockstep: fields 1-9 here must mirror ServiceAccount fields 1-9 exactly. Any field added or\nchanged on those must be mirrored here. The two messages diverge only in that ServiceAccount adds\nthe role_bindings (10) and credential_summary (11) read enrichments.",
+      "properties": {
+        "created_at": {
+          "description": "created_at is when the account was created.",
+          "example": "2026-03-25T10:00:00Z",
+          "readOnly": true,
+          "type": "string"
+        },
+        "created_by": {
+          "description": "created_by is the id of the customer who created the account. Unset for crusoe-managed\naccounts or when the creator has been deleted.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "description": "description is an optional human-readable description.",
+          "example": "CI/CD pipeline for deployments",
+          "type": "string"
+        },
+        "disabled": {
+          "description": "disabled reports whether the account is disabled. Disabled accounts cannot obtain tokens. Change\nit with DisableServiceAccount / EnableServiceAccount, not via UpdateServiceAccount.",
+          "example": false,
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "id": {
+          "description": "id is the unique identifier of the service account.",
+          "example": "178c38e1-4a2f-4b91-9c3d-8f21b3a4c76d",
+          "readOnly": true,
+          "type": "string"
+        },
+        "managed_by": {
+          "description": "managed_by indicates who owns the service account: \"customer\" or \"crusoe\". Customer-created\naccounts are always \"customer\"; \"crusoe\" accounts are read-only over this API.",
+          "example": "customer",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "name is the user-assigned display name; immutable after creation.",
+          "example": "ci-pipeline",
+          "type": "string"
+        },
+        "org_id": {
+          "description": "org_id is the organization the service account belongs to.",
+          "example": "5b5b0f48-6a97-408f-8351-3cc30871e010",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "updated_at is when the account was last updated.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "org_id",
+        "name",
+        "managed_by",
+        "disabled",
+        "created_at",
+        "updated_at"
+      ],
+      "type": "object"
+    },
+    "ServiceAccountsServiceCreateServiceAccountBody": {
+      "description": "CreateServiceAccountRequest is the request to create a service account.",
+      "properties": {
+        "description": {
+          "description": "description is an optional human-readable description.",
+          "example": "CI/CD pipeline for deployments",
+          "type": "string"
+        },
+        "name": {
+          "description": "name is the display name for the service account.",
+          "example": "ci-pipeline",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "ServiceAccountsServiceCreateServiceAccountCredentialBody": {
+      "description": "CreateServiceAccountCredentialRequest is the request to mint a credential for a service account.",
+      "properties": {
+        "credential_type": {
+          "description": "credential_type is the kind of credential to create, e.g. \"oauth2_client\".",
+          "example": "oauth2_client",
+          "type": "string"
+        },
+        "name": {
+          "description": "name is an optional, non-unique label for the credential.",
+          "example": "prod-deploy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "credential_type"
+      ],
+      "type": "object"
+    },
+    "ServiceAccountsServiceDisableServiceAccountBody": {
+      "description": "DisableServiceAccountRequest is the request to disable a service account.",
+      "type": "object"
+    },
+    "ServiceAccountsServiceEnableServiceAccountBody": {
+      "description": "EnableServiceAccountRequest is the request to enable a previously disabled service account.",
+      "type": "object"
+    },
+    "ServiceAccountsServiceUpdateServiceAccountBody": {
+      "description": "UpdateServiceAccountRequest is the request to update a service account. Only present fields are\napplied; name and managed_by are immutable.",
+      "properties": {
+        "description": {
+          "description": "description sets a new description when present.",
+          "type": "string"
+        }
+      },
+      "type": "object"
     },
     "SlurmCluster": {
       "allOf": [
@@ -21760,6 +22713,36 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "customerCreateServiceAccountCredentialResponse": {
+      "description": "CreateServiceAccountCredentialResponse is the response for minting a credential. The one-time\nclient_secret is nested in the credential's oauth2 block and never appears on any get or list\nresponse, which return the secret-free ServiceAccountCredential.",
+      "properties": {
+        "credential": {
+          "$ref": "#/definitions/customerServiceAccountCredentialWithSecret",
+          "description": "credential is the newly created credential, including the one-time client_secret nested in its\noauth2 block.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "customerCredentialSummary": {
+      "description": "CredentialSummary rolls up how many credentials of one type a service account holds. An account\ncan hold credentials of multiple types, so a get/list response carries one CredentialSummary per\ntype present.",
+      "properties": {
+        "count": {
+          "description": "count is the number of credentials of this type the account holds.",
+          "example": 2,
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "credential_type": {
+          "description": "credential_type is the kind of credential this entry summarizes, e.g. \"oauth2_client\".",
+          "example": "oauth2_client",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "customerCredit": {
       "description": "Credit is a single credit balance transaction for an organization.",
       "properties": {
@@ -21779,6 +22762,14 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "customerDeleteServiceAccountCredentialResponse": {
+      "description": "DeleteServiceAccountCredentialResponse is the response for revoking a credential. A successful\ndelete returns an empty body.",
+      "type": "object"
+    },
+    "customerDeleteServiceAccountResponse": {
+      "description": "DeleteServiceAccountResponse is the response for deleting a service account. A successful delete\nreturns an empty body.",
       "type": "object"
     },
     "customerGetOrganizationMFAResponse": {
@@ -21829,6 +22820,75 @@
       "title": "ListFeatureFlagsResponse is the list feature flags response",
       "type": "object"
     },
+    "customerListServiceAccountCredentialsResponse": {
+      "description": "ListServiceAccountCredentialsResponse is the response for listing credentials.",
+      "properties": {
+        "items": {
+          "description": "items is the list of credentials, newest first. Secrets are never included.",
+          "items": {
+            "$ref": "#/definitions/customerServiceAccountCredential",
+            "type": "object"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "next_page_token": {
+          "description": "next_page_token is the token for the next page; empty when there are no more results.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerListServiceAccountsResponse": {
+      "description": "ListServiceAccountsResponse is the response for listing service accounts.",
+      "properties": {
+        "items": {
+          "description": "items is the list of service accounts, newest first.",
+          "items": {
+            "$ref": "#/definitions/customerServiceAccount",
+            "type": "object"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "next_page_token": {
+          "description": "next_page_token is the token for the next page; empty when there are no more results.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerOAuth2Credential": {
+      "description": "OAuth2Credential holds the non-secret OAuth2 client fields of a credential. This is the oauth2\nblock that appears on get and list; it never carries the client_secret.",
+      "properties": {
+        "client_id": {
+          "description": "client_id is the stable OAuth2 client identifier.",
+          "example": "sa-e2ac096b-1234-4abc-9def-000000000000",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerOAuth2CredentialWithSecret": {
+      "description": "OAuth2CredentialWithSecret is the oauth2 block returned only on create, carrying the one-time\nclient_secret nested alongside the client_id. It is a distinct message from OAuth2Credential so\nthat get and list responses (which use OAuth2Credential) cannot structurally carry a secret.",
+      "properties": {
+        "client_id": {
+          "description": "client_id is the stable OAuth2 client identifier.",
+          "example": "sa-e2ac096b-1234-4abc-9def-000000000000",
+          "readOnly": true,
+          "type": "string"
+        },
+        "client_secret": {
+          "description": "client_secret is the OAuth2 client secret, shown exactly once on create. It cannot be retrieved\nagain; create a new credential if it is lost.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "customerOrganizationMFA": {
       "description": "OrganizationMFA describes a single MFA method required by an organization.",
       "properties": {
@@ -21858,6 +22918,22 @@
           "readOnly": true,
           "title": "items is the list of per-project usage line items",
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "customerPrincipal": {
+      "description": "Principal identifies the owner of a credential.",
+      "properties": {
+        "id": {
+          "description": "id is the owning principal's id (the service account id today).",
+          "readOnly": true,
+          "type": "string"
+        },
+        "type": {
+          "description": "type is the kind of owning principal, e.g. \"service_account\".",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -21900,6 +22976,234 @@
           "example": "a40.1x",
           "title": "resource_type is the product type the usage was incurred for",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerRoleBinding": {
+      "description": "RoleBinding grants a role to a principal (a user or a service account) within a specific scope\n(e.g. an organization or a project).",
+      "properties": {
+        "customer_id": {
+          "description": "customer_id is the ID of the user the role is bound to. Deprecated: use principal_id with\nprincipal_type instead. For a user binding it mirrors principal_id; for a service account\nbinding it is unset. Retained until principal_id/principal_type fully replace it.",
+          "example": "d1e3a8c1-7d2e-4c5b-9f9a-2f5b3e9c1a44",
+          "readOnly": true,
+          "type": "string"
+        },
+        "id": {
+          "example": "7b6e8d2c-9a4f-4d3b-8c1e-5f2a9b8c7d6e",
+          "readOnly": true,
+          "title": "id is the ID of the role binding",
+          "type": "string"
+        },
+        "principal_id": {
+          "description": "principal_id is the ID of the principal (user or service account) the role is bound to.",
+          "example": "178c38e1-4a2f-4b91-9c3d-8f21b3a4c76d",
+          "readOnly": true,
+          "type": "string"
+        },
+        "principal_type": {
+          "description": "principal_type is the kind of principal identified by principal_id, \"user\" or \"service_account\".",
+          "example": "service_account",
+          "readOnly": true,
+          "type": "string"
+        },
+        "role_id": {
+          "example": "3a2b1c0d-4e5f-6789-abcd-ef0123456789",
+          "title": "role_id is the ID of the role granted by this binding",
+          "type": "string"
+        },
+        "role_name": {
+          "example": "org-admin",
+          "readOnly": true,
+          "title": "role_name is the human-readable name of the role granted by this binding",
+          "type": "string"
+        },
+        "scope_object_id": {
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+          "title": "scope_object_id is the ID of the resource the binding applies to",
+          "type": "string"
+        },
+        "scope_type": {
+          "example": "org",
+          "title": "scope_type is the type of resource the binding applies to (e.g. org, project)",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "customerServiceAccount": {
+      "description": "ServiceAccount is a non-human identity scoped to an organization. It is the get/list\nrepresentation; the write RPCs (create/update/disable/enable) return ServiceAccountWriteResponse.\n\nLockstep: fields 1-9 are mirrored by ServiceAccountWriteResponse; any field added to or changed in\n1-9 must be made in both messages. Fields 10-11 (role_bindings, credential_summary) are read\nenrichments unique to this message and are intentionally absent from the write response.",
+      "properties": {
+        "created_at": {
+          "description": "created_at is when the account was created.",
+          "example": "2026-03-25T10:00:00Z",
+          "readOnly": true,
+          "type": "string"
+        },
+        "created_by": {
+          "description": "created_by is the id of the customer who created the account. Unset for crusoe-managed\naccounts or when the creator has been deleted.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "credential_summary": {
+          "description": "credential_summary is a per-credential-type rollup of the account's credentials, populated on\nget and list so a caller can show counts without a separate call per account. One entry per\ncredential type the account holds; an account with no credentials has an empty list.",
+          "items": {
+            "$ref": "#/definitions/customerCredentialSummary",
+            "type": "object"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "description": {
+          "description": "description is an optional human-readable description.",
+          "example": "CI/CD pipeline for deployments",
+          "type": "string"
+        },
+        "disabled": {
+          "description": "disabled reports whether the account is disabled. Disabled accounts cannot obtain tokens. Change\nit with DisableServiceAccount / EnableServiceAccount, not via UpdateServiceAccount.",
+          "example": false,
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "id": {
+          "description": "id is the unique identifier of the service account.",
+          "example": "178c38e1-4a2f-4b91-9c3d-8f21b3a4c76d",
+          "readOnly": true,
+          "type": "string"
+        },
+        "managed_by": {
+          "description": "managed_by indicates who owns the service account: \"customer\" or \"crusoe\". Customer-created\naccounts are always \"customer\"; \"crusoe\" accounts are read-only over this API.",
+          "example": "customer",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "name is the user-assigned display name; immutable after creation.",
+          "example": "ci-pipeline",
+          "type": "string"
+        },
+        "org_id": {
+          "description": "org_id is the organization the service account belongs to.",
+          "example": "5b5b0f48-6a97-408f-8351-3cc30871e010",
+          "readOnly": true,
+          "type": "string"
+        },
+        "role_bindings": {
+          "description": "role_bindings is the set of role bindings granted to the service account, populated on get and\nlist. Each binding carries principal_type \"service_account\". Manage bindings via the role\nbindings API, not here.",
+          "items": {
+            "$ref": "#/definitions/customerRoleBinding",
+            "type": "object"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "updated_at": {
+          "description": "updated_at is when the account was last updated.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "org_id",
+        "name",
+        "managed_by",
+        "disabled",
+        "created_at",
+        "updated_at"
+      ],
+      "type": "object"
+    },
+    "customerServiceAccountCredential": {
+      "description": "ServiceAccountCredential is one credential attached to a service account, as returned by get and\nlist. It never carries a secret: its oauth2 block is the secret-free OAuth2Credential.\n\nLockstep: fields 1-8 here must mirror ServiceAccountCredentialWithSecret exactly (only the oauth2\nblock type differs). Any field added/changed here must be mirrored there, or it will silently\nvanish from create responses.",
+      "properties": {
+        "created_at": {
+          "description": "created_at is when the credential was created.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "created_by": {
+          "description": "created_by is the id of the customer who created the credential. Unset when the creator has\nbeen deleted.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "credential_type": {
+          "description": "credential_type is the kind of credential, e.g. \"oauth2_client\".",
+          "example": "oauth2_client",
+          "type": "string"
+        },
+        "id": {
+          "description": "id is the unique identifier of the credential.",
+          "example": "9c81a1b2-3c4d-5e6f-7a8b-9c0d1e2f3a4b",
+          "readOnly": true,
+          "type": "string"
+        },
+        "last_used_at": {
+          "description": "last_used_at is when the credential last minted a token, if ever.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "name is an optional, non-unique, user-assigned label.",
+          "example": "prod-deploy",
+          "type": "string"
+        },
+        "oauth2": {
+          "$ref": "#/definitions/customerOAuth2Credential",
+          "description": "oauth2 holds the OAuth2 client fields (client_id only) for oauth2_client credentials.",
+          "readOnly": true
+        },
+        "principal": {
+          "$ref": "#/definitions/customerPrincipal",
+          "description": "principal is the owner of the credential.",
+          "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "customerServiceAccountCredentialWithSecret": {
+      "description": "ServiceAccountCredentialWithSecret is the credential returned by create. It mirrors\nServiceAccountCredential exactly, except its oauth2 block is OAuth2CredentialWithSecret so the\none-time client_secret is nested there. Keeping it distinct from the reusable\nServiceAccountCredential is what makes it impossible for get/list to carry a secret.\n\nLockstep: fields 1-8 here must mirror ServiceAccountCredential exactly (only the oauth2 block\ntype differs). Any field added/changed there must be mirrored here.",
+      "properties": {
+        "created_at": {
+          "description": "created_at is when the credential was created.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "created_by": {
+          "description": "created_by is the id of the customer who created the credential.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "credential_type": {
+          "description": "credential_type is the kind of credential, e.g. \"oauth2_client\".",
+          "example": "oauth2_client",
+          "type": "string"
+        },
+        "id": {
+          "description": "id is the unique identifier of the credential.",
+          "example": "9c81a1b2-3c4d-5e6f-7a8b-9c0d1e2f3a4b",
+          "readOnly": true,
+          "type": "string"
+        },
+        "last_used_at": {
+          "description": "last_used_at is when the credential last minted a token, if ever (null right after creation).",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "name is an optional, non-unique, user-assigned label.",
+          "example": "prod-deploy",
+          "type": "string"
+        },
+        "oauth2": {
+          "$ref": "#/definitions/customerOAuth2CredentialWithSecret",
+          "description": "oauth2 holds the OAuth2 client fields plus the one-time client_secret.",
+          "readOnly": true
+        },
+        "principal": {
+          "$ref": "#/definitions/customerPrincipal",
+          "description": "principal is the owner of the credential.",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -23064,6 +24368,13 @@
       "name": "Foundry",
       "tags": [
         "Foundry"
+      ]
+    },
+    {
+      "name": "IAM",
+      "tags": [
+        "Roles",
+        "RoleBindings"
       ]
     }
   ]

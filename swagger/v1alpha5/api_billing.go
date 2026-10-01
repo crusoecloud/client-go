@@ -27,7 +27,7 @@ var (
 type BillingApiService service
 
 /*
-BillingApiService Get the daily spend for a specified organization by project.
+BillingApiService Get the daily spend for a specified organization by project. Returns real-time data for Intelligence Billing (Serverless Inference + Serverless Fine Tuning).
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param organizationId
 
