@@ -1181,6 +1181,28 @@
             "name": "managed_by",
             "required": false,
             "type": "string"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "names filters by display name: an account matches when its name contains (case-insensitive) any\nof the given strings. Repeat the query parameter to pass several; omit to return all names.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "names",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "service_account_ids filters by id: an account matches when its id is any of the given UUIDs.\nRepeat the query parameter to pass several; omit to return all ids.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "service_account_ids",
+            "required": false,
+            "type": "array"
           }
         ],
         "responses": {

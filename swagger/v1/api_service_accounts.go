@@ -1185,14 +1185,18 @@ ServiceAccountsApiService List the service accounts in the organization.
      * @param "PageToken" (optional.String) -  page_token is the next_page_token from a previous response; empty requests the first page.
      * @param "Disabled" (optional.Bool) -  disabled filters by status: set true to return only disabled accounts, false for only enabled; omit to return both.
      * @param "ManagedBy" (optional.String) -  managed_by filters by type: \&quot;customer\&quot; or \&quot;crusoe\&quot;; omit to return both.
+     * @param "Names" (optional.Interface of []string) -  names filters by display name: an account matches when its name contains (case-insensitive) any of the given strings. Repeat the query parameter to pass several; omit to return all names.
+     * @param "ServiceAccountIds" (optional.Interface of []string) -  service_account_ids filters by id: an account matches when its id is any of the given UUIDs. Repeat the query parameter to pass several; omit to return all ids.
 @return CustomerListServiceAccountsResponse
 */
 
 type ServiceAccountsApiListServiceAccountsOpts struct {
-	PageSize  optional.Int32
-	PageToken optional.String
-	Disabled  optional.Bool
-	ManagedBy optional.String
+	PageSize          optional.Int32
+	PageToken         optional.String
+	Disabled          optional.Bool
+	ManagedBy         optional.String
+	Names             optional.Interface
+	ServiceAccountIds optional.Interface
 }
 
 func (a *ServiceAccountsApiService) ListServiceAccounts(ctx context.Context, orgId string, localVarOptionals *ServiceAccountsApiListServiceAccountsOpts) (CustomerListServiceAccountsResponse, *http.Response, error) {
@@ -1223,6 +1227,12 @@ func (a *ServiceAccountsApiService) ListServiceAccounts(ctx context.Context, org
 	}
 	if localVarOptionals != nil && localVarOptionals.ManagedBy.IsSet() {
 		localVarQueryParams.Add("managed_by", parameterToString(localVarOptionals.ManagedBy.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Names.IsSet() {
+		localVarQueryParams.Add("names", parameterToString(localVarOptionals.Names.Value(), "multi"))
+	}
+	if localVarOptionals != nil && localVarOptionals.ServiceAccountIds.IsSet() {
+		localVarQueryParams.Add("service_account_ids", parameterToString(localVarOptionals.ServiceAccountIds.Value(), "multi"))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
