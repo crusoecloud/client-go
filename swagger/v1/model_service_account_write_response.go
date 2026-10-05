@@ -8,7 +8,7 @@
  */
 package swagger
 
-// ServiceAccountWriteResponse is the representation of a service account returned by the write RPCs (Create, Update, Disable, Enable). It carries the account's own fields only. The read enrichments role_bindings and credential_summary are populated solely on Get and List, so they are omitted here rather than serialized as misleading empty arrays on a write response.  Lockstep: fields 1-9 here must mirror ServiceAccount fields 1-9 exactly. Any field added or changed on those must be mirrored here. The two messages diverge only in that ServiceAccount adds the role_bindings (10) and credential_summary (11) read enrichments.
+// ServiceAccountWriteResponse is the representation of a service account returned by the write RPCs (Create, Update, Disable, Enable). It carries the account's own fields only. The read enrichments role_bindings and credential_summary are populated solely on Get and List, so they are omitted here rather than serialized as misleading empty arrays on a write response.  Lockstep: fields 1-9 here must mirror ServiceAccount fields 1-9 exactly. Any field added or changed on those must be mirrored here. The two messages diverge only in that ServiceAccount adds the role_bindings (10) and credential_summary (11) read enrichments and the last_used_at (12) activity timestamp, none of which belong on a write response.
 type ServiceAccountWriteResponse struct {
 	// created_at is when the account was created.
 	CreatedAt string `json:"created_at"`

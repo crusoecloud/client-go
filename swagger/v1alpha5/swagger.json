@@ -21206,7 +21206,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ServiceAccountWriteResponse": {
-      "description": "ServiceAccountWriteResponse is the representation of a service account returned by the write RPCs\n(Create, Update, Disable, Enable). It carries the account's own fields only. The read enrichments\nrole_bindings and credential_summary are populated solely on Get and List, so they are omitted\nhere rather than serialized as misleading empty arrays on a write response.\n\nLockstep: fields 1-9 here must mirror ServiceAccount fields 1-9 exactly. Any field added or\nchanged on those must be mirrored here. The two messages diverge only in that ServiceAccount adds\nthe role_bindings (10) and credential_summary (11) read enrichments.",
+      "description": "ServiceAccountWriteResponse is the representation of a service account returned by the write RPCs\n(Create, Update, Disable, Enable). It carries the account's own fields only. The read enrichments\nrole_bindings and credential_summary are populated solely on Get and List, so they are omitted\nhere rather than serialized as misleading empty arrays on a write response.\n\nLockstep: fields 1-9 here must mirror ServiceAccount fields 1-9 exactly. Any field added or\nchanged on those must be mirrored here. The two messages diverge only in that ServiceAccount adds\nthe role_bindings (10) and credential_summary (11) read enrichments and the last_used_at (12)\nactivity timestamp, none of which belong on a write response.",
       "properties": {
         "created_at": {
           "description": "created_at is when the account was created.",
@@ -23090,6 +23090,12 @@
         "id": {
           "description": "id is the unique identifier of the service account.",
           "example": "178c38e1-4a2f-4b91-9c3d-8f21b3a4c76d",
+          "readOnly": true,
+          "type": "string"
+        },
+        "last_used_at": {
+          "description": "last_used_at (RFC3339) is when any of the account's credentials was last used, surviving\ncredential rotation/deletion. Unset until the account has been used. Useful for spotting\ninactive accounts.",
+          "example": "2026-03-25T10:00:00Z",
           "readOnly": true,
           "type": "string"
         },
