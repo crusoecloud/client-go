@@ -1187,6 +1187,7 @@ ServiceAccountsApiService List the service accounts in the organization.
      * @param "ManagedBy" (optional.String) -  managed_by filters by type: \&quot;customer\&quot; or \&quot;crusoe\&quot;; omit to return both.
      * @param "Names" (optional.Interface of []string) -  names filters by display name: an account matches when its name contains (case-insensitive) any of the given strings. Repeat the query parameter to pass several; omit to return all names.
      * @param "ServiceAccountIds" (optional.Interface of []string) -  service_account_ids filters by id: an account matches when its id is any of the given UUIDs. Repeat the query parameter to pass several; omit to return all ids.
+     * @param "OrderBy" (optional.String) -  order_by selects the sort order; defaults to newest first (created_at descending). Set SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC for most-recently-used first, or SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC for stale (never-used) first to find purge candidates.   - SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED: Default: newest first (created_at descending, with id descending as a stable tiebreaker).  - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC: Most recently used first; never-used accounts sort last.  - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC: Least recently used first, with never-used accounts first. For finding stale accounts to purge.
 @return CustomerListServiceAccountsResponse
 */
 
@@ -1197,6 +1198,7 @@ type ServiceAccountsApiListServiceAccountsOpts struct {
 	ManagedBy         optional.String
 	Names             optional.Interface
 	ServiceAccountIds optional.Interface
+	OrderBy           optional.String
 }
 
 func (a *ServiceAccountsApiService) ListServiceAccounts(ctx context.Context, orgId string, localVarOptionals *ServiceAccountsApiListServiceAccountsOpts) (CustomerListServiceAccountsResponse, *http.Response, error) {
@@ -1233,6 +1235,9 @@ func (a *ServiceAccountsApiService) ListServiceAccounts(ctx context.Context, org
 	}
 	if localVarOptionals != nil && localVarOptionals.ServiceAccountIds.IsSet() {
 		localVarQueryParams.Add("service_account_ids", parameterToString(localVarOptionals.ServiceAccountIds.Value(), "multi"))
+	}
+	if localVarOptionals != nil && localVarOptionals.OrderBy.IsSet() {
+		localVarQueryParams.Add("order_by", parameterToString(localVarOptionals.OrderBy.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}

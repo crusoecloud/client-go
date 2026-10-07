@@ -1203,6 +1203,19 @@
             "name": "service_account_ids",
             "required": false,
             "type": "array"
+          },
+          {
+            "default": "SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED",
+            "description": "order_by selects the sort order; defaults to newest first (created_at descending). Set\nSERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC for most-recently-used first, or\nSERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC for stale (never-used) first to find purge candidates.\n\n - SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED: Default: newest first (created_at descending, with id descending as a stable tiebreaker).\n - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC: Most recently used first; never-used accounts sort last.\n - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC: Least recently used first, with never-used accounts first. For finding stale accounts to purge.",
+            "enum": [
+              "SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED",
+              "SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC",
+              "SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC"
+            ],
+            "in": "query",
+            "name": "order_by",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -22866,7 +22879,7 @@
       "description": "ListServiceAccountsResponse is the response for listing service accounts.",
       "properties": {
         "items": {
-          "description": "items is the list of service accounts, newest first.",
+          "description": "items is the list of service accounts, ordered as requested by order_by (default: newest first).",
           "items": {
             "$ref": "#/definitions/customerServiceAccount",
             "type": "object"
