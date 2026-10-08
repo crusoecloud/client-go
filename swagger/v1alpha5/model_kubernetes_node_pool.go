@@ -45,10 +45,14 @@ type KubernetesNodePool struct {
 	PublicIpType string `json:"public_ip_type,omitempty"`
 	// ID of the billing reservation associated with the node pool.
 	ReservationId string `json:"reservation_id"`
+	// SSH public key installed on the node pool's VMs. Omitted when the node pool has none.
+	SshPublicKey string `json:"ssh_public_key,omitempty"`
 	// Current state of the node pool. One of STATE_UNSPECIFIED, STATE_PROVISIONING, STATE_RUNNING, STATE_RUNNING_WITH_ERROR, STATE_UPDATING, STATE_UPGRADING, STATE_ROTATING, STATE_DELETING, STATE_DELETED, or STATE_UNHEALTHY; new states may be added over time, so treat unknown values as display-only. STATE_RUNNING_WITH_ERROR means the pool is serving but could not reach its desired ready node count: a provisioning attempt failed and the shortfall is still outstanding, whether for capacity, quota, or a platform failure. Provisioning keeps retrying and health.issues says what is wrong; the pool returns to STATE_RUNNING once it reaches its desired count again. A pool below its desired count with no failed attempt behind it stays STATE_RUNNING.
 	State string `json:"state"`
 	// ID of the subnet the node pool belongs to.
 	SubnetId string `json:"subnet_id"`
+	// ID of the node pool's InfiniBand or RoCE partition. Omitted when the node pool has none.
+	TransportPartitionId string `json:"transport_partition_id,omitempty"`
 	// VM type of the node pool.
 	Type_          string                            `json:"type"`
 	UpdateSettings *KubernetesNodePoolUpdateSettings `json:"update_settings,omitempty"`

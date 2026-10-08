@@ -17205,6 +17205,12 @@
           "type": "string",
           "x-go-name": "ReservationID"
         },
+        "ssh_public_key": {
+          "description": "SSH public key installed on the node pool's VMs. Omitted when the node\npool has none.",
+          "example": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGk3b8x7Qm2pR9vT4uYwZ1aB6cD8eF0gH2iJ4kL6mN8o",
+          "type": "string",
+          "x-go-name": "SSHPublicKey"
+        },
         "state": {
           "description": "Current state of the node pool. One of STATE_UNSPECIFIED,\nSTATE_PROVISIONING, STATE_RUNNING, STATE_RUNNING_WITH_ERROR,\nSTATE_UPDATING, STATE_UPGRADING, STATE_ROTATING, STATE_DELETING,\nSTATE_DELETED, or STATE_UNHEALTHY; new states may be added over time, so\ntreat unknown values as display-only. STATE_RUNNING_WITH_ERROR means the\npool is serving but could not reach its desired ready node count: a\nprovisioning attempt failed and the shortfall is still outstanding,\nwhether for capacity, quota, or a platform failure. Provisioning keeps\nretrying and health.issues says what is wrong; the pool returns to\nSTATE_RUNNING once it reaches its desired count again. A pool below its\ndesired count with no failed attempt behind it stays STATE_RUNNING.",
           "enum": [
@@ -17228,6 +17234,12 @@
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "SubnetID"
+        },
+        "transport_partition_id": {
+          "description": "ID of the node pool's InfiniBand or RoCE partition. Omitted when the\nnode pool has none.",
+          "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653",
+          "type": "string",
+          "x-go-name": "TransportPartitionID"
         },
         "type": {
           "description": "VM type of the node pool.",
