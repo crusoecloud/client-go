@@ -16300,6 +16300,17 @@
           "type": "string",
           "x-go-name": "Configuration"
         },
+        "control_plane_generation": {
+          "description": "Generation of the control plane. 1 is the original CMK control plane; 2 is\nthe current generation. Omitted when unknown.",
+          "enum": [
+            1,
+            2
+          ],
+          "example": 2,
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "ControlPlaneGeneration"
+        },
         "controller_manager_extra_args": {
           "additionalProperties": {
             "type": "string"
