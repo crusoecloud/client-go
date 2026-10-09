@@ -1231,10 +1231,10 @@ func (a *ServiceAccountsApiService) ListServiceAccounts(ctx context.Context, org
 		localVarQueryParams.Add("managed_by", parameterToString(localVarOptionals.ManagedBy.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.Names.IsSet() {
-		localVarQueryParams.Add("names", parameterToString(localVarOptionals.Names.Value(), "multi"))
+		addQueryParamMulti(localVarQueryParams, "names", localVarOptionals.Names.Value())
 	}
 	if localVarOptionals != nil && localVarOptionals.ServiceAccountIds.IsSet() {
-		localVarQueryParams.Add("service_account_ids", parameterToString(localVarOptionals.ServiceAccountIds.Value(), "multi"))
+		addQueryParamMulti(localVarQueryParams, "service_account_ids", localVarOptionals.ServiceAccountIds.Value())
 	}
 	if localVarOptionals != nil && localVarOptionals.OrderBy.IsSet() {
 		localVarQueryParams.Add("order_by", parameterToString(localVarOptionals.OrderBy.Value(), ""))
