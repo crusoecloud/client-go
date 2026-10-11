@@ -663,3 +663,17 @@ func (e GenericSwaggerError) Body() []byte {
 func (e GenericSwaggerError) Model() interface{} {
 	return e.model
 }
+
+// addQueryParamMulti adds one query pair per slice element for collectionFormat "multi"
+// (?k=a&k=b), which grpc-gateway requires. swagger-codegen v3.0.42 does not generate this
+// correctly, so SDK generation rewrites "multi" call sites to use this helper.
+func addQueryParamMulti(q url.Values, name string, value interface{}) {
+	v := reflect.ValueOf(value)
+	if v.Kind() == reflect.Slice {
+		for i := 0; i < v.Len(); i++ {
+			q.Add(name, parameterToString(v.Index(i).Interface(), "multi"))
+		}
+		return
+	}
+	q.Add(name, parameterToString(value, "multi"))
+}

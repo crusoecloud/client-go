@@ -67,13 +67,13 @@ func (a *UsageApiService) GetUsage(ctx context.Context, orgId string, localVarOp
 	localVarFormParams := url.Values{}
 
 	if localVarOptionals != nil && localVarOptionals.Projects.IsSet() {
-		localVarQueryParams.Add("projects", parameterToString(localVarOptionals.Projects.Value(), "multi"))
+		addQueryParamMulti(localVarQueryParams, "projects", localVarOptionals.Projects.Value())
 	}
 	if localVarOptionals != nil && localVarOptionals.ResourceTypes.IsSet() {
-		localVarQueryParams.Add("resource_types", parameterToString(localVarOptionals.ResourceTypes.Value(), "multi"))
+		addQueryParamMulti(localVarQueryParams, "resource_types", localVarOptionals.ResourceTypes.Value())
 	}
 	if localVarOptionals != nil && localVarOptionals.Regions.IsSet() {
-		localVarQueryParams.Add("regions", parameterToString(localVarOptionals.Regions.Value(), "multi"))
+		addQueryParamMulti(localVarQueryParams, "regions", localVarOptionals.Regions.Value())
 	}
 	if localVarOptionals != nil && localVarOptionals.StartDate.IsSet() {
 		localVarQueryParams.Add("start_date", parameterToString(localVarOptionals.StartDate.Value(), ""))

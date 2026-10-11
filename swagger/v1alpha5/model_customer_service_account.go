@@ -22,6 +22,8 @@ type CustomerServiceAccount struct {
 	Disabled bool `json:"disabled"`
 	// id is the unique identifier of the service account.
 	Id string `json:"id"`
+	// last_used_at (RFC3339) is when any of the account's credentials was last used, surviving credential rotation/deletion. Unset until the account has been used. Useful for spotting inactive accounts.
+	LastUsedAt string `json:"last_used_at,omitempty"`
 	// managed_by indicates who owns the service account: \"customer\" or \"crusoe\". Customer-created accounts are always \"customer\"; \"crusoe\" accounts are read-only over this API.
 	ManagedBy string `json:"managed_by"`
 	// name is the user-assigned display name; immutable after creation.

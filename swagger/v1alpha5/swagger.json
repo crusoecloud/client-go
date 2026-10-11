@@ -1181,6 +1181,41 @@
             "name": "managed_by",
             "required": false,
             "type": "string"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "names filters by display name: an account matches when its name contains (case-insensitive) any\nof the given strings. Repeat the query parameter to pass several; omit to return all names.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "names",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "collectionFormat": "multi",
+            "description": "service_account_ids filters by id: an account matches when its id is any of the given UUIDs.\nRepeat the query parameter to pass several; omit to return all ids.",
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "service_account_ids",
+            "required": false,
+            "type": "array"
+          },
+          {
+            "default": "SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED",
+            "description": "order_by selects the sort order; defaults to newest first (created_at descending). Set\nSERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC for most-recently-used first, or\nSERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC for stale (never-used) first to find purge candidates.\n\n - SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED: Default: newest first (created_at descending, with id descending as a stable tiebreaker).\n - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC: Most recently used first; never-used accounts sort last.\n - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC: Least recently used first, with never-used accounts first. For finding stale accounts to purge.",
+            "enum": [
+              "SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED",
+              "SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC",
+              "SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC"
+            ],
+            "in": "query",
+            "name": "order_by",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -16265,6 +16300,17 @@
           "type": "string",
           "x-go-name": "Configuration"
         },
+        "control_plane_generation": {
+          "description": "Generation of the control plane. 1 is the original CMK control plane; 2 is\nthe current generation. Omitted when unknown.",
+          "enum": [
+            1,
+            2
+          ],
+          "example": 2,
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "ControlPlaneGeneration"
+        },
         "controller_manager_extra_args": {
           "additionalProperties": {
             "type": "string"
@@ -17159,6 +17205,12 @@
           "type": "string",
           "x-go-name": "ReservationID"
         },
+        "ssh_public_key": {
+          "description": "SSH public key installed on the node pool's VMs. Omitted when the node\npool has none.",
+          "example": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGk3b8x7Qm2pR9vT4uYwZ1aB6cD8eF0gH2iJ4kL6mN8o",
+          "type": "string",
+          "x-go-name": "SSHPublicKey"
+        },
         "state": {
           "description": "Current state of the node pool. One of STATE_UNSPECIFIED,\nSTATE_PROVISIONING, STATE_RUNNING, STATE_RUNNING_WITH_ERROR,\nSTATE_UPDATING, STATE_UPGRADING, STATE_ROTATING, STATE_DELETING,\nSTATE_DELETED, or STATE_UNHEALTHY; new states may be added over time, so\ntreat unknown values as display-only. STATE_RUNNING_WITH_ERROR means the\npool is serving but could not reach its desired ready node count: a\nprovisioning attempt failed and the shortfall is still outstanding,\nwhether for capacity, quota, or a platform failure. Provisioning keeps\nretrying and health.issues says what is wrong; the pool returns to\nSTATE_RUNNING once it reaches its desired count again. A pool below its\ndesired count with no failed attempt behind it stays STATE_RUNNING.",
           "enum": [
@@ -17182,6 +17234,12 @@
           "example": "09ae8411-0fbb-411c-898c-2b8f19622ae1",
           "type": "string",
           "x-go-name": "SubnetID"
+        },
+        "transport_partition_id": {
+          "description": "ID of the node pool's InfiniBand or RoCE partition. Omitted when the\nnode pool has none.",
+          "example": "b1f86d1b-42d2-490d-adb0-cc1029abf653",
+          "type": "string",
+          "x-go-name": "TransportPartitionID"
         },
         "type": {
           "description": "VM type of the node pool.",
@@ -21184,7 +21242,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ServiceAccountWriteResponse": {
-      "description": "ServiceAccountWriteResponse is the representation of a service account returned by the write RPCs\n(Create, Update, Disable, Enable). It carries the account's own fields only. The read enrichments\nrole_bindings and credential_summary are populated solely on Get and List, so they are omitted\nhere rather than serialized as misleading empty arrays on a write response.\n\nLockstep: fields 1-9 here must mirror ServiceAccount fields 1-9 exactly. Any field added or\nchanged on those must be mirrored here. The two messages diverge only in that ServiceAccount adds\nthe role_bindings (10) and credential_summary (11) read enrichments.",
+      "description": "ServiceAccountWriteResponse is the representation of a service account returned by the write RPCs\n(Create, Update, Disable, Enable). It carries the account's own fields only. The read enrichments\nrole_bindings and credential_summary are populated solely on Get and List, so they are omitted\nhere rather than serialized as misleading empty arrays on a write response.\n\nLockstep: fields 1-9 here must mirror ServiceAccount fields 1-9 exactly. Any field added or\nchanged on those must be mirrored here. The two messages diverge only in that ServiceAccount adds\nthe role_bindings (10) and credential_summary (11) read enrichments and the last_used_at (12)\nactivity timestamp, none of which belong on a write response.",
       "properties": {
         "created_at": {
           "description": "created_at is when the account was created.",
@@ -22844,7 +22902,7 @@
       "description": "ListServiceAccountsResponse is the response for listing service accounts.",
       "properties": {
         "items": {
-          "description": "items is the list of service accounts, newest first.",
+          "description": "items is the list of service accounts, ordered as requested by order_by (default: newest first).",
           "items": {
             "$ref": "#/definitions/customerServiceAccount",
             "type": "object"
@@ -23068,6 +23126,12 @@
         "id": {
           "description": "id is the unique identifier of the service account.",
           "example": "178c38e1-4a2f-4b91-9c3d-8f21b3a4c76d",
+          "readOnly": true,
+          "type": "string"
+        },
+        "last_used_at": {
+          "description": "last_used_at (RFC3339) is when any of the account's credentials was last used, surviving\ncredential rotation/deletion. Unset until the account has been used. Useful for spotting\ninactive accounts.",
+          "example": "2026-03-25T10:00:00Z",
           "readOnly": true,
           "type": "string"
         },

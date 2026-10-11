@@ -18,6 +18,8 @@ type KubernetesCluster struct {
 	ClusterCidr string `json:"cluster_cidr,omitempty"`
 	// Configuration setting of the Kubernetes cluster.
 	Configuration string `json:"configuration"`
+	// Generation of the control plane. 1 is the original CMK control plane; 2 is the current generation. Omitted when unknown.
+	ControlPlaneGeneration int32 `json:"control_plane_generation,omitempty"`
 	// Extra arguments passed to the kube-controller-manager control plane component.
 	ControllerManagerExtraArgs map[string]string `json:"controller_manager_extra_args,omitempty"`
 	// Creation timestamp of the cluster, in RFC3339 format.
