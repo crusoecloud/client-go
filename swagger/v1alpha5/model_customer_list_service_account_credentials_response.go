@@ -10,7 +10,7 @@ package swagger
 
 // ListServiceAccountCredentialsResponse is the response for listing credentials.
 type CustomerListServiceAccountCredentialsResponse struct {
-	// items is the list of credentials, newest first. Secrets are never included.
+	// items is the list of credentials, ordered as requested by order_by (default: newest first). Secrets are never included.
 	Items []CustomerServiceAccountCredential `json:"items,omitempty"`
 	// next_page_token is the token for the next page; empty when there are no more results.
 	NextPageToken string `json:"next_page_token,omitempty"`
