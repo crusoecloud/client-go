@@ -13,6 +13,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/crusoecloud/client-go/internal/credentials"
 	swagger "github.com/crusoecloud/client-go/swagger/v1alpha5"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
@@ -309,4 +310,88 @@ func NewServiceAccountConfig(ctx context.Context, clientID, clientSecret, tokenU
 	}).Client(ctxWithDefaultHTTPClient(ctx))
 
 	return cfg, nil
+}
+
+// Option configures credential resolution for NewDefaultConfig and NewDefaultAPIClient.
+type Option func(*credentials.Options)
+
+// WithCredentials sets an explicit access key/secret key pair, taking precedence over
+// environment variables and the config file.
+func WithCredentials(accessKey, secret string) Option {
+	return func(o *credentials.Options) {
+		o.AccessKeyID = accessKey
+		o.SecretKey = secret
+	}
+}
+
+// WithServiceAccountCredentials sets explicit service account OAuth2 credentials, taking
+// precedence over environment variables and the config file. tokenURL and audience may be left
+// empty to use their defaults.
+func WithServiceAccountCredentials(clientID, clientSecret, tokenURL, audience string) Option {
+	return func(o *credentials.Options) {
+		o.ServiceAccountClientID = clientID
+		o.ServiceAccountClientSecret = clientSecret
+		o.ServiceAccountTokenURL = tokenURL
+		o.ServiceAccountAudience = audience
+	}
+}
+
+// WithProfile selects a named profile from the config file, overriding CRUSOE_PROFILE and the
+// config file's own top-level profile key.
+func WithProfile(name string) Option {
+	return func(o *credentials.Options) {
+		o.Profile = name
+	}
+}
+
+// WithConfigPath overrides the default ~/.crusoe/config path. Use this when the process has no
+// mounted home directory, e.g. a Kubernetes pod reading credentials from a mounted Secret.
+func WithConfigPath(path string) Option {
+	return func(o *credentials.Options) {
+		o.ConfigPath = path
+	}
+}
+
+// NewDefaultConfig resolves credentials in this order: explicit options passed here, then
+// CRUSOE_* environment variables, then ~/.crusoe/config, returning an error if neither a
+// complete access-key/secret-key pair nor a complete service-account client ID/secret pair is
+// found, or if both are found at once.
+//
+// The resulting *swagger.Configuration is built the same way NewAuthenticatedConfig or
+// NewServiceAccountConfig would build it; this only adds credential resolution on top.
+func NewDefaultConfig(ctx context.Context, opts ...Option) (*swagger.Configuration, error) {
+	var resolveOpts credentials.Options
+	for _, opt := range opts {
+		opt(&resolveOpts)
+	}
+
+	cfg, loadErr := credentials.LoadConfigWithOptions(&resolveOpts)
+
+	method, err := credentials.ResolveAuthMethod(cfg)
+	if err != nil {
+		return nil, fmt.Errorf("resolving default credentials: %w", errors.Join(err, loadErr))
+	}
+
+	switch method {
+	case credentials.AuthMethodServiceAccount:
+		return NewServiceAccountConfig(ctx, cfg.ServiceAccountClientID, cfg.ServiceAccountClientSecret,
+			cfg.ServiceAccountTokenURL, cfg.ServiceAccountAudience)
+	case credentials.AuthMethodAPIKey:
+		return NewAuthenticatedConfig(cfg.AccessKeyID, cfg.SecretKey), nil
+	case credentials.AuthMethodUnknown:
+	}
+
+	// Unreachable: ResolveAuthMethod only returns AuthMethodUnknown alongside a non-nil error,
+	// already handled above.
+	return nil, fmt.Errorf("resolving default credentials: %w", credentials.ErrMissingCredentials)
+}
+
+// NewDefaultAPIClient is NewDefaultConfig, wrapped in a ready-to-use *swagger.APIClient.
+func NewDefaultAPIClient(ctx context.Context, opts ...Option) (*swagger.APIClient, error) {
+	cfg, err := NewDefaultConfig(ctx, opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	return swagger.NewAPIClient(cfg), nil
 }

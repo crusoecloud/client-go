@@ -3,14 +3,18 @@ package auth
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"strings"
 	"sync/atomic"
 	"testing"
 	"time"
 
+	"github.com/crusoecloud/client-go/internal/credentials"
 	"golang.org/x/oauth2"
 )
 
@@ -373,5 +377,191 @@ func TestNewServiceAccountConfig_DefaultHTTPClientTimesOutOnAWedgedConnection(t 
 	if got := atomic.LoadInt32(&tokenRequests); got != 1 {
 		t.Fatalf("expected exactly 1 token request (AuthStyle set explicitly), got %d - "+
 			"did AuthStyle regress to auto-detecting on every call?", got)
+	}
+}
+
+var defaultConfigEnvVars = []string{
+	"CRUSOE_PROFILE",
+	"CRUSOE_ACCESS_KEY_ID",
+	"CRUSOE_SECRET_KEY",
+	"CRUSOE_SERVICE_ACCOUNT_CLIENT_ID",
+	"CRUSOE_SERVICE_ACCOUNT_CLIENT_SECRET",
+	"CRUSOE_SERVICE_ACCOUNT_TOKEN_URL",
+	"CRUSOE_SERVICE_ACCOUNT_AUDIENCE",
+}
+
+// clearDefaultConfigEnvVars unsets every CRUSOE_* env var for the duration of the test, restoring
+// whatever was previously set via t.Cleanup, and returns a nonexistent config path so these tests
+// never read a real ~/.crusoe/config on the machine running them.
+func clearDefaultConfigEnvVars(t *testing.T) string {
+	t.Helper()
+
+	for _, name := range defaultConfigEnvVars {
+		original, had := os.LookupEnv(name)
+		t.Cleanup(func() {
+			if had {
+				os.Setenv(name, original) //nolint:errcheck,usetesting // best-effort restore in cleanup
+			} else {
+				os.Unsetenv(name) //nolint:errcheck,usetesting // best-effort restore in cleanup
+			}
+		})
+		os.Unsetenv(name) //nolint:errcheck,usetesting // clearing for test isolation
+	}
+
+	return filepath.Join(t.TempDir(), "does-not-exist")
+}
+
+func TestNewDefaultConfig_APIKeyFromOptions(t *testing.T) {
+	configPath := clearDefaultConfigEnvVars(t)
+
+	cfg, err := NewDefaultConfig(context.Background(),
+		WithCredentials("explicit-key", "explicit-secret"), WithConfigPath(configPath))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	transport, ok := cfg.HTTPClient.Transport.(AuthenticatingTransport)
+	if !ok {
+		t.Fatalf("expected an AuthenticatingTransport, got %T", cfg.HTTPClient.Transport)
+	}
+	if transport.keyID != "explicit-key" || transport.secretKey != "explicit-secret" {
+		t.Fatalf("expected explicit credentials to be used, got keyID=%q", transport.keyID)
+	}
+}
+
+func TestNewDefaultConfig_APIKeyFromEnv(t *testing.T) {
+	configPath := clearDefaultConfigEnvVars(t)
+	os.Setenv("CRUSOE_ACCESS_KEY_ID", "env-key") //nolint:usetesting // explicit var for this test's assertion
+	os.Setenv("CRUSOE_SECRET_KEY", "env-secret") //nolint:usetesting // explicit var for this test's assertion
+
+	cfg, err := NewDefaultConfig(context.Background(), WithConfigPath(configPath))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	transport, ok := cfg.HTTPClient.Transport.(AuthenticatingTransport)
+	if !ok {
+		t.Fatalf("expected an AuthenticatingTransport, got %T", cfg.HTTPClient.Transport)
+	}
+	if transport.keyID != "env-key" || transport.secretKey != "env-secret" {
+		t.Fatalf("expected env credentials to be used, got keyID=%q", transport.keyID)
+	}
+}
+
+func TestNewDefaultConfig_ServiceAccountFromOptions(t *testing.T) {
+	configPath := clearDefaultConfigEnvVars(t)
+
+	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"access_token": "test-access-token",
+			"token_type":   "Bearer",
+			"expires_in":   3600,
+		})
+	}))
+	defer tokenServer.Close()
+
+	cfg, err := NewDefaultConfig(tokenServerContext(tokenServer),
+		WithServiceAccountCredentials("test-client-id", "test-client-secret", tokenServer.URL, "test-audience"),
+		WithConfigPath(configPath))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	apiServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	}))
+	defer apiServer.Close()
+
+	resp, err := cfg.HTTPClient.Get(apiServer.URL)
+	if err != nil {
+		t.Fatalf("request via resolved client failed: %v", err)
+	}
+	defer resp.Body.Close()
+}
+
+func TestNewDefaultConfig_ServiceAccountFromConfigFile(t *testing.T) {
+	clearDefaultConfigEnvVars(t)
+
+	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"access_token": "test-access-token",
+			"token_type":   "Bearer",
+			"expires_in":   3600,
+		})
+	}))
+	defer tokenServer.Close()
+
+	configPath := filepath.Join(t.TempDir(), "config")
+	configContent := fmt.Sprintf(`
+[default]
+service_account_client_id = "file-client-id"
+service_account_client_secret = "file-client-secret"
+service_account_token_url = %q
+service_account_audience = "test-audience"
+`, tokenServer.URL)
+	if err := os.WriteFile(configPath, []byte(configContent), 0o600); err != nil {
+		t.Fatalf("failed to write temp config: %v", err)
+	}
+
+	cfg, err := NewDefaultConfig(tokenServerContext(tokenServer), WithConfigPath(configPath))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg == nil {
+		t.Fatal("expected a non-nil Configuration")
+	}
+}
+
+func TestNewDefaultConfig_ConflictingCredentialsReturnsError(t *testing.T) {
+	configPath := clearDefaultConfigEnvVars(t)
+
+	_, err := NewDefaultConfig(context.Background(),
+		WithCredentials("key", "secret"),
+		WithServiceAccountCredentials("client-id", "client-secret", "", ""),
+		WithConfigPath(configPath))
+	if !errors.Is(err, credentials.ErrConflictingCredentials) {
+		t.Fatalf("expected ErrConflictingCredentials, got: %v", err)
+	}
+}
+
+func TestNewDefaultConfig_MissingCredentialsReturnsError(t *testing.T) {
+	configPath := clearDefaultConfigEnvVars(t)
+
+	_, err := NewDefaultConfig(context.Background(), WithConfigPath(configPath))
+	if !errors.Is(err, credentials.ErrMissingCredentials) {
+		t.Fatalf("expected ErrMissingCredentials, got: %v", err)
+	}
+}
+
+func TestNewDefaultConfig_ProfileSelection(t *testing.T) {
+	clearDefaultConfigEnvVars(t)
+
+	configPath := filepath.Join(t.TempDir(), "config")
+	configContent := `
+[production]
+access_key_id = "prod-key"
+secret_key = "prod-secret"
+
+[staging]
+access_key_id = "staging-key"
+secret_key = "staging-secret"
+`
+	if err := os.WriteFile(configPath, []byte(configContent), 0o600); err != nil {
+		t.Fatalf("failed to write temp config: %v", err)
+	}
+
+	cfg, err := NewDefaultConfig(context.Background(), WithConfigPath(configPath), WithProfile("staging"))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	transport, ok := cfg.HTTPClient.Transport.(AuthenticatingTransport)
+	if !ok {
+		t.Fatalf("expected an AuthenticatingTransport, got %T", cfg.HTTPClient.Transport)
+	}
+	if transport.keyID != "staging-key" || transport.secretKey != "staging-secret" {
+		t.Fatalf("expected staging profile credentials, got keyID=%q", transport.keyID)
 	}
 }
