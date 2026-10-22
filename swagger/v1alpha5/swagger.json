@@ -17178,6 +17178,17 @@
           "type": "object",
           "x-go-name": "NodeLabels"
         },
+        "node_pool_generation": {
+          "description": "Generation of the node pool.",
+          "enum": [
+            1,
+            2
+          ],
+          "example": 2,
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "NodePoolGeneration"
+        },
         "node_taints": {
           "description": "Taints applied to nodes in the node pool.",
           "example": [

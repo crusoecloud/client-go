@@ -35,6 +35,8 @@ type KubernetesNodePool struct {
 	Name string `json:"name"`
 	// Labels assigned to nodes in the node pool.
 	NodeLabels map[string]string `json:"node_labels"`
+	// Generation of the node pool.
+	NodePoolGeneration int32 `json:"node_pool_generation,omitempty"`
 	// Taints applied to nodes in the node pool.
 	NodeTaints []KubernetesNodeTaint `json:"node_taints"`
 	// NVLink domain ID assigned to the node pool.
