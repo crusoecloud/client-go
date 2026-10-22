@@ -17,22 +17,12 @@ var crusoeEnvVars = []string{
 	"CRUSOE_SERVICE_ACCOUNT_AUDIENCE",
 }
 
-// clearCrusoeEnvVars unsets every CRUSOE_* env var for the duration of the test, restoring
-// whatever was previously set (if anything) via t.Cleanup. Prevents a developer's real shell
-// environment (or CI secrets) from leaking into these tests.
 func clearCrusoeEnvVars(t *testing.T) {
 	t.Helper()
 
 	for _, name := range crusoeEnvVars {
-		original, had := os.LookupEnv(name)
-		t.Cleanup(func() {
-			if had {
-				os.Setenv(name, original) //nolint:errcheck,usetesting // best-effort restore in cleanup
-			} else {
-				os.Unsetenv(name) //nolint:errcheck,usetesting // best-effort restore in cleanup
-			}
-		})
-		os.Unsetenv(name) //nolint:errcheck,usetesting // clearing for test isolation
+		t.Setenv(name, "")
+		os.Unsetenv(name) //nolint:errcheck,usetesting
 	}
 }
 
@@ -80,6 +70,8 @@ secret_key = "opts-profile-secret"
 
 	t.Run("CRUSOE_PROFILE env overrides config file profile key", func(t *testing.T) {
 		os.Setenv("CRUSOE_PROFILE", "from-env") //nolint:usetesting // explicit var for the test's own env-precedence assertion
+		defer os.Unsetenv("CRUSOE_PROFILE")     //nolint:errcheck,usetesting // cleanup after subtest
+
 		cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath})
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
@@ -87,7 +79,6 @@ secret_key = "opts-profile-secret"
 		if cfg.ProfileName != "from-env" || cfg.AccessKeyID != "env-profile-key" {
 			t.Fatalf("expected profile from-env/env-profile-key, got %+v", cfg)
 		}
-		os.Unsetenv("CRUSOE_PROFILE") //nolint:errcheck,usetesting // reset before next subtest
 	})
 
 	t.Run("opts.Profile overrides both env and config file", func(t *testing.T) {

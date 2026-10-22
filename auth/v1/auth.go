@@ -369,7 +369,12 @@ func NewDefaultConfig(ctx context.Context, opts ...Option) (*swagger.Configurati
 
 	method, err := credentials.ResolveAuthMethod(cfg)
 	if err != nil {
-		return nil, fmt.Errorf("resolving default credentials: %w", errors.Join(err, loadErr))
+		if loadErr != nil {
+			//nolint:errorlint // loadErr is advisory text, not a sentinel to match via errors.Is/As
+			return nil, fmt.Errorf("resolving default credentials: %w (config load: %v)", err, loadErr)
+		}
+
+		return nil, fmt.Errorf("resolving default credentials: %w", err)
 	}
 
 	switch method {

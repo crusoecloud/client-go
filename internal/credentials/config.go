@@ -6,6 +6,7 @@
 package credentials
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -110,7 +111,7 @@ func LoadConfigWithOptions(opts *Options) (*Config, error) {
 	} else if _, err := toml.DecodeFile(configPath, &rawData); err != nil {
 		// Missing/invalid config file is non-fatal - credentials can come from env vars or
 		// explicit options alone.
-		if !os.IsNotExist(err) {
+		if !errors.Is(err, os.ErrNotExist) {
 			advisoryErr = fmt.Errorf("error reading config file at %s: %w", configPath, err)
 		}
 		rawData = make(map[string]interface{})

@@ -390,22 +390,12 @@ var defaultConfigEnvVars = []string{
 	"CRUSOE_SERVICE_ACCOUNT_AUDIENCE",
 }
 
-// clearDefaultConfigEnvVars unsets every CRUSOE_* env var for the duration of the test, restoring
-// whatever was previously set via t.Cleanup, and returns a nonexistent config path so these tests
-// never read a real ~/.crusoe/config on the machine running them.
 func clearDefaultConfigEnvVars(t *testing.T) string {
 	t.Helper()
 
 	for _, name := range defaultConfigEnvVars {
-		original, had := os.LookupEnv(name)
-		t.Cleanup(func() {
-			if had {
-				os.Setenv(name, original) //nolint:errcheck,usetesting // best-effort restore in cleanup
-			} else {
-				os.Unsetenv(name) //nolint:errcheck,usetesting // best-effort restore in cleanup
-			}
-		})
-		os.Unsetenv(name) //nolint:errcheck,usetesting // clearing for test isolation
+		t.Setenv(name, "")
+		os.Unsetenv(name) //nolint:errcheck,usetesting
 	}
 
 	return filepath.Join(t.TempDir(), "does-not-exist")
@@ -431,8 +421,8 @@ func TestNewDefaultConfig_APIKeyFromOptions(t *testing.T) {
 
 func TestNewDefaultConfig_APIKeyFromEnv(t *testing.T) {
 	configPath := clearDefaultConfigEnvVars(t)
-	os.Setenv("CRUSOE_ACCESS_KEY_ID", "env-key") //nolint:usetesting // explicit var for this test's assertion
-	os.Setenv("CRUSOE_SECRET_KEY", "env-secret") //nolint:usetesting // explicit var for this test's assertion
+	t.Setenv("CRUSOE_ACCESS_KEY_ID", "env-key")
+	t.Setenv("CRUSOE_SECRET_KEY", "env-secret")
 
 	cfg, err := NewDefaultConfig(context.Background(), WithConfigPath(configPath))
 	if err != nil {
