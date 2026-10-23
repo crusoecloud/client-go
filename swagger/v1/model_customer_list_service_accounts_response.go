@@ -10,7 +10,7 @@ package swagger
 
 // ListServiceAccountsResponse is the response for listing service accounts.
 type CustomerListServiceAccountsResponse struct {
-	// items is the list of service accounts, ordered as requested by order_by (default: newest first).
+	// items is the list of service accounts, ordered as requested by order_by (default: most recently modified first).
 	Items []CustomerServiceAccount `json:"items,omitempty"`
 	// next_page_token is the token for the next page; empty when there are no more results.
 	NextPageToken string `json:"next_page_token,omitempty"`

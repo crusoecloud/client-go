@@ -1206,11 +1206,15 @@
           },
           {
             "default": "SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED",
-            "description": "order_by selects the sort order; defaults to newest first (created_at descending). Set\nSERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC for most-recently-used first, or\nSERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC for stale (never-used) first to find purge candidates.\n\n - SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED: Default: newest first (created_at descending, with id descending as a stable tiebreaker).\n - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC: Most recently used first; never-used accounts sort last.\n - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC: Least recently used first, with never-used accounts first. For finding stale accounts to purge.",
+            "description": "order_by selects the sort order; defaults to most recently modified first (updated_at\ndescending). Set SERVICE_ACCOUNT_ORDER_BY_CREATED_AT_DESC for newest-created first,\nSERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC for most-recently-used first, or\nSERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC for stale (never-used) first to find purge candidates.\n\n - SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED: Default: most recently modified first (updated_at descending, id descending tiebreaker). A newly\ncreated or just-edited account surfaces at the top of the default view.\n - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC: Most recently used first; never-used accounts sort last.\n - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC: Least recently used first, with never-used accounts first. For finding stale accounts to purge.\n - SERVICE_ACCOUNT_ORDER_BY_UPDATED_AT_DESC: Most recently modified first (updated_at descending). Same as the UNSPECIFIED default, explicit.\n - SERVICE_ACCOUNT_ORDER_BY_UPDATED_AT_ASC: Least recently modified first (updated_at ascending).\n - SERVICE_ACCOUNT_ORDER_BY_CREATED_AT_DESC: Newest first (created_at descending). The historical default.\n - SERVICE_ACCOUNT_ORDER_BY_CREATED_AT_ASC: Oldest first (created_at ascending).",
             "enum": [
               "SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED",
               "SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC",
-              "SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC"
+              "SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC",
+              "SERVICE_ACCOUNT_ORDER_BY_UPDATED_AT_DESC",
+              "SERVICE_ACCOUNT_ORDER_BY_UPDATED_AT_ASC",
+              "SERVICE_ACCOUNT_ORDER_BY_CREATED_AT_DESC",
+              "SERVICE_ACCOUNT_ORDER_BY_CREATED_AT_ASC"
             ],
             "in": "query",
             "name": "order_by",
@@ -1520,6 +1524,20 @@
             "description": "page_token is the next_page_token from a previous response; empty requests the first page.",
             "in": "query",
             "name": "page_token",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "default": "CREDENTIAL_ORDER_BY_UNSPECIFIED",
+            "description": "order_by selects the sort order; defaults to newest first (created_at descending). Set\nCREDENTIAL_ORDER_BY_LAST_USED_AT_DESC for most-recently-used first, or\nCREDENTIAL_ORDER_BY_LAST_USED_AT_ASC for stale (never-used) first.\n\n - CREDENTIAL_ORDER_BY_UNSPECIFIED: Default: newest first (created_at descending, with id descending as a stable tiebreaker).\n - CREDENTIAL_ORDER_BY_CREATED_AT_ASC: Oldest first (created_at ascending).\n - CREDENTIAL_ORDER_BY_LAST_USED_AT_DESC: Most recently used first; never-used credentials sort last.\n - CREDENTIAL_ORDER_BY_LAST_USED_AT_ASC: Least recently used first, with never-used credentials first. For finding stale credentials.",
+            "enum": [
+              "CREDENTIAL_ORDER_BY_UNSPECIFIED",
+              "CREDENTIAL_ORDER_BY_CREATED_AT_ASC",
+              "CREDENTIAL_ORDER_BY_LAST_USED_AT_DESC",
+              "CREDENTIAL_ORDER_BY_LAST_USED_AT_ASC"
+            ],
+            "in": "query",
+            "name": "order_by",
             "required": false,
             "type": "string"
           }
@@ -17160,6 +17178,17 @@
           "type": "object",
           "x-go-name": "NodeLabels"
         },
+        "node_pool_generation": {
+          "description": "Generation of the node pool.",
+          "enum": [
+            1,
+            2
+          ],
+          "example": 2,
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "NodePoolGeneration"
+        },
         "node_taints": {
           "description": "Taints applied to nodes in the node pool.",
           "example": [
@@ -22882,7 +22911,7 @@
       "description": "ListServiceAccountCredentialsResponse is the response for listing credentials.",
       "properties": {
         "items": {
-          "description": "items is the list of credentials, newest first. Secrets are never included.",
+          "description": "items is the list of credentials, ordered as requested by order_by (default: newest first).\nSecrets are never included.",
           "items": {
             "$ref": "#/definitions/customerServiceAccountCredential",
             "type": "object"
@@ -22902,7 +22931,7 @@
       "description": "ListServiceAccountsResponse is the response for listing service accounts.",
       "properties": {
         "items": {
-          "description": "items is the list of service accounts, ordered as requested by order_by (default: newest first).",
+          "description": "items is the list of service accounts, ordered as requested by order_by (default: most recently\nmodified first).",
           "items": {
             "$ref": "#/definitions/customerServiceAccount",
             "type": "object"

@@ -1032,12 +1032,14 @@ ServiceAccountsApiService List a service account&#x27;s credentials.
  * @param optional nil or *ServiceAccountsApiListServiceAccountCredentialsOpts - Optional Parameters:
      * @param "PageSize" (optional.Int32) -  page_size is the maximum number of results to return; the server may return fewer. When 0 the server chooses a default.
      * @param "PageToken" (optional.String) -  page_token is the next_page_token from a previous response; empty requests the first page.
+     * @param "OrderBy" (optional.String) -  order_by selects the sort order; defaults to newest first (created_at descending). Set CREDENTIAL_ORDER_BY_LAST_USED_AT_DESC for most-recently-used first, or CREDENTIAL_ORDER_BY_LAST_USED_AT_ASC for stale (never-used) first.   - CREDENTIAL_ORDER_BY_UNSPECIFIED: Default: newest first (created_at descending, with id descending as a stable tiebreaker).  - CREDENTIAL_ORDER_BY_CREATED_AT_ASC: Oldest first (created_at ascending).  - CREDENTIAL_ORDER_BY_LAST_USED_AT_DESC: Most recently used first; never-used credentials sort last.  - CREDENTIAL_ORDER_BY_LAST_USED_AT_ASC: Least recently used first, with never-used credentials first. For finding stale credentials.
 @return CustomerListServiceAccountCredentialsResponse
 */
 
 type ServiceAccountsApiListServiceAccountCredentialsOpts struct {
 	PageSize  optional.Int32
 	PageToken optional.String
+	OrderBy   optional.String
 }
 
 func (a *ServiceAccountsApiService) ListServiceAccountCredentials(ctx context.Context, orgId string, serviceAccountId string, localVarOptionals *ServiceAccountsApiListServiceAccountCredentialsOpts) (CustomerListServiceAccountCredentialsResponse, *http.Response, error) {
@@ -1063,6 +1065,9 @@ func (a *ServiceAccountsApiService) ListServiceAccountCredentials(ctx context.Co
 	}
 	if localVarOptionals != nil && localVarOptionals.PageToken.IsSet() {
 		localVarQueryParams.Add("page_token", parameterToString(localVarOptionals.PageToken.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.OrderBy.IsSet() {
+		localVarQueryParams.Add("order_by", parameterToString(localVarOptionals.OrderBy.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
@@ -1187,7 +1192,7 @@ ServiceAccountsApiService List the service accounts in the organization.
      * @param "ManagedBy" (optional.String) -  managed_by filters by type: \&quot;customer\&quot; or \&quot;crusoe\&quot;; omit to return both.
      * @param "Names" (optional.Interface of []string) -  names filters by display name: an account matches when its name contains (case-insensitive) any of the given strings. Repeat the query parameter to pass several; omit to return all names.
      * @param "ServiceAccountIds" (optional.Interface of []string) -  service_account_ids filters by id: an account matches when its id is any of the given UUIDs. Repeat the query parameter to pass several; omit to return all ids.
-     * @param "OrderBy" (optional.String) -  order_by selects the sort order; defaults to newest first (created_at descending). Set SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC for most-recently-used first, or SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC for stale (never-used) first to find purge candidates.   - SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED: Default: newest first (created_at descending, with id descending as a stable tiebreaker).  - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC: Most recently used first; never-used accounts sort last.  - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC: Least recently used first, with never-used accounts first. For finding stale accounts to purge.
+     * @param "OrderBy" (optional.String) -  order_by selects the sort order; defaults to most recently modified first (updated_at descending). Set SERVICE_ACCOUNT_ORDER_BY_CREATED_AT_DESC for newest-created first, SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC for most-recently-used first, or SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC for stale (never-used) first to find purge candidates.   - SERVICE_ACCOUNT_ORDER_BY_UNSPECIFIED: Default: most recently modified first (updated_at descending, id descending tiebreaker). A newly created or just-edited account surfaces at the top of the default view.  - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_DESC: Most recently used first; never-used accounts sort last.  - SERVICE_ACCOUNT_ORDER_BY_LAST_USED_AT_ASC: Least recently used first, with never-used accounts first. For finding stale accounts to purge.  - SERVICE_ACCOUNT_ORDER_BY_UPDATED_AT_DESC: Most recently modified first (updated_at descending). Same as the UNSPECIFIED default, explicit.  - SERVICE_ACCOUNT_ORDER_BY_UPDATED_AT_ASC: Least recently modified first (updated_at ascending).  - SERVICE_ACCOUNT_ORDER_BY_CREATED_AT_DESC: Newest first (created_at descending). The historical default.  - SERVICE_ACCOUNT_ORDER_BY_CREATED_AT_ASC: Oldest first (created_at ascending).
 @return CustomerListServiceAccountsResponse
 */
 
