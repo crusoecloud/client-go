@@ -5,6 +5,23 @@ import (
 	"testing"
 )
 
+func TestAuthCandidatesInvariants(t *testing.T) {
+	seen := make(map[AuthMethod]bool)
+	for _, c := range authCandidates {
+		if c.complete == nil {
+			t.Fatalf("authCandidate for method %v has a nil complete check", c.method)
+		}
+		if c.partial != nil && c.incompleteErr == nil {
+			t.Fatalf("authCandidate for method %v has a partial check but no incompleteErr; "+
+				"ResolveAuthMethod would return (AuthMethodUnknown, nil) for a partial match", c.method)
+		}
+		if seen[c.method] {
+			t.Fatalf("authCandidates has more than one entry for method %v", c.method)
+		}
+		seen[c.method] = true
+	}
+}
+
 func TestResolveAuthMethod(t *testing.T) {
 	tests := []struct {
 		name    string
@@ -23,8 +40,8 @@ func TestResolveAuthMethod(t *testing.T) {
 			cfg: Config{
 				ServiceAccountClientID:     "id",
 				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     defaultServiceAccountTokenURL,
-				ServiceAccountAudience:     defaultServiceAccountAudience,
+				ServiceAccountTokenURL:     DefaultServiceAccountTokenURL,
+				ServiceAccountAudience:     DefaultServiceAccountAudience,
 			},
 			want:    AuthMethodServiceAccount,
 			wantErr: nil,
@@ -41,8 +58,8 @@ func TestResolveAuthMethod(t *testing.T) {
 				AccessKeyID: "key", SecretKey: "secret",
 				ServiceAccountClientID:     "id",
 				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     defaultServiceAccountTokenURL,
-				ServiceAccountAudience:     defaultServiceAccountAudience,
+				ServiceAccountTokenURL:     DefaultServiceAccountTokenURL,
+				ServiceAccountAudience:     DefaultServiceAccountAudience,
 			},
 			want:    AuthMethodUnknown,
 			wantErr: ErrConflictingCredentials,
@@ -95,8 +112,8 @@ func TestResolveAuthMethod(t *testing.T) {
 				AccessKeyID:                "key",
 				ServiceAccountClientID:     "id",
 				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     defaultServiceAccountTokenURL,
-				ServiceAccountAudience:     defaultServiceAccountAudience,
+				ServiceAccountTokenURL:     DefaultServiceAccountTokenURL,
+				ServiceAccountAudience:     DefaultServiceAccountAudience,
 			},
 			want:    AuthMethodUnknown,
 			wantErr: ErrIncompleteAPIKeyCredentials,
@@ -107,7 +124,7 @@ func TestResolveAuthMethod(t *testing.T) {
 				ServiceAccountClientID:     "id",
 				ServiceAccountClientSecret: "secret",
 				ServiceAccountTokenURL:     "https://auth.example.com/oauth2/token",
-				ServiceAccountAudience:     defaultServiceAccountAudience,
+				ServiceAccountAudience:     DefaultServiceAccountAudience,
 			},
 			want:    AuthMethodUnknown,
 			wantErr: ErrMismatchedServiceAccountEnvironment,
@@ -117,7 +134,7 @@ func TestResolveAuthMethod(t *testing.T) {
 			cfg: Config{
 				ServiceAccountClientID:     "id",
 				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     defaultServiceAccountTokenURL,
+				ServiceAccountTokenURL:     DefaultServiceAccountTokenURL,
 				ServiceAccountAudience:     "https://api.example.com",
 			},
 			want:    AuthMethodUnknown,
@@ -148,8 +165,8 @@ func TestResolveAuthMethod(t *testing.T) {
 			cfg: Config{
 				ServiceAccountClientID:     "id",
 				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     defaultServiceAccountTokenURL,
-				ServiceAccountAudience:     defaultServiceAccountAudience,
+				ServiceAccountTokenURL:     DefaultServiceAccountTokenURL,
+				ServiceAccountAudience:     DefaultServiceAccountAudience,
 			},
 			want:    AuthMethodServiceAccount,
 			wantErr: nil,

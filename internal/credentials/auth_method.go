@@ -42,60 +42,101 @@ var (
 		"service account token URL and audience must both be set together when overriding either from its default")
 )
 
+type authCandidate struct {
+	method        AuthMethod
+	complete      func(cfg *Config) bool
+	partial       func(cfg *Config) bool
+	incompleteErr error
+	validate      func(cfg *Config) error
+}
+
+//nolint:gochecknoglobals // static method registry, never mutated
+var authCandidates = []authCandidate{
+	{
+		method:        AuthMethodAPIKey,
+		complete:      isCompleteAPIKey,
+		partial:       isPartialAPIKey,
+		incompleteErr: ErrIncompleteAPIKeyCredentials,
+	},
+	{
+		method:        AuthMethodServiceAccount,
+		complete:      isCompleteServiceAccount,
+		partial:       isPartialServiceAccount,
+		incompleteErr: ErrIncompleteServiceAccountCredentials,
+		validate:      validateServiceAccountEnvironment,
+	},
+}
+
+func isCompleteAPIKey(cfg *Config) bool { return cfg.AccessKeyID != "" && cfg.SecretKey != "" }
+
+func isPartialAPIKey(cfg *Config) bool {
+	hasAny := cfg.AccessKeyID != "" || cfg.SecretKey != ""
+
+	return hasAny && !isCompleteAPIKey(cfg)
+}
+
+func isCompleteServiceAccount(cfg *Config) bool {
+	return cfg.ServiceAccountClientID != "" && cfg.ServiceAccountClientSecret != ""
+}
+
+func isPartialServiceAccount(cfg *Config) bool {
+	hasAny := cfg.ServiceAccountClientID != "" || cfg.ServiceAccountClientSecret != ""
+
+	return hasAny && !isCompleteServiceAccount(cfg)
+}
+
 // ResolveAuthMethod inspects a Config and determines which authentication method (if any) should
 // be used to construct the Crusoe API client.
 //
 // Precedence / validation rules:
-//   - Both credential pairs fully set               -> ErrConflictingCredentials (ambiguous; refuse to guess).
-//   - Exactly one of AccessKeyID/SecretKey set       -> ErrIncompleteAPIKeyCredentials.
-//   - Exactly one of the service account fields set  -> ErrIncompleteServiceAccountCredentials.
-//   - Service account pair fully set, but only one of TokenURL/Audience is overridden from its
-//     default -> ErrMismatchedServiceAccountEnvironment.
-//   - Only the service account pair fully set        -> AuthMethodServiceAccount.
-//   - Only the API key pair fully set                -> AuthMethodAPIKey.
-//   - Neither pair set at all                        -> ErrMissingCredentials.
+//   - More than one method fully configured   -> ErrConflictingCredentials (ambiguous; refuse to guess).
+//   - Any method partially configured          -> that method's own incomplete-credential error.
+//   - Exactly one method fully configured      -> that method, after running its own validate check.
+//   - No method configured at all              -> ErrMissingCredentials.
 //
-// Partial-credential checks intentionally take priority over "neither set", so a likely typo
-// (e.g. only SecretKey set) is reported precisely instead of being reported as "nothing configured".
-//
-//nolint:cyclop // exhaustive precedence/conflict matrix, ported 1:1 from terraform-provider-crusoe
+// Partial-credential checks intentionally take priority over "nothing configured", so a likely
+// typo (e.g. only SecretKey set) is reported precisely instead of being reported as missing - and
+// take priority even when a different method is already complete (e.g. a complete API key pair
+// plus a stray, partial service-account field is still reported as the incomplete service account,
+// not silently accepted as the API key).
 func ResolveAuthMethod(cfg *Config) (AuthMethod, error) {
-	hasAccessKeyID := cfg.AccessKeyID != ""
-	hasSecretKey := cfg.SecretKey != ""
-	hasClientID := cfg.ServiceAccountClientID != ""
-	hasClientSecret := cfg.ServiceAccountClientSecret != ""
+	complete := make([]authCandidate, 0, len(authCandidates))
+	for _, c := range authCandidates {
+		if c.complete(cfg) {
+			complete = append(complete, c)
+		}
+	}
 
-	hasCompleteAPIKey := hasAccessKeyID && hasSecretKey
-	hasCompleteServiceAccount := hasClientID && hasClientSecret
-	hasAnyAPIKey := hasAccessKeyID || hasSecretKey
-	hasAnyServiceAccount := hasClientID || hasClientSecret
-
-	switch {
-	case hasCompleteAPIKey && hasCompleteServiceAccount:
+	if len(complete) > 1 {
 		return AuthMethodUnknown, ErrConflictingCredentials
-	case hasAnyAPIKey && !hasCompleteAPIKey:
-		return AuthMethodUnknown, ErrIncompleteAPIKeyCredentials
-	case hasAnyServiceAccount && !hasCompleteServiceAccount:
-		return AuthMethodUnknown, ErrIncompleteServiceAccountCredentials
-	case hasCompleteServiceAccount:
-		if err := validateServiceAccountEnvironment(cfg); err != nil {
-			return AuthMethodUnknown, err
+	}
+
+	for _, c := range authCandidates {
+		if c.partial != nil && c.partial(cfg) {
+			return AuthMethodUnknown, c.incompleteErr
+		}
+	}
+
+	if len(complete) == 1 {
+		c := complete[0]
+		if c.validate != nil {
+			if err := c.validate(cfg); err != nil {
+				return AuthMethodUnknown, err
+			}
 		}
 
-		return AuthMethodServiceAccount, nil
-	case hasCompleteAPIKey:
-		return AuthMethodAPIKey, nil
-	default:
-		return AuthMethodUnknown, ErrMissingCredentials
+		return c.method, nil
 	}
+
+	return AuthMethodUnknown, ErrMissingCredentials
 }
 
 // validateServiceAccountEnvironment ensures TokenURL and Audience are overridden together, not
 // independently - see ErrMismatchedServiceAccountEnvironment. An empty field means "not
 // configured" rather than "overridden to empty", so it's treated as the default, not a mismatch.
 func validateServiceAccountEnvironment(cfg *Config) error {
-	hasCustomTokenURL := cfg.ServiceAccountTokenURL != "" && cfg.ServiceAccountTokenURL != defaultServiceAccountTokenURL
-	hasCustomAudience := cfg.ServiceAccountAudience != "" && cfg.ServiceAccountAudience != defaultServiceAccountAudience
+	hasCustomTokenURL := cfg.ServiceAccountTokenURL != "" && cfg.ServiceAccountTokenURL != DefaultServiceAccountTokenURL
+	hasCustomAudience := cfg.ServiceAccountAudience != "" && cfg.ServiceAccountAudience != DefaultServiceAccountAudience
 
 	if hasCustomTokenURL != hasCustomAudience {
 		return ErrMismatchedServiceAccountEnvironment

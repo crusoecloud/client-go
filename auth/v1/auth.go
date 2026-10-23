@@ -191,28 +191,17 @@ func NewAuthenticatedAPIClient(accessKey, secret string) *swagger.APIClient {
 	return swagger.NewAPIClient(NewAuthenticatedConfig(accessKey, secret))
 }
 
-// NewAuthenticatedConfig initializes a new Crusoe API configuration .
+// NewAuthenticatedConfig initializes a new Crusoe API configuration. Always allocates a fresh
+// *http.Client instead of reusing http.DefaultClient, which would mutate that process-wide client
+// for every other goroutine using it.
 func NewAuthenticatedConfig(accessKey, secret string) *swagger.Configuration {
 	cfg := swagger.NewConfiguration()
-	if cfg.HTTPClient == nil {
-		cfg.HTTPClient = http.DefaultClient
+	cfg.HTTPClient = &http.Client{
+		Transport: NewAuthenticatingTransport(http.DefaultTransport, accessKey, secret),
 	}
-
-	cfg.HTTPClient.Transport = NewAuthenticatingTransport(cfg.HTTPClient.Transport, accessKey, secret)
 
 	return cfg
 }
-
-// defaultServiceAccountTokenURL is used when NewServiceAccountConfig is called with an empty
-// tokenURL.
-//
-//nolint:gosec // G101: URL constant, not a credential
-const defaultServiceAccountTokenURL = "https://auth.crusoe.ai/oauth2/token"
-
-// defaultServiceAccountAudience is used when NewServiceAccountConfig is called with an empty
-// audience. It matches the audience prod's auth-gateway validates against, i.e. the environment
-// defaultServiceAccountTokenURL itself points at.
-const defaultServiceAccountAudience = "https://api.crusoe.ai"
 
 // errInsecureTokenURL is returned when a non-empty tokenURL isn't https - sending it would mean
 // a client secret goes out over the wire in the clear.
@@ -269,10 +258,10 @@ func NewServiceAccountAPIClient(ctx context.Context, clientID, clientSecret, tok
 // returned Configuration's HTTPClient fetches an access token on first use and refreshes it
 // automatically as it nears expiry, for every subsequent request.
 //
-// tokenURL defaults to defaultServiceAccountTokenURL when empty. A non-empty tokenURL that isn't
-// https is rejected, rather than sending the client secret over the wire in the clear.
+// tokenURL defaults to credentials.DefaultServiceAccountTokenURL when empty. A non-empty tokenURL
+// that isn't https is rejected, rather than sending the client secret over the wire in the clear.
 //
-// audience defaults to defaultServiceAccountAudience when empty, and is sent as the token
+// audience defaults to credentials.DefaultServiceAccountAudience when empty, and is sent as the token
 // request's "audience" form parameter (RFC 8707 resource indicator). Ory Hydra only treats a
 // client's registered audience list as an allowlist - it does not stamp it onto every issued
 // token - so a request that omits "audience" gets back a token with an empty aud claim, which
@@ -290,13 +279,13 @@ func NewServiceAccountConfig(ctx context.Context, clientID, clientSecret, tokenU
 	// tokenURL defaulting/validation.
 	switch {
 	case tokenURL == "":
-		tokenURL = defaultServiceAccountTokenURL
+		tokenURL = credentials.DefaultServiceAccountTokenURL
 	case !strings.HasPrefix(tokenURL, "https://"):
 		return nil, fmt.Errorf("%w: got %q", errInsecureTokenURL, tokenURL)
 	}
 
 	if audience == "" {
-		audience = defaultServiceAccountAudience
+		audience = credentials.DefaultServiceAccountAudience
 	}
 
 	cfg := swagger.NewConfiguration()
@@ -312,13 +301,18 @@ func NewServiceAccountConfig(ctx context.Context, clientID, clientSecret, tokenU
 	return cfg, nil
 }
 
+// options is a private alias for credentials.Options so that internal type doesn't leak into
+// this package's exported API / godoc. Option and the With* functions below are the public
+// interface; see their own doc comments for behavior.
+type options = credentials.Options
+
 // Option configures credential resolution for NewDefaultConfig and NewDefaultAPIClient.
-type Option func(*credentials.Options)
+type Option func(*options)
 
 // WithCredentials sets an explicit access key/secret key pair, taking precedence over
 // environment variables and the config file.
 func WithCredentials(accessKey, secret string) Option {
-	return func(o *credentials.Options) {
+	return func(o *options) {
 		o.AccessKeyID = accessKey
 		o.SecretKey = secret
 	}
@@ -328,7 +322,7 @@ func WithCredentials(accessKey, secret string) Option {
 // precedence over environment variables and the config file. tokenURL and audience may be left
 // empty to use their defaults.
 func WithServiceAccountCredentials(clientID, clientSecret, tokenURL, audience string) Option {
-	return func(o *credentials.Options) {
+	return func(o *options) {
 		o.ServiceAccountClientID = clientID
 		o.ServiceAccountClientSecret = clientSecret
 		o.ServiceAccountTokenURL = tokenURL
@@ -337,17 +331,20 @@ func WithServiceAccountCredentials(clientID, clientSecret, tokenURL, audience st
 }
 
 // WithProfile selects a named profile from the config file, overriding CRUSOE_PROFILE and the
-// config file's own top-level profile key.
+// config file's own top-level profile key. Also takes precedence over CRUSOE_* environment
+// variables for which identity is used, so a profile explicitly selected this way can't be
+// overridden by unrelated env vars set elsewhere in the same process.
 func WithProfile(name string) Option {
-	return func(o *credentials.Options) {
+	return func(o *options) {
 		o.Profile = name
 	}
 }
 
-// WithConfigPath overrides the default ~/.crusoe/config path. Use this when the process has no
-// mounted home directory, e.g. a Kubernetes pod reading credentials from a mounted Secret.
+// WithConfigPath overrides the default ~/.crusoe/config path, for processes with no home
+// directory or that keep their config file elsewhere. CRUSOE_CONFIG_DIR has the same effect via
+// an environment variable instead.
 func WithConfigPath(path string) Option {
-	return func(o *credentials.Options) {
+	return func(o *options) {
 		o.ConfigPath = path
 	}
 }
@@ -360,7 +357,7 @@ func WithConfigPath(path string) Option {
 // The resulting *swagger.Configuration is built the same way NewAuthenticatedConfig or
 // NewServiceAccountConfig would build it; this only adds credential resolution on top.
 func NewDefaultConfig(ctx context.Context, opts ...Option) (*swagger.Configuration, error) {
-	var resolveOpts credentials.Options
+	var resolveOpts options
 	for _, opt := range opts {
 		opt(&resolveOpts)
 	}

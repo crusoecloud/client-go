@@ -24,6 +24,13 @@ client, err := auth.NewDefaultAPIClient(ctx)
 Environment variables: `CRUSOE_ACCESS_KEY_ID` / `CRUSOE_SECRET_KEY` for a static key,
 `CRUSOE_SERVICE_ACCOUNT_CLIENT_ID` / `CRUSOE_SERVICE_ACCOUNT_CLIENT_SECRET` (optionally with
 `CRUSOE_SERVICE_ACCOUNT_TOKEN_URL` / `CRUSOE_SERVICE_ACCOUNT_AUDIENCE`) for a service account.
-Configuring both at once is an error. `auth.WithProfile(name)` selects a named profile from the
-config file; `auth.WithConfigPath(path)` points at a config file in a non-default location, e.g. a
-mounted Kubernetes Secret.
+Configuring both at once is an error.
+
+`auth.WithProfile(name)` selects a named profile from the config file. A profile selected this
+way takes precedence over environment variables, not just the config file's own default profile -
+so one process can hold multiple identities (e.g. different service accounts for different
+projects) without unrelated `CRUSOE_*` environment variables overriding which one gets used.
+
+`auth.WithConfigPath(path)` (or the `CRUSOE_CONFIG_DIR` environment variable) points at a config
+file in a non-default location, for processes with no home directory or that keep their config
+file elsewhere.

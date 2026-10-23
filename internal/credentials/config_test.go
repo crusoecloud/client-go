@@ -139,7 +139,7 @@ secret_key = "file-secret"
 		}
 	})
 
-	t.Run("per-field override: only access key via env, secret key still from profile", func(t *testing.T) {
+	t.Run("incomplete env override doesn't combine with profile - profile wins whole", func(t *testing.T) {
 		os.Setenv("CRUSOE_ACCESS_KEY_ID", "env-key") //nolint:usetesting // explicit var for the test's own env-precedence assertion
 		defer os.Unsetenv("CRUSOE_ACCESS_KEY_ID")    //nolint:errcheck,usetesting // cleanup after subtest
 
@@ -147,11 +147,8 @@ secret_key = "file-secret"
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
-		if cfg.AccessKeyID != "env-key" {
-			t.Fatalf("expected env access key, got %q", cfg.AccessKeyID)
-		}
-		if cfg.SecretKey != "file-secret" {
-			t.Fatalf("expected profile secret key to remain, got %q", cfg.SecretKey)
+		if cfg.AccessKeyID != "file-key" || cfg.SecretKey != "file-secret" {
+			t.Fatalf("expected the profile's complete pair to win whole, got %+v", cfg)
 		}
 	})
 }
@@ -199,6 +196,51 @@ func TestMissingConfigFile(t *testing.T) {
 	if cfg.AccessKeyID != "env-key" || cfg.SecretKey != "env-secret" {
 		t.Fatalf("expected env credentials to still resolve, got %+v", cfg)
 	}
+}
+
+func TestConfigDirEnvVar(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	dir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(dir, "config"), []byte(`
+[default]
+access_key_id = "dir-env-key"
+secret_key = "dir-env-secret"
+`), 0o600); err != nil {
+		t.Fatalf("failed to write temp config: %v", err)
+	}
+
+	t.Run("CRUSOE_CONFIG_DIR is used when opts.ConfigPath is empty", func(t *testing.T) {
+		os.Setenv("CRUSOE_CONFIG_DIR", dir)    //nolint:usetesting // explicit var for this test's assertion
+		defer os.Unsetenv("CRUSOE_CONFIG_DIR") //nolint:errcheck,usetesting // cleanup
+
+		cfg, err := LoadConfigWithOptions(&Options{})
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		if cfg.AccessKeyID != "dir-env-key" || cfg.SecretKey != "dir-env-secret" {
+			t.Fatalf("expected credentials from CRUSOE_CONFIG_DIR's config file, got %+v", cfg)
+		}
+	})
+
+	t.Run("opts.ConfigPath overrides CRUSOE_CONFIG_DIR", func(t *testing.T) {
+		os.Setenv("CRUSOE_CONFIG_DIR", dir)    //nolint:usetesting // explicit var for this test's assertion
+		defer os.Unsetenv("CRUSOE_CONFIG_DIR") //nolint:errcheck,usetesting // cleanup
+
+		explicitPath := writeTempConfig(t, `
+[default]
+access_key_id = "explicit-path-key"
+secret_key = "explicit-path-secret"
+`)
+
+		cfg, err := LoadConfigWithOptions(&Options{ConfigPath: explicitPath})
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		if cfg.AccessKeyID != "explicit-path-key" || cfg.SecretKey != "explicit-path-secret" {
+			t.Fatalf("expected opts.ConfigPath to win over CRUSOE_CONFIG_DIR, got %+v", cfg)
+		}
+	})
 }
 
 func TestInvalidConfigFile(t *testing.T) {
@@ -286,10 +328,10 @@ service_account_client_secret = "profile-client-secret"
 	if cfg.ServiceAccountClientID != "profile-client-id" || cfg.ServiceAccountClientSecret != "profile-client-secret" {
 		t.Fatalf("expected profile service account credentials, got %+v", cfg)
 	}
-	if cfg.ServiceAccountTokenURL != defaultServiceAccountTokenURL {
+	if cfg.ServiceAccountTokenURL != DefaultServiceAccountTokenURL {
 		t.Fatalf("expected default token URL to be preserved, got %q", cfg.ServiceAccountTokenURL)
 	}
-	if cfg.ServiceAccountAudience != defaultServiceAccountAudience {
+	if cfg.ServiceAccountAudience != DefaultServiceAccountAudience {
 		t.Fatalf("expected default audience to be preserved, got %q", cfg.ServiceAccountAudience)
 	}
 }
@@ -324,5 +366,71 @@ service_account_client_secret = "profile-client-secret"
 	}
 	if cfg.ServiceAccountAudience != "https://api.example.com" {
 		t.Fatalf("expected env audience, got %q", cfg.ServiceAccountAudience)
+	}
+}
+
+func TestCrossTypeCredentialsDoNotCombine(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	configPath := writeTempConfig(t, `
+[default]
+service_account_client_id = "profile-client-id"
+service_account_client_secret = "profile-client-secret"
+`)
+
+	os.Setenv("CRUSOE_ACCESS_KEY_ID", "stray-env-key") //nolint:usetesting // explicit var for this test's assertion
+	defer os.Unsetenv("CRUSOE_ACCESS_KEY_ID")          //nolint:errcheck,usetesting // cleanup
+
+	cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.ServiceAccountClientID != "profile-client-id" || cfg.ServiceAccountClientSecret != "profile-client-secret" {
+		t.Fatalf("expected the profile's complete service account pair, got %+v", cfg)
+	}
+	if cfg.AccessKeyID != "" || cfg.SecretKey != "" {
+		t.Fatalf("expected the stray env access key to be ignored entirely, got %+v", cfg)
+	}
+
+	method, err := ResolveAuthMethod(cfg)
+	if err != nil {
+		t.Fatalf("expected a clean resolution, got error: %v", err)
+	}
+	if method != AuthMethodServiceAccount {
+		t.Fatalf("expected AuthMethodServiceAccount, got %v", method)
+	}
+}
+
+func TestProfileIsolatedFromProcessWideEnvVars(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	configPath := writeTempConfig(t, `
+[projectA]
+service_account_client_id = "projectA-client-id"
+service_account_client_secret = "projectA-client-secret"
+`)
+
+	os.Setenv("CRUSOE_ACCESS_KEY_ID", "process-wide-key") //nolint:usetesting // simulates another identity's env vars
+	os.Setenv("CRUSOE_SECRET_KEY", "process-wide-secret") //nolint:usetesting // simulates another identity's env vars
+	defer os.Unsetenv("CRUSOE_ACCESS_KEY_ID")             //nolint:errcheck,usetesting // cleanup
+	defer os.Unsetenv("CRUSOE_SECRET_KEY")                //nolint:errcheck,usetesting // cleanup
+
+	cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath, Profile: "projectA"})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.ServiceAccountClientID != "projectA-client-id" || cfg.ServiceAccountClientSecret != "projectA-client-secret" {
+		t.Fatalf("expected projectA's service account pair, got %+v", cfg)
+	}
+	if cfg.AccessKeyID != "" || cfg.SecretKey != "" {
+		t.Fatalf("expected process-wide env vars to be fully excluded from this profile's identity, got %+v", cfg)
+	}
+
+	method, err := ResolveAuthMethod(cfg)
+	if err != nil {
+		t.Fatalf("expected WithProfile to isolate this identity cleanly, got error: %v", err)
+	}
+	if method != AuthMethodServiceAccount {
+		t.Fatalf("expected AuthMethodServiceAccount, got %v", method)
 	}
 }

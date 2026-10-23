@@ -25,6 +25,35 @@ func tokenServerContext(tokenServer *httptest.Server) context.Context {
 	return context.WithValue(context.Background(), oauth2.HTTPClient, tokenServer.Client())
 }
 
+func TestNewAuthenticatedConfig_DoesNotMutateDefaultClient(t *testing.T) {
+	originalTransport := http.DefaultClient.Transport
+
+	cfg1 := NewAuthenticatedConfig("key-a", "secret-a")
+
+	if http.DefaultClient.Transport != originalTransport {
+		t.Fatal("NewAuthenticatedConfig mutated http.DefaultClient.Transport")
+	}
+	if cfg1.HTTPClient == http.DefaultClient {
+		t.Fatal("expected a fresh *http.Client, got http.DefaultClient itself")
+	}
+
+	// A second call with different credentials must not affect the first client's.
+	cfg2 := NewAuthenticatedConfig("key-b", "secret-b")
+
+	transport1, ok := cfg1.HTTPClient.Transport.(AuthenticatingTransport)
+	if !ok {
+		t.Fatalf("expected an AuthenticatingTransport, got %T", cfg1.HTTPClient.Transport)
+	}
+	transport2, ok := cfg2.HTTPClient.Transport.(AuthenticatingTransport)
+	if !ok {
+		t.Fatalf("expected an AuthenticatingTransport, got %T", cfg2.HTTPClient.Transport)
+	}
+	if transport1.keyID != "key-a" || transport2.keyID != "key-b" {
+		t.Fatalf("expected independent clients to keep their own credentials, got %q and %q",
+			transport1.keyID, transport2.keyID)
+	}
+}
+
 func TestNewServiceAccountConfig(t *testing.T) {
 	var tokenRequests int32
 
@@ -211,7 +240,7 @@ func TestNewServiceAccountConfig_Audience(t *testing.T) {
 		}))
 	}
 
-	t.Run("empty audience defaults to defaultServiceAccountAudience", func(t *testing.T) {
+	t.Run("empty audience defaults to the package default", func(t *testing.T) {
 		var sawAudiences []string
 		tokenServer := audienceCapturingTokenServer(&sawAudiences)
 		defer tokenServer.Close()
@@ -233,8 +262,8 @@ func TestNewServiceAccountConfig_Audience(t *testing.T) {
 		}
 		resp.Body.Close()
 
-		if len(sawAudiences) != 1 || sawAudiences[0] != defaultServiceAccountAudience {
-			t.Fatalf("expected token request audience=%q, got %v", defaultServiceAccountAudience, sawAudiences)
+		if len(sawAudiences) != 1 || sawAudiences[0] != credentials.DefaultServiceAccountAudience {
+			t.Fatalf("expected token request audience=%q, got %v", credentials.DefaultServiceAccountAudience, sawAudiences)
 		}
 	})
 

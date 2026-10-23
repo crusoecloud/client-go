@@ -14,16 +14,24 @@ import (
 )
 
 const (
-	// configFilePath is appended to the user's home directory to locate the shared Crusoe config
-	// file, matching terraform-provider-crusoe and customer-cli.
-	configFilePath = "/.crusoe/config"
+	// configFilePath is appended to the resolved config directory to locate the shared Crusoe
+	// config file, matching terraform-provider-crusoe and customer-cli.
+	configFilePath = "/config"
 
-	// defaultServiceAccountTokenURL mirrors the default already used by auth.NewServiceAccountConfig.
+	// configDirEnvVar lets a caller relocate the config directory away from ~/.crusoe, matching
+	// customer-cli's CRUSOE_CONFIG_DIR.
+	configDirEnvVar = "CRUSOE_CONFIG_DIR"
+
+	// defaultConfigDir is appended to the user's home directory when neither opts.ConfigPath nor
+	// CRUSOE_CONFIG_DIR is set.
+	defaultConfigDir = "/.crusoe"
+
+	// DefaultServiceAccountTokenURL is the default OAuth2 token endpoint. Exported for auth.go.
 	//nolint:gosec // G101: URL constant, not a credential
-	defaultServiceAccountTokenURL = "https://auth.crusoe.ai/oauth2/token"
+	DefaultServiceAccountTokenURL = "https://auth.crusoe.ai/oauth2/token"
 
-	// defaultServiceAccountAudience mirrors the default already used by auth.NewServiceAccountConfig.
-	defaultServiceAccountAudience = "https://api.crusoe.ai"
+	// DefaultServiceAccountAudience is the default token audience. Exported for auth.go.
+	DefaultServiceAccountAudience = "https://api.crusoe.ai"
 
 	// defaultProfileName is used when no profile is selected by any precedence tier.
 	defaultProfileName = "default"
@@ -49,6 +57,11 @@ type Config struct {
 	// ServiceAccountAudience is the "audience" requested on the token request. Defaults to
 	// prod's audience; must match the target environment's auth-gateway.
 	ServiceAccountAudience string
+
+	// OAuthSessionPath is reserved for a future cached human-OAuth-login credential (see
+	// Options.OAuthSessionPath). Not yet populated by LoadConfigWithOptions, and not yet an
+	// authCandidates entry in ResolveAuthMethod - there is no reader/refresher for it today.
+	OAuthSessionPath string
 }
 
 // Options carries explicit overrides (highest precedence) plus profile/config-path selection.
@@ -59,8 +72,7 @@ type Options struct {
 	Profile string
 
 	// ConfigPath overrides the default ~/.crusoe/config path. Empty uses the default. Pass this
-	// when the process has no mounted home directory (e.g. a Kubernetes pod reading credentials
-	// from a mounted Secret at a fixed path).
+	// for processes with no home directory, or that keep their config file elsewhere.
 	ConfigPath string
 
 	// AccessKeyID, SecretKey, and the ServiceAccount* fields below are explicit overrides: when
@@ -71,6 +83,18 @@ type Options struct {
 	ServiceAccountClientSecret string
 	ServiceAccountTokenURL     string
 	ServiceAccountAudience     string
+
+	// OAuthSessionPath is a forward-compatibility placeholder for a future cached human-OAuth-login
+	// credential (e.g. a "crusoe auth login" flow writing a token to disk, analogous to gcloud's
+	// application-default-credentials file). Intentionally not wired into LoadConfigWithOptions or
+	// ResolveAuthMethod yet: the cache file's schema (in particular, whether/how a refresh token is
+	// represented) and the token endpoint it refreshes against aren't settled. Wiring it in means:
+	// resolving this path (explicit > CRUSOE_OAUTH_SESSION_PATH env > a default location, mirroring
+	// ConfigPath's own precedence), adding a passive (non-interactive) reader/refresher, and adding
+	// one authCandidates entry whose complete check is "a valid or refreshable session exists at
+	// this path" - never anything that opens a browser or blocks on user input; that belongs only
+	// in the CLI's own "auth login" command, not in this SDK.
+	OAuthSessionPath string
 }
 
 // LoadConfigWithOptions resolves a Config in this order (later wins):
@@ -87,62 +111,109 @@ type Options struct {
 // resolution continues using environment variables and explicit options alone.
 func LoadConfigWithOptions(opts *Options) (*Config, error) {
 	cfg := &Config{
-		ServiceAccountTokenURL: defaultServiceAccountTokenURL,
-		ServiceAccountAudience: defaultServiceAccountAudience,
+		ServiceAccountTokenURL: DefaultServiceAccountTokenURL,
+		ServiceAccountAudience: DefaultServiceAccountAudience,
 	}
 
-	// A home-dir lookup failure falls through like a missing config file - env vars and explicit
-	// options alone are a valid way to configure credentials. advisoryErr is still returned so the
-	// caller can surface it, but resolution proceeds.
-	var advisoryErr error
-	configPath := opts.ConfigPath
-	if configPath == "" {
-		homeDir, err := os.UserHomeDir()
-		if err != nil {
-			advisoryErr = fmt.Errorf("failed to find home dir: %w", err)
-		} else {
-			configPath = homeDir + configFilePath
-		}
-	}
-
-	var rawData map[string]interface{}
-	if advisoryErr != nil {
-		rawData = make(map[string]interface{})
-	} else if _, err := toml.DecodeFile(configPath, &rawData); err != nil {
-		// Missing/invalid config file is non-fatal - credentials can come from env vars or
-		// explicit options alone.
-		if !errors.Is(err, os.ErrNotExist) {
-			advisoryErr = fmt.Errorf("error reading config file at %s: %w", configPath, err)
-		}
-		rawData = make(map[string]interface{})
-	}
+	rawData, advisoryErr := loadRawConfig(opts)
 
 	profileName := resolveProfileName(rawData, opts)
 	cfg.ProfileName = profileName
 
-	if profileConfig, ok := loadProfile(rawData, profileName); ok {
-		mergeNonEmpty(cfg, profileConfig)
+	profileConfig, _ := loadProfile(rawData, profileName)
+	if profileConfig == nil {
+		profileConfig = &Config{}
 	}
 
-	mergeNonEmpty(cfg, &Config{
+	envConfig := envConfigFromEnviron()
+	optsConfig := optsConfigFromOptions(opts)
+
+	// Identity fields come from exactly one tier, picked by pickIdentityTier, so a complete pair
+	// never combines field-by-field with a pair from another tier.
+	applyIdentity(cfg, pickIdentityTier(identityTierOrder(opts, optsConfig, envConfig, profileConfig)...))
+
+	// Ancillary fields merge independently of identity, lowest precedence to highest.
+	mergeAncillary(cfg, profileConfig)
+	mergeAncillary(cfg, envConfig)
+	mergeAncillary(cfg, optsConfig)
+
+	return cfg, advisoryErr
+}
+
+// loadRawConfig reads and decodes the TOML config file. A missing home directory or config file
+// is non-fatal: it returns an empty map with an advisory error, since env vars and explicit
+// options alone are still a valid way to configure credentials.
+func loadRawConfig(opts *Options) (map[string]interface{}, error) {
+	configPath := resolveConfigPath(opts)
+	if configPath == "" {
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			return map[string]interface{}{}, fmt.Errorf("failed to find home dir: %w", err)
+		}
+
+		configPath = homeDir + defaultConfigDir + configFilePath
+	}
+
+	var rawData map[string]interface{}
+	if _, err := toml.DecodeFile(configPath, &rawData); err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return map[string]interface{}{}, nil
+		}
+
+		return map[string]interface{}{}, fmt.Errorf("error reading config file at %s: %w", configPath, err)
+	}
+
+	return rawData, nil
+}
+
+// envConfigFromEnviron reads every CRUSOE_* credential env var into a Config.
+func envConfigFromEnviron() *Config {
+	return &Config{
 		AccessKeyID:                os.Getenv("CRUSOE_ACCESS_KEY_ID"),
 		SecretKey:                  os.Getenv("CRUSOE_SECRET_KEY"),
 		ServiceAccountClientID:     os.Getenv("CRUSOE_SERVICE_ACCOUNT_CLIENT_ID"),
 		ServiceAccountClientSecret: os.Getenv("CRUSOE_SERVICE_ACCOUNT_CLIENT_SECRET"),
 		ServiceAccountTokenURL:     os.Getenv("CRUSOE_SERVICE_ACCOUNT_TOKEN_URL"),
 		ServiceAccountAudience:     os.Getenv("CRUSOE_SERVICE_ACCOUNT_AUDIENCE"),
-	})
+	}
+}
 
-	mergeNonEmpty(cfg, &Config{
+// optsConfigFromOptions copies opts' explicit credential fields into a Config.
+func optsConfigFromOptions(opts *Options) *Config {
+	return &Config{
 		AccessKeyID:                opts.AccessKeyID,
 		SecretKey:                  opts.SecretKey,
 		ServiceAccountClientID:     opts.ServiceAccountClientID,
 		ServiceAccountClientSecret: opts.ServiceAccountClientSecret,
 		ServiceAccountTokenURL:     opts.ServiceAccountTokenURL,
 		ServiceAccountAudience:     opts.ServiceAccountAudience,
-	})
+	}
+}
 
-	return cfg, advisoryErr
+// identityTierOrder returns the identity tiers in precedence order: opts > env > profile, except
+// when opts.Profile explicitly names a profile. In that case profile is tried before env, so an
+// explicitly selected identity can't be overridden by unrelated env vars set elsewhere in the
+// same process.
+func identityTierOrder(opts *Options, optsConfig, envConfig, profileConfig *Config) []*Config {
+	if opts.Profile != "" {
+		return []*Config{optsConfig, profileConfig, envConfig}
+	}
+
+	return []*Config{optsConfig, envConfig, profileConfig}
+}
+
+// resolveConfigPath returns the config file path to read, or "" if the caller should fall back to
+// the home-directory default. Precedence: opts.ConfigPath > CRUSOE_CONFIG_DIR env > default.
+func resolveConfigPath(opts *Options) string {
+	if opts.ConfigPath != "" {
+		return opts.ConfigPath
+	}
+
+	if dir := os.Getenv(configDirEnvVar); dir != "" {
+		return dir + configFilePath
+	}
+
+	return ""
 }
 
 // resolveProfileName applies the profile-selection precedence: opts.Profile > CRUSOE_PROFILE env
@@ -198,9 +269,35 @@ func loadProfile(rawData map[string]interface{}, profileName string) (*Config, b
 	return profileConfig, true
 }
 
-// mergeNonEmpty overwrites each non-empty field of override onto cfg, leaving existing fields
-// untouched where override's corresponding field is empty ("not specified").
-func mergeNonEmpty(cfg, override *Config) {
+// isCompleteIdentity reports whether cfg has a complete API-key pair or service-account pair,
+// reusing the same per-method checks ResolveAuthMethod's authCandidates table uses.
+func isCompleteIdentity(cfg *Config) bool {
+	return isCompleteAPIKey(cfg) || isCompleteServiceAccount(cfg)
+}
+
+// pickIdentityTier returns the first tier, in the given highest-to-lowest precedence order, that
+// carries a complete credential pair, used as-is.
+//
+// If no tier is complete, falls back to merging identity fields across all tiers, lowest to
+// highest, so ResolveAuthMethod still reports a precise incomplete-credential error.
+func pickIdentityTier(tiers ...*Config) *Config {
+	for _, tier := range tiers {
+		if isCompleteIdentity(tier) {
+			return tier
+		}
+	}
+
+	merged := &Config{}
+	for i := len(tiers) - 1; i >= 0; i-- {
+		mergeIdentity(merged, tiers[i])
+	}
+
+	return merged
+}
+
+// mergeIdentity overwrites cfg's identity fields with override's non-empty ones. Used only by
+// pickIdentityTier's no-complete-tier fallback.
+func mergeIdentity(cfg, override *Config) {
 	if override.AccessKeyID != "" {
 		cfg.AccessKeyID = override.AccessKeyID
 	}
@@ -213,6 +310,19 @@ func mergeNonEmpty(cfg, override *Config) {
 	if override.ServiceAccountClientSecret != "" {
 		cfg.ServiceAccountClientSecret = override.ServiceAccountClientSecret
 	}
+}
+
+// applyIdentity copies source's identity fields onto cfg unconditionally.
+func applyIdentity(cfg, source *Config) {
+	cfg.AccessKeyID = source.AccessKeyID
+	cfg.SecretKey = source.SecretKey
+	cfg.ServiceAccountClientID = source.ServiceAccountClientID
+	cfg.ServiceAccountClientSecret = source.ServiceAccountClientSecret
+}
+
+// mergeAncillary overwrites cfg's non-identity fields (ServiceAccountTokenURL/Audience) with
+// override's non-empty ones.
+func mergeAncillary(cfg, override *Config) {
 	if override.ServiceAccountTokenURL != "" {
 		cfg.ServiceAccountTokenURL = override.ServiceAccountTokenURL
 	}
