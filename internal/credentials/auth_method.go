@@ -11,9 +11,9 @@ const (
 	AuthMethodUnknown AuthMethod = iota
 	// AuthMethodAPIKey authenticates via the legacy HMAC AccessKeyID/SecretKey pair.
 	AuthMethodAPIKey
-	// AuthMethodServiceAccount authenticates via OAuth2 client_credentials using
-	// ServiceAccountClientID/ServiceAccountClientSecret.
-	AuthMethodServiceAccount
+	// AuthMethodClientSecret authenticates via the OAuth2 client_credentials grant using a shared
+	// client secret (ClientSecretCredentials).
+	AuthMethodClientSecret
 )
 
 var (
@@ -23,9 +23,9 @@ var (
 	// ErrIncompleteAPIKeyCredentials is returned when exactly one of AccessKeyID/SecretKey is set.
 	ErrIncompleteAPIKeyCredentials = errors.New("access key ID and secret key must both be set")
 
-	// ErrIncompleteServiceAccountCredentials is returned when exactly one of
-	// ServiceAccountClientID/ServiceAccountClientSecret is set.
-	ErrIncompleteServiceAccountCredentials = errors.New(
+	// ErrIncompleteClientSecretCredentials is returned when exactly one of
+	// ClientSecretCredentials.ClientID/ClientSecret is set.
+	ErrIncompleteClientSecretCredentials = errors.New(
 		"service account client ID and client secret must both be set")
 
 	// ErrConflictingCredentials is returned when both a complete API key pair and a complete
@@ -40,6 +40,10 @@ var (
 	// pointed at prod, minting a token with the wrong audience for that token endpoint.
 	ErrMismatchedServiceAccountEnvironment = errors.New(
 		"service account token URL and audience must both be set together when overriding either from its default")
+
+	// ErrProfileNotFound is returned when an explicitly requested profile (via Options.Profile or
+	// CRUSOE_PROFILE) doesn't exist in the config file. See LoadConfigWithOptions.
+	ErrProfileNotFound = errors.New("profile not found in config file")
 )
 
 type authCandidate struct {
@@ -59,30 +63,32 @@ var authCandidates = []authCandidate{
 		incompleteErr: ErrIncompleteAPIKeyCredentials,
 	},
 	{
-		method:        AuthMethodServiceAccount,
-		complete:      isCompleteServiceAccount,
-		partial:       isPartialServiceAccount,
-		incompleteErr: ErrIncompleteServiceAccountCredentials,
-		validate:      validateServiceAccountEnvironment,
+		method:        AuthMethodClientSecret,
+		complete:      isCompleteClientSecret,
+		partial:       isPartialClientSecret,
+		incompleteErr: ErrIncompleteClientSecretCredentials,
+		validate:      validateClientSecretEnvironment,
 	},
 }
 
-func isCompleteAPIKey(cfg *Config) bool { return cfg.AccessKeyID != "" && cfg.SecretKey != "" }
+func isCompleteAPIKey(cfg *Config) bool {
+	return cfg.APIKey.AccessKeyID != "" && cfg.APIKey.SecretKey != ""
+}
 
 func isPartialAPIKey(cfg *Config) bool {
-	hasAny := cfg.AccessKeyID != "" || cfg.SecretKey != ""
+	hasAny := cfg.APIKey.AccessKeyID != "" || cfg.APIKey.SecretKey != ""
 
 	return hasAny && !isCompleteAPIKey(cfg)
 }
 
-func isCompleteServiceAccount(cfg *Config) bool {
-	return cfg.ServiceAccountClientID != "" && cfg.ServiceAccountClientSecret != ""
+func isCompleteClientSecret(cfg *Config) bool {
+	return cfg.ClientSecret.ClientID != "" && cfg.ClientSecret.ClientSecret != ""
 }
 
-func isPartialServiceAccount(cfg *Config) bool {
-	hasAny := cfg.ServiceAccountClientID != "" || cfg.ServiceAccountClientSecret != ""
+func isPartialClientSecret(cfg *Config) bool {
+	hasAny := cfg.ClientSecret.ClientID != "" || cfg.ClientSecret.ClientSecret != ""
 
-	return hasAny && !isCompleteServiceAccount(cfg)
+	return hasAny && !isCompleteClientSecret(cfg)
 }
 
 // ResolveAuthMethod inspects a Config and determines which authentication method (if any) should
@@ -131,12 +137,12 @@ func ResolveAuthMethod(cfg *Config) (AuthMethod, error) {
 	return AuthMethodUnknown, ErrMissingCredentials
 }
 
-// validateServiceAccountEnvironment ensures TokenURL and Audience are overridden together, not
+// validateClientSecretEnvironment ensures TokenURL and Audience are overridden together, not
 // independently - see ErrMismatchedServiceAccountEnvironment. An empty field means "not
 // configured" rather than "overridden to empty", so it's treated as the default, not a mismatch.
-func validateServiceAccountEnvironment(cfg *Config) error {
-	hasCustomTokenURL := cfg.ServiceAccountTokenURL != "" && cfg.ServiceAccountTokenURL != DefaultServiceAccountTokenURL
-	hasCustomAudience := cfg.ServiceAccountAudience != "" && cfg.ServiceAccountAudience != DefaultServiceAccountAudience
+func validateClientSecretEnvironment(cfg *Config) error {
+	hasCustomTokenURL := cfg.ClientSecret.TokenURL != "" && cfg.ClientSecret.TokenURL != DefaultServiceAccountTokenURL
+	hasCustomAudience := cfg.ClientSecret.Audience != "" && cfg.ClientSecret.Audience != DefaultServiceAccountAudience
 
 	if hasCustomTokenURL != hasCustomAudience {
 		return ErrMismatchedServiceAccountEnvironment

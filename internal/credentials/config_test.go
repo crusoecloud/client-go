@@ -1,8 +1,10 @@
 package credentials
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -63,7 +65,7 @@ secret_key = "opts-profile-secret"
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
-		if cfg.ProfileName != "from-file" || cfg.AccessKeyID != "file-key" {
+		if cfg.ProfileName != "from-file" || cfg.APIKey.AccessKeyID != "file-key" {
 			t.Fatalf("expected profile from-file/file-key, got %+v", cfg)
 		}
 	})
@@ -76,7 +78,7 @@ secret_key = "opts-profile-secret"
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
-		if cfg.ProfileName != "from-env" || cfg.AccessKeyID != "env-profile-key" {
+		if cfg.ProfileName != "from-env" || cfg.APIKey.AccessKeyID != "env-profile-key" {
 			t.Fatalf("expected profile from-env/env-profile-key, got %+v", cfg)
 		}
 	})
@@ -89,7 +91,7 @@ secret_key = "opts-profile-secret"
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
-		if cfg.ProfileName != "from-opts" || cfg.AccessKeyID != "opts-profile-key" {
+		if cfg.ProfileName != "from-opts" || cfg.APIKey.AccessKeyID != "opts-profile-key" {
 			t.Fatalf("expected profile from-opts/opts-profile-key, got %+v", cfg)
 		}
 	})
@@ -124,7 +126,7 @@ secret_key = "file-secret"
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
-		if cfg.AccessKeyID != "env-key" || cfg.SecretKey != "env-secret" {
+		if cfg.APIKey.AccessKeyID != "env-key" || cfg.APIKey.SecretKey != "env-secret" {
 			t.Fatalf("expected env credentials to win, got %+v", cfg)
 		}
 	})
@@ -134,7 +136,7 @@ secret_key = "file-secret"
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
-		if cfg.AccessKeyID != "file-key" || cfg.SecretKey != "file-secret" {
+		if cfg.APIKey.AccessKeyID != "file-key" || cfg.APIKey.SecretKey != "file-secret" {
 			t.Fatalf("expected profile credentials, got %+v", cfg)
 		}
 	})
@@ -147,7 +149,7 @@ secret_key = "file-secret"
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
-		if cfg.AccessKeyID != "file-key" || cfg.SecretKey != "file-secret" {
+		if cfg.APIKey.AccessKeyID != "file-key" || cfg.APIKey.SecretKey != "file-secret" {
 			t.Fatalf("expected the profile's complete pair to win whole, got %+v", cfg)
 		}
 	})
@@ -168,14 +170,13 @@ secret_key = "file-secret"
 `)
 
 	cfg, err := LoadConfigWithOptions(&Options{
-		ConfigPath:  configPath,
-		AccessKeyID: "explicit-key",
-		SecretKey:   "explicit-secret",
+		ConfigPath: configPath,
+		APIKey:     APIKeyCredentials{AccessKeyID: "explicit-key", SecretKey: "explicit-secret"},
 	})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if cfg.AccessKeyID != "explicit-key" || cfg.SecretKey != "explicit-secret" {
+	if cfg.APIKey.AccessKeyID != "explicit-key" || cfg.APIKey.SecretKey != "explicit-secret" {
 		t.Fatalf("expected explicit options to win over env and file, got %+v", cfg)
 	}
 }
@@ -193,7 +194,7 @@ func TestMissingConfigFile(t *testing.T) {
 	if err != nil {
 		t.Fatalf("expected a missing config file to be non-fatal, got error: %v", err)
 	}
-	if cfg.AccessKeyID != "env-key" || cfg.SecretKey != "env-secret" {
+	if cfg.APIKey.AccessKeyID != "env-key" || cfg.APIKey.SecretKey != "env-secret" {
 		t.Fatalf("expected env credentials to still resolve, got %+v", cfg)
 	}
 }
@@ -218,7 +219,7 @@ secret_key = "dir-env-secret"
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
-		if cfg.AccessKeyID != "dir-env-key" || cfg.SecretKey != "dir-env-secret" {
+		if cfg.APIKey.AccessKeyID != "dir-env-key" || cfg.APIKey.SecretKey != "dir-env-secret" {
 			t.Fatalf("expected credentials from CRUSOE_CONFIG_DIR's config file, got %+v", cfg)
 		}
 	})
@@ -237,7 +238,7 @@ secret_key = "explicit-path-secret"
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
-		if cfg.AccessKeyID != "explicit-path-key" || cfg.SecretKey != "explicit-path-secret" {
+		if cfg.APIKey.AccessKeyID != "explicit-path-key" || cfg.APIKey.SecretKey != "explicit-path-secret" {
 			t.Fatalf("expected opts.ConfigPath to win over CRUSOE_CONFIG_DIR, got %+v", cfg)
 		}
 	})
@@ -256,12 +257,12 @@ func TestInvalidConfigFile(t *testing.T) {
 	if err == nil {
 		t.Fatal("expected an advisory error for malformed TOML")
 	}
-	if cfg.AccessKeyID != "env-key" || cfg.SecretKey != "env-secret" {
+	if cfg.APIKey.AccessKeyID != "env-key" || cfg.APIKey.SecretKey != "env-secret" {
 		t.Fatalf("expected env vars to still populate despite the malformed file, got %+v", cfg)
 	}
 }
 
-func TestProfileNotFoundInConfig(t *testing.T) {
+func TestProfileNotFoundInConfig_ExplicitlyRequested(t *testing.T) {
 	clearCrusoeEnvVars(t)
 
 	configPath := writeTempConfig(t, `
@@ -270,15 +271,61 @@ access_key_id = "file-key"
 secret_key = "file-secret"
 `)
 
-	cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath, Profile: "does-not-exist"})
+	_, err := LoadConfigWithOptions(&Options{ConfigPath: configPath, Profile: "does-not-exist"})
+	if err == nil {
+		t.Fatal("expected an error for an explicitly requested profile absent from the file")
+	}
+}
+
+func TestProfileNotFoundInConfig_ExplicitlyRequestedViaEnv(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	configPath := writeTempConfig(t, `
+[default]
+access_key_id = "file-key"
+secret_key = "file-secret"
+`)
+
+	t.Setenv("CRUSOE_PROFILE", "does-not-exist")
+
+	_, err := LoadConfigWithOptions(&Options{ConfigPath: configPath})
+	if err == nil {
+		t.Fatal("expected an error for a CRUSOE_PROFILE-requested profile absent from the file")
+	}
+}
+
+func TestProfileNotFoundInConfig_MalformedFileWithExplicitProfile(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	configPath := writeTempConfig(t, "this is not valid toml {{{{")
+
+	_, err := LoadConfigWithOptions(&Options{ConfigPath: configPath, Profile: "does-not-exist"})
+	if err == nil {
+		t.Fatal("expected an error for an explicitly requested profile when the config file itself is malformed")
+	}
+	if !strings.Contains(err.Error(), "config file error") {
+		t.Fatalf("expected the malformed-file error to be surfaced alongside the profile error, got: %v", err)
+	}
+}
+
+func TestProfileNotFoundInConfig_ImplicitDefault(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	configPath := writeTempConfig(t, `
+[other]
+access_key_id = "file-key"
+secret_key = "file-secret"
+`)
+
+	cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath})
 	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
+		t.Fatalf("expected no error when the implicit default profile is absent, got: %v", err)
 	}
-	if cfg.ProfileName != "does-not-exist" {
-		t.Fatalf("expected ProfileName to record the requested name, got %q", cfg.ProfileName)
+	if cfg.ProfileName != "default" {
+		t.Fatalf("expected ProfileName %q, got %q", "default", cfg.ProfileName)
 	}
-	if cfg.AccessKeyID != "" || cfg.SecretKey != "" {
-		t.Fatalf("expected empty credentials for a profile absent from the file, got %+v", cfg)
+	if cfg.APIKey.AccessKeyID != "" || cfg.APIKey.SecretKey != "" {
+		t.Fatalf("expected empty credentials for an absent implicit default profile, got %+v", cfg)
 	}
 }
 
@@ -299,7 +346,7 @@ secret_key = "staging-secret"
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if prodCfg.AccessKeyID != "prod-key" || prodCfg.SecretKey != "prod-secret" {
+	if prodCfg.APIKey.AccessKeyID != "prod-key" || prodCfg.APIKey.SecretKey != "prod-secret" {
 		t.Fatalf("expected production profile credentials, got %+v", prodCfg)
 	}
 
@@ -307,7 +354,7 @@ secret_key = "staging-secret"
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if stagingCfg.AccessKeyID != "staging-key" || stagingCfg.SecretKey != "staging-secret" {
+	if stagingCfg.APIKey.AccessKeyID != "staging-key" || stagingCfg.APIKey.SecretKey != "staging-secret" {
 		t.Fatalf("expected staging profile credentials, got %+v", stagingCfg)
 	}
 }
@@ -325,14 +372,14 @@ service_account_client_secret = "profile-client-secret"
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if cfg.ServiceAccountClientID != "profile-client-id" || cfg.ServiceAccountClientSecret != "profile-client-secret" {
+	if cfg.ClientSecret.ClientID != "profile-client-id" || cfg.ClientSecret.ClientSecret != "profile-client-secret" {
 		t.Fatalf("expected profile service account credentials, got %+v", cfg)
 	}
-	if cfg.ServiceAccountTokenURL != DefaultServiceAccountTokenURL {
-		t.Fatalf("expected default token URL to be preserved, got %q", cfg.ServiceAccountTokenURL)
+	if cfg.ClientSecret.TokenURL != DefaultServiceAccountTokenURL {
+		t.Fatalf("expected default token URL to be preserved, got %q", cfg.ClientSecret.TokenURL)
 	}
-	if cfg.ServiceAccountAudience != DefaultServiceAccountAudience {
-		t.Fatalf("expected default audience to be preserved, got %q", cfg.ServiceAccountAudience)
+	if cfg.ClientSecret.Audience != DefaultServiceAccountAudience {
+		t.Fatalf("expected default audience to be preserved, got %q", cfg.ClientSecret.Audience)
 	}
 }
 
@@ -358,14 +405,14 @@ service_account_client_secret = "profile-client-secret"
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if cfg.ServiceAccountClientID != "env-client-id" || cfg.ServiceAccountClientSecret != "env-client-secret" {
+	if cfg.ClientSecret.ClientID != "env-client-id" || cfg.ClientSecret.ClientSecret != "env-client-secret" {
 		t.Fatalf("expected env service account credentials, got %+v", cfg)
 	}
-	if cfg.ServiceAccountTokenURL != "https://auth.example.com/oauth2/token" {
-		t.Fatalf("expected env token URL, got %q", cfg.ServiceAccountTokenURL)
+	if cfg.ClientSecret.TokenURL != "https://auth.example.com/oauth2/token" {
+		t.Fatalf("expected env token URL, got %q", cfg.ClientSecret.TokenURL)
 	}
-	if cfg.ServiceAccountAudience != "https://api.example.com" {
-		t.Fatalf("expected env audience, got %q", cfg.ServiceAccountAudience)
+	if cfg.ClientSecret.Audience != "https://api.example.com" {
+		t.Fatalf("expected env audience, got %q", cfg.ClientSecret.Audience)
 	}
 }
 
@@ -385,10 +432,10 @@ service_account_client_secret = "profile-client-secret"
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if cfg.ServiceAccountClientID != "profile-client-id" || cfg.ServiceAccountClientSecret != "profile-client-secret" {
+	if cfg.ClientSecret.ClientID != "profile-client-id" || cfg.ClientSecret.ClientSecret != "profile-client-secret" {
 		t.Fatalf("expected the profile's complete service account pair, got %+v", cfg)
 	}
-	if cfg.AccessKeyID != "" || cfg.SecretKey != "" {
+	if cfg.APIKey.AccessKeyID != "" || cfg.APIKey.SecretKey != "" {
 		t.Fatalf("expected the stray env access key to be ignored entirely, got %+v", cfg)
 	}
 
@@ -396,8 +443,8 @@ service_account_client_secret = "profile-client-secret"
 	if err != nil {
 		t.Fatalf("expected a clean resolution, got error: %v", err)
 	}
-	if method != AuthMethodServiceAccount {
-		t.Fatalf("expected AuthMethodServiceAccount, got %v", method)
+	if method != AuthMethodClientSecret {
+		t.Fatalf("expected AuthMethodClientSecret, got %v", method)
 	}
 }
 
@@ -410,8 +457,8 @@ service_account_client_id = "projectA-client-id"
 service_account_client_secret = "projectA-client-secret"
 `)
 
-	os.Setenv("CRUSOE_ACCESS_KEY_ID", "process-wide-key") //nolint:usetesting // simulates another identity's env vars
-	os.Setenv("CRUSOE_SECRET_KEY", "process-wide-secret") //nolint:usetesting // simulates another identity's env vars
+	os.Setenv("CRUSOE_ACCESS_KEY_ID", "process-wide-key") //nolint:usetesting // simulates another credential's env vars
+	os.Setenv("CRUSOE_SECRET_KEY", "process-wide-secret") //nolint:usetesting // simulates another credential's env vars
 	defer os.Unsetenv("CRUSOE_ACCESS_KEY_ID")             //nolint:errcheck,usetesting // cleanup
 	defer os.Unsetenv("CRUSOE_SECRET_KEY")                //nolint:errcheck,usetesting // cleanup
 
@@ -419,18 +466,67 @@ service_account_client_secret = "projectA-client-secret"
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if cfg.ServiceAccountClientID != "projectA-client-id" || cfg.ServiceAccountClientSecret != "projectA-client-secret" {
+	if cfg.ClientSecret.ClientID != "projectA-client-id" || cfg.ClientSecret.ClientSecret != "projectA-client-secret" {
 		t.Fatalf("expected projectA's service account pair, got %+v", cfg)
 	}
-	if cfg.AccessKeyID != "" || cfg.SecretKey != "" {
-		t.Fatalf("expected process-wide env vars to be fully excluded from this profile's identity, got %+v", cfg)
+	if cfg.APIKey.AccessKeyID != "" || cfg.APIKey.SecretKey != "" {
+		t.Fatalf("expected process-wide env vars to be fully excluded from this profile's credential pair, got %+v", cfg)
 	}
 
 	method, err := ResolveAuthMethod(cfg)
 	if err != nil {
-		t.Fatalf("expected WithProfile to isolate this identity cleanly, got error: %v", err)
+		t.Fatalf("expected WithProfile to isolate this credential pair cleanly, got error: %v", err)
 	}
-	if method != AuthMethodServiceAccount {
-		t.Fatalf("expected AuthMethodServiceAccount, got %v", method)
+	if method != AuthMethodClientSecret {
+		t.Fatalf("expected AuthMethodClientSecret, got %v", method)
+	}
+}
+
+// Guards against stitching fields from two different tiers into a false-complete pair.
+func TestIncompleteTiersDoNotAssembleIntoACompletePair(t *testing.T) {
+	clearCrusoeEnvVars(t)
+	t.Setenv("CRUSOE_SECRET_KEY", "env-secret-key")
+
+	cfg, err := LoadConfigWithOptions(&Options{
+		ConfigPath: filepath.Join(t.TempDir(), "does-not-exist"),
+		APIKey:     APIKeyCredentials{AccessKeyID: "opts-access-key"}, // incomplete alone: no SecretKey
+	})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	method, err := ResolveAuthMethod(cfg)
+	if err == nil {
+		t.Fatalf("expected an incomplete-credential error, got a resolved method %v with cfg %+v", method, cfg.APIKey)
+	}
+	if !errors.Is(err, ErrIncompleteAPIKeyCredentials) {
+		t.Fatalf("expected ErrIncompleteAPIKeyCredentials, got: %v", err)
+	}
+}
+
+// Guards against TokenURL/Audience leaking in from a tier other than the one that won.
+func TestAncillaryFieldsStayWithTheWinningCredentialTier(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	configPath := writeTempConfig(t, `
+[projectA]
+service_account_client_id = "projectA-client-id"
+service_account_client_secret = "projectA-client-secret"
+`)
+
+	t.Setenv("CRUSOE_SERVICE_ACCOUNT_TOKEN_URL", "https://auth.staging.example.com/oauth2/token")
+	t.Setenv("CRUSOE_SERVICE_ACCOUNT_AUDIENCE", "https://api.staging.example.com")
+
+	cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath, Profile: "projectA"})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.ClientSecret.TokenURL != DefaultServiceAccountTokenURL {
+		t.Fatalf("expected projectA's winning tier to fall back to the default token URL, not a stray env override, got %+v",
+			cfg.ClientSecret)
+	}
+	if cfg.ClientSecret.Audience != DefaultServiceAccountAudience {
+		t.Fatalf("expected projectA's winning tier to fall back to the default audience, not a stray env override, got %+v",
+			cfg.ClientSecret)
 	}
 }

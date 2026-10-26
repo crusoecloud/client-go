@@ -54,7 +54,7 @@ func TestNewAuthenticatedConfig_DoesNotMutateDefaultClient(t *testing.T) {
 	}
 }
 
-func TestNewServiceAccountConfig(t *testing.T) {
+func TestNewClientSecretConfig(t *testing.T) {
 	var tokenRequests int32
 
 	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -90,10 +90,10 @@ func TestNewServiceAccountConfig(t *testing.T) {
 	}))
 	defer apiServer.Close()
 
-	cfg, err := NewServiceAccountConfig(
+	cfg, err := NewClientSecretConfig(
 		tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "")
 	if err != nil {
-		t.Fatalf("NewServiceAccountConfig failed: %v", err)
+		t.Fatalf("NewClientSecretConfig failed: %v", err)
 	}
 
 	resp, err := cfg.HTTPClient.Get(apiServer.URL)
@@ -122,7 +122,7 @@ func TestNewServiceAccountConfig(t *testing.T) {
 	}
 }
 
-func TestNewServiceAccountConfig_RefreshesExpiredToken(t *testing.T) {
+func TestNewClientSecretConfig_RefreshesExpiredToken(t *testing.T) {
 	var tokenRequests int32
 
 	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -133,7 +133,7 @@ func TestNewServiceAccountConfig_RefreshesExpiredToken(t *testing.T) {
 			"access_token": fmt.Sprintf("test-access-token-%d", n),
 			"token_type":   "Bearer",
 			// Already expired by the time it's received, forcing a refetch on
-			// the next request instead of reuse. TestNewServiceAccountConfig
+			// the next request instead of reuse. TestNewClientSecretConfig
 			// above covers the "reuse a still-valid token" half of auto
 			// refresh; this covers the "fetch a new one once it's stale" half.
 			"expires_in": -1,
@@ -146,10 +146,10 @@ func TestNewServiceAccountConfig_RefreshesExpiredToken(t *testing.T) {
 	}))
 	defer apiServer.Close()
 
-	cfg, err := NewServiceAccountConfig(
+	cfg, err := NewClientSecretConfig(
 		tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "")
 	if err != nil {
-		t.Fatalf("NewServiceAccountConfig failed: %v", err)
+		t.Fatalf("NewClientSecretConfig failed: %v", err)
 	}
 
 	const numRequests = 3
@@ -167,7 +167,7 @@ func TestNewServiceAccountConfig_RefreshesExpiredToken(t *testing.T) {
 	}
 }
 
-func TestNewServiceAccountAPIClient(t *testing.T) {
+func TestNewClientSecretAPIClient(t *testing.T) {
 	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		_ = json.NewEncoder(w).Encode(map[string]interface{}{
@@ -178,19 +178,19 @@ func TestNewServiceAccountAPIClient(t *testing.T) {
 	}))
 	defer tokenServer.Close()
 
-	client, err := NewServiceAccountAPIClient(
+	client, err := NewClientSecretAPIClient(
 		tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "")
 	if err != nil {
-		t.Fatalf("NewServiceAccountAPIClient failed: %v", err)
+		t.Fatalf("NewClientSecretAPIClient failed: %v", err)
 	}
 	if client == nil {
 		t.Fatal("expected a non-nil APIClient")
 	}
 }
 
-func TestNewServiceAccountConfig_TokenURLValidation(t *testing.T) {
+func TestNewClientSecretConfig_TokenURLValidation(t *testing.T) {
 	t.Run("empty tokenURL defaults instead of erroring", func(t *testing.T) {
-		cfg, err := NewServiceAccountConfig(context.Background(), "id", "secret", "", "")
+		cfg, err := NewClientSecretConfig(context.Background(), "id", "secret", "", "")
 		if err != nil {
 			t.Fatalf("expected an empty tokenURL to default rather than error, got: %v", err)
 		}
@@ -200,7 +200,7 @@ func TestNewServiceAccountConfig_TokenURLValidation(t *testing.T) {
 	})
 
 	t.Run("non-https tokenURL is rejected", func(t *testing.T) {
-		_, err := NewServiceAccountConfig(context.Background(), "id", "secret", "http://example.com/oauth2/token", "")
+		_, err := NewClientSecretConfig(context.Background(), "id", "secret", "http://example.com/oauth2/token", "")
 		if err == nil {
 			t.Fatal("expected a non-https tokenURL to be rejected")
 		}
@@ -210,18 +210,15 @@ func TestNewServiceAccountConfig_TokenURLValidation(t *testing.T) {
 	})
 
 	t.Run("https tokenURL is accepted", func(t *testing.T) {
-		_, err := NewServiceAccountConfig(context.Background(), "id", "secret", "https://example.com/oauth2/token", "")
+		_, err := NewClientSecretConfig(context.Background(), "id", "secret", "https://example.com/oauth2/token", "")
 		if err != nil {
 			t.Fatalf("expected an https tokenURL to be accepted, got: %v", err)
 		}
 	})
 }
 
-// TestNewServiceAccountConfig_Audience guards against CCX-6069: Hydra only treats a client's
-// registered audience as an allowlist, not something it stamps onto every issued token, so the
-// token request itself must carry an explicit "audience" form value or the resulting access
-// token's aud claim comes back empty and auth-gateway rejects it.
-func TestNewServiceAccountConfig_Audience(t *testing.T) {
+// An omitted audience yields an empty aud claim, which auth-gateway rejects.
+func TestNewClientSecretConfig_Audience(t *testing.T) {
 	// audienceCapturingTokenServer returns a token server that records the "audience" form
 	// value it was sent with on each request, in the sawAudiences slice.
 	audienceCapturingTokenServer := func(sawAudiences *[]string) *httptest.Server {
@@ -250,10 +247,10 @@ func TestNewServiceAccountConfig_Audience(t *testing.T) {
 		}))
 		defer apiServer.Close()
 
-		cfg, err := NewServiceAccountConfig(
+		cfg, err := NewClientSecretConfig(
 			tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "")
 		if err != nil {
-			t.Fatalf("NewServiceAccountConfig failed: %v", err)
+			t.Fatalf("NewClientSecretConfig failed: %v", err)
 		}
 
 		resp, err := cfg.HTTPClient.Get(apiServer.URL)
@@ -279,10 +276,10 @@ func TestNewServiceAccountConfig_Audience(t *testing.T) {
 		}))
 		defer apiServer.Close()
 
-		cfg, err := NewServiceAccountConfig(
+		cfg, err := NewClientSecretConfig(
 			tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, wantAudience)
 		if err != nil {
-			t.Fatalf("NewServiceAccountConfig failed: %v", err)
+			t.Fatalf("NewClientSecretConfig failed: %v", err)
 		}
 
 		resp, err := cfg.HTTPClient.Get(apiServer.URL)
@@ -296,11 +293,11 @@ func TestNewServiceAccountConfig_Audience(t *testing.T) {
 		}
 	})
 
-	t.Run("NewServiceAccountAPIClient accepts an explicit audience", func(t *testing.T) {
-		// NewServiceAccountAPIClient is a thin passthrough to NewServiceAccountConfig (whose
+	t.Run("NewClientSecretAPIClient accepts an explicit audience", func(t *testing.T) {
+		// NewClientSecretAPIClient is a thin passthrough to NewClientSecretConfig (whose
 		// audience-forwarding is fully exercised by the subtests above); swagger.APIClient
 		// doesn't expose its wrapped Configuration, so this only confirms the audience is
-		// accepted and construction succeeds, mirroring TestNewServiceAccountAPIClient.
+		// accepted and construction succeeds, mirroring TestNewClientSecretAPIClient.
 		tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
 			_ = json.NewEncoder(w).Encode(map[string]interface{}{
@@ -311,10 +308,10 @@ func TestNewServiceAccountConfig_Audience(t *testing.T) {
 		}))
 		defer tokenServer.Close()
 
-		client, err := NewServiceAccountAPIClient(
+		client, err := NewClientSecretAPIClient(
 			tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "https://api.crusoe.tech")
 		if err != nil {
-			t.Fatalf("NewServiceAccountAPIClient failed: %v", err)
+			t.Fatalf("NewClientSecretAPIClient failed: %v", err)
 		}
 		if client == nil {
 			t.Fatal("expected a non-nil APIClient")
@@ -322,10 +319,7 @@ func TestNewServiceAccountConfig_Audience(t *testing.T) {
 	})
 }
 
-// TestCtxWithDefaultHTTPClient guards against a wedged connection hanging a token fetch forever:
-// a caller that builds this client once at startup with context.Background() (true of both
-// Terraform and the CLI) has no other way to bound it, since ctx is captured once and a later,
-// unrelated per-request context's cancellation never reaches it.
+// A client built once with context.Background() has no other way to bound a wedged connection.
 func TestCtxWithDefaultHTTPClient(t *testing.T) {
 	t.Run("injects a bounded client when the caller supplied none", func(t *testing.T) {
 		got := ctxWithDefaultHTTPClient(context.Background())
@@ -351,17 +345,8 @@ func TestCtxWithDefaultHTTPClient(t *testing.T) {
 	})
 }
 
-// TestNewServiceAccountConfig_DefaultHTTPClientTimesOutOnAWedgedConnection is an end-to-end
-// regression test for the bug this fix addresses: with no oauth2.HTTPClient supplied and a
-// context that never itself expires (context.Background(), exactly what Terraform/the CLI use),
-// a token server that never responds must still cause the token fetch to give up on its own,
-// rather than hang forever.
-//
-// newDefaultServiceAccountHTTPClient is substituted (rather than just shrinking
-// defaultServiceAccountHTTPTimeout) so the swapped-in client can also trust the test TLS
-// certificate - ctxWithDefaultHTTPClient's own "caller supplied none" branch is still exactly
-// what runs; only what it injects is swapped for a faster, trusting equivalent.
-func TestNewServiceAccountConfig_DefaultHTTPClientTimesOutOnAWedgedConnection(t *testing.T) {
+// A wedged token server must not hang forever, even with context.Background().
+func TestNewClientSecretConfig_DefaultHTTPClientTimesOutOnAWedgedConnection(t *testing.T) {
 	block := make(chan struct{})
 	var tokenRequests int32
 
@@ -384,9 +369,9 @@ func TestNewServiceAccountConfig_DefaultHTTPClientTimesOutOnAWedgedConnection(t 
 	}
 	t.Cleanup(func() { newDefaultServiceAccountHTTPClient = origNewClient })
 
-	cfg, err := NewServiceAccountConfig(context.Background(), "id", "secret", tokenServer.URL, "")
+	cfg, err := NewClientSecretConfig(context.Background(), "id", "secret", tokenServer.URL, "")
 	if err != nil {
-		t.Fatalf("NewServiceAccountConfig failed: %v", err)
+		t.Fatalf("NewClientSecretConfig failed: %v", err)
 	}
 
 	// The target URL doesn't matter - tokenServer.URL is reused only because it's a real,
@@ -434,7 +419,7 @@ func TestNewDefaultConfig_APIKeyFromOptions(t *testing.T) {
 	configPath := clearDefaultConfigEnvVars(t)
 
 	cfg, err := NewDefaultConfig(context.Background(),
-		WithCredentials("explicit-key", "explicit-secret"), WithConfigPath(configPath))
+		WithAPIKey("explicit-key", "explicit-secret"), WithConfigPath(configPath))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -481,7 +466,7 @@ func TestNewDefaultConfig_ServiceAccountFromOptions(t *testing.T) {
 	defer tokenServer.Close()
 
 	cfg, err := NewDefaultConfig(tokenServerContext(tokenServer),
-		WithServiceAccountCredentials("test-client-id", "test-client-secret", tokenServer.URL, "test-audience"),
+		WithClientSecret("test-client-id", "test-client-secret", tokenServer.URL, "test-audience"),
 		WithConfigPath(configPath))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
@@ -537,8 +522,8 @@ func TestNewDefaultConfig_ConflictingCredentialsReturnsError(t *testing.T) {
 	configPath := clearDefaultConfigEnvVars(t)
 
 	_, err := NewDefaultConfig(context.Background(),
-		WithCredentials("key", "secret"),
-		WithServiceAccountCredentials("client-id", "client-secret", "", ""),
+		WithAPIKey("key", "secret"),
+		WithClientSecret("client-id", "client-secret", "", ""),
 		WithConfigPath(configPath))
 	if !errors.Is(err, credentials.ErrConflictingCredentials) {
 		t.Fatalf("expected ErrConflictingCredentials, got: %v", err)

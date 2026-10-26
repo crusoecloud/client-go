@@ -31,19 +31,21 @@ func TestResolveAuthMethod(t *testing.T) {
 	}{
 		{
 			name:    "API key only",
-			cfg:     Config{AccessKeyID: "key", SecretKey: "secret"},
+			cfg:     Config{APIKey: APIKeyCredentials{AccessKeyID: "key", SecretKey: "secret"}},
 			want:    AuthMethodAPIKey,
 			wantErr: nil,
 		},
 		{
 			name: "service account only",
 			cfg: Config{
-				ServiceAccountClientID:     "id",
-				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     DefaultServiceAccountTokenURL,
-				ServiceAccountAudience:     DefaultServiceAccountAudience,
+				ClientSecret: ClientSecretCredentials{
+					ClientID:     "id",
+					ClientSecret: "secret",
+					TokenURL:     DefaultServiceAccountTokenURL,
+					Audience:     DefaultServiceAccountAudience,
+				},
 			},
-			want:    AuthMethodServiceAccount,
+			want:    AuthMethodClientSecret,
 			wantErr: nil,
 		},
 		{
@@ -55,44 +57,46 @@ func TestResolveAuthMethod(t *testing.T) {
 		{
 			name: "both fully configured",
 			cfg: Config{
-				AccessKeyID: "key", SecretKey: "secret",
-				ServiceAccountClientID:     "id",
-				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     DefaultServiceAccountTokenURL,
-				ServiceAccountAudience:     DefaultServiceAccountAudience,
+				APIKey: APIKeyCredentials{AccessKeyID: "key", SecretKey: "secret"},
+				ClientSecret: ClientSecretCredentials{
+					ClientID:     "id",
+					ClientSecret: "secret",
+					TokenURL:     DefaultServiceAccountTokenURL,
+					Audience:     DefaultServiceAccountAudience,
+				},
 			},
 			want:    AuthMethodUnknown,
 			wantErr: ErrConflictingCredentials,
 		},
 		{
 			name:    "only access key ID set",
-			cfg:     Config{AccessKeyID: "key"},
+			cfg:     Config{APIKey: APIKeyCredentials{AccessKeyID: "key"}},
 			want:    AuthMethodUnknown,
 			wantErr: ErrIncompleteAPIKeyCredentials,
 		},
 		{
 			name:    "only secret key set",
-			cfg:     Config{SecretKey: "secret"},
+			cfg:     Config{APIKey: APIKeyCredentials{SecretKey: "secret"}},
 			want:    AuthMethodUnknown,
 			wantErr: ErrIncompleteAPIKeyCredentials,
 		},
 		{
 			name:    "only service account client ID set",
-			cfg:     Config{ServiceAccountClientID: "id"},
+			cfg:     Config{ClientSecret: ClientSecretCredentials{ClientID: "id"}},
 			want:    AuthMethodUnknown,
-			wantErr: ErrIncompleteServiceAccountCredentials,
+			wantErr: ErrIncompleteClientSecretCredentials,
 		},
 		{
 			name:    "only service account client secret set",
-			cfg:     Config{ServiceAccountClientSecret: "secret"},
+			cfg:     Config{ClientSecret: ClientSecretCredentials{ClientSecret: "secret"}},
 			want:    AuthMethodUnknown,
-			wantErr: ErrIncompleteServiceAccountCredentials,
+			wantErr: ErrIncompleteClientSecretCredentials,
 		},
 		{
 			name: "partial API key and partial service account: API key check wins",
 			cfg: Config{
-				AccessKeyID:            "key",
-				ServiceAccountClientID: "id",
+				APIKey:       APIKeyCredentials{AccessKeyID: "key"},
+				ClientSecret: ClientSecretCredentials{ClientID: "id"},
 			},
 			want:    AuthMethodUnknown,
 			wantErr: ErrIncompleteAPIKeyCredentials,
@@ -100,20 +104,22 @@ func TestResolveAuthMethod(t *testing.T) {
 		{
 			name: "complete API key and partial service account",
 			cfg: Config{
-				AccessKeyID: "key", SecretKey: "secret",
-				ServiceAccountClientID: "id",
+				APIKey:       APIKeyCredentials{AccessKeyID: "key", SecretKey: "secret"},
+				ClientSecret: ClientSecretCredentials{ClientID: "id"},
 			},
 			want:    AuthMethodUnknown,
-			wantErr: ErrIncompleteServiceAccountCredentials,
+			wantErr: ErrIncompleteClientSecretCredentials,
 		},
 		{
 			name: "complete service account and partial API key",
 			cfg: Config{
-				AccessKeyID:                "key",
-				ServiceAccountClientID:     "id",
-				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     DefaultServiceAccountTokenURL,
-				ServiceAccountAudience:     DefaultServiceAccountAudience,
+				APIKey: APIKeyCredentials{AccessKeyID: "key"},
+				ClientSecret: ClientSecretCredentials{
+					ClientID:     "id",
+					ClientSecret: "secret",
+					TokenURL:     DefaultServiceAccountTokenURL,
+					Audience:     DefaultServiceAccountAudience,
+				},
 			},
 			want:    AuthMethodUnknown,
 			wantErr: ErrIncompleteAPIKeyCredentials,
@@ -121,10 +127,12 @@ func TestResolveAuthMethod(t *testing.T) {
 		{
 			name: "only token URL overridden",
 			cfg: Config{
-				ServiceAccountClientID:     "id",
-				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     "https://auth.example.com/oauth2/token",
-				ServiceAccountAudience:     DefaultServiceAccountAudience,
+				ClientSecret: ClientSecretCredentials{
+					ClientID:     "id",
+					ClientSecret: "secret",
+					TokenURL:     "https://auth.example.com/oauth2/token",
+					Audience:     DefaultServiceAccountAudience,
+				},
 			},
 			want:    AuthMethodUnknown,
 			wantErr: ErrMismatchedServiceAccountEnvironment,
@@ -132,10 +140,12 @@ func TestResolveAuthMethod(t *testing.T) {
 		{
 			name: "only audience overridden",
 			cfg: Config{
-				ServiceAccountClientID:     "id",
-				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     DefaultServiceAccountTokenURL,
-				ServiceAccountAudience:     "https://api.example.com",
+				ClientSecret: ClientSecretCredentials{
+					ClientID:     "id",
+					ClientSecret: "secret",
+					TokenURL:     DefaultServiceAccountTokenURL,
+					Audience:     "https://api.example.com",
+				},
 			},
 			want:    AuthMethodUnknown,
 			wantErr: ErrMismatchedServiceAccountEnvironment,
@@ -143,32 +153,35 @@ func TestResolveAuthMethod(t *testing.T) {
 		{
 			name: "both token URL and audience overridden together",
 			cfg: Config{
-				ServiceAccountClientID:     "id",
-				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     "https://auth.example.com/oauth2/token",
-				ServiceAccountAudience:     "https://api.example.com",
+				ClientSecret: ClientSecretCredentials{
+					ClientID:     "id",
+					ClientSecret: "secret",
+					TokenURL:     "https://auth.example.com/oauth2/token",
+					Audience:     "https://api.example.com",
+				},
 			},
-			want:    AuthMethodServiceAccount,
+			want:    AuthMethodClientSecret,
 			wantErr: nil,
 		},
 		{
 			name: "both token URL and audience left unset",
 			cfg: Config{
-				ServiceAccountClientID:     "id",
-				ServiceAccountClientSecret: "secret",
+				ClientSecret: ClientSecretCredentials{ClientID: "id", ClientSecret: "secret"},
 			},
-			want:    AuthMethodServiceAccount,
+			want:    AuthMethodClientSecret,
 			wantErr: nil,
 		},
 		{
 			name: "both explicitly set to their own defaults",
 			cfg: Config{
-				ServiceAccountClientID:     "id",
-				ServiceAccountClientSecret: "secret",
-				ServiceAccountTokenURL:     DefaultServiceAccountTokenURL,
-				ServiceAccountAudience:     DefaultServiceAccountAudience,
+				ClientSecret: ClientSecretCredentials{
+					ClientID:     "id",
+					ClientSecret: "secret",
+					TokenURL:     DefaultServiceAccountTokenURL,
+					Audience:     DefaultServiceAccountAudience,
+				},
 			},
-			want:    AuthMethodServiceAccount,
+			want:    AuthMethodClientSecret,
 			wantErr: nil,
 		},
 	}
