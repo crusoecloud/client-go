@@ -259,8 +259,8 @@ func TestNewClientSecretConfig_Audience(t *testing.T) {
 		}
 		resp.Body.Close()
 
-		if len(sawAudiences) != 1 || sawAudiences[0] != credentials.DefaultServiceAccountAudience {
-			t.Fatalf("expected token request audience=%q, got %v", credentials.DefaultServiceAccountAudience, sawAudiences)
+		if len(sawAudiences) != 1 || sawAudiences[0] != credentials.DefaultAudience {
+			t.Fatalf("expected token request audience=%q, got %v", credentials.DefaultAudience, sawAudiences)
 		}
 	})
 
@@ -328,8 +328,8 @@ func TestCtxWithDefaultHTTPClient(t *testing.T) {
 		if !ok {
 			t.Fatalf("expected an *http.Client under oauth2.HTTPClient, got %T", got.Value(oauth2.HTTPClient))
 		}
-		if client.Timeout != defaultServiceAccountHTTPTimeout {
-			t.Fatalf("expected Timeout %v, got %v", defaultServiceAccountHTTPTimeout, client.Timeout)
+		if client.Timeout != defaultTokenFetchHTTPTimeout {
+			t.Fatalf("expected Timeout %v, got %v", defaultTokenFetchHTTPTimeout, client.Timeout)
 		}
 	})
 
@@ -360,14 +360,14 @@ func TestNewClientSecretConfig_DefaultHTTPClientTimesOutOnAWedgedConnection(t *t
 	t.Cleanup(tokenServer.Close)
 	t.Cleanup(func() { close(block) })
 
-	origNewClient := newDefaultServiceAccountHTTPClient
-	newDefaultServiceAccountHTTPClient = func() *http.Client {
+	origNewClient := newDefaultTokenFetchHTTPClient
+	newDefaultTokenFetchHTTPClient = func() *http.Client {
 		client := *tokenServer.Client() // clone: trusts the test cert, without mutating the shared one
 		client.Timeout = 50 * time.Millisecond
 
 		return &client
 	}
-	t.Cleanup(func() { newDefaultServiceAccountHTTPClient = origNewClient })
+	t.Cleanup(func() { newDefaultTokenFetchHTTPClient = origNewClient })
 
 	cfg, err := NewClientSecretConfig(context.Background(), "id", "secret", tokenServer.URL, "")
 	if err != nil {
@@ -398,10 +398,10 @@ var defaultConfigEnvVars = []string{
 	"CRUSOE_PROFILE",
 	"CRUSOE_ACCESS_KEY_ID",
 	"CRUSOE_SECRET_KEY",
-	"CRUSOE_SERVICE_ACCOUNT_CLIENT_ID",
-	"CRUSOE_SERVICE_ACCOUNT_CLIENT_SECRET",
-	"CRUSOE_SERVICE_ACCOUNT_TOKEN_URL",
-	"CRUSOE_SERVICE_ACCOUNT_AUDIENCE",
+	"CRUSOE_CLIENT_ID",
+	"CRUSOE_CLIENT_SECRET",
+	"CRUSOE_TOKEN_URL",
+	"CRUSOE_AUDIENCE",
 }
 
 func clearDefaultConfigEnvVars(t *testing.T) string {
@@ -500,10 +500,10 @@ func TestNewDefaultConfig_ServiceAccountFromConfigFile(t *testing.T) {
 	configPath := filepath.Join(t.TempDir(), "config")
 	configContent := fmt.Sprintf(`
 [default]
-service_account_client_id = "file-client-id"
-service_account_client_secret = "file-client-secret"
-service_account_token_url = %q
-service_account_audience = "test-audience"
+client_id = "file-client-id"
+client_secret = "file-client-secret"
+token_url = %q
+audience = "test-audience"
 `, tokenServer.URL)
 	if err := os.WriteFile(configPath, []byte(configContent), 0o600); err != nil {
 		t.Fatalf("failed to write temp config: %v", err)

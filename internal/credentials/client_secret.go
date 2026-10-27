@@ -20,10 +20,10 @@ var ErrInsecureTokenURL = errors.New("tokenURL must be an https:// URL")
 // oauth2.NewClient (as auth.NewClientSecretConfig does) to get a request-ready *http.Client. ctx is
 // used only for the token-minting HTTP calls this source makes - see oauth2.HTTPClient.
 //
-// tokenURL defaults to DefaultServiceAccountTokenURL when empty; a non-empty tokenURL that isn't
+// tokenURL defaults to DefaultTokenURL when empty; a non-empty tokenURL that isn't
 // https is rejected, rather than sending the client secret over the wire in the clear.
 //
-// audience defaults to DefaultServiceAccountAudience when empty, and is sent as the token request's
+// audience defaults to DefaultAudience when empty, and is sent as the token request's
 // "audience" form parameter (RFC 8707 resource indicator). Ory Hydra only treats a client's
 // registered audience list as an allowlist - it does not stamp it onto every issued token - so a
 // request that omits "audience" gets back a token with an empty aud claim, which auth-gateway then
@@ -35,13 +35,13 @@ func NewClientSecretTokenSource(ctx context.Context, clientID, clientSecret, tok
 	// tokenURL defaulting/validation.
 	switch {
 	case tokenURL == "":
-		tokenURL = DefaultServiceAccountTokenURL
+		tokenURL = DefaultTokenURL
 	case !strings.HasPrefix(tokenURL, "https://"):
 		return nil, fmt.Errorf("%w: got %q", ErrInsecureTokenURL, tokenURL)
 	}
 
 	if audience == "" {
-		audience = DefaultServiceAccountAudience
+		audience = DefaultAudience
 	}
 
 	return (&clientcredentials.Config{

@@ -202,17 +202,17 @@ func NewAuthenticatedConfig(accessKey, secret string) *swagger.Configuration {
 	return cfg
 }
 
-// defaultServiceAccountHTTPTimeout bounds a token fetch when the caller hasn't already supplied
+// defaultTokenFetchHTTPTimeout bounds a token fetch when the caller hasn't already supplied
 // an http.Client via ctx (see ctxWithDefaultHTTPClient).
-const defaultServiceAccountHTTPTimeout = 30 * time.Second
+const defaultTokenFetchHTTPTimeout = 30 * time.Second
 
-// newDefaultServiceAccountHTTPClient builds the client ctxWithDefaultHTTPClient injects when the
+// newDefaultTokenFetchHTTPClient builds the client ctxWithDefaultHTTPClient injects when the
 // caller hasn't supplied one. A var, not a plain call, so tests can substitute a client that also
 // trusts a test TLS certificate instead of waiting out the real timeout.
 //
 //nolint:gochecknoglobals // deliberate test-injection seam, not shared mutable state
-var newDefaultServiceAccountHTTPClient = func() *http.Client {
-	return &http.Client{Timeout: defaultServiceAccountHTTPTimeout}
+var newDefaultTokenFetchHTTPClient = func() *http.Client {
+	return &http.Client{Timeout: defaultTokenFetchHTTPTimeout}
 }
 
 // ctxWithDefaultHTTPClient returns ctx unchanged if the caller already set an oauth2.HTTPClient
@@ -230,7 +230,7 @@ func ctxWithDefaultHTTPClient(ctx context.Context) context.Context {
 		return ctx
 	}
 
-	return context.WithValue(ctx, oauth2.HTTPClient, newDefaultServiceAccountHTTPClient())
+	return context.WithValue(ctx, oauth2.HTTPClient, newDefaultTokenFetchHTTPClient())
 }
 
 // NewClientSecretAPIClient initializes a new Crusoe API client authenticated as a service
@@ -255,7 +255,7 @@ func NewClientSecretAPIClient(ctx context.Context, clientID, clientSecret, token
 //
 // tokenURL/audience defaulting and validation, and the underlying oauth2.TokenSource, live in
 // credentials.NewClientSecretTokenSource - see its doc comment for the RFC 8707 audience details.
-// This wraps that TokenSource with the same ctx (bounded by defaultServiceAccountHTTPTimeout unless
+// This wraps that TokenSource with the same ctx (bounded by defaultTokenFetchHTTPTimeout unless
 // the caller already supplied an oauth2.HTTPClient - see ctxWithDefaultHTTPClient) via
 // oauth2.NewClient to get a request-ready *http.Client. That same injection point would also be the
 // place to add retry/backoff (the parity gap documented where terraform-provider-crusoe wraps this
@@ -354,11 +354,16 @@ func NewDefaultConfig(ctx context.Context, opts ...Option) (*swagger.Configurati
 	case credentials.AuthMethodAPIKey:
 		return NewAuthenticatedConfig(cfg.APIKey.AccessKeyID, cfg.APIKey.SecretKey), nil
 	case credentials.AuthMethodUnknown:
+		// Unreachable: ResolveAuthMethod only returns AuthMethodUnknown alongside a non-nil error,
+		// already handled above.
+		return nil, fmt.Errorf("resolving default credentials: %w", credentials.ErrMissingCredentials)
+	default:
+		// A method ResolveAuthMethod knows how to resolve but this switch has no case for yet -
+		// e.g. a new AuthMethod added to authCandidates without a matching case added here. Fail
+		// loudly instead of falling through to ErrMissingCredentials, which would misreport
+		// credentials that were actually found as missing.
+		return nil, fmt.Errorf("resolving default credentials: %w: %v", credentials.ErrUnsupportedAuthMethod, method)
 	}
-
-	// Unreachable: ResolveAuthMethod only returns AuthMethodUnknown alongside a non-nil error,
-	// already handled above.
-	return nil, fmt.Errorf("resolving default credentials: %w", credentials.ErrMissingCredentials)
 }
 
 // NewDefaultAPIClient is NewDefaultConfig, wrapped in a ready-to-use *swagger.APIClient.

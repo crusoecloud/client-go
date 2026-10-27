@@ -82,8 +82,8 @@ func TestNewClientSecretTokenSource_Audience(t *testing.T) {
 		if _, err := source.Token(); err != nil {
 			t.Fatalf("Token() failed: %v", err)
 		}
-		if sawAudience != DefaultServiceAccountAudience {
-			t.Fatalf("expected default audience %q, got %q", DefaultServiceAccountAudience, sawAudience)
+		if sawAudience != DefaultAudience {
+			t.Fatalf("expected default audience %q, got %q", DefaultAudience, sawAudience)
 		}
 	})
 

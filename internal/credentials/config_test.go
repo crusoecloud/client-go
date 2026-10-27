@@ -13,10 +13,10 @@ var crusoeEnvVars = []string{
 	"CRUSOE_PROFILE",
 	"CRUSOE_ACCESS_KEY_ID",
 	"CRUSOE_SECRET_KEY",
-	"CRUSOE_SERVICE_ACCOUNT_CLIENT_ID",
-	"CRUSOE_SERVICE_ACCOUNT_CLIENT_SECRET",
-	"CRUSOE_SERVICE_ACCOUNT_TOKEN_URL",
-	"CRUSOE_SERVICE_ACCOUNT_AUDIENCE",
+	"CRUSOE_CLIENT_ID",
+	"CRUSOE_CLIENT_SECRET",
+	"CRUSOE_TOKEN_URL",
+	"CRUSOE_AUDIENCE",
 }
 
 func clearCrusoeEnvVars(t *testing.T) {
@@ -364,8 +364,8 @@ func TestServiceAccountConfig_FromProfile(t *testing.T) {
 
 	configPath := writeTempConfig(t, `
 [default]
-service_account_client_id = "profile-client-id"
-service_account_client_secret = "profile-client-secret"
+client_id = "profile-client-id"
+client_secret = "profile-client-secret"
 `)
 
 	cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath})
@@ -375,10 +375,10 @@ service_account_client_secret = "profile-client-secret"
 	if cfg.ClientSecret.ClientID != "profile-client-id" || cfg.ClientSecret.ClientSecret != "profile-client-secret" {
 		t.Fatalf("expected profile service account credentials, got %+v", cfg)
 	}
-	if cfg.ClientSecret.TokenURL != DefaultServiceAccountTokenURL {
+	if cfg.ClientSecret.TokenURL != DefaultTokenURL {
 		t.Fatalf("expected default token URL to be preserved, got %q", cfg.ClientSecret.TokenURL)
 	}
-	if cfg.ClientSecret.Audience != DefaultServiceAccountAudience {
+	if cfg.ClientSecret.Audience != DefaultAudience {
 		t.Fatalf("expected default audience to be preserved, got %q", cfg.ClientSecret.Audience)
 	}
 }
@@ -388,18 +388,18 @@ func TestServiceAccountConfig_EnvOverridesProfile(t *testing.T) {
 
 	configPath := writeTempConfig(t, `
 [default]
-service_account_client_id = "profile-client-id"
-service_account_client_secret = "profile-client-secret"
+client_id = "profile-client-id"
+client_secret = "profile-client-secret"
 `)
 
-	os.Setenv("CRUSOE_SERVICE_ACCOUNT_CLIENT_ID", "env-client-id")                         //nolint:usetesting // explicit var for this test's assertion
-	os.Setenv("CRUSOE_SERVICE_ACCOUNT_CLIENT_SECRET", "env-client-secret")                 //nolint:usetesting // explicit var for this test's assertion
-	os.Setenv("CRUSOE_SERVICE_ACCOUNT_TOKEN_URL", "https://auth.example.com/oauth2/token") //nolint:usetesting // explicit var for this test's assertion
-	os.Setenv("CRUSOE_SERVICE_ACCOUNT_AUDIENCE", "https://api.example.com")                //nolint:usetesting // explicit var for this test's assertion
-	defer os.Unsetenv("CRUSOE_SERVICE_ACCOUNT_CLIENT_ID")                                  //nolint:errcheck,usetesting // cleanup
-	defer os.Unsetenv("CRUSOE_SERVICE_ACCOUNT_CLIENT_SECRET")                              //nolint:errcheck,usetesting // cleanup
-	defer os.Unsetenv("CRUSOE_SERVICE_ACCOUNT_TOKEN_URL")                                  //nolint:errcheck,usetesting // cleanup
-	defer os.Unsetenv("CRUSOE_SERVICE_ACCOUNT_AUDIENCE")                                   //nolint:errcheck,usetesting // cleanup
+	os.Setenv("CRUSOE_CLIENT_ID", "env-client-id")                         //nolint:usetesting // explicit var for this test's assertion
+	os.Setenv("CRUSOE_CLIENT_SECRET", "env-client-secret")                 //nolint:usetesting // explicit var for this test's assertion
+	os.Setenv("CRUSOE_TOKEN_URL", "https://auth.example.com/oauth2/token") //nolint:usetesting // explicit var for this test's assertion
+	os.Setenv("CRUSOE_AUDIENCE", "https://api.example.com")                //nolint:usetesting // explicit var for this test's assertion
+	defer os.Unsetenv("CRUSOE_CLIENT_ID")                                  //nolint:errcheck,usetesting // cleanup
+	defer os.Unsetenv("CRUSOE_CLIENT_SECRET")                              //nolint:errcheck,usetesting // cleanup
+	defer os.Unsetenv("CRUSOE_TOKEN_URL")                                  //nolint:errcheck,usetesting // cleanup
+	defer os.Unsetenv("CRUSOE_AUDIENCE")                                   //nolint:errcheck,usetesting // cleanup
 
 	cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath})
 	if err != nil {
@@ -421,8 +421,8 @@ func TestCrossTypeCredentialsDoNotCombine(t *testing.T) {
 
 	configPath := writeTempConfig(t, `
 [default]
-service_account_client_id = "profile-client-id"
-service_account_client_secret = "profile-client-secret"
+client_id = "profile-client-id"
+client_secret = "profile-client-secret"
 `)
 
 	os.Setenv("CRUSOE_ACCESS_KEY_ID", "stray-env-key") //nolint:usetesting // explicit var for this test's assertion
@@ -453,8 +453,8 @@ func TestProfileIsolatedFromProcessWideEnvVars(t *testing.T) {
 
 	configPath := writeTempConfig(t, `
 [projectA]
-service_account_client_id = "projectA-client-id"
-service_account_client_secret = "projectA-client-secret"
+client_id = "projectA-client-id"
+client_secret = "projectA-client-secret"
 `)
 
 	os.Setenv("CRUSOE_ACCESS_KEY_ID", "process-wide-key") //nolint:usetesting // simulates another credential's env vars
@@ -510,22 +510,22 @@ func TestAncillaryFieldsStayWithTheWinningCredentialTier(t *testing.T) {
 
 	configPath := writeTempConfig(t, `
 [projectA]
-service_account_client_id = "projectA-client-id"
-service_account_client_secret = "projectA-client-secret"
+client_id = "projectA-client-id"
+client_secret = "projectA-client-secret"
 `)
 
-	t.Setenv("CRUSOE_SERVICE_ACCOUNT_TOKEN_URL", "https://auth.staging.example.com/oauth2/token")
-	t.Setenv("CRUSOE_SERVICE_ACCOUNT_AUDIENCE", "https://api.staging.example.com")
+	t.Setenv("CRUSOE_TOKEN_URL", "https://auth.staging.example.com/oauth2/token")
+	t.Setenv("CRUSOE_AUDIENCE", "https://api.staging.example.com")
 
 	cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath, Profile: "projectA"})
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	if cfg.ClientSecret.TokenURL != DefaultServiceAccountTokenURL {
+	if cfg.ClientSecret.TokenURL != DefaultTokenURL {
 		t.Fatalf("expected projectA's winning tier to fall back to the default token URL, not a stray env override, got %+v",
 			cfg.ClientSecret)
 	}
-	if cfg.ClientSecret.Audience != DefaultServiceAccountAudience {
+	if cfg.ClientSecret.Audience != DefaultAudience {
 		t.Fatalf("expected projectA's winning tier to fall back to the default audience, not a stray env override, got %+v",
 			cfg.ClientSecret)
 	}

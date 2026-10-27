@@ -30,12 +30,14 @@ const (
 	// CRUSOE_CONFIG_DIR is set.
 	defaultConfigDir = ".crusoe"
 
-	// DefaultServiceAccountTokenURL is the default OAuth2 token endpoint. Exported for auth.go.
+	// DefaultTokenURL is the default OAuth2 token endpoint. Exported so callers (and tests)
+	// outside this package can reference it instead of duplicating the literal.
 	//nolint:gosec // G101: URL constant, not a credential
-	DefaultServiceAccountTokenURL = "https://auth.crusoe.ai/oauth2/token"
+	DefaultTokenURL = "https://auth.crusoe.ai/oauth2/token"
 
-	// DefaultServiceAccountAudience is the default token audience. Exported for auth.go.
-	DefaultServiceAccountAudience = "https://api.crusoe.ai"
+	// DefaultAudience is the default token audience. Exported so callers (and tests) outside
+	// this package can reference it instead of duplicating the literal.
+	DefaultAudience = "https://api.crusoe.ai"
 
 	// defaultProfileName is used when no profile is selected by any precedence tier.
 	defaultProfileName = "default"
@@ -68,7 +70,7 @@ type Options struct {
 }
 
 // LoadConfigWithOptions resolves a Config in this order (later wins):
-//  1. Hardcoded defaults (service-account token URL/audience only; credentials start empty).
+//  1. Hardcoded defaults (ClientSecret's TokenURL/Audience only; credentials start empty).
 //  2. The selected profile's fields from ~/.crusoe/config (or opts.ConfigPath).
 //  3. CRUSOE_* environment variables.
 //  4. opts' explicit fields.
@@ -86,8 +88,8 @@ type Options struct {
 func LoadConfigWithOptions(opts *Options) (*Config, error) {
 	cfg := &Config{
 		ClientSecret: ClientSecretCredentials{
-			TokenURL: DefaultServiceAccountTokenURL,
-			Audience: DefaultServiceAccountAudience,
+			TokenURL: DefaultTokenURL,
+			Audience: DefaultAudience,
 		},
 	}
 
@@ -148,25 +150,28 @@ func loadRawConfig(opts *Options) (map[string]interface{}, error) {
 	return rawData, nil
 }
 
-// envConfigFromEnviron reads every CRUSOE_* credential env var into a Config.
+// envConfigFromEnviron reads every CRUSOE_* credential env var into a Config, via the same
+// authCandidates table ResolveAuthMethod uses - so a new method added there doesn't require a
+// matching edit here.
 func envConfigFromEnviron() *Config {
-	return &Config{
-		APIKey: APIKeyCredentials{
-			AccessKeyID: os.Getenv("CRUSOE_ACCESS_KEY_ID"),
-			SecretKey:   os.Getenv("CRUSOE_SECRET_KEY"),
-		},
-		ClientSecret: ClientSecretCredentials{
-			ClientID:     os.Getenv("CRUSOE_SERVICE_ACCOUNT_CLIENT_ID"),
-			ClientSecret: os.Getenv("CRUSOE_SERVICE_ACCOUNT_CLIENT_SECRET"),
-			TokenURL:     os.Getenv("CRUSOE_SERVICE_ACCOUNT_TOKEN_URL"),
-			Audience:     os.Getenv("CRUSOE_SERVICE_ACCOUNT_AUDIENCE"),
-		},
+	cfg := &Config{}
+	for _, c := range authCandidates {
+		c.fromEnv(cfg)
 	}
+
+	return cfg
 }
 
-// optsConfigFromOptions copies opts' explicit credential fields into a Config.
+// optsConfigFromOptions copies opts' explicit credential fields into a Config, via the same
+// authCandidates table ResolveAuthMethod uses - so a new method added there doesn't require a
+// matching edit here.
 func optsConfigFromOptions(opts *Options) *Config {
-	return &Config{APIKey: opts.APIKey, ClientSecret: opts.ClientSecret}
+	cfg := &Config{}
+	for _, c := range authCandidates {
+		c.fromOptions(cfg, opts)
+	}
+
+	return cfg
 }
 
 // credentialTierOrder returns the credential tiers in precedence order: opts > env > profile,
@@ -220,7 +225,9 @@ func profileWasExplicitlyRequested(opts *Options) bool {
 	return opts.Profile != "" || os.Getenv(profileEnvVar) != ""
 }
 
-// loadProfile extracts the named profile table from the decoded TOML data, if present.
+// loadProfile extracts the named profile table from the decoded TOML data, if present, via the
+// same authCandidates table ResolveAuthMethod uses - so a new method added there doesn't require a
+// matching edit here.
 func loadProfile(rawData map[string]interface{}, profileName string) (*Config, bool) {
 	val, ok := rawData[profileName]
 	if !ok {
@@ -233,23 +240,8 @@ func loadProfile(rawData map[string]interface{}, profileName string) (*Config, b
 	}
 
 	profileConfig := &Config{}
-	if v, ok := valMap["access_key_id"].(string); ok {
-		profileConfig.APIKey.AccessKeyID = v
-	}
-	if v, ok := valMap["secret_key"].(string); ok {
-		profileConfig.APIKey.SecretKey = v
-	}
-	if v, ok := valMap["service_account_client_id"].(string); ok {
-		profileConfig.ClientSecret.ClientID = v
-	}
-	if v, ok := valMap["service_account_client_secret"].(string); ok {
-		profileConfig.ClientSecret.ClientSecret = v
-	}
-	if v, ok := valMap["service_account_token_url"].(string); ok {
-		profileConfig.ClientSecret.TokenURL = v
-	}
-	if v, ok := valMap["service_account_audience"].(string); ok {
-		profileConfig.ClientSecret.Audience = v
+	for _, c := range authCandidates {
+		c.fromProfile(profileConfig, valMap)
 	}
 
 	return profileConfig, true
@@ -306,22 +298,25 @@ func hasAnyCredentialField(cfg *Config) bool {
 	return false
 }
 
-// applyCredential copies source's credential fields onto cfg unconditionally. ClientSecret.TokenURL/
-// Audience are deliberately left untouched here even though they live on the same struct - callers
-// apply those via mergeAncillary instead, which falls back to a default rather than copying blindly.
+// applyCredential copies source's identity fields onto cfg unconditionally, via the same
+// authCandidates table ResolveAuthMethod uses - so a new method added there doesn't require a
+// matching edit here. ClientSecret.TokenURL/Audience are deliberately left untouched here even
+// though they live on the same struct - callers apply those via mergeAncillary instead, which
+// falls back to a default rather than copying blindly.
 func applyCredential(cfg, source *Config) {
-	cfg.APIKey = source.APIKey
-	cfg.ClientSecret.ClientID = source.ClientSecret.ClientID
-	cfg.ClientSecret.ClientSecret = source.ClientSecret.ClientSecret
+	for _, c := range authCandidates {
+		c.apply(cfg, source)
+	}
 }
 
-// mergeAncillary overwrites cfg's non-credential fields (ClientSecret.TokenURL/Audience) with
-// override's non-empty ones.
+// mergeAncillary overwrites cfg's non-identity fields (e.g. ClientSecret.TokenURL/Audience) with
+// override's non-empty ones, via the same authCandidates table ResolveAuthMethod uses - so a new
+// method added there doesn't require a matching edit here, unless it has no ancillary fields at
+// all (e.g. APIKey), in which case it simply has no mergeAncillary to run.
 func mergeAncillary(cfg, override *Config) {
-	if override.ClientSecret.TokenURL != "" {
-		cfg.ClientSecret.TokenURL = override.ClientSecret.TokenURL
-	}
-	if override.ClientSecret.Audience != "" {
-		cfg.ClientSecret.Audience = override.ClientSecret.Audience
+	for _, c := range authCandidates {
+		if c.mergeAncillary != nil {
+			c.mergeAncillary(cfg, override)
+		}
 	}
 }
