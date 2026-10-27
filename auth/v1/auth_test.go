@@ -363,7 +363,7 @@ func TestNewClientSecretConfig_DefaultHTTPClientTimesOutOnAWedgedConnection(t *t
 	origNewClient := newDefaultTokenFetchHTTPClient
 	newDefaultTokenFetchHTTPClient = func() *http.Client {
 		client := *tokenServer.Client() // clone: trusts the test cert, without mutating the shared one
-		client.Timeout = 50 * time.Millisecond
+		client.Timeout = 200 * time.Millisecond
 
 		return &client
 	}
