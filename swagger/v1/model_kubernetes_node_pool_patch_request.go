@@ -15,18 +15,18 @@ type KubernetesNodePoolPatchRequest struct {
 	// New remediation consent posture for the node pool: auto, propose, or off. Omitted or null leaves the stored mode unchanged. detect_only is not yet available.
 	ConsentMode string `json:"consent_mode,omitempty"`
 	// New desired number of nodes in the node pool.
-	Count int64 `json:"count"`
+	Count *int64 `json:"count,omitempty"`
 	// Whether the first local ephemeral NVMe disk is used for containerd and kubelet ephemeral storage. On supported node pool versions the node advertises that disk's capacity as its ephemeral-storage.
-	EphemeralStorageForContainerd bool `json:"ephemeral_storage_for_containerd"`
+	EphemeralStorageForContainerd *bool `json:"ephemeral_storage_for_containerd,omitempty"`
 	// New labels for the node pool. Labels provided in the PATCH request do not modify existing nodes, but apply to any newly created nodes.
 	NodeLabels map[string]string `json:"node_labels"`
 	// New Kubernetes node pool version for newly created VMs.
-	NodePoolVersion string `json:"node_pool_version"`
+	NodePoolVersion *string `json:"node_pool_version,omitempty"`
 	// New taints for nodes in this node pool. Taints provided in the PATCH request do not modify existing nodes, but apply to any newly created nodes. This field has three behaviors: Omitted (null): existing taints are left unchanged. Empty array ([]): all existing taints are cleared. Non-empty array: existing taints are fully replaced by the provided list. Each (key, effect) pair in the list must be unique. Up to 50 taints are allowed. See KubernetesNodeTaint for per-field format rules.
 	NodeTaints []KubernetesNodeTaint `json:"node_taints"`
 	// New reservation ID for the node pool.
-	ReservationId string `json:"reservation_id"`
+	ReservationId *string `json:"reservation_id,omitempty"`
 	// New SSH public key to use for all VMs created from this node pool.
-	SshPublicKey   string                            `json:"ssh_public_key"`
+	SshPublicKey   *string                           `json:"ssh_public_key,omitempty"`
 	UpdateSettings *KubernetesNodePoolUpdateSettings `json:"update_settings,omitempty"`
 }
