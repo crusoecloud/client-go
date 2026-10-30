@@ -17539,14 +17539,14 @@
           "format": "int64",
           "type": "integer",
           "x-go-name": "Count",
-          "x-redocly-optional": true
+          "x-nullable": true
         },
         "ephemeral_storage_for_containerd": {
           "description": "Whether the first local ephemeral NVMe disk is used for containerd and kubelet\nephemeral storage. On supported node pool versions the node advertises that\ndisk's capacity as its ephemeral-storage.",
           "example": true,
           "type": "boolean",
           "x-go-name": "EphemeralStorageForContainerd",
-          "x-redocly-optional": true
+          "x-nullable": true
         },
         "node_labels": {
           "additionalProperties": {
@@ -17558,14 +17558,14 @@
           },
           "type": "object",
           "x-go-name": "NodeLabels",
-          "x-redocly-optional": true
+          "x-nullable": true
         },
         "node_pool_version": {
           "description": "New Kubernetes node pool version for newly created VMs.",
           "example": "1.30",
           "type": "string",
           "x-go-name": "NodePoolVersion",
-          "x-redocly-optional": true
+          "x-nullable": true
         },
         "node_taints": {
           "description": "New taints for nodes in this node pool. Taints provided in the PATCH request do not modify existing nodes,\nbut apply to any newly created nodes.\nThis field has three behaviors:\nOmitted (null): existing taints are left unchanged.\nEmpty array ([]): all existing taints are cleared.\nNon-empty array: existing taints are fully replaced by the\nprovided list.\nEach (key, effect) pair in the list must be unique. Up to 50\ntaints are allowed. See KubernetesNodeTaint for per-field format rules.",
@@ -17581,35 +17581,28 @@
           },
           "type": "array",
           "x-go-name": "NodeTaints",
-          "x-redocly-optional": true
+          "x-nullable": true
         },
         "reservation_id": {
           "description": "New reservation ID for the node pool.",
           "example": "ca39e669-47ee-456b-968d-303234fbf99f",
           "type": "string",
           "x-go-name": "ReservationID",
-          "x-redocly-optional": true
+          "x-nullable": true
         },
         "ssh_public_key": {
           "description": "New SSH public key to use for all VMs created from this node pool.",
           "example": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCspdG97nTS/h4PEPq2QD2RYVK1jxFXLFZuSDMI8Rtxpucl6LDZLOghEYoj13lxKQnGtcsM3Iu68lh+4YgZe7CbI6cc/TxPbeAX2HJTqDh0J7+GAlLBHK9tsepC0QlhIDiazJptOPDZ3cesCBXdxSnzEbhDaqgYOfl393cp1fCeOKRIDWEP3H9CM25dCbWF66sTDziLsojJ9dMnxhgKm9/JkZc5gYncLT/2Ey+VWfV9Fs65mGUrBbQOn3c8S/nEk6WRcYn4PFOnIp0Mz+Chb50iCJrW677pllLnkTGSU+4c0H9J5z4HDG0I+91RoiQ0QsayFTYO1JtSn+THLuq98V+D",
           "type": "string",
           "x-go-name": "SSHPublicKey",
-          "x-redocly-optional": true
+          "x-nullable": true
         },
         "update_settings": {
           "$ref": "#/definitions/KubernetesNodePoolUpdateSettings"
         }
       },
       "required": [
-        "count",
-        "node_labels",
-        "node_taints",
-        "reservation_id",
-        "action",
-        "ephemeral_storage_for_containerd",
-        "node_pool_version",
-        "ssh_public_key"
+        "action"
       ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
