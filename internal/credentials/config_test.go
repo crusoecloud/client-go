@@ -504,6 +504,140 @@ func TestIncompleteTiersDoNotAssembleIntoACompletePair(t *testing.T) {
 	}
 }
 
+func TestProfileWithExplicitAPIKeyIsError(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	_, err := LoadConfigWithOptions(&Options{
+		Profile: "myprofile",
+		APIKey:  APIKeyCredentials{AccessKeyID: "k", SecretKey: "s"},
+	})
+	if !errors.Is(err, ErrProfileWithExplicitCredentials) {
+		t.Fatalf("expected ErrProfileWithExplicitCredentials, got: %v", err)
+	}
+}
+
+func TestProfileWithExplicitClientSecretIsError(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	_, err := LoadConfigWithOptions(&Options{
+		Profile:      "myprofile",
+		ClientSecret: ClientSecretCredentials{ClientID: "id", ClientSecret: "secret"},
+	})
+	if !errors.Is(err, ErrProfileWithExplicitCredentials) {
+		t.Fatalf("expected ErrProfileWithExplicitCredentials, got: %v", err)
+	}
+}
+
+func TestIncompleteExplicitProfileDoesNotFallThroughToEnv(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	configPath := writeTempConfig(t, `
+[incomplete]
+client_id = "profile-client-id"
+`)
+	t.Setenv("CRUSOE_ACCESS_KEY_ID", "env-key")
+	t.Setenv("CRUSOE_SECRET_KEY", "env-secret")
+
+	cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath, Profile: "incomplete"})
+	if err != nil {
+		t.Fatalf("unexpected error loading config: %v", err)
+	}
+
+	_, err = ResolveAuthMethod(cfg)
+	if !errors.Is(err, ErrIncompleteClientSecretCredentials) {
+		t.Fatalf("expected the profile's own incompleteness, not env credentials, got: %v (cfg %+v)", err, cfg)
+	}
+}
+
+func TestProfileNotFoundInConfig_ExplicitlyRequestedViaTopLevelKey(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	configPath := writeTempConfig(t, `profile = "does-not-exist"`)
+
+	_, err := LoadConfigWithOptions(&Options{ConfigPath: configPath})
+	if !errors.Is(err, ErrProfileNotFound) {
+		t.Fatalf("expected ErrProfileNotFound for a top-level profile key naming a missing table, got: %v", err)
+	}
+}
+
+func TestCredentialSource(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	configPath := writeTempConfig(t, `
+[default]
+access_key_id = "file-key"
+secret_key = "file-secret"
+`)
+
+	t.Run("explicit options", func(t *testing.T) {
+		cfg, err := LoadConfigWithOptions(&Options{
+			ConfigPath: configPath,
+			APIKey:     APIKeyCredentials{AccessKeyID: "k", SecretKey: "s"},
+		})
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		if cfg.CredentialSource != "explicit options" || !cfg.CredentialSourceComplete {
+			t.Fatalf("expected complete explicit options, got source=%q complete=%v", cfg.CredentialSource, cfg.CredentialSourceComplete)
+		}
+	})
+
+	t.Run("environment variables", func(t *testing.T) {
+		t.Setenv("CRUSOE_ACCESS_KEY_ID", "env-key")
+		t.Setenv("CRUSOE_SECRET_KEY", "env-secret")
+
+		cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath})
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		if cfg.CredentialSource != "environment variables" || !cfg.CredentialSourceComplete {
+			t.Fatalf("expected complete environment variables, got source=%q complete=%v", cfg.CredentialSource, cfg.CredentialSourceComplete)
+		}
+	})
+
+	t.Run("profile", func(t *testing.T) {
+		cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath})
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		if cfg.CredentialSource != "profile" || !cfg.CredentialSourceComplete {
+			t.Fatalf("expected complete profile, got source=%q complete=%v", cfg.CredentialSource, cfg.CredentialSourceComplete)
+		}
+	})
+
+	t.Run("named profile via WithProfile", func(t *testing.T) {
+		cfg, err := LoadConfigWithOptions(&Options{ConfigPath: configPath, Profile: "default"})
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		if cfg.CredentialSource != "profile default" || !cfg.CredentialSourceComplete {
+			t.Fatalf("expected complete profile default, got source=%q complete=%v", cfg.CredentialSource, cfg.CredentialSourceComplete)
+		}
+	})
+
+	t.Run("incomplete fallback", func(t *testing.T) {
+		t.Setenv("CRUSOE_ACCESS_KEY_ID", "only-key-no-secret")
+
+		cfg, err := LoadConfigWithOptions(&Options{ConfigPath: writeTempConfig(t, "")})
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		if cfg.CredentialSource != "environment variables" || cfg.CredentialSourceComplete {
+			t.Fatalf("expected incomplete environment variables, got source=%q complete=%v", cfg.CredentialSource, cfg.CredentialSourceComplete)
+		}
+	})
+
+	t.Run("nothing configured", func(t *testing.T) {
+		cfg, err := LoadConfigWithOptions(&Options{ConfigPath: writeTempConfig(t, "")})
+		if err != nil {
+			t.Fatalf("unexpected error: %v", err)
+		}
+		if cfg.CredentialSource != "" || cfg.CredentialSourceComplete {
+			t.Fatalf("expected no source, got source=%q complete=%v", cfg.CredentialSource, cfg.CredentialSourceComplete)
+		}
+	})
+}
+
 // Guards against TokenURL/Audience leaking in from a tier other than the one that won.
 func TestAncillaryFieldsStayWithTheWinningCredentialTier(t *testing.T) {
 	clearCrusoeEnvVars(t)

@@ -48,6 +48,12 @@ var (
 	// CRUSOE_PROFILE) doesn't exist in the config file. See LoadConfigWithOptions.
 	ErrProfileNotFound = errors.New("profile not found in config file")
 
+	// ErrProfileWithExplicitCredentials is returned when Options.Profile is set together with an
+	// explicit credential override (APIKey or ClientSecret). Both select an identity; combining
+	// them is ambiguous about which one should win, so resolution refuses to guess.
+	ErrProfileWithExplicitCredentials = errors.New(
+		"profile cannot be combined with an explicit credential override")
+
 	// ErrUnsupportedAuthMethod is returned by a caller that constructs a client per AuthMethod
 	// (e.g. auth.NewDefaultConfig) when ResolveAuthMethod returns a method it has no constructor
 	// for. Should not occur in practice - every AuthMethod in authCandidates should have a

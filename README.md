@@ -21,10 +21,35 @@ environment variables, then `~/.crusoe/config` - use `NewDefaultAPIClient` inste
 client, err := auth.NewDefaultAPIClient(ctx)
 ```
 
+### Config file
+
+`~/.crusoe/config` is TOML, with one table per named profile. A top-level `profile` key selects
+the default profile when none is specified another way:
+
+```toml
+profile = "default"
+
+[default]
+access_key_id = "..."
+secret_key = "..."
+
+[my-service-account]
+client_id = "..."
+client_secret = "..."
+# token_url and audience are optional, defaulting to the production endpoint.
+```
+
+A table may hold either an access key pair (`access_key_id` / `secret_key`) or a service account
+pair (`client_id` / `client_secret`, optionally `token_url` / `audience`) - not both.
+
 `auth.WithProfile(name)` selects a named profile from the config file. A profile selected this
 way takes precedence over environment variables, not just the config file's own default profile -
 so one process can hold multiple identities (e.g. different service accounts for different
-projects) without unrelated `CRUSOE_*` environment variables overriding which one gets used.
+projects) without unrelated `CRUSOE_*` environment variables overriding which one gets used. If
+the named profile is missing or incomplete, resolution fails rather than falling through to env
+vars that may belong to a different identity. `WithProfile` cannot be combined with `WithAPIKey`
+or `WithClientSecret` - both select an identity, so combining them is rejected as ambiguous rather
+than silently picking one.
 
 Environment variables: `CRUSOE_ACCESS_KEY_ID` / `CRUSOE_SECRET_KEY` for a static key,
 `CRUSOE_CLIENT_ID` / `CRUSOE_CLIENT_SECRET` (optionally with `CRUSOE_TOKEN_URL` /

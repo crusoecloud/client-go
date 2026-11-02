@@ -50,6 +50,12 @@ type Config struct {
 
 	APIKey       APIKeyCredentials
 	ClientSecret ClientSecretCredentials
+
+	// CredentialSource names the winning precedence tier (e.g. "explicit options", "profile").
+	// CredentialSourceComplete reports whether that tier was a full pair. Both are empty/false
+	// when no tier had any field set. Informational only - not used by resolution itself.
+	CredentialSource         string
+	CredentialSourceComplete bool
 }
 
 // Options carries explicit overrides (highest precedence) plus profile/config-path selection.
@@ -76,21 +82,29 @@ type Options struct {
 //  4. opts' explicit fields.
 //
 // Profile selection itself follows: opts.Profile > CRUSOE_PROFILE env > config file's top-level
-// "profile" key > "default".
+// "profile" key > "default". opts.Profile cannot be combined with opts.APIKey or
+// opts.ClientSecret - both select an identity, so combining them returns
+// ErrProfileWithExplicitCredentials.
 //
 // The returned Config is always populated, even on error: a non-nil error from a missing or
 // unreadable config file is advisory, not fatal - resolution continues using environment
 // variables and explicit options alone. The one exception is an explicitly requested profile
-// (via Options.Profile or CRUSOE_PROFILE) that doesn't exist in the config file: that is always a
-// hard error, since silently falling through could authenticate as the wrong identity without the
-// caller noticing. An implicit "default" profile that doesn't exist is not an error, since many
-// callers configure credentials entirely via env vars and never create a config file at all.
+// (via Options.Profile, CRUSOE_PROFILE, or the config file's own top-level "profile" key) that
+// doesn't exist: that is always a hard error, since silently falling through could authenticate as
+// the wrong identity without the caller noticing. An implicit "default" profile that doesn't exist
+// is not an error, since many callers configure credentials entirely via env vars and never
+// create a config file at all.
 func LoadConfigWithOptions(opts *Options) (*Config, error) {
 	cfg := &Config{
 		ClientSecret: ClientSecretCredentials{
 			TokenURL: DefaultTokenURL,
 			Audience: DefaultAudience,
 		},
+	}
+
+	optsConfig := optsConfigFromOptions(opts)
+	if opts.Profile != "" && hasAnyCredentialField(optsConfig) {
+		return cfg, ErrProfileWithExplicitCredentials
 	}
 
 	rawData, advisoryErr := loadRawConfig(opts)
@@ -100,7 +114,7 @@ func LoadConfigWithOptions(opts *Options) (*Config, error) {
 
 	profileConfig, found := loadProfile(rawData, profileName)
 	if !found {
-		if profileWasExplicitlyRequested(opts) {
+		if profileWasExplicitlyRequested(rawData, opts) {
 			if advisoryErr != nil {
 				return cfg, fmt.Errorf("%w: %q (config file error: %v)", ErrProfileNotFound, profileName, advisoryErr)
 			}
@@ -112,14 +126,15 @@ func LoadConfigWithOptions(opts *Options) (*Config, error) {
 	}
 
 	envConfig := envConfigFromEnviron()
-	optsConfig := optsConfigFromOptions(opts)
 
 	// The winning tier supplies both the credential pair and its own ancillary fields
 	// (TokenURL/Audience) together - never mixed with a different tier's, so one identity's
 	// secret is never silently paired with a different tier's token endpoint or audience.
-	winner := pickCredentialTier(credentialTierOrder(opts, optsConfig, envConfig, profileConfig)...)
+	winner, outcome := pickCredentialTier(credentialTierOrder(opts, optsConfig, envConfig, profileConfig)...)
 	applyCredential(cfg, winner)
 	mergeAncillary(cfg, winner)
+	cfg.CredentialSource = outcome.tier
+	cfg.CredentialSourceComplete = outcome.complete
 
 	return cfg, advisoryErr
 }
@@ -174,16 +189,29 @@ func optsConfigFromOptions(opts *Options) *Config {
 	return cfg
 }
 
-// credentialTierOrder returns the credential tiers in precedence order: opts > env > profile,
-// except when opts.Profile explicitly names a profile. In that case profile is tried before env,
-// so an explicitly selected credential pair can't be overridden by unrelated env vars set
-// elsewhere in the same process.
-func credentialTierOrder(opts *Options, optsConfig, envConfig, profileConfig *Config) []*Config {
+// namedTier pairs a precedence-ordered Config with the human-readable name pickCredentialTier
+// reports back as Config.CredentialSource when that tier wins.
+type namedTier struct {
+	name   string
+	config *Config
+}
+
+// credentialTierOrder returns the credential tiers in precedence order: opts > env > profile.
+// When opts.Profile names a profile, env is excluded entirely - an incomplete named profile must
+// report its own incompleteness, not fall through to unrelated env vars.
+func credentialTierOrder(opts *Options, optsConfig, envConfig, profileConfig *Config) []namedTier {
 	if opts.Profile != "" {
-		return []*Config{optsConfig, profileConfig, envConfig}
+		return []namedTier{
+			{"explicit options", optsConfig},
+			{"profile " + opts.Profile, profileConfig},
+		}
 	}
 
-	return []*Config{optsConfig, envConfig, profileConfig}
+	return []namedTier{
+		{"explicit options", optsConfig},
+		{"environment variables", envConfig},
+		{"profile", profileConfig},
+	}
 }
 
 // resolveConfigPath returns the config file path to read, or "" if the caller should fall back to
@@ -218,11 +246,18 @@ func resolveProfileName(rawData map[string]interface{}, opts *Options) string {
 	return profileName
 }
 
-// profileWasExplicitlyRequested reports whether the caller named a specific profile, as opposed to
-// falling back to the implicit "default". See LoadConfigWithOptions for why this distinction
-// determines whether a missing profile is a hard error.
-func profileWasExplicitlyRequested(opts *Options) bool {
-	return opts.Profile != "" || os.Getenv(profileEnvVar) != ""
+// profileWasExplicitlyRequested reports whether the caller named a specific profile - via
+// opts.Profile, CRUSOE_PROFILE, or the config file's own top-level "profile" key - as opposed to
+// falling back to the implicit "default". See LoadConfigWithOptions for why this determines
+// whether a missing profile is a hard error.
+func profileWasExplicitlyRequested(rawData map[string]interface{}, opts *Options) bool {
+	if opts.Profile != "" || os.Getenv(profileEnvVar) != "" {
+		return true
+	}
+
+	topLevelProfile, ok := rawData["profile"].(string)
+
+	return ok && topLevelProfile != ""
 }
 
 // loadProfile extracts the named profile table from the decoded TOML data, if present, via the
@@ -260,6 +295,13 @@ func isCompleteCredential(cfg *Config) bool {
 	return false
 }
 
+// tierOutcome records which precedence tier pickCredentialTier chose and whether it was complete,
+// for Config.CredentialSource/CredentialSourceComplete.
+type tierOutcome struct {
+	tier     string
+	complete bool
+}
+
 // pickCredentialTier returns the first tier, in the given highest-to-lowest precedence order, that
 // carries a complete credential pair, used as-is.
 //
@@ -269,20 +311,20 @@ func isCompleteCredential(cfg *Config) bool {
 // assemble a "complete" pair out of two unrelated tiers (the exact cross-tier contamination this
 // whole tier-based resolution exists to prevent), so ResolveAuthMethod's incomplete-credential
 // error must reflect one real tier's actual state, not a composite of several.
-func pickCredentialTier(tiers ...*Config) *Config {
-	for _, tier := range tiers {
-		if isCompleteCredential(tier) {
-			return tier
+func pickCredentialTier(tiers ...namedTier) (*Config, tierOutcome) {
+	for _, t := range tiers {
+		if isCompleteCredential(t.config) {
+			return t.config, tierOutcome{tier: t.name, complete: true}
 		}
 	}
 
-	for _, tier := range tiers {
-		if hasAnyCredentialField(tier) {
-			return tier
+	for _, t := range tiers {
+		if hasAnyCredentialField(t.config) {
+			return t.config, tierOutcome{tier: t.name, complete: false}
 		}
 	}
 
-	return &Config{}
+	return &Config{}, tierOutcome{}
 }
 
 // hasAnyCredentialField reports whether cfg has any credential field set, complete or not, via the

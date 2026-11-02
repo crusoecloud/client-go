@@ -530,6 +530,30 @@ func TestNewDefaultConfig_ConflictingCredentialsReturnsError(t *testing.T) {
 	}
 }
 
+func TestNewDefaultConfig_ProfileWithAPIKeyReturnsError(t *testing.T) {
+	configPath := clearDefaultConfigEnvVars(t)
+
+	_, err := NewDefaultConfig(context.Background(),
+		WithProfile("myprofile"),
+		WithAPIKey("key", "secret"),
+		WithConfigPath(configPath))
+	if !errors.Is(err, credentials.ErrProfileWithExplicitCredentials) {
+		t.Fatalf("expected ErrProfileWithExplicitCredentials, got: %v", err)
+	}
+	if !errors.Is(err, ErrProfileWithExplicitCredentials) {
+		t.Fatalf("expected the reexported auth.ErrProfileWithExplicitCredentials to also match, got: %v", err)
+	}
+}
+
+func TestNewDefaultConfig_ProfileNotFoundReturnsError(t *testing.T) {
+	configPath := clearDefaultConfigEnvVars(t)
+
+	_, err := NewDefaultConfig(context.Background(), WithProfile("does-not-exist"), WithConfigPath(configPath))
+	if !errors.Is(err, credentials.ErrProfileNotFound) {
+		t.Fatalf("expected ErrProfileNotFound, not a generic missing-credentials error, got: %v", err)
+	}
+}
+
 func TestNewDefaultConfig_MissingCredentialsReturnsError(t *testing.T) {
 	configPath := clearDefaultConfigEnvVars(t)
 
