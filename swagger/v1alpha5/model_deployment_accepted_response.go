@@ -12,6 +12,8 @@ package swagger
 type DeploymentAcceptedResponse struct {
 	// ID of the affected deployment.
 	Id string `json:"id,omitempty"`
+	// ID of the operation that tracks this request.
+	OperationId string `json:"operation_id,omitempty"`
 	// Resulting status.
 	Status string `json:"status,omitempty"`
 }

@@ -9,6 +9,8 @@
 package swagger
 
 type UpdateModelResponse struct {
+	// ID of the operation that tracks this request.
+	OperationId string `json:"operation_id,omitempty"`
 	// The per-cluster update workflows that were triggered.
 	Workflows []UpdateResponseEntry `json:"workflows,omitempty"`
 }

@@ -5519,6 +5519,107 @@
         ]
       }
     },
+    "/projects/{project_id}/foundry/deployed-models/operations": {
+      "get": {
+        "operationId": "listFoundryDeployedModelOperations",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "Operation states to include.",
+            "example": [
+              "IN_PROGRESS"
+            ],
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "state",
+            "type": "array",
+            "x-go-name": "State"
+          },
+          {
+            "description": "Excludes operations started before this RFC 3339 time.",
+            "example": "2021-12-03T19:58:34Z",
+            "in": "query",
+            "name": "lower_time_bound",
+            "type": "string",
+            "x-go-name": "LowerTimeBound"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the deployed model operations in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/deployed-models/operations/{operation_id}": {
+      "get": {
+        "operationId": "getFoundryDeployedModelOperation",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the operation.",
+            "in": "path",
+            "name": "operation_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "OperationID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns a single deployed model operation.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
     "/projects/{project_id}/foundry/deployed-models/progress": {
       "get": {
         "operationId": "getFoundryDeployedModelsProgress",
@@ -5913,6 +6014,107 @@
           }
         },
         "summary": "Creates a self-serve deployment in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/selfserve/deployments/operations": {
+      "get": {
+        "operationId": "listFoundryDeploymentOperations",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "Operation states to include.",
+            "example": [
+              "IN_PROGRESS"
+            ],
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "state",
+            "type": "array",
+            "x-go-name": "State"
+          },
+          {
+            "description": "Excludes operations started before this RFC 3339 time.",
+            "example": "2021-12-03T19:58:34Z",
+            "in": "query",
+            "name": "lower_time_bound",
+            "type": "string",
+            "x-go-name": "LowerTimeBound"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the self-serve deployment operations in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/selfserve/deployments/operations/{operation_id}": {
+      "get": {
+        "operationId": "getFoundryDeploymentOperation",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the operation.",
+            "in": "path",
+            "name": "operation_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "OperationID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns a single self-serve deployment operation.",
         "tags": [
           "Foundry"
         ]
@@ -13748,6 +13950,11 @@
           "description": "ID of the affected deployment.",
           "type": "string",
           "x-go-name": "ID"
+        },
+        "operation_id": {
+          "description": "ID of the operation that tracks this request.",
+          "type": "string",
+          "x-go-name": "OperationID"
         },
         "status": {
           "description": "Resulting status.",
@@ -22001,6 +22208,11 @@
     },
     "UpdateModelResponse": {
       "properties": {
+        "operation_id": {
+          "description": "ID of the operation that tracks this request.",
+          "type": "string",
+          "x-go-name": "OperationID"
+        },
         "workflows": {
           "description": "The per-cluster update workflows that were triggered.",
           "items": {
