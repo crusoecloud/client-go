@@ -610,8 +610,8 @@ secret_key = "file-secret"
 		if err != nil {
 			t.Fatalf("unexpected error: %v", err)
 		}
-		if cfg.CredentialSource != "profile default" || !cfg.CredentialSourceComplete {
-			t.Fatalf("expected complete profile default, got source=%q complete=%v", cfg.CredentialSource, cfg.CredentialSourceComplete)
+		if cfg.CredentialSource != "profile" || !cfg.CredentialSourceComplete {
+			t.Fatalf("expected complete profile, got source=%q complete=%v", cfg.CredentialSource, cfg.CredentialSourceComplete)
 		}
 	})
 

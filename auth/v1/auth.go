@@ -337,6 +337,13 @@ func NewDefaultConfig(ctx context.Context, opts ...Option) (*swagger.Configurati
 	}
 
 	cfg, loadErr := credentials.LoadConfigWithOptions(&resolveOpts)
+	// Most load errors are advisory and still let resolution continue; these two are fatal and
+	// must be returned directly, not buried as context behind a later ErrMissingCredentials.
+	fatalLoadErr := errors.Is(loadErr, credentials.ErrProfileNotFound) ||
+		errors.Is(loadErr, credentials.ErrProfileWithExplicitCredentials)
+	if fatalLoadErr {
+		return nil, fmt.Errorf("resolving default credentials: %w", loadErr)
+	}
 
 	method, err := credentials.ResolveAuthMethod(cfg)
 	if err != nil {

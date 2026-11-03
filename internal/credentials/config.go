@@ -201,9 +201,12 @@ type namedTier struct {
 // report its own incompleteness, not fall through to unrelated env vars.
 func credentialTierOrder(opts *Options, optsConfig, envConfig, profileConfig *Config) []namedTier {
 	if opts.Profile != "" {
+		// optsConfig is guaranteed empty here: LoadConfigWithOptions already returns
+		// ErrProfileWithExplicitCredentials before reaching this call if opts.Profile and any
+		// explicit credential field are both set, so there is no "explicit options" tier left to
+		// consider.
 		return []namedTier{
-			{"explicit options", optsConfig},
-			{"profile " + opts.Profile, profileConfig},
+			{"profile", profileConfig},
 		}
 	}
 
