@@ -1,43 +1,33 @@
-PREFIX?=$(shell pwd)
+# Tool pins, execution, and workflow ordering live in mise.toml.
+ifneq ($(origin BUILDTAGS),undefined)
+export BUILDTAGS
+endif
+ifneq ($(origin GOLANGCI_VERSION),undefined)
+export GOLANGCI_VERSION
+endif
 
-GOLANGCI_VERSION = v1.47.3
+.PHONY: dev ci build-deps precommit test test-ci lint help
 
-.PHONY: dev
-dev: test build-deps lint ## Runs a , test, lint
+dev: ## Run tests and lint
+	@mise run dev
 
-.PHONY: ci
-ci: test-ci build-deps lint ## Runs test, lint
+ci: ## Run module, coverage, and lint checks
+	@mise run test:all
 
-.PHONY: build-deps
-build-deps: ## Install build dependencies
-	@echo "==> $@"
-	@GO111MODULE=on go install github.com/golangci/golangci-lint/cmd/golangci-lint@${GOLANGCI_VERSION}
+build-deps: ## Install project tools
+	@mise install
 
-.PHONY: precommit
-precommit: ## runs various formatters that will be checked by linter (but can/should be automatic in your editor)
-	@echo "==> $@"
-	@go mod tidy
-	@golangci-lint run --fix ./...
+precommit: ## Tidy modules and apply lint fixes
+	@mise run precommit
 
-.PHONY: test
-test: ## Runs the go tests.
-	@echo "==> $@"
-	@go test -tags "$(BUILDTAGS)" -cover -race -v ./...
+test: ## Run the race tests
+	@mise run go:test:race
 
-.PHONY: test-ci
-test-ci: ## Runs the go tests with additional options for a CI environment
-	@echo "==> $@"
-	@go mod tidy
-	@git diff --exit-code go.mod go.sum # fail if go.mod is not tidy
-	@go test -tags "$(BUILDTAGS)" -coverprofile=coverage.out -race -v ./...
-	@go tool cover -func=coverage.out
+test-ci: ## Check modules and preserve atomic race coverage reports
+	@mise run test:checks
 
-.PHONY: lint
-lint: ## Verifies `golangci-lint` passes
-	@echo "==> $@"
-	@golangci-lint version
-	@golangci-lint run ./... --skip-dirs "swagger"
+lint: ## Run lint checks
+	@mise run lint:all
 
-.PHONY: help
 help:
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' Makefile | sort

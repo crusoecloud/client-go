@@ -1,19 +1,23 @@
 include:
-  - project: 'crusoeenergy/tools'
-    file: '/templates/go.gitlab-ci.yml'
+  - component: $CI_SERVER_FQDN/crusoeenergy/tools/mise@master
+  - component: $CI_SERVER_FQDN/crusoeenergy/tools/go@master
+    inputs:
+      major_version: "$MAJOR_VERSION"
+      minor_version: "$MINOR_VERSION"
+  # Retain the legacy analyzer scopes alongside centrally injected policy jobs.
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+  - template: Security/SAST-IaC.latest.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
 
 variables:
   MAJOR_VERSION: "1"
   MINOR_VERSION: "0"
-  # Comment-only touch to this file (see tag_semver's .version-changes rule below) to force a new
-  # patch tag for CCX-6069's service-account audience fix (merged in 6e3c41f), which otherwise
-  # wouldn't get one: tag_semver only fires on swagger/** changes or edits to this file, and that
-  # merge touched neither.
+  # The retained standalone reminder/promotion jobs use the existing helper image.
   CI_IMAGE: registry.gitlab.com/crusoeenergy/tools/go-ci-1.18
-
-analyze:
-  variables:
-    GOKART_CONFIG_LOC: $CI_PROJECT_DIR/.gokart/analyzers.yml
+  CI_IMAGE_TAG: master
+  SAST_EXCLUDED_ANALYZERS: gosec,semgrep
+  GITLAB_ADVANCED_SAST_ENABLED: 'true'
 
 .code-changes: &code-changes
       changes:
@@ -21,41 +25,47 @@ analyze:
         - Makefile
         - go.*
 
-.swagger-changes: &swagger-changes
-      changes:
-        - swagger/**/*
-
-.version-changes: &version-changes
-      changes:
-        - .gitlab-ci.yml
-
-.swagger-and-code-changes: &swagger-and-code-changes
-      changes:
-        - .gitlab-ci.yml
-        - Makefile
-        - go.*
-        - swagger/**/*
-
-test_and_lint:
-  rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "auto-gen" || $CI_MERGE_REQUEST_ID'
-      changes: !reference [.swagger-and-code-changes, changes]
-
-# trigger semantic versioning + tagging if .swagger-changes or version variables change on the default branch
-tag_semver:
+# Preserve the informational source index while shared Go jobs use mise.
+code_intelligence:
+  needs: []
+  allow_failure: true
+  image: registry.gitlab.com/crusoeenergy/tools/scip:v0.5.0
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      changes: !reference [.swagger-changes, changes]
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      changes: !reference [.version-changes, changes]
-  needs: ["test_and_lint"]
+      changes: !reference [.code-changes, changes]
+  before_script:
+    - go env -w "GOPRIVATE=${CI_SERVER_HOST}"
+    - echo "machine ${CI_SERVER_HOST} login gitlab-ci-token password ${CI_JOB_TOKEN}" > ~/.netrc
+  script:
+    - scip-go --skip-tests
+    - scip convert --from index.scip --to dump.lsif
+  artifacts:
+    reports:
+      lsif: dump.lsif
 
-# job that will ensure swagger pipeline is created when modifying swagger code
-swagger-dummy:
+# The existing dependency reminder remains separate from the shared QA jobs.
+dependency-reminders:
+  image: $CI_IMAGE:$CI_IMAGE_TAG
   needs: []
   rules:
-    - <<: *code-changes
+    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "prod"'
       when: never
-    - <<: *swagger-changes
-      when: always
-  script: "echo 'dummy swagger job'"
+    - if: '$CI_MERGE_REQUEST_ID && $CI_API_TOKEN'
+      changes: [go.mod, go.sum]
+  script:
+    - /var/crusoe/scripts/dependency_reminder.sh
+
+# Retain the meaningful v1-only checks alongside the standard v2 lint job.
+legacy_lint_checks:
+  extends: .go_rules
+  stage: test
+  rules: !reference [golangci_lint, rules]
+  script:
+    - mise run lint:legacy-checks
+
+format_lint:
+  extends: .go_rules
+  stage: test
+  rules: !reference [golangci_lint, rules]
+  script:
+    - mise run format:check

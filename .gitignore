@@ -4,3 +4,12 @@ dist/
 coverage.out
 gokart_result.json
 .idea/**
+# Mise and shared task outputs
+.mise-data/
+/bin/
+/public/
+coverage.html
+coverage.xml
+coverage.out.tmp
+junit.xml
+gl-code-quality-report.json
