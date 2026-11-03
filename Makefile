@@ -23,7 +23,7 @@ precommit: ## Tidy modules and apply lint fixes
 test: ## Run the race tests
 	@mise run go:test:race
 
-test-ci: ## Check modules and preserve atomic race coverage reports
+test-ci: ## Check modules, produce shared coverage reports, and run race checks
 	@mise run test:checks
 
 lint: ## Run lint checks

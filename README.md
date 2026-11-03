@@ -69,8 +69,11 @@ resolves macOS arm64 and Linux amd64 (including musl).
 CI uses the shared mise/Go components from tools `master`: count coverage and
 race checks run separately, lint runs on MR pipelines, and release tagging follows
 the shared dependency policy. The existing legacy and central security analyzers
-remain enabled. Local `make test-ci` preserves the atomic race coverage/report
-interface; `make ci` includes local lint. Native `GOFLAGS` supplies extra Go flags.
+remain enabled. Local `make test-ci` uses the shared count coverage reports
+(`coverage.out`, `coverage.html`, `coverage.xml`, and `junit.xml`) and runs race
+checks separately; `make ci` also runs local lint. Coverage excludes generated
+protobuf files and mocks/proto packages, and Cobertura reports coverage by file.
+`BUILDTAGS` and native `GOFLAGS` remain supported for test selection.
 
 This migration upgrades the project tooling to Go 1.26.10 and golangci-lint v2.
 The v2 lint configuration maps maintained checks and retains the generated

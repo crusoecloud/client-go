@@ -13,7 +13,7 @@ lockfile = true
 
 [task_config]
 includes = [
-  "git::https://git@gitlab.com/crusoeenergy/tools.git//tasks/go.toml?ref=master",
+  "{{ env.CRUSOE_TASKS_URL | default(value='git::https://git@gitlab.com/crusoeenergy/tools.git//tasks?ref=master') }}",
 ]
 
 [env]
@@ -38,7 +38,7 @@ run = [
 ]
 
 [tasks."test:all"]
-description = "Check module tidiness, then run atomic race coverage and lint"
+description = "Check module tidiness, then run shared count coverage, race checks, and lint"
 run = [
   { task = "go:mod-tidy:check" },
   { task = "test:coverage" },
@@ -48,17 +48,18 @@ run = [
 [tasks."go:test:race".env]
 GOFLAGS = "{{ env.GOFLAGS | default(value='') }} '-tags={{ env.BUILDTAGS }}'"
 
+[tasks."go:test:cover".env]
+GOFLAGS = "{{ env.GOFLAGS | default(value='') }} '-tags={{ env.BUILDTAGS }}'"
+
 [tasks."test:coverage"]
-description = "Preserve the legacy full-module atomic race coverage profile"
-run = '''
-#!/usr/bin/env bash
-set -euo pipefail
-go test -tags "$BUILDTAGS" -coverprofile=coverage.out -race -v ./...
-go tool cover -func=coverage.out
-'''
+description = "Produce the shared count coverage reports, then run race checks"
+run = [
+  { task = "go:test:cover" },
+  { task = "go:test:race" },
+]
 
 [tasks."test:checks"]
-description = "Check module tidiness and produce the legacy race coverage reports"
+description = "Check module tidiness, produce shared coverage reports, and run race checks"
 run = [
   { task = "go:mod-tidy:check" },
   { task = "test:coverage" },
