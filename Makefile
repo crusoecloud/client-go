@@ -1,7 +1,4 @@
 # Tool pins and task implementations live in mise.toml.
-ifneq ($(origin BUILDTAGS),undefined)
-export BUILDTAGS
-endif
 ifneq ($(origin GOLANGCI_VERSION),undefined)
 export GOLANGCI_VERSION
 endif

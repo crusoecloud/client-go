@@ -77,7 +77,9 @@ remain enabled. Local `make test-ci` uses the shared count coverage reports
 (`coverage.out`, `coverage.html`, `coverage.xml`, and `junit.xml`) and runs race
 checks separately; `make ci` also runs local lint. Coverage excludes generated
 protobuf files and mocks/proto packages, and Cobertura reports coverage by file.
-`BUILDTAGS` and native `GOFLAGS` remain supported for test selection.
+Use native `GOFLAGS` for test selection, for example
+`GOFLAGS="-tags=unit,integration" make test`. The legacy `BUILDTAGS` variable is
+no longer translated into Go flags.
 
 This migration upgrades the project tooling to Go 1.26.10 and golangci-lint v2.
 The v2 lint configuration maps maintained checks and retains the generated

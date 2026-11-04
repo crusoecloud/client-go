@@ -17,8 +17,6 @@ includes = [
 ]
 
 [env]
-# Legacy Make always passes an explicit -tags argument, including when it is empty.
-BUILDTAGS = "{{ env.BUILDTAGS | default(value='') }}"
 LEGACY_LINT_VERSION = "1.47.3"
 
 [tasks.precommit]
@@ -45,12 +43,6 @@ run = [
   "mise run go:test:race",
   { task = "lint:all" },
 ]
-
-[tasks."go:test:race".env]
-GOFLAGS = "{{ env.GOFLAGS | default(value='') }} '-tags={{ env.BUILDTAGS }}'"
-
-[tasks."go:test:cover".env]
-GOFLAGS = "{{ env.GOFLAGS | default(value='') }} '-tags={{ env.BUILDTAGS }}'"
 
 [tasks."lint:all"]
 description = "Run maintained v2 lint and the retained v1-only checks"
