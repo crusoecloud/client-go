@@ -9,16 +9,16 @@
 package swagger
 
 type VpcFirewallRulesPatchRequest struct {
-	// Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).
-	DestinationPorts []string `json:"destination_ports,omitempty"`
+	// Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080). Omitted or null leaves the destination ports unchanged; an empty list clears them, which a rule switching to icmp requires.
+	DestinationPorts []string `json:"destination_ports"`
 	// Destinations the rule matches, given as CIDR blocks or resource IDs.
 	Destinations []FirewallRuleObject `json:"destinations,omitempty"`
 	// New name for the firewall rule.
 	Name string `json:"name,omitempty"`
 	// Network protocols the rule matches (for example, tcp, udp).
 	Protocols []string `json:"protocols,omitempty"`
-	// Source ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).
-	SourcePorts []string `json:"source_ports,omitempty"`
+	// Source ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080). Omitted or null leaves the source ports unchanged; an empty list clears them, which a rule switching to icmp requires.
+	SourcePorts []string `json:"source_ports"`
 	// Sources the rule matches, given as CIDR blocks or resource IDs.
 	Sources []FirewallRuleObject `json:"sources,omitempty"`
 }

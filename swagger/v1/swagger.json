@@ -22649,13 +22649,14 @@
     "VPCFirewallRulesPatchRequest": {
       "properties": {
         "destination_ports": {
-          "description": "Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).",
+          "description": "Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).\nOmitted or null leaves the destination ports unchanged; an empty list clears them, which a rule\nswitching to icmp requires.",
           "example": "[80, 443, 3000-8080]",
           "items": {
             "type": "string"
           },
           "type": "array",
-          "x-go-name": "DestinationPorts"
+          "x-go-name": "DestinationPorts",
+          "x-nullable": true
         },
         "destinations": {
           "description": "Destinations the rule matches, given as CIDR blocks or resource IDs.",
@@ -22681,13 +22682,14 @@
           "x-go-name": "Protocols"
         },
         "source_ports": {
-          "description": "Source ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).",
+          "description": "Source ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).\nOmitted or null leaves the source ports unchanged; an empty list clears them, which a rule\nswitching to icmp requires.",
           "example": "[80, 443, 3000-8080]",
           "items": {
             "type": "string"
           },
           "type": "array",
-          "x-go-name": "SourcePorts"
+          "x-go-name": "SourcePorts",
+          "x-nullable": true
         },
         "sources": {
           "description": "Sources the rule matches, given as CIDR blocks or resource IDs.",
