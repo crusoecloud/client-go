@@ -4,11 +4,6 @@ include:
     inputs:
       major_version: "$MAJOR_VERSION"
       minor_version: "$MINOR_VERSION"
-  # Retain the legacy analyzer scopes alongside centrally injected policy jobs.
-  - template: Security/SAST.gitlab-ci.yml
-  - template: Jobs/Secret-Detection.gitlab-ci.yml
-  - template: Security/SAST-IaC.latest.gitlab-ci.yml
-  - template: Security/Dependency-Scanning.gitlab-ci.yml
 
 variables:
   MAJOR_VERSION: "1"
@@ -16,6 +11,7 @@ variables:
   # The retained standalone reminder/promotion jobs use the existing helper image.
   CI_IMAGE: registry.gitlab.com/crusoeenergy/tools/go-ci-1.18
   CI_IMAGE_TAG: master
+  AST_ENABLE_MR_PIPELINES: 'true'
   SAST_EXCLUDED_ANALYZERS: gosec,semgrep
   GITLAB_ADVANCED_SAST_ENABLED: 'true'
 

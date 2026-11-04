@@ -68,7 +68,7 @@ resolves macOS arm64 and Linux amd64 (including musl).
 
 CI uses the shared mise/Go components from tools `master`: count coverage and
 race checks run separately, lint runs on MR pipelines, and release tagging follows
-the shared dependency policy. The existing legacy and central security analyzers
+the shared dependency policy. Central security policy scans
 remain enabled. Local `make test-ci` uses the shared count coverage reports
 (`coverage.out`, `coverage.html`, `coverage.xml`, and `junit.xml`) and runs race
 checks separately; `make ci` also runs local lint. Coverage excludes generated
