@@ -13,7 +13,7 @@ lockfile = true
 
 [task_config]
 includes = [
-  "{{ env.CRUSOE_TASKS_URL | default(value='git::https://git@gitlab.com/crusoeenergy/tools.git//tasks?ref=shiqi-shared-manifest-aliaslint-tasks') }}",
+  "{{ env.CRUSOE_TASKS_URL | default(value='git::https://git@gitlab.com/crusoeenergy/tools.git//tasks?ref=52a252e053fb5defe58d56bad41c8b20c236d158') }}",
 ]
 
 [env]
