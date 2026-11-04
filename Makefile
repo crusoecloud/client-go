@@ -24,7 +24,7 @@ test: ## Run the race tests
 	@mise run go:test:race
 
 test-ci: ## Check modules, produce shared coverage reports, and run race checks
-	@mise run test:checks
+	@mise run go:test:all
 
 lint: ## Run lint checks
 	@mise run lint:all

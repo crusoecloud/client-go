@@ -64,4 +64,4 @@ format_lint:
   stage: test
   rules: !reference [golangci_lint, rules]
   script:
-    - mise run format:check
+    - mise run go:fmt:check

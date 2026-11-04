@@ -63,8 +63,15 @@ file elsewhere.
 ## Project tooling
 
 Run `mise install`, then use the existing Make targets or `mise run` directly.
-Tool versions and local workflow ordering live in root `mise.toml`; `mise.lock`
-resolves macOS arm64 and Linux amd64 (including musl).
+Tool versions and project-specific workflows live in root `mise.toml`; `mise.lock`
+resolves macOS arm64 and Linux amd64 (including musl). Standard ordered test and
+precommit workflows come from shared tools tasks.
+
+Shared task imports currently use tools branch
+`shiqi-shared-manifest-aliaslint-tasks` for the reusable workflow helpers in
+[tools !506](https://gitlab.com/crusoeenergy/tools/-/merge_requests/506). Merge that
+companion first, then switch the task import to `master`. `make test-ci` calls
+`go:test:all` (module tidiness, count coverage, then race checks).
 
 CI uses the shared mise/Go components from tools `master`: count coverage and
 race checks run separately, lint runs on MR pipelines, and release tagging follows
@@ -82,4 +89,5 @@ Swagger exclusion; removed upstream checks are listed in the migration review.
 The v1-only `ifshort` and `exportloopref` checks remain available through
 `mise run lint:legacy-checks` and MR CI on their compatible Go 1.18 lint runtime.
 The module language version remains Go 1.17. `make lint` and local CI/development
-workflows include those checks, v2 lint, and the separate v2 formatting check.
+workflows include those checks, v2 lint, and shared `go:fmt:check`. The client
+precommit workflow retains its formatting step through shared `go:fmt`.

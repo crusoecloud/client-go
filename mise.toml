@@ -13,7 +13,7 @@ lockfile = true
 
 [task_config]
 includes = [
-  "{{ env.CRUSOE_TASKS_URL | default(value='git::https://git@gitlab.com/crusoeenergy/tools.git//tasks?ref=master') }}",
+  "{{ env.CRUSOE_TASKS_URL | default(value='git::https://git@gitlab.com/crusoeenergy/tools.git//tasks?ref=shiqi-shared-manifest-aliaslint-tasks') }}",
 ]
 
 [env]
@@ -25,7 +25,7 @@ LEGACY_LINT_VERSION = "1.47.3"
 description = "Tidy modules and apply the existing lint fixes"
 run = [
   { task = "go:mod-tidy" },
-  { task = "format:fix" },
+  { task = "go:fmt" },
   { task = "go:lint" },
   { task = "lint:legacy-checks" },
 ]
@@ -40,8 +40,7 @@ run = [
 [tasks."test:all"]
 description = "Check module tidiness, then run shared count coverage, race checks, and lint"
 run = [
-  { task = "go:mod-tidy:check" },
-  { task = "test:coverage" },
+  { task = "go:test:all" },
   { task = "lint:all" },
 ]
 
@@ -51,25 +50,11 @@ GOFLAGS = "{{ env.GOFLAGS | default(value='') }} '-tags={{ env.BUILDTAGS }}'"
 [tasks."go:test:cover".env]
 GOFLAGS = "{{ env.GOFLAGS | default(value='') }} '-tags={{ env.BUILDTAGS }}'"
 
-[tasks."test:coverage"]
-description = "Produce the shared count coverage reports, then run race checks"
-run = [
-  { task = "go:test:cover" },
-  { task = "go:test:race" },
-]
-
-[tasks."test:checks"]
-description = "Check module tidiness, produce shared coverage reports, and run race checks"
-run = [
-  { task = "go:mod-tidy:check" },
-  { task = "test:coverage" },
-]
-
 [tasks."lint:all"]
 description = "Run maintained v2 lint, formatting, and the retained v1-only checks"
 run = [
   { task = "go:lint:check" },
-  { task = "format:check" },
+  { task = "go:fmt:check" },
   { task = "lint:legacy-checks" },
 ]
 
@@ -84,11 +69,3 @@ set -euo pipefail
 legacy_lint="$(mise which --tool "golangci-lint@${LEGACY_LINT_VERSION}" golangci-lint)"
 "${legacy_lint}" run --no-config --disable-all --enable ifshort,exportloopref --tests=false --skip-dirs swagger ./...
 '''
-
-[tasks."format:check"]
-description = "Preserve the formatting checks moved out of golangci-lint run in v2"
-run = "golangci-lint fmt --diff"
-
-[tasks."format:fix"]
-description = "Apply the formatting fixes previously enabled by v1 precommit"
-run = "golangci-lint fmt"
