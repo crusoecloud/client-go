@@ -13,7 +13,7 @@ lockfile = true
 
 [task_config]
 includes = [
-  "{{ env.CRUSOE_TASKS_URL | default(value='git::https://git@gitlab.com/crusoeenergy/tools.git//tasks?ref=73b6a6e6c70be4bf220bb64b63abbe429164718b') }}",
+  "{{ env.CRUSOE_TASKS_URL | default(value='git::https://git@gitlab.com/crusoeenergy/tools.git//tasks?ref=master') }}",
 ]
 
 [env]
@@ -25,7 +25,6 @@ LEGACY_LINT_VERSION = "1.47.3"
 description = "Tidy modules and apply the existing lint fixes"
 run = [
   { task = "go:mod-tidy" },
-  { task = "go:lint:fmt" },
   { task = "go:lint" },
   { task = "lint:legacy-checks" },
 ]
@@ -54,10 +53,9 @@ GOFLAGS = "{{ env.GOFLAGS | default(value='') }} '-tags={{ env.BUILDTAGS }}'"
 GOFLAGS = "{{ env.GOFLAGS | default(value='') }} '-tags={{ env.BUILDTAGS }}'"
 
 [tasks."lint:all"]
-description = "Run maintained v2 lint, formatting, and the retained v1-only checks"
+description = "Run maintained v2 lint and the retained v1-only checks"
 run = [
   { task = "go:lint:check" },
-  { task = "go:lint:fmt", args = ["--diff", "./..."] },
   { task = "lint:legacy-checks" },
 ]
 

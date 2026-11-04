@@ -67,9 +67,7 @@ Tool versions and project-specific workflows live in root `mise.toml`; `mise.loc
 resolves macOS arm64 and Linux amd64 (including musl). Standard Go checks come
 from shared tools tasks.
 
-Shared task imports currently pin a reviewed revision of
-[tools !506](https://gitlab.com/crusoeenergy/tools/-/merge_requests/506). Merge that
-companion first, then switch the task import to `master`. `make test-ci` directly runs
+Shared Go tasks use tools `master`. `make test-ci` directly runs
 `go:mod-tidy:check`, `go:test:cover`, then `go:test:race`.
 
 CI uses the shared mise/Go components from tools `master`: count coverage and
@@ -88,6 +86,8 @@ Swagger exclusion; removed upstream checks are listed in the migration review.
 The v1-only `ifshort` and `exportloopref` checks remain available through
 `mise run lint:legacy-checks` and MR CI on their compatible Go 1.18 lint runtime.
 The module language version remains Go 1.17. `make lint` and local CI/development
-workflows include those checks, v2 lint, and the broader formatting scope of
-shared `go:lint:fmt -- --diff`. This includes test files excluded by lint's
-`run.tests: false`; precommit formats them through `go:lint:fmt` before lint fixes.
+workflows include the retained legacy checks and maintained v2 lint. The maintained
+check reports formatter issues in test files; precommit applies fixes through
+shared `go:lint` (`run --fix`). Test packages now participate in loading and type
+checking, while the configured non-formatter linters keep test-file findings
+excluded. The legacy v1 checks continue to run with tests disabled.

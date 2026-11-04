@@ -1,9 +1,9 @@
 version: "2"
 run:
-  tests: false
+  tests: true
 linters:
   default: none
-  enable:
+  enable: &enabled-linters
     - asciicheck
     - bodyclose
     - cyclop
@@ -97,6 +97,9 @@ linters:
       - legacy
       - std-error-handling
     rules:
+      # Keep test-linter findings excluded while formatters cover test files.
+      - path: '_test\.go$'
+        linters: *enabled-linters
       - linters:
           - lll
         source: '^//go:generate '
