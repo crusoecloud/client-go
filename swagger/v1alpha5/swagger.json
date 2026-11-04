@@ -5519,6 +5519,107 @@
         ]
       }
     },
+    "/projects/{project_id}/foundry/deployed-models/operations": {
+      "get": {
+        "operationId": "listFoundryDeployedModelOperations",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "Operation states to include.",
+            "example": [
+              "IN_PROGRESS"
+            ],
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "state",
+            "type": "array",
+            "x-go-name": "State"
+          },
+          {
+            "description": "Excludes operations started before this RFC 3339 time.",
+            "example": "2021-12-03T19:58:34Z",
+            "in": "query",
+            "name": "lower_time_bound",
+            "type": "string",
+            "x-go-name": "LowerTimeBound"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the deployed model operations in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/deployed-models/operations/{operation_id}": {
+      "get": {
+        "operationId": "getFoundryDeployedModelOperation",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the operation.",
+            "in": "path",
+            "name": "operation_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "OperationID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns a single deployed model operation.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
     "/projects/{project_id}/foundry/deployed-models/progress": {
       "get": {
         "operationId": "getFoundryDeployedModelsProgress",
@@ -5913,6 +6014,107 @@
           }
         },
         "summary": "Creates a self-serve deployment in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/selfserve/deployments/operations": {
+      "get": {
+        "operationId": "listFoundryDeploymentOperations",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "Operation states to include.",
+            "example": [
+              "IN_PROGRESS"
+            ],
+            "in": "query",
+            "items": {
+              "type": "string"
+            },
+            "name": "state",
+            "type": "array",
+            "x-go-name": "State"
+          },
+          {
+            "description": "Excludes operations started before this RFC 3339 time.",
+            "example": "2021-12-03T19:58:34Z",
+            "in": "query",
+            "name": "lower_time_bound",
+            "type": "string",
+            "x-go-name": "LowerTimeBound"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listOperationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists the self-serve deployment operations in the project.",
+        "tags": [
+          "Foundry"
+        ]
+      }
+    },
+    "/projects/{project_id}/foundry/selfserve/deployments/operations/{operation_id}": {
+      "get": {
+        "operationId": "getFoundryDeploymentOperation",
+        "parameters": [
+          {
+            "description": "ID of the project.",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the operation.",
+            "in": "path",
+            "name": "operation_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "OperationID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getOperationResponse"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns a single self-serve deployment operation.",
         "tags": [
           "Foundry"
         ]
@@ -13644,6 +13846,57 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "CustomerRoleBinding": {
+      "description": "RoleBinding grants a role to a principal (a user or a service account) within a specific scope\n(e.g. an organization or a project).",
+      "properties": {
+        "customer_id": {
+          "description": "customer_id is the ID of the user the role is bound to. Deprecated: use principal_id with\nprincipal_type instead. For a user binding it mirrors principal_id; for a service account\nbinding it is unset. Retained until principal_id/principal_type fully replace it.",
+          "example": "d1e3a8c1-7d2e-4c5b-9f9a-2f5b3e9c1a44",
+          "readOnly": true,
+          "type": "string"
+        },
+        "id": {
+          "example": "7b6e8d2c-9a4f-4d3b-8c1e-5f2a9b8c7d6e",
+          "readOnly": true,
+          "title": "id is the ID of the role binding",
+          "type": "string"
+        },
+        "principal_id": {
+          "description": "principal_id is the ID of the principal (user or service account) the role is bound to.",
+          "example": "178c38e1-4a2f-4b91-9c3d-8f21b3a4c76d",
+          "readOnly": true,
+          "type": "string"
+        },
+        "principal_type": {
+          "description": "principal_type is the kind of principal identified by principal_id, \"user\" or \"service_account\".",
+          "example": "service_account",
+          "readOnly": true,
+          "type": "string"
+        },
+        "role_id": {
+          "example": "3a2b1c0d-4e5f-6789-abcd-ef0123456789",
+          "title": "role_id is the ID of the role granted by this binding",
+          "type": "string"
+        },
+        "role_name": {
+          "example": "org-admin",
+          "readOnly": true,
+          "title": "role_name is the human-readable name of the role granted by this binding",
+          "type": "string"
+        },
+        "scope_object_id": {
+          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+          "title": "scope_object_id is the ID of the resource the binding applies to",
+          "type": "string"
+        },
+        "scope_type": {
+          "example": "org",
+          "title": "scope_type is the type of resource the binding applies to (e.g. org, project)",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "DeployedModelEntry": {
       "properties": {
         "architecture": {
@@ -13748,6 +14001,11 @@
           "description": "ID of the affected deployment.",
           "type": "string",
           "x-go-name": "ID"
+        },
+        "operation_id": {
+          "description": "ID of the operation that tracks this request.",
+          "type": "string",
+          "x-go-name": "OperationID"
         },
         "status": {
           "description": "Resulting status.",
@@ -22001,6 +22259,11 @@
     },
     "UpdateModelResponse": {
       "properties": {
+        "operation_id": {
+          "description": "ID of the operation that tracks this request.",
+          "type": "string",
+          "x-go-name": "OperationID"
+        },
         "workflows": {
           "description": "The per-cluster update workflows that were triggered.",
           "items": {
@@ -22386,13 +22649,14 @@
     "VPCFirewallRulesPatchRequest": {
       "properties": {
         "destination_ports": {
-          "description": "Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).",
+          "description": "Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).\nOmitted or null leaves the destination ports unchanged; an empty list clears them, which a rule\nswitching to icmp requires.",
           "example": "[80, 443, 3000-8080]",
           "items": {
             "type": "string"
           },
           "type": "array",
-          "x-go-name": "DestinationPorts"
+          "x-go-name": "DestinationPorts",
+          "x-nullable": true
         },
         "destinations": {
           "description": "Destinations the rule matches, given as CIDR blocks or resource IDs.",
@@ -22418,13 +22682,14 @@
           "x-go-name": "Protocols"
         },
         "source_ports": {
-          "description": "Source ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).",
+          "description": "Source ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).\nOmitted or null leaves the source ports unchanged; an empty list clears them, which a rule\nswitching to icmp requires.",
           "example": "[80, 443, 3000-8080]",
           "items": {
             "type": "string"
           },
           "type": "array",
-          "x-go-name": "SourcePorts"
+          "x-go-name": "SourcePorts",
+          "x-nullable": true
         },
         "sources": {
           "description": "Sources the rule matches, given as CIDR blocks or resource IDs.",
@@ -23060,57 +23325,6 @@
       },
       "type": "object"
     },
-    "customerRoleBinding": {
-      "description": "RoleBinding grants a role to a principal (a user or a service account) within a specific scope\n(e.g. an organization or a project).",
-      "properties": {
-        "customer_id": {
-          "description": "customer_id is the ID of the user the role is bound to. Deprecated: use principal_id with\nprincipal_type instead. For a user binding it mirrors principal_id; for a service account\nbinding it is unset. Retained until principal_id/principal_type fully replace it.",
-          "example": "d1e3a8c1-7d2e-4c5b-9f9a-2f5b3e9c1a44",
-          "readOnly": true,
-          "type": "string"
-        },
-        "id": {
-          "example": "7b6e8d2c-9a4f-4d3b-8c1e-5f2a9b8c7d6e",
-          "readOnly": true,
-          "title": "id is the ID of the role binding",
-          "type": "string"
-        },
-        "principal_id": {
-          "description": "principal_id is the ID of the principal (user or service account) the role is bound to.",
-          "example": "178c38e1-4a2f-4b91-9c3d-8f21b3a4c76d",
-          "readOnly": true,
-          "type": "string"
-        },
-        "principal_type": {
-          "description": "principal_type is the kind of principal identified by principal_id, \"user\" or \"service_account\".",
-          "example": "service_account",
-          "readOnly": true,
-          "type": "string"
-        },
-        "role_id": {
-          "example": "3a2b1c0d-4e5f-6789-abcd-ef0123456789",
-          "title": "role_id is the ID of the role granted by this binding",
-          "type": "string"
-        },
-        "role_name": {
-          "example": "org-admin",
-          "readOnly": true,
-          "title": "role_name is the human-readable name of the role granted by this binding",
-          "type": "string"
-        },
-        "scope_object_id": {
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-          "title": "scope_object_id is the ID of the resource the binding applies to",
-          "type": "string"
-        },
-        "scope_type": {
-          "example": "org",
-          "title": "scope_type is the type of resource the binding applies to (e.g. org, project)",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "customerServiceAccount": {
       "description": "ServiceAccount is a non-human identity scoped to an organization. It is the get/list\nrepresentation; the write RPCs (create/update/disable/enable) return ServiceAccountWriteResponse.\n\nLockstep: fields 1-9 are mirrored by ServiceAccountWriteResponse; any field added to or changed in\n1-9 must be made in both messages. Fields 10-11 (role_bindings, credential_summary) are read\nenrichments unique to this message and are intentionally absent from the write response.",
       "properties": {
@@ -23177,7 +23391,7 @@
         "role_bindings": {
           "description": "role_bindings is the set of role bindings granted to the service account, populated on get and\nlist. Each binding carries principal_type \"service_account\". Manage bindings via the role\nbindings API, not here.",
           "items": {
-            "$ref": "#/definitions/customerRoleBinding",
+            "$ref": "#/definitions/CustomerRoleBinding",
             "type": "object"
           },
           "readOnly": true,
