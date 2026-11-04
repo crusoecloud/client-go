@@ -106,6 +106,13 @@ func LoadConfigWithOptions(opts *Options) (*Config, error) {
 	if opts.Profile != "" && hasAnyCredentialField(optsConfig) {
 		return cfg, ErrProfileWithExplicitCredentials
 	}
+	// A partial explicit override must fail fast, not silently fall through to a complete but
+	// different identity from env or the config file - unlike those ambient tiers, explicit
+	// options are set at the same call site the caller controls directly. Scoped to optsConfig
+	// only; env and profile keep their existing "most complete tier wins" fallback.
+	if err := firstPartialCredentialErr(optsConfig); err != nil {
+		return cfg, err
+	}
 
 	rawData, advisoryErr := loadRawConfig(opts)
 
@@ -127,16 +134,32 @@ func LoadConfigWithOptions(opts *Options) (*Config, error) {
 
 	envConfig := envConfigFromEnviron()
 
-	// The winning tier supplies both the credential pair and its own ancillary fields
-	// (TokenURL/Audience) together - never mixed with a different tier's, so one identity's
-	// secret is never silently paired with a different tier's token endpoint or audience.
-	winner, outcome := pickCredentialTier(credentialTierOrder(opts, optsConfig, envConfig, profileConfig)...)
+	// The winning tier supplies the identity fields as a whole (see pickCredentialTier). Ancillary
+	// fields (TokenURL/Audience) cascade independently across the same tiers, lowest precedence
+	// first, so a higher-precedence override isn't discarded just because a lower-precedence tier
+	// supplied the identity - e.g. identity from env, token URL/audience fixed in code.
+	tiers := credentialTierOrder(opts, optsConfig, envConfig, profileConfig)
+	winner, outcome := pickCredentialTier(tiers...)
 	applyCredential(cfg, winner)
-	mergeAncillary(cfg, winner)
+	for i := len(tiers) - 1; i >= 0; i-- {
+		mergeAncillary(cfg, tiers[i].config)
+	}
 	cfg.CredentialSource = outcome.tier
 	cfg.CredentialSourceComplete = outcome.complete
 
 	return cfg, advisoryErr
+}
+
+// firstPartialCredentialErr returns the incomplete-credential error for the first authCandidate
+// that's partially (but not completely) configured in cfg, or nil if none are.
+func firstPartialCredentialErr(cfg *Config) error {
+	for _, c := range authCandidates {
+		if c.partial != nil && c.partial(cfg) {
+			return c.incompleteErr
+		}
+	}
+
+	return nil
 }
 
 // loadRawConfig reads and decodes the TOML config file. A missing home directory or config file

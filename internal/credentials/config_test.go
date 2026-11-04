@@ -2,6 +2,7 @@ package credentials
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -487,20 +488,12 @@ func TestIncompleteTiersDoNotAssembleIntoACompletePair(t *testing.T) {
 	clearCrusoeEnvVars(t)
 	t.Setenv("CRUSOE_SECRET_KEY", "env-secret-key")
 
-	cfg, err := LoadConfigWithOptions(&Options{
+	_, err := LoadConfigWithOptions(&Options{
 		ConfigPath: filepath.Join(t.TempDir(), "does-not-exist"),
 		APIKey:     APIKeyCredentials{AccessKeyID: "opts-access-key"}, // incomplete alone: no SecretKey
 	})
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
-
-	method, err := ResolveAuthMethod(cfg)
-	if err == nil {
-		t.Fatalf("expected an incomplete-credential error, got a resolved method %v with cfg %+v", method, cfg.APIKey)
-	}
 	if !errors.Is(err, ErrIncompleteAPIKeyCredentials) {
-		t.Fatalf("expected ErrIncompleteAPIKeyCredentials, got: %v", err)
+		t.Fatalf("expected ErrIncompleteAPIKeyCredentials instead of stitching opts' AccessKeyID with env's SecretKey, got: %v", err)
 	}
 }
 
@@ -663,4 +656,496 @@ client_secret = "projectA-client-secret"
 		t.Fatalf("expected projectA's winning tier to fall back to the default audience, not a stray env override, got %+v",
 			cfg.ClientSecret)
 	}
+}
+
+func TestAncillaryFieldsFromExplicitOptionsSurviveEnvSuppliedIdentity(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	t.Setenv("CRUSOE_CLIENT_ID", "env-client-id")
+	t.Setenv("CRUSOE_CLIENT_SECRET", "env-client-secret")
+
+	cfg, err := LoadConfigWithOptions(&Options{
+		ConfigPath: filepath.Join(t.TempDir(), "does-not-exist"),
+		ClientSecret: ClientSecretCredentials{
+			TokenURL: "https://auth.staging.example.com/oauth2/token",
+			Audience: "https://api.staging.example.com",
+		},
+	})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if cfg.ClientSecret.ClientID != "env-client-id" || cfg.ClientSecret.ClientSecret != "env-client-secret" {
+		t.Fatalf("expected env identity to still win, got %+v", cfg.ClientSecret)
+	}
+	if cfg.ClientSecret.TokenURL != "https://auth.staging.example.com/oauth2/token" {
+		t.Fatalf("expected the explicit options' TokenURL override to survive, got %q", cfg.ClientSecret.TokenURL)
+	}
+	if cfg.ClientSecret.Audience != "https://api.staging.example.com" {
+		t.Fatalf("expected the explicit options' Audience override to survive, got %q", cfg.ClientSecret.Audience)
+	}
+}
+
+func TestExplicitPartialAPIKeyDoesNotFallThroughToEnv(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	t.Setenv("CRUSOE_ACCESS_KEY_ID", "env-key")
+	t.Setenv("CRUSOE_SECRET_KEY", "env-secret")
+
+	cfg, err := LoadConfigWithOptions(&Options{
+		ConfigPath: filepath.Join(t.TempDir(), "does-not-exist"),
+		APIKey:     APIKeyCredentials{AccessKeyID: "explicit-key"},
+	})
+	if !errors.Is(err, ErrIncompleteAPIKeyCredentials) {
+		t.Fatalf("expected ErrIncompleteAPIKeyCredentials for an explicit partial override, got err=%v cfg=%+v", err, cfg)
+	}
+}
+
+func TestExplicitPartialClientSecretDoesNotFallThroughToEnv(t *testing.T) {
+	clearCrusoeEnvVars(t)
+
+	t.Setenv("CRUSOE_CLIENT_ID", "env-client-id")
+	t.Setenv("CRUSOE_CLIENT_SECRET", "env-client-secret")
+
+	cfg, err := LoadConfigWithOptions(&Options{
+		ConfigPath:   filepath.Join(t.TempDir(), "does-not-exist"),
+		ClientSecret: ClientSecretCredentials{ClientID: "explicit-client-id"},
+	})
+	if !errors.Is(err, ErrIncompleteClientSecretCredentials) {
+		t.Fatalf("expected ErrIncompleteClientSecretCredentials for an explicit partial override, got err=%v cfg=%+v", err, cfg)
+	}
+}
+
+// tierState is one tier's credential signal. Each state sets at most one method's fields - a tier
+// carrying both methods at once is covered separately by TestSameTierCredentialConflicts.
+type tierState int
+
+const (
+	stNone tierState = iota
+	stAPIKeyComplete
+	stAPIKeyPartialAccessOnly
+	stAPIKeyPartialSecretOnly
+	stCSComplete
+	stCSPartialIDOnly
+	stCSPartialSecretOnly
+)
+
+var allTierStates = []tierState{
+	stNone, stAPIKeyComplete, stAPIKeyPartialAccessOnly, stAPIKeyPartialSecretOnly,
+	stCSComplete, stCSPartialIDOnly, stCSPartialSecretOnly,
+}
+
+func (s tierState) String() string {
+	switch s {
+	case stNone:
+		return "none"
+	case stAPIKeyComplete:
+		return "apikey-complete"
+	case stAPIKeyPartialAccessOnly:
+		return "apikey-partial-access"
+	case stAPIKeyPartialSecretOnly:
+		return "apikey-partial-secret"
+	case stCSComplete:
+		return "cs-complete"
+	case stCSPartialIDOnly:
+		return "cs-partial-id"
+	case stCSPartialSecretOnly:
+		return "cs-partial-secret"
+	default:
+		return "unknown"
+	}
+}
+
+func (s tierState) apiKey(tag string) APIKeyCredentials {
+	switch s {
+	case stAPIKeyComplete:
+		return APIKeyCredentials{AccessKeyID: tag + "-ak", SecretKey: tag + "-sk"}
+	case stAPIKeyPartialAccessOnly:
+		return APIKeyCredentials{AccessKeyID: tag + "-ak"}
+	case stAPIKeyPartialSecretOnly:
+		return APIKeyCredentials{SecretKey: tag + "-sk"}
+	default:
+		return APIKeyCredentials{}
+	}
+}
+
+func (s tierState) clientSecret(tag string) ClientSecretCredentials {
+	switch s {
+	case stCSComplete:
+		return ClientSecretCredentials{ClientID: tag + "-id", ClientSecret: tag + "-secret"}
+	case stCSPartialIDOnly:
+		return ClientSecretCredentials{ClientID: tag + "-id"}
+	case stCSPartialSecretOnly:
+		return ClientSecretCredentials{ClientSecret: tag + "-secret"}
+	default:
+		return ClientSecretCredentials{}
+	}
+}
+
+func (s tierState) isAPIKeyPartial() bool {
+	return s == stAPIKeyPartialAccessOnly || s == stAPIKeyPartialSecretOnly
+}
+
+func (s tierState) isCSPartial() bool {
+	return s == stCSPartialIDOnly || s == stCSPartialSecretOnly
+}
+
+func (s tierState) isComplete() bool {
+	return s == stAPIKeyComplete || s == stCSComplete
+}
+
+func (s tierState) isAnySignal() bool {
+	return s != stNone
+}
+
+func TestExhaustiveIdentityPrecedence(t *testing.T) {
+	tiers := []struct {
+		name string
+		tag  string
+	}{
+		{"opts", "opts"},
+		{"env", "env"},
+		{"profile", "profile"},
+	}
+
+	total := 0
+	for _, optsSt := range allTierStates {
+		for _, envSt := range allTierStates {
+			for _, profileSt := range allTierStates {
+				states := [3]tierState{optsSt, envSt, profileSt}
+				name := fmt.Sprintf("opts=%s/env=%s/profile=%s", optsSt, envSt, profileSt)
+				t.Run(name, func(t *testing.T) {
+					total++
+					runIdentityCombination(t, tiers, states)
+				})
+			}
+		}
+	}
+	t.Logf("ran %d combinations", total)
+}
+
+func runIdentityCombination(t *testing.T, tiers []struct {
+	name string
+	tag  string
+}, states [3]tierState,
+) {
+	t.Helper()
+	clearCrusoeEnvVars(t)
+
+	opts := &Options{}
+	opts.APIKey = states[0].apiKey("opts")
+	opts.ClientSecret = states[0].clientSecret("opts")
+
+	if states[1].apiKey("env").AccessKeyID != "" {
+		t.Setenv("CRUSOE_ACCESS_KEY_ID", states[1].apiKey("env").AccessKeyID)
+	}
+	if states[1].apiKey("env").SecretKey != "" {
+		t.Setenv("CRUSOE_SECRET_KEY", states[1].apiKey("env").SecretKey)
+	}
+	if states[1].clientSecret("env").ClientID != "" {
+		t.Setenv("CRUSOE_CLIENT_ID", states[1].clientSecret("env").ClientID)
+	}
+	if states[1].clientSecret("env").ClientSecret != "" {
+		t.Setenv("CRUSOE_CLIENT_SECRET", states[1].clientSecret("env").ClientSecret)
+	}
+
+	profileAK := states[2].apiKey("profile")
+	profileCS := states[2].clientSecret("profile")
+	var toml string
+	toml += "[default]\n"
+	if profileAK.AccessKeyID != "" {
+		toml += fmt.Sprintf("access_key_id = %q\n", profileAK.AccessKeyID)
+	}
+	if profileAK.SecretKey != "" {
+		toml += fmt.Sprintf("secret_key = %q\n", profileAK.SecretKey)
+	}
+	if profileCS.ClientID != "" {
+		toml += fmt.Sprintf("client_id = %q\n", profileCS.ClientID)
+	}
+	if profileCS.ClientSecret != "" {
+		toml += fmt.Sprintf("client_secret = %q\n", profileCS.ClientSecret)
+	}
+	opts.ConfigPath = writeTempConfig(t, toml)
+
+	cfg, loadErr := LoadConfigWithOptions(opts)
+
+	// Model, step 1: an explicit-options partial signal must fail fast (Fix B), regardless of
+	// what env/profile contain.
+	if states[0].isAPIKeyPartial() {
+		if !errors.Is(loadErr, ErrIncompleteAPIKeyCredentials) {
+			t.Fatalf("expected ErrIncompleteAPIKeyCredentials from opts partial APIKey, got: %v (cfg=%+v)", loadErr, cfg)
+		}
+		return
+	}
+	if states[0].isCSPartial() {
+		if !errors.Is(loadErr, ErrIncompleteClientSecretCredentials) {
+			t.Fatalf("expected ErrIncompleteClientSecretCredentials from opts partial ClientSecret, got: %v (cfg=%+v)", loadErr, cfg)
+		}
+		return
+	}
+	if loadErr != nil {
+		t.Fatalf("unexpected LoadConfigWithOptions error: %v", loadErr)
+	}
+
+	// Model, step 2: whole-tier winner - first COMPLETE tier in [opts, env, profile] order; else
+	// first tier with ANY signal; else no winner. This mirrors pickCredentialTier's pre-existing,
+	// deliberately-tested "never stitch across tiers" semantics (see
+	// TestCrossTypeCredentialsDoNotCombine) - only the opts fail-fast behavior above is new.
+	winnerIdx := -1
+	for i, s := range states {
+		if s.isComplete() {
+			winnerIdx = i
+			break
+		}
+	}
+	if winnerIdx == -1 {
+		for i, s := range states {
+			if s.isAnySignal() {
+				winnerIdx = i
+				break
+			}
+		}
+	}
+
+	if winnerIdx == -1 {
+		if cfg.APIKey != (APIKeyCredentials{}) || cfg.ClientSecret.ClientID != "" || cfg.ClientSecret.ClientSecret != "" {
+			t.Fatalf("expected empty identity fields when no tier has any signal, got %+v / %+v", cfg.APIKey, cfg.ClientSecret)
+		}
+
+		method, resolveErr := ResolveAuthMethod(cfg)
+		if !errors.Is(resolveErr, ErrMissingCredentials) {
+			t.Fatalf("expected ErrMissingCredentials, got method=%v err=%v", method, resolveErr)
+		}
+
+		return
+	}
+
+	winnerState := states[winnerIdx]
+	winnerTag := tiers[winnerIdx].tag
+
+	wantAPIKey := APIKeyCredentials{}
+	wantCS := ClientSecretCredentials{}
+	if winnerState == stAPIKeyComplete || winnerState.isAPIKeyPartial() {
+		wantAPIKey = winnerState.apiKey(winnerTag)
+	}
+	if winnerState == stCSComplete || winnerState.isCSPartial() {
+		wantCS.ClientID = winnerState.clientSecret(winnerTag).ClientID
+		wantCS.ClientSecret = winnerState.clientSecret(winnerTag).ClientSecret
+	}
+
+	if cfg.APIKey != wantAPIKey {
+		t.Fatalf("APIKey mismatch: want %+v, got %+v (winner=%s/%s)", wantAPIKey, cfg.APIKey, tiers[winnerIdx].name, winnerState)
+	}
+	if cfg.ClientSecret.ClientID != wantCS.ClientID || cfg.ClientSecret.ClientSecret != wantCS.ClientSecret {
+		t.Fatalf("ClientSecret identity mismatch: want %+v, got id=%q secret=%q (winner=%s/%s)",
+			wantCS, cfg.ClientSecret.ClientID, cfg.ClientSecret.ClientSecret, tiers[winnerIdx].name, winnerState)
+	}
+
+	method, resolveErr := ResolveAuthMethod(cfg)
+
+	switch {
+	case winnerState == stAPIKeyComplete:
+		if resolveErr != nil || method != AuthMethodAPIKey {
+			t.Fatalf("expected clean AuthMethodAPIKey, got method=%v err=%v cfg=%+v", method, resolveErr, cfg)
+		}
+	case winnerState == stCSComplete:
+		if resolveErr != nil || method != AuthMethodClientSecret {
+			t.Fatalf("expected clean AuthMethodClientSecret, got method=%v err=%v cfg=%+v", method, resolveErr, cfg)
+		}
+	case winnerState.isAPIKeyPartial():
+		if !errors.Is(resolveErr, ErrIncompleteAPIKeyCredentials) {
+			t.Fatalf("expected ErrIncompleteAPIKeyCredentials (fallback partial winner), got method=%v err=%v cfg=%+v", method, resolveErr, cfg)
+		}
+	case winnerState.isCSPartial():
+		if !errors.Is(resolveErr, ErrIncompleteClientSecretCredentials) {
+			t.Fatalf("expected ErrIncompleteClientSecretCredentials (fallback partial winner), got method=%v err=%v cfg=%+v", method, resolveErr, cfg)
+		}
+	default:
+		t.Fatalf("unreachable winner state %v", winnerState)
+	}
+}
+
+// ancillaryState describes one tier's TokenURL/Audience signal.
+type ancillaryState int
+
+const (
+	ancNone ancillaryState = iota
+	ancTokenURLOnly
+	ancAudienceOnly
+	ancBoth
+)
+
+var allAncillaryStates = []ancillaryState{ancNone, ancTokenURLOnly, ancAudienceOnly, ancBoth}
+
+func (a ancillaryState) String() string {
+	switch a {
+	case ancNone:
+		return "none"
+	case ancTokenURLOnly:
+		return "tokenurl-only"
+	case ancAudienceOnly:
+		return "audience-only"
+	case ancBoth:
+		return "both"
+	default:
+		return "unknown"
+	}
+}
+
+func (a ancillaryState) tokenURL(tag string) string {
+	if a == ancTokenURLOnly || a == ancBoth {
+		return "https://auth." + tag + ".example.com/oauth2/token"
+	}
+	return ""
+}
+
+func (a ancillaryState) audience(tag string) string {
+	if a == ancAudienceOnly || a == ancBoth {
+		return "https://api." + tag + ".example.com"
+	}
+	return ""
+}
+
+func TestExhaustiveAncillaryCascade(t *testing.T) {
+	identityTierNames := []string{"opts", "env", "profile"}
+
+	for _, identityTier := range identityTierNames {
+		for _, optsAnc := range allAncillaryStates {
+			for _, envAnc := range allAncillaryStates {
+				for _, profileAnc := range allAncillaryStates {
+					anc := [3]ancillaryState{optsAnc, envAnc, profileAnc}
+					name := fmt.Sprintf("identity=%s/opts=%s/env=%s/profile=%s", identityTier, optsAnc, envAnc, profileAnc)
+					t.Run(name, func(t *testing.T) {
+						runAncillaryCombination(t, identityTier, anc)
+					})
+				}
+			}
+		}
+	}
+}
+
+func runAncillaryCombination(t *testing.T, identityTier string, anc [3]ancillaryState) {
+	t.Helper()
+	clearCrusoeEnvVars(t)
+
+	opts := &Options{}
+	tags := []string{"opts", "env", "profile"}
+
+	switch identityTier {
+	case "opts":
+		opts.ClientSecret.ClientID = "opts-id"
+		opts.ClientSecret.ClientSecret = "opts-secret"
+	case "env":
+		t.Setenv("CRUSOE_CLIENT_ID", "env-id")
+		t.Setenv("CRUSOE_CLIENT_SECRET", "env-secret")
+	case "profile":
+		// written into the profile TOML below
+	}
+
+	opts.ClientSecret.TokenURL = anc[0].tokenURL(tags[0])
+	opts.ClientSecret.Audience = anc[0].audience(tags[0])
+
+	if url := anc[1].tokenURL(tags[1]); url != "" {
+		t.Setenv("CRUSOE_TOKEN_URL", url)
+	}
+	if aud := anc[1].audience(tags[1]); aud != "" {
+		t.Setenv("CRUSOE_AUDIENCE", aud)
+	}
+
+	toml := "[default]\n"
+	if identityTier == "profile" {
+		toml += `client_id = "profile-id"` + "\n"
+		toml += `client_secret = "profile-secret"` + "\n"
+	}
+	if url := anc[2].tokenURL(tags[2]); url != "" {
+		toml += fmt.Sprintf("token_url = %q\n", url)
+	}
+	if aud := anc[2].audience(tags[2]); aud != "" {
+		toml += fmt.Sprintf("audience = %q\n", aud)
+	}
+	opts.ConfigPath = writeTempConfig(t, toml)
+
+	cfg, err := LoadConfigWithOptions(opts)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	wantTokenURL := DefaultTokenURL
+	for i, a := range anc {
+		if url := a.tokenURL(tags[i]); url != "" {
+			wantTokenURL = url
+			break
+		}
+	}
+	wantAudience := DefaultAudience
+	for i, a := range anc {
+		if aud := a.audience(tags[i]); aud != "" {
+			wantAudience = aud
+			break
+		}
+	}
+
+	if cfg.ClientSecret.TokenURL != wantTokenURL {
+		t.Fatalf("TokenURL: want %q, got %q (identity=%s, anc=%v)", wantTokenURL, cfg.ClientSecret.TokenURL, identityTier, anc)
+	}
+	if cfg.ClientSecret.Audience != wantAudience {
+		t.Fatalf("Audience: want %q, got %q (identity=%s, anc=%v)", wantAudience, cfg.ClientSecret.Audience, identityTier, anc)
+	}
+}
+
+func TestSameTierCredentialConflicts(t *testing.T) {
+	t.Run("opts carries both", func(t *testing.T) {
+		clearCrusoeEnvVars(t)
+		cfg, err := LoadConfigWithOptions(&Options{
+			ConfigPath: filepath.Join(t.TempDir(), "does-not-exist"),
+			APIKey:     APIKeyCredentials{AccessKeyID: "ak", SecretKey: "sk"},
+			ClientSecret: ClientSecretCredentials{
+				ClientID: "id", ClientSecret: "secret",
+			},
+		})
+		if err != nil {
+			t.Fatalf("unexpected LoadConfigWithOptions error: %v", err)
+		}
+		method, resolveErr := ResolveAuthMethod(cfg)
+		if !errors.Is(resolveErr, ErrConflictingCredentials) {
+			t.Fatalf("expected ErrConflictingCredentials, got method=%v err=%v", method, resolveErr)
+		}
+	})
+
+	t.Run("env carries both, opts empty", func(t *testing.T) {
+		clearCrusoeEnvVars(t)
+		t.Setenv("CRUSOE_ACCESS_KEY_ID", "ak")
+		t.Setenv("CRUSOE_SECRET_KEY", "sk")
+		t.Setenv("CRUSOE_CLIENT_ID", "id")
+		t.Setenv("CRUSOE_CLIENT_SECRET", "secret")
+
+		cfg, err := LoadConfigWithOptions(&Options{ConfigPath: filepath.Join(t.TempDir(), "does-not-exist")})
+		if err != nil {
+			t.Fatalf("unexpected LoadConfigWithOptions error: %v", err)
+		}
+		method, resolveErr := ResolveAuthMethod(cfg)
+		if !errors.Is(resolveErr, ErrConflictingCredentials) {
+			t.Fatalf("expected ErrConflictingCredentials, got method=%v err=%v", method, resolveErr)
+		}
+	})
+
+	t.Run("opts has complete APIKey only, env has complete ClientSecret only - opts wins whole, env's method silently dropped", func(t *testing.T) {
+		clearCrusoeEnvVars(t)
+		t.Setenv("CRUSOE_CLIENT_ID", "env-id")
+		t.Setenv("CRUSOE_CLIENT_SECRET", "env-secret")
+
+		cfg, err := LoadConfigWithOptions(&Options{
+			ConfigPath: filepath.Join(t.TempDir(), "does-not-exist"),
+			APIKey:     APIKeyCredentials{AccessKeyID: "opts-ak", SecretKey: "opts-sk"},
+		})
+		if err != nil {
+			t.Fatalf("unexpected LoadConfigWithOptions error: %v", err)
+		}
+		if cfg.ClientSecret.ClientID != "" || cfg.ClientSecret.ClientSecret != "" {
+			t.Fatalf("expected env's ClientSecret to be fully discarded when opts wins whole, got %+v", cfg.ClientSecret)
+		}
+		method, resolveErr := ResolveAuthMethod(cfg)
+		if resolveErr != nil || method != AuthMethodAPIKey {
+			t.Fatalf("expected clean AuthMethodAPIKey (no conflict detected across tiers by design), got method=%v err=%v", method, resolveErr)
+		}
+	})
 }
