@@ -11,8 +11,8 @@ variables:
   # The retained standalone reminder/promotion jobs use the existing helper image.
   CI_IMAGE: registry.gitlab.com/crusoeenergy/tools/go-ci-1.18
   CI_IMAGE_TAG: master
+  # The scan policy does not set these MR/Advanced SAST flags.
   AST_ENABLE_MR_PIPELINES: 'true'
-  SAST_EXCLUDED_ANALYZERS: gosec,semgrep
   GITLAB_ADVANCED_SAST_ENABLED: 'true'
 
 # The existing dependency reminder remains separate from the shared QA jobs.
