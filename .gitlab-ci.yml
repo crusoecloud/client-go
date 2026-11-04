@@ -58,3 +58,10 @@ legacy_lint_checks:
   rules: !reference [golangci_lint, rules]
   script:
     - mise run lint:legacy-checks
+
+format_lint:
+  extends: .go_rules
+  stage: test
+  rules: !reference [golangci_lint, rules]
+  script:
+    - mise run go:lint:fmt -- --diff ./...

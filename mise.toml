@@ -25,6 +25,7 @@ LEGACY_LINT_VERSION = "1.47.3"
 description = "Tidy modules and apply the existing lint fixes"
 run = [
   { task = "go:mod-tidy" },
+  { task = "go:lint:fmt" },
   { task = "go:lint" },
   { task = "lint:legacy-checks" },
 ]
@@ -53,6 +54,7 @@ GOFLAGS = "{{ env.GOFLAGS | default(value='') }} '-tags={{ env.BUILDTAGS }}'"
 description = "Run maintained v2 lint, formatting, and the retained v1-only checks"
 run = [
   { task = "go:lint:check" },
+  { task = "go:lint:fmt", args = ["--diff", "./..."] },
   { task = "lint:legacy-checks" },
 ]
 

@@ -89,5 +89,6 @@ Swagger exclusion; removed upstream checks are listed in the migration review.
 The v1-only `ifshort` and `exportloopref` checks remain available through
 `mise run lint:legacy-checks` and MR CI on their compatible Go 1.18 lint runtime.
 The module language version remains Go 1.17. `make lint` and local CI/development
-workflows include those checks and v2 lint. Configured formatters report through
-shared `go:lint:check`; precommit applies their fixes through shared `go:lint`.
+workflows include those checks, v2 lint, and the broader formatting scope of
+shared `go:lint:fmt -- --diff`. This includes test files excluded by lint's
+`run.tests: false`; precommit formats them through `go:lint:fmt` before lint fixes.
