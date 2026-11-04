@@ -1,4 +1,4 @@
-# Tool pins, execution, and workflow ordering live in mise.toml.
+# Tool pins and task implementations live in mise.toml.
 ifneq ($(origin BUILDTAGS),undefined)
 export BUILDTAGS
 endif
@@ -24,7 +24,9 @@ test: ## Run the race tests
 	@mise run go:test:race
 
 test-ci: ## Check modules, produce shared coverage reports, and run race checks
-	@mise run go:test:all
+	@mise run go:mod-tidy:check
+	@mise run go:test:cover
+	@mise run go:test:race
 
 lint: ## Run lint checks
 	@mise run lint:all

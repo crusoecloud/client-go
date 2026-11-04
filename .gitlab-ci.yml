@@ -15,30 +15,6 @@ variables:
   SAST_EXCLUDED_ANALYZERS: gosec,semgrep
   GITLAB_ADVANCED_SAST_ENABLED: 'true'
 
-.code-changes: &code-changes
-      changes:
-        - .gitlab-ci.yml
-        - Makefile
-        - go.*
-
-# Preserve the informational source index while shared Go jobs use mise.
-code_intelligence:
-  needs: []
-  allow_failure: true
-  image: registry.gitlab.com/crusoeenergy/tools/scip:v0.5.0
-  rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      changes: !reference [.code-changes, changes]
-  before_script:
-    - go env -w "GOPRIVATE=${CI_SERVER_HOST}"
-    - echo "machine ${CI_SERVER_HOST} login gitlab-ci-token password ${CI_JOB_TOKEN}" > ~/.netrc
-  script:
-    - scip-go --skip-tests
-    - scip convert --from index.scip --to dump.lsif
-  artifacts:
-    reports:
-      lsif: dump.lsif
-
 # The existing dependency reminder remains separate from the shared QA jobs.
 dependency-reminders:
   image: $CI_IMAGE:$CI_IMAGE_TAG

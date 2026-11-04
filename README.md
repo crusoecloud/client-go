@@ -64,14 +64,13 @@ file elsewhere.
 
 Run `mise install`, then use the existing Make targets or `mise run` directly.
 Tool versions and project-specific workflows live in root `mise.toml`; `mise.lock`
-resolves macOS arm64 and Linux amd64 (including musl). Standard ordered test and
-precommit workflows come from shared tools tasks.
+resolves macOS arm64 and Linux amd64 (including musl). Standard Go checks come
+from shared tools tasks.
 
-Shared task imports currently use tools branch
-`shiqi-shared-manifest-aliaslint-tasks` for the reusable workflow helpers in
+Shared task imports currently pin a reviewed revision of
 [tools !506](https://gitlab.com/crusoeenergy/tools/-/merge_requests/506). Merge that
-companion first, then switch the task import to `master`. `make test-ci` calls
-`go:test:all` (module tidiness, count coverage, then race checks).
+companion first, then switch the task import to `master`. `make test-ci` directly runs
+`go:mod-tidy:check`, `go:test:cover`, then `go:test:race`.
 
 CI uses the shared mise/Go components from tools `master`: count coverage and
 race checks run separately, lint runs on MR pipelines, and release tagging follows

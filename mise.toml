@@ -13,7 +13,7 @@ lockfile = true
 
 [task_config]
 includes = [
-  "{{ env.CRUSOE_TASKS_URL | default(value='git::https://git@gitlab.com/crusoeenergy/tools.git//tasks?ref=52a252e053fb5defe58d56bad41c8b20c236d158') }}",
+  "{{ env.CRUSOE_TASKS_URL | default(value='git::https://git@gitlab.com/crusoeenergy/tools.git//tasks?ref=73b6a6e6c70be4bf220bb64b63abbe429164718b') }}",
 ]
 
 [env]
@@ -40,7 +40,10 @@ run = [
 [tasks."test:all"]
 description = "Check module tidiness, then run shared count coverage, race checks, and lint"
 run = [
-  { task = "go:test:all" },
+  # Separate invocations retain coverage post-processing when tests fail.
+  "mise run go:mod-tidy:check",
+  "mise run go:test:cover",
+  "mise run go:test:race",
   { task = "lint:all" },
 ]
 
