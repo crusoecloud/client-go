@@ -348,7 +348,7 @@ func NewDefaultConfig(ctx context.Context, opts ...Option) (*swagger.Configurati
 	method, err := credentials.ResolveAuthMethod(cfg)
 	if err != nil {
 		if loadErr != nil {
-			return nil, fmt.Errorf("resolving default credentials: %w (config load: %v)", err, loadErr)
+			return nil, fmt.Errorf("resolving default credentials: %w (config load: %s)", err, loadErr.Error())
 		}
 
 		return nil, fmt.Errorf("resolving default credentials: %w", err)

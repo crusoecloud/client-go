@@ -123,7 +123,7 @@ func LoadConfigWithOptions(opts *Options) (*Config, error) {
 	if !found {
 		if profileWasExplicitlyRequested(rawData, opts) {
 			if advisoryErr != nil {
-				return cfg, fmt.Errorf("%w: %q (config file error: %v)", ErrProfileNotFound, profileName, advisoryErr)
+				return cfg, fmt.Errorf("%w: %q (config file error: %s)", ErrProfileNotFound, profileName, advisoryErr.Error())
 			}
 
 			return cfg, fmt.Errorf("%w: %q", ErrProfileNotFound, profileName)
