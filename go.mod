@@ -1,8 +1,9 @@
 module github.com/crusoecloud/client-go
 
-go 1.17
+go 1.18
 
 require (
+	github.com/BurntSushi/toml v1.5.0
 	github.com/antihax/optional v1.0.0
 	golang.org/x/oauth2 v0.7.0
 )

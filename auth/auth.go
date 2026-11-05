@@ -13,9 +13,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/crusoecloud/client-go/internal/credentials"
 	swagger "github.com/crusoecloud/client-go/swagger/v1alpha5"
 	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/clientcredentials"
 )
 
 // AuthenticatingTransport is a struct implementing http.Roundtripper
@@ -190,44 +190,29 @@ func NewAuthenticatedAPIClient(accessKey, secret string) *swagger.APIClient {
 	return swagger.NewAPIClient(NewAuthenticatedConfig(accessKey, secret))
 }
 
-// NewAuthenticatedConfig initializes a new Crusoe API configuration .
+// NewAuthenticatedConfig initializes a new Crusoe API configuration. Always allocates a fresh
+// *http.Client instead of reusing http.DefaultClient, which would mutate that process-wide client
+// for every other goroutine using it.
 func NewAuthenticatedConfig(accessKey, secret string) *swagger.Configuration {
 	cfg := swagger.NewConfiguration()
-	if cfg.HTTPClient == nil {
-		cfg.HTTPClient = http.DefaultClient
+	cfg.HTTPClient = &http.Client{
+		Transport: NewAuthenticatingTransport(http.DefaultTransport, accessKey, secret),
 	}
-
-	cfg.HTTPClient.Transport = NewAuthenticatingTransport(cfg.HTTPClient.Transport, accessKey, secret)
 
 	return cfg
 }
 
-// defaultServiceAccountTokenURL is used when NewServiceAccountConfig is called with an empty
-// tokenURL.
-//
-//nolint:gosec // G101: URL constant, not a credential
-const defaultServiceAccountTokenURL = "https://auth.crusoe.ai/oauth2/token"
-
-// defaultServiceAccountAudience is used when NewServiceAccountConfig is called with an empty
-// audience. It matches the audience prod's auth-gateway validates against, i.e. the environment
-// defaultServiceAccountTokenURL itself points at.
-const defaultServiceAccountAudience = "https://api.crusoe.ai"
-
-// errInsecureTokenURL is returned when a non-empty tokenURL isn't https - sending it would mean
-// a client secret goes out over the wire in the clear.
-var errInsecureTokenURL = errors.New("tokenURL must be an https:// URL")
-
-// defaultServiceAccountHTTPTimeout bounds a token fetch when the caller hasn't already supplied
+// defaultTokenFetchHTTPTimeout bounds a token fetch when the caller hasn't already supplied
 // an http.Client via ctx (see ctxWithDefaultHTTPClient).
-const defaultServiceAccountHTTPTimeout = 30 * time.Second
+const defaultTokenFetchHTTPTimeout = 30 * time.Second
 
-// newDefaultServiceAccountHTTPClient builds the client ctxWithDefaultHTTPClient injects when the
+// newDefaultTokenFetchHTTPClient builds the client ctxWithDefaultHTTPClient injects when the
 // caller hasn't supplied one. A var, not a plain call, so tests can substitute a client that also
 // trusts a test TLS certificate instead of waiting out the real timeout.
 //
 //nolint:gochecknoglobals // deliberate test-injection seam, not shared mutable state
-var newDefaultServiceAccountHTTPClient = func() *http.Client {
-	return &http.Client{Timeout: defaultServiceAccountHTTPTimeout}
+var newDefaultTokenFetchHTTPClient = func() *http.Client {
+	return &http.Client{Timeout: defaultTokenFetchHTTPTimeout}
 }
 
 // ctxWithDefaultHTTPClient returns ctx unchanged if the caller already set an oauth2.HTTPClient
@@ -245,17 +230,17 @@ func ctxWithDefaultHTTPClient(ctx context.Context) context.Context {
 		return ctx
 	}
 
-	return context.WithValue(ctx, oauth2.HTTPClient, newDefaultServiceAccountHTTPClient())
+	return context.WithValue(ctx, oauth2.HTTPClient, newDefaultTokenFetchHTTPClient())
 }
 
-// NewServiceAccountAPIClient initializes a new Crusoe API client authenticated as a service
-// account via the OAuth2 client credentials grant. See NewServiceAccountConfig for how ctx
+// NewClientSecretAPIClient initializes a new Crusoe API client authenticated as a service
+// account via the OAuth2 client credentials grant. See NewClientSecretConfig for how ctx
 // bounds the token fetch (including its default timeout when ctx carries no oauth2.HTTPClient).
-func NewServiceAccountAPIClient(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
+func NewClientSecretAPIClient(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
 	*swagger.APIClient, error,
 ) {
-	// Delegate to NewServiceAccountConfig for tokenURL/audience validation and defaulting.
-	cfg, err := NewServiceAccountConfig(ctx, clientID, clientSecret, tokenURL, audience)
+	// Delegate to NewClientSecretConfig for tokenURL/audience validation and defaulting.
+	cfg, err := NewClientSecretConfig(ctx, clientID, clientSecret, tokenURL, audience)
 	if err != nil {
 		return nil, err
 	}
@@ -263,50 +248,137 @@ func NewServiceAccountAPIClient(ctx context.Context, clientID, clientSecret, tok
 	return swagger.NewAPIClient(cfg), nil
 }
 
-// NewServiceAccountConfig initializes a new Crusoe API configuration authenticated as a service
+// NewClientSecretConfig initializes a new Crusoe API configuration authenticated as a service
 // account via the OAuth2 client credentials grant (clientID/clientSecret against tokenURL). The
 // returned Configuration's HTTPClient fetches an access token on first use and refreshes it
 // automatically as it nears expiry, for every subsequent request.
 //
-// tokenURL defaults to defaultServiceAccountTokenURL when empty. A non-empty tokenURL that isn't
-// https is rejected, rather than sending the client secret over the wire in the clear.
-//
-// audience defaults to defaultServiceAccountAudience when empty, and is sent as the token
-// request's "audience" form parameter (RFC 8707 resource indicator). Ory Hydra only treats a
-// client's registered audience list as an allowlist - it does not stamp it onto every issued
-// token - so a request that omits "audience" gets back a token with an empty aud claim, which
-// auth-gateway then rejects (CCX-6069). Callers targeting a non-prod environment must pass the
-// audience matching that environment's auth-gateway config alongside its tokenURL.
-//
-// The token fetch itself is bounded by defaultServiceAccountHTTPTimeout unless ctx already
-// carries its own oauth2.HTTPClient - see ctxWithDefaultHTTPClient. That same injection point
-// would also be the place to add retry/backoff (the parity gap documented where
-// terraform-provider-crusoe wraps this client) if that's ever needed; not done here since it's a
-// separate, larger design decision.
-func NewServiceAccountConfig(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
+// tokenURL/audience defaulting and validation, and the underlying oauth2.TokenSource, live in
+// credentials.NewClientSecretTokenSource - see its doc comment for the RFC 8707 audience details.
+// This wraps that TokenSource with the same ctx (bounded by defaultTokenFetchHTTPTimeout unless
+// the caller already supplied an oauth2.HTTPClient - see ctxWithDefaultHTTPClient) via
+// oauth2.NewClient to get a request-ready *http.Client. That same injection point would also be the
+// place to add retry/backoff (the parity gap documented where terraform-provider-crusoe wraps this
+// client) if that's ever needed; not done here since it's a separate, larger design decision.
+func NewClientSecretConfig(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
 	*swagger.Configuration, error,
 ) {
-	// tokenURL defaulting/validation.
-	switch {
-	case tokenURL == "":
-		tokenURL = defaultServiceAccountTokenURL
-	case !strings.HasPrefix(tokenURL, "https://"):
-		return nil, fmt.Errorf("%w: got %q", errInsecureTokenURL, tokenURL)
-	}
+	//nolint:wsl // no blank line needed before this statement
+	tokenCtx := ctxWithDefaultHTTPClient(ctx)
 
-	if audience == "" {
-		audience = defaultServiceAccountAudience
+	tokenSource, err := credentials.NewClientSecretTokenSource(tokenCtx, clientID, clientSecret, tokenURL, audience)
+	if err != nil {
+		return nil, fmt.Errorf("constructing client secret token source: %w", err)
 	}
 
 	cfg := swagger.NewConfiguration()
-
-	cfg.HTTPClient = (&clientcredentials.Config{
-		ClientID:       clientID,
-		ClientSecret:   clientSecret,
-		TokenURL:       tokenURL,
-		EndpointParams: url.Values{"audience": {audience}},
-		AuthStyle:      oauth2.AuthStyleInHeader,
-	}).Client(ctxWithDefaultHTTPClient(ctx))
+	cfg.HTTPClient = oauth2.NewClient(tokenCtx, tokenSource)
 
 	return cfg, nil
+}
+
+// options is a private alias for credentials.Options so that internal type doesn't leak into
+// this package's exported API / godoc. Option and the With* functions below are the public
+// interface; see their own doc comments for behavior.
+type options = credentials.Options
+
+// Option configures credential resolution for NewDefaultConfig and NewDefaultAPIClient.
+type Option func(*options)
+
+// WithAPIKey sets an explicit access key/secret key pair, taking precedence over
+// environment variables and the config file.
+func WithAPIKey(accessKey, secret string) Option {
+	return func(o *options) {
+		o.APIKey = credentials.APIKeyCredentials{AccessKeyID: accessKey, SecretKey: secret}
+	}
+}
+
+// WithClientSecret sets explicit service account OAuth2 credentials, taking
+// precedence over environment variables and the config file. tokenURL and audience may be left
+// empty to use their defaults.
+func WithClientSecret(clientID, clientSecret, tokenURL, audience string) Option {
+	return func(o *options) {
+		o.ClientSecret = credentials.ClientSecretCredentials{
+			ClientID: clientID, ClientSecret: clientSecret, TokenURL: tokenURL, Audience: audience,
+		}
+	}
+}
+
+// WithProfile selects a named profile from the config file, overriding CRUSOE_PROFILE and the
+// config file's own top-level profile key. Also takes precedence over CRUSOE_* environment
+// variables for which identity is used, so a profile explicitly selected this way can't be
+// overridden by unrelated env vars set elsewhere in the same process.
+func WithProfile(name string) Option {
+	return func(o *options) {
+		o.Profile = name
+	}
+}
+
+// WithConfigPath overrides the default ~/.crusoe/config path, for processes with no home
+// directory or that keep their config file elsewhere. CRUSOE_CONFIG_DIR has the same effect via
+// an environment variable instead.
+func WithConfigPath(path string) Option {
+	return func(o *options) {
+		o.ConfigPath = path
+	}
+}
+
+// NewDefaultConfig resolves credentials in this order: explicit options passed here, then
+// CRUSOE_* environment variables, then ~/.crusoe/config, returning an error if neither a
+// complete access-key/secret-key pair nor a complete service-account client ID/secret pair is
+// found, or if both are found at once.
+//
+// The resulting *swagger.Configuration is built the same way NewAuthenticatedConfig or
+// NewClientSecretConfig would build it; this only adds credential resolution on top.
+func NewDefaultConfig(ctx context.Context, opts ...Option) (*swagger.Configuration, error) {
+	var resolveOpts options
+	for _, opt := range opts {
+		opt(&resolveOpts)
+	}
+
+	cfg, loadErr := credentials.LoadConfigWithOptions(&resolveOpts)
+	// Most load errors are advisory and still let resolution continue; these two are fatal and
+	// must be returned directly, not buried as context behind a later ErrMissingCredentials.
+	fatalLoadErr := errors.Is(loadErr, credentials.ErrProfileNotFound) ||
+		errors.Is(loadErr, credentials.ErrProfileWithExplicitCredentials)
+	if fatalLoadErr {
+		return nil, fmt.Errorf("resolving default credentials: %w", loadErr)
+	}
+
+	method, err := credentials.ResolveAuthMethod(cfg)
+	if err != nil {
+		if loadErr != nil {
+			return nil, fmt.Errorf("resolving default credentials: %w (config load: %v)", err, loadErr)
+		}
+
+		return nil, fmt.Errorf("resolving default credentials: %w", err)
+	}
+
+	switch method {
+	case credentials.AuthMethodClientSecret:
+		return NewClientSecretConfig(ctx, cfg.ClientSecret.ClientID, cfg.ClientSecret.ClientSecret,
+			cfg.ClientSecret.TokenURL, cfg.ClientSecret.Audience)
+	case credentials.AuthMethodAPIKey:
+		return NewAuthenticatedConfig(cfg.APIKey.AccessKeyID, cfg.APIKey.SecretKey), nil
+	case credentials.AuthMethodUnknown:
+		// Unreachable: ResolveAuthMethod only returns AuthMethodUnknown alongside a non-nil error,
+		// already handled above.
+		return nil, fmt.Errorf("resolving default credentials: %w", credentials.ErrMissingCredentials)
+	default:
+		// A method ResolveAuthMethod knows how to resolve but this switch has no case for yet -
+		// e.g. a new AuthMethod added to authCandidates without a matching case added here. Fail
+		// loudly instead of falling through to ErrMissingCredentials, which would misreport
+		// credentials that were actually found as missing.
+		return nil, fmt.Errorf("resolving default credentials: %w: %v", credentials.ErrUnsupportedAuthMethod, method)
+	}
+}
+
+// NewDefaultAPIClient is NewDefaultConfig, wrapped in a ready-to-use *swagger.APIClient.
+func NewDefaultAPIClient(ctx context.Context, opts ...Option) (*swagger.APIClient, error) {
+	cfg, err := NewDefaultConfig(ctx, opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	return swagger.NewAPIClient(cfg), nil
 }
