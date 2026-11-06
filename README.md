@@ -59,3 +59,38 @@ Configuring both at once is an error.
 `auth.WithConfigPath(path)` (or the `CRUSOE_CONFIG_DIR` environment variable) points at a config
 file in a non-default location, for processes with no home directory or that keep their config
 file elsewhere.
+
+## Project tooling
+
+Run `mise install`, then use the existing Make targets or `mise run` directly.
+Tool versions and project-specific workflows live in root `mise.toml`; `mise.lock`
+resolves macOS arm64 and Linux amd64 (including musl). Standard Go checks come
+from shared tools tasks.
+
+Shared Go tasks use tools `master`. `make test-ci` directly runs
+`go:mod-tidy:check`, `go:test:cover`, then `go:test:race`.
+
+CI uses the shared mise/Go components from tools `master`: count coverage and
+race checks run separately, lint runs on MR pipelines, and release tagging follows
+the shared dependency policy. Central security policy scans
+remain enabled. Local `make test-ci` uses the shared count coverage reports
+(`coverage.out`, `coverage.html`, `coverage.xml`, and `junit.xml`) and runs race
+checks separately; `make ci` also runs local lint. Coverage excludes generated
+protobuf files and mocks/proto packages, and Cobertura reports coverage by file.
+Use native `GOFLAGS` for test selection, for example
+`GOFLAGS="-tags=unit,integration" make test`. The legacy `BUILDTAGS` variable is
+no longer translated into Go flags.
+
+This migration upgrades the project tooling to Go 1.26.10 and golangci-lint v2.
+The v2 lint configuration maps maintained checks and retains the generated
+Swagger exclusion; removed upstream checks are listed in the migration review.
+
+The v1-only `ifshort` and `exportloopref` checks remain available through
+`mise run lint:legacy-checks` and MR CI on their compatible Go 1.18 lint runtime.
+The module language version remains Go 1.18, so range variables still use the
+pre-Go 1.22 semantics that `exportloopref` checks. `make lint` and local CI/development
+workflows include the retained legacy checks and maintained v2 lint. The maintained
+check reports formatter issues in test files; precommit applies fixes through
+shared `go:lint` (`run --fix`). Test packages now participate in loading and type
+checking, while the configured non-formatter linters keep test-file findings
+excluded. The legacy v1 checks continue to run with tests disabled.

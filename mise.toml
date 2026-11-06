@@ -1,0 +1,64 @@
+min_version = "2026.10.17"
+
+[tools]
+go = "1.26.10"
+"go:github.com/golangci/golangci-lint/v2/cmd/golangci-lint" = "{{ env.GOLANGCI_VERSION | default(value='2.2.1') | trim_start(pat='v') }}"
+
+gotestsum = "1.13.0"
+"go:github.com/boumenot/gocover-cobertura" = "1.4.0"
+
+[settings]
+experimental = true
+lockfile = true
+
+[task_config]
+includes = [
+  "{{ env.CRUSOE_TASKS_URL | default(value='git::https://git@gitlab.com/crusoeenergy/tools.git//tasks?ref=master') }}",
+]
+
+[env]
+LEGACY_LINT_VERSION = "1.47.3"
+
+[tasks.precommit]
+description = "Tidy modules and apply the existing lint fixes"
+run = [
+  { task = "go:mod-tidy" },
+  { task = "go:lint" },
+  { task = "lint:legacy-checks" },
+]
+
+[tasks.dev]
+description = "Run the existing local test and lint workflow in order"
+run = [
+  { task = "go:test:race" },
+  { task = "lint:all" },
+]
+
+[tasks."test:all"]
+description = "Check module tidiness, then run shared count coverage, race checks, and lint"
+run = [
+  # Separate invocations retain coverage post-processing when tests fail.
+  "mise run go:mod-tidy:check",
+  "mise run go:test:cover",
+  "mise run go:test:race",
+  { task = "lint:all" },
+]
+
+[tasks."lint:all"]
+description = "Run maintained v2 lint and the retained v1-only checks"
+run = [
+  { task = "go:lint:check" },
+  { task = "lint:legacy-checks" },
+]
+
+# ifshort is archived, and exportloopref still matters with the Go 1.18 module
+# language version. Keep these v1-only checks on their compatible lint runtime.
+[tasks."lint:legacy-checks"]
+description = "Retain ifshort and exportloopref while the maintained checks use v2"
+tools = { go = "1.18.10", "golangci-lint" = "{{ env.LEGACY_LINT_VERSION }}" }
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+legacy_lint="$(mise which --tool "golangci-lint@${LEGACY_LINT_VERSION}" golangci-lint)"
+"${legacy_lint}" run --no-config --disable-all --enable ifshort,exportloopref --tests=false --skip-dirs swagger ./...
+'''

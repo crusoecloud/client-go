@@ -1,61 +1,18 @@
 include:
-  - project: 'crusoeenergy/tools'
-    file: '/templates/go.gitlab-ci.yml'
+  - component: $CI_SERVER_FQDN/crusoeenergy/tools/mise@master
+  - component: $CI_SERVER_FQDN/crusoeenergy/tools/go@master
+    inputs:
+      major_version: "$MAJOR_VERSION"
+      minor_version: "$MINOR_VERSION"
 
 variables:
   MAJOR_VERSION: "1"
   MINOR_VERSION: "0"
-  # Comment-only touch to this file (see tag_semver's .version-changes rule below) to force a new
-  # patch tag for CCX-6069's service-account audience fix (merged in 6e3c41f), which otherwise
-  # wouldn't get one: tag_semver only fires on swagger/** changes or edits to this file, and that
-  # merge touched neither.
-  CI_IMAGE: registry.gitlab.com/crusoeenergy/tools/go-ci-1.18
 
-analyze:
-  variables:
-    GOKART_CONFIG_LOC: $CI_PROJECT_DIR/.gokart/analyzers.yml
-
-.code-changes: &code-changes
-      changes:
-        - .gitlab-ci.yml
-        - Makefile
-        - go.*
-
-.swagger-changes: &swagger-changes
-      changes:
-        - swagger/**/*
-
-.version-changes: &version-changes
-      changes:
-        - .gitlab-ci.yml
-
-.swagger-and-code-changes: &swagger-and-code-changes
-      changes:
-        - .gitlab-ci.yml
-        - Makefile
-        - go.*
-        - swagger/**/*
-
-test_and_lint:
-  rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "auto-gen" || $CI_MERGE_REQUEST_ID'
-      changes: !reference [.swagger-and-code-changes, changes]
-
-# trigger semantic versioning + tagging if .swagger-changes or version variables change on the default branch
-tag_semver:
-  rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      changes: !reference [.swagger-changes, changes]
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      changes: !reference [.version-changes, changes]
-  needs: ["test_and_lint"]
-
-# job that will ensure swagger pipeline is created when modifying swagger code
-swagger-dummy:
-  needs: []
-  rules:
-    - <<: *code-changes
-      when: never
-    - <<: *swagger-changes
-      when: always
-  script: "echo 'dummy swagger job'"
+# Retain the meaningful v1-only checks alongside the standard v2 lint job.
+legacy_lint_checks:
+  extends: .go_rules
+  stage: test
+  rules: !reference [golangci_lint, rules]
+  script:
+    - mise run lint:legacy-checks
