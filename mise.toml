@@ -51,7 +51,7 @@ run = [
   { task = "lint:legacy-checks" },
 ]
 
-# ifshort is archived, and exportloopref still matters with the Go 1.17 module
+# ifshort is archived, and exportloopref still matters with the Go 1.18 module
 # language version. Keep these v1-only checks on their compatible lint runtime.
 [tasks."lint:legacy-checks"]
 description = "Retain ifshort and exportloopref while the maintained checks use v2"

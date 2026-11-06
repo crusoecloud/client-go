@@ -8,21 +8,6 @@ include:
 variables:
   MAJOR_VERSION: "1"
   MINOR_VERSION: "0"
-  # The retained standalone reminder/promotion jobs use the existing helper image.
-  CI_IMAGE: registry.gitlab.com/crusoeenergy/tools/go-ci-1.18
-  CI_IMAGE_TAG: master
-
-# The existing dependency reminder remains separate from the shared QA jobs.
-dependency-reminders:
-  image: $CI_IMAGE:$CI_IMAGE_TAG
-  needs: []
-  rules:
-    - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "staging" || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "prod"'
-      when: never
-    - if: '$CI_MERGE_REQUEST_ID && $CI_API_TOKEN'
-      changes: [go.mod, go.sum]
-  script:
-    - /var/crusoe/scripts/dependency_reminder.sh
 
 # Retain the meaningful v1-only checks alongside the standard v2 lint job.
 legacy_lint_checks:
