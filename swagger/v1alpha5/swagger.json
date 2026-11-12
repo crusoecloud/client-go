@@ -15627,7 +15627,7 @@
         },
         "version": {
           "description": "Version to install. If omitted, the catalog default for the cluster's\nKubernetes version is used.",
-          "example": "v1alpha5.19.1",
+          "example": "v1.19.1",
           "type": "string",
           "x-go-name": "Version"
         }
@@ -15754,7 +15754,7 @@
       "properties": {
         "version": {
           "description": "Installable version string for the add-on.",
-          "example": "v1alpha5.19.1",
+          "example": "v1.19.1",
           "type": "string",
           "x-go-name": "Version"
         }
@@ -16433,7 +16433,7 @@
         },
         "version": {
           "description": "Version the add-on was installed with (or the existing install's version\nwhen already_exists is true).",
-          "example": "v1alpha5.19.1",
+          "example": "v1.19.1",
           "type": "string",
           "x-go-name": "Version"
         }
@@ -16508,7 +16508,7 @@
         },
         "installed_version": {
           "description": "Version actually applied on the cluster. Empty before the first install\ncompletes; differs from version while an upgrade is in flight.",
-          "example": "v1alpha5.19.1",
+          "example": "v1.19.1",
           "type": "string",
           "x-go-name": "InstalledVersion"
         },
@@ -16534,7 +16534,7 @@
         },
         "version": {
           "description": "Requested (target) version.",
-          "example": "v1alpha5.19.1",
+          "example": "v1.19.1",
           "type": "string",
           "x-go-name": "Version"
         }
@@ -18932,7 +18932,7 @@
           "description": "Tags that point to the manifest.",
           "example": [
             "latest",
-            "v1alpha5.0"
+            "v1.0"
           ],
           "items": {
             "type": "string"
