@@ -7886,7 +7886,7 @@
         ]
       }
     },
-    "/projects/{project_id}/metrics/timeseries/api/v1/query-range": {
+    "/projects/{project_id}/metrics/timeseries/api/v1/query_range": {
       "get": {
         "operationId": "queryTimeseriesRange",
         "parameters": [
