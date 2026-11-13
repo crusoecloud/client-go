@@ -17259,6 +17259,21 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "KubernetesNodePoolResponse": {
+      "properties": {
+        "details": {
+          "$ref": "#/definitions/OperationDetails"
+        },
+        "node_pool": {
+          "$ref": "#/definitions/KubernetesNodePool"
+        }
+      },
+      "required": [
+        "node_pool"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "KubernetesNodePoolRotateStartRequest": {
       "properties": {
         "count": {
@@ -19249,6 +19264,23 @@
       "title": "Operation contains the common fields for all Operation API objects.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/fetch"
+    },
+    "OperationDetails": {
+      "properties": {
+        "error": {
+          "description": "Error associated with the operation. Populated if the operation was a\npartial success on a best-effort basis.",
+          "type": "string",
+          "x-go-name": "Error"
+        },
+        "num_vms_created": {
+          "description": "Number of VMs (nodes) successfully created by the operation.",
+          "format": "int32",
+          "type": "integer",
+          "x-go-name": "NumVMsCreated"
+        }
+      },
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "OrgQuota": {
       "properties": {
