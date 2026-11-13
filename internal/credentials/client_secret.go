@@ -26,29 +26,13 @@ type clientSecretOptions struct {
 // NewClientSecretTokenSource.
 type ClientSecretOption func(*clientSecretOptions)
 
-// WithDiskTokenCache enables caching minted access tokens on disk under dir. It is off by default;
-// without it the token source behaves exactly as it always has, keeping a token only in memory for
-// the lifetime of the process. With it, a token minted by one process is reused by subsequent
-// processes until it nears expiry - the difference that matters for a CLI that runs as a fresh
-// process per command and would otherwise pay a token round-trip every time.
+// WithDiskTokenCache caches minted access tokens on disk under dir, reused across process
+// invocations until near expiry. Off by default.
 //
-// dir is created with 0700 permissions if it doesn't exist. Each cache file is named by a SHA-256
-// hash of the full credential tuple - never a plaintext client ID or secret - and written with 0600
-// permissions. The client secret is never written to disk. dir is also required to already be
-// privately owned and permissioned if it exists beforehand (e.g. from a previous run) - a
-// pre-existing dir that fails that check is treated as unusable and caching is silently skipped,
-// rather than trusting whatever another local user could have placed inside it. These permission
-// checks are POSIX-only; on Windows, only that dir is actually a directory is verified. dir is
-// checked with Lstat, so a dir that is itself a symlink also fails the check and silently disables
-// caching - a safe default, not an error, but worth knowing if caching seems to never engage.
-//
-// A rotated client secret is covered by the cache key and always misses. A token invalidated some
-// other way - its signing key rotated server-side, or explicitly revoked - is not: the cache has no
-// way to know that happened, and keeps serving it until its own recorded expiry. A caller that sees
-// a 401 it can't otherwise explain should call InvalidateDiskTokenCache for the same credential
-// tuple, then build a new token source/config before retrying - invalidating only removes the disk
-// entry, it does not reach into an *http.Client already built from this option, which has its own
-// in-memory copy of the bad token via oauth2.NewClient's own reuse wrapper.
+// dir is created 0700 if missing, and must already be privately owned/permissioned if it exists -
+// otherwise caching is silently skipped (POSIX-only; Windows only checks it's a directory). Cache
+// files are 0600, named by hash only; the client secret is never written. Revocation (unlike
+// rotation) isn't caught by the cache key - see InvalidateDiskTokenCache.
 func WithDiskTokenCache(dir string) ClientSecretOption {
 	return func(o *clientSecretOptions) {
 		o.diskCacheDir = dir
