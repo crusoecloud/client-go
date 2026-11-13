@@ -17,7 +17,7 @@ type LogEntry struct {
 	ActorEmail string `json:"actor_email"`
 	// Actor: who performed the action.
 	ActorId string `json:"actor_id"`
-	// ActorType: type of the actor
+	// Type of the actor: User, ServiceAccount, System or Crusoe Admin.
 	ActorType string `json:"actor_type"`
 	// IP address of the request
 	ClientIp string `json:"client_ip"`

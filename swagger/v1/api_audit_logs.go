@@ -36,15 +36,15 @@ AuditLogsApiService Get audit logs belonging to the specified organization. User
      * @param "EndTime" (optional.String) -
      * @param "Actions" (optional.Interface of []string) -
      * @param "ActorIds" (optional.Interface of []string) -
-     * @param "ActorEmails" (optional.Interface of []string) -
-     * @param "ActorTypes" (optional.Interface of []string) -
+     * @param "ActorEmails" (optional.Interface of []string) -  Emails of the users to filter by. Filtering by Crusoe Admin email isn&#x27;t supported.
+     * @param "ActorTypes" (optional.Interface of []string) -  Actor types to filter by: User, ServiceAccount, System or Crusoe Admin. URL-encode values that contain spaces.
      * @param "TargetIds" (optional.Interface of []string) -
      * @param "TargetTypes" (optional.Interface of []string) -
      * @param "TargetNames" (optional.Interface of []string) -
      * @param "Locations" (optional.Interface of []string) -
      * @param "Results" (optional.Interface of []string) -
-     * @param "ResultsNot" (optional.Interface of []string) -
-     * @param "Surfaces" (optional.Interface of []string) -
+     * @param "ResultsNot" (optional.Interface of []string) -  Results to exclude from the response.
+     * @param "Surfaces" (optional.Interface of []string) -  Surfaces the requests came from, such as Browser or Crusoe Terraform/v0.5.21. URL-encode the values.
      * @param "Limit" (optional.String) -
      * @param "NextToken" (optional.String) -
      * @param "PrevToken" (optional.String) -

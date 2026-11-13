@@ -1417,7 +1417,8 @@
             "x-go-name": "ActorIDs"
           },
           {
-            "example": "hh26@xxx.com,xyz@yyy.ai, only support filter by user email, not by crusoe admin email.",
+            "description": "Emails of the users to filter by. Filtering by Crusoe Admin email isn't supported.",
+            "example": "hh26@xxx.com,xyz@yyy.ai",
             "in": "query",
             "items": {
               "type": "string"
@@ -1427,7 +1428,8 @@
             "x-go-name": "ActorEmails"
           },
           {
-            "example": "User,Crusoe Admin, please ensure URL encoding for values with space.",
+            "description": "Actor types to filter by: User, ServiceAccount, System or Crusoe Admin. URL-encode values that contain spaces.",
+            "example": "User,Crusoe Admin",
             "in": "query",
             "items": {
               "type": "string"
@@ -1487,6 +1489,7 @@
             "x-go-name": "Results"
           },
           {
+            "description": "Results to exclude from the response.",
             "example": "OK,Bad Request",
             "in": "query",
             "items": {
@@ -1497,7 +1500,8 @@
             "x-go-name": "ResultsNot"
           },
           {
-            "example": "Browser,Crusoe Terraform/v0.5.21 please make sure the values are URL encoded.",
+            "description": "Surfaces the requests came from, such as Browser or Crusoe Terraform/v0.5.21. URL-encode the values.",
+            "example": "Browser,Crusoe Terraform/v0.5.21",
             "in": "query",
             "items": {
               "type": "string"
@@ -7646,7 +7650,7 @@
     },
     "/projects/{project_id}/metrics/scrape": {
       "get": {
-        "description": "This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics\nin Prometheus text exposition format for scraping by external monitoring systems.\n\nSupports filtering by:\nmetric_name: Filter by metric name(s). Supports comma-separated values (e.g., metric_name=http_requests_total,http_response_time)\nmetric_category: Filter by 'system' (Crusoe-collected) or 'custom' (user-defined) metrics\nlabels: Filter by label key:value pairs. Supports comma-separated values (e.g., labels=job:api,region:us-east)\n\nInternal metrics and provisioned throughput metrics are always excluded.\n\nRate limited to 10 requests per minute per project.\nResponse limited to 50MB payload and 100,000 time series.\nResponses are cached for up to 1 minute.",
+        "description": "Use it as a scrape target for external monitoring systems, such as Prometheus.\n\nSupports filtering by:\nmetric_name: Filter by metric name(s). Supports comma-separated values (e.g., metric_name=http_requests_total,http_response_time)\nmetric_category: Filter by 'system' (Crusoe-collected) or 'custom' (user-defined) metrics\nlabels: Filter by label key:value pairs. Supports comma-separated values (e.g., labels=job:api,region:us-east)\n\nInternal metrics and provisioned throughput metrics are always excluded.\n\nRate limited to 10 requests per minute per project.\nResponse limited to 50MB payload and 100,000 time series.\nResponses are cached for up to 1 minute.",
         "operationId": "scrapeMetrics",
         "parameters": [
           {
@@ -7811,7 +7815,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Query timeseries for a resource (in development).",
+        "summary": "Query timeseries for a resource.",
         "tags": [
           "Observability"
         ]
@@ -18808,8 +18812,8 @@
           "x-go-name": "Actor"
         },
         "actor_type": {
-          "description": "ActorType: type of the actor",
-          "example": "user || admin || system",
+          "description": "Type of the actor: User, ServiceAccount, System or Crusoe Admin.",
+          "example": "User",
           "type": "string",
           "x-go-name": "ActorType"
         },
