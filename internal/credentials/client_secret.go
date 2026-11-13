@@ -38,17 +38,38 @@ type ClientSecretOption func(*clientSecretOptions)
 // privately owned and permissioned if it exists beforehand (e.g. from a previous run) - a
 // pre-existing dir that fails that check is treated as unusable and caching is silently skipped,
 // rather than trusting whatever another local user could have placed inside it. These permission
-// checks are POSIX-only; on Windows, only that dir is actually a directory is verified.
+// checks are POSIX-only; on Windows, only that dir is actually a directory is verified. dir is
+// checked with Lstat, so a dir that is itself a symlink also fails the check and silently disables
+// caching - a safe default, not an error, but worth knowing if caching seems to never engage.
 //
 // A rotated client secret is covered by the cache key and always misses. A token invalidated some
 // other way - its signing key rotated server-side, or explicitly revoked - is not: the cache has no
 // way to know that happened, and keeps serving it until its own recorded expiry. A caller that sees
 // a 401 it can't otherwise explain should call InvalidateDiskTokenCache for the same credential
-// tuple before retrying once.
+// tuple, then build a new token source/config before retrying - invalidating only removes the disk
+// entry, it does not reach into an *http.Client already built from this option, which has its own
+// in-memory copy of the bad token via oauth2.NewClient's own reuse wrapper.
 func WithDiskTokenCache(dir string) ClientSecretOption {
 	return func(o *clientSecretOptions) {
 		o.diskCacheDir = dir
 	}
+}
+
+// defaultTokenURLAndAudience applies the same empty-string substitution NewClientSecretTokenSource
+// validates and defaults tokenURL/audience with, so InvalidateDiskTokenCache hashes the same
+// effective values a token source built from the same raw inputs would - a caller that constructed
+// with "" and invalidates with "" must land on the same cache file, not a different one that was
+// never written.
+func defaultTokenURLAndAudience(tokenURL, audience string) (resolvedTokenURL, resolvedAudience string) {
+	if tokenURL == "" {
+		tokenURL = DefaultTokenURL
+	}
+
+	if audience == "" {
+		audience = DefaultAudience
+	}
+
+	return tokenURL, audience
 }
 
 // NewClientSecretTokenSource returns an oauth2.TokenSource for the OAuth2 client_credentials grant,
@@ -70,17 +91,12 @@ func WithDiskTokenCache(dir string) ClientSecretOption {
 func NewClientSecretTokenSource(
 	ctx context.Context, clientID, clientSecret, tokenURL, audience string, opts ...ClientSecretOption,
 ) (oauth2.TokenSource, error) {
-	// tokenURL defaulting/validation.
-	switch {
-	case tokenURL == "":
-		tokenURL = DefaultTokenURL
-	case !strings.HasPrefix(tokenURL, "https://"):
+	// A non-empty tokenURL is validated before defaulting - only the empty case is a default.
+	if tokenURL != "" && !strings.HasPrefix(tokenURL, "https://") {
 		return nil, fmt.Errorf("%w: got %q", ErrInsecureTokenURL, tokenURL)
 	}
 
-	if audience == "" {
-		audience = DefaultAudience
-	}
+	tokenURL, audience = defaultTokenURLAndAudience(tokenURL, audience)
 
 	// Applied after defaulting so the cache key below hashes the effective tokenURL/audience.
 	var sourceOpts clientSecretOptions

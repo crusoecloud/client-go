@@ -543,3 +543,19 @@ func TestInvalidateDiskTokenCache(t *testing.T) {
 		t.Fatalf("expected invalidation to force a fresh mint, got %d mints", inner.callCount())
 	}
 }
+
+func TestInvalidateDiskTokenCache_MatchesEmptyTokenURLAndAudience(t *testing.T) {
+	dir := newPrivateTestDir(t)
+
+	path := cacheFilePath(dir, testClientID, testClientSecret, DefaultTokenURL, DefaultAudience)
+	writeCacheFile(t, path, marshalEntry(t, validEntry("cached-token", time.Now().Add(time.Hour))))
+
+	if err := InvalidateDiskTokenCache(dir, testClientID, testClientSecret, "", ""); err != nil {
+		t.Fatalf("InvalidateDiskTokenCache failed: %v", err)
+	}
+
+	if _, err := os.Stat(path); !os.IsNotExist(err) {
+		t.Fatalf("expected the entry stored under the defaulted tokenURL/audience to be removed "+
+			"by invalidating with the same raw empty values, stat error: %v", err)
+	}
+}

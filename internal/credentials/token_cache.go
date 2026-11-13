@@ -92,7 +92,18 @@ func newDiskCachingTokenSource(
 // key rotating server-side, or it being explicitly revoked - where a caller that gets a 401 wants to
 // discard the cache and force a fresh mint on the next attempt rather than keep reusing the same
 // token until it naturally expires. A missing entry is not an error.
+//
+// tokenURL/audience are defaulted exactly as NewClientSecretTokenSource would - pass the same raw
+// values (including "" to mean "use the defaults") that were used to build the token source whose
+// entry this should remove, not whatever those defaults happen to resolve to.
+//
+// This only removes the disk entry. It does not affect any *http.Client/*swagger.Configuration
+// already built from this credential tuple - oauth2.NewClient wraps the token source in its own
+// in-memory reuse wrapper, which goes on handing out the same bad token regardless of what happens
+// on disk. Construct a new token source/config after calling this, and retry on that, not on the
+// client that got the 401.
 func InvalidateDiskTokenCache(dir, clientID, clientSecret, tokenURL, audience string) error {
+	tokenURL, audience = defaultTokenURLAndAudience(tokenURL, audience)
 	path := cacheFilePath(dir, clientID, clientSecret, tokenURL, audience)
 
 	if err := os.Remove(path); err != nil && !os.IsNotExist(err) {
@@ -178,7 +189,6 @@ func (s *diskCachingTokenSource) write(token *oauth2.Token) {
 		return
 	}
 
-	//nolint:gosec // G117: this cache intentionally persists the short-lived access token, never the client secret
 	data, err := json.Marshal(cacheEntry{
 		SchemaVersion: cacheSchemaVersion,
 		AccessToken:   token.AccessToken,

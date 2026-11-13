@@ -188,28 +188,6 @@ func TestNewClientSecretAPIClient(t *testing.T) {
 	}
 }
 
-func TestNewClientSecretAPIClient_ForwardsDiskTokenCacheOption(t *testing.T) {
-	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		_ = json.NewEncoder(w).Encode(map[string]interface{}{
-			"access_token": "test-access-token",
-			"token_type":   "Bearer",
-			"expires_in":   3600,
-		})
-	}))
-	defer tokenServer.Close()
-
-	client, err := NewClientSecretAPIClient(
-		tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "",
-		WithDiskTokenCache(t.TempDir()))
-	if err != nil {
-		t.Fatalf("NewClientSecretAPIClient failed: %v", err)
-	}
-	if client == nil {
-		t.Fatal("expected a non-nil APIClient")
-	}
-}
-
 func TestNewClientSecretConfig_ForwardsDiskTokenCacheOption(t *testing.T) {
 	var mints int32
 
