@@ -23452,7 +23452,11 @@
         "VMs",
         "VM Operations",
         "Images",
-        "Instance Templates"
+        "CustomImages",
+        "Custom Image Operations",
+        "Instance Templates",
+        "Instance Groups",
+        "Diagnostics"
       ]
     },
     {
@@ -23460,11 +23464,16 @@
       "tags": [
         "Projects",
         "Billing",
+        "Credits",
+        "Reservations",
         "Entities",
         "Usage",
         "Quotas",
         "Audit Logs",
-        "SCIM"
+        "SCIM",
+        "MFA",
+        "SSO",
+        "Feature Flags"
       ]
     },
     {
@@ -23472,7 +23481,8 @@
       "tags": [
         "Identities",
         "SSH Keys",
-        "Tokens"
+        "Tokens",
+        "LimitedUsageAPIKey"
       ]
     },
     {
@@ -23482,7 +23492,8 @@
         "Disk Operations",
         "Snapshots",
         "Snapshot Operations",
-        "S3Buckets"
+        "S3Buckets",
+        "S3Keys"
       ]
     },
     {
@@ -23491,9 +23502,15 @@
         "VPC Firewall Rules",
         "VPC Firewall Rule Operations",
         "VPC Networks",
+        "VPC Network Operations",
         "VPC Subnets",
+        "VPC Subnet Operations",
         "IB Partitions",
+        "IB Networks",
         "Load Balancers",
+        "Load Balancer Operations",
+        "Internal Load Balancers",
+        "Internal Load Balancer Operations",
         "NVLink Domains"
       ]
     },
@@ -23505,8 +23522,14 @@
         "Kubernetes Node Pools",
         "Kubernetes Node Pool Operations",
         "Kubernetes Versions",
+        "Kubernetes Addons",
+        "Kubernetes Support Access",
         "AutoClusters",
-        "AutoCluster Operations"
+        "AutoCluster Operations",
+        "Slurm Clusters",
+        "Slurm Cluster Operations",
+        "Slurm Nodesets",
+        "Slurm Nodeset Operations"
       ]
     },
     {
@@ -23519,6 +23542,12 @@
       "name": "Capacities",
       "tags": [
         "Capacities"
+      ]
+    },
+    {
+      "name": "Observability",
+      "tags": [
+        "Observability"
       ]
     },
     {
