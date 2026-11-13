@@ -9,6 +9,6 @@
 package swagger
 
 type ListOrgQuotasResponse struct {
-	// Quotas are all returned org quotas
+	// Quotas of the organization.
 	Quotas []OrgQuota `json:"quotas,omitempty"`
 }

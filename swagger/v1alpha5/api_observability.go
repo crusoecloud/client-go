@@ -202,7 +202,7 @@ func (a *ObservabilityApiService) QueryTimeseriesRange(ctx context.Context, proj
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/metrics/timeseries/api/v1/query-range"
+	localVarPath := a.client.cfg.BasePath + "/projects/{project_id}/metrics/timeseries/api/v1/query_range"
 	localVarPath = strings.Replace(localVarPath, "{"+"project_id"+"}", fmt.Sprintf("%v", projectId), -1)
 
 	localVarHeaderParams := make(map[string]string)

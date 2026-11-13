@@ -12,7 +12,7 @@ type KubernetesNodePool struct {
 	AutoscalingConfig *KubernetesNodePoolAutoscalingConfig `json:"autoscaling_config,omitempty"`
 	// ID of the Kubernetes cluster the node pool belongs to.
 	ClusterId string `json:"cluster_id"`
-	// Remediation consent posture for the node pool: auto, propose, detect_only, or off. Always present for node pools served by the v2 backend; absent otherwise.
+	// Remediation consent posture for the node pool: auto, propose, detect_only, or off. Always present when node_pool_generation is 2; absent otherwise.
 	ConsentMode string `json:"consent_mode,omitempty"`
 	// Desired number of nodes in the node pool. The number of running nodes may temporarily differ while the pool is scaling or repairing.
 	Count int64 `json:"count"`
@@ -33,6 +33,8 @@ type KubernetesNodePool struct {
 	InstanceIds []string `json:"instance_ids"`
 	// Name of the node pool.
 	Name string `json:"name"`
+	// Size of the disk that holds ephemeral storage on each new node, such as emptyDir volumes, container writable layers and logs. Data on this disk is deleted with the node. By default this is the boot disk. If ephemeral_storage_for_containerd is enabled, it is the first local NVMe disk on supported node pool versions, and the boot disk otherwise. On Slurm compute node pools, it is all local NVMe disks combined. Omitted when unknown.
+	NodeEphemeralStorage string `json:"node_ephemeral_storage,omitempty"`
 	// Labels assigned to nodes in the node pool.
 	NodeLabels map[string]string `json:"node_labels"`
 	// Generation of the node pool.

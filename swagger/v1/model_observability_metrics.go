@@ -10,10 +10,14 @@ package swagger
 
 // see also https://prometheus.io/docs/prometheus/latest/querying/api/
 type ObservabilityMetrics struct {
-	Data      *interface{} `json:"data"`
-	Error_    string       `json:"error,omitempty"`
-	ErrorType string       `json:"errorType,omitempty"`
-	Infos     []string     `json:"infos,omitempty"`
-	Status    string       `json:"status"`
-	Warnings  []string     `json:"warnings,omitempty"`
+	Data *interface{} `json:"data"`
+	// Error message. Present only when status is error.
+	Error_ string `json:"error,omitempty"`
+	// Type of the error. Present only when status is error.
+	ErrorType string `json:"errorType,omitempty"`
+	// Info-level notes from running the query. Present only when there are notes.
+	Infos  []string `json:"infos,omitempty"`
+	Status string   `json:"status"`
+	// Warnings from running the query. Present only when there are warnings; the response still includes data.
+	Warnings []string `json:"warnings,omitempty"`
 }

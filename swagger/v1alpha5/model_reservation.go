@@ -14,7 +14,7 @@ type Reservation struct {
 	DateDelivered     string  `json:"date_delivered"`
 	DeliveryDeadline  string  `json:"delivery_deadline"`
 	Duration          float32 `json:"duration"`
-	// TODO: follow new format for giving descriptions to fields for apis
+	// ID of the reservation.
 	Id              string   `json:"id"`
 	Locations       []string `json:"locations"`
 	Price           string   `json:"price"`

@@ -12,7 +12,7 @@ type KubernetesNodePoolPostRequest struct {
 	AutoscalingConfig *KubernetesNodePoolAutoscalingConfig `json:"autoscaling_config,omitempty"`
 	// ID of the cluster the new node pool belongs to.
 	ClusterId string `json:"cluster_id"`
-	// Remediation consent posture for the node pool: auto, propose, or off. Omitted means propose. detect_only is not yet available.
+	// Remediation consent posture for the node pool: auto, propose, or off. Omitted means auto. detect_only is not yet available.
 	ConsentMode string `json:"consent_mode,omitempty"`
 	// Desired number of nodes in the node pool.
 	Count int64 `json:"count"`

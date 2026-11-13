@@ -8,5 +8,7 @@
  */
 package swagger
 
-// DeleteServiceAccountResponse is the response for deleting a service account. A successful delete returns an empty body.
-type CustomerDeleteServiceAccountResponse struct{}
+type KubernetesNodePoolResponse struct {
+	Details  *OperationDetails   `json:"details,omitempty"`
+	NodePool *KubernetesNodePool `json:"node_pool"`
+}

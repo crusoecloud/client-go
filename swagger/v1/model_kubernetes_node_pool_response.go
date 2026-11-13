@@ -8,5 +8,7 @@
  */
 package swagger
 
-// EnableServiceAccountRequest is the request to enable a previously disabled service account.
-type ServiceAccountsServiceEnableServiceAccountBody struct{}
+type KubernetesNodePoolResponse struct {
+	Details  *OperationDetails   `json:"details,omitempty"`
+	NodePool *KubernetesNodePool `json:"node_pool"`
+}
