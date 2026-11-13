@@ -152,9 +152,8 @@ func countingTokenServer(t *testing.T) (*httptest.Server, *int32) {
 }
 
 func TestNewClientSecretTokenSource_DiskTokenCacheIsOptIn(t *testing.T) {
-	t.Run("no options never touches the disk", func(t *testing.T) {
+	t.Run("no options mints independently every time", func(t *testing.T) {
 		tokenServer, requests := countingTokenServer(t)
-		dir := t.TempDir()
 
 		for i := 0; i < 2; i++ {
 			source, err := NewClientSecretTokenSource(
@@ -169,14 +168,6 @@ func TestNewClientSecretTokenSource_DiskTokenCacheIsOptIn(t *testing.T) {
 
 		if got := atomic.LoadInt32(requests); got != 2 {
 			t.Fatalf("expected each source to mint its own token without options, got %d requests", got)
-		}
-
-		entries, err := os.ReadDir(dir)
-		if err != nil {
-			t.Fatalf("failed to read the temp dir: %v", err)
-		}
-		if len(entries) != 0 {
-			t.Fatalf("expected no files to be written without WithDiskTokenCache, got %v", entries)
 		}
 	})
 

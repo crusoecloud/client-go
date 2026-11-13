@@ -252,8 +252,6 @@ func TestNewClientSecretConfig_DiskTokenCacheIsOptIn(t *testing.T) {
 	}))
 	t.Cleanup(tokenServer.Close)
 
-	unusedDir := t.TempDir()
-
 	for i := 0; i < 2; i++ {
 		cfg, err := NewClientSecretConfig(
 			tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "")
@@ -270,14 +268,6 @@ func TestNewClientSecretConfig_DiskTokenCacheIsOptIn(t *testing.T) {
 
 	if got := atomic.LoadInt32(&mints); got != 2 {
 		t.Fatalf("expected each config to mint its own token without the option, got %d token requests", got)
-	}
-
-	entries, err := os.ReadDir(unusedDir)
-	if err != nil {
-		t.Fatalf("failed to read the temp dir: %v", err)
-	}
-	if len(entries) != 0 {
-		t.Fatalf("expected no files to be written without WithDiskTokenCache, got %v", entries)
 	}
 }
 

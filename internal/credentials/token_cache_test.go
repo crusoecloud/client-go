@@ -1,6 +1,7 @@
 package credentials
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"os"
@@ -319,18 +320,28 @@ func TestDiskCachingTokenSource_RotatedSecretMisses(t *testing.T) {
 func TestDiskCachingTokenSource_PostDefaultingKey(t *testing.T) {
 	dir := t.TempDir()
 
-	defaulted := newDiskCachingTokenSource(
-		newFakeTokenSource("token"), dir, testClientID, testClientSecret, DefaultTokenURL, DefaultAudience)
-	explicit := newDiskCachingTokenSource(
-		newFakeTokenSource("token"), dir, testClientID, testClientSecret, DefaultTokenURL, DefaultAudience)
-
-	if cachePath(t, defaulted) != cachePath(t, explicit) {
-		t.Fatal("expected identical credential tuples to share one cache file")
+	omitted, err := NewClientSecretTokenSource(
+		context.Background(), testClientID, testClientSecret, "", "", WithDiskTokenCache(dir))
+	if err != nil {
+		t.Fatalf("NewClientSecretTokenSource failed: %v", err)
 	}
 
-	different := newDiskCachingTokenSource(
-		newFakeTokenSource("token"), dir, testClientID, testClientSecret, testTokenURL, DefaultAudience)
-	if cachePath(t, different) == cachePath(t, defaulted) {
+	spelledOut, err := NewClientSecretTokenSource(
+		context.Background(), testClientID, testClientSecret, DefaultTokenURL, DefaultAudience, WithDiskTokenCache(dir))
+	if err != nil {
+		t.Fatalf("NewClientSecretTokenSource failed: %v", err)
+	}
+
+	if cachePath(t, omitted) != cachePath(t, spelledOut) {
+		t.Fatal("expected an omitted tokenURL/audience to hash the same as the spelled-out defaults")
+	}
+
+	different, err := NewClientSecretTokenSource(
+		context.Background(), testClientID, testClientSecret, testTokenURL, DefaultAudience, WithDiskTokenCache(dir))
+	if err != nil {
+		t.Fatalf("NewClientSecretTokenSource failed: %v", err)
+	}
+	if cachePath(t, different) == cachePath(t, omitted) {
 		t.Fatal("expected a different tokenURL to hash to a different cache file")
 	}
 }

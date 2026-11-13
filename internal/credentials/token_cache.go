@@ -141,6 +141,7 @@ func (s *diskCachingTokenSource) write(token *oauth2.Token) {
 		return
 	}
 
+	//nolint:gosec // G117: this cache intentionally persists the short-lived access token, never the client secret
 	data, err := json.Marshal(cacheEntry{
 		SchemaVersion: cacheSchemaVersion,
 		AccessToken:   token.AccessToken,
