@@ -8,7 +8,7 @@
  */
 package swagger
 
-// ListKubernetesNodePoolVMsResponse is the response type for GET /projects/{project_id}/kubernetes/nodepools/{node_pool_id}/vms. Uses the canonical short-form `next_token` / `prev_token` field names that match `fetch`'s request params, rather than the legacy `*_page_token` naming used by /compute/vms/instances.
+// ListKubernetesNodePoolVMsResponse is the response type for GET /projects/{project_id}/kubernetes/nodepools/{node_pool_id}/vms.
 type ListKubernetesNodePoolVmsResponse struct {
 	Items []InstanceV1 `json:"items"`
 	// Base64 encoded token representing the next page of instances. Empty if currently on the last page.

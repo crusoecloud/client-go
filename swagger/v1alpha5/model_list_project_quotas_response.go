@@ -9,6 +9,6 @@
 package swagger
 
 type ListProjectQuotasResponse struct {
-	// Quotas are all returned project quotas
+	// Quotas of the project.
 	Quotas []ProjectQuota `json:"quotas,omitempty"`
 }

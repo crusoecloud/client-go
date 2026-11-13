@@ -7673,7 +7673,7 @@
             "description": "Filter by metric category. 'system' returns Crusoe-collected metrics.\n'custom' returns user-defined metrics with metrics_source=custom-metrics label.",
             "enum": [
               "system",
-              " custom"
+              "custom"
             ],
             "example": "system",
             "in": "query",
@@ -12626,7 +12626,7 @@
           "x-go-name": "Quantity"
         },
         "quota_type": {
-          "description": "QuotaType is the enum string for the quota type consumed by this resource",
+          "description": "Type of the project quota this capacity consumes. Matches type on project\nquotas.",
           "example": "PROJECT_QUOTA_TYPE_MAXIMUM_VM_SLICES_VCPU_6_MEM_60_A40_PCIE_48GB_1",
           "type": "string",
           "x-go-name": "QuotaType"
@@ -12768,7 +12768,7 @@
       "properties": {
         "location": {
           "description": "Location to create the bucket in.",
-          "example": "us-eaststaging1-a",
+          "example": "us-east1-a",
           "type": "string",
           "x-go-name": "Location"
         },
@@ -16594,7 +16594,7 @@
           "x-go-name": "ClusterID"
         },
         "consent_mode": {
-          "description": "Remediation consent posture for the node pool: auto, propose,\ndetect_only, or off. Always present for node pools served by the v2\nbackend; absent otherwise.",
+          "description": "Remediation consent posture for the node pool: auto, propose,\ndetect_only, or off. Always present when node_pool_generation is 2;\nabsent otherwise.",
           "enum": [
             "auto",
             "propose",
@@ -16938,7 +16938,7 @@
         },
         "name": {
           "description": "Kubernetes Node name as registered in the cluster.",
-          "example": "node-1e490fee.cmk.crusoe.ai",
+          "example": "np-ef50dfc2-2.us-east1-a.compute.internal",
           "type": "string",
           "x-go-name": "Name"
         },
@@ -17123,7 +17123,7 @@
           "x-go-name": "ClusterID"
         },
         "consent_mode": {
-          "description": "Remediation consent posture for the node pool: auto, propose, or off.\nOmitted means propose. detect_only is not yet available.",
+          "description": "Remediation consent posture for the node pool: auto, propose, or off.\nOmitted means auto. detect_only is not yet available.",
           "enum": [
             "auto",
             "propose",
@@ -17298,7 +17298,7 @@
       "description": "KubernetesNodePoolUpdateSettings configures how update operations may act on\na node pool's existing nodes.",
       "properties": {
         "allow_scale_down": {
-          "description": "Whether an update may scale the node pool below its current node count,\ndraining and deleting existing nodes. When false (the default), an\nupdate that lowers the count only records the new target and reports a\nhealth issue; no nodes are removed. Only supported on CMK v2 clusters.",
+          "description": "Whether an update may scale the node pool below its current node count,\ndraining and deleting existing nodes. When false (the default), an\nupdate that lowers the count only records the new target and reports a\nhealth issue; no nodes are removed. Only supported on CMK v2 clusters,\nfor node pools whose node_pool_generation is 2, and can't be turned on\nwhile autoscaling is enabled.",
           "example": true,
           "type": "boolean",
           "x-go-name": "AllowScaleDown"
@@ -17864,7 +17864,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListKubernetesNodePoolNodesResponse": {
-      "description": "ListKubernetesNodePoolNodesResponse is the response type for\nGET /projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes. Like the\nsibling /vms endpoint it uses the canonical short-form `next_token` /\n`prev_token` field names that match `fetch`'s request params, rather than the\nlegacy `*_page_token` naming used by /compute/vms/instances.",
+      "description": "ListKubernetesNodePoolNodesResponse is the response type for\nGET /projects/{project_id}/kubernetes/nodepools/{node_pool_id}/nodes.",
       "properties": {
         "next_token": {
           "description": "Base64 encoded token representing the next page of nodes. Empty if\ncurrently on the last page.",
@@ -17908,7 +17908,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListKubernetesNodePoolVMsResponse": {
-      "description": "ListKubernetesNodePoolVMsResponse is the response type for\nGET /projects/{project_id}/kubernetes/nodepools/{node_pool_id}/vms. Uses the\ncanonical short-form `next_token` / `prev_token` field names that match\n`fetch`'s request params, rather than the legacy `*_page_token` naming used\nby /compute/vms/instances.",
+      "description": "ListKubernetesNodePoolVMsResponse is the response type for\nGET /projects/{project_id}/kubernetes/nodepools/{node_pool_id}/vms.",
       "properties": {
         "items": {
           "items": {
@@ -18077,7 +18077,7 @@
     "ListOrgQuotasResponse": {
       "properties": {
         "quotas": {
-          "description": "Quotas are all returned org quotas",
+          "description": "Quotas of the organization.",
           "items": {
             "$ref": "#/definitions/OrgQuota"
           },
@@ -18092,7 +18092,7 @@
     "ListProjectQuotasResponse": {
       "properties": {
         "quotas": {
-          "description": "Quotas are all returned project quotas",
+          "description": "Quotas of the project.",
           "items": {
             "$ref": "#/definitions/ProjectQuota"
           },
@@ -19161,17 +19161,19 @@
           "x-go-name": "Data"
         },
         "error": {
-          "example": "???",
+          "description": "Error message. Present only when status is error.",
+          "example": "invalid parameter \"query\": 1:1: parse error: unexpected end of input",
           "type": "string",
           "x-go-name": "Error"
         },
         "errorType": {
-          "example": "???",
+          "description": "Type of the error. Present only when status is error.",
+          "example": "bad_data",
           "type": "string",
           "x-go-name": "ErrorType"
         },
         "infos": {
-          "example": "???",
+          "description": "Info-level notes from running the query. Present only when there are notes.",
           "items": {
             "type": "string"
           },
@@ -19184,7 +19186,7 @@
           "x-go-name": "Status"
         },
         "warnings": {
-          "example": "???",
+          "description": "Warnings from running the query. Present only when there are warnings; the response still includes data.",
           "items": {
             "type": "string"
           },
@@ -19251,39 +19253,39 @@
     "OrgQuota": {
       "properties": {
         "available": {
-          "description": "Available is the remaining quota available to the org",
+          "description": "Amount of the quota still available to the organization.",
           "example": 6,
           "format": "int64",
           "type": "integer",
           "x-go-name": "Available"
         },
         "description": {
-          "description": "Description is the customer-facing description of the quota",
+          "description": "Display name of the quota.",
           "example": "Users",
           "type": "string",
           "x-go-name": "Description"
         },
         "max": {
-          "description": "Max is the maximum quota allowed for the resource in the org",
+          "description": "Maximum amount the organization can use.",
           "example": 10,
           "format": "int64",
           "type": "integer",
           "x-go-name": "Max"
         },
         "programmatic_name": {
-          "description": "ProgrammaticName is the external, human-friendly identifier for the quota",
+          "description": "Readable identifier of the quota.",
           "example": "users",
           "type": "string",
           "x-go-name": "ProgrammaticName"
         },
         "type": {
-          "description": "Type is the enum quota type. This is meant to be used internally",
+          "description": "Identifier of the quota type. For a readable name, use programmatic_name\nor description.",
           "example": "ORG_QUOTAS_MAXIMUM_USERS",
           "type": "string",
           "x-go-name": "Type"
         },
         "used": {
-          "description": "Used is the current quota consumed by the org",
+          "description": "Amount of the quota the organization uses now.",
           "example": 4,
           "format": "int64",
           "type": "integer",
@@ -19410,51 +19412,51 @@
     "ProjectQuota": {
       "properties": {
         "available": {
-          "description": "Available is the remaining quota available",
+          "description": "Amount of the quota still available to the project.",
           "example": 6,
           "format": "int64",
           "type": "integer",
           "x-go-name": "Available"
         },
         "category": {
-          "description": "Category is the quota category",
-          "example": "GPU Instance, Storage",
+          "description": "Category of the quota, such as GPU Instance or Storage.",
+          "example": "GPU Instance",
           "type": "string",
           "x-go-name": "Category"
         },
         "description": {
-          "description": "Description is the customer-facing description of the quota",
+          "description": "Display name of the quota.",
           "example": "A40 PCIe",
           "type": "string",
           "x-go-name": "Description"
         },
         "max": {
-          "description": "Max is the maximum quota allowed for the resource in the project",
+          "description": "Maximum amount of the resource the project can use.",
           "example": 10,
           "format": "int64",
           "type": "integer",
           "x-go-name": "Max"
         },
         "programmatic_name": {
-          "description": "ProgrammaticName is the external name of the resource the quota applies to",
+          "description": "Name of the resource the quota applies to.",
           "example": "a40",
           "type": "string",
           "x-go-name": "ProgrammaticName"
         },
         "type": {
-          "description": "Type is the enum quota type. This is meant to be used internally",
+          "description": "Identifier of the quota type. Matches quota_type on capacities. For a\nreadable name, use programmatic_name or description.",
           "example": "PROJECT_QUOTA_TYPE_MAXIMUM_VM_SLICES_VCPU_6_MEM_60_A40_PCIE_48GB_1",
           "type": "string",
           "x-go-name": "Type"
         },
         "usage_tracking": {
-          "description": "UsageTracking represents how quota usage is tracked",
+          "description": "How Crusoe tracks usage against the quota.",
           "example": "QUOTA_USAGE_TRACKING_CENTRAL",
           "type": "string",
           "x-go-name": "UsageTracking"
         },
         "used": {
-          "description": "Used is the current quota consumed by the project",
+          "description": "Amount of the quota the project uses now.",
           "example": 4,
           "format": "int64",
           "type": "integer",
@@ -19831,7 +19833,7 @@
           "x-go-name": "Duration"
         },
         "id": {
-          "description": "TODO: follow new format for giving descriptions to fields for apis",
+          "description": "ID of the reservation.",
           "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb",
           "type": "string",
           "x-go-name": "ID"
@@ -20092,7 +20094,7 @@
         },
         "location": {
           "description": "Location where the bucket is hosted.",
-          "example": "us-eaststaging1-a",
+          "example": "us-east1-a",
           "type": "string",
           "x-go-name": "Location"
         },
@@ -20129,7 +20131,7 @@
         },
         "s3_url": {
           "description": "Endpoint URL for accessing the bucket.",
-          "example": "https://object.us-eaststaging7-b.crusoecloudcompute.com/my-first-bucket",
+          "example": "https://object.us-east1-a.crusoecloudcompute.com/my-first-bucket",
           "type": "string",
           "x-go-name": "S3URL"
         },

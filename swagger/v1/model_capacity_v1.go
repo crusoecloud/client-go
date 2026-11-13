@@ -13,7 +13,7 @@ type CapacityV1 struct {
 	// NumSlices is the number of slices that make up the resource
 	NumSlices int32 `json:"num_slices,omitempty"`
 	Quantity  int32 `json:"quantity"`
-	// QuotaType is the enum string for the quota type consumed by this resource
+	// Type of the project quota this capacity consumes. Matches type on project quotas.
 	QuotaType string `json:"quota_type,omitempty"`
 	Type_     string `json:"type,omitempty"`
 }

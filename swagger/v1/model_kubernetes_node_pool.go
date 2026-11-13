@@ -12,7 +12,7 @@ type KubernetesNodePool struct {
 	AutoscalingConfig *KubernetesNodePoolAutoscalingConfig `json:"autoscaling_config,omitempty"`
 	// ID of the Kubernetes cluster the node pool belongs to.
 	ClusterId string `json:"cluster_id"`
-	// Remediation consent posture for the node pool: auto, propose, detect_only, or off. Always present for node pools served by the v2 backend; absent otherwise.
+	// Remediation consent posture for the node pool: auto, propose, detect_only, or off. Always present when node_pool_generation is 2; absent otherwise.
 	ConsentMode string `json:"consent_mode,omitempty"`
 	// Desired number of nodes in the node pool. The number of running nodes may temporarily differ while the pool is scaling or repairing.
 	Count int64 `json:"count"`

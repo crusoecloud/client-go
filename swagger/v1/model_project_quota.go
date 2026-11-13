@@ -9,20 +9,20 @@
 package swagger
 
 type ProjectQuota struct {
-	// Available is the remaining quota available
+	// Amount of the quota still available to the project.
 	Available int64 `json:"available,omitempty"`
-	// Category is the quota category
+	// Category of the quota, such as GPU Instance or Storage.
 	Category string `json:"category,omitempty"`
-	// Description is the customer-facing description of the quota
+	// Display name of the quota.
 	Description string `json:"description,omitempty"`
-	// Max is the maximum quota allowed for the resource in the project
+	// Maximum amount of the resource the project can use.
 	Max int64 `json:"max,omitempty"`
-	// ProgrammaticName is the external name of the resource the quota applies to
+	// Name of the resource the quota applies to.
 	ProgrammaticName string `json:"programmatic_name,omitempty"`
-	// Type is the enum quota type. This is meant to be used internally
+	// Identifier of the quota type. Matches quota_type on capacities. For a readable name, use programmatic_name or description.
 	Type_ string `json:"type,omitempty"`
-	// UsageTracking represents how quota usage is tracked
+	// How Crusoe tracks usage against the quota.
 	UsageTracking string `json:"usage_tracking,omitempty"`
-	// Used is the current quota consumed by the project
+	// Amount of the quota the project uses now.
 	Used int64 `json:"used,omitempty"`
 }

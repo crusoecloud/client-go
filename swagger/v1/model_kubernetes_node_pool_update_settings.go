@@ -10,6 +10,6 @@ package swagger
 
 // KubernetesNodePoolUpdateSettings configures how update operations may act on a node pool's existing nodes.
 type KubernetesNodePoolUpdateSettings struct {
-	// Whether an update may scale the node pool below its current node count, draining and deleting existing nodes. When false (the default), an update that lowers the count only records the new target and reports a health issue; no nodes are removed. Only supported on CMK v2 clusters.
+	// Whether an update may scale the node pool below its current node count, draining and deleting existing nodes. When false (the default), an update that lowers the count only records the new target and reports a health issue; no nodes are removed. Only supported on CMK v2 clusters, for node pools whose node_pool_generation is 2, and can't be turned on while autoscaling is enabled.
 	AllowScaleDown bool `json:"allow_scale_down,omitempty"`
 }

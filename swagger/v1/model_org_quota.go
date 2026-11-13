@@ -9,16 +9,16 @@
 package swagger
 
 type OrgQuota struct {
-	// Available is the remaining quota available to the org
+	// Amount of the quota still available to the organization.
 	Available int64 `json:"available,omitempty"`
-	// Description is the customer-facing description of the quota
+	// Display name of the quota.
 	Description string `json:"description,omitempty"`
-	// Max is the maximum quota allowed for the resource in the org
+	// Maximum amount the organization can use.
 	Max int64 `json:"max,omitempty"`
-	// ProgrammaticName is the external, human-friendly identifier for the quota
+	// Readable identifier of the quota.
 	ProgrammaticName string `json:"programmatic_name,omitempty"`
-	// Type is the enum quota type. This is meant to be used internally
+	// Identifier of the quota type. For a readable name, use programmatic_name or description.
 	Type_ string `json:"type,omitempty"`
-	// Used is the current quota consumed by the org
+	// Amount of the quota the organization uses now.
 	Used int64 `json:"used,omitempty"`
 }
