@@ -15,6 +15,32 @@ import (
 // client secret goes out over the wire in the clear.
 var ErrInsecureTokenURL = errors.New("tokenURL must be an https:// URL")
 
+// clientSecretOptions collects the optional behavior a caller can turn on for the token source
+// itself. It is unrelated to Options, which governs which credentials get resolved in the first
+// place.
+type clientSecretOptions struct {
+	diskCacheDir string
+}
+
+// ClientSecretOption configures optional behavior of the token source returned by
+// NewClientSecretTokenSource.
+type ClientSecretOption func(*clientSecretOptions)
+
+// WithDiskTokenCache enables caching minted access tokens on disk under dir. It is off by default;
+// without it the token source behaves exactly as it always has, keeping a token only in memory for
+// the lifetime of the process. With it, a token minted by one process is reused by subsequent
+// processes until it nears expiry - the difference that matters for a CLI that runs as a fresh
+// process per command and would otherwise pay a token round-trip every time.
+//
+// dir is created with 0700 permissions if it doesn't exist. Each cache file is named by a SHA-256
+// hash of the full credential tuple - never a plaintext client ID or secret - and written with 0600
+// permissions. The client secret is never written to disk.
+func WithDiskTokenCache(dir string) ClientSecretOption {
+	return func(o *clientSecretOptions) {
+		o.diskCacheDir = dir
+	}
+}
+
 // NewClientSecretTokenSource returns an oauth2.TokenSource for the OAuth2 client_credentials grant,
 // authenticated via a shared client secret - the decoratable unit a caller wraps with
 // oauth2.NewClient (as auth.NewClientSecretConfig does) to get a request-ready *http.Client. ctx is
@@ -29,9 +55,11 @@ var ErrInsecureTokenURL = errors.New("tokenURL must be an https:// URL")
 // request that omits "audience" gets back a token with an empty aud claim, which auth-gateway then
 // rejects. Callers targeting a non-prod environment must pass the audience matching that
 // environment's auth-gateway config alongside its tokenURL.
-func NewClientSecretTokenSource(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
-	oauth2.TokenSource, error,
-) {
+//
+// opts are additive and off by default - see WithDiskTokenCache.
+func NewClientSecretTokenSource(
+	ctx context.Context, clientID, clientSecret, tokenURL, audience string, opts ...ClientSecretOption,
+) (oauth2.TokenSource, error) {
 	// tokenURL defaulting/validation.
 	switch {
 	case tokenURL == "":
@@ -44,11 +72,24 @@ func NewClientSecretTokenSource(ctx context.Context, clientID, clientSecret, tok
 		audience = DefaultAudience
 	}
 
-	return (&clientcredentials.Config{
+	// Applied after defaulting so the cache key below hashes the effective tokenURL/audience.
+	var sourceOpts clientSecretOptions
+	for _, opt := range opts {
+		opt(&sourceOpts)
+	}
+
+	source := (&clientcredentials.Config{
 		ClientID:       clientID,
 		ClientSecret:   clientSecret,
 		TokenURL:       tokenURL,
 		EndpointParams: url.Values{"audience": {audience}},
 		AuthStyle:      oauth2.AuthStyleInHeader,
-	}).TokenSource(ctx), nil
+	}).TokenSource(ctx)
+
+	if sourceOpts.diskCacheDir != "" {
+		return newDiskCachingTokenSource(
+			source, sourceOpts.diskCacheDir, clientID, clientSecret, tokenURL, audience), nil
+	}
+
+	return source, nil
 }
