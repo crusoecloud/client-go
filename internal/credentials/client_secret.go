@@ -34,7 +34,17 @@ type ClientSecretOption func(*clientSecretOptions)
 //
 // dir is created with 0700 permissions if it doesn't exist. Each cache file is named by a SHA-256
 // hash of the full credential tuple - never a plaintext client ID or secret - and written with 0600
-// permissions. The client secret is never written to disk.
+// permissions. The client secret is never written to disk. dir is also required to already be
+// privately owned and permissioned if it exists beforehand (e.g. from a previous run) - a
+// pre-existing dir that fails that check is treated as unusable and caching is silently skipped,
+// rather than trusting whatever another local user could have placed inside it. These permission
+// checks are POSIX-only; on Windows, only that dir is actually a directory is verified.
+//
+// A rotated client secret is covered by the cache key and always misses. A token invalidated some
+// other way - its signing key rotated server-side, or explicitly revoked - is not: the cache has no
+// way to know that happened, and keeps serving it until its own recorded expiry. A caller that sees
+// a 401 it can't otherwise explain should call InvalidateDiskTokenCache for the same credential
+// tuple before retrying once.
 func WithDiskTokenCache(dir string) ClientSecretOption {
 	return func(o *clientSecretOptions) {
 		o.diskCacheDir = dir

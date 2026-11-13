@@ -173,7 +173,7 @@ func TestNewClientSecretTokenSource_DiskTokenCacheIsOptIn(t *testing.T) {
 
 	t.Run("WithDiskTokenCache reuses a token across sources", func(t *testing.T) {
 		tokenServer, requests := countingTokenServer(t)
-		dir := t.TempDir()
+		dir := newPrivateTestDir(t)
 
 		for i := 0; i < 3; i++ {
 			source, err := NewClientSecretTokenSource(

@@ -235,12 +235,13 @@ func ctxWithDefaultHTTPClient(ctx context.Context) context.Context {
 
 // NewClientSecretAPIClient initializes a new Crusoe API client authenticated as a service
 // account via the OAuth2 client credentials grant. See NewClientSecretConfig for how ctx
-// bounds the token fetch (including its default timeout when ctx carries no oauth2.HTTPClient).
-func NewClientSecretAPIClient(ctx context.Context, clientID, clientSecret, tokenURL, audience string) (
-	*swagger.APIClient, error,
-) {
+// bounds the token fetch (including its default timeout when ctx carries no oauth2.HTTPClient),
+// and for how opts are forwarded.
+func NewClientSecretAPIClient(
+	ctx context.Context, clientID, clientSecret, tokenURL, audience string, opts ...ClientSecretOption,
+) (*swagger.APIClient, error) {
 	// Delegate to NewClientSecretConfig for tokenURL/audience validation and defaulting.
-	cfg, err := NewClientSecretConfig(ctx, clientID, clientSecret, tokenURL, audience)
+	cfg, err := NewClientSecretConfig(ctx, clientID, clientSecret, tokenURL, audience, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -258,6 +259,12 @@ type ClientSecretOption = credentials.ClientSecretOption
 //
 //nolint:gochecknoglobals // re-export of a constructor function, not shared mutable state
 var WithDiskTokenCache = credentials.WithDiskTokenCache
+
+// InvalidateDiskTokenCache removes the disk-cached token for the given credential tuple under dir,
+// documented on credentials.InvalidateDiskTokenCache.
+//
+//nolint:gochecknoglobals // re-export of a constructor function, not shared mutable state
+var InvalidateDiskTokenCache = credentials.InvalidateDiskTokenCache
 
 // NewClientSecretConfig initializes a new Crusoe API configuration authenticated as a service
 // account via the OAuth2 client credentials grant (clientID/clientSecret against tokenURL). The

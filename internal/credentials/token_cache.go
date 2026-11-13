@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"sync"
@@ -58,25 +59,47 @@ type diskCachingTokenSource struct {
 	clientID string
 }
 
-// newDiskCachingTokenSource keys the cache off the full credential tuple, which the caller must
-// pass already defaulted: two logically identical configurations - one omitting tokenURL/audience,
-// one spelling out the literal defaults - have to resolve to the same entry. Including the secret
-// in the key means a rotated secret lands on a different filename, so a stale entry can never be
-// served to new credentials.
-func newDiskCachingTokenSource(
-	inner oauth2.TokenSource, dir, clientID, clientSecret, tokenURL, audience string,
-) oauth2.TokenSource {
+// cacheFilePath keys the cache off the full credential tuple, which the caller must pass already
+// defaulted: two logically identical configurations - one omitting tokenURL/audience, one spelling
+// out the literal defaults - have to resolve to the same entry. Including the secret in the key
+// means a rotated secret lands on a different filename, so a stale entry can never be served to new
+// credentials. Shared by newDiskCachingTokenSource and InvalidateDiskTokenCache so the two never
+// compute the key differently.
+func cacheFilePath(dir, clientID, clientSecret, tokenURL, audience string) string {
 	// NUL separators keep the tuple unambiguous: no field can contain one, so no combination of
 	// values can be rearranged into another tuple's key.
 	sum := sha256.Sum256([]byte(clientID + "\x00" + clientSecret + "\x00" + tokenURL + "\x00" + audience))
 	key := hex.EncodeToString(sum[:])
 
+	return filepath.Join(dir, key+".json")
+}
+
+func newDiskCachingTokenSource(
+	inner oauth2.TokenSource, dir, clientID, clientSecret, tokenURL, audience string,
+) oauth2.TokenSource {
+	// Keyed once here; Token() never recomputes it.
 	return &diskCachingTokenSource{
 		inner:    inner,
 		dir:      dir,
-		path:     filepath.Join(dir, key+".json"),
+		path:     cacheFilePath(dir, clientID, clientSecret, tokenURL, audience),
 		clientID: clientID,
 	}
+}
+
+// InvalidateDiskTokenCache removes the disk-cached entry for the given credential tuple under dir,
+// if one exists. The cache-key design already forces a miss on a rotated client secret; this covers
+// the other way a cached token can go bad before its own recorded expiry - for example its signing
+// key rotating server-side, or it being explicitly revoked - where a caller that gets a 401 wants to
+// discard the cache and force a fresh mint on the next attempt rather than keep reusing the same
+// token until it naturally expires. A missing entry is not an error.
+func InvalidateDiskTokenCache(dir, clientID, clientSecret, tokenURL, audience string) error {
+	path := cacheFilePath(dir, clientID, clientSecret, tokenURL, audience)
+
+	if err := os.Remove(path); err != nil && !os.IsNotExist(err) {
+		return fmt.Errorf("removing cached token: %w", err)
+	}
+
+	return nil
 }
 
 // Token serves a still-valid cached token without contacting the inner source, and otherwise mints
@@ -103,9 +126,13 @@ func (s *diskCachingTokenSource) Token() (*oauth2.Token, error) {
 }
 
 // read reports a hit only for a file that is present, parseable, of the current schema, and still
-// comfortably short of expiry. Every other outcome - including an unreadable or corrupt file - is
-// an ordinary miss.
+// comfortably short of expiry. Every other outcome - including an unreadable or corrupt file, or a
+// directory this process can't be sure is private to it - is an ordinary miss.
 func (s *diskCachingTokenSource) read() (*oauth2.Token, bool) {
+	if !dirIsSafeForCache(s.dir) {
+		return nil, false
+	}
+
 	data, err := os.ReadFile(s.path)
 	if err != nil {
 		return nil, false
@@ -120,6 +147,9 @@ func (s *diskCachingTokenSource) read() (*oauth2.Token, bool) {
 		return nil, false
 	}
 
+	// A token minted with no expiry (zero Expiry) can never clear this check, so it's never cached
+	// - the safe default for a server that doesn't set expires_in, rather than treating it as
+	// eternally valid.
 	if !time.Now().Add(cacheExpiryDelta).Before(entry.Expiry) {
 		return nil, false
 	}
@@ -138,6 +168,13 @@ func (s *diskCachingTokenSource) read() (*oauth2.Token, bool) {
 // it is only an optimization.
 func (s *diskCachingTokenSource) write(token *oauth2.Token) {
 	if err := os.MkdirAll(s.dir, cacheDirPerm); err != nil {
+		return
+	}
+
+	// MkdirAll only applies cacheDirPerm to a directory it actually creates - a pre-existing one
+	// (e.g. a shared or misconfigured CRUSOE_CONFIG_DIR) keeps whatever permissions it already had,
+	// so this check is what actually enforces privacy on every write, not just the first one.
+	if !dirIsSafeForCache(s.dir) {
 		return
 	}
 
@@ -180,4 +217,18 @@ func (s *diskCachingTokenSource) write(token *oauth2.Token) {
 // harmless stray file, and there is nothing further worth doing about it.
 func removeTempFile(path string) {
 	_ = os.Remove(path)
+}
+
+// dirIsSafeForCache reports whether dir is safe to read or write cache entries in. It must be a
+// real directory - Lstat, so a symlink standing in for it doesn't count - and, where the platform
+// makes that meaningful (see isPrivateDir), owned by this process with no group/other permission
+// bits, so no other local user could have planted or substituted a file inside it. A directory that
+// fails this check is treated exactly like a missing one: the cache is skipped, never trusted.
+func dirIsSafeForCache(dir string) bool {
+	info, err := os.Lstat(dir)
+	if err != nil {
+		return false
+	}
+
+	return isPrivateDir(info)
 }

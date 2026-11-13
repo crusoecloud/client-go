@@ -6,6 +6,7 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"sync"
 	"testing"
@@ -55,6 +56,21 @@ func (f *fakeTokenSource) callCount() int {
 
 func newFakeTokenSource(accessToken string) *fakeTokenSource {
 	return &fakeTokenSource{accessToken: accessToken, expiresIn: time.Hour}
+}
+
+// newPrivateTestDir returns a fresh temp dir chmod'd to exactly the 0700 this package's own write()
+// creates a cache directory with - t.TempDir() isn't guaranteed to produce that under every umask,
+// but a freshly-created real token-cache dir always is, so this is what the cache actually sees in
+// real use.
+func newPrivateTestDir(t *testing.T) string {
+	t.Helper()
+
+	dir := t.TempDir()
+	if err := os.Chmod(dir, 0o700); err != nil {
+		t.Fatalf("failed to set up a private test dir: %v", err)
+	}
+
+	return dir
 }
 
 func newTestCache(t *testing.T, inner oauth2.TokenSource, dir, clientSecret string) oauth2.TokenSource {
@@ -108,7 +124,7 @@ func validEntry(accessToken string, expiry time.Time) cacheEntry {
 }
 
 func TestDiskCachingTokenSource_RoundTrip(t *testing.T) {
-	dir := t.TempDir()
+	dir := newPrivateTestDir(t)
 	inner := newFakeTokenSource("minted-token")
 	source := newTestCache(t, inner, dir, testClientSecret)
 
@@ -150,6 +166,10 @@ func TestDiskCachingTokenSource_RoundTrip(t *testing.T) {
 }
 
 func TestDiskCachingTokenSource_CacheFilePermissions(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("POSIX permission bits don't apply on Windows")
+	}
+
 	dir := filepath.Join(t.TempDir(), "created-on-demand")
 	source := newTestCache(t, newFakeTokenSource("minted-token"), dir, testClientSecret)
 
@@ -176,7 +196,7 @@ func TestDiskCachingTokenSource_CacheFilePermissions(t *testing.T) {
 
 func TestDiskCachingTokenSource_ExpiryBoundary(t *testing.T) {
 	t.Run("expiry inside the safety buffer is a miss", func(t *testing.T) {
-		dir := t.TempDir()
+		dir := newPrivateTestDir(t)
 		inner := newFakeTokenSource("minted-token")
 		source := newTestCache(t, inner, dir, testClientSecret)
 
@@ -196,7 +216,7 @@ func TestDiskCachingTokenSource_ExpiryBoundary(t *testing.T) {
 	})
 
 	t.Run("expiry beyond the safety buffer is a hit", func(t *testing.T) {
-		dir := t.TempDir()
+		dir := newPrivateTestDir(t)
 		inner := newFakeTokenSource("minted-token")
 		source := newTestCache(t, inner, dir, testClientSecret)
 
@@ -235,7 +255,7 @@ func TestDiskCachingTokenSource_FailsOpenOnBadCacheFile(t *testing.T) {
 	for _, testCase := range cases {
 		testCase := testCase
 		t.Run(testCase.name, func(t *testing.T) {
-			dir := t.TempDir()
+			dir := newPrivateTestDir(t)
 			inner := newFakeTokenSource("minted-token")
 			source := newTestCache(t, inner, dir, testClientSecret)
 
@@ -276,7 +296,7 @@ func TestDiskCachingTokenSource_FailsOpenOnUnwritableDir(t *testing.T) {
 func TestDiskCachingTokenSource_MintErrorIsReturned(t *testing.T) {
 	mintErr := errors.New("hydra said no")
 	inner := &fakeTokenSource{err: mintErr}
-	source := newTestCache(t, inner, t.TempDir(), testClientSecret)
+	source := newTestCache(t, inner, newPrivateTestDir(t), testClientSecret)
 
 	if _, err := source.Token(); !errors.Is(err, mintErr) {
 		t.Fatalf("expected the inner minting error to be returned unchanged, got: %v", err)
@@ -284,7 +304,7 @@ func TestDiskCachingTokenSource_MintErrorIsReturned(t *testing.T) {
 }
 
 func TestDiskCachingTokenSource_RotatedSecretMisses(t *testing.T) {
-	dir := t.TempDir()
+	dir := newPrivateTestDir(t)
 	original := newTestCache(t, newFakeTokenSource("original-token"), dir, testClientSecret)
 
 	writeCacheFile(t, cachePath(t, original),
@@ -349,7 +369,7 @@ func TestDiskCachingTokenSource_PostDefaultingKey(t *testing.T) {
 func TestDiskCachingTokenSource_Concurrent(t *testing.T) {
 	const goroutines = 20
 
-	dir := t.TempDir()
+	dir := newPrivateTestDir(t)
 	inner := newFakeTokenSource("minted-token")
 
 	var (
@@ -422,7 +442,7 @@ func TestDiskCachingTokenSource_Concurrent(t *testing.T) {
 }
 
 func TestDiskCachingTokenSource_NeverWritesClientSecret(t *testing.T) {
-	dir := t.TempDir()
+	dir := newPrivateTestDir(t)
 	source := newTestCache(t, newFakeTokenSource("minted-token"), dir, testClientSecret)
 
 	if _, err := source.Token(); err != nil {
@@ -459,5 +479,67 @@ func TestDiskCachingTokenSource_NeverWritesClientSecret(t *testing.T) {
 		if _, found := raw[field]; found {
 			t.Fatalf("unexpected %q field in the cache file: %s", field, data)
 		}
+	}
+}
+
+func TestDiskCachingTokenSource_UntrustedDirectoryIsNeverCached(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("directory ownership/mode checks don't apply on Windows")
+	}
+
+	dir := t.TempDir()
+	if err := os.Chmod(dir, 0o755); err != nil {
+		t.Fatalf("failed to loosen permissions on the cache dir: %v", err)
+	}
+
+	inner := newFakeTokenSource("minted-token")
+	source := newTestCache(t, inner, dir, testClientSecret)
+
+	if _, err := source.Token(); err != nil {
+		t.Fatalf("Token() failed: %v", err)
+	}
+	if inner.callCount() != 1 {
+		t.Fatalf("expected a fresh mint, got %d", inner.callCount())
+	}
+
+	if _, err := source.Token(); err != nil {
+		t.Fatalf("second Token() failed: %v", err)
+	}
+	if inner.callCount() != 2 {
+		t.Fatalf("expected an untrusted directory to mint every time, got %d mints", inner.callCount())
+	}
+}
+
+func TestInvalidateDiskTokenCache(t *testing.T) {
+	dir := newPrivateTestDir(t)
+	inner := newFakeTokenSource("minted-token")
+	source := newTestCache(t, inner, dir, testClientSecret)
+
+	if _, err := source.Token(); err != nil {
+		t.Fatalf("Token() failed: %v", err)
+	}
+
+	path := cachePath(t, source)
+	if _, err := os.Stat(path); err != nil {
+		t.Fatalf("expected a cache file before invalidation: %v", err)
+	}
+
+	if err := InvalidateDiskTokenCache(dir, testClientID, testClientSecret, testTokenURL, testAudience); err != nil {
+		t.Fatalf("InvalidateDiskTokenCache failed: %v", err)
+	}
+
+	if _, err := os.Stat(path); !os.IsNotExist(err) {
+		t.Fatalf("expected the cache file to be removed, stat error: %v", err)
+	}
+
+	if err := InvalidateDiskTokenCache(dir, testClientID, testClientSecret, testTokenURL, testAudience); err != nil {
+		t.Fatalf("expected invalidating an already-missing entry to be a no-op, got: %v", err)
+	}
+
+	if _, err := source.Token(); err != nil {
+		t.Fatalf("Token() after invalidation failed: %v", err)
+	}
+	if inner.callCount() != 2 {
+		t.Fatalf("expected invalidation to force a fresh mint, got %d mints", inner.callCount())
 	}
 }
