@@ -33,6 +33,8 @@ type KubernetesNodePool struct {
 	InstanceIds []string `json:"instance_ids"`
 	// Name of the node pool.
 	Name string `json:"name"`
+	// Size of the disk that holds ephemeral storage on each new node, such as emptyDir volumes, container writable layers and logs. Data on this disk is deleted with the node. By default this is the boot disk. If ephemeral_storage_for_containerd is enabled, it is the first local NVMe disk on supported node pool versions, and the boot disk otherwise. On Slurm compute node pools, it is all local NVMe disks combined. Omitted when unknown.
+	NodeEphemeralStorage string `json:"node_ephemeral_storage,omitempty"`
 	// Labels assigned to nodes in the node pool.
 	NodeLabels map[string]string `json:"node_labels"`
 	// Generation of the node pool.

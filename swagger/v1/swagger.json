@@ -16671,6 +16671,12 @@
           "type": "string",
           "x-go-name": "Name"
         },
+        "node_ephemeral_storage": {
+          "description": "Size of the disk that holds ephemeral storage on each new node, such as\nemptyDir volumes, container writable layers and logs. Data on this disk is\ndeleted with the node. By default this is the boot disk. If\nephemeral_storage_for_containerd is enabled, it is the first local NVMe disk\non supported node pool versions, and the boot disk otherwise. On Slurm\ncompute node pools, it is all local NVMe disks combined. Omitted when unknown.",
+          "example": "128Gi",
+          "type": "string",
+          "x-go-name": "NodeEphemeralStorage"
+        },
         "node_labels": {
           "additionalProperties": {
             "type": "string"
