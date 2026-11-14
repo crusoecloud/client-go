@@ -20916,7 +20916,7 @@
       "additionalProperties": {
         "type": "string"
       },
-      "description": "SlurmClusterInternalConfig holds internal-only configuration that is used\nfor support and development purposes only.",
+      "description": "Reserved for Crusoe support. Leave it unset unless Crusoe support asks\nyou to set it.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
