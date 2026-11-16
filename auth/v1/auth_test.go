@@ -188,6 +188,92 @@ func TestNewClientSecretAPIClient(t *testing.T) {
 	}
 }
 
+func TestNewClientSecretConfig_ForwardsDiskTokenCacheOption(t *testing.T) {
+	var mints int32
+
+	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPost {
+			atomic.AddInt32(&mints, 1)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"access_token": "test-access-token",
+			"token_type":   "Bearer",
+			"expires_in":   3600,
+		})
+	}))
+	t.Cleanup(tokenServer.Close)
+
+	cacheDir := t.TempDir()
+	if err := os.Chmod(cacheDir, 0o700); err != nil {
+		t.Fatalf("failed to set up a private cache dir: %v", err)
+	}
+
+	for i := 0; i < 2; i++ {
+		cfg, err := NewClientSecretConfig(
+			tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "",
+			WithDiskTokenCache(cacheDir))
+		if err != nil {
+			t.Fatalf("NewClientSecretConfig failed: %v", err)
+		}
+
+		resp, err := cfg.HTTPClient.Get(tokenServer.URL)
+		if err != nil {
+			t.Fatalf("request failed: %v", err)
+		}
+		resp.Body.Close()
+	}
+
+	if got := atomic.LoadInt32(&mints); got != 1 {
+		t.Fatalf("expected the second config to reuse the cached token, got %d token requests", got)
+	}
+
+	entries, err := os.ReadDir(cacheDir)
+	if err != nil {
+		t.Fatalf("failed to read the cache dir: %v", err)
+	}
+	if len(entries) != 1 {
+		t.Fatalf("expected exactly one cache file, got %v", entries)
+	}
+}
+
+func TestNewClientSecretConfig_DiskTokenCacheIsOptIn(t *testing.T) {
+	var mints int32
+
+	tokenServer := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPost {
+			atomic.AddInt32(&mints, 1)
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(map[string]interface{}{
+			"access_token": "test-access-token",
+			"token_type":   "Bearer",
+			"expires_in":   3600,
+		})
+	}))
+	t.Cleanup(tokenServer.Close)
+
+	for i := 0; i < 2; i++ {
+		cfg, err := NewClientSecretConfig(
+			tokenServerContext(tokenServer), "test-client-id", "test-client-secret", tokenServer.URL, "")
+		if err != nil {
+			t.Fatalf("NewClientSecretConfig failed: %v", err)
+		}
+
+		resp, err := cfg.HTTPClient.Get(tokenServer.URL)
+		if err != nil {
+			t.Fatalf("request failed: %v", err)
+		}
+		resp.Body.Close()
+	}
+
+	if got := atomic.LoadInt32(&mints); got != 2 {
+		t.Fatalf("expected each config to mint its own token without the option, got %d token requests", got)
+	}
+}
+
 func TestNewClientSecretConfig_TokenURLValidation(t *testing.T) {
 	t.Run("empty tokenURL defaults instead of erroring", func(t *testing.T) {
 		cfg, err := NewClientSecretConfig(context.Background(), "id", "secret", "", "")
