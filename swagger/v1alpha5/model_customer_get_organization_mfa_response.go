@@ -10,5 +10,6 @@ package swagger
 
 // GetOrganizationMFAResponse is the response containing an organization's required MFA methods.
 type CustomerGetOrganizationMfaResponse struct {
+	// mfa_methods is the set of MFA methods currently required by the organization.
 	MfaMethods []CustomerOrganizationMfa `json:"mfa_methods,omitempty"`
 }

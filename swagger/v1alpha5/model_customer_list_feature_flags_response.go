@@ -8,6 +8,8 @@
  */
 package swagger
 
+// ListFeatureFlagsResponse is the list feature flags response.
 type CustomerListFeatureFlagsResponse struct {
+	// feature_flags is a map of feature flag names to their values.
 	FeatureFlags map[string]interface{} `json:"feature_flags,omitempty"`
 }

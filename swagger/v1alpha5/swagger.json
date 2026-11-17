@@ -19366,6 +19366,7 @@
       "description": "UpdateOrganizationMFARequest is the request for setting an organization's required MFA methods.",
       "properties": {
         "intended_methods": {
+          "description": "intended_methods is the full set of MFA methods for the organization to require (one of: totp, webauthn).",
           "example": [
             "totp",
             "webauthn"
@@ -19373,7 +19374,6 @@
           "items": {
             "type": "string"
           },
-          "title": "intended_methods is the full set of MFA methods the organization should require (one of: totp, webauthn)",
           "type": "array"
         }
       },
@@ -22253,11 +22253,11 @@
       "description": "GetOrganizationMFAResponse is the response containing an organization's required MFA methods.",
       "properties": {
         "mfa_methods": {
+          "description": "mfa_methods is the set of MFA methods currently required by the organization.",
           "items": {
             "$ref": "#/definitions/customerOrganizationMFA",
             "type": "object"
           },
-          "title": "mfa_methods is the set of MFA methods currently required by the organization",
           "type": "array"
         }
       },
@@ -22283,33 +22283,33 @@
       "type": "object"
     },
     "customerListFeatureFlagsResponse": {
+      "description": "ListFeatureFlagsResponse is the list feature flags response.",
       "properties": {
         "feature_flags": {
           "additionalProperties": {},
+          "description": "feature_flags is a map of feature flag names to their values.",
           "example": {
             "curated-images": true,
             "infiniband": false
           },
-          "title": "feature_flags is a map of feature flag names to their values",
           "type": "object"
         }
       },
-      "title": "ListFeatureFlagsResponse is the list feature flags response",
       "type": "object"
     },
     "customerOrganizationMFA": {
       "description": "OrganizationMFA describes a single MFA method required by an organization.",
       "properties": {
         "created_at": {
+          "description": "created_at is when this MFA method was required by the organization.",
           "format": "date-time",
           "readOnly": true,
-          "title": "created_at is when this MFA method was required by the organization",
           "type": "string"
         },
         "method": {
+          "description": "method is the required MFA method (one of: totp, webauthn).",
           "example": "totp",
           "readOnly": true,
-          "title": "method is the required MFA method (one of: totp, webauthn)",
           "type": "string"
         }
       },
