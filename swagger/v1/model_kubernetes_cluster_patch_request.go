@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.
 type KubernetesClusterPatchRequest struct {
 	// New extra arguments to pass to the kube-apiserver control plane component. If absent, existing args are preserved. If present but empty, args are cleared.
 	ApiserverExtraArgs map[string]string `json:"apiserver_extra_args,omitempty"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ExternalLoadBalancerPostRequest defines the structure of the request body for creating an external load balancer.
 type ExternalLoadBalancerPostRequest struct {
 	HealthCheckOptions *HealthCheckOptionsExternalLb `json:"health_check_options,omitempty"`
 	// Listen ports and associated backends configuration.

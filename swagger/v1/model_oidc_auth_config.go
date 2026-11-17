@@ -8,7 +8,7 @@
  */
 package swagger
 
-// This allows the Kubernetes API server to authenticate users via an external OIDC provider.
+// OIDCAuthConfig defines OpenID Connect authentication configuration. This allows the Kubernetes API server to authenticate users via an external OIDC provider.
 type OidcAuthConfig struct {
 	// PEM-encoded certificate authority certificate used to validate the OIDC server's certificate.
 	CaCert string `json:"ca_cert,omitempty"`

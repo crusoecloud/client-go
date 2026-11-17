@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesNodePoolNode is a Kubernetes Node backing a node pool.
 type KubernetesNodePoolNode struct {
 	// Creation timestamp of the node, in RFC3339 format.
 	CreatedAt string `json:"created_at"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// NvlinkDomainSummaryResponse represents summary information about an NVLink domain.
 type NvlinkDomainSummaryResponse struct {
 	// Number of nodes currently available in the NVLink domain
 	AvailableNodes int32 `json:"available_nodes,omitempty"`

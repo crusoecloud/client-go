@@ -12,6 +12,7 @@ import (
 	"time"
 )
 
+// AutoClustersConfigResponse represents the cluster configuration in the API response.
 type AutoClustersConfigResponse struct {
 	// Whether to use project's unused reservations as fallback when Crusoe spares are exhausted.
 	FallbackToProjectReservations bool `json:"fallback_to_project_reservations,omitempty"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// CustomImagesEditTagsRequest is the request type for PATCH requests to the /custom-images{id}/edit-tags endpoint.
 type CustomImageEditTagsRequest struct {
 	// New set of tags to associate with the custom image.
 	Tags []string `json:"tags"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// Entity contains identifying information for an organization.
 type Entity struct {
 	Billing          *Billing               `json:"billing"`
 	BillingAddr      *BillingAddress        `json:"billing_addr,omitempty"`

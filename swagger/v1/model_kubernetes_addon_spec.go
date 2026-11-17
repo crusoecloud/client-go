@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesAddonSpec identifies one add-on to install on a cluster.
 type KubernetesAddonSpec struct {
 	// Catalog identifier of the add-on.
 	AddonType string `json:"addon_type"`

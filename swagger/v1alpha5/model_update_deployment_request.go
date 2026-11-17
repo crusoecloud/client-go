@@ -8,6 +8,7 @@
  */
 package swagger
 
+// UpdateDeploymentRequest is the body for updating a self-serve deployment.
 type UpdateDeploymentRequest struct {
 	// Updated deployment name.
 	DeploymentName string `json:"deployment_name,omitempty"`

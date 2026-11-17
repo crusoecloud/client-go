@@ -8,7 +8,7 @@
  */
 package swagger
 
-// These are the fields returned from a PUT request.
+// GeneratedToken contains the Traits Island stores for a Token inside of Kratos. These are the fields returned from a PUT request.
 type GeneratedToken struct {
 	AccessKey string `json:"access_key"`
 	Alias     string `json:"alias,omitempty"`

@@ -8,7 +8,7 @@
  */
 package swagger
 
-// optionally including an inline token when requested.
+// CreateSCIMIntegrationResponse is the JSON response for creating a SCIM integration, optionally including an inline token when requested.
 type CreateScimIntegrationResponse struct {
 	ApiKeyInfo  *GeneratedLimitedUsageApiKey `json:"api_key_info,omitempty"`
 	Integration *ScimIntegrationResponse     `json:"integration"`

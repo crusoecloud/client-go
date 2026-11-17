@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListS3SupportedLocationsResponse is the response type for GET requests to the S3 supported-locations endpoint.
 type ListS3SupportedLocationsResponse struct {
 	// Locations where object storage (S3) is available.
 	Items []string `json:"items"`

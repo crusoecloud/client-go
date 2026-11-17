@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListS3BucketsResponse is the response type for GET requests to the S3 buckets endpoint.
 type ListS3BucketsResponse struct {
 	// List of buckets.
 	Items []S3Bucket `json:"items"`

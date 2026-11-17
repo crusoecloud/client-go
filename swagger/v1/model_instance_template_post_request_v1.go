@@ -8,6 +8,7 @@
  */
 package swagger
 
+// InstanceTemplatePostRequestV1 defines the specifications of VMs to be created during bulk VM creation.
 type InstanceTemplatePostRequestV1 struct {
 	// Custom image to use for all VMs created from this instance template. Only one of Image or CustomImage should be supplied at once.
 	CustomImageName string `json:"custom_image_name,omitempty"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// EntitiesPutPostResponse is the response type for PUT and POST requests to the entities endpoint.
 type EntitiesPutPostResponse struct {
 	Entity *Entity `json:"entity"`
 }

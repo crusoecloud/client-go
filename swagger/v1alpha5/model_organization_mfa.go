@@ -8,6 +8,7 @@
  */
 package swagger
 
+// OrganizationMFA contains details about a single required MFA method.
 type OrganizationMfa struct {
 	CreatedAt string `json:"created_at"`
 	Method    string `json:"method"`

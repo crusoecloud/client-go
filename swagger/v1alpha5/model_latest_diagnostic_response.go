@@ -8,6 +8,7 @@
  */
 package swagger
 
+// LatestDiagnosticResponse is the REST response for latest diagnostic.
 type LatestDiagnosticResponse struct {
 	CreatedAt     string `json:"created_at,omitempty"`
 	HasDiagnostic bool   `json:"has_diagnostic"`

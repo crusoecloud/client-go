@@ -8,7 +8,7 @@
  */
 package swagger
 
-// A taint allows a node to repel a set of pods unless those pods tolerate the taint. Taints follow standard Kubernetes semantics (see https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/).
+// KubernetesNodeTaint represents a Kubernetes node taint. A taint allows a node to repel a set of pods unless those pods tolerate the taint. Taints follow standard Kubernetes semantics (see https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/).
 type KubernetesNodeTaint struct {
 	// Taint effect, controlling how pods are treated on matching nodes: NoSchedule: new pods are not scheduled unless they tolerate. PreferNoSchedule: new pods avoid the node if possible. NoExecute: new pods are not scheduled AND existing non-tolerating pods are evicted.
 	Effect string `json:"effect"`

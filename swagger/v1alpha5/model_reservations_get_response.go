@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ReservationsGetResponse is the response type for GET requests to the reservations endpoint.
 type ReservationsGetResponse struct {
 	Items []Reservation `json:"items"`
 }

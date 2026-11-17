@@ -8,7 +8,7 @@
  */
 package swagger
 
-// It includes the one-time-only secret key.
+// CreateS3KeyResponse is the response body after creating a new S3 access key for a user. It includes the one-time-only secret key.
 type CreateS3KeyResponse struct {
 	// Access key ID used to authenticate S3 requests.
 	AccessKeyId string `json:"access_key_id"`

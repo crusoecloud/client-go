@@ -8,6 +8,7 @@
  */
 package swagger
 
+// UpdateResponseEntry describes the workflow triggered for a single cluster by an update.
 type UpdateResponseEntry struct {
 	// Name of the cluster the workflow runs on.
 	ClusterName string `json:"cluster_name,omitempty"`

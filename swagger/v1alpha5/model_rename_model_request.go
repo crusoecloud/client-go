@@ -8,6 +8,7 @@
  */
 package swagger
 
+// RenameModelRequest is the body for renaming a deployed model's alias.
 type RenameModelRequest struct {
 	// Current alias of the model.
 	ModelAlias string `json:"model_alias"`

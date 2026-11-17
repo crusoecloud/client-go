@@ -8,6 +8,7 @@
  */
 package swagger
 
+// CreateSCIMIntegrationRequestBody is the JSON request body for creating a SCIM integration.
 type CreateScimIntegrationRequestBody struct {
 	IdentityProvider string                      `json:"identity_provider"`
 	Name             string                      `json:"name"`

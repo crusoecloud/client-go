@@ -12132,6 +12132,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "AsyncOperationResponse": {
+      "description": "AsyncOperationResponse is the response type for endpoints which return async operations.",
       "properties": {
         "operation": {
           "$ref": "#/definitions/Operation"
@@ -12140,7 +12141,6 @@
       "required": [
         "operation"
       ],
-      "title": "AsyncOperationResponse is the response type for endpoints which return async operations.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/fetch"
     },
@@ -12259,6 +12259,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "AutoClustersConfigResponse": {
+      "description": "AutoClustersConfigResponse represents the cluster configuration in the API response.",
       "properties": {
         "fallback_to_project_reservations": {
           "description": "Whether to use project's unused reservations as fallback when Crusoe spares are exhausted.",
@@ -12282,17 +12283,16 @@
           "x-go-name": "UpdatedAt"
         }
       },
-      "title": "AutoClustersConfigResponse represents the cluster configuration in the API response.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "AutoRemediation": {
-      "description": "example: REPLACE_NODE\nenum: REPLACE_NODE,OFF",
-      "title": "AutoRemediation represents the auto remediation action type for an issue.",
+      "description": "AutoRemediation represents the auto remediation action type for an issue.\nexample: REPLACE_NODE\nenum: REPLACE_NODE,OFF",
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Backend": {
+      "description": "Backend defines the backend server configuration.",
       "properties": {
         "ip": {
           "description": "IP address of the backend server.",
@@ -12319,11 +12319,11 @@
         "port",
         "status"
       ],
-      "title": "Backend defines the backend server configuration.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Billing": {
+      "description": "Billing contains information about the billing status of an organization.",
       "properties": {
         "balance": {
           "example": "$1000.00",
@@ -12354,11 +12354,11 @@
         "has_valid_payment_method",
         "delinquent"
       ],
-      "title": "Billing contains information about the billing status of an organization.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingAddress": {
+      "description": "BillingAddress contains sensitive information related to the billing address for an entity.",
       "properties": {
         "address_line1": {
           "example": "123 Main Street",
@@ -12398,11 +12398,11 @@
         "postal_code",
         "country"
       ],
-      "title": "BillingAddress contains sensitive information related to the billing address for an entity.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingCostData": {
+      "description": "UsageByProjectGetResponse is the response type for GET requests to the usage.usageByProject endpoint.",
       "properties": {
         "data": {
           "items": {
@@ -12419,7 +12419,6 @@
       "required": [
         "data"
       ],
-      "title": "UsageByProjectGetResponse is the response type for GET requests to the usage.usageByProject endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -12688,6 +12687,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateCredentialRequest": {
+      "description": "CreateCredentialRequest is the body for creating a credential.",
       "properties": {
         "credentials": {
           "$ref": "#/definitions/CredentialSecrets"
@@ -12707,11 +12707,11 @@
         "name",
         "credentials"
       ],
-      "title": "CreateCredentialRequest is the body for creating a credential.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "CreateDeploymentRequest": {
+      "description": "CreateDeploymentRequest is the body for creating a self-serve deployment.",
       "properties": {
         "deployment_name": {
           "description": "User-chosen deployment name.",
@@ -12740,7 +12740,6 @@
         "fine_tuned_model",
         "flavor_id"
       ],
-      "title": "CreateDeploymentRequest is the body for creating a self-serve deployment.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
@@ -12770,6 +12769,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateS3BucketRequest": {
+      "description": "CreateS3BucketRequest is the request body for creating a new S3 bucket.",
       "properties": {
         "location": {
           "description": "Location to create the bucket in.",
@@ -12815,11 +12815,11 @@
         "name",
         "location"
       ],
-      "title": "CreateS3BucketRequest is the request body for creating a new S3 bucket.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateS3KeyRequest": {
+      "description": "CreateS3KeyRequest is the request body for creating a new S3 access key for a user.",
       "properties": {
         "alias": {
           "description": "Human-readable alias for the new S3 access key.",
@@ -12834,12 +12834,11 @@
           "x-go-name": "ExpireAt"
         }
       },
-      "title": "CreateS3KeyRequest is the request body for creating a new S3 access key for a user.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateS3KeyResponse": {
-      "description": "It includes the one-time-only secret key.",
+      "description": "CreateS3KeyResponse is the response body after creating a new S3 access key for a user.\nIt includes the one-time-only secret key.",
       "properties": {
         "access_key_id": {
           "description": "Access key ID used to authenticate S3 requests.",
@@ -12864,11 +12863,11 @@
         "access_key_id",
         "secret_key"
       ],
-      "title": "CreateS3KeyResponse is the response body after creating a new S3 access key for a user.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateSCIMIntegrationRequestBody": {
+      "description": "CreateSCIMIntegrationRequestBody is the JSON request body for creating a SCIM integration.",
       "properties": {
         "identity_provider": {
           "example": "okta",
@@ -12888,12 +12887,11 @@
         "name",
         "identity_provider"
       ],
-      "title": "CreateSCIMIntegrationRequestBody is the JSON request body for creating a SCIM integration.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateSCIMIntegrationResponse": {
-      "description": "optionally including an inline token when requested.",
+      "description": "CreateSCIMIntegrationResponse is the JSON response for creating a SCIM integration,\noptionally including an inline token when requested.",
       "properties": {
         "api_key_info": {
           "$ref": "#/definitions/GeneratedLimitedUsageAPIKey"
@@ -12905,11 +12903,11 @@
       "required": [
         "integration"
       ],
-      "title": "CreateSCIMIntegrationResponse is the JSON response for creating a SCIM integration,",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateSCIMTokenRequestBody": {
+      "description": "CreateSCIMTokenRequestBody is the JSON request body for creating a SCIM integration token.",
       "properties": {
         "alias": {
           "example": "my-scim-token",
@@ -12926,7 +12924,6 @@
         "alias",
         "expires_at"
       ],
-      "title": "CreateSCIMTokenRequestBody is the JSON request body for creating a SCIM integration token.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -13015,6 +13012,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CredentialResponse": {
+      "description": "CredentialResponse describes a stored credential.",
       "properties": {
         "created_at": {
           "description": "RFC 3339 creation timestamp.",
@@ -13060,11 +13058,11 @@
           "x-go-name": "Vendor"
         }
       },
-      "title": "CredentialResponse describes a stored credential.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "CredentialSecrets": {
+      "description": "CredentialSecrets holds the secret material for a credential.",
       "properties": {
         "token": {
           "description": "Access token (e.g. a HuggingFace token). Write-only; omitted unless explicitly revealed.",
@@ -13072,11 +13070,11 @@
           "x-go-name": "Token"
         }
       },
-      "title": "CredentialSecrets holds the secret material for a credential.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "CustomImageEditTagsRequest": {
+      "description": "CustomImagesEditTagsRequest is the request type for PATCH requests to the /custom-images{id}/edit-tags endpoint.",
       "properties": {
         "tags": {
           "description": "New set of tags to associate with the custom image.",
@@ -13091,11 +13089,11 @@
       "required": [
         "tags"
       ],
-      "title": "CustomImagesEditTagsRequest is the request type for PATCH requests to the /custom-images{id}/edit-tags endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CustomImagePatchRequest": {
+      "description": "CustomImagePatchRequest is the request type for PATCH requests to the /custom-images/{id} endpoint.",
       "properties": {
         "description": {
           "description": "New description for the custom image.",
@@ -13107,11 +13105,11 @@
       "required": [
         "description"
       ],
-      "title": "CustomImagePatchRequest is the request type for PATCH requests to the /custom-images/{id} endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CustomImagePostRequest": {
+      "description": "CustomImagePostRequest is the request type for POST requests to the /custom-images endpoint.",
       "properties": {
         "DiskID": {
           "description": "ID of the disk to create the custom image from.",
@@ -13144,11 +13142,11 @@
         "DiskID",
         "name"
       ],
-      "title": "CustomImagePostRequest is the request type for POST requests to the /custom-images endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DeployedModelEntry": {
+      "description": "DeployedModelEntry describes a model available for inference in the project.",
       "properties": {
         "architecture": {
           "$ref": "#/definitions/FoundryArchitecture"
@@ -13241,7 +13239,6 @@
           "x-go-name": "Type"
         }
       },
-      "title": "DeployedModelEntry describes a model available for inference in the project.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
@@ -13268,6 +13265,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "DeploymentProgress": {
+      "description": "DeploymentProgress describes the progress of a deployment operation.",
       "properties": {
         "message": {
           "description": "Human-readable progress message.",
@@ -13286,11 +13284,11 @@
           "x-go-name": "UpdatedAt"
         }
       },
-      "title": "DeploymentProgress describes the progress of a deployment operation.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "DesiredCount": {
+      "description": "DesiredCount defines a wrapper struct for the desired count of VMs in the instance group.",
       "properties": {
         "value": {
           "description": "New desired number of instances for the instance group.",
@@ -13300,11 +13298,11 @@
           "x-go-name": "Value"
         }
       },
-      "title": "DesiredCount defines a wrapper struct for the desired count of VMs in the instance group.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiagnosticResponse": {
+      "description": "DiagnosticResponse is the REST response for creating a diagnostic.",
       "properties": {
         "already_pending": {
           "example": false,
@@ -13321,11 +13319,11 @@
         "id",
         "already_pending"
       ],
-      "title": "DiagnosticResponse is the REST response for creating a diagnostic.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiagnosticStatusResponse": {
+      "description": "DiagnosticStatusResponse is the REST response for diagnostic status.",
       "properties": {
         "created_at": {
           "example": "2024-01-15T10:30:00Z",
@@ -13360,7 +13358,6 @@
         "created_at",
         "updated_at"
       ],
-      "title": "DiagnosticStatusResponse is the REST response for diagnostic status.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -13500,6 +13497,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "DiskTemplate": {
+      "description": "DiskTemplate defines a disk to create for each VM during bulk VM creation.",
       "properties": {
         "size": {
           "description": "Size of the disk, including a unit suffix.",
@@ -13522,7 +13520,6 @@
         "size",
         "type"
       ],
-      "title": "DiskTemplate defines a disk to create for each VM during bulk VM creation.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -13692,6 +13689,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "EnableS3BucketObjectLockRequest": {
+      "description": "EnableS3BucketObjectLockRequest defines the body for enabling object lock.",
       "properties": {
         "retention_period": {
           "description": "Length of the object lock retention period, in the unit given by retention_period_unit.",
@@ -13704,11 +13702,11 @@
           "$ref": "#/definitions/S3RetentionPeriodUnit"
         }
       },
-      "title": "EnableS3BucketObjectLockRequest defines the body for enabling object lock.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "EntitiesPutPostRequest": {
+      "description": "EntitiesPutPostRequest is the request type for PUT and POST requests to the entities endpoint.",
       "properties": {
         "billing_addr": {
           "$ref": "#/definitions/BillingAddress"
@@ -13737,11 +13735,11 @@
           "x-go-name": "TaxIDType"
         }
       },
-      "title": "EntitiesPutPostRequest is the request type for PUT and POST requests to the entities endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "EntitiesPutPostResponse": {
+      "description": "EntitiesPutPostResponse is the response type for PUT and POST requests to the entities endpoint.",
       "properties": {
         "entity": {
           "$ref": "#/definitions/Entity"
@@ -13750,11 +13748,11 @@
       "required": [
         "entity"
       ],
-      "title": "EntitiesPutPostResponse is the response type for PUT and POST requests to the entities endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Entity": {
+      "description": "Entity contains identifying information for an organization.",
       "properties": {
         "billing": {
           "$ref": "#/definitions/Billing"
@@ -13839,11 +13837,11 @@
         "state",
         "state_reason"
       ],
-      "title": "Entity contains identifying information for an organization.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ExternalLoadBalancer": {
+      "description": "ExternalLoadBalancer defines the specifications of the External Load Balancer.",
       "properties": {
         "health_check_options": {
           "$ref": "#/definitions/HealthCheckOptionsExternalLB"
@@ -13910,11 +13908,11 @@
         "listen_ports_and_backends",
         "health_check_options"
       ],
-      "title": "ExternalLoadBalancer defines the specifications of the External Load Balancer.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ExternalLoadBalancerPatchRequest": {
+      "description": "ExternalLoadBalancerPatchRequest defines the structure of the request body for patching an external load balancer.",
       "properties": {
         "health_check_options": {
           "$ref": "#/definitions/HealthCheckOptionsExternalLB"
@@ -13931,11 +13929,11 @@
       "required": [
         "listen_ports_and_backends"
       ],
-      "title": "ExternalLoadBalancerPatchRequest defines the structure of the request body for patching an external load balancer.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ExternalLoadBalancerPostRequest": {
+      "description": "ExternalLoadBalancerPostRequest defines the structure of the request body for creating an external load balancer.",
       "properties": {
         "health_check_options": {
           "$ref": "#/definitions/HealthCheckOptionsExternalLB"
@@ -13980,7 +13978,6 @@
         "location",
         "listen_ports_and_backends"
       ],
-      "title": "ExternalLoadBalancerPostRequest defines the structure of the request body for creating an external load balancer.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -14005,7 +14002,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "FirewallRuleObject": {
-      "description": "It has two fields: CIDR and ResourceID. The CIDR field may either be a\nCIDR or an IP address. If an IP, it will be converted to a CIDR. Resource IDs\nof VPC networks, Subnets, and VMs are the only ones allowed. Only one of the two\nfields can be non-empty.",
+      "description": "FirewallRuleObject specifies the source or destination of a firewall rule.\nIt has two fields: CIDR and ResourceID. The CIDR field may either be a\nCIDR or an IP address. If an IP, it will be converted to a CIDR. Resource IDs\nof VPC networks, Subnets, and VMs are the only ones allowed. Only one of the two\nfields can be non-empty.",
       "properties": {
         "cidr": {
           "description": "CIDR block, or an IP address that is converted to a CIDR. Mutually exclusive with resource_id.",
@@ -14020,11 +14017,11 @@
           "x-go-name": "ResourceID"
         }
       },
-      "title": "FirewallRuleObject specifies the source or destination of a firewall rule.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "FoundryArchitecture": {
+      "description": "FoundryArchitecture describes the architecture of a deployed model.",
       "properties": {
         "instruct_type": {
           "description": "Instruction tuning type (e.g. \"chat\").",
@@ -14048,7 +14045,6 @@
           "x-go-name": "Tokenizer"
         }
       },
-      "title": "FoundryArchitecture describes the architecture of a deployed model.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
@@ -14212,7 +14208,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GeneratedToken": {
-      "description": "These are the fields returned from a PUT request.",
+      "description": "GeneratedToken contains the Traits Island stores for a Token inside of Kratos.\nThese are the fields returned from a PUT request.",
       "properties": {
         "access_key": {
           "example": "R7p5XctCQMuGlpVBmVdqzA",
@@ -14246,7 +14242,6 @@
         "created_at",
         "expires_at"
       ],
-      "title": "GeneratedToken contains the Traits Island stores for a Token inside of Kratos.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -14272,7 +14267,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GetS3BucketsCountResponse": {
-      "description": "This is the REST-friendly model for the `GetS3BucketCountResponse` proto.",
+      "description": "GetS3BucketsCountResponse is the response type for GET requests to the S3 buckets count endpoint.\nThis is the REST-friendly model for the `GetS3BucketCountResponse` proto.",
       "properties": {
         "bucket_count": {
           "description": "Number of S3 buckets in the project. May be absent when the count is\nzero (proto3 marshalling omits zero-valued scalars), so consumers\nshould treat a missing field as 0.",
@@ -14282,7 +14277,6 @@
           "x-go-name": "BucketCount"
         }
       },
-      "title": "GetS3BucketsCountResponse is the response type for GET requests to the S3 buckets count endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -14326,6 +14320,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "HealthCheckOptionsExternalLB": {
+      "description": "HealthCheckOptionsExternalLB defines the health check configuration.",
       "properties": {
         "failure_count": {
           "description": "Number of allowed failures before considering the backend unhealthy.",
@@ -14362,7 +14357,6 @@
         "success_count",
         "timeout"
       ],
-      "title": "HealthCheckOptionsExternalLB defines the health check configuration.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -14503,6 +14497,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "IBPartitionsPostRequestV1": {
+      "description": "IBPartitionsPostRequestV1 is the request type for POST requests to the IB Partitions endpoint.",
       "properties": {
         "ib_network_id": {
           "description": "ID of the InfiniBand network to create the partition in.",
@@ -14521,7 +14516,6 @@
         "name",
         "ib_network_id"
       ],
-      "title": "IBPartitionsPostRequestV1 is the request type for POST requests to the IB Partitions endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -14623,6 +14617,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "IdentityCredential": {
+      "description": "IdentityCredential represents a specific Kratos credential type, sanitized to expose to customers.",
       "properties": {
         "created_at": {
           "format": "date-time",
@@ -14644,7 +14639,6 @@
         "created_at",
         "updated_at"
       ],
-      "title": "IdentityCredential represents a specific Kratos credential type, sanitized to expose to customers.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/devx/go-utils/gatewayx/authn"
     },
@@ -14755,6 +14749,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceGroup": {
+      "description": "InstanceGroup defines the specification of an instance group.",
       "properties": {
         "active_instances": {
           "description": "List of IDs of running instances in the instance group.",
@@ -14860,12 +14855,11 @@
         "inactive_instances",
         "desired_count"
       ],
-      "title": "InstanceGroup defines the specification of an instance group.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceGroupPatchRequest": {
-      "description": "This is a separate type from InstanceGroupPostRequest for clearer documentation, as these fields are not required\nin the PATCH endpoint.",
+      "description": "InstanceGroupPatchRequest defines the specifications of the updates to be made to the instance group.\nThis is a separate type from InstanceGroupPostRequest for clearer documentation, as these fields are not required\nin the PATCH endpoint.",
       "properties": {
         "desired_count": {
           "$ref": "#/definitions/DesiredCount"
@@ -14883,11 +14877,11 @@
           "x-go-name": "TemplateID"
         }
       },
-      "title": "InstanceGroupPatchRequest defines the specifications of the updates to be made to the instance group.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceGroupPostRequest": {
+      "description": "InstanceGroupPostRequest defines the specifications of the instance group to be created.",
       "properties": {
         "desired_count": {
           "description": "Desired number of instances for the new instance group.",
@@ -14914,11 +14908,11 @@
         "template_id",
         "desired_count"
       ],
-      "title": "InstanceGroupPostRequest defines the specifications of the instance group to be created.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceTemplate": {
+      "description": "InstanceTemplate defines the specifications of VMs to be created during bulk VM creation.",
       "properties": {
         "created_at": {
           "description": "Creation timestamp of the instance template, in RFC3339 format.",
@@ -15080,11 +15074,11 @@
         "placement_policy",
         "maintenance_policy"
       ],
-      "title": "InstanceTemplate defines the specifications of VMs to be created during bulk VM creation.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstanceTemplatePostRequestV1": {
+      "description": "InstanceTemplatePostRequestV1 defines the specifications of VMs to be created during bulk VM creation.",
       "properties": {
         "custom_image_name": {
           "description": "Custom image to use for all VMs created from this instance template.\nOnly one of Image or CustomImage should be supplied at once.",
@@ -15209,7 +15203,6 @@
         "type",
         "ssh_public_key"
       ],
-      "title": "InstanceTemplatePostRequestV1 defines the specifications of VMs to be created during bulk VM creation.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -15436,6 +15429,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "InstancesPatchRequestV1": {
+      "description": "InstancesPatchRequestV1 is the request type for PATCH requests to the vms.instances endpoint.",
       "properties": {
         "action": {
           "description": "Action to perform on the VM: START, STOP, RESET, RESERVE, UNRESERVE, or UPDATE. RESERVE and\nUNRESERVE operations are done synchronously, and so will have succeeded with a 200 response.",
@@ -15495,7 +15489,6 @@
       "required": [
         "action"
       ],
-      "title": "InstancesPatchRequestV1 is the request type for PATCH requests to the vms.instances endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -15623,6 +15616,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesAddonSpec": {
+      "description": "KubernetesAddonSpec identifies one add-on to install on a cluster.",
       "properties": {
         "addon_type": {
           "description": "Catalog identifier of the add-on.",
@@ -15640,11 +15634,11 @@
       "required": [
         "addon_type"
       ],
-      "title": "KubernetesAddonSpec identifies one add-on to install on a cluster.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesAddonsPostRequest": {
+      "description": "KubernetesAddonsPostRequest is the request body for installing add-ons on a cluster.",
       "properties": {
         "addons": {
           "description": "Add-ons to install.",
@@ -15658,12 +15652,11 @@
       "required": [
         "addons"
       ],
-      "title": "KubernetesAddonsPostRequest is the request body for installing add-ons on a cluster.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesAuthenticationDetails": {
-      "description": "It supports both the new kubeconfig-based and legacy certificate-based authentication.",
+      "description": "KubernetesAuthenticationDetails contains credentials to authenticate to a Kubernetes cluster.\nIt supports both the new kubeconfig-based and legacy certificate-based authentication.",
       "properties": {
         "cluster_address": {
           "description": "Address of the Kubernetes cluster to authenticate to.",
@@ -15709,11 +15702,11 @@
         "user_client_certificate",
         "user_client_key"
       ],
-      "title": "KubernetesAuthenticationDetails contains credentials to authenticate to a Kubernetes cluster.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesAvailableAddon": {
+      "description": "KubernetesAvailableAddon is one add-on available to install, from the catalog.",
       "properties": {
         "addon_type": {
           "description": "Catalog identifier of the add-on.",
@@ -15751,11 +15744,11 @@
       "required": [
         "versions"
       ],
-      "title": "KubernetesAvailableAddon is one add-on available to install, from the catalog.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesAvailableAddonVersion": {
+      "description": "KubernetesAvailableAddonVersion is one installable version of an available add-on.",
       "properties": {
         "version": {
           "description": "Installable version string for the add-on.",
@@ -15767,7 +15760,6 @@
       "required": [
         "version"
       ],
-      "title": "KubernetesAvailableAddonVersion is one installable version of an available add-on.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -15786,6 +15778,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesCluster": {
+      "description": "KubernetesCluster defines the specifications of the Kubernetes cluster.",
       "properties": {
         "add_ons": {
           "description": "Add-ons associated with the cluster.",
@@ -15990,22 +15983,21 @@
         "updated_at",
         "kubelogin_args"
       ],
-      "title": "KubernetesCluster defines the specifications of the Kubernetes cluster.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesClusterAuthConfig": {
-      "description": "This configures how users authenticate to the Kubernetes API server.\nexample: {\"oidc\": {\"issuer_url\": \"https://oauth2.example.com\", \"client_id\": \"kubernetes\"}}",
+      "description": "KubernetesClusterAuthConfig defines authentication configuration for the cluster.\nThis configures how users authenticate to the Kubernetes API server.\nexample: {\"oidc\": {\"issuer_url\": \"https://oauth2.example.com\", \"client_id\": \"kubernetes\"}}",
       "properties": {
         "oidc": {
           "$ref": "#/definitions/OIDCAuthConfig"
         }
       },
-      "title": "KubernetesClusterAuthConfig defines authentication configuration for the cluster.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesClusterLocationPreflight": {
+      "description": "KubernetesClusterLocationPreflight is the preflight result for one location.",
       "properties": {
         "control_plane_type": {
           "description": "How the cluster's control plane would be hosted. \"pod\" means Crusoe hosts it and\nit consumes none of the project's VM capacity; \"vm\" means it runs on VMs in the\nproject's location.",
@@ -16037,11 +16029,11 @@
         "control_plane_type",
         "control_plane_vm_types"
       ],
-      "title": "KubernetesClusterLocationPreflight is the preflight result for one location.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesClusterPatchRequest": {
+      "description": "KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.",
       "properties": {
         "apiserver_extra_args": {
           "additionalProperties": {
@@ -16102,11 +16094,11 @@
       "required": [
         "kubelogin_args"
       ],
-      "title": "KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesClusterPostRequest": {
+      "description": "KubernetesClusterPostRequest defines the specifications of the cluster to be created.",
       "properties": {
         "add_ons": {
           "description": "List of add-ons to include in the new cluster.",
@@ -16244,7 +16236,6 @@
         "location",
         "version"
       ],
-      "title": "KubernetesClusterPostRequest defines the specifications of the cluster to be created.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -16276,6 +16267,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesClusterPreflightVersion": {
+      "description": "KubernetesClusterPreflightVersion is one version a cluster can be created at and what it runs today.",
       "properties": {
         "major_minor_version": {
           "description": "The version to pass when creating a cluster, as major.minor.",
@@ -16294,7 +16286,6 @@
         "major_minor_version",
         "resolved_version"
       ],
-      "title": "KubernetesClusterPreflightVersion is one version a cluster can be created at and what it runs today.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -16400,6 +16391,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesCreateAddonsResponse": {
+      "description": "KubernetesCreateAddonsResponse is the response to installing add-ons.",
       "properties": {
         "addons": {
           "items": {
@@ -16418,11 +16410,11 @@
       "required": [
         "addons"
       ],
-      "title": "KubernetesCreateAddonsResponse is the response to installing add-ons.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesCreatedAddon": {
+      "description": "KubernetesCreatedAddon reports the outcome of installing one add-on.",
       "properties": {
         "addon_type": {
           "description": "Catalog identifier of the add-on.",
@@ -16443,11 +16435,11 @@
           "x-go-name": "Version"
         }
       },
-      "title": "KubernetesCreatedAddon reports the outcome of installing one add-on.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesDeleteAddonResponse": {
+      "description": "KubernetesDeleteAddonResponse is the response to removing an add-on.",
       "properties": {
         "operation_id": {
           "description": "Correlation ID for the delete operation.",
@@ -16456,7 +16448,6 @@
           "x-go-name": "OperationID"
         }
       },
-      "title": "KubernetesDeleteAddonResponse is the response to removing an add-on.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -16548,6 +16539,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesListAddonsResponse": {
+      "description": "KubernetesListAddonsResponse lists the add-ons installed on a cluster.",
       "properties": {
         "addons": {
           "items": {
@@ -16560,11 +16552,11 @@
       "required": [
         "addons"
       ],
-      "title": "KubernetesListAddonsResponse lists the add-ons installed on a cluster.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesListAvailableAddonsResponse": {
+      "description": "KubernetesListAvailableAddonsResponse is one page of the available add-ons catalog.",
       "properties": {
         "addons": {
           "items": {
@@ -16583,7 +16575,6 @@
       "required": [
         "addons"
       ],
-      "title": "KubernetesListAvailableAddonsResponse is one page of the available add-ons catalog.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -16823,6 +16814,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesNodePoolAutoscalingConfig": {
+      "description": "KubernetesNodePoolAutoscalingConfig defines the Cluster Autoscaler policy for a node pool.",
       "properties": {
         "enabled": {
           "description": "Whether the Cluster Autoscaler manages this node pool's size.",
@@ -16850,11 +16842,11 @@
         "min_node_size",
         "max_node_size"
       ],
-      "title": "KubernetesNodePoolAutoscalingConfig defines the Cluster Autoscaler policy for a node pool.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesNodePoolHealth": {
+      "description": "KubernetesNodePoolHealth reports current issues on a node pool.",
       "properties": {
         "issues": {
           "description": "Current issues detected on the node pool.",
@@ -16868,11 +16860,11 @@
       "required": [
         "issues"
       ],
-      "title": "KubernetesNodePoolHealth reports current issues on a node pool.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesNodePoolHealthIssue": {
+      "description": "KubernetesNodePoolHealthIssue is one current issue on a node pool.",
       "properties": {
         "affected_count": {
           "description": "Number of nodes affected by the issue.",
@@ -16921,11 +16913,11 @@
         "code",
         "message"
       ],
-      "title": "KubernetesNodePoolHealthIssue is one current issue on a node pool.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesNodePoolNode": {
+      "description": "KubernetesNodePoolNode is a Kubernetes Node backing a node pool.",
       "properties": {
         "created_at": {
           "description": "Creation timestamp of the node, in RFC3339 format.",
@@ -16980,7 +16972,6 @@
         "version",
         "created_at"
       ],
-      "title": "KubernetesNodePoolNode is a Kubernetes Node backing a node pool.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -17370,7 +17361,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesNodeTaint": {
-      "description": "A taint allows a node to repel a set of pods unless those pods\ntolerate the taint. Taints follow standard Kubernetes semantics\n(see https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/).",
+      "description": "KubernetesNodeTaint represents a Kubernetes node taint.\nA taint allows a node to repel a set of pods unless those pods\ntolerate the taint. Taints follow standard Kubernetes semantics\n(see https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/).",
       "properties": {
         "effect": {
           "description": "Taint effect, controlling how pods are treated on\nmatching nodes:\nNoSchedule: new pods are not scheduled unless they tolerate.\nPreferNoSchedule: new pods avoid the node if possible.\nNoExecute: new pods are not scheduled AND existing non-tolerating\npods are evicted.",
@@ -17401,11 +17392,11 @@
         "key",
         "effect"
       ],
-      "title": "KubernetesNodeTaint represents a Kubernetes node taint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "KubernetesSupportAccessRequest": {
+      "description": "KubernetesSupportAccessRequest defines the information about a support access request.",
       "properties": {
         "access_role": {
           "description": "Requested support access role.",
@@ -17477,11 +17468,11 @@
       "required": [
         "access_role"
       ],
-      "title": "KubernetesSupportAccessRequest defines the information about a support access request.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LatestDiagnosticResponse": {
+      "description": "LatestDiagnosticResponse is the REST response for latest diagnostic.",
       "properties": {
         "created_at": {
           "example": "2024-01-15T10:30:00Z",
@@ -17507,7 +17498,6 @@
       "required": [
         "has_diagnostic"
       ],
-      "title": "LatestDiagnosticResponse is the REST response for latest diagnostic.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -17532,7 +17522,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LimitedUsageAPIKeyInfo": {
-      "description": "These are the fields returned from a GET request.",
+      "description": "TokenInfo contains the Traits Island stores for a Token inside of Kratos.\nThese are the fields returned from a GET request.",
       "properties": {
         "alias": {
           "example": "token1",
@@ -17582,7 +17572,6 @@
         "expires_at",
         "last_used"
       ],
-      "title": "TokenInfo contains the Traits Island stores for a Token inside of Kratos.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -17599,6 +17588,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListActivityResponse": {
+      "description": "ListActivityResponse is the response body for a deployment activity feed.",
       "properties": {
         "events": {
           "description": "Activity events, most recent first.",
@@ -17614,7 +17604,6 @@
           "x-go-name": "NextCursor"
         }
       },
-      "title": "ListActivityResponse is the response body for a deployment activity feed.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
@@ -17649,6 +17638,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListCredentialsResponse": {
+      "description": "ListCredentialsResponse is the response body for listing credentials.",
       "properties": {
         "credentials": {
           "description": "The credentials in the project.",
@@ -17659,11 +17649,11 @@
           "x-go-name": "Credentials"
         }
       },
-      "title": "ListCredentialsResponse is the response body for listing credentials.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "ListDeploymentsResponse": {
+      "description": "ListDeploymentsResponse is the response body for listing self-serve deployments.",
       "properties": {
         "deployments": {
           "description": "The self-serve deployments in the project.",
@@ -17674,7 +17664,6 @@
           "x-go-name": "Deployments"
         }
       },
-      "title": "ListDeploymentsResponse is the response body for listing self-serve deployments.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
@@ -17695,6 +17684,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListDisksResponseV1": {
+      "description": "ListDisksResponseV1 is the response type for GET requests to the disks endpoint.",
       "properties": {
         "items": {
           "items": {
@@ -17707,11 +17697,11 @@
       "required": [
         "items"
       ],
-      "title": "ListDisksResponseV1 is the response type for GET requests to the disks endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListEntitiesResponseV1": {
+      "description": "ListEntitiesResponseV1 is the response type for GET requests to the entities endpoint.",
       "properties": {
         "items": {
           "items": {
@@ -17724,7 +17714,6 @@
       "required": [
         "items"
       ],
-      "title": "ListEntitiesResponseV1 is the response type for GET requests to the entities endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -17745,6 +17734,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListFlavorsResponse": {
+      "description": "ListFlavorsResponse is the response body for listing self-serve flavors.",
       "properties": {
         "flavors": {
           "description": "The available self-serve flavors.",
@@ -17755,11 +17745,11 @@
           "x-go-name": "Flavors"
         }
       },
-      "title": "ListFlavorsResponse is the response body for listing self-serve flavors.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "ListIBNetworksResponseV1": {
+      "description": "ListIBNetworksResponseV1 is the response type for GET requests to the IB Networks endpoint.",
       "properties": {
         "items": {
           "items": {
@@ -17772,11 +17762,11 @@
       "required": [
         "items"
       ],
-      "title": "ListIBNetworksResponseV1 is the response type for GET requests to the IB Networks endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListIBPartitionsResponseV1": {
+      "description": "ListIBPartitionsResponseV1 is the response type for GET requests to the IB Partitions endpoint.",
       "properties": {
         "items": {
           "items": {
@@ -17789,11 +17779,11 @@
       "required": [
         "items"
       ],
-      "title": "ListIBPartitionsResponseV1 is the response type for GET requests to the IB Partitions endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListImagesResponseV1": {
+      "description": "ListImagesResponseV1 is the resource response type for GET requests to the Images endpoint.",
       "properties": {
         "items": {
           "items": {
@@ -17806,7 +17796,6 @@
       "required": [
         "items"
       ],
-      "title": "ListImagesResponseV1 is the resource response type for GET requests to the Images endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -17845,6 +17834,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListInstancesResponseV1": {
+      "description": "ListInstancesResponseV1 is the response type for GET requests to /compute/vms/instances.",
       "properties": {
         "items": {
           "items": {
@@ -17869,7 +17859,6 @@
       "required": [
         "items"
       ],
-      "title": "ListInstancesResponseV1 is the response type for GET requests to /compute/vms/instances.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -18070,6 +18059,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListModelsResponse": {
+      "description": "ListModelsResponse is the response body for listing deployed models.",
       "properties": {
         "deployments": {
           "description": "The models deployed and available to the project.",
@@ -18080,7 +18070,6 @@
           "x-go-name": "Deployments"
         }
       },
-      "title": "ListModelsResponse is the response body for listing deployed models.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
@@ -18101,6 +18090,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/fetch"
     },
     "ListOrgQuotasResponse": {
+      "description": "ListOrgQuotasResponse is the response for listing a org's quotas.",
       "properties": {
         "quotas": {
           "description": "Quotas of the organization.",
@@ -18111,11 +18101,11 @@
           "x-go-name": "Quotas"
         }
       },
-      "title": "ListOrgQuotasResponse is the response for listing a org's quotas.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListProjectQuotasResponse": {
+      "description": "ListProjectQuotasResponse is the response for listing a project's quotas.",
       "properties": {
         "quotas": {
           "description": "Quotas of the project.",
@@ -18126,11 +18116,11 @@
           "x-go-name": "Quotas"
         }
       },
-      "title": "ListProjectQuotasResponse is the response for listing a project's quotas.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListProjectsResponseV1": {
+      "description": "ListProjectsResponseV1 is the response type for GET requests to the projects endpoint.",
       "properties": {
         "items": {
           "items": {
@@ -18143,7 +18133,6 @@
       "required": [
         "items"
       ],
-      "title": "ListProjectsResponseV1 is the response type for GET requests to the projects endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -18194,6 +18183,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListS3BucketsResponse": {
+      "description": "ListS3BucketsResponse is the response type for GET requests to the S3 buckets endpoint.",
       "properties": {
         "items": {
           "description": "List of buckets.",
@@ -18217,11 +18207,11 @@
       "required": [
         "items"
       ],
-      "title": "ListS3BucketsResponse is the response type for GET requests to the S3 buckets endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListS3KeysResponse": {
+      "description": "ListS3KeysResponse is the response type for GET requests to the S3 access keys endpoint.",
       "properties": {
         "items": {
           "items": {
@@ -18234,11 +18224,11 @@
       "required": [
         "items"
       ],
-      "title": "ListS3KeysResponse is the response type for GET requests to the S3 access keys endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListS3SupportedLocationsResponse": {
+      "description": "ListS3SupportedLocationsResponse is the response type for GET requests to the S3 supported-locations endpoint.",
       "properties": {
         "items": {
           "description": "Locations where object storage (S3) is available.",
@@ -18256,11 +18246,11 @@
       "required": [
         "items"
       ],
-      "title": "ListS3SupportedLocationsResponse is the response type for GET requests to the S3 supported-locations endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSCIMIntegrationTokensResponse": {
+      "description": "ListSCIMIntegrationTokensResponse wraps a list of SCIM integration token responses.",
       "properties": {
         "items": {
           "items": {
@@ -18273,11 +18263,11 @@
       "required": [
         "items"
       ],
-      "title": "ListSCIMIntegrationTokensResponse wraps a list of SCIM integration token responses.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSCIMIntegrationsResponse": {
+      "description": "ListSCIMIntegrationsResponse wraps a list of SCIM integration responses.",
       "properties": {
         "integrations": {
           "items": {
@@ -18290,7 +18280,6 @@
       "required": [
         "integrations"
       ],
-      "title": "ListSCIMIntegrationsResponse wraps a list of SCIM integration responses.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -18423,6 +18412,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListVPCFirewallRulesResponseV1": {
+      "description": "ListVPCFirewallRulesResponseV1 is the response type for GET requests to the VPC Firewall Rules endpoint.",
       "properties": {
         "items": {
           "items": {
@@ -18435,11 +18425,11 @@
       "required": [
         "items"
       ],
-      "title": "ListVPCFirewallRulesResponseV1 is the response type for GET requests to the VPC Firewall Rules endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListVPCNetworksResponseV1": {
+      "description": "ListVPCNetworksResponseV1 is the response type for GET requests to the VPC Networks endpoint.",
       "properties": {
         "items": {
           "items": {
@@ -18452,11 +18442,11 @@
       "required": [
         "items"
       ],
-      "title": "ListVPCNetworksResponseV1 is the response type for GET requests to the VPC Networks endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListVPCSubnetsResponseV1": {
+      "description": "ListVPCSubnetsResponseV1 is the response type for GET requests to the VPC Subnets endpoint.",
       "properties": {
         "items": {
           "items": {
@@ -18469,11 +18459,11 @@
       "required": [
         "items"
       ],
-      "title": "ListVPCSubnetsResponseV1 is the response type for GET requests to the VPC Subnets endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListenPortAndBackend": {
+      "description": "ListenPortAndBackend defines a mapping of listen ports to backend configurations.",
       "properties": {
         "backends": {
           "description": "List of backend configurations.",
@@ -18495,7 +18485,6 @@
         "listen_port",
         "backends"
       ],
-      "title": "ListenPortAndBackend defines a mapping of listen ports to backend configurations.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -18772,6 +18761,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LoadLoraRequest": {
+      "description": "LoadLoraRequest is the body for deploying a LoRA adapter.",
       "properties": {
         "model_id": {
           "description": "ID of the fine-tuned model (LoRA adapter) to deploy, as registered in the model registry.",
@@ -18782,7 +18772,6 @@
       "required": [
         "model_id"
       ],
-      "title": "LoadLoraRequest is the body for deploying a LoRA adapter.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
@@ -19083,6 +19072,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "NvlinkDomainSummaryResponse": {
+      "description": "NvlinkDomainSummaryResponse represents summary information about an NVLink domain.",
       "properties": {
         "available_nodes": {
           "description": "Number of nodes currently available in the NVLink domain",
@@ -19117,11 +19107,11 @@
           "x-go-name": "TotalNodes"
         }
       },
-      "title": "NvlinkDomainSummaryResponse represents summary information about an NVLink domain.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "NvlinkDomainsSummaryListResponse": {
+      "description": "NvlinkDomainsSummaryListResponse represents a list of NVLink domain summaries.",
       "properties": {
         "nvlink_domains": {
           "description": "List of NVLink domain summaries",
@@ -19132,12 +19122,11 @@
           "x-go-name": "NvlinkDomains"
         }
       },
-      "title": "NvlinkDomainsSummaryListResponse represents a list of NVLink domain summaries.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "OIDCAuthConfig": {
-      "description": "This allows the Kubernetes API server to authenticate users via an external OIDC provider.",
+      "description": "OIDCAuthConfig defines OpenID Connect authentication configuration.\nThis allows the Kubernetes API server to authenticate users via an external OIDC provider.",
       "properties": {
         "ca_cert": {
           "description": "PEM-encoded certificate authority certificate used to validate the OIDC server's certificate.",
@@ -19175,12 +19164,11 @@
           "x-go-name": "UsernamePrefix"
         }
       },
-      "title": "OIDCAuthConfig defines OpenID Connect authentication configuration.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ObservabilityMetrics": {
-      "description": "see also https://prometheus.io/docs/prometheus/latest/querying/api/",
+      "description": "This is the standard format for prometheus query responses;\nsee also https://prometheus.io/docs/prometheus/latest/querying/api/",
       "properties": {
         "data": {
           "example": "{}",
@@ -19224,12 +19212,11 @@
         "status",
         "data"
       ],
-      "title": "This is the standard format for prometheus query responses;",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Operation": {
-      "description": "Individual resources that use Operations should populate the `metadata` field\nwith resource-specific information.",
+      "description": "Operation contains the common fields for all Operation API objects.\nIndividual resources that use Operations should populate the `metadata` field\nwith resource-specific information.",
       "properties": {
         "completed_at": {
           "example": "2021-12-03T19:59:34Z",
@@ -19272,7 +19259,6 @@
         "started_at",
         "completed_at"
       ],
-      "title": "Operation contains the common fields for all Operation API objects.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/fetch"
     },
@@ -19339,6 +19325,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "OrganizationMFA": {
+      "description": "OrganizationMFA contains details about a single required MFA method.",
       "properties": {
         "created_at": {
           "example": "2021-12-03T19:58:34Z",
@@ -19358,7 +19345,6 @@
         "method",
         "created_at"
       ],
-      "title": "OrganizationMFA contains details about a single required MFA method.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -19380,6 +19366,7 @@
       "type": "object"
     },
     "PartialHostChannelAdapter": {
+      "description": "PartialHostChannelAdapter is used when POSTing and PATCHing VMs to assign IB Partitions.",
       "properties": {
         "ib_partition_id": {
           "description": "Deprecated: Use transport_partition_id instead.",
@@ -19392,7 +19379,6 @@
           "x-go-name": "TransportPartitionID"
         }
       },
-      "title": "PartialHostChannelAdapter is used when POSTing and PATCHing VMs to assign IB Partitions.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -19412,6 +19398,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Project": {
+      "description": "Project contains identifying information for a project.",
       "properties": {
         "id": {
           "description": "ID of the project.",
@@ -19448,7 +19435,6 @@
         "relation",
         "resources"
       ],
-      "title": "Project contains identifying information for a project.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -19510,6 +19496,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectResourceDetails": {
+      "description": "ProjectResourceDetails contains a count of resources of a single type within a project.",
       "properties": {
         "count": {
           "description": "Number of resources of this type in the project.",
@@ -19522,11 +19509,11 @@
       "required": [
         "count"
       ],
-      "title": "ProjectResourceDetails contains a count of resources of a single type within a project.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectResources": {
+      "description": "ProjectResources contains information about resources within a project.",
       "properties": {
         "disks": {
           "$ref": "#/definitions/ProjectResourceDetails"
@@ -19551,11 +19538,11 @@
         "images",
         "vpc_networks"
       ],
-      "title": "ProjectResources contains information about resources within a project.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectsPostRequest": {
+      "description": "ProjectsPostRequest is the request type for POST requests to the projects endpoint.",
       "properties": {
         "name": {
           "description": "Name for the new project.",
@@ -19574,11 +19561,11 @@
         "organization_id",
         "name"
       ],
-      "title": "ProjectsPostRequest is the request type for POST requests to the projects endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectsPutPostResponseV1": {
+      "description": "ProjectsPutPostResponseV1 is the response type for PUT and POST requests to the projects endpoint.",
       "properties": {
         "project": {
           "$ref": "#/definitions/Project"
@@ -19587,11 +19574,11 @@
       "required": [
         "project"
       ],
-      "title": "ProjectsPutPostResponseV1 is the response type for PUT and POST requests to the projects endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectsPutRequest": {
+      "description": "ProjectsPutRequest is the request type for PUT requests to the projects endpoint.",
       "properties": {
         "name": {
           "description": "New name for the project.",
@@ -19603,7 +19590,6 @@
       "required": [
         "name"
       ],
-      "title": "ProjectsPutRequest is the request type for PUT requests to the projects endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -19657,6 +19643,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "RemediationConfig": {
+      "description": "RemediationConfig represents a single remediation configuration in the API response.",
       "properties": {
         "default_action": {
           "$ref": "#/definitions/AutoRemediation"
@@ -19674,11 +19661,11 @@
           "$ref": "#/definitions/AutoRemediation"
         }
       },
-      "title": "RemediationConfig represents a single remediation configuration in the API response.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "RemediationOverrideRequest": {
+      "description": "RemediationOverrideRequest represents a remediation override in the API request.",
       "properties": {
         "action": {
           "$ref": "#/definitions/AutoRemediation"
@@ -19694,11 +19681,11 @@
         "issue_name",
         "action"
       ],
-      "title": "RemediationOverrideRequest represents a remediation override in the API request.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "RenameModelRequest": {
+      "description": "RenameModelRequest is the body for renaming a deployed model's alias.",
       "properties": {
         "model_alias": {
           "description": "Current alias of the model.",
@@ -19715,11 +19702,11 @@
         "model_alias",
         "new_alias"
       ],
-      "title": "RenameModelRequest is the body for renaming a deployed model's alias.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "RenameModelResponse": {
+      "description": "RenameModelResponse is the response body for a model rename.",
       "properties": {
         "endpoint_id": {
           "description": "The endpoint ID that was renamed.",
@@ -19732,7 +19719,6 @@
           "x-go-name": "ModelAlias"
         }
       },
-      "title": "RenameModelResponse is the response body for a model rename.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
@@ -19848,6 +19834,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Reservation": {
+      "description": "Reservation contains information about a customer reservation.",
       "properties": {
         "contract_end_date": {
           "example": "2025-08-14T09:00:35Z",
@@ -19949,7 +19936,6 @@
         "vm_ids",
         "price"
       ],
-      "title": "Reservation contains information about a customer reservation.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -19977,6 +19963,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ReservationsGetResponse": {
+      "description": "ReservationsGetResponse is the response type for GET requests to the reservations endpoint.",
       "properties": {
         "items": {
           "items": {
@@ -19989,7 +19976,6 @@
       "required": [
         "items"
       ],
-      "title": "ReservationsGetResponse is the response type for GET requests to the reservations endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -20114,7 +20100,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3Bucket": {
-      "description": "This is the REST-friendly model for the `BucketInfo` proto.",
+      "description": "S3Bucket represents information about a single S3 bucket.\nThis is the REST-friendly model for the `BucketInfo` proto.",
       "properties": {
         "archived_at": {
           "description": "Archive timestamp of the bucket, in RFC3339 format.",
@@ -20212,11 +20198,11 @@
         "created_at",
         "updated_at"
       ],
-      "title": "S3Bucket represents information about a single S3 bucket.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3Key": {
+      "description": "S3Key represents an S3 Access key for a user.",
       "properties": {
         "access_key_id": {
           "description": "Access key ID used to authenticate S3 requests.",
@@ -20286,29 +20272,26 @@
         "status",
         "created_at"
       ],
-      "title": "S3Key represents an S3 Access key for a user.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3RetentionMode": {
-      "description": "enum: governance,compliance",
-      "title": "Object lock retention mode for an S3 bucket: governance or compliance.",
+      "description": "Object lock retention mode for an S3 bucket: governance or compliance.\nenum: governance,compliance",
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3RetentionPeriodUnit": {
-      "description": "enum: days,years",
-      "title": "Unit of measurement for an object lock retention period: days or years.",
+      "description": "Unit of measurement for an object lock retention period: days or years.\nenum: days,years",
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "S3VersioningState": {
-      "description": "enum: disabled,enabled,suspended",
-      "title": "Versioning state of an S3 bucket: disabled, enabled, or suspended.",
+      "description": "Versioning state of an S3 bucket: disabled, enabled, or suspended.\nenum: disabled,enabled,suspended",
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SCIMIntegrationResponse": {
+      "description": "SCIMIntegrationResponse is the JSON representation of a SCIM integration.",
       "properties": {
         "created_at": {
           "example": "2024-01-01T00:00:00Z",
@@ -20381,11 +20364,11 @@
         "updated_at",
         "created_by"
       ],
-      "title": "SCIMIntegrationResponse is the JSON representation of a SCIM integration.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SCIMIntegrationTokenInfo": {
+      "description": "SCIMIntegrationTokenInfo extends LimitedUsageAPIKeyInfo with a user ID.",
       "properties": {
         "alias": {
           "example": "token1",
@@ -20441,7 +20424,6 @@
         "last_used",
         "user_id"
       ],
-      "title": "SCIMIntegrationTokenInfo extends LimitedUsageAPIKeyInfo with a user ID.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -20533,6 +20515,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SelfServeActivityEvent": {
+      "description": "SelfServeActivityEvent is a single activity/audit event for a deployment.",
       "properties": {
         "event_type": {
           "description": "Event type identifier.",
@@ -20560,11 +20543,11 @@
           "x-go-name": "UpdatedBy"
         }
       },
-      "title": "SelfServeActivityEvent is a single activity/audit event for a deployment.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "SelfServeDeploymentDetail": {
+      "description": "SelfServeDeploymentDetail is the detailed view of a self-serve deployment.",
       "properties": {
         "available_replicas": {
           "description": "Currently available replicas.",
@@ -20651,11 +20634,11 @@
           "x-go-name": "TargetReplicas"
         }
       },
-      "title": "SelfServeDeploymentDetail is the detailed view of a self-serve deployment.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "SelfServeDeploymentSummary": {
+      "description": "SelfServeDeploymentSummary is a summary view of a self-serve deployment.",
       "properties": {
         "available_replicas": {
           "description": "Currently available replicas.",
@@ -20727,11 +20710,11 @@
           "x-go-name": "TargetReplicas"
         }
       },
-      "title": "SelfServeDeploymentSummary is a summary view of a self-serve deployment.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "SelfServeFlavor": {
+      "description": "SelfServeFlavor describes a hardware/model flavor available for self-serve deployment.",
       "properties": {
         "flavor_type": {
           "description": "Flavor type identifier.",
@@ -20780,7 +20763,6 @@
           "x-go-name": "Quantization"
         }
       },
-      "title": "SelfServeFlavor describes a hardware/model flavor available for self-serve deployment.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
@@ -20850,10 +20832,11 @@
           "type": "object"
         }
       ],
-      "title": "SlurmCluster defines the specifications of the slurm cluster.",
+      "description": "SlurmCluster defines the specifications of the slurm cluster.",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmClusterConfig": {
+      "description": "Configurable fields of the Slurm Cluster.",
       "properties": {
         "home_volume_size": {
           "default": "\"10Ti\"",
@@ -20909,7 +20892,6 @@
         "location",
         "root_ssh_pub_keys"
       ],
-      "title": "Configurable fields of the Slurm Cluster.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -20922,6 +20904,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmClusterIssue": {
+      "description": "SlurmClusterIssue describes a problem preventing the cluster from reaching RUNNING state.",
       "properties": {
         "code": {
           "description": "Machine-readable issue code.",
@@ -20934,7 +20917,6 @@
           "x-go-name": "Message"
         }
       },
-      "title": "SlurmClusterIssue describes a problem preventing the cluster from reaching RUNNING state.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -20952,10 +20934,11 @@
           "type": "object"
         }
       ],
-      "title": "SlurmClusterPostRequest defines the specifications of the cluster to be created.",
+      "description": "SlurmClusterPostRequest defines the specifications of the cluster to be created.",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmClusterStatus": {
+      "description": "Non-configurable, changing fields relating the current state of the cluster.",
       "properties": {
         "issues": {
           "description": "Issues describing why the cluster is not in RUNNING.",
@@ -20998,7 +20981,6 @@
       "required": [
         "state"
       ],
-      "title": "Non-configurable, changing fields relating the current state of the cluster.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -21085,6 +21067,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SlurmNodesetIssue": {
+      "description": "SlurmNodesetIssue describes a problem preventing the nodeset from reaching RUNNING state.",
       "properties": {
         "code": {
           "description": "Machine-readable issue code.",
@@ -21097,7 +21080,6 @@
           "x-go-name": "Message"
         }
       },
-      "title": "SlurmNodesetIssue describes a problem preventing the nodeset from reaching RUNNING state.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -21166,6 +21148,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SyncOperationResponse": {
+      "description": "SyncOperationResponse is the response type for endpoints which return completed synchronous operations.",
       "properties": {
         "operation": {
           "$ref": "#/definitions/Operation"
@@ -21174,12 +21157,11 @@
       "required": [
         "operation"
       ],
-      "title": "SyncOperationResponse is the response type for endpoints which return completed synchronous operations.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/fetch"
     },
     "TokenInfo": {
-      "description": "These are the fields returned from a GET request.",
+      "description": "TokenInfo contains the Traits Island stores for a Token inside of Kratos.\nThese are the fields returned from a GET request.",
       "properties": {
         "access_key": {
           "example": "Hm11C1coQZm2+Aihn9ofYg",
@@ -21214,7 +21196,6 @@
         "expires_at",
         "last_used"
       ],
-      "title": "TokenInfo contains the Traits Island stores for a Token inside of Kratos.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -21231,6 +21212,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Type": {
+      "description": "Type describes an instance type of a Crusoe cloud offering, used in the GET vms.types endpoint response.",
       "properties": {
         "cpu_cores": {
           "description": "Number of CPU cores provided by the VM type.",
@@ -21309,11 +21291,11 @@
         "num_gpu",
         "gpu_type"
       ],
-      "title": "Type describes an instance type of a Crusoe cloud offering, used in the GET vms.types endpoint response.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UpdateAutoClustersConfigRequest": {
+      "description": "UpdateAutoClustersConfigRequest represents the request body for updating cluster config.",
       "properties": {
         "fallback_to_project_reservations": {
           "description": "Whether to use project's unused reservations as fallback. If not set, existing value is preserved.",
@@ -21352,11 +21334,11 @@
       "required": [
         "fallback_to_project_reservations"
       ],
-      "title": "UpdateAutoClustersConfigRequest represents the request body for updating cluster config.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UpdateCredentialRequest": {
+      "description": "UpdateCredentialRequest is the body for updating a credential.",
       "properties": {
         "description": {
           "description": "Updated description.",
@@ -21364,11 +21346,11 @@
           "x-go-name": "Description"
         }
       },
-      "title": "UpdateCredentialRequest is the body for updating a credential.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "UpdateDeploymentRequest": {
+      "description": "UpdateDeploymentRequest is the body for updating a self-serve deployment.",
       "properties": {
         "deployment_name": {
           "description": "Updated deployment name.",
@@ -21392,11 +21374,11 @@
           "x-go-name": "RollingUpdate"
         }
       },
-      "title": "UpdateDeploymentRequest is the body for updating a self-serve deployment.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "UpdateModelRequest": {
+      "description": "UpdateModelRequest is the body for updating a deployed model's HuggingFace source.",
       "properties": {
         "model_alias": {
           "description": "Customer-facing alias of the model to update.",
@@ -21423,11 +21405,11 @@
         "model_alias",
         "new_hugging_face_model"
       ],
-      "title": "UpdateModelRequest is the body for updating a deployed model's HuggingFace source.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "UpdateModelResponse": {
+      "description": "UpdateModelResponse is the response body for a model source update.",
       "properties": {
         "operation_id": {
           "description": "ID of the operation that tracks this request.",
@@ -21443,11 +21425,11 @@
           "x-go-name": "Workflows"
         }
       },
-      "title": "UpdateModelResponse is the response body for a model source update.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "UpdateResponseEntry": {
+      "description": "UpdateResponseEntry describes the workflow triggered for a single cluster by an update.",
       "properties": {
         "cluster_name": {
           "description": "Name of the cluster the workflow runs on.",
@@ -21480,11 +21462,11 @@
           "x-go-name": "WorkflowID"
         }
       },
-      "title": "UpdateResponseEntry describes the workflow triggered for a single cluster by an update.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "UpdateS3BucketTagsRequest": {
+      "description": "UpdateS3BucketTagsRequest is the request body for updating S3 bucket tags.",
       "properties": {
         "tags": {
           "additionalProperties": {
@@ -21498,11 +21480,11 @@
       "required": [
         "tags"
       ],
-      "title": "UpdateS3BucketTagsRequest is the request body for updating S3 bucket tags.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UpdateSCIMIntegrationRequestBody": {
+      "description": "UpdateSCIMIntegrationRequestBody is the JSON request body for updating a SCIM integration.",
       "properties": {
         "status": {
           "description": "The new status for the integration.",
@@ -21511,7 +21493,6 @@
           "x-go-name": "Status"
         }
       },
-      "title": "UpdateSCIMIntegrationRequestBody is the JSON request body for updating a SCIM integration.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -21647,7 +21628,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UserResponse": {
-      "description": "The Identity of a user is returned.",
+      "description": "UserResponse is the return type from the GET and PUT handlers to User.\nThe Identity of a user is returned.",
       "properties": {
         "credentials": {
           "description": "Credentials will be deprecated",
@@ -21671,12 +21652,11 @@
       "required": [
         "identity"
       ],
-      "title": "UserResponse is the return type from the GET and PUT handlers to User.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UserStateEnum": {
-      "title": "UserStateEnum describes high-level state for an authenticated user.",
+      "description": "UserStateEnum describes high-level state for an authenticated user.",
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/devx/go-utils/gatewayx/authn"
     },
@@ -21817,6 +21797,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCFirewallRulesPatchRequest": {
+      "description": "VPCFirewallRulesPatchRequest is the request type for PATCH requests to the VPC Firewall Rules endpoint.",
       "properties": {
         "destination_ports": {
           "description": "Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080).\nOmitted or null leaves the destination ports unchanged; an empty list clears them, which a rule\nswitching to icmp requires.",
@@ -21870,11 +21851,11 @@
           "x-go-name": "Sources"
         }
       },
-      "title": "VPCFirewallRulesPatchRequest is the request type for PATCH requests to the VPC Firewall Rules endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCFirewallRulesPostRequestV1": {
+      "description": "VPCFirewallRulesPostRequestV1 is the request type for POST requests to the VPC Firewall Rules endpoint.",
       "properties": {
         "action": {
           "description": "Action applied to traffic that matches the rule: allow or deny.",
@@ -21961,7 +21942,6 @@
         "protocols",
         "vpc_network_id"
       ],
-      "title": "VPCFirewallRulesPostRequestV1 is the request type for POST requests to the VPC Firewall Rules endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -22012,6 +21992,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCNetworkPatchRequest": {
+      "description": "VPCNetworkPatchRequest is the request type for PATCH requests to the VPC Networks endpoint.",
       "properties": {
         "name": {
           "description": "New name for the VPC network.",
@@ -22023,11 +22004,11 @@
       "required": [
         "name"
       ],
-      "title": "VPCNetworkPatchRequest is the request type for PATCH requests to the VPC Networks endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCNetworkPostRequest": {
+      "description": "VPCNetworkPostRequest is the request type for POST requests to the VPC Networks endpoint.",
       "properties": {
         "cidr": {
           "description": "Address range for the VPC network, in CIDR notation (for example, 172.27.0.0/16).",
@@ -22046,11 +22027,11 @@
         "name",
         "cidr"
       ],
-      "title": "VPCNetworkPostRequest is the request type for POST requests to the VPC Networks endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCNetworkPostResponse": {
+      "description": "VPCNetworkPostResponse is the response type for POST requests to the VPC Networks endpoint.",
       "properties": {
         "network": {
           "$ref": "#/definitions/VPCNetwork"
@@ -22059,7 +22040,6 @@
       "required": [
         "network"
       ],
-      "title": "VPCNetworkPostResponse is the response type for POST requests to the VPC Networks endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -22115,6 +22095,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCSubnetPatchRequest": {
+      "description": "VPCSubnetPatchRequest is the request type for PATCH requests to the VPC Subnets endpoint.",
       "properties": {
         "name": {
           "description": "New name for the VPC subnet.",
@@ -22137,11 +22118,11 @@
       "required": [
         "name"
       ],
-      "title": "VPCSubnetPatchRequest is the request type for PATCH requests to the VPC Subnets endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCSubnetPostRequest": {
+      "description": "VPCSubnetPostRequest is the request type for POST requests to the VPC Subnet endpoint.",
       "properties": {
         "cidr": {
           "description": "Address range for the VPC subnet, in CIDR notation (for example, 172.27.0.0/16).",
@@ -22181,11 +22162,11 @@
         "location",
         "nat_gateway_enabled"
       ],
-      "title": "VPCSubnetPostRequest is the request type for POST requests to the VPC Subnet endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "VPCSubnetPostResponse": {
+      "description": "VPCSubnetPostResponse is the response type for POST requests to the VPC Subnets endpoint.",
       "properties": {
         "subnet": {
           "$ref": "#/definitions/VPCSubnet"
@@ -22194,7 +22175,6 @@
       "required": [
         "subnet"
       ],
-      "title": "VPCSubnetPostResponse is the response type for POST requests to the VPC Subnets endpoint.",
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },

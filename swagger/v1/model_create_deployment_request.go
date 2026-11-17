@@ -8,6 +8,7 @@
  */
 package swagger
 
+// CreateDeploymentRequest is the body for creating a self-serve deployment.
 type CreateDeploymentRequest struct {
 	// User-chosen deployment name.
 	DeploymentName string `json:"deployment_name"`

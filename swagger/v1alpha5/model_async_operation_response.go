@@ -8,6 +8,7 @@
  */
 package swagger
 
+// AsyncOperationResponse is the response type for endpoints which return async operations.
 type AsyncOperationResponse struct {
 	Operation *Operation `json:"operation"`
 }

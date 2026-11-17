@@ -8,6 +8,7 @@
  */
 package swagger
 
+// DiskTemplate defines a disk to create for each VM during bulk VM creation.
 type DiskTemplate struct {
 	// Size of the disk, including a unit suffix.
 	Size string `json:"size"`

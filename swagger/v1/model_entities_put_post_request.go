@@ -8,6 +8,7 @@
  */
 package swagger
 
+// EntitiesPutPostRequest is the request type for PUT and POST requests to the entities endpoint.
 type EntitiesPutPostRequest struct {
 	BillingAddr      *BillingAddress `json:"billing_addr,omitempty"`
 	CompanyName      string          `json:"company_name,omitempty"`

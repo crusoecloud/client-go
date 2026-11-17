@@ -8,6 +8,7 @@
  */
 package swagger
 
+// VPCSubnetPatchRequest is the request type for PATCH requests to the VPC Subnets endpoint.
 type VpcSubnetPatchRequest struct {
 	// New name for the VPC subnet.
 	Name string `json:"name"`

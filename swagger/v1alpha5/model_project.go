@@ -8,6 +8,7 @@
  */
 package swagger
 
+// Project contains identifying information for a project.
 type Project struct {
 	// ID of the project.
 	Id string `json:"id"`

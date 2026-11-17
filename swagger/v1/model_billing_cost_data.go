@@ -8,6 +8,7 @@
  */
 package swagger
 
+// UsageByProjectGetResponse is the response type for GET requests to the usage.usageByProject endpoint.
 type BillingCostData struct {
 	Data        []BillingCostDatum `json:"data"`
 	LastUpdated string             `json:"last_updated,omitempty"`

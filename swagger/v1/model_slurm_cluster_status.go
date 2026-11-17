@@ -8,6 +8,7 @@
  */
 package swagger
 
+// Non-configurable, changing fields relating the current state of the cluster.
 type SlurmClusterStatus struct {
 	// Issues describing why the cluster is not in RUNNING.
 	Issues []SlurmClusterIssue `json:"issues,omitempty"`

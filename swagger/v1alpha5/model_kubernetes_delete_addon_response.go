@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesDeleteAddonResponse is the response to removing an add-on.
 type KubernetesDeleteAddonResponse struct {
 	// Correlation ID for the delete operation.
 	OperationId string `json:"operation_id,omitempty"`

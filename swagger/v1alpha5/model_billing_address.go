@@ -8,6 +8,7 @@
  */
 package swagger
 
+// BillingAddress contains sensitive information related to the billing address for an entity.
 type BillingAddress struct {
 	AddressLine1  string `json:"address_line1"`
 	AddressLine2  string `json:"address_line2,omitempty"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// SlurmClusterPostRequest defines the specifications of the cluster to be created.
 type SlurmClusterPostRequest struct {
 	// Size of the shared home volume as a Kubernetes quantity string (e.g. \"10Ti\"). Set empty to omit.
 	HomeVolumeSize string `json:"home_volume_size,omitempty"`

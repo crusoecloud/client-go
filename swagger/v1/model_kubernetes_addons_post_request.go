@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesAddonsPostRequest is the request body for installing add-ons on a cluster.
 type KubernetesAddonsPostRequest struct {
 	// Add-ons to install.
 	Addons []KubernetesAddonSpec `json:"addons"`

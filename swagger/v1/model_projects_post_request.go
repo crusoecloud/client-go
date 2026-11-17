@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ProjectsPostRequest is the request type for POST requests to the projects endpoint.
 type ProjectsPostRequest struct {
 	// Name for the new project.
 	Name string `json:"name"`

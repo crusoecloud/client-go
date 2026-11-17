@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListFlavorsResponse is the response body for listing self-serve flavors.
 type ListFlavorsResponse struct {
 	// The available self-serve flavors.
 	Flavors []SelfServeFlavor `json:"flavors,omitempty"`

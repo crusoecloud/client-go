@@ -8,6 +8,7 @@
  */
 package swagger
 
+// S3Key represents an S3 Access key for a user.
 type S3Key struct {
 	// Access key ID used to authenticate S3 requests.
 	AccessKeyId string `json:"access_key_id"`

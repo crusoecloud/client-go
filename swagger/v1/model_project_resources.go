@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ProjectResources contains information about resources within a project.
 type ProjectResources struct {
 	Disks       *ProjectResourceDetails `json:"disks"`
 	Images      *ProjectResourceDetails `json:"images"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// CustomImagePostRequest is the request type for POST requests to the /custom-images endpoint.
 type CustomImagePostRequest struct {
 	// ID of the disk to create the custom image from.
 	DiskID string `json:"DiskID"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ProjectResourceDetails contains a count of resources of a single type within a project.
 type ProjectResourceDetails struct {
 	// Number of resources of this type in the project.
 	Count int64 `json:"count"`

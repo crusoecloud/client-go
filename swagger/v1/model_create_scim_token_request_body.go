@@ -8,6 +8,7 @@
  */
 package swagger
 
+// CreateSCIMTokenRequestBody is the JSON request body for creating a SCIM integration token.
 type CreateScimTokenRequestBody struct {
 	Alias     string `json:"alias"`
 	ExpiresAt string `json:"expires_at"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListDeploymentsResponse is the response body for listing self-serve deployments.
 type ListDeploymentsResponse struct {
 	// The self-serve deployments in the project.
 	Deployments []SelfServeDeploymentSummary `json:"deployments,omitempty"`

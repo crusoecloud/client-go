@@ -8,7 +8,7 @@
  */
 package swagger
 
-// It supports both the new kubeconfig-based and legacy certificate-based authentication.
+// KubernetesAuthenticationDetails contains credentials to authenticate to a Kubernetes cluster. It supports both the new kubeconfig-based and legacy certificate-based authentication.
 type KubernetesAuthenticationDetails struct {
 	// Address of the Kubernetes cluster to authenticate to.
 	ClusterAddress string `json:"cluster_address"`

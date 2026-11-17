@@ -8,6 +8,7 @@
  */
 package swagger
 
+// VPCNetworkPostRequest is the request type for POST requests to the VPC Networks endpoint.
 type VpcNetworkPostRequest struct {
 	// Address range for the VPC network, in CIDR notation (for example, 172.27.0.0/16).
 	Cidr string `json:"cidr"`

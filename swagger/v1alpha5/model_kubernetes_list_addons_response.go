@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesListAddonsResponse lists the add-ons installed on a cluster.
 type KubernetesListAddonsResponse struct {
 	Addons []KubernetesInstalledAddon `json:"addons"`
 }

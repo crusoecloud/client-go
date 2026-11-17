@@ -8,6 +8,7 @@
  */
 package swagger
 
+// VPCFirewallRulesPostRequestV1Alpha5 is the request type for POST requests to the VPC Firewall Rules endpoint.
 type VpcFirewallRulesPostRequestV1Alpha5 struct {
 	// Action applied to traffic that matches the rule: allow or deny.
 	Action string `json:"action"`

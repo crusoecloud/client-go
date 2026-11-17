@@ -8,6 +8,7 @@
  */
 package swagger
 
+// CreateCredentialRequest is the body for creating a credential.
 type CreateCredentialRequest struct {
 	Credentials *CredentialSecrets `json:"credentials"`
 	// Optional human-readable description.

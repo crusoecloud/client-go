@@ -8,6 +8,7 @@
  */
 package swagger
 
+// RemediationConfig represents a single remediation configuration in the API response.
 type RemediationConfig struct {
 	DefaultAction   string `json:"default_action,omitempty"`
 	EffectiveAction string `json:"effective_action,omitempty"`

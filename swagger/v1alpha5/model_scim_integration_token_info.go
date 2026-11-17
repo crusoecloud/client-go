@@ -8,6 +8,7 @@
  */
 package swagger
 
+// SCIMIntegrationTokenInfo extends LimitedUsageAPIKeyInfo with a user ID.
 type ScimIntegrationTokenInfo struct {
 	Alias     string `json:"alias"`
 	CreatedAt string `json:"created_at"`

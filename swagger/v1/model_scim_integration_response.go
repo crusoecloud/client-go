@@ -8,6 +8,7 @@
  */
 package swagger
 
+// SCIMIntegrationResponse is the JSON representation of a SCIM integration.
 type ScimIntegrationResponse struct {
 	CreatedAt        string `json:"created_at"`
 	CreatedBy        string `json:"created_by"`

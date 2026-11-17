@@ -8,6 +8,7 @@
  */
 package swagger
 
+// UpdateAutoClustersConfigRequest represents the request body for updating cluster config.
 type UpdateAutoClustersConfigRequest struct {
 	// Whether to use project's unused reservations as fallback. If not set, existing value is preserved.
 	FallbackToProjectReservations bool `json:"fallback_to_project_reservations"`

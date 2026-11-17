@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesClusterPostRequest defines the specifications of the cluster to be created.
 type KubernetesClusterPostRequest struct {
 	// List of add-ons to include in the new cluster.
 	AddOns []string `json:"add_ons,omitempty"`

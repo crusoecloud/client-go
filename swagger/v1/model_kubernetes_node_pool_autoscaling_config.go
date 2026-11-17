@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesNodePoolAutoscalingConfig defines the Cluster Autoscaler policy for a node pool.
 type KubernetesNodePoolAutoscalingConfig struct {
 	// Whether the Cluster Autoscaler manages this node pool's size.
 	Enabled bool `json:"enabled"`

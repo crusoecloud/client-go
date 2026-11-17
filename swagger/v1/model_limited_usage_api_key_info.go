@@ -8,7 +8,7 @@
  */
 package swagger
 
-// These are the fields returned from a GET request.
+// TokenInfo contains the Traits Island stores for a Token inside of Kratos. These are the fields returned from a GET request.
 type LimitedUsageApiKeyInfo struct {
 	Alias     string `json:"alias"`
 	CreatedAt string `json:"created_at"`

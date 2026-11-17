@@ -8,6 +8,7 @@
  */
 package swagger
 
+// CreateS3KeyRequest is the request body for creating a new S3 access key for a user.
 type CreateS3KeyRequest struct {
 	// Human-readable alias for the new S3 access key.
 	Alias string `json:"alias,omitempty"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListEntitiesResponseV1 is the response type for GET requests to the entities endpoint.
 type ListEntitiesResponseV1 struct {
 	Items []Entity `json:"items"`
 }

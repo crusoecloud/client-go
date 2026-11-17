@@ -8,6 +8,7 @@
  */
 package swagger
 
+// Backend defines the backend server configuration.
 type Backend struct {
 	// IP address of the backend server.
 	Ip string `json:"ip"`

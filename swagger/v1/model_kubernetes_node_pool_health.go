@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesNodePoolHealth reports current issues on a node pool.
 type KubernetesNodePoolHealth struct {
 	// Current issues detected on the node pool.
 	Issues []KubernetesNodePoolHealthIssue `json:"issues"`

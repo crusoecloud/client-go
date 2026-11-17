@@ -8,6 +8,7 @@
  */
 package swagger
 
+// VPCFirewallRulesPatchRequest is the request type for PATCH requests to the VPC Firewall Rules endpoint.
 type VpcFirewallRulesPatchRequest struct {
 	// Destination ports the rule matches. Each entry is a single port or a port range (for example, 3000-8080). Omitted or null leaves the destination ports unchanged; an empty list clears them, which a rule switching to icmp requires.
 	DestinationPorts []string `json:"destination_ports"`

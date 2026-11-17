@@ -8,6 +8,7 @@
  */
 package swagger
 
+// Billing contains information about the billing status of an organization.
 type Billing struct {
 	Balance               string `json:"balance"`
 	BillingMethod         string `json:"billing_method,omitempty"`

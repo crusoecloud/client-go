@@ -8,6 +8,7 @@
  */
 package swagger
 
+// InstanceGroupPostRequest defines the specifications of the instance group to be created.
 type InstanceGroupPostRequest struct {
 	// Desired number of instances for the new instance group.
 	DesiredCount int64 `json:"desired_count"`

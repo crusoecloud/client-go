@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListCredentialsResponse is the response body for listing credentials.
 type ListCredentialsResponse struct {
 	// The credentials in the project.
 	Credentials []CredentialResponse `json:"credentials,omitempty"`

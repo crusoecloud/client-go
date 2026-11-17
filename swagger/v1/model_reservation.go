@@ -8,6 +8,7 @@
  */
 package swagger
 
+// Reservation contains information about a customer reservation.
 type Reservation struct {
 	ContractEndDate   string  `json:"contract_end_date"`
 	ContractStartDate string  `json:"contract_start_date"`

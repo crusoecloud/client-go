@@ -8,6 +8,7 @@
  */
 package swagger
 
+// UpdateS3BucketTagsRequest is the request body for updating S3 bucket tags.
 type UpdateS3BucketTagsRequest struct {
 	// New set of tags for the bucket, as key-value pairs. Replaces all existing tags.
 	Tags map[string]string `json:"tags"`

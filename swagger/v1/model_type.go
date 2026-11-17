@@ -8,6 +8,7 @@
  */
 package swagger
 
+// Type describes an instance type of a Crusoe cloud offering, used in the GET vms.types endpoint response.
 type ModelType struct {
 	// Number of CPU cores provided by the VM type.
 	CpuCores int64 `json:"cpu_cores"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListIBPartitionsResponseV1 is the response type for GET requests to the IB Partitions endpoint.
 type ListIbPartitionsResponseV1 struct {
 	Items []IbPartition `json:"items"`
 }

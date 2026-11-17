@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesAvailableAddonVersion is one installable version of an available add-on.
 type KubernetesAvailableAddonVersion struct {
 	// Installable version string for the add-on.
 	Version string `json:"version"`

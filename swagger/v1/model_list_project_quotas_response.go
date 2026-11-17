@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListProjectQuotasResponse is the response for listing a project's quotas.
 type ListProjectQuotasResponse struct {
 	// Quotas of the project.
 	Quotas []ProjectQuota `json:"quotas,omitempty"`

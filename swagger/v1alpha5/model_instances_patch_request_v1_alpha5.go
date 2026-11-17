@@ -8,6 +8,7 @@
  */
 package swagger
 
+// InstancesPatchRequestV1Alpha5 is the request type for PATCH requests to the vms.instances endpoint.
 type InstancesPatchRequestV1Alpha5 struct {
 	// Action to perform on the VM: START, STOP, RESET, RESERVE, UNRESERVE, or UPDATE. RESERVE and UNRESERVE operations are done synchronously, and so will have succeeded with a 200 response.
 	Action string `json:"action"`

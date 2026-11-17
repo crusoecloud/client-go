@@ -8,6 +8,7 @@
  */
 package swagger
 
+// UpdateModelResponse is the response body for a model source update.
 type UpdateModelResponse struct {
 	// ID of the operation that tracks this request.
 	OperationId string `json:"operation_id,omitempty"`

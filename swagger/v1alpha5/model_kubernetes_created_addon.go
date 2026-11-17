@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesCreatedAddon reports the outcome of installing one add-on.
 type KubernetesCreatedAddon struct {
 	// Catalog identifier of the add-on.
 	AddonType string `json:"addon_type,omitempty"`

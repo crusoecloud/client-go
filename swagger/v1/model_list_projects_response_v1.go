@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListProjectsResponseV1 is the response type for GET requests to the projects endpoint.
 type ListProjectsResponseV1 struct {
 	Items []Project `json:"items"`
 }
