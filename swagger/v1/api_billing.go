@@ -153,7 +153,7 @@ func (a *BillingApiService) GetBillingCosts(ctx context.Context, organizationId 
 }
 
 /*
-BillingApiService Return a CSV containing the costs for resources in a given period.
+BillingApiService Return a CSV file with the organization&#x27;s costs per product line in a given period.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param organizationId ID of the organization.
  * @param startDate First day to include, as &#x60;YYYY-MM-DD&#x60; in UTC.

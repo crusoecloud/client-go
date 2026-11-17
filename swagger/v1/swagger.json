@@ -1746,7 +1746,7 @@
             "$ref": "#/responses/serverError"
           }
         },
-        "summary": "Return a CSV containing the costs for resources in a given period.",
+        "summary": "Return a CSV file with the organization's costs per product line in a given period.",
         "tags": [
           "Billing"
         ]
@@ -22921,60 +22921,7 @@
       }
     },
     "getBillingExportProductlineResponse": {
-      "description": "A CSV file of the organization's costs, with one row per project, product line, region, and day.",
-      "headers": {
-        "cost": {
-          "description": "required: true",
-          "example": "45.67",
-          "type": "string"
-        },
-        "metric": {
-          "description": "required: true",
-          "example": "\"instance-hours\"",
-          "type": "string"
-        },
-        "product_line": {
-          "description": "required: true",
-          "example": "\"a40\", \"persistent-ssd\"",
-          "type": "string"
-        },
-        "project_id": {
-          "description": "required: true",
-          "example": "\"ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab\"",
-          "type": "string"
-        },
-        "project_name": {
-          "description": "required: true",
-          "example": "\"Apollo Project\"",
-          "type": "string"
-        },
-        "quantity": {
-          "description": "required: true",
-          "example": "261.271111",
-          "format": "double",
-          "type": "number"
-        },
-        "region": {
-          "description": "required: true",
-          "example": "\"us-east1\"",
-          "type": "string"
-        },
-        "resource_name": {
-          "description": "required: true",
-          "example": "\"My Cool Virtual Machine\"",
-          "type": "string"
-        },
-        "unit_price": {
-          "description": "required: true",
-          "example": "0.15",
-          "type": "string"
-        },
-        "usage_date": {
-          "description": "required: true",
-          "example": "\"2025-02-14\"",
-          "type": "string"
-        }
-      }
+      "description": "A CSV file of the organization's costs, with one row per product line, region, and day. Each row\nadds up every project the request covers, so filter by one project to get that project's costs.\nThe file leaves out usage that a reservation covers.\n\nThe first row names the columns, in this order:\n\n Column | Description | Example |\n --- | --- | --- |\n `usage_date` | Day of the usage, as `YYYY-MM-DD` in UTC. | `2025-02-14` |\n `project_name` | Name of one of the projects the row adds up, or `overage` for usage beyond a reservation. | `Apollo Project` |\n `project_id` | ID of one of the projects the row adds up, or `00000000-0000-0000-0000-000000000000` for usage beyond a reservation. | `ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab` |\n `product_line` | Product line of the usage. | `a40` |\n `region` | Region of the usage. | `us-east1` |\n `unit_price` | Price of one unit of `metric`, in US dollars. Shows `-` when `metric` is `million-tokens`, because a product line's input, output, and cached tokens have different prices. | `0.15` |\n `quantity` | Amount used, in the unit that `metric` names. | `261.271111` |\n `metric` | Unit of `quantity`, such as `instance-hours` or `million-tokens`. | `instance-hours` |\n `total_price` | Cost of the usage, in US dollars. | `45.67` |"
     },
     "getCreditBalanceResponse": {
       "description": "The aggregate balance of the organization's active credit grants.",
@@ -23593,38 +23540,7 @@
       }
     },
     "usageExportGetResponse": {
-      "description": "A CSV file of the organization's usage, with one row per resource and day.",
-      "headers": {
-        "metric": {
-          "example": "instance-hours",
-          "type": "string"
-        },
-        "project_id": {
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-          "type": "string"
-        },
-        "quantity": {
-          "example": "261.271111",
-          "format": "double",
-          "type": "number"
-        },
-        "region": {
-          "example": "us-east1",
-          "type": "string"
-        },
-        "resource_id": {
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-          "type": "string"
-        },
-        "resource_type": {
-          "example": "a40.1x",
-          "type": "string"
-        },
-        "usage_date": {
-          "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
-          "type": "string"
-        }
-      }
+      "description": "A CSV file of the organization's usage, with one row per resource and day.\nThe first row names the columns, in this order:\n\n Column | Description | Example |\n --- | --- | --- |\n `resource_id` | ID of the resource used. | `d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb` |\n `resource_type` | Type of the resource used. | `a40.1x` |\n `project_id` | ID of the project that used the resource. | `ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab` |\n `region` | Region the resource is in. | `us-east1` |\n `quantity` | Amount used, in the unit that `metric` names. | `261.271111` |\n `metric` | Unit of `quantity`, such as `instance-hours`. | `instance-hours` |\n `usage_date` | Day of the usage, as `YYYY-MM-DD` in UTC. | `2025-02-14` |"
     },
     "usageOptionsGetResponse": {
       "description": "The values you can filter the organization's usage by.",
