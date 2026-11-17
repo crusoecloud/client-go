@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-// IdentityCredential represents a specific Kratos credential type, sanitized to expose to customers.
+// IdentityCredential is a sign-in method the user has set up, such as a password, an authenticator app, a security key or single sign-on.
 type IdentityCredential struct {
 	CreatedAt time.Time `json:"created_at"`
 	Type_     string    `json:"type"`

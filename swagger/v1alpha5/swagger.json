@@ -14809,7 +14809,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "IdentityCredential": {
-      "description": "IdentityCredential represents a specific Kratos credential type, sanitized to expose to customers.",
+      "description": "IdentityCredential is a sign-in method the user has set up, such as a password, an authenticator app, a security key or single sign-on.",
       "properties": {
         "created_at": {
           "format": "date-time",
