@@ -31,7 +31,7 @@ FoundryApiService Creates a credential in the project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId ID of the project.
  * @param optional nil or *FoundryApiCreateFoundryCredentialOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of CreateCredentialRequest) -
+     * @param "Body" (optional.Interface of CreateCredentialRequest) -  CreateCredentialRequest is the body for creating a credential.
 @return CredentialResponse
 */
 
@@ -170,7 +170,7 @@ Asynchronous: returns the accepted deployment ID and status.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId ID of the project.
  * @param optional nil or *FoundryApiCreateFoundryDeploymentOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of CreateDeploymentRequest) -
+     * @param "Body" (optional.Interface of CreateDeploymentRequest) -  CreateDeploymentRequest is the body for creating a self-serve deployment.
 @return DeploymentAcceptedResponse
 */
 
@@ -309,7 +309,7 @@ The deployment is asynchronous: the response returns the deployment record in a 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId ID of the project to deploy the adapter in.
  * @param optional nil or *FoundryApiCreateFoundryLoraOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of LoadLoraRequest) -
+     * @param "Body" (optional.Interface of LoadLoraRequest) -  LoadLoraRequest is the body for deploying a LoRA adapter.
 @return LoRaAdapterDeployment
 */
 
@@ -2797,7 +2797,7 @@ FoundryApiService Renames a deployed model&#x27;s alias.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId ID of the project.
  * @param optional nil or *FoundryApiRenameFoundryDeployedModelOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of RenameModelRequest) -
+     * @param "Body" (optional.Interface of RenameModelRequest) -  RenameModelRequest is the body for renaming a deployed model&#x27;s alias.
 @return RenameModelResponse
 */
 
@@ -3150,7 +3150,7 @@ FoundryApiService Updates a credential&#x27;s description in the project.
  * @param projectId ID of the project.
  * @param id ID of the credential.
  * @param optional nil or *FoundryApiUpdateFoundryCredentialOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of UpdateCredentialRequest) -
+     * @param "Body" (optional.Interface of UpdateCredentialRequest) -  UpdateCredentialRequest is the body for updating a credential.
 @return CredentialResponse
 */
 
@@ -3299,7 +3299,7 @@ FoundryApiService Updates the HuggingFace source behind a deployed model&#x27;s 
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId ID of the project.
  * @param optional nil or *FoundryApiUpdateFoundryDeployedModelOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of UpdateModelRequest) -
+     * @param "Body" (optional.Interface of UpdateModelRequest) -  UpdateModelRequest is the body for updating a deployed model&#x27;s HuggingFace source.
 @return UpdateModelResponse
 */
 
@@ -3448,7 +3448,7 @@ FoundryApiService Updates a self-serve deployment (name and/or replica count) in
  * @param projectId ID of the project.
  * @param id ID of the deployment.
  * @param optional nil or *FoundryApiUpdateFoundryDeploymentOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of UpdateDeploymentRequest) -
+     * @param "Body" (optional.Interface of UpdateDeploymentRequest) -  UpdateDeploymentRequest is the body for updating a self-serve deployment.
 @return DeploymentAcceptedResponse
 */
 

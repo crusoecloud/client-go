@@ -27,7 +27,7 @@ type IBPartitionsApiService service
 /*
 IBPartitionsApiService Creates an InfiniBand partition in the project and returns the created InfiniBand partition.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body IBPartitionsPostRequestV1 is the request type for POST requests to the IB Partitions endpoint.
   - @param projectId
 
 @return IbPartition

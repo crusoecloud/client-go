@@ -30,7 +30,7 @@ type SlurmClustersApiService service
 SlurmClustersApiService Create a new slurm cluster owned by the logged in user.
 A successful response from this resource will contain the async operation ID.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body SlurmClusterPostRequest defines the specifications of the cluster to be created.
   - @param projectId
 
 @return AsyncOperationResponse

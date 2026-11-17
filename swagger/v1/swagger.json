@@ -493,6 +493,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "EntitiesPutPostRequest is the request type for PUT and POST requests to the entities endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -575,6 +576,7 @@
         "operationId": "createProject",
         "parameters": [
           {
+            "description": "ProjectsPostRequest is the request type for POST requests to the projects endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -619,6 +621,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ProjectsPutRequest is the request type for PUT requests to the projects endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -815,6 +818,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "CreateSCIMIntegrationRequestBody is the JSON request body for creating a SCIM integration.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -951,6 +955,7 @@
             "x-go-name": "IntegrationID"
           },
           {
+            "description": "UpdateSCIMIntegrationRequestBody is the JSON request body for updating a SCIM integration.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -1048,6 +1053,7 @@
             "x-go-name": "IntegrationID"
           },
           {
+            "description": "CreateSCIMTokenRequestBody is the JSON request body for creating a SCIM integration token.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -1186,6 +1192,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "CreateS3KeyRequest is the request body for creating a new S3 access key for a user.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -3051,6 +3058,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "CustomImagePostRequest is the request type for POST requests to the /custom-images endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -3296,6 +3304,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "CustomImagePatchRequest is the request type for PATCH requests to the /custom-images/{id} endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -3353,6 +3362,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "CustomImagesEditTagsRequest is the request type for PATCH requests to the /custom-images{id}/edit-tags endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -3420,6 +3430,7 @@
         "operationId": "createInstanceGroup",
         "parameters": [
           {
+            "description": "InstanceGroupPostRequest defines the specifications of the instance group to be created.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -3553,6 +3564,7 @@
             "x-go-name": "InstanceGroupID"
           },
           {
+            "description": "InstanceGroupPatchRequest defines the specifications of the updates to be made to the instance group.\nThis is a separate type from InstanceGroupPostRequest for clearer documentation, as these fields are not required\nin the PATCH endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -3622,6 +3634,7 @@
         "operationId": "createInstanceTemplate",
         "parameters": [
           {
+            "description": "InstanceTemplatePostRequestV1 defines the specifications of VMs to be created during bulk VM creation.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -3911,6 +3924,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "InstancesPostRequestV1 is the request type for POST requests to the\nvms.instances endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -4137,6 +4151,7 @@
         "operationId": "updateInstance",
         "parameters": [
           {
+            "description": "InstancesPatchRequestV1 is the request type for PATCH requests to the vms.instances endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -4191,6 +4206,7 @@
         "operationId": "updateInstanceAttachDisks",
         "parameters": [
           {
+            "description": "InstancesAttachDiskPostRequestV1 is the request type for POST requests to the\nvms.instances.attach-disk endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -4245,6 +4261,7 @@
         "operationId": "updateInstanceDetachDisks",
         "parameters": [
           {
+            "description": "InstancesDetachDiskPostRequest is the request type for POST requests to the\nvms.instances.detach-disk endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -4580,6 +4597,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "CreateCredentialRequest is the body for creating a credential.",
             "in": "body",
             "name": "Body",
             "schema": {
@@ -4722,6 +4740,7 @@
             "x-go-name": "ID"
           },
           {
+            "description": "UpdateCredentialRequest is the body for updating a credential.",
             "in": "body",
             "name": "Body",
             "schema": {
@@ -5002,6 +5021,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "RenameModelRequest is the body for renaming a deployed model's alias.",
             "in": "body",
             "name": "Body",
             "schema": {
@@ -5048,6 +5068,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "UpdateModelRequest is the body for updating a deployed model's HuggingFace source.",
             "in": "body",
             "name": "Body",
             "schema": {
@@ -5126,6 +5147,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "LoadLoraRequest is the body for deploying a LoRA adapter.",
             "in": "body",
             "name": "Body",
             "schema": {
@@ -5291,6 +5313,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "CreateDeploymentRequest is the body for creating a self-serve deployment.",
             "in": "body",
             "name": "Body",
             "schema": {
@@ -5527,6 +5550,7 @@
             "x-go-name": "ID"
           },
           {
+            "description": "UpdateDeploymentRequest is the body for updating a self-serve deployment.",
             "in": "body",
             "name": "Body",
             "schema": {
@@ -6042,6 +6066,7 @@
         "operationId": "createCluster",
         "parameters": [
           {
+            "description": "KubernetesClusterPostRequest defines the specifications of the cluster to be created.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -6334,6 +6359,7 @@
             "x-go-name": "ClusterID"
           },
           {
+            "description": "KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -6429,6 +6455,7 @@
             "x-go-name": "ClusterID"
           },
           {
+            "description": "KubernetesAddonsPostRequest is the request body for installing add-ons on a cluster.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -6865,6 +6892,7 @@
             "x-go-name": "ClusterID"
           },
           {
+            "description": "KubernetesClusterSupportSettingsRequest defines the request for updating\nsupport access settings for a Kubernetes cluster.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -8187,6 +8215,7 @@
         "operationId": "createIBPartition",
         "parameters": [
           {
+            "description": "IBPartitionsPostRequestV1 is the request type for POST requests to the IB Partitions endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -9032,6 +9061,7 @@
         "operationId": "createVPCFirewallRule",
         "parameters": [
           {
+            "description": "VPCFirewallRulesPostRequestV1 is the request type for POST requests to the VPC Firewall Rules endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -9274,6 +9304,7 @@
             "x-go-name": "VPCFirewallRuleID"
           },
           {
+            "description": "VPCFirewallRulesPatchRequest is the request type for PATCH requests to the VPC Firewall Rules endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -9341,6 +9372,7 @@
         "operationId": "createVPCNetwork",
         "parameters": [
           {
+            "description": "VPCNetworkPostRequest is the request type for POST requests to the VPC Networks endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -9589,6 +9621,7 @@
             "x-go-name": "VPCNetworkID"
           },
           {
+            "description": "VPCNetworkPatchRequest is the request type for PATCH requests to the VPC Networks endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -9659,6 +9692,7 @@
         "operationId": "createVPCSubnet",
         "parameters": [
           {
+            "description": "VPCSubnetPostRequest is the request type for POST requests to the VPC Subnet endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -9907,6 +9941,7 @@
             "x-go-name": "VPCSubnetID"
           },
           {
+            "description": "VPCSubnetPatchRequest is the request type for PATCH requests to the VPC Subnets endpoint.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -10045,6 +10080,7 @@
         "operationId": "createSlurmCluster",
         "parameters": [
           {
+            "description": "SlurmClusterPostRequest defines the specifications of the cluster to be created.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -11049,6 +11085,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "CreateS3BucketRequest is the request body for creating a new S3 bucket.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -11260,6 +11297,7 @@
             "x-go-name": "BucketName"
           },
           {
+            "description": "UpdateS3BucketTagsRequest is the request body for updating S3 bucket tags.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -11318,6 +11356,7 @@
             "x-go-name": "BucketName"
           },
           {
+            "description": "EnableS3BucketObjectLockRequest defines the body for enabling object lock.",
             "in": "body",
             "name": "Body",
             "schema": {

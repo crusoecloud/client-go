@@ -27,7 +27,7 @@ type InstanceGroupsApiService service
 /*
 InstanceGroupsApiService Creates an instance group in the project and returns the created instance group.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body InstanceGroupPostRequest defines the specifications of the instance group to be created.
   - @param projectId
 
 @return InstanceGroup
@@ -477,7 +477,10 @@ func (a *InstanceGroupsApiService) ListInstanceGroups(ctx context.Context, proje
 /*
 InstanceGroupsApiService Updates an instance group in the project and returns the updated instance group.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body InstanceGroupPatchRequest defines the specifications of the updates to be made to the instance group.
+
+This is a separate type from InstanceGroupPostRequest for clearer documentation, as these fields are not required
+in the PATCH endpoint.
   - @param instanceGroupId ID of the instance group.
   - @param projectId
 

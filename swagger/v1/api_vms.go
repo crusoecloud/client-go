@@ -158,7 +158,9 @@ func (a *VMsApiService) BulkCreateInstance(ctx context.Context, body BulkInstanc
 /*
 VMsApiService Creates a VM in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body InstancesPostRequestV1 is the request type for POST requests to the
+
+vms.instances endpoint.
   - @param projectId
 
 @return AsyncOperationResponse
@@ -799,7 +801,7 @@ func (a *VMsApiService) ListInstances(ctx context.Context, projectId string, loc
 /*
 VMsApiService Updates a VM in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body InstancesPatchRequestV1 is the request type for PATCH requests to the vms.instances endpoint.
   - @param projectId ID of the project that owns the VM.
   - @param vmId ID of the VM.
 
@@ -930,7 +932,9 @@ func (a *VMsApiService) UpdateInstance(ctx context.Context, body InstancesPatchR
 /*
 VMsApiService Attaches disks to a VM in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body InstancesAttachDiskPostRequestV1 is the request type for POST requests to the
+
+vms.instances.attach-disk endpoint.
   - @param projectId ID of the project that owns the VM.
   - @param vmId ID of the VM.
 
@@ -1061,7 +1065,9 @@ func (a *VMsApiService) UpdateInstanceAttachDisks(ctx context.Context, body Inst
 /*
 VMsApiService Detaches disks from a VM in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body InstancesDetachDiskPostRequest is the request type for POST requests to the
+
+vms.instances.detach-disk endpoint.
   - @param projectId ID of the project that owns the VM.
   - @param vmId ID of the VM.
 

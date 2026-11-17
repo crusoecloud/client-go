@@ -27,7 +27,7 @@ type InstanceTemplatesApiService service
 /*
 InstanceTemplatesApiService Creates an instance template in the project and returns the created instance template.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body InstanceTemplatePostRequestV1Alpha5 defines the specifications of VMs to be created during bulk VM creation.
   - @param projectId
 
 @return InstanceTemplate

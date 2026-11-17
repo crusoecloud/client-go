@@ -27,7 +27,7 @@ type SCIMApiService service
 /*
 SCIMApiService Create a new SCIM integration for an organization.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body CreateSCIMIntegrationRequestBody is the JSON request body for creating a SCIM integration.
   - @param orgId
 
 @return CreateScimIntegrationResponse
@@ -156,7 +156,7 @@ func (a *SCIMApiService) CreateSCIMIntegration(ctx context.Context, body CreateS
 /*
 SCIMApiService Create a token for a SCIM integration.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body CreateSCIMTokenRequestBody is the JSON request body for creating a SCIM integration token.
   - @param orgId
   - @param integrationId
 
@@ -895,7 +895,7 @@ func (a *SCIMApiService) ListSCIMIntegrations(ctx context.Context, orgId string)
 /*
 SCIMApiService Update a SCIM integration.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body UpdateSCIMIntegrationRequestBody is the JSON request body for updating a SCIM integration.
   - @param orgId
   - @param integrationId
 

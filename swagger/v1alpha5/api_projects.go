@@ -30,7 +30,7 @@ type ProjectsApiService service
 ProjectsApiService Creates a project and returns the created project.
 The logged-in user must have the permission to create projects within the organization. A successful response from this resource contains details of the created project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body ProjectsPostRequest is the request type for POST requests to the projects endpoint.
 
 @return ProjectsPutPostResponseV1Alpha5
 */
@@ -484,7 +484,7 @@ func (a *ProjectsApiService) ListProjects(ctx context.Context, localVarOptionals
 ProjectsApiService Updates a project and returns the updated project.
 Requests to this resource must contain the json-encoded representation of the changes they want to make to the project. Currently only the project&#x27;s name can be changed.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body ProjectsPutRequest is the request type for PUT requests to the projects endpoint.
   - @param projectId ID of the project.
 
 @return ProjectsPutPostResponseV1Alpha5
