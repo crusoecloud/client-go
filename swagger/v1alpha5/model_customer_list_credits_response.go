@@ -10,6 +10,8 @@ package swagger
 
 // ListCreditsResponse is the response for CreditsService.ListCredits.
 type CustomerListCreditsResponse struct {
-	Credits  []CustomerCredit `json:"credits,omitempty"`
-	Currency string           `json:"currency,omitempty"`
+	// credits is the list of credit transactions, ordered newest-first.
+	Credits []CustomerCredit `json:"credits,omitempty"`
+	// currency is the currency code (e.g. \"usd\") the amounts are denominated in.
+	Currency string `json:"currency,omitempty"`
 }

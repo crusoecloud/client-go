@@ -163,7 +163,7 @@ func (a *MFAApiService) GetMFA(ctx context.Context, organizationId string) (Cust
 /*
 MFAApiService Update required MFA methods for the specified organization.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body UpdateOrganizationMFARequest is the request for setting an organization&#x27;s required MFA methods.
   - @param organizationId organization_id is the ID of the organization
 
 @return CustomerUpdateOrganizationMfaResponse

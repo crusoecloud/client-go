@@ -1830,6 +1830,7 @@
             "type": "string"
           },
           {
+            "description": "UpdateOrganizationMFARequest is the request for setting an organization's required MFA methods.",
             "in": "body",
             "name": "body",
             "required": true,
@@ -22231,18 +22232,18 @@
       "description": "Credit is a single credit balance transaction for an organization.",
       "properties": {
         "amount": {
+          "description": "amount is the amount of credit added or subtracted in this transaction, formatted as a\ndecimal string.",
           "example": "12.34",
-          "title": "amount is the amount of credit added or subtracted in this transaction, formatted as a\ndecimal string",
           "type": "string"
         },
         "balance": {
+          "description": "balance is the remaining credit balance after this transaction, formatted as a decimal\nstring.",
           "example": "45.67",
-          "title": "balance is the remaining credit balance after this transaction, formatted as a decimal\nstring",
           "type": "string"
         },
         "date": {
+          "description": "date is when the transaction occurred, in RFC3339 format.",
           "example": "2025-02-14T12:00:00Z",
-          "title": "date is when the transaction occurred, in RFC3339 format",
           "type": "string"
         }
       },
@@ -22266,16 +22267,16 @@
       "description": "ListCreditsResponse is the response for CreditsService.ListCredits.",
       "properties": {
         "credits": {
+          "description": "credits is the list of credit transactions, ordered newest-first.",
           "items": {
             "$ref": "#/definitions/customerCredit",
             "type": "object"
           },
-          "title": "credits is the list of credit transactions, ordered newest-first",
           "type": "array"
         },
         "currency": {
+          "description": "currency is the currency code (e.g. \"usd\") the amounts are denominated in.",
           "example": "usd",
-          "title": "currency is the currency code (e.g. \"usd\") the amounts are denominated in",
           "type": "string"
         }
       },
@@ -22318,12 +22319,12 @@
       "description": "OrganizationUsage is the project-level usage of products across an organization.",
       "properties": {
         "items": {
+          "description": "items is the list of per-project usage line items.",
           "items": {
             "$ref": "#/definitions/customerProductProjectUsage",
             "type": "object"
           },
           "readOnly": true,
-          "title": "items is the list of per-project usage line items",
           "type": "array"
         }
       },
@@ -22333,39 +22334,39 @@
       "description": "ProductProjectUsage is the usage of a product within a project for a single date.",
       "properties": {
         "billable_metric": {
+          "description": "billable_metric is the unit the quantity is measured in.",
           "example": "gpu-hours",
-          "title": "billable_metric is the unit the quantity is measured in",
           "type": "string"
         },
         "date": {
+          "description": "date is the date the usage was incurred, formatted YYYY-MM-DD.",
           "example": "2022-07-01",
-          "title": "date is the date the usage was incurred, formatted YYYY-MM-DD",
           "type": "string"
         },
         "project_id": {
+          "description": "project_id is the ID of the project the usage was incurred in.",
           "example": "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb",
-          "title": "project_id is the ID of the project the usage was incurred in",
           "type": "string"
         },
         "quantity": {
+          "description": "quantity is the amount of the product used.",
           "example": 2.123,
           "format": "double",
-          "title": "quantity is the amount of the product used",
           "type": "number"
         },
         "region": {
+          "description": "region is the region the usage was incurred in.",
           "example": "us-northcentral1",
-          "title": "region is the region the usage was incurred in",
           "type": "string"
         },
         "reservation_id": {
+          "description": "reservation_id is the ID of the reservation the usage was incurred under.",
           "example": "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb",
-          "title": "reservation_id is the ID of the reservation the usage was incurred under",
           "type": "string"
         },
         "resource_type": {
+          "description": "resource_type is the product type the usage was incurred for.",
           "example": "a40.1x",
-          "title": "resource_type is the product type the usage was incurred for",
           "type": "string"
         }
       },
@@ -22377,20 +22378,25 @@
     },
     "protobufAny": {
       "additionalProperties": {},
+      "description": "A structured detail about an error. `@type` names its type, and the other properties are the fields of that type.",
       "properties": {
         "@type": {
+          "description": "The type of the detail, as a URL such as `type.googleapis.com/google.rpc.ErrorInfo`.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "rpcStatus": {
+      "description": "The error a failed request returns.",
       "properties": {
         "code": {
+          "description": "The gRPC status code of the error, such as `5` for `NOT_FOUND`.",
           "format": "int32",
           "type": "integer"
         },
         "details": {
+          "description": "Structured details about the error, when there are any.",
           "items": {
             "$ref": "#/definitions/protobufAny",
             "type": "object"
@@ -22398,6 +22404,7 @@
           "type": "array"
         },
         "message": {
+          "description": "A description of the error, in English.",
           "type": "string"
         }
       },
