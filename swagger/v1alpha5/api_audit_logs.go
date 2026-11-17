@@ -29,7 +29,7 @@ type AuditLogsApiService service
 /*
 AuditLogsApiService Get audit logs belonging to the specified organization. User must be part of the organization.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
+ * @param organizationId ID of the organization that owns the audit logs.
  * @param optional nil or *AuditLogsApiGetAuditLogsOpts - Optional Parameters:
      * @param "ProjectIds" (optional.Interface of []string) -
      * @param "StartTime" (optional.String) -

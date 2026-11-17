@@ -28,7 +28,7 @@ type InternalLoadBalancersApiService service
 InternalLoadBalancersApiService Creates a load balancer in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return AsyncOperationResponse
 */
@@ -392,7 +392,7 @@ func (a *InternalLoadBalancersApiService) GetLoadBalancer(ctx context.Context, p
 /*
 InternalLoadBalancersApiService Lists all load balancers in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListLoadBalancersResponseV1Alpha5
 */

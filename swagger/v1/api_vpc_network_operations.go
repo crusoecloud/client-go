@@ -30,8 +30,8 @@ type VPCNetworkOperationsApiService service
 VPCNetworkOperationsApiService Get status of a single asynchronous operation
 This resource retrieves information about the status of an asynchronous operation initiated by the VPC Network resource. Only information about the operation specified in the path will be returned, or an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged in user, or has expired.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param operationId
+  - @param projectId ID of the project that owns the operation.
+  - @param operationId ID of the operation.
 
 @return Operation
 */
@@ -159,10 +159,10 @@ func (a *VPCNetworkOperationsApiService) GetNetworkingVPCNetworksOperation(ctx c
 VPCNetworkOperationsApiService Get status of asynchronous operations
 This resource retrieves information about the status of asynchronous operations initiated by the VPC Networks resource. All operations that are either in-flight or completed but not yet queried will be returned.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project.
  * @param optional nil or *VPCNetworkOperationsApiListNetworkingVPCNetworksOperationsOpts - Optional Parameters:
-     * @param "ResourceId" (optional.String) -
-     * @param "State" (optional.Interface of []string) -
+     * @param "ResourceId" (optional.String) -  Filters results to operations on the resource with this ID.
+     * @param "State" (optional.Interface of []string) -  Filters results to operations in these states.
 @return ListOperationsResponseV1
 */
 

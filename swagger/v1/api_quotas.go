@@ -27,7 +27,7 @@ type QuotasApiService service
 /*
 QuotasApiService List max and currently used organization quotas.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
+  - @param organizationId ID of the organization.
 
 @return ListOrgQuotasResponse
 */
@@ -153,7 +153,7 @@ func (a *QuotasApiService) ListOrgQuotas(ctx context.Context, organizationId str
 /*
 QuotasApiService List max and currently used project quotas.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListProjectQuotasResponse
 */

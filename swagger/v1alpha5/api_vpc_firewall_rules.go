@@ -28,7 +28,7 @@ type VPCFirewallRulesApiService service
 VPCFirewallRulesApiService Creates a VPC firewall rule in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body VPCFirewallRulesPostRequestV1Alpha5 is the request type for POST requests to the VPC Firewall Rules endpoint.
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return AsyncOperationResponse
 */
@@ -392,7 +392,7 @@ func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, pro
 /*
 VPCFirewallRulesApiService Lists all VPC firewall rules in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListVpcFirewallRulesResponseV1Alpha5
 */

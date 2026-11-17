@@ -29,7 +29,7 @@ type CreditsApiService service
 /*
 CreditsApiService Get the aggregate credit balance for the specified organization. By default only active grants are counted.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
+  - @param organizationId ID of the organization.
 
 @return GetCreditBalanceResponse
 */

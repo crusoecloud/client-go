@@ -30,7 +30,7 @@ type VMsApiService service
 VMsApiService Creates multiple VMs in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return AsyncOperationResponse
 */
@@ -161,7 +161,7 @@ VMsApiService Creates a VM in the project and returns the async operation.
   - @param body InstancesPostRequestV1Alpha5 is the request type for POST requests to the
 
 vms.instances endpoint.
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return AsyncOperationResponse
 */
@@ -535,7 +535,7 @@ func (a *VMsApiService) GetInstance(ctx context.Context, projectId string, vmId 
 /*
 VMsApiService Lists all available VM types and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListTypesResponseV1Alpha5
 */
@@ -641,7 +641,7 @@ func (a *VMsApiService) GetVMTypes(ctx context.Context, projectId string) (ListT
 /*
 VMsApiService Lists all VMs in the project and returns their details.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project.
  * @param optional nil or *VMsApiListInstancesOpts - Optional Parameters:
      * @param "Ids" (optional.String) -  Filters results to VMs with these IDs.
      * @param "Names" (optional.String) -  Filters results to VMs with these names.

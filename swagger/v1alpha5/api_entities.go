@@ -132,7 +132,7 @@ EntitiesApiService Update details for an organization that the logged in user ow
 A successful response from this resource will contain the updated organization details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body EntitiesPutPostRequest is the request type for PUT and POST requests to the entities endpoint.
-  - @param orgId
+  - @param orgId ID of the organization.
 
 @return EntitiesPutPostResponse
 */

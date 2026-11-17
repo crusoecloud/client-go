@@ -28,7 +28,7 @@ type SSOApiService service
 SSOApiService Create a new SSO provider for a specific org.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param organizationId
+  - @param organizationId ID of the organization that owns the SSO provider.
 
 @return SsoProvider
 */
@@ -156,7 +156,7 @@ func (a *SSOApiService) CreateSSOProvider(ctx context.Context, body CreateSsoPro
 /*
 SSOApiService Delete a specific SSO provider for a specific org.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
+  - @param organizationId ID of the organization that owns the SSO provider.
   - @param providerId
 
 @return SsoProvider
@@ -284,7 +284,7 @@ func (a *SSOApiService) DeleteSSOProvider(ctx context.Context, organizationId st
 /*
 SSOApiService Returns the active sso providers for a given orgID.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
+  - @param organizationId ID of the organization that owns the SSO providers.
 
 @return ListSsoProvidersResponse
 */

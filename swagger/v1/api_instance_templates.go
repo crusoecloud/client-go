@@ -28,7 +28,7 @@ type InstanceTemplatesApiService service
 InstanceTemplatesApiService Creates an instance template in the project and returns the created instance template.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body InstanceTemplatePostRequestV1 defines the specifications of VMs to be created during bulk VM creation.
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return InstanceTemplate
 */
@@ -147,7 +147,7 @@ func (a *InstanceTemplatesApiService) CreateInstanceTemplate(ctx context.Context
 InstanceTemplatesApiService Deletes an instance template from the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param instanceTemplateId ID of the instance template.
-  - @param projectId
+  - @param projectId ID of the project.
 */
 func (a *InstanceTemplatesApiService) DeleteInstanceTemplate(ctx context.Context, instanceTemplateId string, projectId string) (*http.Response, error) {
 	var (
@@ -254,7 +254,7 @@ func (a *InstanceTemplatesApiService) DeleteInstanceTemplate(ctx context.Context
 InstanceTemplatesApiService Returns details for a single instance template in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param instanceTemplateId ID of the instance template.
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return InstanceTemplate
 */
@@ -381,7 +381,7 @@ func (a *InstanceTemplatesApiService) GetInstanceTemplate(ctx context.Context, i
 /*
 InstanceTemplatesApiService Lists all instance templates in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListInstanceTemplatesResponseV1
 */

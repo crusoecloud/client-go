@@ -179,7 +179,7 @@ func (a *UsageApiService) GetUsage(ctx context.Context, orgId string, localVarOp
 /*
 UsageApiService Get resource-level usage for products in Crusoe Cloud.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
+  - @param organizationId ID of the organization.
   - @param projects
   - @param resources
   - @param resourceTypes
@@ -276,7 +276,7 @@ func (a *UsageApiService) GetUsageExport(ctx context.Context, organizationId str
 /*
 UsageApiService Get options which exist for filters for /usage and /usage/export routes.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
+  - @param organizationId ID of the organization.
 
 @return UsageOptions
 */

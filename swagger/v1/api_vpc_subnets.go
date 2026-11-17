@@ -28,7 +28,7 @@ type VPCSubnetsApiService service
 VPCSubnetsApiService Creates a VPC subnet in the project and returns the created subnet.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body VPCSubnetPostRequest is the request type for POST requests to the VPC Subnet endpoint.
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return VpcSubnetPostResponse
 */
@@ -412,7 +412,7 @@ func (a *VPCSubnetsApiService) GetVPCSubnet(ctx context.Context, projectId strin
 /*
 VPCSubnetsApiService Lists all VPC subnets in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListVpcSubnetsResponseV1
 */

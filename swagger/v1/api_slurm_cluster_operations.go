@@ -30,8 +30,8 @@ type SlurmClusterOperationsApiService service
 SlurmClusterOperationsApiService Get status of a single asynchronous operation.
 This resource retrieves information about the status of an asynchronous operation for a slurm cluster. Only information about the operation specified in the path will be returned.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param operationId
+  - @param projectId ID of the project that owns the operation.
+  - @param operationId ID of the operation.
 
 @return Operation
 */
@@ -169,10 +169,10 @@ func (a *SlurmClusterOperationsApiService) GetSlurmClusterOperation(ctx context.
 SlurmClusterOperationsApiService Get status of asynchronous operations.
 This resource retrieves information about the status of asynchronous operations for slurm clusters. Query parameters can be used to filter results by slurm cluster ID or operation state.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project.
  * @param optional nil or *SlurmClusterOperationsApiListSlurmClusterOperationsOpts - Optional Parameters:
-     * @param "ResourceId" (optional.String) -
-     * @param "State" (optional.Interface of []string) -
+     * @param "ResourceId" (optional.String) -  Filters results to operations on the resource with this ID.
+     * @param "State" (optional.Interface of []string) -  Filters results to operations in these states.
 @return ListOperationsResponseV1
 */
 

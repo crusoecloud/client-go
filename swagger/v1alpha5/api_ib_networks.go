@@ -145,7 +145,7 @@ func (a *IBNetworksApiService) GetIBNetwork(ctx context.Context, projectId strin
 /*
 IBNetworksApiService Lists all InfiniBand networks and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListIbNetworksResponseV1Alpha5
 */

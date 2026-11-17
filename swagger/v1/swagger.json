@@ -485,6 +485,7 @@
         "operationId": "updateOrganization",
         "parameters": [
           {
+            "description": "ID of the organization.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "query",
             "name": "org_id",
@@ -659,6 +660,7 @@
         "operationId": "deleteProject",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -779,6 +781,7 @@
         "operationId": "listSCIMIntegrations",
         "parameters": [
           {
+            "description": "ID of the organization that owns the SCIM integrations.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "org_id",
@@ -810,6 +813,7 @@
         "operationId": "createSCIMIntegration",
         "parameters": [
           {
+            "description": "ID of the organization that owns the SCIM integration.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "org_id",
@@ -855,6 +859,7 @@
         "operationId": "deleteSCIMIntegration",
         "parameters": [
           {
+            "description": "ID of the organization that owns the SCIM integration.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "org_id",
@@ -863,6 +868,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "ID of the SCIM integration.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "integration_id",
@@ -897,6 +903,7 @@
         "operationId": "getSCIMIntegration",
         "parameters": [
           {
+            "description": "ID of the organization that owns the SCIM integration.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "org_id",
@@ -905,6 +912,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "ID of the SCIM integration.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "integration_id",
@@ -939,6 +947,7 @@
         "operationId": "updateSCIMIntegration",
         "parameters": [
           {
+            "description": "ID of the organization that owns the SCIM integration.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "org_id",
@@ -947,6 +956,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "ID of the SCIM integration.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "integration_id",
@@ -995,6 +1005,7 @@
         "operationId": "listSCIMIntegrationTokens",
         "parameters": [
           {
+            "description": "ID of the organization that owns the SCIM integration.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "org_id",
@@ -1003,6 +1014,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "ID of the SCIM integration that owns the tokens.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "integration_id",
@@ -1037,6 +1049,7 @@
         "operationId": "createSCIMIntegrationToken",
         "parameters": [
           {
+            "description": "ID of the organization that owns the SCIM integration.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "org_id",
@@ -1045,6 +1058,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "ID of the SCIM integration that owns the tokens.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "integration_id",
@@ -1093,6 +1107,7 @@
         "operationId": "deleteSCIMIntegrationToken",
         "parameters": [
           {
+            "description": "ID of the organization that owns the SCIM integration.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "org_id",
@@ -1101,6 +1116,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "ID of the SCIM integration that owns the token.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "integration_id",
@@ -1372,6 +1388,7 @@
         "operationId": "getAuditLogs",
         "parameters": [
           {
+            "description": "ID of the organization that owns the audit logs.",
             "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
             "in": "path",
             "name": "organization_id",
@@ -1567,6 +1584,7 @@
         "operationId": "getBillingCosts",
         "parameters": [
           {
+            "description": "ID of the organization.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "organization_id",
@@ -1603,6 +1621,7 @@
         "operationId": "getCreditBalance",
         "parameters": [
           {
+            "description": "ID of the organization.",
             "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
             "in": "path",
             "name": "organization_id",
@@ -1642,6 +1661,7 @@
         "operationId": "getBillingExportProductline",
         "parameters": [
           {
+            "description": "ID of the organization.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "organization_id",
@@ -1732,6 +1752,7 @@
         "operationId": "getBillingOptions",
         "parameters": [
           {
+            "description": "ID of the organization.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "organization_id",
@@ -1887,6 +1908,7 @@
         "operationId": "listOrgQuotas",
         "parameters": [
           {
+            "description": "ID of the organization.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "organization_id",
@@ -1923,6 +1945,7 @@
         "operationId": "getReservations",
         "parameters": [
           {
+            "description": "ID of the organization that owns the reservations.",
             "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
             "in": "path",
             "name": "organization_id",
@@ -1966,6 +1989,7 @@
         "operationId": "getReservationsGPUTracking",
         "parameters": [
           {
+            "description": "ID of the organization that owns the reservations.",
             "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
             "in": "path",
             "name": "organization_id",
@@ -2041,6 +2065,7 @@
         "operationId": "getLatestGPUTracking",
         "parameters": [
           {
+            "description": "ID of the organization that owns the reservations.",
             "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
             "in": "path",
             "name": "organization_id",
@@ -2102,6 +2127,7 @@
         "operationId": "getReservation",
         "parameters": [
           {
+            "description": "ID of the organization that owns the reservation.",
             "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
             "in": "path",
             "name": "organization_id",
@@ -2146,6 +2172,7 @@
         "operationId": "listSSOProviders",
         "parameters": [
           {
+            "description": "ID of the organization that owns the SSO providers.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "organization_id",
@@ -2180,6 +2207,7 @@
         "operationId": "createSSOProvider",
         "parameters": [
           {
+            "description": "ID of the organization that owns the SSO provider.",
             "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
             "in": "path",
             "name": "organization_id",
@@ -2224,6 +2252,7 @@
         "operationId": "deleteSSOProvider",
         "parameters": [
           {
+            "description": "ID of the organization that owns the SSO provider.",
             "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
             "in": "path",
             "name": "organization_id",
@@ -2268,6 +2297,7 @@
         "operationId": "getUsageExport",
         "parameters": [
           {
+            "description": "ID of the organization.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "organization_id",
@@ -2371,6 +2401,7 @@
         "operationId": "getUsageOptions",
         "parameters": [
           {
+            "description": "ID of the organization.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "organization_id",
@@ -3021,6 +3052,7 @@
         "operationId": "listCustomImages",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3099,6 +3131,7 @@
         "operationId": "listCustomImagesOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -3106,6 +3139,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -3118,6 +3152,7 @@
             "x-go-name": "State"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3152,6 +3187,7 @@
         "operationId": "getCustomImagesOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3160,6 +3196,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -3252,6 +3289,7 @@
             "x-go-name": "ImageID"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3402,6 +3440,7 @@
         "operationId": "listInstanceGroups",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3439,6 +3478,7 @@
             }
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3481,6 +3521,7 @@
             "x-go-name": "InstanceGroupID"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3521,6 +3562,7 @@
             "x-go-name": "InstanceGroupID"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3573,6 +3615,7 @@
             }
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3606,6 +3649,7 @@
         "operationId": "listInstanceTemplates",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3643,6 +3687,7 @@
             }
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3685,6 +3730,7 @@
             "x-go-name": "InstanceTemplateID"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3728,6 +3774,7 @@
             "x-go-name": "InstanceTemplateID"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3764,6 +3811,7 @@
         "operationId": "bulkCreateInstance",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3808,6 +3856,7 @@
         "operationId": "listInstances",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3916,6 +3965,7 @@
         "operationId": "createInstance",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -3962,6 +4012,7 @@
         "operationId": "listComputeVMsInstancesOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -3969,6 +4020,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -3988,6 +4040,7 @@
             "x-go-name": "LowerTimeBound"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4022,6 +4075,7 @@
         "operationId": "getComputeVMsInstancesOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -4030,6 +4084,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -4316,6 +4371,7 @@
         "operationId": "getVMTypes",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -5834,6 +5890,7 @@
             "x-go-name": "ClusterID"
           },
           {
+            "description": "Filters results to the operation with this ID.",
             "example": "5f9c5d6a-2d15-4a2c-8a2a-9b0f4e1d3b21",
             "in": "query",
             "name": "operation_id",
@@ -5841,6 +5898,7 @@
             "x-go-name": "OperationID"
           },
           {
+            "description": "Filters results to operations in this state.",
             "example": "IN_PROGRESS",
             "in": "query",
             "name": "state",
@@ -5901,6 +5959,7 @@
         "operationId": "getAutoClusterOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -5909,6 +5968,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb",
             "in": "path",
             "name": "operation_id",
@@ -6113,6 +6173,7 @@
         "operationId": "listKubernetesClustersOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -6120,6 +6181,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -6132,6 +6194,7 @@
             "x-go-name": "State"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6169,6 +6232,7 @@
         "operationId": "getKubernetesClustersOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -6177,6 +6241,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -6721,6 +6786,7 @@
         "operationId": "remediateVM",
         "parameters": [
           {
+            "description": "ID of the project that owns the cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -7021,6 +7087,7 @@
         "operationId": "listKubernetesNodePoolsOperations",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -7058,6 +7125,7 @@
         "operationId": "getKubernetesNodePoolsOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -7066,6 +7134,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -7777,6 +7846,7 @@
         "operationId": "queryTimeseriesSimplified",
         "parameters": [
           {
+            "description": "ID of the project to query metrics for.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -7793,6 +7863,7 @@
             "x-go-name": "ResourceType"
           },
           {
+            "description": "Filters results to the resource with this ID.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "query",
             "name": "resource_id",
@@ -7855,6 +7926,7 @@
         "operationId": "queryTimeseries",
         "parameters": [
           {
+            "description": "ID of the project to query metrics for.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -7924,6 +7996,7 @@
         "operationId": "queryTimeseriesRange",
         "parameters": [
           {
+            "description": "ID of the project to query metrics for.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8012,6 +8085,7 @@
         "operationId": "queryTimeseriesWithParameters",
         "parameters": [
           {
+            "description": "ID of the project to query metrics for.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8111,6 +8185,7 @@
         "operationId": "listIBNetworks",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8184,6 +8259,7 @@
         "operationId": "listIBPartitions",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8224,6 +8300,7 @@
             }
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8350,6 +8427,7 @@
         "operationId": "listLoadBalancers",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8389,6 +8467,7 @@
             }
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8426,6 +8505,7 @@
         "operationId": "listNetworkingLoadBalancersOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -8433,6 +8513,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -8445,6 +8526,7 @@
             "x-go-name": "State"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8479,6 +8561,7 @@
         "operationId": "getNetworkingLoadBalancersOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8487,6 +8570,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -8758,6 +8842,7 @@
         "operationId": "listExternalLoadBalancerOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -8765,6 +8850,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -8777,6 +8863,7 @@
             "x-go-name": "State"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8814,6 +8901,7 @@
         "operationId": "getExternalLoadBalancerOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -8822,6 +8910,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -9030,6 +9119,7 @@
         "operationId": "listVPCFirewallRules",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9070,6 +9160,7 @@
             }
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9107,6 +9198,7 @@
         "operationId": "listNetworkingVPCFirewallRulesOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -9114,6 +9206,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -9126,6 +9219,7 @@
             "x-go-name": "State"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9160,6 +9254,7 @@
         "operationId": "getNetworkingVPCFirewallRulesOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9168,6 +9263,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -9341,6 +9437,7 @@
         "operationId": "listVPCNetworks",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9381,6 +9478,7 @@
             }
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9418,6 +9516,7 @@
         "operationId": "listNetworkingVPCNetworksOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -9425,6 +9524,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -9437,6 +9537,7 @@
             "x-go-name": "State"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9471,6 +9572,7 @@
         "operationId": "getNetworkingVPCNetworksOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9479,6 +9581,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -9661,6 +9764,7 @@
         "operationId": "listVPCSubnets",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9701,6 +9805,7 @@
             }
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9738,6 +9843,7 @@
         "operationId": "listNetworkingVPCSubnetsOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -9745,6 +9851,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -9757,6 +9864,7 @@
             "x-go-name": "State"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9791,6 +9899,7 @@
         "operationId": "getNetworkingVPCSubnetsOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -9799,6 +9908,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -9981,6 +10091,7 @@
         "operationId": "listProjectQuotas",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10017,6 +10128,7 @@
         "operationId": "listSlurmClusters",
         "parameters": [
           {
+            "description": "ID of the project that owns the Slurm clusters.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10042,6 +10154,7 @@
             "x-go-name": "Location"
           },
           {
+            "description": "Filters results to Slurm clusters in this state.",
             "example": "running",
             "in": "query",
             "name": "state",
@@ -10089,6 +10202,7 @@
             }
           },
           {
+            "description": "ID of the project that owns the Slurm cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10126,6 +10240,7 @@
         "operationId": "listSlurmClusterOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -10133,6 +10248,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -10145,6 +10261,7 @@
             "x-go-name": "State"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10182,6 +10299,7 @@
         "operationId": "getSlurmClusterOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10190,6 +10308,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -10229,6 +10348,7 @@
         "operationId": "deleteSlurmCluster",
         "parameters": [
           {
+            "description": "ID of the project that owns the Slurm cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10237,6 +10357,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the Slurm cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "slurm_cluster_id",
@@ -10268,6 +10389,7 @@
         "operationId": "getSlurmCluster",
         "parameters": [
           {
+            "description": "ID of the project that owns the Slurm cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10276,6 +10398,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the Slurm cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "slurm_cluster_id",
@@ -10306,6 +10429,7 @@
         "operationId": "listSlurmNodesets",
         "parameters": [
           {
+            "description": "ID of the project that owns the Slurm cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10314,6 +10438,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the Slurm cluster that owns the nodesets.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "slurm_cluster_id",
@@ -10358,6 +10483,7 @@
             }
           },
           {
+            "description": "ID of the project that owns the Slurm cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10366,6 +10492,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the Slurm cluster that owns the nodeset.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "slurm_cluster_id",
@@ -10403,6 +10530,7 @@
         "operationId": "listSlurmNodesetsOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -10410,6 +10538,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -10422,6 +10551,7 @@
             "x-go-name": "State"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10430,6 +10560,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the Slurm cluster that owns the nodesets.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "slurm_cluster_id",
@@ -10467,6 +10598,7 @@
         "operationId": "getSlurmNodesetOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10475,6 +10607,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -10483,6 +10616,7 @@
             "x-go-name": "OperationID"
           },
           {
+            "description": "ID of the Slurm cluster that owns the nodesets.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "slurm_cluster_id",
@@ -10522,6 +10656,7 @@
         "operationId": "deleteSlurmNodeset",
         "parameters": [
           {
+            "description": "ID of the project that owns the Slurm cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10530,6 +10665,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the Slurm cluster that owns the nodeset.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "slurm_cluster_id",
@@ -10569,6 +10705,7 @@
         "operationId": "getSlurmNodeset",
         "parameters": [
           {
+            "description": "ID of the project that owns the Slurm cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10577,6 +10714,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the Slurm cluster that owns the nodeset.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "slurm_cluster_id",
@@ -10613,6 +10751,7 @@
         "operationId": "updateSlurmNodeset",
         "parameters": [
           {
+            "description": "ID of the project that owns the Slurm cluster.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10621,6 +10760,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the Slurm cluster that owns the nodeset.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "slurm_cluster_id",
@@ -10737,6 +10877,7 @@
         "operationId": "createDisk",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10782,6 +10923,7 @@
         "operationId": "listStorageDisksOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -10789,6 +10931,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -10801,6 +10944,7 @@
             "x-go-name": "State"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10835,6 +10979,7 @@
         "operationId": "getStorageDisksOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -10843,6 +10988,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",
@@ -11447,6 +11593,7 @@
         "operationId": "listDiskSnapshots",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -11482,6 +11629,7 @@
         "operationId": "createDiskSnapshot",
         "parameters": [
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -11524,6 +11672,7 @@
         "operationId": "listStorageSnapshotsOperations",
         "parameters": [
           {
+            "description": "Filters results to operations on the resource with this ID.",
             "example": "452580d7-41d1-4b63-b4d7-4e4e21e95f96",
             "in": "query",
             "name": "resource_id",
@@ -11531,6 +11680,7 @@
             "x-go-name": "ResourceID"
           },
           {
+            "description": "Filters results to operations in these states.",
             "example": [
               "IN_PROGRESS"
             ],
@@ -11543,6 +11693,7 @@
             "x-go-name": "State"
           },
           {
+            "description": "ID of the project.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -11577,6 +11728,7 @@
         "operationId": "getStorageSnapshotsOperation",
         "parameters": [
           {
+            "description": "ID of the project that owns the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "project_id",
@@ -11585,6 +11737,7 @@
             "x-go-name": "ProjectID"
           },
           {
+            "description": "ID of the operation.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "operation_id",

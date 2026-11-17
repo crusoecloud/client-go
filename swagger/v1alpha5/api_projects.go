@@ -158,7 +158,7 @@ func (a *ProjectsApiService) CreateProject(ctx context.Context, body ProjectsPos
 ProjectsApiService Deletes a project.
 Delete operations cascade to VMs created under that project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 */
 func (a *ProjectsApiService) DeleteProject(ctx context.Context, projectId string) (*http.Response, error) {
 	var (

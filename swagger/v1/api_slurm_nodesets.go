@@ -31,8 +31,8 @@ SlurmNodesetsApiService Create a new slurm nodeset owned by the logged in user.
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param slurmClusterId
+  - @param projectId ID of the project that owns the Slurm cluster.
+  - @param slurmClusterId ID of the Slurm cluster that owns the nodeset.
 
 @return AsyncOperationResponse
 */
@@ -161,8 +161,8 @@ func (a *SlurmNodesetsApiService) CreateSlurmNodeset(ctx context.Context, body S
 /*
 SlurmNodesetsApiService Delete a nodeset that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param slurmClusterId
+  - @param projectId ID of the project that owns the Slurm cluster.
+  - @param slurmClusterId ID of the Slurm cluster that owns the nodeset.
   - @param nodesetId
 
 @return AsyncOperationResponse
@@ -281,8 +281,8 @@ func (a *SlurmNodesetsApiService) DeleteSlurmNodeset(ctx context.Context, projec
 /*
 SlurmNodesetsApiService Retrieve information about a particular slurm nodeset belonging to the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param slurmClusterId
+  - @param projectId ID of the project that owns the Slurm cluster.
+  - @param slurmClusterId ID of the Slurm cluster that owns the nodeset.
   - @param nodesetId
 
 @return SlurmNodeset
@@ -391,8 +391,8 @@ func (a *SlurmNodesetsApiService) GetSlurmNodeset(ctx context.Context, projectId
 /*
 SlurmNodesetsApiService Retrieve information about slurm nodesets belonging to a project or cluster.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param slurmClusterId
+ * @param projectId ID of the project that owns the Slurm cluster.
+ * @param slurmClusterId ID of the Slurm cluster that owns the nodesets.
  * @param optional nil or *SlurmNodesetsApiListSlurmNodesetsOpts - Optional Parameters:
      * @param "Name" (optional.String) -
 @return ListSlurmNodesetsResponse
@@ -509,8 +509,8 @@ func (a *SlurmNodesetsApiService) ListSlurmNodesets(ctx context.Context, project
 SlurmNodesetsApiService Update a nodeset that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
-  - @param slurmClusterId
+  - @param projectId ID of the project that owns the Slurm cluster.
+  - @param slurmClusterId ID of the Slurm cluster that owns the nodeset.
   - @param nodesetId
 
 @return AsyncOperationResponse

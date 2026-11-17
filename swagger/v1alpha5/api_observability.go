@@ -29,7 +29,7 @@ type ObservabilityApiService service
 /*
 ObservabilityApiService Query timeseries at an instant via PromQL.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project to query metrics for.
  * @param query Prometheus expression query string.
  * @param optional nil or *ObservabilityApiQueryTimeseriesOpts - Optional Parameters:
      * @param "Time" (optional.String) -  Evaluation timestamp.
@@ -176,7 +176,7 @@ func (a *ObservabilityApiService) QueryTimeseries(ctx context.Context, projectId
 /*
 ObservabilityApiService Query timeseries over a time range via PromQL.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project to query metrics for.
  * @param query Prometheus expression query string.
  * @param start Start timestamp, inclusive.
  * @param end End timestamp, inclusive.
@@ -324,13 +324,13 @@ func (a *ObservabilityApiService) QueryTimeseriesRange(ctx context.Context, proj
 /*
 ObservabilityApiService Query timeseries for a resource.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project to query metrics for.
  * @param resourceType
  * @param start Start timestamp, inclusive.
  * @param end End timestamp, inclusive.
  * @param step Query resolution step width in duration format or float number of seconds.
  * @param optional nil or *ObservabilityApiQueryTimeseriesSimplifiedOpts - Optional Parameters:
-     * @param "ResourceId" (optional.String) -
+     * @param "ResourceId" (optional.String) -  Filters results to the resource with this ID.
 @return ObservabilityMetrics
 */
 
@@ -467,7 +467,7 @@ func (a *ObservabilityApiService) QueryTimeseriesSimplified(ctx context.Context,
 /*
 ObservabilityApiService Query timeseries by passing various metric parameters.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project to query metrics for.
  * @param metric Name of the metric to query.
  * @param start Start timestamp, inclusive.
  * @param end End timestamp, inclusive.

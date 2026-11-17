@@ -29,7 +29,7 @@ type BillingApiService service
 /*
 BillingApiService Get the daily spend for a specified organization by project. Returns real-time data for Intelligence Billing (Serverless Inference + Serverless Fine Tuning).
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
+  - @param organizationId ID of the organization.
 
 @return BillingCostData
 */
@@ -155,7 +155,7 @@ func (a *BillingApiService) GetBillingCosts(ctx context.Context, organizationId 
 /*
 BillingApiService Return a CSV containing the costs for resources in a given period.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
+ * @param organizationId ID of the organization.
  * @param startDate
  * @param endDate
  * @param optional nil or *BillingApiGetBillingExportProductlineOpts - Optional Parameters:
@@ -275,7 +275,7 @@ func (a *BillingApiService) GetBillingExportProductline(ctx context.Context, org
 /*
 BillingApiService Retrieve data about an organizations recent Non-Reservation costs.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
+ * @param organizationId ID of the organization.
  * @param optional nil or *BillingApiGetBillingOptionsOpts - Optional Parameters:
      * @param "StartDate" (optional.String) -
      * @param "EndDate" (optional.String) -

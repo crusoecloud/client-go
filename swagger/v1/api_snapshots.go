@@ -29,7 +29,7 @@ SnapshotsApiService Creates a disk snapshot in the project and returns the async
 A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return AsyncOperationResponse
 */
@@ -396,7 +396,7 @@ func (a *SnapshotsApiService) GetDiskSnapshot(ctx context.Context, projectId str
 SnapshotsApiService Lists all disk snapshots in the project and returns their details.
 Size of snapshots will be in bytes.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListDiskSnapshotsResponseV1
 */

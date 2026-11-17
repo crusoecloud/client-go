@@ -28,7 +28,7 @@ type SCIMApiService service
 SCIMApiService Create a new SCIM integration for an organization.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body CreateSCIMIntegrationRequestBody is the JSON request body for creating a SCIM integration.
-  - @param orgId
+  - @param orgId ID of the organization that owns the SCIM integration.
 
 @return CreateScimIntegrationResponse
 */
@@ -157,8 +157,8 @@ func (a *SCIMApiService) CreateSCIMIntegration(ctx context.Context, body CreateS
 SCIMApiService Create a token for a SCIM integration.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body CreateSCIMTokenRequestBody is the JSON request body for creating a SCIM integration token.
-  - @param orgId
-  - @param integrationId
+  - @param orgId ID of the organization that owns the SCIM integration.
+  - @param integrationId ID of the SCIM integration that owns the tokens.
 
 @return LimitedUsageApiKeyPostResponse
 */
@@ -297,8 +297,8 @@ func (a *SCIMApiService) CreateSCIMIntegrationToken(ctx context.Context, body Cr
 /*
 SCIMApiService Delete a SCIM integration.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId
-  - @param integrationId
+  - @param orgId ID of the organization that owns the SCIM integration.
+  - @param integrationId ID of the SCIM integration.
 */
 func (a *SCIMApiService) DeleteSCIMIntegration(ctx context.Context, orgId string, integrationId string) (*http.Response, error) {
 	var (
@@ -404,8 +404,8 @@ func (a *SCIMApiService) DeleteSCIMIntegration(ctx context.Context, orgId string
 /*
 SCIMApiService Delete a token from a SCIM integration.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId
-  - @param integrationId
+  - @param orgId ID of the organization that owns the SCIM integration.
+  - @param integrationId ID of the SCIM integration that owns the token.
   - @param accessKeyId
 */
 func (a *SCIMApiService) DeleteSCIMIntegrationToken(ctx context.Context, orgId string, integrationId string, accessKeyId string) (*http.Response, error) {
@@ -523,8 +523,8 @@ func (a *SCIMApiService) DeleteSCIMIntegrationToken(ctx context.Context, orgId s
 /*
 SCIMApiService Get a SCIM integration by ID.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId
-  - @param integrationId
+  - @param orgId ID of the organization that owns the SCIM integration.
+  - @param integrationId ID of the SCIM integration.
 
 @return ScimIntegrationResponse
 */
@@ -651,8 +651,8 @@ func (a *SCIMApiService) GetSCIMIntegration(ctx context.Context, orgId string, i
 /*
 SCIMApiService List the tokens for a SCIM integration.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId
-  - @param integrationId
+  - @param orgId ID of the organization that owns the SCIM integration.
+  - @param integrationId ID of the SCIM integration that owns the tokens.
 
 @return ListScimIntegrationTokensResponse
 */
@@ -779,7 +779,7 @@ func (a *SCIMApiService) ListSCIMIntegrationTokens(ctx context.Context, orgId st
 /*
 SCIMApiService List SCIM integrations for an organization.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param orgId
+  - @param orgId ID of the organization that owns the SCIM integrations.
 
 @return ListScimIntegrationsResponse
 */
@@ -896,8 +896,8 @@ func (a *SCIMApiService) ListSCIMIntegrations(ctx context.Context, orgId string)
 SCIMApiService Update a SCIM integration.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body UpdateSCIMIntegrationRequestBody is the JSON request body for updating a SCIM integration.
-  - @param orgId
-  - @param integrationId
+  - @param orgId ID of the organization that owns the SCIM integration.
+  - @param integrationId ID of the SCIM integration.
 
 @return ScimIntegrationResponse
 */

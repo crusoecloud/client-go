@@ -28,7 +28,7 @@ type VPCNetworksApiService service
 VPCNetworksApiService Creates a VPC network in the project and returns the created network.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body VPCNetworkPostRequest is the request type for POST requests to the VPC Networks endpoint.
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return VpcNetworkPostResponse
 */
@@ -412,7 +412,7 @@ func (a *VPCNetworksApiService) GetVPCNetwork(ctx context.Context, projectId str
 /*
 VPCNetworksApiService Lists all VPC networks in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListVpcNetworksResponseV1Alpha5
 */

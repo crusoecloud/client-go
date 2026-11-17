@@ -29,7 +29,7 @@ type ReservationsApiService service
 /*
 ReservationsApiService Get latest GPU tracking data for the specified organization. User must be part of the organization and have reservations feature access.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
+ * @param organizationId ID of the organization that owns the reservations.
  * @param optional nil or *ReservationsApiGetLatestGPUTrackingOpts - Optional Parameters:
      * @param "ProductLine" (optional.Interface of []string) -
      * @param "Region" (optional.Interface of []string) -
@@ -169,7 +169,7 @@ func (a *ReservationsApiService) GetLatestGPUTracking(ctx context.Context, organ
 /*
 ReservationsApiService Get reservation belonging to the specified organization and reservation ID. User must be part of the organization.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
+  - @param organizationId ID of the organization that owns the reservation.
   - @param reservationId
 
 @return ReservationsGetResponse
@@ -297,7 +297,7 @@ func (a *ReservationsApiService) GetReservation(ctx context.Context, organizatio
 /*
 ReservationsApiService Get all reservations belonging to the specified organization. User must be part of the organization.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
+ * @param organizationId ID of the organization that owns the reservations.
  * @param optional nil or *ReservationsApiGetReservationsOpts - Optional Parameters:
      * @param "Status" (optional.String) -
 @return ReservationsGetResponse
@@ -432,7 +432,7 @@ func (a *ReservationsApiService) GetReservations(ctx context.Context, organizati
 /*
 ReservationsApiService Get GPU tracking data for the specified organization. User must be part of the organization and have reservations feature access.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
+ * @param organizationId ID of the organization that owns the reservations.
  * @param optional nil or *ReservationsApiGetReservationsGPUTrackingOpts - Optional Parameters:
      * @param "ProductLine" (optional.Interface of []string) -
      * @param "Region" (optional.Interface of []string) -
