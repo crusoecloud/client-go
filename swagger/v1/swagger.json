@@ -14400,7 +14400,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GeneratedToken": {
-      "description": "GeneratedToken contains the Traits Island stores for a Token inside of Kratos.\nThese are the fields returned from a PUT request.",
+      "description": "An API key you just created. It includes the secret key, which the API doesn't return again.",
       "properties": {
         "access_key": {
           "example": "R7p5XctCQMuGlpVBmVdqzA",
@@ -17714,7 +17714,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LimitedUsageAPIKeyInfo": {
-      "description": "TokenInfo contains the Traits Island stores for a Token inside of Kratos.\nThese are the fields returned from a GET request.",
+      "description": "A limited usage API key. The API returns the key itself only when you create it.",
       "properties": {
         "alias": {
           "example": "token1",
@@ -21353,7 +21353,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/schemas/utils/fetch"
     },
     "TokenInfo": {
-      "description": "TokenInfo contains the Traits Island stores for a Token inside of Kratos.\nThese are the fields returned from a GET request.",
+      "description": "An API key. The API returns its secret key only when you create the key.",
       "properties": {
         "access_key": {
           "example": "Hm11C1coQZm2+Aihn9ofYg",

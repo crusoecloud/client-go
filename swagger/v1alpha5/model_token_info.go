@@ -8,7 +8,7 @@
  */
 package swagger
 
-// TokenInfo contains the Traits Island stores for a Token inside of Kratos. These are the fields returned from a GET request.
+// An API key. The API returns its secret key only when you create the key.
 type TokenInfo struct {
 	AccessKey string `json:"access_key"`
 	Alias     string `json:"alias"`
