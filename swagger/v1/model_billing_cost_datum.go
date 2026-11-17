@@ -8,13 +8,22 @@
  */
 package swagger
 
+// The cost of one resource type in one project and region on one day.
 type BillingCostDatum struct {
-	BillableMetric string  `json:"billable_metric"`
-	Cost           float64 `json:"cost,omitempty"`
-	Date           string  `json:"date"`
-	ProjectId      string  `json:"project_id"`
-	Quantity       float64 `json:"quantity"`
-	Region         string  `json:"region"`
-	ResourceType   string  `json:"resource_type"`
-	UnitPrice      float64 `json:"unit_price,omitempty"`
+	// Unit of `quantity`, such as `gpu-hours`.
+	BillableMetric string `json:"billable_metric"`
+	// Cost of the usage, in US dollars.
+	Cost float64 `json:"cost,omitempty"`
+	// Day of the usage, as `YYYY-MM-DD` in UTC.
+	Date string `json:"date"`
+	// ID of the project that used the resource.
+	ProjectId string `json:"project_id"`
+	// Amount used, in the unit that `billable_metric` names.
+	Quantity float64 `json:"quantity"`
+	// Region the resource is in.
+	Region string `json:"region"`
+	// Type of the resource used.
+	ResourceType string `json:"resource_type"`
+	// Price of one unit of `billable_metric`, in US dollars.
+	UnitPrice float64 `json:"unit_price,omitempty"`
 }

@@ -8,12 +8,18 @@
  */
 package swagger
 
-// UsageOptions contains the values which exist for the fields which we allow filtering on for the usageByProjectGet endpoint.
+// The values the usage and billing endpoints can filter by, taken from the organization's usage in the requested period.
 type UsageOptions struct {
-	EndDate       string   `json:"end_date"`
-	ProductLines  []string `json:"product_lines"`
-	Projects      []string `json:"projects"`
-	Regions       []string `json:"regions"`
+	// Last day with usage in the period, as `YYYY-MM-DD`.
+	EndDate string `json:"end_date"`
+	// Product lines with usage in the period.
+	ProductLines []string `json:"product_lines"`
+	// IDs of the projects with usage in the period.
+	Projects []string `json:"projects"`
+	// Regions with usage in the period.
+	Regions []string `json:"regions"`
+	// Resource types with usage in the period.
 	ResourceTypes []string `json:"resource_types"`
-	StartDate     string   `json:"start_date"`
+	// First day with usage in the period, as `YYYY-MM-DD`.
+	StartDate string `json:"start_date"`
 }

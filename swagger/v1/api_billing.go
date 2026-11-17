@@ -156,12 +156,12 @@ func (a *BillingApiService) GetBillingCosts(ctx context.Context, organizationId 
 BillingApiService Return a CSV containing the costs for resources in a given period.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param organizationId ID of the organization.
- * @param startDate
- * @param endDate
+ * @param startDate First day to include, as &#x60;YYYY-MM-DD&#x60; in UTC.
+ * @param endDate Last day to include, as &#x60;YYYY-MM-DD&#x60; in UTC.
  * @param optional nil or *BillingApiGetBillingExportProductlineOpts - Optional Parameters:
-     * @param "Projects" (optional.Interface of []string) -
-     * @param "ProductLines" (optional.Interface of []string) -
-     * @param "Regions" (optional.Interface of []string) -
+     * @param "Projects" (optional.Interface of []string) -  Filters results to the projects with these IDs.
+     * @param "ProductLines" (optional.Interface of []string) -  Filters results to these product lines.
+     * @param "Regions" (optional.Interface of []string) -  Filters results to these regions.
 
 */
 
@@ -277,8 +277,8 @@ BillingApiService Retrieve data about an organizations recent Non-Reservation co
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param organizationId ID of the organization.
  * @param optional nil or *BillingApiGetBillingOptionsOpts - Optional Parameters:
-     * @param "StartDate" (optional.String) -
-     * @param "EndDate" (optional.String) -
+     * @param "StartDate" (optional.String) -  First day of the period to list filter values for, as &#x60;YYYY-MM-DD&#x60; in UTC.
+     * @param "EndDate" (optional.String) -  Last day of the period to list filter values for, as &#x60;YYYY-MM-DD&#x60; in UTC.
 @return UsageOptions
 */
 

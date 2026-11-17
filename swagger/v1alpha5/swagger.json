@@ -1670,6 +1670,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "Filters results to the projects with these IDs.",
             "example": [
               "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb"
             ],
@@ -1682,6 +1683,7 @@
             "x-go-name": "Projects"
           },
           {
+            "description": "Filters results to these product lines.",
             "example": [
               "persistent-ssd",
               "a40"
@@ -1695,6 +1697,7 @@
             "x-go-name": "ProductLines"
           },
           {
+            "description": "Filters results to these regions.",
             "example": [
               "us-east1",
               "us-northcentral1"
@@ -1708,6 +1711,7 @@
             "x-go-name": "Regions"
           },
           {
+            "description": "First day to include, as `YYYY-MM-DD` in UTC.",
             "example": "\"2022-07-01\"",
             "in": "query",
             "name": "start_date",
@@ -1716,6 +1720,7 @@
             "x-go-name": "StartDate"
           },
           {
+            "description": "Last day to include, as `YYYY-MM-DD` in UTC.",
             "example": "\"2023-08-08\"",
             "in": "query",
             "name": "end_date",
@@ -1761,6 +1766,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "First day of the period to list filter values for, as `YYYY-MM-DD` in UTC.",
             "example": "\"2025-05-01\"",
             "in": "query",
             "name": "start_date",
@@ -1768,6 +1774,7 @@
             "x-go-name": "StartDate"
           },
           {
+            "description": "Last day of the period to list filter values for, as `YYYY-MM-DD` in UTC.",
             "example": "\"2025-05-20\"",
             "in": "query",
             "name": "end_date",
@@ -2306,6 +2313,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "Filters results to the projects with these IDs.",
             "example": [
               "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb"
             ],
@@ -2319,6 +2327,7 @@
             "x-go-name": "Projects"
           },
           {
+            "description": "Filters results to the resources with these IDs.",
             "example": [
               "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb"
             ],
@@ -2332,6 +2341,7 @@
             "x-go-name": "Resources"
           },
           {
+            "description": "Filters results to these resource types.",
             "example": [
               "persistent-ssd",
               "a40.1x"
@@ -2346,6 +2356,7 @@
             "x-go-name": "ResourceTypes"
           },
           {
+            "description": "Filters results to these regions.",
             "example": [
               "us-east1",
               "us-northcentral1"
@@ -2360,6 +2371,7 @@
             "x-go-name": "Regions"
           },
           {
+            "description": "First day to include, as `YYYY-MM-DD` in UTC.",
             "example": "\"2022-07-01\"",
             "in": "query",
             "name": "start_date",
@@ -2368,6 +2380,7 @@
             "x-go-name": "StartDate"
           },
           {
+            "description": "Last day to include, as `YYYY-MM-DD` in UTC.",
             "example": "\"2023-08-08\"",
             "in": "query",
             "name": "end_date",
@@ -12594,9 +12607,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingCostData": {
-      "description": "UsageByProjectGetResponse is the response type for GET requests to the usage.usageByProject endpoint.",
+      "description": "The organization's daily costs.",
       "properties": {
         "data": {
+          "description": "The costs, one entry per project, resource type, region, and day.",
           "items": {
             "$ref": "#/definitions/BillingCostDatum"
           },
@@ -12604,6 +12618,7 @@
           "x-go-name": "Data"
         },
         "last_updated": {
+          "description": "When the costs were last computed, as an RFC 3339 timestamp.",
           "type": "string",
           "x-go-name": "LastUpdated"
         }
@@ -12615,45 +12630,54 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingCostDatum": {
+      "description": "The cost of one resource type in one project and region on one day.",
       "properties": {
         "billable_metric": {
+          "description": "Unit of `quantity`, such as `gpu-hours`.",
           "example": "\"gpu-hours\"",
           "type": "string",
           "x-go-name": "BillableMetric"
         },
         "cost": {
+          "description": "Cost of the usage, in US dollars.",
           "example": 12.34,
           "format": "double",
           "type": "number",
           "x-go-name": "Cost"
         },
         "date": {
+          "description": "Day of the usage, as `YYYY-MM-DD` in UTC.",
           "example": "\"2022-07-01\"",
           "type": "string",
           "x-go-name": "Date"
         },
         "project_id": {
+          "description": "ID of the project that used the resource.",
           "example": "\"d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb\"",
           "type": "string",
           "x-go-name": "ProjectID"
         },
         "quantity": {
+          "description": "Amount used, in the unit that `billable_metric` names.",
           "example": 2.123,
           "format": "double",
           "type": "number",
           "x-go-name": "Quantity"
         },
         "region": {
+          "description": "Region the resource is in.",
           "example": "\"us-northcentral1\"",
           "type": "string",
           "x-go-name": "Region"
         },
         "resource_type": {
+          "description": "Type of the resource used.",
           "example": "\"a40.1x\"",
           "type": "string",
           "x-go-name": "ResourceType"
         },
         "unit_price": {
+          "description": "Price of one unit of `billable_metric`, in US dollars.",
           "example": 1.23,
           "format": "double",
           "type": "number",
@@ -14438,14 +14462,17 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GetCreditBalanceResponse": {
+      "description": "The aggregate balance of the organization's active credit grants.",
       "properties": {
         "grants_count": {
+          "description": "Number of active grants.",
           "example": 3,
           "format": "int32",
           "type": "integer",
           "x-go-name": "GrantsCount"
         },
         "total_balance": {
+          "description": "Sum of the remaining balances of the active grants, as a decimal string.",
           "example": "\"1250.00\"",
           "type": "string",
           "x-go-name": "TotalBalance"
@@ -21752,14 +21779,16 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UsageOptions": {
-      "description": "UsageOptions contains the values which exist for the fields which we allow filtering\non for the usageByProjectGet endpoint.",
+      "description": "The values the usage and billing endpoints can filter by, taken from the organization's usage\nin the requested period.",
       "properties": {
         "end_date": {
+          "description": "Last day with usage in the period, as `YYYY-MM-DD`.",
           "example": "\"2023-08-08\"",
           "type": "string",
           "x-go-name": "EndDate"
         },
         "product_lines": {
+          "description": "Product lines with usage in the period.",
           "example": [
             "a40",
             "h200"
@@ -21771,6 +21800,7 @@
           "x-go-name": "ProductLines"
         },
         "projects": {
+          "description": "IDs of the projects with usage in the period.",
           "example": [
             "d8f58dfd-dd86-4ee4-8f01-643e6d0f15bb"
           ],
@@ -21781,6 +21811,7 @@
           "x-go-name": "Projects"
         },
         "regions": {
+          "description": "Regions with usage in the period.",
           "example": [
             "us-east1",
             "us-northcentral1"
@@ -21792,6 +21823,7 @@
           "x-go-name": "Regions"
         },
         "resource_types": {
+          "description": "Resource types with usage in the period.",
           "example": [
             "persistent-ssd",
             "a40.1x"
@@ -21803,6 +21835,7 @@
           "x-go-name": "ResourceTypes"
         },
         "start_date": {
+          "description": "First day with usage in the period, as `YYYY-MM-DD`.",
           "example": "\"2022-07-01\"",
           "type": "string",
           "x-go-name": "StartDate"
@@ -22641,13 +22674,13 @@
       }
     },
     "billingCostsGetResponse": {
-      "description": "",
+      "description": "The organization's daily non-reservation costs, by project, resource type, and region.",
       "schema": {
         "$ref": "#/definitions/BillingCostData"
       }
     },
     "billingOptionsGetResponse": {
-      "description": "",
+      "description": "The values you can filter the organization's non-reservation costs by.",
       "schema": {
         "$ref": "#/definitions/UsageOptions"
       }
@@ -22888,7 +22921,7 @@
       }
     },
     "getBillingExportProductlineResponse": {
-      "description": "",
+      "description": "A CSV file of the organization's costs, with one row per project, product line, region, and day.",
       "headers": {
         "cost": {
           "description": "required: true",
@@ -22944,7 +22977,7 @@
       }
     },
     "getCreditBalanceResponse": {
-      "description": "",
+      "description": "The aggregate balance of the organization's active credit grants.",
       "schema": {
         "$ref": "#/definitions/GetCreditBalanceResponse"
       }
@@ -23560,7 +23593,7 @@
       }
     },
     "usageExportGetResponse": {
-      "description": "",
+      "description": "A CSV file of the organization's usage, with one row per resource and day.",
       "headers": {
         "metric": {
           "example": "instance-hours",
@@ -23594,7 +23627,7 @@
       }
     },
     "usageOptionsGetResponse": {
-      "description": "",
+      "description": "The values you can filter the organization's usage by.",
       "schema": {
         "$ref": "#/definitions/UsageOptions"
       }

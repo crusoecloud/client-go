@@ -8,7 +8,10 @@
  */
 package swagger
 
+// The aggregate balance of the organization's active credit grants.
 type GetCreditBalanceResponse struct {
-	GrantsCount  int32  `json:"grants_count"`
+	// Number of active grants.
+	GrantsCount int32 `json:"grants_count"`
+	// Sum of the remaining balances of the active grants, as a decimal string.
 	TotalBalance string `json:"total_balance"`
 }
