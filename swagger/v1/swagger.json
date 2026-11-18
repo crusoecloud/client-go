@@ -261,18 +261,21 @@
         "operationId": "listRoleBindings",
         "parameters": [
           {
+            "description": "Filters results to role bindings for the users with these comma-separated IDs.",
             "in": "query",
             "name": "user_id",
             "type": "string",
             "x-go-name": "UserID"
           },
           {
+            "description": "Filters results to role bindings that grant the roles with these comma-separated IDs.",
             "in": "query",
             "name": "role_id",
             "type": "string",
             "x-go-name": "RoleID"
           },
           {
+            "description": "Filters results to role bindings that apply to this type of resource.",
             "enum": [
               "org",
               "project"
@@ -283,18 +286,21 @@
             "x-go-name": "ScopeType"
           },
           {
+            "description": "Filters results to role bindings that apply to the organization or project with this ID. Requires `scope_type`.",
             "in": "query",
             "name": "scope_object_id",
             "type": "string",
             "x-go-name": "ScopeObjectID"
           },
           {
+            "description": "Filters results to role bindings for the principals with these comma-separated IDs, as role bindings return them in\n`principal_id`. Requires `principal_type`.",
             "in": "query",
             "name": "principal_id",
             "type": "string",
             "x-go-name": "PrincipalID"
           },
           {
+            "description": "Filters results to role bindings for this type of principal. Requires `principal_id`.",
             "enum": [
               "user",
               "service_account"
@@ -357,6 +363,7 @@
         "operationId": "applyServiceAccountRoleBindings",
         "parameters": [
           {
+            "description": "ID of the service account whose role bindings to change. The service account can't be disabled or managed by Crusoe.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "service_account_id",
@@ -365,6 +372,7 @@
             "x-go-name": "ServiceAccountID"
           },
           {
+            "description": "The role bindings to create and delete for a service account.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -402,6 +410,7 @@
         "operationId": "applyRoleBindings",
         "parameters": [
           {
+            "description": "ID of the user whose role bindings to change. You can't change your own role bindings.",
             "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
             "in": "path",
             "name": "user_id",
@@ -410,6 +419,7 @@
             "x-go-name": "UserID"
           },
           {
+            "description": "The role bindings to create and delete for a user.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -494,7 +504,7 @@
             "x-go-name": "OrgID"
           },
           {
-            "description": "EntitiesPutPostRequest is the request type for PUT and POST requests to the entities endpoint.",
+            "description": "Details of the organization to create or update.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -822,7 +832,7 @@
             "x-go-name": "OrgID"
           },
           {
-            "description": "CreateSCIMIntegrationRequestBody is the JSON request body for creating a SCIM integration.",
+            "description": "The SCIM integration to create.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -1067,7 +1077,7 @@
             "x-go-name": "IntegrationID"
           },
           {
-            "description": "CreateSCIMTokenRequestBody is the JSON request body for creating a SCIM integration token.",
+            "description": "The SCIM integration token to create.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -1125,6 +1135,7 @@
             "x-go-name": "IntegrationID"
           },
           {
+            "description": "ID of the token, from its key_id field.",
             "example": "R7p5XctCQMuGlpVBmVdqzA",
             "in": "path",
             "name": "access_key_id",
@@ -2223,6 +2234,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "The SSO provider to create.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -2268,6 +2280,7 @@
             "x-go-name": "OrgID"
           },
           {
+            "description": "ID of the SSO provider.",
             "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
             "in": "path",
             "name": "provider_id",
@@ -11968,6 +11981,7 @@
         "operationId": "updateUserIdentity",
         "parameters": [
           {
+            "description": "The changes to make to your identity. Only the name can be changed.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -11998,6 +12012,7 @@
         "operationId": "deleteLimitedUsageAPIKey",
         "parameters": [
           {
+            "description": "ID of the limited usage API key to delete.",
             "example": "WTUzcGibQ82y9_01h4MCdQ",
             "in": "query",
             "name": "key_id",
@@ -12048,6 +12063,7 @@
         "operationId": "createLimitedUsageAPIKey",
         "parameters": [
           {
+            "description": "What you can use the key for.",
             "enum": [
               "inference",
               "observability"
@@ -12059,6 +12075,7 @@
             "x-go-name": "Usage"
           },
           {
+            "description": "The limited usage API key to create.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -12175,6 +12192,7 @@
         "operationId": "updateUserSSOEnforcement",
         "parameters": [
           {
+            "description": "The SSO enforcement level to set for users in your organization.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -12211,6 +12229,7 @@
         "operationId": "deleteToken",
         "parameters": [
           {
+            "description": "Access key ID of the API key to delete.",
             "example": "WTUzcGibQ82y9_01h4MCdQ",
             "in": "query",
             "name": "access_key",
@@ -12261,6 +12280,7 @@
         "operationId": "createToken",
         "parameters": [
           {
+            "description": "The API key to create.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -12289,8 +12309,10 @@
   },
   "definitions": {
     "ApplyRoleBindingRequest": {
+      "description": "The role bindings to create and delete for a user.",
       "properties": {
         "bindings_to_create": {
+          "description": "Role bindings to create for the user.",
           "items": {
             "$ref": "#/definitions/RoleBindingInput"
           },
@@ -12298,6 +12320,7 @@
           "x-go-name": "BindingsToCreate"
         },
         "bindings_to_delete": {
+          "description": "IDs of the user's role bindings to delete. A user always needs an `org` binding, so to delete one, create another\nin the same request.",
           "items": {
             "type": "string"
           },
@@ -12313,8 +12336,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ApplyServiceAccountRoleBindingRequest": {
+      "description": "The role bindings to create and delete for a service account.",
       "properties": {
         "bindings_to_create": {
+          "description": "Role bindings to create for the service account.",
           "items": {
             "$ref": "#/definitions/ServiceAccountRoleBindingInput"
           },
@@ -12322,6 +12347,7 @@
           "x-go-name": "BindingsToCreate"
         },
         "bindings_to_delete": {
+          "description": "IDs of the service account's role bindings to delete.",
           "items": {
             "type": "string"
           },
@@ -12528,14 +12554,16 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Billing": {
-      "description": "Billing contains information about the billing status of an organization.",
+      "description": "An organization's billing status.",
       "properties": {
         "balance": {
+          "description": "Balance of the organization.",
           "example": "$1000.00",
           "type": "string",
           "x-go-name": "Balance"
         },
         "billing_method": {
+          "description": "How the organization is billed.",
           "enum": [
             "stripe",
             "manual"
@@ -12544,11 +12572,13 @@
           "x-go-name": "BillingMethod"
         },
         "delinquent": {
+          "description": "Whether the organization is delinquent on its payments.",
           "example": false,
           "type": "boolean",
           "x-go-name": "Delinquent"
         },
         "has_valid_payment_method": {
+          "description": "Whether the organization has a valid payment method.",
           "example": true,
           "type": "boolean",
           "x-go-name": "HasValidPaymentMethod"
@@ -12563,34 +12593,40 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "BillingAddress": {
-      "description": "BillingAddress contains sensitive information related to the billing address for an entity.",
+      "description": "An organization's billing address.",
       "properties": {
         "address_line1": {
+          "description": "First line of the address.",
           "example": "123 Main Street",
           "type": "string",
           "x-go-name": "AddressLine1"
         },
         "address_line2": {
+          "description": "Second line of the address.",
           "example": "Suite 400",
           "type": "string",
           "x-go-name": "AddressLine2"
         },
         "city": {
+          "description": "City of the address.",
           "example": "Denver",
           "type": "string",
           "x-go-name": "City"
         },
         "country": {
+          "description": "Country of the address, as a two-letter country code.",
           "example": "US",
           "type": "string",
           "x-go-name": "Country"
         },
         "postal_code": {
+          "description": "Postal code of the address.",
           "example": "80202",
           "type": "string",
           "x-go-name": "PostalCode"
         },
         "state_or_region": {
+          "description": "State or region of the address.",
           "example": "Colorado",
           "type": "string",
           "x-go-name": "StateOrRegion"
@@ -12960,19 +12996,22 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "CreateLimitedUsageAPIKeyRequest": {
+      "description": "The limited usage API key to create.",
       "properties": {
         "alias": {
+          "description": "Display name of the key.",
           "example": "token1",
           "type": "string",
           "x-go-name": "Alias"
         },
         "expires_at": {
+          "description": "When the key expires, in RFC 3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpiresAt"
         },
         "project_id": {
-          "description": "Optional project ID the token is scoped to",
+          "description": "ID of the project to scope the key to, if any.",
           "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
           "type": "string",
           "x-go-name": "ProjectID"
@@ -13083,14 +13122,16 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateSCIMIntegrationRequestBody": {
-      "description": "CreateSCIMIntegrationRequestBody is the JSON request body for creating a SCIM integration.",
+      "description": "The SCIM integration to create.",
       "properties": {
         "identity_provider": {
+          "description": "Identity provider that provisions your users through the SCIM integration. The only supported value is okta.",
           "example": "okta",
           "type": "string",
           "x-go-name": "IdentityProvider"
         },
         "name": {
+          "description": "Display name of the SCIM integration, at most 128 characters.",
           "example": "Okta SCIM Integration",
           "type": "string",
           "x-go-name": "Name"
@@ -13123,14 +13164,16 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateSCIMTokenRequestBody": {
-      "description": "CreateSCIMTokenRequestBody is the JSON request body for creating a SCIM integration token.",
+      "description": "The SCIM integration token to create.",
       "properties": {
         "alias": {
+          "description": "Display name of the token: at most 64 letters, digits, spaces, dots, hyphens, and underscores.",
           "example": "my-scim-token",
           "type": "string",
           "x-go-name": "Alias"
         },
         "expires_at": {
+          "description": "When the token expires, in RFC 3339 format, or \"never\".",
           "example": "2025-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpiresAt"
@@ -13176,6 +13219,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateSSOProviderRequest": {
+      "description": "The SSO provider to create.",
       "properties": {
         "client_id": {
           "description": "Client ID of the SSO provider. Required for okta and other providers.",
@@ -13183,7 +13227,7 @@
           "x-go-name": "ClientID"
         },
         "email_domains": {
-          "description": "The email domains which should use this SSO provider. Required for okta and other providers.",
+          "description": "Email domains that use the SSO provider. Required for okta and other providers.",
           "items": {
             "type": "string"
           },
@@ -13191,11 +13235,12 @@
           "x-go-name": "EmailDomains"
         },
         "issuer_uri": {
-          "description": "The URI of the SSO provider. Required for okta and other providers.",
+          "description": "Issuer URI of the SSO provider. Required for okta and other providers.",
           "type": "string",
           "x-go-name": "IssuerURI"
         },
         "provider_type": {
+          "description": "Type of the SSO provider: okta, google for Google Workspace, or other for any other OIDC provider. Defaults to okta.",
           "enum": [
             "okta",
             "google",
@@ -13209,13 +13254,16 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateTokenRequest": {
+      "description": "The API key to create.",
       "properties": {
         "alias": {
+          "description": "Display name of the API key.",
           "example": "token1",
           "type": "string",
           "x-go-name": "Alias"
         },
         "expires_at": {
+          "description": "When the API key expires, in RFC 3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpiresAt"
@@ -13922,27 +13970,31 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "EntitiesPutPostRequest": {
-      "description": "EntitiesPutPostRequest is the request type for PUT and POST requests to the entities endpoint.",
+      "description": "Details of the organization to create or update.",
       "properties": {
         "billing_addr": {
           "$ref": "#/definitions/BillingAddress"
         },
         "company_name": {
+          "description": "Name of the company that owns the organization.",
           "example": "mycompany",
           "type": "string",
           "x-go-name": "CompanyName"
         },
         "organization_name": {
+          "description": "Name of the organization.",
           "example": "Crusoe Energy",
           "type": "string",
           "x-go-name": "OrganizationName"
         },
         "tax_id": {
+          "description": "Tax ID of the company.",
           "example": "51-2144346",
           "type": "string",
           "x-go-name": "TaxID"
         },
         "tax_id_type": {
+          "description": "Type of the company's tax ID.",
           "enum": [
             "EIN",
             "VAT"
@@ -13968,7 +14020,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Entity": {
-      "description": "Entity contains identifying information for an organization.",
+      "description": "An organization's details.",
       "properties": {
         "billing": {
           "$ref": "#/definitions/Billing"
@@ -13977,21 +14029,25 @@
           "$ref": "#/definitions/BillingAddress"
         },
         "company_name": {
+          "description": "Name of the company that owns the organization.",
           "example": "mycompany",
           "type": "string",
           "x-go-name": "CompanyName"
         },
         "features": {
           "additionalProperties": {},
+          "description": "Feature flags evaluated for you in the organization, keyed by flag name. Flags that evaluate to `false` are left\nout.",
           "type": "object",
           "x-go-name": "Features"
         },
         "id": {
+          "description": "ID of the organization.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "ID"
         },
         "mfa_methods": {
+          "description": "MFA methods the organization requires.",
           "items": {
             "$ref": "#/definitions/OrganizationMFA"
           },
@@ -13999,11 +14055,13 @@
           "x-go-name": "MFAMethods"
         },
         "name": {
+          "description": "Name of the organization.",
           "example": "Crusoe Energy",
           "type": "string",
           "x-go-name": "Name"
         },
         "organization_type": {
+          "description": "Type of the organization.",
           "enum": [
             "standard",
             "enterprise",
@@ -14013,29 +14071,35 @@
           "x-go-name": "OrganizationType"
         },
         "registration_type": {
+          "description": "How the organization registered, such as `waitlist` or `selfserve`.",
           "example": "waitlist",
           "type": "string",
           "x-go-name": "RegistrationType"
         },
         "relation": {
+          "description": "Your relation to the organization.",
           "example": "owner",
           "type": "string",
           "x-go-name": "Relation"
         },
         "state": {
+          "description": "State of the organization, such as `ORGANIZATION_STATE_ACTIVE` or `ORGANIZATION_STATE_SUSPENDED`.",
           "type": "string",
           "x-go-name": "State"
         },
         "state_reason": {
+          "description": "Reason for the organization's state, such as `ORGANIZATION_STATE_REASON_PAYMENT_DELINQUENT`.",
           "type": "string",
           "x-go-name": "StateReason"
         },
         "tax_id": {
+          "description": "Tax ID of the company.",
           "example": "51-2144346",
           "type": "string",
           "x-go-name": "TaxID"
         },
         "tax_id_type": {
+          "description": "Type of the company's tax ID.",
           "enum": [
             "EIN",
             "VAT"
@@ -14372,38 +14436,46 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GeneratedLimitedUsageAPIKey": {
+      "description": "A limited usage API key you just created. It includes the key itself, which the API doesn't return again.",
       "properties": {
         "alias": {
+          "description": "Display name of the key.",
           "example": "newAPIKey",
           "type": "string",
           "x-go-name": "Alias"
         },
         "api_key": {
+          "description": "The key itself. The API returns it only in this response.",
           "example": "R7p5XctCQMuGlpVBmVdqzA",
           "type": "string",
           "x-go-name": "APIKey"
         },
         "created_at": {
+          "description": "When the key was created, in RFC 3339 format.",
           "example": "2021-11-03T22:16:27Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "expires_at": {
+          "description": "When the key expires, in RFC 3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpiresAt"
         },
         "key_id": {
+          "description": "ID of the key.",
           "example": "R7p5XctCQMuGlpVBmVdqzA",
           "type": "string",
           "x-go-name": "KeyID"
         },
         "project_id": {
+          "description": "ID of the project the key is scoped to, if any.",
           "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
           "type": "string",
           "x-go-name": "ProjectID"
         },
         "usage": {
+          "description": "What you can use the key for.",
           "enum": [
             "inference",
             "observability"
@@ -14427,26 +14499,31 @@
       "description": "An API key you just created. It includes the secret key, which the API doesn't return again.",
       "properties": {
         "access_key": {
+          "description": "Access key ID of the API key.",
           "example": "R7p5XctCQMuGlpVBmVdqzA",
           "type": "string",
           "x-go-name": "AccessKey"
         },
         "alias": {
+          "description": "Display name of the API key.",
           "example": "newtoken",
           "type": "string",
           "x-go-name": "Alias"
         },
         "created_at": {
+          "description": "When the API key was created, in RFC 3339 format.",
           "example": "2021-11-03T22:16:27Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "expires_at": {
+          "description": "When the API key expires, in RFC 3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpiresAt"
         },
         "secret_key": {
+          "description": "Secret key of the API key. The API returns it only in this response.",
           "example": "HrbZ3VTUb2YNAq53Md1EsA",
           "type": "string",
           "x-go-name": "SecretKey"
@@ -14755,58 +14832,69 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Identity": {
-      "description": "Identity contains the information stored for a User. These are\nthe fields returned from a GET or PUT request.",
+      "description": "A user's identity.",
       "properties": {
         "accepted_tos": {
+          "description": "Whether the user has accepted the terms of service.",
           "example": true,
           "type": "boolean",
           "x-go-name": "AcceptedTos"
         },
         "company_name": {
+          "description": "Name of the user's company.",
           "example": "Crusoe",
           "type": "string",
           "x-go-name": "CompanyName"
         },
         "email": {
+          "description": "Email address of the user.",
           "example": "john.doe@crusoeenergy.com",
           "type": "string",
           "x-go-name": "Email"
         },
         "id": {
+          "description": "ID of the user.",
           "type": "string",
           "x-go-name": "ID"
         },
         "is_recovery": {
+          "description": "Whether the user signed in through account recovery.",
           "example": true,
           "type": "boolean",
           "x-go-name": "IsRecoveryFlow"
         },
         "managed_by": {
+          "description": "System that manages the user, such as a SCIM identity provider, if any.",
           "example": "scim_okta",
           "type": "string",
           "x-go-name": "ManagedBy"
         },
         "name": {
+          "description": "Name of the user.",
           "example": "John Doe",
           "type": "string",
           "x-go-name": "Name"
         },
         "org_role": {
+          "description": "Name of the user's role in their organization, such as `org-admin` or `org-member`.",
           "example": "org-member, org-admin",
           "type": "string",
           "x-go-name": "OrgRole"
         },
         "registration_type": {
+          "description": "How the user registered, such as `waitlist` or `selfserve`.",
           "example": "waitlist",
           "type": "string",
           "x-go-name": "RegistrationType"
         },
         "role": {
+          "description": "Legacy organization role of the user. Deprecated: use `role_bindings` instead.",
           "example": "Admin",
           "type": "string",
           "x-go-name": "Role"
         },
         "role_bindings": {
+          "description": "Role bindings granted to the user.",
           "items": {
             "$ref": "#/definitions/RoleBinding"
           },
@@ -14814,6 +14902,7 @@
           "x-go-name": "RoleBindings"
         },
         "sso_enforcement": {
+          "description": "Whether the user must sign in with SSO.",
           "enum": [
             "required",
             "none"
@@ -14862,13 +14951,16 @@
       "x-go-package": "gitlab.com/crusoeenergy/devx/go-utils/gatewayx/authn"
     },
     "IdentityPutRequest": {
+      "description": "The changes to make to your identity. Only the name can be changed.",
       "properties": {
         "name": {
+          "description": "Your new name.",
           "example": "John Doe",
           "type": "string",
           "x-go-name": "Name"
         },
         "role": {
+          "description": "Accepted for compatibility and ignored.",
           "example": "Admin",
           "type": "string",
           "x-go-name": "Role"
@@ -17744,36 +17836,43 @@
       "description": "A limited usage API key. The API returns the key itself only when you create it.",
       "properties": {
         "alias": {
+          "description": "Display name of the key.",
           "example": "token1",
           "type": "string",
           "x-go-name": "Alias"
         },
         "created_at": {
+          "description": "When the key was created, in RFC 3339 format.",
           "example": "2021-11-03T22:16:27Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "expires_at": {
+          "description": "When the key expires, in RFC 3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpiresAt"
         },
         "key_id": {
+          "description": "ID of the key.",
           "example": "Hm11C1coQZm2+Aihn9ofYg",
           "type": "string",
           "x-go-name": "KeyID"
         },
         "last_used": {
+          "description": "When the key was last used, in RFC 3339 format.",
           "example": "2021-11-03T22:22:55Z",
           "type": "string",
           "x-go-name": "LastUsed"
         },
         "project_id": {
+          "description": "ID of the project the key is scoped to, if any.",
           "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
           "type": "string",
           "x-go-name": "ProjectID"
         },
         "usage": {
+          "description": "What you can use the key for.",
           "enum": [
             "inference",
             "observability"
@@ -17795,6 +17894,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LimitedUsageAPIKeyPostResponse": {
+      "description": "The limited usage API key you created.",
       "properties": {
         "api_key_info": {
           "$ref": "#/definitions/GeneratedLimitedUsageAPIKey"
@@ -17920,9 +18020,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListEntitiesResponseV1": {
-      "description": "ListEntitiesResponseV1 is the response type for GET requests to the entities endpoint.",
+      "description": "The organizations you belong to.",
       "properties": {
         "items": {
+          "description": "The organizations.",
           "items": {
             "$ref": "#/definitions/Entity"
           },
@@ -18213,8 +18314,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListLimitedUsageAPIKeysResponseV1": {
+      "description": "Your limited usage API keys.",
       "properties": {
         "items": {
+          "description": "The limited usage API keys.",
           "items": {
             "$ref": "#/definitions/LimitedUsageAPIKeyInfo"
           },
@@ -18339,9 +18442,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListProjectsResponseV1": {
-      "description": "ListProjectsResponseV1 is the response type for GET requests to the projects endpoint.",
+      "description": "The projects you can access.",
       "properties": {
         "items": {
+          "description": "The projects.",
           "items": {
             "$ref": "#/definitions/Project"
           },
@@ -18370,8 +18474,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListRoleBindingsResponse": {
+      "description": "The role bindings that match the filters.",
       "properties": {
         "role_bindings": {
+          "description": "Role bindings that match the filters.",
           "items": {
             "$ref": "#/definitions/RoleBinding"
           },
@@ -18386,8 +18492,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListRolesResponse": {
+      "description": "The roles in your organization.",
       "properties": {
         "roles": {
+          "description": "Roles in your organization.",
           "items": {
             "$ref": "#/definitions/Role"
           },
@@ -18469,9 +18577,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSCIMIntegrationTokensResponse": {
-      "description": "ListSCIMIntegrationTokensResponse wraps a list of SCIM integration token responses.",
+      "description": "A SCIM integration's tokens.",
       "properties": {
         "items": {
+          "description": "The tokens.",
           "items": {
             "$ref": "#/definitions/SCIMIntegrationTokenInfo"
           },
@@ -18486,9 +18595,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSCIMIntegrationsResponse": {
-      "description": "ListSCIMIntegrationsResponse wraps a list of SCIM integration responses.",
+      "description": "The organization's SCIM integrations.",
       "properties": {
         "integrations": {
+          "description": "The SCIM integrations.",
           "items": {
             "$ref": "#/definitions/SCIMIntegrationResponse"
           },
@@ -18519,8 +18629,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSSOProvidersResponse": {
+      "description": "The organization's active SSO providers.",
       "properties": {
         "sso_providers": {
+          "description": "The SSO providers.",
           "items": {
             "$ref": "#/definitions/SSOProvider"
           },
@@ -18599,8 +18711,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListTokensResponseV1": {
+      "description": "Your API keys.",
       "properties": {
         "items": {
+          "description": "The API keys.",
           "items": {
             "$ref": "#/definitions/TokenInfo"
           },
@@ -19544,14 +19658,16 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "OrganizationMFA": {
-      "description": "OrganizationMFA contains details about a single required MFA method.",
+      "description": "An MFA method that an organization requires.",
       "properties": {
         "created_at": {
+          "description": "When the organization started requiring the method, in RFC 3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "method": {
+          "description": "MFA method the organization requires.",
           "enum": [
             "totp",
             "webauthn"
@@ -20199,8 +20315,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Role": {
+      "description": "A set of permissions you can grant to a user or service account with a role binding.",
       "properties": {
         "allowed_scopes": {
+          "description": "Types of resource that bindings of this role can apply to, each `org` or `project`.",
           "items": {
             "type": "string"
           },
@@ -20208,18 +20326,22 @@
           "x-go-name": "AllowedScopes"
         },
         "description": {
+          "description": "Description of the role.",
           "type": "string",
           "x-go-name": "Description"
         },
         "id": {
+          "description": "ID of the role.",
           "type": "string",
           "x-go-name": "ID"
         },
         "org_id": {
+          "description": "ID of the organization that owns the role.",
           "type": "string",
           "x-go-name": "OrgID"
         },
         "role_name": {
+          "description": "Name of the role.",
           "type": "string",
           "x-go-name": "RoleName"
         }
@@ -20235,20 +20357,25 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "RoleBinding": {
+      "description": "A role granted to a principal, such as a user or service account, on an organization or a project.",
       "properties": {
         "customer_id": {
+          "description": "For a user, the same value as `principal_id`; empty for other principals, such as service accounts. Use\n`principal_id` and `principal_type` instead.",
           "type": "string",
           "x-go-name": "CustomerID"
         },
         "id": {
+          "description": "ID of the role binding.",
           "type": "string",
           "x-go-name": "ID"
         },
         "principal_id": {
+          "description": "ID of the principal the role is granted to. For a service account, it's the service account's ID. For a user, it's\nthe same value as `customer_id`, not the user's ID.",
           "type": "string",
           "x-go-name": "PrincipalID"
         },
         "principal_type": {
+          "description": "Type of the principal that `principal_id` identifies.",
           "enum": [
             "user",
             "service_account"
@@ -20257,18 +20384,22 @@
           "x-go-name": "PrincipalType"
         },
         "role_id": {
+          "description": "ID of the role the binding grants.",
           "type": "string",
           "x-go-name": "RoleID"
         },
         "role_name": {
+          "description": "Name of the role the binding grants.",
           "type": "string",
           "x-go-name": "RoleName"
         },
         "scope_object_id": {
+          "description": "ID of the organization or project the binding applies to.",
           "type": "string",
           "x-go-name": "ScopeObjectID"
         },
         "scope_type": {
+          "description": "Type of resource the binding applies to: `org` or `project`.",
           "type": "string",
           "x-go-name": "ScopeType"
         }
@@ -20287,20 +20418,25 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "RoleBindingInput": {
+      "description": "A role binding to create for a user.",
       "properties": {
         "customer_id": {
+          "description": "ID of the user in the path, as the user's role bindings return it in `customer_id`, not the user ID.",
           "type": "string",
           "x-go-name": "CustomerID"
         },
         "role_id": {
+          "description": "ID of the role to grant.",
           "type": "string",
           "x-go-name": "RoleID"
         },
         "scope_object_id": {
+          "description": "ID of the resource the binding applies to: your organization's ID for `org`, or the ID of one of its projects for\n`project`.",
           "type": "string",
           "x-go-name": "ScopeObjectID"
         },
         "scope_type": {
+          "description": "Type of resource the binding applies to. It must be one of the role's `allowed_scopes`.",
           "enum": [
             "org",
             "project"
@@ -20510,50 +20646,58 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SCIMIntegrationResponse": {
-      "description": "SCIMIntegrationResponse is the JSON representation of a SCIM integration.",
+      "description": "A SCIM integration that lets your identity provider provision your organization's users.",
       "properties": {
         "created_at": {
+          "description": "When the SCIM integration was created, in RFC 3339 format.",
           "example": "2024-01-01T00:00:00Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "created_by": {
+          "description": "ID of the user who created the SCIM integration.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "CreatedBy"
         },
         "id": {
+          "description": "ID of the SCIM integration.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "ID"
         },
         "identity_provider": {
+          "description": "Identity provider that provisions your users through the SCIM integration.",
           "example": "okta",
           "type": "string",
           "x-go-name": "IdentityProvider"
         },
         "last_activity_at": {
-          "description": "The timestamp of the last SCIM activity on this integration.",
+          "description": "When the last SCIM activity on the SCIM integration occurred, in RFC 3339 format.",
           "example": "2024-01-01T00:00:00Z",
           "type": "string",
           "x-go-name": "LastActivityAt"
         },
         "name": {
+          "description": "Display name of the SCIM integration.",
           "example": "Okta SCIM Integration",
           "type": "string",
           "x-go-name": "Name"
         },
         "organization_id": {
+          "description": "ID of the organization that owns the SCIM integration.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "OrganizationID"
         },
         "status": {
+          "description": "Status of the SCIM integration. Your identity provider can provision users only while the integration is active.",
           "example": "active",
           "type": "string",
           "x-go-name": "Status"
         },
         "token_ids": {
+          "description": "IDs of the SCIM integration's tokens.",
           "items": {
             "type": "string"
           },
@@ -20561,6 +20705,7 @@
           "x-go-name": "TokenIDs"
         },
         "updated_at": {
+          "description": "When the SCIM integration was last updated, in RFC 3339 format.",
           "example": "2024-01-01T00:00:00Z",
           "type": "string",
           "x-go-name": "UpdatedAt"
@@ -20587,39 +20732,46 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SCIMIntegrationTokenInfo": {
-      "description": "SCIMIntegrationTokenInfo extends LimitedUsageAPIKeyInfo with a user ID.",
+      "description": "A SCIM integration token. The API returns the token's API key only when you create the token.",
       "properties": {
         "alias": {
+          "description": "Display name of the key.",
           "example": "token1",
           "type": "string",
           "x-go-name": "Alias"
         },
         "created_at": {
+          "description": "When the key was created, in RFC 3339 format.",
           "example": "2021-11-03T22:16:27Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "expires_at": {
+          "description": "When the key expires, in RFC 3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpiresAt"
         },
         "key_id": {
+          "description": "ID of the key.",
           "example": "Hm11C1coQZm2+Aihn9ofYg",
           "type": "string",
           "x-go-name": "KeyID"
         },
         "last_used": {
+          "description": "When the key was last used, in RFC 3339 format.",
           "example": "2021-11-03T22:22:55Z",
           "type": "string",
           "x-go-name": "LastUsed"
         },
         "project_id": {
+          "description": "ID of the project the key is scoped to, if any.",
           "example": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
           "type": "string",
           "x-go-name": "ProjectID"
         },
         "usage": {
+          "description": "What you can use the key for.",
           "enum": [
             "inference",
             "observability"
@@ -20629,6 +20781,7 @@
           "x-go-name": "Usage"
         },
         "user_id": {
+          "description": "ID of the user who created the token.",
           "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
           "type": "string",
           "x-go-name": "UserID"
@@ -20683,16 +20836,20 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SSOProvider": {
+      "description": "An SSO identity provider that your organization's users sign in with.",
       "properties": {
         "client_id": {
+          "description": "Client ID of the SSO provider. Empty for google providers.",
           "type": "string",
           "x-go-name": "ClientID"
         },
         "created_at": {
+          "description": "When the SSO provider was created.",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "email_domains": {
+          "description": "Email domains that use the SSO provider. Empty for google providers.",
           "items": {
             "type": "string"
           },
@@ -20700,18 +20857,22 @@
           "x-go-name": "EmailDomains"
         },
         "id": {
+          "description": "ID of the SSO provider.",
           "type": "string",
           "x-go-name": "ID"
         },
         "issuer_uri": {
+          "description": "Issuer URI of the SSO provider. Empty for google providers.",
           "type": "string",
           "x-go-name": "IssuerURI"
         },
         "org_id": {
+          "description": "ID of the organization that owns the SSO provider.",
           "type": "string",
           "x-go-name": "OrganizationID"
         },
         "provider_type": {
+          "description": "Type of the SSO provider: okta, google for Google Workspace, or other for any other OIDC provider.",
           "enum": [
             "okta",
             "google",
@@ -20986,17 +21147,20 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "ServiceAccountRoleBindingInput": {
-      "description": "ServiceAccountRoleBindingInput is a role binding to create for a service account. Unlike\nRoleBindingInput, it carries no customer_id -- the principal is the service_account_id in the\nURL path, not a field on the binding.",
+      "description": "A role binding to create for a service account.",
       "properties": {
         "role_id": {
+          "description": "ID of the role to grant. A service account can't have the `org-admin` role.",
           "type": "string",
           "x-go-name": "RoleID"
         },
         "scope_object_id": {
+          "description": "ID of the resource the binding applies to: your organization's ID for `org`, or the ID of one of its projects for\n`project`.",
           "type": "string",
           "x-go-name": "ScopeObjectID"
         },
         "scope_type": {
+          "description": "Type of resource the binding applies to. It must be one of the role's `allowed_scopes`.",
           "enum": [
             "org",
             "project"
@@ -21383,26 +21547,31 @@
       "description": "An API key. The API returns its secret key only when you create the key.",
       "properties": {
         "access_key": {
+          "description": "Access key ID of the API key.",
           "example": "Hm11C1coQZm2+Aihn9ofYg",
           "type": "string",
           "x-go-name": "AccessKey"
         },
         "alias": {
+          "description": "Display name of the API key.",
           "example": "token1",
           "type": "string",
           "x-go-name": "Alias"
         },
         "created_at": {
+          "description": "When the API key was created, in RFC 3339 format.",
           "example": "2021-11-03T22:16:27Z",
           "type": "string",
           "x-go-name": "CreatedAt"
         },
         "expires_at": {
+          "description": "When the API key expires, in RFC 3339 format.",
           "example": "2021-12-03T19:58:34Z",
           "type": "string",
           "x-go-name": "ExpiresAt"
         },
         "last_used": {
+          "description": "When the API key was last used, in RFC 3339 format.",
           "example": "2021-11-03T22:22:55Z",
           "type": "string",
           "x-go-name": "LastUsed"
@@ -21419,6 +21588,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "TokensPostResponse": {
+      "description": "The API key you created.",
       "properties": {
         "token": {
           "$ref": "#/definitions/GeneratedToken"
@@ -21716,8 +21886,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UpdateUserSSOEnforcementRequest": {
+      "description": "The SSO enforcement level to set for users in your organization.",
       "properties": {
         "enforcement": {
+          "description": "Whether the users must sign in with SSO (required, needs an active SSO provider) or can use a password (none).",
           "enum": [
             "none",
             "required"
@@ -21726,6 +21898,7 @@
           "x-go-name": "Enforcement"
         },
         "user_ids": {
+          "description": "IDs of the users to update. They must be in your organization.",
           "example": "d62a74a8-e14e-41fd-81b6-9983f7ab9ba8",
           "items": {
             "type": "string"
@@ -21853,7 +22026,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "UserResponse": {
-      "description": "UserResponse is the return type from the GET and PUT handlers to User.\nThe Identity of a user is returned.",
+      "description": "Your identity and sign-in methods.",
       "properties": {
         "credentials": {
           "description": "Credentials will be deprecated",
@@ -21867,6 +22040,7 @@
           "additionalProperties": {
             "$ref": "#/definitions/IdentityCredential"
           },
+          "description": "Your sign-in methods, keyed by type, such as `password`, `totp`, or `webauthn`.",
           "type": "object",
           "x-go-name": "CredentialsMap"
         },
@@ -22776,13 +22950,13 @@
       }
     },
     "createSCIMIntegrationResponse": {
-      "description": "",
+      "description": "The SCIM integration you created. If your request included a token, the response also includes the token's API key,\nwhich the API doesn't return again.",
       "schema": {
         "$ref": "#/definitions/CreateSCIMIntegrationResponse"
       }
     },
     "createSCIMIntegrationTokenResponse": {
-      "description": "",
+      "description": "The token you created. It includes the token's API key, which the API doesn't return again.",
       "schema": {
         "$ref": "#/definitions/LimitedUsageAPIKeyPostResponse"
       }
@@ -22794,7 +22968,7 @@
       }
     },
     "createSSOProviderResponse": {
-      "description": "",
+      "description": "The SSO provider you created.",
       "schema": {
         "$ref": "#/definitions/SSOProvider"
       }
@@ -22806,7 +22980,7 @@
       }
     },
     "deleteSSOProviderResponse": {
-      "description": "",
+      "description": "The SSO provider you deleted.",
       "schema": {
         "$ref": "#/definitions/SSOProvider"
       }
@@ -23038,7 +23212,7 @@
       }
     },
     "getProjectResponse": {
-      "description": "",
+      "description": "The project.",
       "schema": {
         "$ref": "#/definitions/Project"
       }
@@ -23062,7 +23236,7 @@
       }
     },
     "getSCIMIntegrationResponse": {
-      "description": "",
+      "description": "The SCIM integration.",
       "schema": {
         "$ref": "#/definitions/SCIMIntegrationResponse"
       }
@@ -23134,7 +23308,7 @@
       }
     },
     "limitedUsageAPIKeyPostResponse": {
-      "description": "",
+      "description": "The limited usage API key you created. It includes the key itself, which the API doesn't return again.",
       "schema": {
         "$ref": "#/definitions/LimitedUsageAPIKeyPostResponse"
       }
@@ -23272,19 +23446,19 @@
       }
     },
     "listProjectsResponse": {
-      "description": "",
+      "description": "The projects you can access.",
       "schema": {
         "$ref": "#/definitions/ListProjectsResponseV1"
       }
     },
     "listRoleBindingsResponse": {
-      "description": "",
+      "description": "The role bindings that match the filters.",
       "schema": {
         "$ref": "#/definitions/ListRoleBindingsResponse"
       }
     },
     "listRolesResponse": {
-      "description": "",
+      "description": "The roles in your organization.",
       "schema": {
         "$ref": "#/definitions/ListRolesResponse"
       }
@@ -23308,19 +23482,19 @@
       }
     },
     "listSCIMIntegrationTokensResponse": {
-      "description": "",
+      "description": "The SCIM integration's tokens.",
       "schema": {
         "$ref": "#/definitions/ListSCIMIntegrationTokensResponse"
       }
     },
     "listSCIMIntegrationsResponse": {
-      "description": "",
+      "description": "The organization's SCIM integrations.",
       "schema": {
         "$ref": "#/definitions/ListSCIMIntegrationsResponse"
       }
     },
     "listSSOProvidersResponse": {
-      "description": "",
+      "description": "The organization's active SSO providers.",
       "schema": {
         "$ref": "#/definitions/ListSSOProvidersResponse"
       }
@@ -23387,13 +23561,13 @@
       "description": ""
     },
     "organizationsGetResponse": {
-      "description": "",
+      "description": "The organizations you belong to.",
       "schema": {
         "$ref": "#/definitions/ListEntitiesResponseV1"
       }
     },
     "organizationsPutPostResponse": {
-      "description": "",
+      "description": "The created or updated organization.",
       "schema": {
         "$ref": "#/definitions/EntitiesPutPostResponse"
       }
@@ -23427,7 +23601,7 @@
       }
     },
     "projectsPutPostResponse": {
-      "description": "",
+      "description": "The created or updated project.",
       "schema": {
         "$ref": "#/definitions/ProjectsPutPostResponseV1"
       }
@@ -23510,7 +23684,7 @@
       }
     },
     "tokensPostResponse": {
-      "description": "",
+      "description": "The API key you created. It includes the secret key, which the API doesn't return again.",
       "schema": {
         "$ref": "#/definitions/TokensPostResponse"
       }
@@ -23528,7 +23702,7 @@
       }
     },
     "updateSCIMIntegrationResponse": {
-      "description": "",
+      "description": "The updated SCIM integration.",
       "schema": {
         "$ref": "#/definitions/SCIMIntegrationResponse"
       }
@@ -23549,13 +23723,13 @@
       }
     },
     "usersGetResponse": {
-      "description": "",
+      "description": "Your identity and sign-in methods.",
       "schema": {
         "$ref": "#/definitions/UserResponse"
       }
     },
     "usersPutResponse": {
-      "description": "",
+      "description": "Your updated identity and sign-in methods.",
       "schema": {
         "$ref": "#/definitions/UserResponse"
       }

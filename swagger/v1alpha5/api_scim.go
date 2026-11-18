@@ -27,7 +27,7 @@ type SCIMApiService service
 /*
 SCIMApiService Create a new SCIM integration for an organization.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body CreateSCIMIntegrationRequestBody is the JSON request body for creating a SCIM integration.
+  - @param body The SCIM integration to create.
   - @param orgId ID of the organization that owns the SCIM integration.
 
 @return CreateScimIntegrationResponse
@@ -156,7 +156,7 @@ func (a *SCIMApiService) CreateSCIMIntegration(ctx context.Context, body CreateS
 /*
 SCIMApiService Create a token for a SCIM integration.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body CreateSCIMTokenRequestBody is the JSON request body for creating a SCIM integration token.
+  - @param body The SCIM integration token to create.
   - @param orgId ID of the organization that owns the SCIM integration.
   - @param integrationId ID of the SCIM integration that owns the tokens.
 
@@ -406,7 +406,7 @@ SCIMApiService Delete a token from a SCIM integration.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param orgId ID of the organization that owns the SCIM integration.
   - @param integrationId ID of the SCIM integration that owns the token.
-  - @param accessKeyId
+  - @param accessKeyId ID of the token, from its key_id field.
 */
 func (a *SCIMApiService) DeleteSCIMIntegrationToken(ctx context.Context, orgId string, integrationId string, accessKeyId string) (*http.Response, error) {
 	var (

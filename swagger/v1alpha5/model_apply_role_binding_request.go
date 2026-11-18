@@ -8,7 +8,10 @@
  */
 package swagger
 
+// The role bindings to create and delete for a user.
 type ApplyRoleBindingRequest struct {
+	// Role bindings to create for the user.
 	BindingsToCreate []RoleBindingInput `json:"bindings_to_create"`
-	BindingsToDelete []string           `json:"bindings_to_delete"`
+	// IDs of the user's role bindings to delete. A user always needs an `org` binding, so to delete one, create another in the same request.
+	BindingsToDelete []string `json:"bindings_to_delete"`
 }

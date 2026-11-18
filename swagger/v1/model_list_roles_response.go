@@ -8,6 +8,8 @@
  */
 package swagger
 
+// The roles in your organization.
 type ListRolesResponse struct {
+	// Roles in your organization.
 	Roles []Role `json:"roles"`
 }

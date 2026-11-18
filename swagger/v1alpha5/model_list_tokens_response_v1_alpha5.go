@@ -8,6 +8,8 @@
  */
 package swagger
 
+// Your API keys.
 type ListTokensResponseV1Alpha5 struct {
+	// The API keys.
 	Items []TokenInfo `json:"items"`
 }

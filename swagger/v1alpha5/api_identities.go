@@ -131,7 +131,7 @@ func (a *IdentitiesApiService) GetUserIdentity(ctx context.Context) (UserRespons
 IdentitiesApiService Update user details for the logged in user.
 A successful response from this resource wil contain the updated user details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body The changes to make to your identity. Only the name can be changed.
 
 @return UserResponse
 */

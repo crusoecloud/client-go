@@ -8,10 +8,14 @@
  */
 package swagger
 
-// Billing contains information about the billing status of an organization.
+// An organization's billing status.
 type Billing struct {
-	Balance               string `json:"balance"`
-	BillingMethod         string `json:"billing_method,omitempty"`
-	Delinquent            bool   `json:"delinquent"`
-	HasValidPaymentMethod bool   `json:"has_valid_payment_method"`
+	// Balance of the organization.
+	Balance string `json:"balance"`
+	// How the organization is billed.
+	BillingMethod string `json:"billing_method,omitempty"`
+	// Whether the organization is delinquent on its payments.
+	Delinquent bool `json:"delinquent"`
+	// Whether the organization has a valid payment method.
+	HasValidPaymentMethod bool `json:"has_valid_payment_method"`
 }

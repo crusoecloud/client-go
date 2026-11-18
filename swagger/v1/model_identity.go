@@ -8,19 +8,31 @@
  */
 package swagger
 
-// Identity contains the information stored for a User. These are the fields returned from a GET or PUT request.
+// A user's identity.
 type Identity struct {
-	AcceptedTos      bool          `json:"accepted_tos,omitempty"`
-	CompanyName      string        `json:"company_name,omitempty"`
-	Email            string        `json:"email"`
-	Id               string        `json:"id"`
-	IsRecovery       bool          `json:"is_recovery,omitempty"`
-	ManagedBy        string        `json:"managed_by,omitempty"`
-	Name             string        `json:"name"`
-	OrgRole          string        `json:"org_role,omitempty"`
-	RegistrationType string        `json:"registration_type,omitempty"`
-	Role             string        `json:"role"`
-	RoleBindings     []RoleBinding `json:"role_bindings,omitempty"`
-	SsoEnforcement   string        `json:"sso_enforcement,omitempty"`
-	UserState        string        `json:"user_state,omitempty"`
+	// Whether the user has accepted the terms of service.
+	AcceptedTos bool `json:"accepted_tos,omitempty"`
+	// Name of the user's company.
+	CompanyName string `json:"company_name,omitempty"`
+	// Email address of the user.
+	Email string `json:"email"`
+	// ID of the user.
+	Id string `json:"id"`
+	// Whether the user signed in through account recovery.
+	IsRecovery bool `json:"is_recovery,omitempty"`
+	// System that manages the user, such as a SCIM identity provider, if any.
+	ManagedBy string `json:"managed_by,omitempty"`
+	// Name of the user.
+	Name string `json:"name"`
+	// Name of the user's role in their organization, such as `org-admin` or `org-member`.
+	OrgRole string `json:"org_role,omitempty"`
+	// How the user registered, such as `waitlist` or `selfserve`.
+	RegistrationType string `json:"registration_type,omitempty"`
+	// Legacy organization role of the user. Deprecated: use `role_bindings` instead.
+	Role string `json:"role"`
+	// Role bindings granted to the user.
+	RoleBindings []RoleBinding `json:"role_bindings,omitempty"`
+	// Whether the user must sign in with SSO.
+	SsoEnforcement string `json:"sso_enforcement,omitempty"`
+	UserState      string `json:"user_state,omitempty"`
 }

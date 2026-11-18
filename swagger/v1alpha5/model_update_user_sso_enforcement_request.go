@@ -8,7 +8,10 @@
  */
 package swagger
 
+// The SSO enforcement level to set for users in your organization.
 type UpdateUserSsoEnforcementRequest struct {
-	Enforcement string   `json:"enforcement"`
-	UserIds     []string `json:"user_ids"`
+	// Whether the users must sign in with SSO (required, needs an active SSO provider) or can use a password (none).
+	Enforcement string `json:"enforcement"`
+	// IDs of the users to update. They must be in your organization.
+	UserIds []string `json:"user_ids"`
 }

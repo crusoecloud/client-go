@@ -8,7 +8,10 @@
  */
 package swagger
 
+// The API key to create.
 type CreateTokenRequest struct {
-	Alias     string `json:"alias,omitempty"`
+	// Display name of the API key.
+	Alias string `json:"alias,omitempty"`
+	// When the API key expires, in RFC 3339 format.
 	ExpiresAt string `json:"expires_at"`
 }

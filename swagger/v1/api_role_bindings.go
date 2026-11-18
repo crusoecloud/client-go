@@ -30,8 +30,8 @@ type RoleBindingsApiService service
 RoleBindingsApiService Creates and deletes role bindings for a user in a single atomic operation.
 If any creation or deletion fails, no changes are applied.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
-  - @param userId
+  - @param body The role bindings to create and delete for a user.
+  - @param userId ID of the user whose role bindings to change. You can&#x27;t change your own role bindings.
 */
 func (a *RoleBindingsApiService) ApplyRoleBindings(ctx context.Context, body ApplyRoleBindingRequest, userId string) (*http.Response, error) {
 	var (
@@ -139,8 +139,8 @@ func (a *RoleBindingsApiService) ApplyRoleBindings(ctx context.Context, body App
 RoleBindingsApiService Creates and deletes role bindings for a service account in a single atomic operation.
 If any creation or deletion fails, no changes are applied.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
-  - @param serviceAccountId
+  - @param body The role bindings to create and delete for a service account.
+  - @param serviceAccountId ID of the service account whose role bindings to change. The service account can&#x27;t be disabled or managed by Crusoe.
 */
 func (a *RoleBindingsApiService) ApplyServiceAccountRoleBindings(ctx context.Context, body ApplyServiceAccountRoleBindingRequest, serviceAccountId string) (*http.Response, error) {
 	var (
@@ -248,12 +248,12 @@ func (a *RoleBindingsApiService) ApplyServiceAccountRoleBindings(ctx context.Con
 RoleBindingsApiService Lists role bindings visible to the caller.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *RoleBindingsApiListRoleBindingsOpts - Optional Parameters:
-     * @param "UserId" (optional.String) -
-     * @param "RoleId" (optional.String) -
-     * @param "ScopeType" (optional.String) -
-     * @param "ScopeObjectId" (optional.String) -
-     * @param "PrincipalId" (optional.String) -
-     * @param "PrincipalType" (optional.String) -
+     * @param "UserId" (optional.String) -  Filters results to role bindings for the users with these comma-separated IDs.
+     * @param "RoleId" (optional.String) -  Filters results to role bindings that grant the roles with these comma-separated IDs.
+     * @param "ScopeType" (optional.String) -  Filters results to role bindings that apply to this type of resource.
+     * @param "ScopeObjectId" (optional.String) -  Filters results to role bindings that apply to the organization or project with this ID. Requires &#x60;scope_type&#x60;.
+     * @param "PrincipalId" (optional.String) -  Filters results to role bindings for the principals with these comma-separated IDs, as role bindings return them in &#x60;principal_id&#x60;. Requires &#x60;principal_type&#x60;.
+     * @param "PrincipalType" (optional.String) -  Filters results to role bindings for this type of principal. Requires &#x60;principal_id&#x60;.
 @return ListRoleBindingsResponse
 */
 

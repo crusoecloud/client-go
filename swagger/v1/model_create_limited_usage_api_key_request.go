@@ -8,9 +8,12 @@
  */
 package swagger
 
+// The limited usage API key to create.
 type CreateLimitedUsageApiKeyRequest struct {
-	Alias     string `json:"alias,omitempty"`
+	// Display name of the key.
+	Alias string `json:"alias,omitempty"`
+	// When the key expires, in RFC 3339 format.
 	ExpiresAt string `json:"expires_at"`
-	// Optional project ID the token is scoped to
+	// ID of the project to scope the key to, if any.
 	ProjectId string `json:"project_id,omitempty"`
 }

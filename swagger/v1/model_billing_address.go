@@ -8,12 +8,18 @@
  */
 package swagger
 
-// BillingAddress contains sensitive information related to the billing address for an entity.
+// An organization's billing address.
 type BillingAddress struct {
-	AddressLine1  string `json:"address_line1"`
-	AddressLine2  string `json:"address_line2,omitempty"`
-	City          string `json:"city"`
-	Country       string `json:"country"`
-	PostalCode    string `json:"postal_code"`
+	// First line of the address.
+	AddressLine1 string `json:"address_line1"`
+	// Second line of the address.
+	AddressLine2 string `json:"address_line2,omitempty"`
+	// City of the address.
+	City string `json:"city"`
+	// Country of the address, as a two-letter country code.
+	Country string `json:"country"`
+	// Postal code of the address.
+	PostalCode string `json:"postal_code"`
+	// State or region of the address.
 	StateOrRegion string `json:"state_or_region"`
 }

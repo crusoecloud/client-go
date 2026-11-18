@@ -10,9 +10,14 @@ package swagger
 
 // An API key you just created. It includes the secret key, which the API doesn't return again.
 type GeneratedToken struct {
+	// Access key ID of the API key.
 	AccessKey string `json:"access_key"`
-	Alias     string `json:"alias,omitempty"`
+	// Display name of the API key.
+	Alias string `json:"alias,omitempty"`
+	// When the API key was created, in RFC 3339 format.
 	CreatedAt string `json:"created_at"`
+	// When the API key expires, in RFC 3339 format.
 	ExpiresAt string `json:"expires_at"`
+	// Secret key of the API key. The API returns it only in this response.
 	SecretKey string `json:"secret_key"`
 }

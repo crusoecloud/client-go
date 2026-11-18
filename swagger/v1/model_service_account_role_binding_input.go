@@ -8,9 +8,12 @@
  */
 package swagger
 
-// ServiceAccountRoleBindingInput is a role binding to create for a service account. Unlike RoleBindingInput, it carries no customer_id -- the principal is the service_account_id in the URL path, not a field on the binding.
+// A role binding to create for a service account.
 type ServiceAccountRoleBindingInput struct {
-	RoleId        string `json:"role_id"`
+	// ID of the role to grant. A service account can't have the `org-admin` role.
+	RoleId string `json:"role_id"`
+	// ID of the resource the binding applies to: your organization's ID for `org`, or the ID of one of its projects for `project`.
 	ScopeObjectId string `json:"scope_object_id"`
-	ScopeType     string `json:"scope_type"`
+	// Type of resource the binding applies to. It must be one of the role's `allowed_scopes`.
+	ScopeType string `json:"scope_type"`
 }

@@ -27,7 +27,7 @@ type TokensApiService service
 TokensApiService Create a new token owned by the logged in user.
 A successful response from this resource will contain json-encoded details of API token. This is the only time the customer will be able to view the secret key associated with the token.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body The API key to create.
 
 @return TokensPostResponse
 */
@@ -134,7 +134,7 @@ func (a *TokensApiService) CreateToken(ctx context.Context, body CreateTokenRequ
 /*
 TokensApiService Delete an API token owned by the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param accessKey
+  - @param accessKey Access key ID of the API key to delete.
 */
 func (a *TokensApiService) DeleteToken(ctx context.Context, accessKey string) (*http.Response, error) {
 	var (

@@ -8,19 +8,28 @@
  */
 package swagger
 
-// SCIMIntegrationResponse is the JSON representation of a SCIM integration.
+// A SCIM integration that lets your identity provider provision your organization's users.
 type ScimIntegrationResponse struct {
-	CreatedAt        string `json:"created_at"`
-	CreatedBy        string `json:"created_by"`
-	Id               string `json:"id"`
+	// When the SCIM integration was created, in RFC 3339 format.
+	CreatedAt string `json:"created_at"`
+	// ID of the user who created the SCIM integration.
+	CreatedBy string `json:"created_by"`
+	// ID of the SCIM integration.
+	Id string `json:"id"`
+	// Identity provider that provisions your users through the SCIM integration.
 	IdentityProvider string `json:"identity_provider"`
-	// The timestamp of the last SCIM activity on this integration.
-	LastActivityAt string   `json:"last_activity_at,omitempty"`
-	Name           string   `json:"name"`
-	OrganizationId string   `json:"organization_id"`
-	Status         string   `json:"status"`
-	TokenIds       []string `json:"token_ids"`
-	UpdatedAt      string   `json:"updated_at"`
+	// When the last SCIM activity on the SCIM integration occurred, in RFC 3339 format.
+	LastActivityAt string `json:"last_activity_at,omitempty"`
+	// Display name of the SCIM integration.
+	Name string `json:"name"`
+	// ID of the organization that owns the SCIM integration.
+	OrganizationId string `json:"organization_id"`
+	// Status of the SCIM integration. Your identity provider can provision users only while the integration is active.
+	Status string `json:"status"`
+	// IDs of the SCIM integration's tokens.
+	TokenIds []string `json:"token_ids"`
+	// When the SCIM integration was last updated, in RFC 3339 format.
+	UpdatedAt string `json:"updated_at"`
 	// UserCount is the number of users provisioned via this SCIM integration.
 	UserCount int32 `json:"user_count,omitempty"`
 }

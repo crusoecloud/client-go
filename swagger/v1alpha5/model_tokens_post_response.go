@@ -8,6 +8,7 @@
  */
 package swagger
 
+// The API key you created.
 type TokensPostResponse struct {
 	Token *GeneratedToken `json:"token"`
 }
