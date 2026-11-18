@@ -37,7 +37,7 @@ const (
 
 	// DefaultAudience is the default token audience. Exported so callers (and tests) outside
 	// this package can reference it instead of duplicating the literal.
-	DefaultAudience = "https://api.crusoe.ai"
+	DefaultAudience = "https://api.cloud.crusoe.ai"
 
 	// defaultProfileName is used when no profile is selected by any precedence tier.
 	defaultProfileName = "default"
