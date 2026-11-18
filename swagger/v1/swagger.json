@@ -12119,6 +12119,7 @@
         "operationId": "deleteSSHKey",
         "parameters": [
           {
+            "description": "ID of the SSH key to delete.",
             "example": "6e28cad3-98e6-47a9-a9fc-1cd83a7f25c1",
             "in": "query",
             "name": "id",
@@ -12172,6 +12173,7 @@
         "operationId": "createSSHKey",
         "parameters": [
           {
+            "description": "The SSH public key to register.",
             "in": "body",
             "name": "Body",
             "required": true,
@@ -13202,13 +13204,16 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateSSHKeyRequest": {
+      "description": "The SSH public key to register.",
       "properties": {
         "name": {
+          "description": "Display name for the SSH key, at most 1,024 bytes.",
           "example": "John Doe",
           "type": "string",
           "x-go-name": "Name"
         },
         "public_key": {
+          "description": "SSH public key to register, in OpenSSH `authorized_keys` format, such as the contents of a `.pub` file.",
           "example": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpuH/fqCFLbAConChyVH6rZzSaxlnHSwQk6qvtPsf5E",
           "type": "string",
           "x-go-name": "PublicKey"
@@ -13222,6 +13227,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "CreateSSHKeyResponse": {
+      "description": "The SSH key you registered.",
       "properties": {
         "ssh_key": {
           "$ref": "#/definitions/SSHKey"
@@ -14277,13 +14283,16 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "Fingerprints": {
+      "description": "Fingerprints of an SSH public key.",
       "properties": {
         "md5": {
+          "description": "MD5 fingerprint of the public key, as colon-separated hexadecimal bytes.",
           "example": "bf:60:fa:cc:9f:42:1f:5e:23:9e:ed:d2:69:d8:76:93",
           "type": "string",
           "x-go-name": "MD5"
         },
         "sha256": {
+          "description": "SHA-256 fingerprint of the public key, in the `SHA256:\u003cunpadded Base64\u003e` format that `ssh-keygen -l` prints.",
           "example": "tARFxQkVHeqm6TzqpI897QsHVdgZlxgL2/YhVltmEUk",
           "type": "string",
           "x-go-name": "SHA256"
@@ -18628,8 +18637,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ListSSHKeysResponseV1": {
+      "description": "Your SSH keys.",
       "properties": {
         "items": {
+          "description": "Your SSH keys, sorted by name.",
           "items": {
             "$ref": "#/definitions/SSHKey"
           },
@@ -20816,8 +20827,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "SSHKey": {
+      "description": "One of your SSH public keys.",
       "properties": {
         "created_at": {
+          "description": "When the SSH key was registered, in RFC 3339 format.",
           "example": "2022-01-24T20:13:35.328Z",
           "type": "string",
           "x-go-name": "CreatedAt"
@@ -20826,16 +20839,19 @@
           "$ref": "#/definitions/Fingerprints"
         },
         "id": {
+          "description": "ID of the SSH key.",
           "example": "0b880f48-6a97-408f-8351-3cc30871e010",
           "type": "string",
           "x-go-name": "ID"
         },
         "name": {
+          "description": "Display name of the SSH key.",
           "example": "public key 1",
           "type": "string",
           "x-go-name": "Name"
         },
         "public_key": {
+          "description": "SSH public key, in OpenSSH `authorized_keys` format, as you registered it.",
           "example": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpuH/fqCFLbAConChyVH6rZzSaxlnHSwQk6qvtPsf5E",
           "type": "string",
           "x-go-name": "PublicKey"
@@ -22978,7 +22994,7 @@
       }
     },
     "createSSHKeysResponse": {
-      "description": "",
+      "description": "The SSH key you registered.",
       "schema": {
         "$ref": "#/definitions/CreateSSHKeyResponse"
       }
@@ -23258,7 +23274,7 @@
       }
     },
     "getSSHKeysResponse": {
-      "description": "",
+      "description": "Your SSH keys.",
       "schema": {
         "$ref": "#/definitions/ListSSHKeysResponseV1"
       }

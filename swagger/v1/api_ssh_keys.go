@@ -27,7 +27,7 @@ type SSHKeysApiService service
 SSHKeysApiService Register a new SSH public key to the logged in user.
 A successful response from this resource wil contain the created SSH key details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body The SSH public key to register.
 
 @return CreateSshKeyResponse
 */
@@ -144,7 +144,7 @@ func (a *SSHKeysApiService) CreateSSHKey(ctx context.Context, body CreateSshKeyR
 /*
 SSHKeysApiService Delete an SSH public key registered to the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param id
+  - @param id ID of the SSH key to delete.
 */
 func (a *SSHKeysApiService) DeleteSSHKey(ctx context.Context, id string) (*http.Response, error) {
 	var (

@@ -8,7 +8,10 @@
  */
 package swagger
 
+// Fingerprints of an SSH public key.
 type Fingerprints struct {
-	Md5    string `json:"md5"`
+	// MD5 fingerprint of the public key, as colon-separated hexadecimal bytes.
+	Md5 string `json:"md5"`
+	// SHA-256 fingerprint of the public key, in the `SHA256:<unpadded Base64>` format that `ssh-keygen -l` prints.
 	Sha256 string `json:"sha256"`
 }
