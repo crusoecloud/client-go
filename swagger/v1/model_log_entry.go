@@ -8,6 +8,7 @@
  */
 package swagger
 
+// An audit log entry: an action taken in an organization.
 type LogEntry struct {
 	// Name of the action
 	Action string `json:"action"`
@@ -41,10 +42,10 @@ type LogEntry struct {
 	StartTime string `json:"start_time"`
 	// Surface type of the request
 	Surface string `json:"surface"`
-	// The targets of the action required
+	// The targets of the action
 	TargetIds []string `json:"target_ids,omitempty"`
 	// The target names of the action
 	TargetNames []string `json:"target_names,omitempty"`
-	// The target type of the action required
+	// The target type of the action
 	TargetType string `json:"target_type,omitempty"`
 }

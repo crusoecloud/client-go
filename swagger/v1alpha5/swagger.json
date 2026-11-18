@@ -1408,6 +1408,7 @@
             "x-go-name": "OrganizationID"
           },
           {
+            "description": "Filters results to entries for the projects with these comma-separated IDs.",
             "example": "f934fbdb-7e3a-4b92-b7d2-da0f91d768e8,8c29f3f3-830f-4a44-9b6b-a51fcf6a6b5d",
             "in": "query",
             "items": {
@@ -1418,6 +1419,7 @@
             "x-go-name": "ProjectIDs"
           },
           {
+            "description": "Start of the time range to search, in RFC 3339 format. It must be within the past year. If you leave it out, it's 24 hours before `end_time`.",
             "example": "2022-09-01T14:25:36-07:00",
             "in": "query",
             "name": "start_time",
@@ -1425,6 +1427,7 @@
             "x-go-name": "StartTime"
           },
           {
+            "description": "End of the time range to search, in RFC 3339 format. It must be within the past year and at most 93 days after `start_time`. If you leave it out, it's the current time or 24 hours after `start_time`, whichever is earlier.",
             "example": "2022-09-06T14:25:36-07:00",
             "in": "query",
             "name": "end_time",
@@ -1432,6 +1435,7 @@
             "x-go-name": "EndTime"
           },
           {
+            "description": "Filters results to entries whose `action` is one of these comma-separated values, such as `Create` or `Update`.",
             "example": "Create,Update",
             "in": "query",
             "items": {
@@ -1442,6 +1446,7 @@
             "x-go-name": "Actions"
           },
           {
+            "description": "Filters results to entries whose `actor_id` is one of these comma-separated IDs.",
             "example": "f934fbdb-7e3a-4b92-b7d2-da0f91d768e8,8c29f3f3-830f-4a44-9b6b-a51fcf6a6b5d",
             "in": "query",
             "items": {
@@ -1474,6 +1479,7 @@
             "x-go-name": "ActorTypes"
           },
           {
+            "description": "Filters results to entries whose `target_ids` include any of these comma-separated IDs.",
             "example": "f934fbdb-7e3a-4b92-b7d2-da0f91d768e8,8c29f3f3-830f-4a44-9b6b-a51fcf6a6b5d",
             "in": "query",
             "items": {
@@ -1484,6 +1490,7 @@
             "x-go-name": "TargetIDs"
           },
           {
+            "description": "Filters results to entries whose `target_type` is one of these comma-separated values, such as `VM` or `KubernetesCluster`.",
             "example": "VM,KubernetesCluster",
             "in": "query",
             "items": {
@@ -1494,6 +1501,7 @@
             "x-go-name": "TargetTypes"
           },
           {
+            "description": "Filters results to entries whose `target_names` include any of these comma-separated names, ignoring case.",
             "example": "my_vm1,my_vm2",
             "in": "query",
             "items": {
@@ -1504,6 +1512,7 @@
             "x-go-name": "TargetNames"
           },
           {
+            "description": "Filters results to entries whose `locations` include any of these comma-separated locations. An unknown location fails the request.",
             "example": "us-east1,us-northcentral1-a",
             "in": "query",
             "items": {
@@ -1514,6 +1523,7 @@
             "x-go-name": "Locations"
           },
           {
+            "description": "Filters results to entries whose `result` is one of these comma-separated values, such as `OK` or `Bad Request`.",
             "example": "OK,Bad Request",
             "in": "query",
             "items": {
@@ -1546,6 +1556,7 @@
             "x-go-name": "Surfaces"
           },
           {
+            "description": "Maximum number of entries to return, up to 100. Defaults to 20.",
             "example": "20",
             "in": "query",
             "name": "limit",
@@ -1553,6 +1564,7 @@
             "x-go-name": "Limit"
           },
           {
+            "description": "Token for the next page, from `next_page_token` in the previous response. You can't combine it with `prev_token`.",
             "example": "bXktZmlyc3Qtdm0",
             "in": "query",
             "name": "next_token",
@@ -1560,6 +1572,7 @@
             "x-go-name": "NextToken"
           },
           {
+            "description": "Token for the previous page, from `prev_page_token` in the previous response. You can't combine it with `next_token`.",
             "example": "bXktZmlyc3Qtdm0",
             "in": "query",
             "name": "prev_token",
@@ -12462,8 +12475,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "AuditLogsGetResponse": {
+      "description": "A page of an organization's audit log entries.",
       "properties": {
         "items": {
+          "description": "Audit log entries on this page, newest first.",
           "items": {
             "$ref": "#/definitions/LogEntry"
           },
@@ -19109,6 +19124,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1alpha5"
     },
     "LogEntry": {
+      "description": "An audit log entry: an action taken in an organization.",
       "properties": {
         "action": {
           "description": "Name of the action",
@@ -19210,7 +19226,7 @@
           "x-go-name": "Surface"
         },
         "target_ids": {
-          "description": "The targets of the action\nrequired",
+          "description": "The targets of the action",
           "example": "e384a1de-81f8-4cb2-b312-a7d88a9bf9cb,6ac4d027-ee2a-4c0c-9b6f-e8638a7ae867",
           "items": {
             "type": "string"
@@ -19228,7 +19244,7 @@
           "x-go-name": "TargetName"
         },
         "target_type": {
-          "description": "The target type of the action\nrequired",
+          "description": "The target type of the action",
           "example": "VM",
           "type": "string",
           "x-go-name": "TargetType"
@@ -22798,7 +22814,7 @@
       }
     },
     "auditLogsResponse": {
-      "description": "",
+      "description": "A page of the organization's audit log entries, newest first.",
       "schema": {
         "$ref": "#/definitions/AuditLogsGetResponse"
       }
