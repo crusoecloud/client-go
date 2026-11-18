@@ -10,6 +10,6 @@ package swagger
 
 // CredentialSecrets holds the secret material for a credential.
 type CredentialSecrets struct {
-	// Access token (e.g. a HuggingFace token). Write-only; omitted unless explicitly revealed.
+	// Access token, such as a Hugging Face token. Responses mask it, except when you create the credential or get it with `reveal` set to `true`.
 	Token string `json:"token,omitempty"`
 }

@@ -13329,7 +13329,7 @@
       "description": "CredentialSecrets holds the secret material for a credential.",
       "properties": {
         "token": {
-          "description": "Access token (e.g. a HuggingFace token). Write-only; omitted unless explicitly revealed.",
+          "description": "Access token, such as a Hugging Face token. Responses mask it, except when you create the credential or get it with `reveal` set to `true`.",
           "type": "string",
           "x-go-name": "Token"
         }
@@ -22999,55 +22999,55 @@
       "description": "Empty Response"
     },
     "foundryActivityResponse": {
-      "description": "",
+      "description": "One page of the deployment's activity events, newest first.",
       "schema": {
         "$ref": "#/definitions/ListActivityResponse"
       }
     },
     "foundryCredentialListResponse": {
-      "description": "",
+      "description": "The credentials in the project, with their tokens masked.",
       "schema": {
         "$ref": "#/definitions/ListCredentialsResponse"
       }
     },
     "foundryCredentialResponse": {
-      "description": "",
+      "description": "The credential. Its token is in plain text when you create the credential or get it with `reveal` set to `true`, and masked otherwise.",
       "schema": {
         "$ref": "#/definitions/CredentialResponse"
       }
     },
     "foundryDeployedModelsResponse": {
-      "description": "",
+      "description": "The models deployed for the project, one entry per model alias.",
       "schema": {
         "$ref": "#/definitions/ListModelsResponse"
       }
     },
     "foundryDeploymentAcceptedResponse": {
-      "description": "",
+      "description": "The deployment the request applies to, its new status, and the ID of the operation that tracks the change.",
       "schema": {
         "$ref": "#/definitions/DeploymentAcceptedResponse"
       }
     },
     "foundryDeploymentDetailResponse": {
-      "description": "",
+      "description": "The self-serve deployment, including its provider, flavor type, and hourly cost.",
       "schema": {
         "$ref": "#/definitions/SelfServeDeploymentDetail"
       }
     },
     "foundryDeploymentListResponse": {
-      "description": "",
+      "description": "The self-serve deployments in the project.",
       "schema": {
         "$ref": "#/definitions/ListDeploymentsResponse"
       }
     },
     "foundryFlavorsResponse": {
-      "description": "",
+      "description": "The self-serve flavors available to the project.",
       "schema": {
         "$ref": "#/definitions/ListFlavorsResponse"
       }
     },
     "foundryLoraListResponse": {
-      "description": "",
+      "description": "The LoRA adapter deployments in the project, newest first.",
       "schema": {
         "items": {
           "$ref": "#/definitions/LoRAAdapterDeployment"
@@ -23056,28 +23056,28 @@
       }
     },
     "foundryLoraResponse": {
-      "description": "",
+      "description": "The LoRA adapter deployment.",
       "schema": {
         "$ref": "#/definitions/LoRAAdapterDeployment"
       }
     },
     "foundryProgressResponse": {
-      "description": "",
+      "description": "The deployment's current progress. A `percent` of `0` with an empty `message` means nothing is in progress.",
       "schema": {
         "$ref": "#/definitions/DeploymentProgress"
       }
     },
     "foundryProgressStreamResponse": {
-      "description": ""
+      "description": "A server-sent events stream of the deployment's progress: a `progress` event when you connect and whenever progress changes, and a `done` event when the deployment finishes."
     },
     "foundryRenameModelResponse": {
-      "description": "",
+      "description": "The renamed model's endpoint ID and new alias.",
       "schema": {
         "$ref": "#/definitions/RenameModelResponse"
       }
     },
     "foundryUpdateModelResponse": {
-      "description": "",
+      "description": "The update's status on each cluster it targets, and the ID of the operation that tracks the request.",
       "schema": {
         "$ref": "#/definitions/UpdateModelResponse"
       }
