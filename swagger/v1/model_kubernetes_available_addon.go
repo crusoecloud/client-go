@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesAvailableAddon is one add-on available to install, from the catalog.
 type KubernetesAvailableAddon struct {
 	// Catalog identifier of the add-on.
 	AddonType string `json:"addon_type,omitempty"`

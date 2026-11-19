@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesCluster defines the specifications of the Kubernetes cluster.
 type KubernetesCluster struct {
 	// Add-ons associated with the cluster.
 	AddOns []string `json:"add_ons"`

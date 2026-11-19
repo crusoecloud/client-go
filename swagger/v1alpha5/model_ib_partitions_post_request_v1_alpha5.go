@@ -8,6 +8,7 @@
  */
 package swagger
 
+// IBPartitionsPostRequestV1Alpha5 is the request type for POST requests to the IB Partitions endpoint.
 type IbPartitionsPostRequestV1Alpha5 struct {
 	// ID of the InfiniBand network to create the partition in.
 	IbNetworkId string `json:"ib_network_id"`

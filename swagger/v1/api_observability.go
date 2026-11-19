@@ -29,7 +29,7 @@ type ObservabilityApiService service
 /*
 ObservabilityApiService Query timeseries at an instant via PromQL.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project to query metrics for.
  * @param query Prometheus expression query string.
  * @param optional nil or *ObservabilityApiQueryTimeseriesOpts - Optional Parameters:
      * @param "Time" (optional.String) -  Evaluation timestamp.
@@ -176,7 +176,7 @@ func (a *ObservabilityApiService) QueryTimeseries(ctx context.Context, projectId
 /*
 ObservabilityApiService Query timeseries over a time range via PromQL.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project to query metrics for.
  * @param query Prometheus expression query string.
  * @param start Start timestamp, inclusive.
  * @param end End timestamp, inclusive.
@@ -322,15 +322,15 @@ func (a *ObservabilityApiService) QueryTimeseriesRange(ctx context.Context, proj
 }
 
 /*
-ObservabilityApiService Query timeseries for a resource (in development).
+ObservabilityApiService Query timeseries for a resource.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project to query metrics for.
  * @param resourceType
  * @param start Start timestamp, inclusive.
  * @param end End timestamp, inclusive.
  * @param step Query resolution step width in duration format or float number of seconds.
  * @param optional nil or *ObservabilityApiQueryTimeseriesSimplifiedOpts - Optional Parameters:
-     * @param "ResourceId" (optional.String) -
+     * @param "ResourceId" (optional.String) -  Filters results to the resource with this ID.
 @return ObservabilityMetrics
 */
 
@@ -467,7 +467,7 @@ func (a *ObservabilityApiService) QueryTimeseriesSimplified(ctx context.Context,
 /*
 ObservabilityApiService Query timeseries by passing various metric parameters.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project to query metrics for.
  * @param metric Name of the metric to query.
  * @param start Start timestamp, inclusive.
  * @param end End timestamp, inclusive.
@@ -622,7 +622,7 @@ func (a *ObservabilityApiService) QueryTimeseriesWithParameters(ctx context.Cont
 
 /*
 ObservabilityApiService Export metrics in Prometheus text format (default) or OpenMetrics format for scraping.
-This endpoint proxies to VictoriaMetrics /federate endpoint and returns metrics in Prometheus text exposition format for scraping by external monitoring systems.  Supports filtering by: metric_name: Filter by metric name(s). Supports comma-separated values (e.g., metric_name&#x3D;http_requests_total,http_response_time) metric_category: Filter by &#x27;system&#x27; (Crusoe-collected) or &#x27;custom&#x27; (user-defined) metrics labels: Filter by label key:value pairs. Supports comma-separated values (e.g., labels&#x3D;job:api,region:us-east)  Internal metrics and provisioned throughput metrics are always excluded.  Rate limited to 10 requests per minute per project. Response limited to 50MB payload and 100,000 time series. Responses are cached for up to 1 minute.
+Use it as a scrape target for external monitoring systems, such as Prometheus.  Supports filtering by: metric_name: Filter by metric name(s). Supports comma-separated values (e.g., metric_name&#x3D;http_requests_total,http_response_time) metric_category: Filter by &#x27;system&#x27; (Crusoe-collected) or &#x27;custom&#x27; (user-defined) metrics labels: Filter by label key:value pairs. Supports comma-separated values (e.g., labels&#x3D;job:api,region:us-east)  Internal metrics and provisioned throughput metrics are always excluded.  Rate limited to 10 requests per minute per project. Response limited to 50MB payload and 100,000 time series. Responses are cached for up to 1 minute.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param projectId The project ID to scrape metrics from. User must have read access to the project.
  * @param optional nil or *ObservabilityApiScrapeMetricsOpts - Optional Parameters:

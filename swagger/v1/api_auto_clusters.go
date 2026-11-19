@@ -157,7 +157,7 @@ func (a *AutoClustersApiService) GetAutoClustersConfig(ctx context.Context, proj
 AutoClustersApiService Trigger VM remediation.
 Trigger remediation for a VM within a Kubernetes cluster with AutoClusters add-on enabled. This creates an AutoClusters operation and returns an asynchronous operation handle. Currently, this defaults to performing a replace node operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project that owns the cluster.
   - @param clusterId
   - @param vmId
 

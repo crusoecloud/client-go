@@ -10,5 +10,6 @@ package swagger
 
 // UpdateOrganizationMFARequest is the request for setting an organization's required MFA methods.
 type OrganizationsMfaServiceUpdateOrganizationMfaBody struct {
+	// intended_methods is the full set of MFA methods for the organization to require (one of: totp, webauthn).
 	IntendedMethods []string `json:"intended_methods,omitempty"`
 }

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// UpdateSCIMIntegrationRequestBody is the JSON request body for updating a SCIM integration.
 type UpdateScimIntegrationRequestBody struct {
 	// The new status for the integration.
 	Status string `json:"status,omitempty"`

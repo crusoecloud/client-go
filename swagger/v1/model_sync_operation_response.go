@@ -8,6 +8,7 @@
  */
 package swagger
 
+// SyncOperationResponse is the response type for endpoints which return completed synchronous operations.
 type SyncOperationResponse struct {
 	Operation *Operation `json:"operation"`
 }

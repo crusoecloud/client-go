@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListInstancesResponseV1 is the response type for GET requests to /compute/vms/instances.
 type ListInstancesResponseV1 struct {
 	Items []InstanceV1 `json:"items"`
 	// Base64 encoded token representing the next page of instances. Empty if currently on the last page.

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// NvlinkDomainsSummaryListResponse represents a list of NVLink domain summaries.
 type NvlinkDomainsSummaryListResponse struct {
 	// List of NVLink domain summaries
 	NvlinkDomains []NvlinkDomainSummaryResponse `json:"nvlink_domains,omitempty"`

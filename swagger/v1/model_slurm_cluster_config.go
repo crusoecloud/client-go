@@ -8,6 +8,7 @@
  */
 package swagger
 
+// Configurable fields of the Slurm Cluster.
 type SlurmClusterConfig struct {
 	// Size of the shared home volume as a Kubernetes quantity string (e.g. \"10Ti\"). Set empty to omit.
 	HomeVolumeSize string `json:"home_volume_size,omitempty"`

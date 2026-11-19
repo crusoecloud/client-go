@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ExternalLoadBalancer defines the specifications of the External Load Balancer.
 type ExternalLoadBalancer struct {
 	HealthCheckOptions *HealthCheckOptionsExternalLb `json:"health_check_options"`
 	// ID of the External Load Balancer.

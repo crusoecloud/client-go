@@ -8,6 +8,7 @@
  */
 package swagger
 
+// HealthCheckOptionsExternalLB defines the health check configuration.
 type HealthCheckOptionsExternalLb struct {
 	// Number of allowed failures before considering the backend unhealthy.
 	FailureCount int64 `json:"failure_count"`

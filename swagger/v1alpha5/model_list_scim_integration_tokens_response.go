@@ -8,6 +8,8 @@
  */
 package swagger
 
+// A SCIM integration's tokens.
 type ListScimIntegrationTokensResponse struct {
+	// The tokens.
 	Items []ScimIntegrationTokenInfo `json:"items"`
 }

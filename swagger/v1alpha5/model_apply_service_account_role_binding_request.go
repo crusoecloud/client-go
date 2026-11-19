@@ -8,7 +8,10 @@
  */
 package swagger
 
+// The role bindings to create and delete for a service account.
 type ApplyServiceAccountRoleBindingRequest struct {
+	// Role bindings to create for the service account.
 	BindingsToCreate []ServiceAccountRoleBindingInput `json:"bindings_to_create"`
-	BindingsToDelete []string                         `json:"bindings_to_delete"`
+	// IDs of the service account's role bindings to delete.
+	BindingsToDelete []string `json:"bindings_to_delete"`
 }

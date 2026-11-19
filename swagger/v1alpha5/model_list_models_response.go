@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListModelsResponse is the response body for listing deployed models.
 type ListModelsResponse struct {
 	// The models deployed and available to the project.
 	Deployments []DeployedModelEntry `json:"deployments,omitempty"`

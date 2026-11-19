@@ -165,7 +165,7 @@ func (a *CustomImagesApiService) CustomImageDelete(ctx context.Context, imageId 
 /*
 CustomImagesApiService Updates the tags of a custom image in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body CustomImagesEditTagsRequest is the request type for PATCH requests to the /custom-images{id}/edit-tags endpoint.
   - @param imageId ID of the custom image.
   - @param projectId ID of the project that owns the custom image.
 
@@ -306,7 +306,7 @@ func (a *CustomImagesApiService) CustomImageEditTags(ctx context.Context, body C
 /*
 CustomImagesApiService Updates a custom image in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body CustomImagePatchRequest is the request type for PATCH requests to the /custom-images/{id} endpoint.
   - @param imageId ID of the custom image.
   - @param projectId ID of the project that owns the custom image.
 
@@ -447,7 +447,7 @@ func (a *CustomImagesApiService) CustomImagePatch(ctx context.Context, body Cust
 /*
 CustomImagesApiService Creates a custom image in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body CustomImagePostRequest is the request type for POST requests to the /custom-images endpoint.
   - @param projectId ID of the project that owns the custom image.
 
 @return AsyncOperationResponse
@@ -587,7 +587,7 @@ func (a *CustomImagesApiService) CustomImagePost(ctx context.Context, body Custo
 CustomImagesApiService Returns details for a single custom image in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param imageId ID of the image.
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return Image
 */
@@ -714,7 +714,7 @@ func (a *CustomImagesApiService) GetCustomImage(ctx context.Context, imageId str
 /*
 CustomImagesApiService Lists all custom images in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListImagesResponseV1
 */

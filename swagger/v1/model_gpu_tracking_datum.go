@@ -8,14 +8,24 @@
  */
 package swagger
 
+// An organization's GPU usage compared with its reserved capacity, for one product line and region at one point in time.
 type GpuTrackingDatum struct {
-	EventTime        string  `json:"event_time,omitempty"`
-	GlobalCapacity   int64   `json:"global_capacity,omitempty"`
-	GpuUsage         int64   `json:"gpu_usage,omitempty"`
-	OnDemandCount    int64   `json:"on_demand_count,omitempty"`
-	OrganizationId   string  `json:"organization_id,omitempty"`
-	Price            float64 `json:"price,omitempty"`
-	ProductLine      string  `json:"product_line,omitempty"`
-	Region           string  `json:"region,omitempty"`
-	RegionalCapacity int64   `json:"regional_capacity,omitempty"`
+	// When these values took effect, in RFC 3339 format.
+	EventTime string `json:"event_time,omitempty"`
+	// Number of reserved GPUs for the product line that aren't tied to a single region.
+	GlobalCapacity int64 `json:"global_capacity,omitempty"`
+	// Number of GPUs in use in the region. In `global` entries, the number in use beyond the regional reserved capacity, across all regions.
+	GpuUsage int64 `json:"gpu_usage,omitempty"`
+	// Number of GPUs in use beyond the regional and global reserved capacity.
+	OnDemandCount int64 `json:"on_demand_count,omitempty"`
+	// ID of the organization.
+	OrganizationId string `json:"organization_id,omitempty"`
+	// Price per GPU hour, in US dollars, of GPU usage beyond the reserved capacity in the region. It's `-1` in `global` entries.
+	Price float64 `json:"price,omitempty"`
+	// Product line the entry applies to.
+	ProductLine string `json:"product_line,omitempty"`
+	// Region the entry applies to, or `global` for the entry that covers all regions.
+	Region string `json:"region,omitempty"`
+	// Number of reserved GPUs tied to the region. It's `0` in `global` entries.
+	RegionalCapacity int64 `json:"regional_capacity,omitempty"`
 }

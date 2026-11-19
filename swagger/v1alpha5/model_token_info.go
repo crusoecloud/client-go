@@ -8,11 +8,16 @@
  */
 package swagger
 
-// These are the fields returned from a GET request.
+// An API key. The API returns its secret key only when you create the key.
 type TokenInfo struct {
+	// Access key ID of the API key.
 	AccessKey string `json:"access_key"`
-	Alias     string `json:"alias"`
+	// Display name of the API key.
+	Alias string `json:"alias"`
+	// When the API key was created, in RFC 3339 format.
 	CreatedAt string `json:"created_at"`
+	// When the API key expires, in RFC 3339 format.
 	ExpiresAt string `json:"expires_at"`
-	LastUsed  string `json:"last_used"`
+	// When the API key was last used, in RFC 3339 format.
+	LastUsed string `json:"last_used"`
 }

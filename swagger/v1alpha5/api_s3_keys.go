@@ -27,7 +27,7 @@ type S3KeysApiService service
 /*
 S3KeysApiService Creates an S3 access key in the organization and returns the access key ID and one-time secret key.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body CreateS3KeyRequest is the request body for creating a new S3 access key for a user.
   - @param orgId ID of the organization that owns the S3 access key.
 
 @return CreateS3KeyResponse

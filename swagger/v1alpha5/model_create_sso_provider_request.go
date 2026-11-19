@@ -8,12 +8,14 @@
  */
 package swagger
 
+// The SSO provider to create.
 type CreateSsoProviderRequest struct {
 	// Client ID of the SSO provider. Required for okta and other providers.
 	ClientId string `json:"client_id,omitempty"`
-	// The email domains which should use this SSO provider. Required for okta and other providers.
+	// Email domains that use the SSO provider. Required for okta and other providers.
 	EmailDomains []string `json:"email_domains,omitempty"`
-	// The URI of the SSO provider. Required for okta and other providers.
-	IssuerUri    string `json:"issuer_uri,omitempty"`
+	// Issuer URI of the SSO provider. Required for okta and other providers.
+	IssuerUri string `json:"issuer_uri,omitempty"`
+	// Type of the SSO provider: okta, google for Google Workspace, or other for any other OIDC provider. Defaults to okta.
 	ProviderType string `json:"provider_type,omitempty"`
 }

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ProjectsPutPostResponseV1 is the response type for PUT and POST requests to the projects endpoint.
 type ProjectsPutPostResponseV1 struct {
 	Project *Project `json:"project"`
 }

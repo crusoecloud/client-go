@@ -8,7 +8,7 @@
  */
 package swagger
 
-// see also https://prometheus.io/docs/prometheus/latest/querying/api/
+// This is the standard format for prometheus query responses; see also https://prometheus.io/docs/prometheus/latest/querying/api/
 type ObservabilityMetrics struct {
 	Data *interface{} `json:"data"`
 	// Error message. Present only when status is error.

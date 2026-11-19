@@ -8,7 +8,7 @@
  */
 package swagger
 
-// Individual resources that use Operations should populate the `metadata` field with resource-specific information.
+// Operation contains the common fields for all Operation API objects. Individual resources that use Operations should populate the `metadata` field with resource-specific information.
 type Operation struct {
 	CompletedAt string       `json:"completed_at"`
 	Metadata    *interface{} `json:"metadata"`

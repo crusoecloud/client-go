@@ -8,6 +8,8 @@
  */
 package swagger
 
+// Your limited usage API keys.
 type ListLimitedUsageApiKeysResponseV1Alpha5 struct {
+	// The limited usage API keys.
 	Items []LimitedUsageApiKeyInfo `json:"items"`
 }

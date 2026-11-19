@@ -8,6 +8,7 @@
  */
 package swagger
 
+// CustomImagePatchRequest is the request type for PATCH requests to the /custom-images/{id} endpoint.
 type CustomImagePatchRequest struct {
 	// New description for the custom image.
 	Description string `json:"description"`

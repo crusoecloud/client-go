@@ -29,7 +29,7 @@ type KubernetesAddonsApiService service
 /*
 KubernetesAddonsApiService Installs one or more add-ons on a Kubernetes cluster.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body KubernetesAddonsPostRequest is the request body for installing add-ons on a cluster.
   - @param projectId ID of the project that owns the cluster.
   - @param clusterId ID of the cluster to install the add-ons on.
 

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListActivityResponse is the response body for a deployment activity feed.
 type ListActivityResponse struct {
 	// Activity events, most recent first.
 	Events []SelfServeActivityEvent `json:"events,omitempty"`

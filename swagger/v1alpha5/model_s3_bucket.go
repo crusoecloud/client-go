@@ -8,7 +8,7 @@
  */
 package swagger
 
-// This is the REST-friendly model for the `BucketInfo` proto.
+// S3Bucket represents information about a single S3 bucket. This is the REST-friendly model for the `BucketInfo` proto.
 type S3Bucket struct {
 	// Archive timestamp of the bucket, in RFC3339 format.
 	ArchivedAt string `json:"archived_at,omitempty"`

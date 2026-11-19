@@ -8,10 +8,15 @@
  */
 package swagger
 
+// Details of the organization to create or update.
 type EntitiesPutPostRequest struct {
-	BillingAddr      *BillingAddress `json:"billing_addr,omitempty"`
-	CompanyName      string          `json:"company_name,omitempty"`
-	OrganizationName string          `json:"organization_name,omitempty"`
-	TaxId            string          `json:"tax_id,omitempty"`
-	TaxIdType        string          `json:"tax_id_type,omitempty"`
+	BillingAddr *BillingAddress `json:"billing_addr,omitempty"`
+	// Name of the company that owns the organization.
+	CompanyName string `json:"company_name,omitempty"`
+	// Name of the organization.
+	OrganizationName string `json:"organization_name,omitempty"`
+	// Tax ID of the company.
+	TaxId string `json:"tax_id,omitempty"`
+	// Type of the company's tax ID.
+	TaxIdType string `json:"tax_id_type,omitempty"`
 }

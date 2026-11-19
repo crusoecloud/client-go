@@ -8,6 +8,7 @@
  */
 package swagger
 
+// The limited usage API key you created.
 type LimitedUsageApiKeyPostResponse struct {
 	ApiKeyInfo *GeneratedLimitedUsageApiKey `json:"api_key_info"`
 }

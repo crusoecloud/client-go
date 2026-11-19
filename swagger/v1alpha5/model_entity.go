@@ -8,19 +8,32 @@
  */
 package swagger
 
+// An organization's details.
 type Entity struct {
-	Billing          *Billing               `json:"billing"`
-	BillingAddr      *BillingAddress        `json:"billing_addr,omitempty"`
-	CompanyName      string                 `json:"company_name,omitempty"`
-	Features         map[string]interface{} `json:"features"`
-	Id               string                 `json:"id"`
-	MfaMethods       []OrganizationMfa      `json:"mfa_methods,omitempty"`
-	Name             string                 `json:"name"`
-	OrganizationType string                 `json:"organization_type,omitempty"`
-	RegistrationType string                 `json:"registration_type,omitempty"`
-	Relation         string                 `json:"relation"`
-	State            string                 `json:"state"`
-	StateReason      string                 `json:"state_reason"`
-	TaxId            string                 `json:"tax_id,omitempty"`
-	TaxIdType        string                 `json:"tax_id_type,omitempty"`
+	Billing     *Billing        `json:"billing"`
+	BillingAddr *BillingAddress `json:"billing_addr,omitempty"`
+	// Name of the company that owns the organization.
+	CompanyName string `json:"company_name,omitempty"`
+	// Feature flags evaluated for you in the organization, keyed by flag name. Flags that evaluate to `false` are left out.
+	Features map[string]interface{} `json:"features"`
+	// ID of the organization.
+	Id string `json:"id"`
+	// MFA methods the organization requires.
+	MfaMethods []OrganizationMfa `json:"mfa_methods,omitempty"`
+	// Name of the organization.
+	Name string `json:"name"`
+	// Type of the organization.
+	OrganizationType string `json:"organization_type,omitempty"`
+	// How the organization registered, such as `waitlist` or `selfserve`.
+	RegistrationType string `json:"registration_type,omitempty"`
+	// Your relation to the organization.
+	Relation string `json:"relation"`
+	// State of the organization, such as `ORGANIZATION_STATE_ACTIVE` or `ORGANIZATION_STATE_SUSPENDED`.
+	State string `json:"state"`
+	// Reason for the organization's state, such as `ORGANIZATION_STATE_REASON_PAYMENT_DELINQUENT`.
+	StateReason string `json:"state_reason"`
+	// Tax ID of the company.
+	TaxId string `json:"tax_id,omitempty"`
+	// Type of the company's tax ID.
+	TaxIdType string `json:"tax_id_type,omitempty"`
 }

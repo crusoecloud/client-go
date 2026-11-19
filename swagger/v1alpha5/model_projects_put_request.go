@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ProjectsPutRequest is the request type for PUT requests to the projects endpoint.
 type ProjectsPutRequest struct {
 	// New name for the project.
 	Name string `json:"name"`

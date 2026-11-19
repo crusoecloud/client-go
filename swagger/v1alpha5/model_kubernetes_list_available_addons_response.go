@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesListAvailableAddonsResponse is one page of the available add-ons catalog.
 type KubernetesListAvailableAddonsResponse struct {
 	Addons []KubernetesAvailableAddon `json:"addons"`
 	// Token for the next page of results; empty when there are no more.

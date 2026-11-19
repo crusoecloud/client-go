@@ -8,6 +8,8 @@
  */
 package swagger
 
+// The role bindings that match the filters.
 type ListRoleBindingsResponse struct {
+	// Role bindings that match the filters.
 	RoleBindings []RoleBinding `json:"role_bindings"`
 }

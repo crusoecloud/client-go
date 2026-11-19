@@ -31,7 +31,7 @@ DisksApiService Creates a disk in the project and returns the async operation.
 Requires either a disk snapshot ID, or size and location, where size of disk should be in gibibytes (GiB) or tebibytes (TiB) in the format [Size][Unit]. E.g. 10GiB. Disk type must be one of: DISK_TYPE_PERSISTENT_SSD. A successful response from this resource will contain the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
   - @param body
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return AsyncOperationResponse
 */

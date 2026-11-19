@@ -8,7 +8,7 @@
  */
 package swagger
 
-// This is a separate type from InstanceGroupPostRequest for clearer documentation, as these fields are not required in the PATCH endpoint.
+// InstanceGroupPatchRequest defines the specifications of the updates to be made to the instance group. This is a separate type from InstanceGroupPostRequest for clearer documentation, as these fields are not required in the PATCH endpoint.
 type InstanceGroupPatchRequest struct {
 	DesiredCount *DesiredCount `json:"desired_count,omitempty"`
 	// New name for the instance group.

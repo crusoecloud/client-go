@@ -10,5 +10,6 @@ package swagger
 
 // OrganizationUsage is the project-level usage of products across an organization.
 type CustomerOrganizationUsage struct {
+	// items is the list of per-project usage line items.
 	Items []CustomerProductProjectUsage `json:"items,omitempty"`
 }

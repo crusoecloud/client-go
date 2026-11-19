@@ -29,8 +29,8 @@ type AutoClusterOperationsApiService service
 /*
 AutoClusterOperationsApiService Retrieve information about a specific AutoCluster operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param operationId
+  - @param projectId ID of the project that owns the operation.
+  - @param operationId ID of the operation.
 
 @return Operation
 */
@@ -160,8 +160,8 @@ AutoClusterOperationsApiService Retrieve information about AutoCluster operation
  * @param projectId Project ID
  * @param optional nil or *AutoClusterOperationsApiListAutoClusterOperationsOpts - Optional Parameters:
      * @param "ClusterId" (optional.String) -
-     * @param "OperationId" (optional.String) -
-     * @param "State" (optional.String) -
+     * @param "OperationId" (optional.String) -  Filters results to the operation with this ID.
+     * @param "State" (optional.String) -  Filters results to operations in this state.
      * @param "OperationType" (optional.String) -
      * @param "RemediationState" (optional.String) -
      * @param "LowerBound" (optional.String) -

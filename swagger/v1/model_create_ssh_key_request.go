@@ -8,7 +8,10 @@
  */
 package swagger
 
+// The SSH public key to register.
 type CreateSshKeyRequest struct {
-	Name      string `json:"name"`
+	// Display name for the SSH key, at most 1,024 bytes.
+	Name string `json:"name"`
+	// SSH public key to register, in OpenSSH `authorized_keys` format, such as the contents of a `.pub` file.
 	PublicKey string `json:"public_key"`
 }

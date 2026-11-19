@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListDisksResponseV1Alpha5 is the response type for GET requests to the disks endpoint.
 type ListDisksResponseV1Alpha5 struct {
 	Items []DiskV1Alpha5 `json:"items"`
 }

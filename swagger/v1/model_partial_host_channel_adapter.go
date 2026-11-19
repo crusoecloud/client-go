@@ -8,6 +8,7 @@
  */
 package swagger
 
+// PartialHostChannelAdapter is used when POSTing and PATCHing VMs to assign IB Partitions.
 type PartialHostChannelAdapter struct {
 	// Deprecated: Use transport_partition_id instead.
 	IbPartitionId string `json:"ib_partition_id,omitempty"`

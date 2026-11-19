@@ -14,6 +14,8 @@ import (
 
 // OrganizationMFA describes a single MFA method required by an organization.
 type CustomerOrganizationMfa struct {
+	// created_at is when this MFA method was required by the organization.
 	CreatedAt time.Time `json:"created_at,omitempty"`
-	Method    string    `json:"method,omitempty"`
+	// method is the required MFA method (one of: totp, webauthn).
+	Method string `json:"method,omitempty"`
 }

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListenPortAndBackend defines a mapping of listen ports to backend configurations.
 type ListenPortAndBackend struct {
 	// List of backend configurations.
 	Backends []Backend `json:"backends"`

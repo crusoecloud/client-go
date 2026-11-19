@@ -8,6 +8,7 @@
  */
 package swagger
 
+// CreateS3BucketRequest is the request body for creating a new S3 bucket.
 type CreateS3BucketRequest struct {
 	// Location to create the bucket in.
 	Location string `json:"location"`

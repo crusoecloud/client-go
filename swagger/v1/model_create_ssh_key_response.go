@@ -8,6 +8,7 @@
  */
 package swagger
 
+// The SSH key you registered.
 type CreateSshKeyResponse struct {
 	SshKey *SshKey `json:"ssh_key"`
 }

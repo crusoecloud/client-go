@@ -8,6 +8,7 @@
  */
 package swagger
 
+// UpdateModelRequest is the body for updating a deployed model's HuggingFace source.
 type UpdateModelRequest struct {
 	// Customer-facing alias of the model to update.
 	ModelAlias string `json:"model_alias"`

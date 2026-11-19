@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListVPCSubnetsResponseV1Alpha5 is the response type for GET requests to the VPC Subnets endpoint.
 type ListVpcSubnetsResponseV1Alpha5 struct {
 	Items []VpcSubnet `json:"items"`
 }

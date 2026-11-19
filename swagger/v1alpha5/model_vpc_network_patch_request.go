@@ -8,6 +8,7 @@
  */
 package swagger
 
+// VPCNetworkPatchRequest is the request type for PATCH requests to the VPC Networks endpoint.
 type VpcNetworkPatchRequest struct {
 	// New name for the VPC network.
 	Name string `json:"name"`

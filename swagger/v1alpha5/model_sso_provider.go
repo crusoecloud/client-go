@@ -8,12 +8,20 @@
  */
 package swagger
 
+// An SSO identity provider that your organization's users sign in with.
 type SsoProvider struct {
-	ClientId     string   `json:"client_id"`
-	CreatedAt    string   `json:"created_at"`
+	// Client ID of the SSO provider. Empty for google providers.
+	ClientId string `json:"client_id"`
+	// When the SSO provider was created.
+	CreatedAt string `json:"created_at"`
+	// Email domains that use the SSO provider. Empty for google providers.
 	EmailDomains []string `json:"email_domains"`
-	Id           string   `json:"id"`
-	IssuerUri    string   `json:"issuer_uri"`
-	OrgId        string   `json:"org_id"`
-	ProviderType string   `json:"provider_type"`
+	// ID of the SSO provider.
+	Id string `json:"id"`
+	// Issuer URI of the SSO provider. Empty for google providers.
+	IssuerUri string `json:"issuer_uri"`
+	// ID of the organization that owns the SSO provider.
+	OrgId string `json:"org_id"`
+	// Type of the SSO provider: okta, google for Google Workspace, or other for any other OIDC provider.
+	ProviderType string `json:"provider_type"`
 }

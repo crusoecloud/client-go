@@ -8,6 +8,7 @@
  */
 package swagger
 
+// VPCNetworkPostResponse is the response type for POST requests to the VPC Networks endpoint.
 type VpcNetworkPostResponse struct {
 	Network *VpcNetwork `json:"network"`
 }

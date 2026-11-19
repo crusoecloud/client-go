@@ -28,8 +28,8 @@ type KubernetesNodePoolOperationsApiService service
 KubernetesNodePoolOperationsApiService Get status of a single asynchronous operation
 This resource retrieves information about the status of an asynchronous operation initiated by the Kubernetes Node Pool resource. Only information about the operation specified in the path will be returned, or an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged in user, or has expired.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param operationId
+  - @param projectId ID of the project that owns the operation.
+  - @param operationId ID of the operation.
 
 @return Operation
 */
@@ -157,7 +157,7 @@ func (a *KubernetesNodePoolOperationsApiService) GetKubernetesNodePoolsOperation
 KubernetesNodePoolOperationsApiService Get status of asynchronous operations
 This resource retrieves information about the status of an asynchronous operation initiated by the Kubernetes Node Pool resource. Only information about the operation specified in the path will be returned, or an HTTP 403 will be returned if the operation does not exist, was not initiated by the logged in user, or has expired.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListOperationsResponseV1
 */

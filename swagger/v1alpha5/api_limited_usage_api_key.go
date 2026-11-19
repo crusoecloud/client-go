@@ -27,8 +27,8 @@ type LimitedUsageAPIKeyApiService service
 LimitedUsageAPIKeyApiService Create a new limited usage api key owned by the logged in user, of type specified by usage parameter.
 A successful response from this resource will contain json-encoded details of the limited usage API key. This is the only time the customer will be able to view the api key associated with the API key id.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
-  - @param usage
+  - @param body The limited usage API key to create.
+  - @param usage What you can use the key for.
 
 @return LimitedUsageApiKeyPostResponse
 */
@@ -136,7 +136,7 @@ func (a *LimitedUsageAPIKeyApiService) CreateLimitedUsageAPIKey(ctx context.Cont
 /*
 LimitedUsageAPIKeyApiService Delete a Limited Usage API Key owned by the logged in user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param keyId
+  - @param keyId ID of the limited usage API key to delete.
 */
 func (a *LimitedUsageAPIKeyApiService) DeleteLimitedUsageAPIKey(ctx context.Context, keyId string) (*http.Response, error) {
 	var (

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListImagesResponseV1 is the resource response type for GET requests to the Images endpoint.
 type ListImagesResponseV1 struct {
 	Items []Image `json:"items"`
 }

@@ -8,10 +8,15 @@
  */
 package swagger
 
+// One of your SSH public keys.
 type SshKey struct {
+	// When the SSH key was registered, in RFC 3339 format.
 	CreatedAt    string        `json:"created_at"`
 	Fingerprints *Fingerprints `json:"fingerprints"`
-	Id           string        `json:"id"`
-	Name         string        `json:"name"`
-	PublicKey    string        `json:"public_key"`
+	// ID of the SSH key.
+	Id string `json:"id"`
+	// Display name of the SSH key.
+	Name string `json:"name"`
+	// SSH public key, in OpenSSH `authorized_keys` format, as you registered it.
+	PublicKey string `json:"public_key"`
 }

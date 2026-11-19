@@ -8,6 +8,7 @@
  */
 package swagger
 
+// SlurmCluster defines the specifications of the slurm cluster.
 type SlurmCluster struct {
 	// Issues describing why the cluster is not in RUNNING.
 	Issues []SlurmClusterIssue `json:"issues,omitempty"`

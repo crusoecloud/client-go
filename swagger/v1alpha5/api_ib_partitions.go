@@ -27,8 +27,8 @@ type IBPartitionsApiService service
 /*
 IBPartitionsApiService Creates an InfiniBand partition in the project and returns the created InfiniBand partition.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
-  - @param projectId
+  - @param body IBPartitionsPostRequestV1Alpha5 is the request type for POST requests to the IB Partitions endpoint.
+  - @param projectId ID of the project.
 
 @return IbPartition
 */
@@ -391,7 +391,7 @@ func (a *IBPartitionsApiService) GetIBPartition(ctx context.Context, projectId s
 /*
 IBPartitionsApiService Lists all InfiniBand partitions in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListIbPartitionsResponseV1Alpha5
 */

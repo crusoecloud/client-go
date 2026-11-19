@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListIBNetworksResponseV1Alpha5 is the response type for GET requests to the IB Networks endpoint.
 type ListIbNetworksResponseV1Alpha5 struct {
 	Items []IbNetwork `json:"items"`
 }

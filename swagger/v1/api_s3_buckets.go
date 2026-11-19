@@ -29,7 +29,7 @@ type S3BucketsApiService service
 /*
 S3BucketsApiService Creates an S3 bucket in the project and returns the created bucket.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body CreateS3BucketRequest is the request body for creating a new S3 bucket.
   - @param projectId ID of the project to create the bucket in.
 
 @return S3Bucket
@@ -268,7 +268,7 @@ S3BucketsApiService Enables object lock on an S3 bucket and returns the updated 
  * @param projectId ID of the project that owns the bucket.
  * @param bucketName Name of the bucket.
  * @param optional nil or *S3BucketsApiEnableS3BucketObjectLockOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of EnableS3BucketObjectLockRequest) -
+     * @param "Body" (optional.Interface of EnableS3BucketObjectLockRequest) -  EnableS3BucketObjectLockRequest defines the body for enabling object lock.
 @return S3Bucket
 */
 
@@ -1152,7 +1152,7 @@ func (a *S3BucketsApiService) ListS3SupportedLocations(ctx context.Context) (Lis
 /*
 S3BucketsApiService Replaces the tags on an S3 bucket and returns the updated bucket.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body UpdateS3BucketTagsRequest is the request body for updating S3 bucket tags.
   - @param projectId ID of the project that owns the bucket.
   - @param bucketName Name of the bucket.
 

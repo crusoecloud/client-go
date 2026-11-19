@@ -8,6 +8,7 @@
  */
 package swagger
 
+// DeploymentProgress describes the progress of a deployment operation.
 type DeploymentProgress struct {
 	// Human-readable progress message.
 	Message string `json:"message,omitempty"`

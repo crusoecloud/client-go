@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListOrgQuotasResponse is the response for listing a org's quotas.
 type ListOrgQuotasResponse struct {
 	// Quotas of the organization.
 	Quotas []OrgQuota `json:"quotas,omitempty"`

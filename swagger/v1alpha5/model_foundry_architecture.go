@@ -8,6 +8,7 @@
  */
 package swagger
 
+// FoundryArchitecture describes the architecture of a deployed model.
 type FoundryArchitecture struct {
 	// Instruction tuning type (e.g. \"chat\").
 	InstructType string `json:"instruct_type,omitempty"`

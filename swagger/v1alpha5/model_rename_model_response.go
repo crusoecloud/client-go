@@ -8,6 +8,7 @@
  */
 package swagger
 
+// RenameModelResponse is the response body for a model rename.
 type RenameModelResponse struct {
 	// The endpoint ID that was renamed.
 	EndpointId string `json:"endpoint_id,omitempty"`

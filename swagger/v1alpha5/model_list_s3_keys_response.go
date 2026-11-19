@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListS3KeysResponse is the response type for GET requests to the S3 access keys endpoint.
 type ListS3KeysResponse struct {
 	Items []S3Key `json:"items"`
 }

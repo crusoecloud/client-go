@@ -8,6 +8,7 @@
  */
 package swagger
 
+// DiagnosticResponse is the REST response for creating a diagnostic.
 type DiagnosticResponse struct {
 	AlreadyPending bool   `json:"already_pending"`
 	Id             string `json:"id"`

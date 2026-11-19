@@ -8,7 +8,7 @@
  */
 package swagger
 
-// This is the REST-friendly model for the `GetS3BucketCountResponse` proto.
+// GetS3BucketsCountResponse is the response type for GET requests to the S3 buckets count endpoint. This is the REST-friendly model for the `GetS3BucketCountResponse` proto.
 type GetS3BucketsCountResponse struct {
 	// Number of S3 buckets in the project. May be absent when the count is zero (proto3 marshalling omits zero-valued scalars), so consumers should treat a missing field as 0.
 	BucketCount int64 `json:"bucket_count,omitempty"`

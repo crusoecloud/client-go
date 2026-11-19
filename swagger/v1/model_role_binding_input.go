@@ -8,9 +8,14 @@
  */
 package swagger
 
+// A role binding to create for a user.
 type RoleBindingInput struct {
-	CustomerId    string `json:"customer_id"`
-	RoleId        string `json:"role_id"`
+	// ID of the user in the path, as the user's role bindings return it in `customer_id`, not the user ID.
+	CustomerId string `json:"customer_id"`
+	// ID of the role to grant.
+	RoleId string `json:"role_id"`
+	// ID of the resource the binding applies to: your organization's ID for `org`, or the ID of one of its projects for `project`.
 	ScopeObjectId string `json:"scope_object_id"`
-	ScopeType     string `json:"scope_type"`
+	// Type of resource the binding applies to. It must be one of the role's `allowed_scopes`.
+	ScopeType string `json:"scope_type"`
 }

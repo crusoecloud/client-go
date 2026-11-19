@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesClusterPreflightVersion is one version a cluster can be created at and what it runs today.
 type KubernetesClusterPreflightVersion struct {
 	// The version to pass when creating a cluster, as major.minor.
 	MajorMinorVersion string `json:"major_minor_version"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// SlurmClusterIssue describes a problem preventing the cluster from reaching RUNNING state.
 type SlurmClusterIssue struct {
 	// Machine-readable issue code.
 	Code string `json:"code,omitempty"`

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesNodePoolHealthIssue is one current issue on a node pool.
 type KubernetesNodePoolHealthIssue struct {
 	// Number of nodes affected by the issue.
 	AffectedCount int64 `json:"affected_count,omitempty"`

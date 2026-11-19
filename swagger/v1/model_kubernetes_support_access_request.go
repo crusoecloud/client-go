@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesSupportAccessRequest defines the information about a support access request.
 type KubernetesSupportAccessRequest struct {
 	// Requested support access role.
 	AccessRole string `json:"access_role"`

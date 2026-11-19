@@ -8,10 +8,11 @@
  */
 package swagger
 
-// The Identity of a user is returned.
+// Your identity and sign-in methods.
 type UserResponse struct {
 	// Credentials will be deprecated
-	Credentials    []string                      `json:"credentials,omitempty"`
+	Credentials []string `json:"credentials,omitempty"`
+	// Your sign-in methods, keyed by type, such as `password`, `totp`, or `webauthn`.
 	CredentialsMap map[string]IdentityCredential `json:"credentials_map,omitempty"`
 	Identity       *Identity                     `json:"identity"`
 }

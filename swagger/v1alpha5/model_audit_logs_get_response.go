@@ -8,7 +8,9 @@
  */
 package swagger
 
+// A page of an organization's audit log entries.
 type AuditLogsGetResponse struct {
+	// Audit log entries on this page, newest first.
 	Items []LogEntry `json:"items"`
 	// Base64 encoded token representing the starting of the next page of log entry. Empty if currently on the last page.
 	NextPageToken string `json:"next_page_token,omitempty"`

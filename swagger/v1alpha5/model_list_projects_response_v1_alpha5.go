@@ -8,6 +8,8 @@
  */
 package swagger
 
+// The projects you can access.
 type ListProjectsResponseV1Alpha5 struct {
+	// The projects.
 	Items []Project `json:"items"`
 }

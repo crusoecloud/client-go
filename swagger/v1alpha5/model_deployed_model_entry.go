@@ -8,6 +8,7 @@
  */
 package swagger
 
+// DeployedModelEntry describes a model available for inference in the project.
 type DeployedModelEntry struct {
 	Architecture *FoundryArchitecture `json:"architecture,omitempty"`
 	// Maximum context length supported by the model.

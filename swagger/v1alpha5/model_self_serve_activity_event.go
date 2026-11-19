@@ -8,6 +8,7 @@
  */
 package swagger
 
+// SelfServeActivityEvent is a single activity/audit event for a deployment.
 type SelfServeActivityEvent struct {
 	// Event type identifier.
 	EventType string `json:"event_type,omitempty"`

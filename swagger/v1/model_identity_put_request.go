@@ -8,7 +8,10 @@
  */
 package swagger
 
+// The changes to make to your identity. Only the name can be changed.
 type IdentityPutRequest struct {
+	// Your new name.
 	Name string `json:"name"`
+	// Accepted for compatibility and ignored.
 	Role string `json:"role,omitempty"`
 }

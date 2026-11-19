@@ -8,12 +8,20 @@
  */
 package swagger
 
+// A limited usage API key you just created. It includes the key itself, which the API doesn't return again.
 type GeneratedLimitedUsageApiKey struct {
-	Alias     string `json:"alias,omitempty"`
-	ApiKey    string `json:"api_key"`
+	// Display name of the key.
+	Alias string `json:"alias,omitempty"`
+	// The key itself. The API returns it only in this response.
+	ApiKey string `json:"api_key"`
+	// When the key was created, in RFC 3339 format.
 	CreatedAt string `json:"created_at"`
+	// When the key expires, in RFC 3339 format.
 	ExpiresAt string `json:"expires_at"`
-	KeyId     string `json:"key_id"`
+	// ID of the key.
+	KeyId string `json:"key_id"`
+	// ID of the project the key is scoped to, if any.
 	ProjectId string `json:"project_id,omitempty"`
-	Usage     string `json:"usage"`
+	// What you can use the key for.
+	Usage string `json:"usage"`
 }

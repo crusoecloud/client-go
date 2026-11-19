@@ -8,6 +8,7 @@
  */
 package swagger
 
+// CredentialResponse describes a stored credential.
 type CredentialResponse struct {
 	// RFC 3339 creation timestamp.
 	CreatedAt   string             `json:"created_at,omitempty"`

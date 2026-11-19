@@ -27,8 +27,8 @@ type SSOApiService service
 /*
 SSOApiService Create a new SSO provider for a specific org.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
-  - @param organizationId
+  - @param body The SSO provider to create.
+  - @param organizationId ID of the organization that owns the SSO provider.
 
 @return SsoProvider
 */
@@ -156,8 +156,8 @@ func (a *SSOApiService) CreateSSOProvider(ctx context.Context, body CreateSsoPro
 /*
 SSOApiService Delete a specific SSO provider for a specific org.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
-  - @param providerId
+  - @param organizationId ID of the organization that owns the SSO provider.
+  - @param providerId ID of the SSO provider.
 
 @return SsoProvider
 */
@@ -284,7 +284,7 @@ func (a *SSOApiService) DeleteSSOProvider(ctx context.Context, organizationId st
 /*
 SSOApiService Returns the active sso providers for a given orgID.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
+  - @param organizationId ID of the organization that owns the SSO providers.
 
 @return ListSsoProvidersResponse
 */
@@ -410,7 +410,7 @@ func (a *SSOApiService) ListSSOProviders(ctx context.Context, organizationId str
 /*
 SSOApiService Update SSO for a user.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body The SSO enforcement level to set for users in your organization.
 */
 func (a *SSOApiService) UpdateUserSSOEnforcement(ctx context.Context, body UpdateUserSsoEnforcementRequest) (*http.Response, error) {
 	var (

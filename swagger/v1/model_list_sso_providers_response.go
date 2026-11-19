@@ -8,6 +8,8 @@
  */
 package swagger
 
+// The organization's active SSO providers.
 type ListSsoProvidersResponse struct {
+	// The SSO providers.
 	SsoProviders []SsoProvider `json:"sso_providers"`
 }

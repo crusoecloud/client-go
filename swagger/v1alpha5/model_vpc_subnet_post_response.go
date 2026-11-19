@@ -8,6 +8,7 @@
  */
 package swagger
 
+// VPCSubnetPostResponse is the response type for POST requests to the VPC Subnets endpoint.
 type VpcSubnetPostResponse struct {
 	Subnet *VpcSubnet `json:"subnet"`
 }

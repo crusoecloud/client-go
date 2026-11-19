@@ -66,6 +66,8 @@ type APIClient struct {
 
 	DiagnosticsApi *DiagnosticsApiService
 
+	DiskMigrationsApi *DiskMigrationsApiService
+
 	DiskOperationsApi *DiskOperationsApiService
 
 	DisksApi *DisksApiService
@@ -200,6 +202,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.CustomImageOperationsApi = (*CustomImageOperationsApiService)(&c.common)
 	c.CustomImagesApi = (*CustomImagesApiService)(&c.common)
 	c.DiagnosticsApi = (*DiagnosticsApiService)(&c.common)
+	c.DiskMigrationsApi = (*DiskMigrationsApiService)(&c.common)
 	c.DiskOperationsApi = (*DiskOperationsApiService)(&c.common)
 	c.DisksApi = (*DisksApiService)(&c.common)
 	c.EntitiesApi = (*EntitiesApiService)(&c.common)

@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesCreateAddonsResponse is the response to installing add-ons.
 type KubernetesCreateAddonsResponse struct {
 	Addons []KubernetesCreatedAddon `json:"addons"`
 	// Correlation ID for the install operation.

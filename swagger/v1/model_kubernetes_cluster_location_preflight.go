@@ -8,6 +8,7 @@
  */
 package swagger
 
+// KubernetesClusterLocationPreflight is the preflight result for one location.
 type KubernetesClusterLocationPreflight struct {
 	// How the cluster's control plane would be hosted. \"pod\" means Crusoe hosts it and it consumes none of the project's VM capacity; \"vm\" means it runs on VMs in the project's location.
 	ControlPlaneType string `json:"control_plane_type"`

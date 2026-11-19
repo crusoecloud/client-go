@@ -8,13 +8,22 @@
  */
 package swagger
 
+// A SCIM integration token. The API returns the token's API key only when you create the token.
 type ScimIntegrationTokenInfo struct {
-	Alias     string `json:"alias"`
+	// Display name of the key.
+	Alias string `json:"alias"`
+	// When the key was created, in RFC 3339 format.
 	CreatedAt string `json:"created_at"`
+	// When the key expires, in RFC 3339 format.
 	ExpiresAt string `json:"expires_at"`
-	KeyId     string `json:"key_id"`
-	LastUsed  string `json:"last_used"`
+	// ID of the key.
+	KeyId string `json:"key_id"`
+	// When the key was last used, in RFC 3339 format.
+	LastUsed string `json:"last_used"`
+	// ID of the project the key is scoped to, if any.
 	ProjectId string `json:"project_id,omitempty"`
-	Usage     string `json:"usage"`
-	UserId    string `json:"user_id"`
+	// What you can use the key for.
+	Usage string `json:"usage"`
+	// ID of the user who created the token.
+	UserId string `json:"user_id"`
 }

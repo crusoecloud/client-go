@@ -30,8 +30,8 @@ type SlurmClustersApiService service
 SlurmClustersApiService Create a new slurm cluster owned by the logged in user.
 A successful response from this resource will contain the async operation ID.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
-  - @param projectId
+  - @param body SlurmClusterPostRequest defines the specifications of the cluster to be created.
+  - @param projectId ID of the project that owns the Slurm cluster.
 
 @return AsyncOperationResponse
 */
@@ -159,8 +159,8 @@ func (a *SlurmClustersApiService) CreateSlurmCluster(ctx context.Context, body S
 /*
 SlurmClustersApiService Delete a slurm cluster that the logged in user owns.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param slurmClusterId
+  - @param projectId ID of the project that owns the Slurm cluster.
+  - @param slurmClusterId ID of the Slurm cluster.
 
 @return AsyncOperationResponse
 */
@@ -277,8 +277,8 @@ func (a *SlurmClustersApiService) DeleteSlurmCluster(ctx context.Context, projec
 /*
 SlurmClustersApiService Retrieve information about a particular slurm cluster belonged to the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param slurmClusterId
+  - @param projectId ID of the project that owns the Slurm cluster.
+  - @param slurmClusterId ID of the Slurm cluster.
 
 @return SlurmCluster
 */
@@ -385,11 +385,11 @@ func (a *SlurmClustersApiService) GetSlurmCluster(ctx context.Context, projectId
 /*
 SlurmClustersApiService Retrieve information about slurm clusters belonging to the project.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
+ * @param projectId ID of the project that owns the Slurm clusters.
  * @param optional nil or *SlurmClustersApiListSlurmClustersOpts - Optional Parameters:
      * @param "Names" (optional.Interface of []string) -
      * @param "Location" (optional.String) -
-     * @param "State" (optional.String) -
+     * @param "State" (optional.String) -  Filters results to Slurm clusters in this state.
      * @param "SlurmClusterIds" (optional.Interface of []string) -
 @return ListSlurmClustersResponse
 */

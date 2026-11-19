@@ -8,13 +8,22 @@
  */
 package swagger
 
+// A role granted to a principal, such as a user or service account, on an organization or a project.
 type RoleBinding struct {
-	CustomerId    string `json:"customer_id"`
-	Id            string `json:"id"`
-	PrincipalId   string `json:"principal_id"`
+	// For a user, the same value as `principal_id`; empty for other principals, such as service accounts. Use `principal_id` and `principal_type` instead.
+	CustomerId string `json:"customer_id"`
+	// ID of the role binding.
+	Id string `json:"id"`
+	// ID of the principal the role is granted to. For a service account, it's the service account's ID. For a user, it's the same value as `customer_id`, not the user's ID.
+	PrincipalId string `json:"principal_id"`
+	// Type of the principal that `principal_id` identifies.
 	PrincipalType string `json:"principal_type"`
-	RoleId        string `json:"role_id"`
-	RoleName      string `json:"role_name"`
+	// ID of the role the binding grants.
+	RoleId string `json:"role_id"`
+	// Name of the role the binding grants.
+	RoleName string `json:"role_name"`
+	// ID of the organization or project the binding applies to.
 	ScopeObjectId string `json:"scope_object_id"`
-	ScopeType     string `json:"scope_type"`
+	// Type of resource the binding applies to: `org` or `project`.
+	ScopeType string `json:"scope_type"`
 }

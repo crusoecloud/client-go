@@ -8,7 +8,10 @@
  */
 package swagger
 
+// An organization's most recent GPU usage compared with its reserved capacity.
 type LatestGpuTracking struct {
-	Data          []GpuTrackingDatumMod `json:"data,omitempty"`
-	ReservationId []string              `json:"reservation_id,omitempty"`
+	// Most recent entry for each product line and region. Covers only product lines the organization has reservations for, and leaves out regions with no usage and no regional reserved capacity.
+	Data []GpuTrackingDatumMod `json:"data,omitempty"`
+	// IDs of the organization's reservations, limited to `product_line` when it's set. Includes reservations that aren't in effect, such as expired ones.
+	ReservationId []string `json:"reservation_id,omitempty"`
 }

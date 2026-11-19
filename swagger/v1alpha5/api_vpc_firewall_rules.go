@@ -27,8 +27,8 @@ type VPCFirewallRulesApiService service
 /*
 VPCFirewallRulesApiService Creates a VPC firewall rule in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
-  - @param projectId
+  - @param body VPCFirewallRulesPostRequestV1Alpha5 is the request type for POST requests to the VPC Firewall Rules endpoint.
+  - @param projectId ID of the project.
 
 @return AsyncOperationResponse
 */
@@ -392,7 +392,7 @@ func (a *VPCFirewallRulesApiService) GetVPCFirewallRule(ctx context.Context, pro
 /*
 VPCFirewallRulesApiService Lists all VPC firewall rules in the project and returns their details.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
+  - @param projectId ID of the project.
 
 @return ListVpcFirewallRulesResponseV1Alpha5
 */
@@ -508,7 +508,7 @@ func (a *VPCFirewallRulesApiService) ListVPCFirewallRules(ctx context.Context, p
 /*
 VPCFirewallRulesApiService Updates a VPC firewall rule in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body VPCFirewallRulesPatchRequest is the request type for PATCH requests to the VPC Firewall Rules endpoint.
   - @param projectId ID of the project that owns the VPC firewall rule.
   - @param vpcFirewallRuleId ID of the VPC firewall rule.
 

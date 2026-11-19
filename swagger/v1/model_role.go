@@ -8,10 +8,16 @@
  */
 package swagger
 
+// A set of permissions you can grant to a user or service account with a role binding.
 type Role struct {
+	// Types of resource that bindings of this role can apply to, each `org` or `project`.
 	AllowedScopes []string `json:"allowed_scopes"`
-	Description   string   `json:"description"`
-	Id            string   `json:"id"`
-	OrgId         string   `json:"org_id"`
-	RoleName      string   `json:"role_name"`
+	// Description of the role.
+	Description string `json:"description"`
+	// ID of the role.
+	Id string `json:"id"`
+	// ID of the organization that owns the role.
+	OrgId string `json:"org_id"`
+	// Name of the role.
+	RoleName string `json:"role_name"`
 }

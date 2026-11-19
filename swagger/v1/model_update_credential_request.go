@@ -8,6 +8,7 @@
  */
 package swagger
 
+// UpdateCredentialRequest is the body for updating a credential.
 type UpdateCredentialRequest struct {
 	// Updated description.
 	Description string `json:"description,omitempty"`

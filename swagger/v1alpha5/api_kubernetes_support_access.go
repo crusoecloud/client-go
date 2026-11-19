@@ -155,7 +155,9 @@ func (a *KubernetesSupportAccessApiService) GetSupportSettings(ctx context.Conte
 /*
 KubernetesSupportAccessApiService Updates support access settings for a Kubernetes cluster in the project.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body KubernetesClusterSupportSettingsRequest defines the request for updating
+
+support access settings for a Kubernetes cluster.
   - @param projectId ID of the project that owns the cluster.
   - @param clusterId ID of the cluster.
 

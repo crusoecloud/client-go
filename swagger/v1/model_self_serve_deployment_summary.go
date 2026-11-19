@@ -8,6 +8,7 @@
  */
 package swagger
 
+// SelfServeDeploymentSummary is a summary view of a self-serve deployment.
 type SelfServeDeploymentSummary struct {
 	// Currently available replicas.
 	AvailableReplicas int32 `json:"available_replicas,omitempty"`

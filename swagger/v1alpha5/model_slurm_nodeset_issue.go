@@ -8,6 +8,7 @@
  */
 package swagger
 
+// SlurmNodesetIssue describes a problem preventing the nodeset from reaching RUNNING state.
 type SlurmNodesetIssue struct {
 	// Machine-readable issue code.
 	Code string `json:"code,omitempty"`

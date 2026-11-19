@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ExternalLoadBalancerPatchRequest defines the structure of the request body for patching an external load balancer.
 type ExternalLoadBalancerPatchRequest struct {
 	HealthCheckOptions *HealthCheckOptionsExternalLb `json:"health_check_options,omitempty"`
 	// Listen ports and associated backends configuration.

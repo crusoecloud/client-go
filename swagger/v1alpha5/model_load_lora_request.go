@@ -8,6 +8,7 @@
  */
 package swagger
 
+// LoadLoraRequest is the body for deploying a LoRA adapter.
 type LoadLoraRequest struct {
 	// ID of the fine-tuned model (LoRA adapter) to deploy, as registered in the model registry.
 	ModelId string `json:"model_id"`

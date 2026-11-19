@@ -8,6 +8,7 @@
  */
 package swagger
 
+// DiagnosticStatusResponse is the REST response for diagnostic status.
 type DiagnosticStatusResponse struct {
 	CreatedAt string `json:"created_at"`
 	// Failure detail, populated when status is \"failed\" or \"timeout\".

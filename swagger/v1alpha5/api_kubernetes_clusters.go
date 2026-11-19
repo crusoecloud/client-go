@@ -29,7 +29,7 @@ type KubernetesClustersApiService service
 /*
 KubernetesClustersApiService Creates a Kubernetes cluster in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body KubernetesClusterPostRequest defines the specifications of the cluster to be created.
   - @param projectId ID of the project to create the cluster in.
 
 @return AsyncOperationResponse
@@ -817,7 +817,7 @@ func (a *KubernetesClustersApiService) ListClusters(ctx context.Context, project
 /*
 KubernetesClustersApiService Updates a Kubernetes cluster in the project and returns the async operation.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param body
+  - @param body KubernetesClusterPatchRequest defines the specifications of the cluster to be updated.
   - @param projectId ID of the project that owns the cluster.
   - @param clusterId ID of the cluster.
 

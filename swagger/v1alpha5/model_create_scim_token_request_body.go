@@ -8,7 +8,10 @@
  */
 package swagger
 
+// The SCIM integration token to create.
 type CreateScimTokenRequestBody struct {
-	Alias     string `json:"alias"`
+	// Display name of the token: at most 64 letters, digits, spaces, dots, hyphens, and underscores.
+	Alias string `json:"alias"`
+	// When the token expires, in RFC 3339 format, or \"never\".
 	ExpiresAt string `json:"expires_at"`
 }

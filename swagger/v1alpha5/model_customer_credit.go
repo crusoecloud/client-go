@@ -10,7 +10,10 @@ package swagger
 
 // Credit is a single credit balance transaction for an organization.
 type CustomerCredit struct {
-	Amount  string `json:"amount,omitempty"`
+	// amount is the amount of credit added or subtracted in this transaction, formatted as a decimal string.
+	Amount string `json:"amount,omitempty"`
+	// balance is the remaining credit balance after this transaction, formatted as a decimal string.
 	Balance string `json:"balance,omitempty"`
-	Date    string `json:"date,omitempty"`
+	// date is when the transaction occurred, in RFC3339 format.
+	Date string `json:"date,omitempty"`
 }

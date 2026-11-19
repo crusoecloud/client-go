@@ -8,6 +8,7 @@
  */
 package swagger
 
+// DesiredCount defines a wrapper struct for the desired count of VMs in the instance group.
 type DesiredCount struct {
 	// New desired number of instances for the instance group.
 	Value int64 `json:"value,omitempty"`

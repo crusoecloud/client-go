@@ -8,8 +8,12 @@
  */
 package swagger
 
+// The error a failed request returns.
 type RpcStatus struct {
-	Code    int32                    `json:"code,omitempty"`
+	// The gRPC status code of the error, such as `5` for `NOT_FOUND`.
+	Code int32 `json:"code,omitempty"`
+	// Structured details about the error, when there are any.
 	Details []map[string]interface{} `json:"details,omitempty"`
-	Message string                   `json:"message,omitempty"`
+	// A description of the error, in English.
+	Message string `json:"message,omitempty"`
 }

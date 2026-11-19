@@ -29,25 +29,25 @@ type AuditLogsApiService service
 /*
 AuditLogsApiService Get audit logs belonging to the specified organization. User must be part of the organization.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
+ * @param organizationId ID of the organization that owns the audit logs.
  * @param optional nil or *AuditLogsApiGetAuditLogsOpts - Optional Parameters:
-     * @param "ProjectIds" (optional.Interface of []string) -
-     * @param "StartTime" (optional.String) -
-     * @param "EndTime" (optional.String) -
-     * @param "Actions" (optional.Interface of []string) -
-     * @param "ActorIds" (optional.Interface of []string) -
-     * @param "ActorEmails" (optional.Interface of []string) -
-     * @param "ActorTypes" (optional.Interface of []string) -
-     * @param "TargetIds" (optional.Interface of []string) -
-     * @param "TargetTypes" (optional.Interface of []string) -
-     * @param "TargetNames" (optional.Interface of []string) -
-     * @param "Locations" (optional.Interface of []string) -
-     * @param "Results" (optional.Interface of []string) -
-     * @param "ResultsNot" (optional.Interface of []string) -
-     * @param "Surfaces" (optional.Interface of []string) -
-     * @param "Limit" (optional.String) -
-     * @param "NextToken" (optional.String) -
-     * @param "PrevToken" (optional.String) -
+     * @param "ProjectIds" (optional.Interface of []string) -  Filters results to entries for the projects with these comma-separated IDs.
+     * @param "StartTime" (optional.String) -  Start of the time range to search, in RFC 3339 format. It must be within the past year. If you leave it out, it&#x27;s 24 hours before &#x60;end_time&#x60;.
+     * @param "EndTime" (optional.String) -  End of the time range to search, in RFC 3339 format. It must be within the past year and at most 93 days after &#x60;start_time&#x60;. If you leave it out, it&#x27;s the current time or 24 hours after &#x60;start_time&#x60;, whichever is earlier.
+     * @param "Actions" (optional.Interface of []string) -  Filters results to entries whose &#x60;action&#x60; is one of these comma-separated values, such as &#x60;Create&#x60; or &#x60;Update&#x60;.
+     * @param "ActorIds" (optional.Interface of []string) -  Filters results to entries whose &#x60;actor_id&#x60; is one of these comma-separated IDs.
+     * @param "ActorEmails" (optional.Interface of []string) -  Emails of the users to filter by. Filtering by Crusoe Admin email isn&#x27;t supported.
+     * @param "ActorTypes" (optional.Interface of []string) -  Actor types to filter by: User, ServiceAccount, System or Crusoe Admin. URL-encode values that contain spaces.
+     * @param "TargetIds" (optional.Interface of []string) -  Filters results to entries whose &#x60;target_ids&#x60; include any of these comma-separated IDs.
+     * @param "TargetTypes" (optional.Interface of []string) -  Filters results to entries whose &#x60;target_type&#x60; is one of these comma-separated values, such as &#x60;VM&#x60; or &#x60;KubernetesCluster&#x60;.
+     * @param "TargetNames" (optional.Interface of []string) -  Filters results to entries whose &#x60;target_names&#x60; include any of these comma-separated names, ignoring case.
+     * @param "Locations" (optional.Interface of []string) -  Filters results to entries whose &#x60;locations&#x60; include any of these comma-separated locations. An unknown location fails the request.
+     * @param "Results" (optional.Interface of []string) -  Filters results to entries whose &#x60;result&#x60; is one of these comma-separated values, such as &#x60;OK&#x60; or &#x60;Bad Request&#x60;.
+     * @param "ResultsNot" (optional.Interface of []string) -  Results to exclude from the response.
+     * @param "Surfaces" (optional.Interface of []string) -  Surfaces the requests came from, such as Browser or Crusoe Terraform/v0.5.21. URL-encode the values.
+     * @param "Limit" (optional.String) -  Maximum number of entries to return, up to 100. Defaults to 20.
+     * @param "NextToken" (optional.String) -  Token for the next page, from &#x60;next_page_token&#x60; in the previous response. You can&#x27;t combine it with &#x60;prev_token&#x60;.
+     * @param "PrevToken" (optional.String) -  Token for the previous page, from &#x60;prev_page_token&#x60; in the previous response. You can&#x27;t combine it with &#x60;next_token&#x60;.
 @return AuditLogsGetResponse
 */
 

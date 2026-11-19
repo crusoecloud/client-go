@@ -8,6 +8,8 @@
  */
 package swagger
 
+// Your SSH keys.
 type ListSshKeysResponseV1Alpha5 struct {
+	// Your SSH keys, sorted by name.
 	Items []SshKey `json:"items"`
 }

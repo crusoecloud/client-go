@@ -8,6 +8,7 @@
  */
 package swagger
 
+// InstanceGroup defines the specification of an instance group.
 type InstanceGroup struct {
 	// List of IDs of running instances in the instance group.
 	ActiveInstances []string `json:"active_instances"`

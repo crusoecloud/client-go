@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListVPCFirewallRulesResponseV1 is the response type for GET requests to the VPC Firewall Rules endpoint.
 type ListVpcFirewallRulesResponseV1 struct {
 	Items []VpcFirewallRule `json:"items"`
 }

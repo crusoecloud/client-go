@@ -10,11 +10,18 @@ package swagger
 
 // ProductProjectUsage is the usage of a product within a project for a single date.
 type CustomerProductProjectUsage struct {
-	BillableMetric string  `json:"billable_metric,omitempty"`
-	Date           string  `json:"date,omitempty"`
-	ProjectId      string  `json:"project_id,omitempty"`
-	Quantity       float64 `json:"quantity,omitempty"`
-	Region         string  `json:"region,omitempty"`
-	ReservationId  string  `json:"reservation_id,omitempty"`
-	ResourceType   string  `json:"resource_type,omitempty"`
+	// billable_metric is the unit the quantity is measured in.
+	BillableMetric string `json:"billable_metric,omitempty"`
+	// date is the date the usage was incurred, formatted YYYY-MM-DD.
+	Date string `json:"date,omitempty"`
+	// project_id is the ID of the project the usage was incurred in.
+	ProjectId string `json:"project_id,omitempty"`
+	// quantity is the amount of the product used.
+	Quantity float64 `json:"quantity,omitempty"`
+	// region is the region the usage was incurred in.
+	Region string `json:"region,omitempty"`
+	// reservation_id is the ID of the reservation the usage was incurred under.
+	ReservationId string `json:"reservation_id,omitempty"`
+	// resource_type is the product type the usage was incurred for.
+	ResourceType string `json:"resource_type,omitempty"`
 }

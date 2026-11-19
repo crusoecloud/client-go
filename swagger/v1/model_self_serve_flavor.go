@@ -8,6 +8,7 @@
  */
 package swagger
 
+// SelfServeFlavor describes a hardware/model flavor available for self-serve deployment.
 type SelfServeFlavor struct {
 	// Flavor type identifier.
 	FlavorType string `json:"flavor_type,omitempty"`

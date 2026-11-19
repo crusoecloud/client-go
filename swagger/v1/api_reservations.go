@@ -29,10 +29,10 @@ type ReservationsApiService service
 /*
 ReservationsApiService Get latest GPU tracking data for the specified organization. User must be part of the organization and have reservations feature access.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
+ * @param organizationId ID of the organization that owns the reservations.
  * @param optional nil or *ReservationsApiGetLatestGPUTrackingOpts - Optional Parameters:
-     * @param "ProductLine" (optional.Interface of []string) -
-     * @param "Region" (optional.Interface of []string) -
+     * @param "ProductLine" (optional.Interface of []string) -  Filters results, and the reservation IDs returned, to these product lines, such as &#x60;h100&#x60;. Accepts repeated parameters or one comma-separated value.
+     * @param "Region" (optional.Interface of []string) -  Filters results to these regions. Accepts repeated parameters or one comma-separated value.
 @return LatestGpuTracking
 */
 
@@ -169,8 +169,8 @@ func (a *ReservationsApiService) GetLatestGPUTracking(ctx context.Context, organ
 /*
 ReservationsApiService Get reservation belonging to the specified organization and reservation ID. User must be part of the organization.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param organizationId
-  - @param reservationId
+  - @param organizationId ID of the organization that owns the reservation.
+  - @param reservationId ID of the reservation to get.
 
 @return ReservationsGetResponse
 */
@@ -297,9 +297,9 @@ func (a *ReservationsApiService) GetReservation(ctx context.Context, organizatio
 /*
 ReservationsApiService Get all reservations belonging to the specified organization. User must be part of the organization.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
+ * @param organizationId ID of the organization that owns the reservations.
  * @param optional nil or *ReservationsApiGetReservationsOpts - Optional Parameters:
-     * @param "Status" (optional.String) -
+     * @param "Status" (optional.String) -  Filters results to reservations with this status. The only supported value is &#x60;effective&#x60;: the contract has started and hasn&#x27;t ended, and the capacity has been delivered. Leave it out to list every reservation, whatever its status.
 @return ReservationsGetResponse
 */
 
@@ -432,12 +432,12 @@ func (a *ReservationsApiService) GetReservations(ctx context.Context, organizati
 /*
 ReservationsApiService Get GPU tracking data for the specified organization. User must be part of the organization and have reservations feature access.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param organizationId
+ * @param organizationId ID of the organization that owns the reservations.
  * @param optional nil or *ReservationsApiGetReservationsGPUTrackingOpts - Optional Parameters:
-     * @param "ProductLine" (optional.Interface of []string) -
-     * @param "Region" (optional.Interface of []string) -
-     * @param "StartTime" (optional.String) -
-     * @param "EndTime" (optional.String) -
+     * @param "ProductLine" (optional.Interface of []string) -  Filters results to these product lines, such as &#x60;h100&#x60;. Accepts repeated parameters or one comma-separated value.
+     * @param "Region" (optional.Interface of []string) -  Filters results to these regions. Accepts repeated parameters or one comma-separated value. The &#x60;global&#x60; entries are returned either way.
+     * @param "StartTime" (optional.String) -  Filters results to entries at or after this time, in RFC 3339 format. Leave it out to start from the earliest entry.
+     * @param "EndTime" (optional.String) -  Filters results to entries at or before this time, in RFC 3339 format. It can&#x27;t be before &#x60;start_time&#x60;. Leave it out to include entries up to the latest one.
 @return GpuTrackingResponse
 */
 

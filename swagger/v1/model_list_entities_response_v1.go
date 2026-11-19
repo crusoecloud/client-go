@@ -8,6 +8,8 @@
  */
 package swagger
 
+// The organizations you belong to.
 type ListEntitiesResponseV1 struct {
+	// The organizations.
 	Items []Entity `json:"items"`
 }

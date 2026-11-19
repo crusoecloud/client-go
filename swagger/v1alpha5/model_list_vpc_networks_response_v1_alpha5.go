@@ -8,6 +8,7 @@
  */
 package swagger
 
+// ListVPCNetworksResponseV1Alpha5 is the response type for GET requests to the VPC Networks endpoint.
 type ListVpcNetworksResponseV1Alpha5 struct {
 	Items []VpcNetwork `json:"items"`
 }

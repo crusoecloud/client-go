@@ -8,6 +8,7 @@
  */
 package swagger
 
+// InstanceTemplate defines the specifications of VMs to be created during bulk VM creation.
 type InstanceTemplate struct {
 	// Creation timestamp of the instance template, in RFC3339 format.
 	CreatedAt string `json:"created_at"`

@@ -30,9 +30,9 @@ type SlurmNodesetOperationsApiService service
 SlurmNodesetOperationsApiService Get status of a single asynchronous operation.
 This resource retrieves information about the status of an asynchronous operation for a slurm nodeset. Only information about the operation specified in the path will be returned.
   - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-  - @param projectId
-  - @param operationId
-  - @param slurmClusterId
+  - @param projectId ID of the project that owns the operation.
+  - @param operationId ID of the operation.
+  - @param slurmClusterId ID of the Slurm cluster that owns the nodesets.
 
 @return Operation
 */
@@ -171,11 +171,11 @@ func (a *SlurmNodesetOperationsApiService) GetSlurmNodesetOperation(ctx context.
 SlurmNodesetOperationsApiService Get status of asynchronous operations.
 This resource retrieves information about the status of asynchronous operations for slurm nodesets. Query parameters can be used to filter results by slurm nodeset ID or operation state.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param projectId
- * @param slurmClusterId
+ * @param projectId ID of the project.
+ * @param slurmClusterId ID of the Slurm cluster that owns the nodesets.
  * @param optional nil or *SlurmNodesetOperationsApiListSlurmNodesetsOperationsOpts - Optional Parameters:
-     * @param "ResourceId" (optional.String) -
-     * @param "State" (optional.Interface of []string) -
+     * @param "ResourceId" (optional.String) -  Filters results to operations on the resource with this ID.
+     * @param "State" (optional.Interface of []string) -  Filters results to operations in these states.
 @return ListOperationsResponseV1
 */
 
