@@ -8219,6 +8219,190 @@
         ]
       }
     },
+    "/projects/{project_id}/migrations": {
+      "get": {
+        "description": "Use getDiskMigration for a specific job's per-VM detail.",
+        "operationId": "listDiskMigrations",
+        "parameters": [
+          {
+            "description": "ID of the project to list migration jobs for.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/listDiskMigrationsResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Lists every disk migration job for a project, each with its job-level status only.",
+        "tags": [
+          "DiskMigrations"
+        ]
+      }
+    },
+    "/projects/{project_id}/migrations/{job_id}": {
+      "get": {
+        "operationId": "getDiskMigration",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the migration job.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "ID of the migration job.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "JobID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/getDiskMigrationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Returns the per-VM status of a disk migration job.",
+        "tags": [
+          "DiskMigrations"
+        ]
+      }
+    },
+    "/projects/{project_id}/migrations:finish": {
+      "post": {
+        "description": "The job must have reached job_status = AWAITING_FINISH; signaling before then is rejected.",
+        "operationId": "finishDiskMigration",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the migration job.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "DiskMigrationFinishRequest is the request body for signaling a live disk migration job to finish.",
+            "in": "body",
+            "name": "Body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DiskMigrationFinishRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/finishDiskMigrationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "404": {
+            "$ref": "#/responses/notFoundError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Signals a live disk migration job to finish.",
+        "tags": [
+          "DiskMigrations"
+        ]
+      }
+    },
+    "/projects/{project_id}/migrations:start": {
+      "post": {
+        "description": "At most one of vm_id or vm_ids may be specified; if neither is given, every VM in the project is migrated.",
+        "operationId": "startDiskMigration",
+        "parameters": [
+          {
+            "description": "ID of the project that owns the VM(s) to migrate.",
+            "example": "ab4a6b00-aa5f-408e-a9fb-ac6de5eb45ab",
+            "in": "path",
+            "name": "project_id",
+            "required": true,
+            "type": "string",
+            "x-go-name": "ProjectID"
+          },
+          {
+            "description": "DiskMigrationStartRequest is the request body for starting a live disk migration.",
+            "in": "body",
+            "name": "Body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DiskMigrationStartRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/startDiskMigrationResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badReqError"
+          },
+          "401": {
+            "$ref": "#/responses/authError"
+          },
+          "403": {
+            "$ref": "#/responses/permissionsError"
+          },
+          "500": {
+            "$ref": "#/responses/serverError"
+          }
+        },
+        "summary": "Starts a live disk migration for one VM, several named VMs, or every VM in the project.",
+        "tags": [
+          "DiskMigrations"
+        ]
+      }
+    },
     "/projects/{project_id}/networking/ib-networks": {
       "get": {
         "operationId": "listIBNetworks",
@@ -13683,6 +13867,105 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "DiskMigrationFinishRequest": {
+      "description": "DiskMigrationFinishRequest is the request body for signaling a live disk migration job to finish.",
+      "properties": {
+        "job_id": {
+          "description": "ID of the migration job to finish.",
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "type": "string",
+          "x-go-name": "JobID"
+        }
+      },
+      "required": [
+        "job_id"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "DiskMigrationFinishResponse": {
+      "description": "DiskMigrationFinishResponse is the response body after signaling a live disk migration job to finish.",
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "DiskMigrationStartRequest": {
+      "description": "DiskMigrationStartRequest is the request body for starting a live disk migration.",
+      "properties": {
+        "size": {
+          "description": "New disk size, given as a size and unit in the format [Size][Unit], for example 100GiB or 1TiB.",
+          "example": "10GiB",
+          "type": "string",
+          "x-go-name": "DiskSize"
+        },
+        "vm_id": {
+          "description": "ID of the single VM to migrate. At most one of vm_id or vm_ids may be specified. If\nneither is, every VM in the project is migrated instead.",
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "type": "string",
+          "x-go-name": "VMID"
+        },
+        "vm_ids": {
+          "description": "IDs of the VMs to migrate. At most one of vm_id or vm_ids may be specified. If neither is,\nevery VM in the project is migrated instead.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "x-go-name": "VMIDs"
+        }
+      },
+      "required": [
+        "size"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "DiskMigrationStartResponse": {
+      "description": "DiskMigrationStartResponse is the response body after starting a live disk migration.",
+      "properties": {
+        "job_id": {
+          "description": "ID of the dispatched migration job. Only set when the request specified vm_id.",
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "type": "string",
+          "x-go-name": "JobID"
+        },
+        "results": {
+          "description": "Per-VM dispatch result. Only set when the request specified vm_ids.",
+          "items": {
+            "$ref": "#/definitions/DiskMigrationStartResult"
+          },
+          "type": "array",
+          "x-go-name": "Results"
+        }
+      },
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "DiskMigrationStartResult": {
+      "description": "DiskMigrationStartResult is a single VM's dispatch result within a DiskMigrationStartResponse.",
+      "properties": {
+        "error": {
+          "description": "Set on failure for this VM; other VMs' results are unaffected.",
+          "type": "string",
+          "x-go-name": "Error"
+        },
+        "job_id": {
+          "description": "ID of the dispatched migration job. Set on success.",
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "type": "string",
+          "x-go-name": "JobID"
+        },
+        "vm_id": {
+          "description": "ID of the VM this result is for.",
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "type": "string",
+          "x-go-name": "VMID"
+        }
+      },
+      "required": [
+        "vm_id"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "DiskModeType": {
       "type": "string",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
@@ -18404,6 +18687,24 @@
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
+    "ListMigrationJobsResponse": {
+      "description": "ListMigrationJobsResponse is the response body for every disk migration job in a project, each\nwith its job-level status only -- use MigrationJob (the get-by-job-id response) for per-VM detail.",
+      "properties": {
+        "jobs": {
+          "description": "Every disk migration job for the project, each with its job-level status only.",
+          "items": {
+            "$ref": "#/definitions/MigrationJobSummary"
+          },
+          "type": "array",
+          "x-go-name": "Jobs"
+        }
+      },
+      "required": [
+        "jobs"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
     "ListModelsResponse": {
       "description": "ListModelsResponse is the response body for listing deployed models.",
       "properties": {
@@ -19316,6 +19617,89 @@
           "x-go-name": "Tags"
         }
       },
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "MigrationJob": {
+      "description": "MigrationJob is the response body for a single disk migration job, with per-VM detail.",
+      "properties": {
+        "job_id": {
+          "description": "ID of the migration job.",
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "type": "string",
+          "x-go-name": "JobID"
+        },
+        "job_status": {
+          "description": "Job-level status, e.g. PENDING, IN_PROGRESS, AWAITING_FINISH, FINISHING, COMPLETED, or\nPARTIALLY_FAILED.",
+          "example": "AWAITING_FINISH",
+          "type": "string",
+          "x-go-name": "JobStatus"
+        },
+        "vms": {
+          "description": "Per-VM status of every VM dispatched under this job.",
+          "items": {
+            "$ref": "#/definitions/MigrationVMStatus"
+          },
+          "type": "array",
+          "x-go-name": "VMs"
+        }
+      },
+      "required": [
+        "job_id",
+        "job_status",
+        "vms"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "MigrationJobSummary": {
+      "description": "MigrationJobSummary is a single item in ListMigrationJobsResponse.",
+      "properties": {
+        "job_id": {
+          "description": "ID of the migration job.",
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "type": "string",
+          "x-go-name": "JobID"
+        },
+        "job_status": {
+          "description": "Job-level status, e.g. PENDING, IN_PROGRESS, AWAITING_FINISH, FINISHING, COMPLETED, or\nPARTIALLY_FAILED.",
+          "example": "AWAITING_FINISH",
+          "type": "string",
+          "x-go-name": "JobStatus"
+        }
+      },
+      "required": [
+        "job_id",
+        "job_status"
+      ],
+      "type": "object",
+      "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
+    },
+    "MigrationVMStatus": {
+      "description": "MigrationVMStatus is a single VM's status within a MigrationJob.",
+      "properties": {
+        "error": {
+          "description": "Set if this VM's migration failed.",
+          "type": "string",
+          "x-go-name": "Error"
+        },
+        "status": {
+          "description": "This VM's migration status, e.g. IN_PROGRESS, MIGRATION_READY, or FAILED.",
+          "example": "IN_PROGRESS",
+          "type": "string",
+          "x-go-name": "Status"
+        },
+        "vm_id": {
+          "description": "ID of the VM.",
+          "example": "123e4567-e89b-12d3-a456-426614174000",
+          "type": "string",
+          "x-go-name": "VMID"
+        }
+      },
+      "required": [
+        "vm_id",
+        "status"
+      ],
       "type": "object",
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
@@ -23030,6 +23414,12 @@
     "emptyResponse": {
       "description": "Empty Response"
     },
+    "finishDiskMigrationResponse": {
+      "description": "Empty body, returned once the finish signal is accepted.",
+      "schema": {
+        "$ref": "#/definitions/DiskMigrationFinishResponse"
+      }
+    },
     "foundryActivityResponse": {
       "description": "One page of the deployment's activity events, newest first.",
       "schema": {
@@ -23139,6 +23529,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/DiagnosticStatusResponse"
+      }
+    },
+    "getDiskMigrationResponse": {
+      "description": "Per-VM status of the migration job.",
+      "schema": {
+        "$ref": "#/definitions/MigrationJob"
       }
     },
     "getDiskResponse": {
@@ -23361,6 +23757,12 @@
       "description": "",
       "schema": {
         "$ref": "#/definitions/KubernetesListAvailableAddonsResponse"
+      }
+    },
+    "listDiskMigrationsResponse": {
+      "description": "Every disk migration job for the project.",
+      "schema": {
+        "$ref": "#/definitions/ListMigrationJobsResponse"
       }
     },
     "listDiskSnapshotsResponse": {
@@ -23695,6 +24097,12 @@
           "message"
         ],
         "type": "object"
+      }
+    },
+    "startDiskMigrationResponse": {
+      "description": "Result of dispatching the migration.",
+      "schema": {
+        "$ref": "#/definitions/DiskMigrationStartResponse"
       }
     },
     "syncOperationResponse": {
