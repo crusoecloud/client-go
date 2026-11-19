@@ -8,6 +8,8 @@
  */
 package swagger
 
+// An organization's GPU usage compared with its reserved capacity over time.
 type GpuTrackingResponse struct {
+	// Usage and capacity entries, newest first: one per event time, product line, and region, plus a `global` entry per event time and product line.
 	Data []GpuTrackingDatum `json:"data,omitempty"`
 }

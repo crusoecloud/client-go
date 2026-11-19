@@ -8,6 +8,7 @@
  */
 package swagger
 
+// A limit on how much of one resource a project can use.
 type ProjectQuota struct {
 	// Amount of the quota still available to the project.
 	Available int64 `json:"available,omitempty"`

@@ -10,19 +10,32 @@ package swagger
 
 // Reservation contains information about a customer reservation.
 type Reservation struct {
-	ContractEndDate   string  `json:"contract_end_date"`
-	ContractStartDate string  `json:"contract_start_date"`
-	DateDelivered     string  `json:"date_delivered"`
-	DeliveryDeadline  string  `json:"delivery_deadline"`
-	Duration          float32 `json:"duration"`
+	// When the reservation contract ends, in RFC 3339 format.
+	ContractEndDate string `json:"contract_end_date"`
+	// When the reservation contract starts, in RFC 3339 format.
+	ContractStartDate string `json:"contract_start_date"`
+	// When the reserved capacity was delivered, in RFC 3339 format. A date before 2000, such as `1970-01-01T00:00:00Z`, means it hasn't been delivered yet.
+	DateDelivered string `json:"date_delivered"`
+	// Deadline for delivering the reserved capacity, in RFC 3339 format.
+	DeliveryDeadline string `json:"delivery_deadline"`
+	// Length of the reservation contract, in months.
+	Duration float32 `json:"duration"`
 	// ID of the reservation.
-	Id              string   `json:"id"`
-	Locations       []string `json:"locations"`
-	Price           string   `json:"price"`
-	ProductLine     string   `json:"product_line"`
-	Projects        []string `json:"projects"`
-	Quantity        int64    `json:"quantity"`
-	ReservationType string   `json:"reservation_type"`
-	UsedQuantity    int64    `json:"used_quantity"`
-	VmIds           []string `json:"vm_ids"`
+	Id string `json:"id"`
+	// Regions the reservation applies to. Empty when it applies to all regions.
+	Locations []string `json:"locations"`
+	// Price per GPU hour of the reserved capacity, in US dollars, as a decimal string.
+	Price string `json:"price"`
+	// Product line the reservation applies to, such as `h100`.
+	ProductLine string `json:"product_line"`
+	// IDs of the projects the reservation applies to.
+	Projects []string `json:"projects"`
+	// Number of GPUs reserved.
+	Quantity int64 `json:"quantity"`
+	// Type of the reservation, such as `RIPA`.
+	ReservationType string `json:"reservation_type"`
+	// Number of reserved GPUs in use.
+	UsedQuantity int64 `json:"used_quantity"`
+	// IDs of the VMs attached to the reservation.
+	VmIds []string `json:"vm_ids"`
 }

@@ -1985,6 +1985,7 @@
             "x-go-name": "OrganizationID"
           },
           {
+            "description": "Filters results to reservations with this status. The only supported value is `effective`: the contract has started and hasn't ended, and the capacity has been delivered. Leave it out to list every reservation, whatever its status.",
             "example": "effective",
             "in": "query",
             "name": "status",
@@ -2029,8 +2030,9 @@
             "x-go-name": "OrganizationID"
           },
           {
+            "description": "Filters results to these product lines, such as `h100`. Accepts repeated parameters or one comma-separated value.",
             "example": [
-              "gpu-hours"
+              "h100"
             ],
             "in": "query",
             "items": {
@@ -2041,6 +2043,7 @@
             "x-go-name": "ProductLine"
           },
           {
+            "description": "Filters results to these regions. Accepts repeated parameters or one comma-separated value. The `global` entries are returned either way.",
             "example": [
               "us-east1",
               "us-northcentral1"
@@ -2054,6 +2057,7 @@
             "x-go-name": "Region"
           },
           {
+            "description": "Filters results to entries at or after this time, in RFC 3339 format. Leave it out to start from the earliest entry.",
             "example": "\"2024-01-01T00:00:00Z\"",
             "in": "query",
             "name": "start_time",
@@ -2061,6 +2065,7 @@
             "x-go-name": "StartTime"
           },
           {
+            "description": "Filters results to entries at or before this time, in RFC 3339 format. It can't be before `start_time`. Leave it out to include entries up to the latest one.",
             "example": "\"2024-01-31T23:59:59Z\"",
             "in": "query",
             "name": "end_time",
@@ -2105,8 +2110,9 @@
             "x-go-name": "OrganizationID"
           },
           {
+            "description": "Filters results, and the reservation IDs returned, to these product lines, such as `h100`. Accepts repeated parameters or one comma-separated value.",
             "example": [
-              "gpu-hours"
+              "h100"
             ],
             "in": "query",
             "items": {
@@ -2117,6 +2123,7 @@
             "x-go-name": "ProductLine"
           },
           {
+            "description": "Filters results to these regions. Accepts repeated parameters or one comma-separated value.",
             "example": [
               "us-east1",
               "us-northcentral1"
@@ -2167,6 +2174,7 @@
             "x-go-name": "OrganizationID"
           },
           {
+            "description": "ID of the reservation to get.",
             "example": "de8f27fe-8438-45e7-a2c2-a2767660625f",
             "in": "path",
             "name": "reservation_id",
@@ -14636,44 +14644,54 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/docs/v1"
     },
     "GPUTrackingDatum": {
+      "description": "An organization's GPU usage compared with its reserved capacity, for one product line and region at one point in\ntime.",
       "properties": {
         "event_time": {
+          "description": "When these values took effect, in RFC 3339 format.",
           "type": "string",
           "x-go-name": "EventTime"
         },
         "global_capacity": {
+          "description": "Number of reserved GPUs for the product line that aren't tied to a single region.",
           "format": "int64",
           "type": "integer",
           "x-go-name": "GlobalCapacity"
         },
         "gpu_usage": {
+          "description": "Number of GPUs in use in the region. In `global` entries, the number in use beyond the regional reserved capacity,\nacross all regions.",
           "format": "int64",
           "type": "integer",
           "x-go-name": "GPUUsage"
         },
         "on_demand_count": {
+          "description": "Number of GPUs in use beyond the regional and global reserved capacity.",
           "format": "int64",
           "type": "integer",
           "x-go-name": "OnDemandCount"
         },
         "organization_id": {
+          "description": "ID of the organization.",
           "type": "string",
           "x-go-name": "OrganizationID"
         },
         "price": {
+          "description": "Price per GPU hour, in US dollars, of GPU usage beyond the reserved capacity in the region. It's `-1` in `global`\nentries.",
           "format": "double",
           "type": "number",
           "x-go-name": "Price"
         },
         "product_line": {
+          "description": "Product line the entry applies to.",
           "type": "string",
           "x-go-name": "ProductLine"
         },
         "region": {
+          "description": "Region the entry applies to, or `global` for the entry that covers all regions.",
           "type": "string",
           "x-go-name": "Region"
         },
         "regional_capacity": {
+          "description": "Number of reserved GPUs tied to the region. It's `0` in `global` entries.",
           "format": "int64",
           "type": "integer",
           "x-go-name": "RegionalCapacity"
@@ -14683,44 +14701,54 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GPUTrackingDatumMod": {
+      "description": "An organization's most recent GPU usage compared with its reserved capacity, for one product line and region.",
       "properties": {
         "event_time": {
+          "description": "When these values took effect, in RFC 3339 format.",
           "type": "string",
           "x-go-name": "EventTime"
         },
         "global_reservation_capacity": {
+          "description": "Number of reserved GPUs for the product line that aren't tied to a single region.",
           "format": "int64",
           "type": "integer",
           "x-go-name": "GlobalCapacity"
         },
         "organization_id": {
+          "description": "ID of the organization.",
           "type": "string",
           "x-go-name": "OrganizationID"
         },
         "overage_count": {
+          "description": "Number of GPUs in use beyond the regional and global reserved capacity. Omitted when zero.",
           "format": "int64",
           "type": "integer",
           "x-go-name": "OnDemandCount"
         },
         "price": {
+          "description": "Price per GPU hour, in US dollars, of GPU usage beyond the reserved capacity in the region.",
           "format": "double",
           "type": "number",
           "x-go-name": "Price"
         },
         "product_line": {
+          "description": "Product line the entry applies to.",
           "type": "string",
           "x-go-name": "ProductLine"
         },
         "region": {
+          "description": "Region the entry applies to.",
           "type": "string",
           "x-go-name": "Region"
         },
         "regional_reservation_capacity": {
+          "description": "Number of reserved GPUs tied to the region. Omitted when zero.",
           "format": "int64",
           "type": "integer",
           "x-go-name": "RegionalCapacity"
         },
         "running_compute_unit_count": {
+          "description": "Number of GPUs in use in the region.",
           "format": "int64",
           "type": "integer",
           "x-go-name": "GPUUsage"
@@ -14730,8 +14758,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "GPUTrackingResponse": {
+      "description": "An organization's GPU usage compared with its reserved capacity over time.",
       "properties": {
         "data": {
+          "description": "Usage and capacity entries, newest first: one per event time, product line, and region, plus a `global` entry per\nevent time and product line.",
           "items": {
             "$ref": "#/definitions/GPUTrackingDatum"
           },
@@ -18120,8 +18150,10 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "LatestGPUTracking": {
+      "description": "An organization's most recent GPU usage compared with its reserved capacity.",
       "properties": {
         "data": {
+          "description": "Most recent entry for each product line and region. Covers only product lines the organization has reservations for,\nand leaves out regions with no usage and no regional reserved capacity.",
           "items": {
             "$ref": "#/definitions/GPUTrackingDatumMod"
           },
@@ -18129,6 +18161,7 @@
           "x-go-name": "Data"
         },
         "reservation_id": {
+          "description": "IDs of the organization's reservations, limited to `product_line` when it's set. Includes reservations that aren't\nin effect, such as expired ones.",
           "items": {
             "type": "string"
           },
@@ -20024,6 +20057,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "OrgQuota": {
+      "description": "A limit on how much of one resource your organization can use, such as users or projects.",
       "properties": {
         "available": {
           "description": "Amount of the quota still available to the organization.",
@@ -20185,6 +20219,7 @@
       "x-go-package": "gitlab.com/crusoeenergy/island/rest-gateway/internal/models"
     },
     "ProjectQuota": {
+      "description": "A limit on how much of one resource a project can use.",
       "properties": {
         "available": {
           "description": "Amount of the quota still available to the project.",
@@ -20583,26 +20618,31 @@
       "description": "Reservation contains information about a customer reservation.",
       "properties": {
         "contract_end_date": {
+          "description": "When the reservation contract ends, in RFC 3339 format.",
           "example": "2025-08-14T09:00:35Z",
           "type": "string",
           "x-go-name": "ContractEndDate"
         },
         "contract_start_date": {
+          "description": "When the reservation contract starts, in RFC 3339 format.",
           "example": "2024-08-14T09:00:35Z",
           "type": "string",
           "x-go-name": "ContractStartDate"
         },
         "date_delivered": {
+          "description": "When the reserved capacity was delivered, in RFC 3339 format. A date before 2000, such as `1970-01-01T00:00:00Z`,\nmeans it hasn't been delivered yet.",
           "example": "2024-07-14T09:00:35Z",
           "type": "string",
           "x-go-name": "DateDelivered"
         },
         "delivery_deadline": {
+          "description": "Deadline for delivering the reserved capacity, in RFC 3339 format.",
           "example": "2024-08-14T09:00:35Z",
           "type": "string",
           "x-go-name": "DeliveryDeadline"
         },
         "duration": {
+          "description": "Length of the reservation contract, in months.",
           "example": 12,
           "format": "float",
           "type": "number",
@@ -20615,6 +20655,7 @@
           "x-go-name": "ID"
         },
         "locations": {
+          "description": "Regions the reservation applies to. Empty when it applies to all regions.",
           "example": "\"us-east1\"",
           "items": {
             "type": "string"
@@ -20623,16 +20664,19 @@
           "x-go-name": "Locations"
         },
         "price": {
+          "description": "Price per GPU hour of the reserved capacity, in US dollars, as a decimal string.",
           "example": "6.25",
           "type": "string",
           "x-go-name": "Price"
         },
         "product_line": {
+          "description": "Product line the reservation applies to, such as `h100`.",
           "example": "h100",
           "type": "string",
           "x-go-name": "ProductLine"
         },
         "projects": {
+          "description": "IDs of the projects the reservation applies to.",
           "example": "\"1a8ebda8-3c68-4ba6-adf6-961c3ec53748\"",
           "items": {
             "type": "string"
@@ -20641,23 +20685,27 @@
           "x-go-name": "Projects"
         },
         "quantity": {
+          "description": "Number of GPUs reserved.",
           "example": 64,
           "format": "int64",
           "type": "integer",
           "x-go-name": "Quantity"
         },
         "reservation_type": {
+          "description": "Type of the reservation, such as `RIPA`.",
           "example": "RIPA",
           "type": "string",
           "x-go-name": "ReservationType"
         },
         "used_quantity": {
+          "description": "Number of reserved GPUs in use.",
           "example": 32,
           "format": "int64",
           "type": "integer",
           "x-go-name": "UsedQuantity"
         },
         "vm_ids": {
+          "description": "IDs of the VMs attached to the reservation.",
           "example": "1a8ebda8-3c68-4ba6-adf6-961c3ec53748,6f70a988-fac6-4a9c-ae26-cb016d7bec72",
           "items": {
             "type": "string"
@@ -20712,6 +20760,7 @@
       "description": "ReservationsGetResponse is the response type for GET requests to the reservations endpoint.",
       "properties": {
         "items": {
+          "description": "Reservations that match the request. Getting one reservation by ID returns it as the only item.",
           "items": {
             "$ref": "#/definitions/Reservation"
           },
@@ -23724,7 +23773,7 @@
       }
     },
     "latestGPUTrackingResponse": {
-      "description": "",
+      "description": "The organization's most recent GPU usage and reserved capacity.",
       "schema": {
         "$ref": "#/definitions/LatestGPUTracking"
       }
@@ -23868,13 +23917,13 @@
       }
     },
     "listOrgQuotasResponse": {
-      "description": "",
+      "description": "The organization's quotas.",
       "schema": {
         "$ref": "#/definitions/ListOrgQuotasResponse"
       }
     },
     "listProjectQuotasResponse": {
-      "description": "",
+      "description": "The project's quotas.",
       "schema": {
         "$ref": "#/definitions/ListProjectQuotasResponse"
       }
@@ -24063,13 +24112,13 @@
       }
     },
     "reservationsGPUTrackingResponse": {
-      "description": "",
+      "description": "The organization's GPU usage and reserved capacity over time.",
       "schema": {
         "$ref": "#/definitions/GPUTrackingResponse"
       }
     },
     "reservationsResponse": {
-      "description": "",
+      "description": "The reservations that match the request.",
       "schema": {
         "$ref": "#/definitions/ReservationsGetResponse"
       }
